@@ -1,0 +1,9 @@
+# /adapters/sqlite/wrangler.toml
+name = "cicsc-sqlite-adapter-dev"
+main = "src/worker.ts"
+compatibility_date = "2026-02-11"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "cicsc_dev"
+database_id = "REPLACE_ME"
