@@ -1,0 +1,116 @@
+# Core IR v0 — Schema Notes (Informative)
+
+## 0. Status
+
+This document provides implementation notes for Core IR v0.
+This document is informative and does not override the normative schema.
+
+---
+
+## 1. AST Encoding
+
+Expression AST nodes MUST be encoded as tagged JSON objects.
+
+Example:
+
+```json
+{ "eq": [ { "var": { "state": true } }, { "lit": { "string": "new" } } ] }
+```
+
+Implementations MUST NOT accept string expressions.
+
+---
+
+## 2. Determinism
+
+All Core IR AST nodes MUST be serialized deterministically:
+
+- object keys sorted
+- arrays ordered
+- no implicit defaults
+
+This ensures reproducible compilation artifacts.
+
+---
+
+## 3. Validation Order
+
+Implementations SHOULD validate Core IR in the following order:
+
+1. schema validation  
+2. type checking  
+3. reducer completeness  
+4. constraint representability  
+5. adapter capability matching  
+
+Compilation MUST fail on the first error.
+
+---
+
+## 4. Extension Policy
+
+Core IR v0 is closed.
+
+Any extension MUST:
+
+- increment Core IR version  
+- update schema  
+- update adapter interface  
+- preserve migration compatibility  
+
+Implementations MUST reject unknown node types.
+
+---
+
+## 5. Testing Guidance
+
+Reference tests SHOULD include:
+
+- round-trip Spec → IR → Spec (if Spec AST exists)  
+- IR → SQLite lowering determinism  
+- migration replay verification  
+- constraint equivalence across backends  
+
+---
+
+## 6. Canonicalization
+
+Implementations SHOULD canonicalize:
+
+- field ordering  
+- enum ordering  
+- reducer op ordering  
+
+before hashing or signing IR artifacts.
+
+---
+
+## 7. Hashing
+
+Implementations SHOULD compute:
+
+- IR content hash  
+- migration hash  
+- bundle hash  
+
+Hashes SHOULD be included in audit logs.
+
+---
+
+## 8. Forward Compatibility
+
+IR v0 bundles SHOULD embed:
+
+```json
+{ "core_ir_version": 0 }
+```
+
+Future IR versions MUST remain distinguishable at runtime.
+
+---
+
+## 9. Security Notes
+
+Implementations MUST treat Core IR as untrusted input.
+
+All lowering MUST be safe against injection or resource exhaustion.

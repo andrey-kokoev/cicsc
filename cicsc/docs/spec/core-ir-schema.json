@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CICSC Core IR v0 Schema",
+  "type": "object",
+  "required": ["core_ir"],
+  "properties": {
+    "core_ir": {
+      "type": "object",
+      "required": ["version", "types"],
+      "properties": {
+        "version": { "type": "integer", "const": 0 },
+
+        "types": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["id_type", "states", "initial_state", "attrs", "commands", "reducer"],
+            "properties": {
+              "id_type": { "type": "string" },
+
+              "states": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 1
+              },
+
+              "initial_state": { "type": "string" },
+
+              "attrs": {
+                "type": "object",
+                "additionalProperties": { "type": "object" }
+              },
+
+              "shadows": {
+                "type": "object",
+                "additionalProperties": { "type": "object" }
+              },
+
+              "commands": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "object",
+                  "required": ["input", "guard", "emits"],
+                  "properties": {
+                    "input": { "type": "object" },
+                    "guard": {
+                      "type": "object",
+                      "required": ["expr"]
+                    },
+                    "emits": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": ["event_type", "payload"],
+                        "properties": {
+                          "event_type": { "type": "string" },
+                          "payload": { "type": "object" }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+
+              "reducer": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "array",
+                  "items": { "type": "object" }
+                }
+              }
+            }
+          }
+        },
+
+        "constraints": { "type": "object" },
+        "views": { "type": "object" },
+        "slas": { "type": "object" },
+        "policies": { "type": "object" },
+        "migrations": { "type": "object" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

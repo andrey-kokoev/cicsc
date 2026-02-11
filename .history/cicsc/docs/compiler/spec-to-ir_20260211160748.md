@@ -1,0 +1,127 @@
+# /docs/compiler/spec-to-ir.md
+
+# Spec DSL → Core IR Compilation (Normative)
+
+## 0. Status
+
+This document defines the normative compilation rules from Spec DSL to Core IR v0.
+
+Spec DSL is a frontend language.
+Core IR is the closed semantic target.
+
+---
+
+## 1. Determinism
+
+Compilation MUST be:
+
+- total  
+- deterministic  
+- semantics-preserving  
+
+Any Spec construct not mappable to Core IR v0 MUST be rejected.
+
+---
+
+## 2. Entities
+
+Spec entity definitions MUST compile to:
+
+- `core_ir.types[T]`
+- id_type
+- states
+- initial_state
+- attrs
+- shadows (materialize directives)
+
+---
+
+## 3. Commands
+
+Spec commands MUST compile to:
+
+- Core IR command nodes  
+- typed Expr AST for guards  
+- typed Expr AST for payload expressions  
+
+Compilation MUST fail if:
+
+- guards are non-total  
+- payload expressions reference undefined variables  
+
+---
+
+## 4. Reducers
+
+Spec reducers MUST compile to:
+
+- ordered lists of typed ReducerOps  
+- exactly one reducer per emitted event  
+
+Reducers MUST be deterministic and total.
+
+---
+
+## 5. Policies
+
+Spec policies MUST compile to:
+
+- Core IR policy Expr AST  
+
+Policy calls MUST compile to `call` Expr nodes.
+
+---
+
+## 6. Constraints
+
+Spec constraints MUST compile to:
+
+- snapshot constraints (Expr AST), or  
+- bool_query constraints (Query AST + assert Expr AST)
+
+Compilation MUST fail if constraint semantics cannot be represented in Core IR v0.
+
+---
+
+## 7. Views
+
+Spec views MUST compile to:
+
+- Core IR view nodes  
+- Query AST  
+
+Joins MUST only target SlaStatus in v0.
+
+---
+
+## 8. SLAs
+
+Spec SLAs MUST compile to:
+
+- Core IR SLA nodes  
+- typed EventSelector AST  
+
+Compilation MUST fail if SLAs reference undefined events.
+
+---
+
+## 9. Migrations
+
+Spec migrations MUST compile to:
+
+- Core IR migration nodes  
+- total event transform functions  
+
+Compilation MUST fail if any migration is partial or non-total.
+
+---
+
+## 10. Errors
+
+The compiler MUST reject Spec if:
+
+- any construct cannot be lowered to Core IR v0  
+- any expression is ill-typed  
+- any reducer is missing  
+- any migration is partial  
+- semantic closure is violated  
