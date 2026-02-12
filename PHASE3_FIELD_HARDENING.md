@@ -1,0 +1,65 @@
+# PHASE3_FIELD_HARDENING.md
+## CICSC Phase 3: Field Hardening
+
+This phase executes post-v1.5 hardening before new research axes.
+
+## 0. Phase Rules
+
+- [x] 0.1 Add execution contract for one-checkbox/one-commit discipline.
+- [ ] 0.2 Add per-checkbox Definition of Done aligned with AGENTS and roadmap agreement.
+
+### Execution Contract
+
+- Exactly one checkbox is implemented per commit.
+- No parallel checkbox execution.
+- Each commit must include:
+  - `Checkbox: <id>`
+  - `Invariant: <strengthened property>`
+  - `Proof/Test: <command/theorem/test target>`
+  - `Docs: <paths changed>`
+- A checkbox is not marked complete without verification evidence.
+- If a checkbox is blocked, record blocker in this file and do not mark complete.
+
+## 1. Stabilization Gate (must pass before pilot)
+
+- [ ] 1.1 Add deterministic baseline script for build/test/typecheck/conformance.
+- [ ] 1.2 Eliminate known build graph inconsistencies blocking reliable CI signal.
+- [ ] 1.3 Add a single CI target running oracle tests + SQL conformance + typechecker negatives.
+- [ ] 1.4 Add baseline conformance artifact doc.
+
+## 2. Conformance Hardening
+
+- [ ] 2.1 Add missing differential tests for lowering paths without oracle-vs-SQL coverage.
+- [ ] 2.2 Add typechecker negative tests for fail-fast semantic mismatches.
+- [ ] 2.3 Add replay determinism regression suite across representative histories/streams.
+- [ ] 2.4 Add constraint parity tests (oracle interpreter vs lowered backend).
+- [ ] 2.5 Add migration replay-verification regression suite for v1 migration class.
+
+## 3. Pilot Deployment Preparation
+
+- [ ] 3.1 Select pilot vertical and record explicit scope contract.
+- [ ] 3.2 Define unsupported feature list for pilot (explicit rejections).
+- [ ] 3.3 Define tenant isolation and retention policy.
+- [ ] 3.4 Add pilot runbook (install/upgrade/rollback/verify-loop).
+- [ ] 3.5 Add structured pilot error taxonomy.
+
+## 4. Pilot Execution (Validation-by-Usage)
+
+- [ ] 4.1 Stand up reproducible pilot environment.
+- [ ] 4.2 Execute scripted command/view/verify workload with invariant checks.
+- [ ] 4.3 Classify findings into semantic bug/typechecker gap/lowering gap/ops gap.
+- [ ] 4.4 Convert validated findings into roadmap checkboxes.
+- [ ] 4.5 Publish pilot findings report.
+
+## 5. Productization Minimum (forced by pilot only)
+
+- [ ] 5.1 Add stable bundle registry protocol doc + reference contract.
+- [ ] 5.2 Add tenant->bundle binding lifecycle semantics (idempotent).
+- [ ] 5.3 Add migration/verification operator command set for cutovers.
+- [ ] 5.4 Add compatibility matrix: bundle x runtime x adapter.
+
+## 6. Phase Exit and Freeze Decision
+
+- [ ] 6.1 Add objective Phase 3 exit checklist and pass/fail criteria.
+- [ ] 6.2 Run full exit suite and publish evidence bundle.
+- [ ] 6.3 Record decision commit: freeze core (v1.x) or open exactly one research axis.
