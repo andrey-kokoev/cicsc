@@ -39,19 +39,18 @@ def reducerLiteralStatesValid (ts : TypeSpec) : Prop :=
       | _ => True
 
 def reducerOpsTypecheck (ts : TypeSpec) : Prop :=
-  match mkStateEnv ts with
+  match stateTypeEnv ts with
   | none => False
   | some Γstate =>
-      ts.reducer.all (fun kv => kv.snd.all (checkReducerOp Γstate)) = true
+      ∀ evt ops, (evt, ops) ∈ ts.reducer →
+        ∀ op ∈ ops, checkReducerOp Γstate op = true
 
 def commandsTypecheck (ts : TypeSpec) : Prop :=
-  match mkStateEnv ts with
+  match stateTypeEnv ts with
   | none => False
   | some Γstate =>
-      ts.commands.all (fun kv =>
-        match mkInputEnv kv.snd.input with
-        | none => false
-        | some Γinput => checkCommand (Γinput ++ Γstate) kv.snd) = true
+      ∀ name cmd, (name, cmd) ∈ ts.commands →
+        ∃ Γcmd, commandTypeEnv ts cmd = some Γcmd ∧ checkCommand Γcmd cmd = true
 
 def WFTypeSpec (ts : TypeSpec) : Prop :=
   initialStateInStates ts ∧
@@ -78,5 +77,46 @@ def WFIR (ir : IR) : Prop :=
   (∀ typeName ts, (typeName, ts) ∈ ir.types → WFTypeSpec ts) ∧
   constraintsReferenceExistingTypes ir ∧
   viewsReferenceExistingTypes ir
+
+theorem reducerOpsTypecheck_of_checkTypeSpec
+  (ts : TypeSpec)
+  (hcheck : checkTypeSpec ts = true) :
+  reducerOpsTypecheck ts := by
+  unfold checkTypeSpec at hcheck
+  split at hcheck
+  · contradiction
+  · cases hState : stateTypeEnv ts with
+    | none =>
+        simp [hState] at hcheck
+    | some Γstate =>
+        simp [hState] at hcheck
+        intro evt ops hmem op hop
+        have hpair : (ops.all (checkReducerOp Γstate)) = true :=
+          (List.all_eq_true.mp hcheck.2) (evt, ops) hmem
+        exact (List.all_eq_true.mp hpair) op hop
+
+theorem commandsTypecheck_of_checkTypeSpec
+  (ts : TypeSpec)
+  (hcheck : checkTypeSpec ts = true) :
+  commandsTypecheck ts := by
+  unfold checkTypeSpec at hcheck
+  split at hcheck
+  · contradiction
+  · cases hState : stateTypeEnv ts with
+    | none =>
+        simp [hState] at hcheck
+    | some Γstate =>
+        simp [hState] at hcheck
+        intro name cmd hmem
+        have hcmd :
+          (match commandTypeEnv ts cmd with
+          | none => false
+          | some Γcmd => checkCommand Γcmd cmd) = true :=
+          (List.all_eq_true.mp hcheck.1) (name, cmd) hmem
+        cases hΓ : commandTypeEnv ts cmd with
+        | none =>
+            simp [hΓ] at hcmd
+        | some Γcmd =>
+            exact ⟨Γcmd, hΓ, by simpa [hΓ] using hcmd⟩
 
 end Cicsc.Core
