@@ -218,7 +218,8 @@ v2 adds semantic coverage for:
 **Objective:** Executable conformance tests between Lean oracle and SQL backends
 
 #### 2.2.1 Test Generator
-- [ ] Define property-based test generator:
+- [x] Define property-based test generator:
+  - Added deterministic generator in `tests/conformance/random-query-generator.ts` for Query + SnapSet pairs over the supported subset.
   - Generate random Query + SnapSet pairs
   - Generate random IR schemas
   - Ensure generated queries are well-typed
