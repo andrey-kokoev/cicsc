@@ -102,7 +102,7 @@ Canonical evaluator policy (runtime alignment):
 #### 2.1 Prove TypeSpec Connection (Already Exists - Audit)
 - [x] `reducerOpsTypecheck_of_checkTypeSpec` exists (WF.lean:81)
 - [x] `commandsTypecheck_of_checkTypeSpec` exists (WF.lean:98)
-- [ ] Audit: Do these cover all of `WFTypeSpec`?
+- [x] Audit: Do these cover all of `WFTypeSpec`?
 
 #### 2.2 Prove Missing TypeSpec Properties
 - [ ] `checkTypeSpecNames ts = true → NoReservedCollisions ts`

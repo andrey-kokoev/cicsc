@@ -119,4 +119,11 @@ theorem commandsTypecheck_of_checkTypeSpec
         | some Γcmd =>
             exact ⟨Γcmd, hΓ, by simpa [hΓ] using hcmd⟩
 
+-- Coverage audit (v1.5/B.9):
+-- Existing bridge lemmas connect `checkTypeSpec = true` to:
+--   * `reducerOpsTypecheck ts`
+--   * `commandsTypecheck ts`
+-- Remaining `WFTypeSpec` conjuncts are bridged by dedicated lemmas added in
+-- subsequent checkboxes (B.10-B.15).
+
 end Cicsc.Core
