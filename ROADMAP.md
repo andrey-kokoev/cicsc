@@ -99,7 +99,7 @@
 - [x] Add adapter conformance checklist
 - [x] Add “how to build a vertical” guide
 - [x] Add migration cookbook
-- [ ] Add threat model
+- [x] Add threat model
 
 ## M. Stress Verticals (Design Validation)
 - [ ] Implement CRM vertical Spec (leads, stages, owners, SLAs)
