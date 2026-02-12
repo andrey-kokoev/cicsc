@@ -1,0 +1,79 @@
+{
+  "version": 0,
+  "entities": {
+    "Card": {
+      "id": "string",
+      "states": [
+        "backlog",
+        "in_progress",
+        "review",
+        "done"
+      ],
+      "initial": "backlog",
+      "attributes": {
+        "title": { "type": "string" },
+        "description": { "type": "string", "optional": true },
+        "owner_id": { "type": "string", "optional": true }
+      },
+      "shadows": {
+        "priority_i": { "type": "int" }
+      },
+      "commands": {
+        "create": {
+          "inputs": {
+            "title": { "type": "string" },
+            "description": { "type": "string", "optional": true }
+          },
+          "emit": [
+            {
+              "type": "card_created",
+              "payload": {
+                "title": { "var": { "input": { "field": "title" } } },
+                "description": { "var": { "input": { "field": "description" } } }
+              }
+            }
+          ]
+        },
+        "start_work": {
+          "when": { "state_is": "backlog" },
+          "emit": [{ "type": "work_started", "payload": {} }]
+        },
+        "send_to_review": {
+          "when": { "state_is": "in_progress" },
+          "emit": [{ "type": "review_started", "payload": {} }]
+        },
+        "finish": {
+          "when": { "state_is": "review" },
+          "emit": [{ "type": "card_completed", "payload": {} }]
+        }
+      },
+      "reducers": {
+        "card_created": [
+          { "set_attr": { "field": "title", "value": { "var": { "e_payload": { "path": "title" } } } } },
+          { "set_attr": { "field": "description", "value": { "var": { "e_payload": { "path": "description" } } } } },
+          { "set_shadow": { "field": "priority_i", "value": 0 } }
+        ],
+        "work_started": [
+          { "set_state": "in_progress" }
+        ],
+        "review_started": [
+          { "set_state": "review" }
+        ],
+        "card_completed": [
+          { "set_state": "done" }
+        ]
+      }
+    }
+  },
+  "views": {
+    "board": {
+      "kind": "lanes",
+      "on": "Card",
+      "lanes": {
+        "states": ["backlog", "in_progress", "review", "done"],
+        "order_by": { "field": "updated_ts", "dir": "desc" },
+        "limit": 100
+      }
+    }
+  }
+}

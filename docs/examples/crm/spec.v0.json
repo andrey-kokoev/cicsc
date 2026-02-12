@@ -1,0 +1,91 @@
+{
+  "version": 0,
+  "entities": {
+    "Lead": {
+      "id": "string",
+      "states": [
+        "new",
+        "qualified",
+        "proposal",
+        "won",
+        "lost"
+      ],
+      "initial": "new",
+      "attributes": {
+        "name": { "type": "string" },
+        "owner_id": { "type": "string", "optional": true },
+        "value_band": { "type": "enum", "values": ["small", "mid", "enterprise"] }
+      },
+      "shadows": {
+        "score_i": { "type": "int" }
+      },
+      "commands": {
+        "create": {
+          "inputs": {
+            "name": { "type": "string" },
+            "value_band": { "type": "enum", "values": ["small", "mid", "enterprise"] }
+          },
+          "emit": [
+            {
+              "type": "lead_created",
+              "payload": {
+                "name": { "var": { "input": { "field": "name" } } },
+                "value_band": { "var": { "input": { "field": "value_band" } } }
+              }
+            }
+          ]
+        },
+        "qualify": {
+          "when": { "state_is": "new" },
+          "emit": [{ "type": "lead_qualified", "payload": {} }]
+        },
+        "propose": {
+          "when": { "state_is": "qualified" },
+          "emit": [{ "type": "proposal_sent", "payload": {} }]
+        },
+        "close_won": {
+          "when": { "state_is": "proposal" },
+          "emit": [{ "type": "lead_won", "payload": {} }]
+        },
+        "close_lost": {
+          "when": { "state_is": "proposal" },
+          "emit": [{ "type": "lead_lost", "payload": {} }]
+        }
+      },
+      "reducers": {
+        "lead_created": [
+          { "set_attr": { "field": "name", "value": { "var": { "e_payload": { "path": "name" } } } } },
+          { "set_attr": { "field": "value_band", "value": { "var": { "e_payload": { "path": "value_band" } } } } },
+          { "set_shadow": { "field": "score_i", "value": 10 } }
+        ],
+        "lead_qualified": [
+          { "set_state": "qualified" },
+          { "set_shadow": { "field": "score_i", "value": 40 } }
+        ],
+        "proposal_sent": [
+          { "set_state": "proposal" },
+          { "set_shadow": { "field": "score_i", "value": 60 } }
+        ],
+        "lead_won": [
+          { "set_state": "won" },
+          { "set_shadow": { "field": "score_i", "value": 100 } }
+        ],
+        "lead_lost": [
+          { "set_state": "lost" },
+          { "set_shadow": { "field": "score_i", "value": 0 } }
+        ]
+      }
+    }
+  },
+  "views": {
+    "pipeline": {
+      "kind": "lanes",
+      "on": "Lead",
+      "lanes": {
+        "states": ["new", "qualified", "proposal", "won", "lost"],
+        "order_by": { "field": "updated_ts", "dir": "desc" },
+        "limit": 150
+      }
+    }
+  }
+}

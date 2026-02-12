@@ -50,7 +50,7 @@
 - [x] Implement sugar for views (lanes, ordering, limits)
 - [x] Implement Spec → IR lowering (non-trivial compiler)
 - [x] Add Spec-level typechecking + error reporting (before IR typecheck)
-- [ ] Add Spec examples for Kanban, Ticketing, CRM
+- [x] Add Spec examples for Kanban, Ticketing, CRM
 - [ ] Add Spec linter (detect anti-patterns, unreachable states, dead commands)
 
 ## G. Migrations & Constructive Invariance (CIS → CICSC)
