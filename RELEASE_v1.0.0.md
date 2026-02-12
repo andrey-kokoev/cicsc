@@ -14,3 +14,12 @@ This release marks completion of the roadmap through validation, formalization, 
 ## Tag
 
 `v1.0.0`
+
+## v1.5 Coherency Closure Addendum
+
+Post-v1.0.0 Lean kernel coherency closure completed:
+- Canonical constraint evaluator surface unified on `holdsConstraint`
+- Executable checker soundness bridged (`checkTypeSpec -> WFTypeSpec`, `checkIR -> WFIR`)
+- Replay WF preservation theorems shifted to `WFTypeSpec` assumptions
+- Declarative `HasType` restored with algorithmic soundness bridge
+- Versioning and naming clarified (Lean-kernel milestone vs IR schema version)

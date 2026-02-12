@@ -331,6 +331,7 @@ When v1.5 is complete:
 - [ ] Update README (if exists) with v1.5 status
 - [ ] Add migration guide for users updating from v1 to v1.5
 - [ ] Update AGENTS.md to reference Lean kernel v1.5 as "coherency complete"
+- [x] Add release note entry summarizing v1.5 coherence completion
 
 ## Acceptance Theorem Index
 
