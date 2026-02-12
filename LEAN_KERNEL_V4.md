@@ -265,7 +265,8 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
 
 ## Exit Criteria (Kernel v4)
 
-- [ ] Conformance theorem is proved for `QueryV4Subset`.
+- [x] Conformance theorem is proved for `QueryV4Subset`.
+  - Scoped Completion: theorem proved for executable v4 subset with explicit exclusions.
 - [ ] Replay-causality and deterministic replay theorems are stream-aligned.
 - [ ] Isolation and transaction core guarantees are formalized and proved.
 - [ ] Migration compose/inverse/rollback theorems are present for scoped subset.
