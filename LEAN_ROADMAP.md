@@ -30,5 +30,5 @@
 
 ## G. Examples and Closure
 - [x] Add Ticketing example in `Examples/Ticketing.lean`
-- [ ] Add Kanban example in `Examples/Kanban.lean`
+- [x] Add Kanban example in `Examples/Kanban.lean`
 - [ ] Add Lean kernel acceptance checklist document (maps to v0 acceptance criteria)
