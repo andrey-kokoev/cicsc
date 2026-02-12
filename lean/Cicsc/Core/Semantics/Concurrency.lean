@@ -17,4 +17,26 @@ theorem happensBefore_irrefl (e : Event) : ¬ happensBefore e e := by
 theorem sameStream_refl (e : Event) : sameStream e e := by
   simp [sameStream]
 
+theorem sameStream_symm (e1 e2 : Event) : sameStream e1 e2 → sameStream e2 e1 := by
+  intro h
+  rcases h with ⟨h1, h2, h3⟩
+  exact ⟨h1.symm, h2.symm, h3.symm⟩
+
+theorem sameStream_trans (e1 e2 e3 : Event) :
+  sameStream e1 e2 → sameStream e2 e3 → sameStream e1 e3 := by
+  intro h12 h23
+  rcases h12 with ⟨h12a, h12b, h12c⟩
+  rcases h23 with ⟨h23a, h23b, h23c⟩
+  exact ⟨h12a.trans h23a, h12b.trans h23b, h12c.trans h23c⟩
+
+theorem happensBefore_trans (e1 e2 e3 : Event) :
+  happensBefore e1 e2 → happensBefore e2 e3 → happensBefore e1 e3 := by
+  intro h12 h23
+  refine ⟨sameStream_trans e1 e2 e3 h12.1 h23.1, Nat.lt_trans h12.2 h23.2⟩
+
+theorem happensBefore_asymm (e1 e2 : Event) :
+  happensBefore e1 e2 → ¬ happensBefore e2 e1 := by
+  intro h12 h21
+  exact Nat.lt_asymm h12.2 h21.2
+
 end Cicsc.Core
