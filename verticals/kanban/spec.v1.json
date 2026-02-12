@@ -1,0 +1,88 @@
+{
+  "version": 0,
+  "policies": {
+    "can_move_card": {
+      "params": ["actor"],
+      "allow": { "role_is": "manager" }
+    }
+  },
+  "entities": {
+    "Card": {
+      "id": "string",
+      "states": ["backlog", "in_progress", "review", "done"],
+      "initial": "backlog",
+      "attributes": {
+        "title": { "type": "string" },
+        "swimlane": { "type": "string", "optional": true },
+        "owner_id": { "type": "string", "optional": true }
+      },
+      "shadows": {
+        "wip_bucket_i": { "type": "int" }
+      },
+      "commands": {
+        "create": {
+          "inputs": { "title": { "type": "string" }, "swimlane": { "type": "string", "optional": true } },
+          "emit": [{ "type": "created", "payload": { "title": { "var": { "input": { "field": "title" } } }, "swimlane": { "var": { "input": { "field": "swimlane" } } } } }]
+        },
+        "start": {
+          "when": { "state_is": "backlog" },
+          "auth": { "policy": "can_move_card" },
+          "emit": [{ "type": "started", "payload": {} }]
+        },
+        "review": {
+          "when": { "state_is": "in_progress" },
+          "auth": { "policy": "can_move_card" },
+          "emit": [{ "type": "moved_to_review", "payload": {} }]
+        },
+        "done": {
+          "when": { "state_is": "review" },
+          "auth": { "policy": "can_move_card" },
+          "emit": [{ "type": "completed", "payload": {} }]
+        }
+      },
+      "reducers": {
+        "created": [
+          { "set_attr": { "field": "title", "value": { "var": { "e_payload": { "path": "title" } } } } },
+          { "set_attr": { "field": "swimlane", "value": { "var": { "e_payload": { "path": "swimlane" } } } } },
+          { "set_shadow": { "field": "wip_bucket_i", "value": 0 } }
+        ],
+        "started": [{ "set_state": "in_progress" }],
+        "moved_to_review": [{ "set_state": "review" }],
+        "completed": [{ "set_state": "done" }]
+      }
+    }
+  },
+  "constraints": {
+    "wip_in_progress_limit": {
+      "kind": "bool_query",
+      "entity": "Card",
+      "args": { "limit_i": { "type": "int" } },
+      "query": {
+        "source": { "snap": { "type": "Card" } },
+        "pipeline": [
+          { "filter": { "eq": [{ "var": { "row": { "field": "state" } } }, { "lit": { "string": "in_progress" } }] } }
+        ]
+      },
+      "assert": {
+        "le": [{ "var": { "rows_count": true } }, { "var": { "arg": { "name": "limit_i" } } }]
+      }
+    }
+  },
+  "views": {
+    "board": {
+      "kind": "lanes",
+      "on": "Card",
+      "row_policy": {
+        "or": [
+          { "eq": [{ "var": { "row": { "field": "owner_id" } } }, { "var": { "actor": true } }] },
+          { "call": { "fn": "has_role", "args": [{ "var": { "actor": true } }, { "lit": { "string": "manager" } }] } }
+        ]
+      },
+      "lanes": {
+        "states": ["backlog", "in_progress", "review", "done"],
+        "order_by": { "field": "updated_ts", "dir": "desc" },
+        "limit": 500
+      }
+    }
+  }
+}
