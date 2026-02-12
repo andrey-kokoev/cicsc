@@ -107,7 +107,7 @@ Canonical evaluator policy (runtime alignment):
 #### 2.2 Prove Missing TypeSpec Properties
 - [x] `checkTypeSpecNames ts = true → NoReservedCollisions ts`
 - [x] `checkTypeSpecNames ts = true → NoDuplicateFieldNames ts`
-- [ ] `checkTypeSpec ts = true → initialStateInStates ts`
+- [x] `checkTypeSpec ts = true → initialStateInStates ts`
 - [ ] `checkTypeSpec ts = true → reducerTargetsDeclared ts`
 - [ ] `checkTypeSpec ts = true → reducerLiteralStatesValid ts`
 

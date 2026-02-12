@@ -134,6 +134,16 @@ theorem noDuplicateFieldNames_of_checkTypeSpecNames
   simp [NoDuplicateFieldNames] at hnames
   exact ⟨hnames.3.1, hnames.3.2⟩
 
+theorem initialStateInStates_of_checkTypeSpec
+  (ts : TypeSpec)
+  (hcheck : checkTypeSpec ts = true) :
+  initialStateInStates ts := by
+  unfold checkTypeSpec at hcheck
+  split at hcheck
+  · contradiction
+  · simp [initialStateInStates, checkInitialStateDeclared] at hcheck
+    exact hcheck.1
+
 -- Coverage audit (v1.5/B.9):
 -- Existing bridge lemmas connect `checkTypeSpec = true` to:
 --   * `reducerOpsTypecheck ts`

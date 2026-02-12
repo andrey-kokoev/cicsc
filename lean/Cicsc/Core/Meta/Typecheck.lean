@@ -195,8 +195,11 @@ def checkTypeSpecNames (ts : TypeSpec) : Bool :=
   !hasDuplicateAttrNames ts &&
   !hasDuplicateShadowNames ts
 
+def checkInitialStateDeclared (ts : TypeSpec) : Bool :=
+  ts.states.contains ts.initialState
+
 def checkTypeSpec (ts : TypeSpec) : Bool :=
-  if !checkTypeSpecNames ts then
+  if !checkTypeSpecNames ts || !checkInitialStateDeclared ts then
     false
   else
     match stateTypeEnv ts with
