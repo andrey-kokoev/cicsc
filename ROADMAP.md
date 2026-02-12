@@ -154,7 +154,7 @@
 
 - [x] Cut v1.0.0 release tag
 - [x] Define semantic versioning policy for Spec, IR, runtime, kernel
-- [ ] Define deprecation policy for Spec constructs
+- [x] Define deprecation policy for Spec constructs
 - [ ] Freeze Core IR v1 grammar
 - [ ] Add long-term support (LTS) branch
 - [ ] Define contribution and review process for semantic changes
