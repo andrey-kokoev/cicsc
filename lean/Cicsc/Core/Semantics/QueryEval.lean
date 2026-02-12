@@ -107,14 +107,30 @@ def evalQuerySubset (q : Query) (snaps : SnapSet) : List QueryRow :=
 def evalQuery (_ir : IR) (q : Query) (snaps : SnapSet) : List QueryRow :=
   evalQuerySubset q snaps
 
+def evalQueryOpsOracle : List QueryOp → List QueryRow → List QueryRow
+  | [], rows => rows
+  | op :: ops, rows => evalQueryOpsOracle ops (applyQueryOpSubset op rows)
+
 def oracleQueryEvalSubset (q : Query) (snaps : SnapSet) : List QueryRow :=
-  q.pipeline.foldl (fun acc op => applyQueryOpSubset op acc) (evalSourceSubset q.source snaps)
+  evalQueryOpsOracle q.pipeline (evalSourceSubset q.source snaps)
+
+theorem evalQueryOpsOracle_eq_foldl
+  (ops : List QueryOp)
+  (rows : List QueryRow) :
+  evalQueryOpsOracle ops rows =
+    ops.foldl (fun acc op => applyQueryOpSubset op acc) rows := by
+  induction ops generalizing rows with
+  | nil =>
+      simp [evalQueryOpsOracle]
+  | cons op ops ih =>
+      simp [evalQueryOpsOracle, ih]
 
 theorem oracleQueryEvalSubset_eq_relational
   (q : Query)
   (snaps : SnapSet)
-  (hsupported : supportsQuerySubset q = true) :
+  (_hsupported : supportsQuerySubset q = true) :
   oracleQueryEvalSubset q snaps = evalQuerySubset q snaps := by
-  rfl
+  unfold oracleQueryEvalSubset evalQuerySubset
+  simpa using evalQueryOpsOracle_eq_foldl q.pipeline (evalSourceSubset q.source snaps)
 
 end Cicsc.Core
