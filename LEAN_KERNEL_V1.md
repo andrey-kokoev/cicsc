@@ -180,7 +180,7 @@ Acceptance: bool_query constraints depend on actual query evaluation for the sup
 
 Lean Kernel v1 is complete when all are true:
 
-- [ ] Evolution uses the same replay semantics as Core (StreamId filtering)
+- [x] Evolution uses the same replay semantics as Core (StreamId filtering)
 - [ ] Reducer env exposes `.row` and `"state"` consistently across all contexts
 - [ ] Typechecker and evaluator agree on the v1 Expr fragment (including `.get`)
 - [ ] WF(IR) predicates exist and are used as assumptions for theorems
