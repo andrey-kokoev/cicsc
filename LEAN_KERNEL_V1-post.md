@@ -174,7 +174,7 @@ Canonical evaluator policy (runtime alignment):
   - May require strengthening `reducerOpsTypecheck` to track state reachability
 
 #### 4.3 Update Replay Theorems
-- [ ] Remove `ReducerPreservesWF` hypothesis from theorems
+- [x] Remove `ReducerPreservesWF` hypothesis from theorems
 - [ ] Replace with `WFTypeSpec` assumption
 - [ ] Update Examples to use unconditional theorems
 

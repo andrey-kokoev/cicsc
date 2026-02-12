@@ -140,11 +140,12 @@ theorem replayTotalIfTypeExists
 
 theorem applyReducerPreservesWellFormed
   (ts : TypeSpec)
-  (hpres : ReducerPreservesWF ts)
+  (hWf : WFTypeSpec ts)
   (st : State)
   (e : Event)
   (hwf : WellFormedState ts st) :
   WellFormedState ts (applyReducer ts st e) := by
+  let hpres := reducerPreservesWF_of_WFTypeSpec ts hWf
   exact hpres st e hwf
 
 theorem replayDeterministic (ir : IR) (sid : StreamId) (h : History) :
@@ -160,10 +161,11 @@ theorem initialStateWellFormedOfWFTypeSpec
 
 theorem replayFoldPreservesWellFormed
   (ts : TypeSpec)
-  (hpres : ReducerPreservesWF ts) :
+  (hWf : WFTypeSpec ts) :
   ∀ (events : List Event) (st : State),
     WellFormedState ts st →
     WellFormedState ts (events.foldl (fun acc e => applyReducer ts acc e) st) := by
+  let hpres := reducerPreservesWF_of_WFTypeSpec ts hWf
   intro events
   induction events with
   | nil =>
@@ -180,7 +182,7 @@ theorem replayPreservesWellFormedIfTypeExists
   (h : History)
   (ts : TypeSpec)
   (hlookup : lookupTypeSpec ir sid.entityType = some ts)
-  (hpres : ReducerPreservesWF ts)
+  (hWf : WFTypeSpec ts)
   (hinit : WellFormedState ts (initialState ts)) :
   ∃ st, replay ir sid h = some st ∧ WellFormedState ts st := by
   unfold replay
@@ -189,6 +191,6 @@ theorem replayPreservesWellFormedIfTypeExists
   refine ⟨stream.foldl (fun acc e => applyReducer ts acc e) (initialState ts), ?_⟩
   constructor
   · rfl
-  · exact replayFoldPreservesWellFormed ts hpres stream (initialState ts) hinit
+  · exact replayFoldPreservesWellFormed ts hWf stream (initialState ts) hinit
 
 end Cicsc.Core
