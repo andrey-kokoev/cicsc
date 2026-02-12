@@ -53,6 +53,25 @@ def StepCommutes
     step irFrom sid s e = some s' →
     stepMigrated irTo sid ms (migrateState ms s) e = some (migrateState ms s')
 
+def ReducerCompatibility
+  (irFrom irTo : IR)
+  (sid : StreamId)
+  (ms : MigrationSpec) : Prop :=
+  ∀ (s : State) (e : Event),
+    stepMigrated irTo sid ms (migrateState ms s) e =
+      Option.map (migrateState ms) (step irFrom sid s e)
+
+theorem stepCommutes_ofReducerCompatibility
+  (irFrom irTo : IR)
+  (sid : StreamId)
+  (ms : MigrationSpec)
+  (hcompat : ReducerCompatibility irFrom irTo sid ms) :
+  StepCommutes irFrom irTo sid ms := by
+  intro s s' e hstep
+  have hcompat' := hcompat s e
+  simp [hstep] at hcompat'
+  exact hcompat'
+
 theorem step_total_of_lookup
   (ir : IR)
   (sid : StreamId)
@@ -76,7 +95,7 @@ structure RestrictedMigrationClass
   appliesToType : sid.entityType = ms.entityType
   noPayload : NoPayloadTransforms ms
   stateRenameOnly : StateLabelRenamesOnly ms
-  stepCommutes : StepCommutes irFrom irTo sid ms
+  reducerCompatibility : ReducerCompatibility irFrom irTo sid ms
 
 theorem replay_commutes
   (irFrom irTo : IR)
@@ -84,10 +103,12 @@ theorem replay_commutes
   (ms : MigrationSpec)
   (hWf : WFMigration ms irFrom irTo)
   (happlies : sid.entityType = ms.entityType)
-  (hstep : StepCommutes irFrom irTo sid ms) :
+  (hcompat : ReducerCompatibility irFrom irTo sid ms) :
   ∀ (h : History) (s0 : State), Commutes irFrom irTo sid ms s0 h := by
   have hsrc : ∃ ts, lookupTypeSpec irFrom sid.entityType = some ts := by
     simpa [happlies] using wfMigration_sourceTypeExists ms irFrom irTo hWf
+  have hstep : StepCommutes irFrom irTo sid ms :=
+    stepCommutes_ofReducerCompatibility irFrom irTo sid ms hcompat
   intro h
   induction h with
   | nil =>
@@ -110,6 +131,6 @@ theorem replay_commutes_restricted
   (ms : MigrationSpec)
   (hclass : RestrictedMigrationClass irFrom irTo sid ms) :
   ∀ (h : History) (s0 : State), Commutes irFrom irTo sid ms s0 h := by
-  exact replay_commutes irFrom irTo sid ms hclass.wf hclass.appliesToType hclass.stepCommutes
+  exact replay_commutes irFrom irTo sid ms hclass.wf hclass.appliesToType hclass.reducerCompatibility
 
 end Cicsc.Evolution

@@ -136,7 +136,7 @@ v1 migration class is restricted to:
   - [x] mapped target states exist in irTo
 
 ### 5.2 Proof obligations
-- [ ] Prove `StepCommutes` for the restricted class without taking it as hypothesis
+- [x] Prove `StepCommutes` for the restricted class without taking it as hypothesis
   - derive it from WFMigration + reducer compatibility conditions
 - [ ] Prove `replay_commutes` using StreamId-based replay semantics
 - [ ] Add an end-to-end example:

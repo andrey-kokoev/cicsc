@@ -97,6 +97,12 @@ theorem ticket_v0_v1_non_identity_commutes_on_sample_from_restricted
   exact replay_commutes_restricted
     ticketIr ticketIrV1 ticketStream ticketMigrationV0V1 hclass ticketHistory ticketInitialV0
 
+theorem ticket_v0_v1_commutes_all_histories_from_restricted
+  (hclass : RestrictedMigrationClass ticketIr ticketIrV1 ticketStream ticketMigrationV0V1) :
+  ∀ (h : History) (s0 : State),
+    Commutes ticketIr ticketIrV1 ticketStream ticketMigrationV0V1 s0 h := by
+  exact replay_commutes_restricted ticketIr ticketIrV1 ticketStream ticketMigrationV0V1 hclass
+
 theorem ticket_v0_v1_non_identity_commutes_on_sample_by_computation :
   Commutes ticketIr ticketIrV1 ticketStream ticketMigrationV0V1 ticketInitialV0 ticketHistory := by
   decide
