@@ -22,13 +22,13 @@ Reach a state where:
 Reconcile documentation claims with proven behavior and current test signal.
 
 ### TODOs
-- [ ] P4.1.1 Audit `ROADMAP.md`, `LEAN_KERNEL_*`, `PHASE3_FIELD_HARDENING.md`, and status docs for claim drift.
-- [ ] P4.1.2 Introduce “Proved / Scoped / Deferred” status labels in normative docs.
-- [ ] P4.1.3 Add a single source-of-truth theorem index doc.
-- [ ] P4.1.4 Remove or reword any claim that exceeds proved scope.
+- [x] P4.1.1 Audit `ROADMAP.md`, `LEAN_KERNEL_*`, `PHASE3_FIELD_HARDENING.md`, and status docs for claim drift.
+- [x] P4.1.2 Introduce “Proved / Scoped / Deferred” status labels in normative docs.
+- [x] P4.1.3 Add a single source-of-truth theorem index doc.
+- [x] P4.1.4 Remove or reword any claim that exceeds proved scope.
 
 ### Acceptance
-- [ ] No normative doc claims stronger guarantees than theorem/test evidence supports.
+- [x] No normative doc claims stronger guarantees than theorem/test evidence supports.
 
 ---
 
@@ -38,15 +38,15 @@ Reconcile documentation claims with proven behavior and current test signal.
 Move from smoke parity toward broad operator-level execution parity.
 
 ### TODOs
-- [ ] P4.2.1 Keep current smoke + random differential tests as mandatory gate.
+- [x] P4.2.1 Keep current smoke + random differential tests as mandatory gate.
 - [ ] P4.2.2 Expand generated differential matrix to include join/group/having/subquery scenarios.
-- [ ] P4.2.3 Add deterministic seed replay artifact on test failure.
+- [x] P4.2.3 Add deterministic seed replay artifact on test failure.
 - [ ] P4.2.4 Promote full sqlite execution-vs-oracle matrix from backlog to tracked closure plan.
-- [ ] P4.2.5 Add operator coverage report for conformance suites.
+- [x] P4.2.5 Add operator coverage report for conformance suites.
 
 ### Acceptance
 - [ ] CI fails on any regression in required conformance suites.
-- [ ] Coverage report shows gap areas explicitly.
+- [x] Coverage report shows gap areas explicitly.
 
 ---
 
@@ -56,10 +56,10 @@ Move from smoke parity toward broad operator-level execution parity.
 Make multi-user execution semantics explicit and testable.
 
 ### TODOs
-- [ ] P4.3.1 Connect `isCausal` with replay behavior via executable tests/theorems.
-- [ ] P4.3.2 Add transaction model tests for atomicity across multiple streams.
-- [ ] P4.3.3 Add write-write conflict tests and expected abort outcomes.
-- [ ] P4.3.4 Add deterministic replay tests under causally-equivalent history permutations.
+- [x] P4.3.1 Connect `isCausal` with replay behavior via executable tests/theorems.
+- [x] P4.3.2 Add transaction model tests for atomicity across multiple streams.
+- [x] P4.3.3 Add write-write conflict tests and expected abort outcomes.
+- [x] P4.3.4 Add deterministic replay tests under causally-equivalent history permutations.
 - [ ] P4.3.5 Document supported isolation guarantees and excluded scenarios.
 
 ### Acceptance
@@ -73,11 +73,11 @@ Make multi-user execution semantics explicit and testable.
 Establish migration operations that are safe, auditable, and replay-verified.
 
 ### TODOs
-- [ ] P4.4.1 Add migration composition test/proof suite (multi-step chains).
-- [ ] P4.4.2 Add reversible migration path tests for supported subset.
-- [ ] P4.4.3 Define and enforce `SafeMigration` checklist at build time.
+- [x] P4.4.1 Add migration composition test/proof suite (multi-step chains).
+- [x] P4.4.2 Add reversible migration path tests for supported subset.
+- [x] P4.4.3 Define and enforce `SafeMigration` checklist at build time.
 - [ ] P4.4.4 Add operator runbook for rollback/cutover with preconditions.
-- [ ] P4.4.5 Add “unsafe pattern” detection and explicit rejection messaging.
+- [x] P4.4.5 Add “unsafe pattern” detection and explicit rejection messaging.
 
 ### Acceptance
 - [ ] Migration workflows have deterministic pass/fail criteria.
@@ -140,3 +140,13 @@ Prevent premature phase transitions.
 - [ ] Concurrency and migration guarantees are operationally usable, not only conceptual.
 - [ ] At least one vertical deployment provides empirical validation and backlog forcing function.
 - [ ] Governance rules prevent unchecked claim inflation in future phases.
+
+## Current Evidence
+
+- `P4.1`: `docs/spec/truth-audit-v1.md`, `LEAN_KERNEL_V4.md` theorem index section.
+- `P4.2`: `tests/conformance/random-oracle-harness.ts`,
+  `tests/conformance/sqlite-random-vs-oracle.test.ts`,
+  `tests/conformance/operator-coverage-report.ts`.
+- `P4.3`: `tests/concurrency/causality-replay.test.ts`,
+  `tests/concurrency/transaction-model.test.ts`.
+- `P4.4`: `tests/conformance/migration-composition.test.ts`.
