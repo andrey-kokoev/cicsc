@@ -279,6 +279,52 @@ def applyGroupByWithAggs (keys : List GroupKey) (aggs : List (String × AggExpr)
     let aggFields := aggs.map (fun (name, agg) => (name, evalAggregate agg grp))
     keyFields ++ aggFields)
 
+-- v2: Query evaluation order
+-- See LEAN_KERNEL_V2.md §1.2.2 checkpoint 2
+
+-- Canonical GROUP BY query evaluation order:
+-- 1. GROUP BY (partition rows)
+-- 2. Aggregation (compute aggregate values)
+-- 3. HAVING (filter aggregated results)
+-- 4. Projection (select columns)
+-- 5. ORDER BY (sort results)
+-- 6. LIMIT/OFFSET (pagination)
+
+-- Helper: Extract canonical GROUP BY query pattern
+structure GroupByQuery where
+  groupKeys : List GroupKey
+  aggs : List (String × AggExpr)
+  havingExpr : Option Expr := none
+  projectFields : Option (List ProjectField) := none
+deriving Repr, DecidableEq
+
+-- Evaluate GROUP BY query with canonical ordering
+def evalGroupByQuery (gbq : GroupByQuery) (rows : List QueryRow) : List QueryRow :=
+  -- Step 1 & 2: GROUP BY + aggregation
+  let aggregated := applyGroupByWithAggs gbq.groupKeys gbq.aggs rows
+  -- Step 3: HAVING (filter aggregated results)
+  let filtered := match gbq.havingExpr with
+    | none => aggregated
+    | some e => aggregated.filter (fun r => evalFilterExpr r e)
+  -- Step 4: Projection (if specified)
+  match gbq.projectFields with
+  | none => filtered
+  | some fields => filtered.map (fun r => evalProject r fields)
+
+-- Theorem: Evaluation order is GROUP BY → AGG → HAVING → PROJECT
+theorem evalGroupByQuery_order
+  (gbq : GroupByQuery)
+  (rows : List QueryRow) :
+  evalGroupByQuery gbq rows =
+    (let step1_2 := applyGroupByWithAggs gbq.groupKeys gbq.aggs rows
+     let step3 := match gbq.havingExpr with
+       | none => step1_2
+       | some e => step1_2.filter (fun r => evalFilterExpr r e)
+     match gbq.projectFields with
+     | none => step3
+     | some fields => step3.map (fun r => evalProject r fields)) := by
+  rfl  -- Definitional equality
+
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .project fields, rows => rows.map (fun r => evalProject r fields)
