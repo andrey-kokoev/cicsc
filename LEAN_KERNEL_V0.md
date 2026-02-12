@@ -162,6 +162,10 @@ Well-formedness predicate:
 - non-dropped target reducer existence in `irTo`
 - `stateMap` target state validity in `irTo`
 
+Optional strict contract (for total-on-type evolution):
+- `WFMigrationStrict ms irFrom irTo := WFMigration ... ∧ TotalOnTypeCoverage ...`
+- requires every source reducer event type to be explicitly mapped or dropped
+
 ### Theorem E — Naturality / Commutation
 Prove (history induction):
 - `replay_commutes : WFMigration ... → (sid.entityType = ms.entityType) → StepCommutes ... → ∀ h s0, Commutes ... s0 h`
