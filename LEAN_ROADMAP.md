@@ -38,4 +38,4 @@
 - [x] Add `WFMigration` predicate with coverage/target/state validity checks
 - [x] Replace naturality tautology with real theorem statement (`replay_commutes`)
 - [x] Prove `replay_commutes` by induction on `History`
-- [ ] Add non-identity Ticketing v0→v1 migration example proof (event + state rename)
+- [x] Add non-identity Ticketing v0→v1 migration example proof (event + state rename)
