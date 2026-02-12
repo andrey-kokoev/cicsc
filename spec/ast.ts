@@ -32,6 +32,7 @@ export type SpecShadowV0 = {
 export type SpecCommandV0 = {
   inputs?: Record<string, SpecAttrV0>
   when?: any
+  auth?: { cmdref?: string; policy?: string }
   emit: Array<{ type: string; payload?: Record<string, any> }>
 }
 

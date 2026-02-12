@@ -10,7 +10,7 @@ export function compileSpecV0ToCoreIr (spec: SpecV0): CoreIrV0 {
       initial_state: e.initial,
       attrs: e.attributes ?? {},
       shadows: e.shadows ?? {},
-      commands: mapCommands(e.commands ?? {}),
+      commands: mapCommands(e.commands ?? {}, name),
       reducer: mapReducers(e.reducers ?? {}),
     } as any
   }
@@ -30,12 +30,16 @@ export function compileSpecV0ToCoreIr (spec: SpecV0): CoreIrV0 {
   }
 }
 
-function mapCommands (commands: Record<string, any>) {
+function mapCommands (commands: Record<string, any>, entityName: string) {
   const out: Record<string, any> = {}
   for (const [name, c] of Object.entries(commands)) {
+    const baseGuard = lowerGuard((c as any).when)
+    const authGuard = lowerAuthGuard((c as any).auth, entityName, name)
+    const guardExpr = authGuard ? { and: [baseGuard, authGuard] } : baseGuard
+
     out[name] = {
       input: c.inputs ?? {},
-      guard: { expr: lowerGuard(c.when) },
+      guard: { expr: guardExpr },
       emits: (c.emit ?? []).map((x: any) => ({
         event_type: String(x.type),
         payload: x.payload ?? {},
@@ -43,6 +47,17 @@ function mapCommands (commands: Record<string, any>) {
     }
   }
   return out
+}
+
+function lowerAuthGuard (auth: any, entityName: string, commandName: string): any | null {
+  if (!auth || typeof auth !== "object" || Array.isArray(auth)) return null
+  const cmdref = String(auth.cmdref ?? auth.policy ?? `${entityName}.${commandName}`)
+  return {
+    call: {
+      fn: "auth_ok",
+      args: [{ var: { actor: true } }, { lit: { string: cmdref } }],
+    },
+  }
 }
 
 function lowerGuard (when: any): any {
