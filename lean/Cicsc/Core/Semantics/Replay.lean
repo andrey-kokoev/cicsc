@@ -59,6 +59,12 @@ def replay (ir : IR) (typeName : String) (h : History) : Option State :=
       let stream := h.filter (fun e => e.entityType = typeName)
       some (stream.foldl (fun acc e => applyReducer ts acc e) (initialState ts))
 
+def WellFormedState (ts : TypeSpec) (st : State) : Prop :=
+  st.st ∈ ts.states
+
+def ReducerPreservesWF (ts : TypeSpec) : Prop :=
+  ∀ (st : State) (e : Event), WellFormedState ts st → WellFormedState ts (applyReducer ts st e)
+
 theorem replayTotalIfTypeExists
   (ir : IR) (typeName : String) (h : History)
   (hex : ∃ ts, lookupTypeSpec ir typeName = some ts) :
@@ -66,5 +72,14 @@ theorem replayTotalIfTypeExists
   rcases hex with ⟨ts, hts⟩
   unfold replay
   simp [lookupTypeSpec, hts]
+
+theorem applyReducerPreservesWellFormed
+  (ts : TypeSpec)
+  (hpres : ReducerPreservesWF ts)
+  (st : State)
+  (e : Event)
+  (hwf : WellFormedState ts st) :
+  WellFormedState ts (applyReducer ts st e) := by
+  exact hpres st e hwf
 
 end Cicsc.Core

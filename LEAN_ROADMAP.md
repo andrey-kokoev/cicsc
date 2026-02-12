@@ -22,7 +22,7 @@
 ## E. Proof Milestone v0
 - [x] Prove expression evaluation determinism theorem
 - [x] Prove replay totality theorem
-- [ ] Prove reducer well-formedness preservation theorem
+- [x] Prove reducer well-formedness preservation theorem
 
 ## F. Migration Formalization
 - [ ] Define migration primitives in `Evolution/Migration.lean`
