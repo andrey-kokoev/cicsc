@@ -85,6 +85,14 @@ def lookupSnapRows (snaps : SnapSet) (typeName : TypeName) : List State :=
   | some kv => kv.snd
   | none => []
 
+theorem lookupSnapRows_cons_ne
+  (snaps : SnapSet)
+  (typeName otherType : TypeName)
+  (rows : List State)
+  (hne : otherType ≠ typeName) :
+  lookupSnapRows ((otherType, rows) :: snaps) typeName = lookupSnapRows snaps typeName := by
+  simp [lookupSnapRows, hne]
+
 def evalSourceSubset (src : Source) (snaps : SnapSet) : List QueryRow :=
   match src with
   | .snap typeName => (lookupSnapRows snaps typeName).map mkRow

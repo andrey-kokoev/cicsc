@@ -119,6 +119,20 @@ theorem holdsConstraint_boolQuery_decompose
     evalBoolQueryConstraintSubset ir (.boolQuery onType q assertExpr) snaps := by
   simp [holdsConstraint]
 
+theorem holdsConstraint_boolQuery_irrelevantOutOfScopeSnapEntry
+  (ir : IR)
+  (onType otherType : TypeName)
+  (q : Query)
+  (assertExpr : Expr)
+  (st : State)
+  (snaps : SnapSet)
+  (rows : List State)
+  (hsrc : q.source = .snap onType)
+  (hne : otherType ≠ onType) :
+  holdsConstraint ir (.boolQuery onType q assertExpr) st ((otherType, rows) :: snaps) =
+    holdsConstraint ir (.boolQuery onType q assertExpr) st snaps := by
+  simp [holdsConstraint, evalBoolQueryConstraintSubset, hsrc, lookupSnapRows_cons_ne, hne]
+
 theorem holdsAllKernelConstraints_onlySnapshot
   (cs : List (String × Constraint))
   (st : State) :
