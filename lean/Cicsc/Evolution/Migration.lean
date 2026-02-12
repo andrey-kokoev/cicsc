@@ -149,4 +149,28 @@ def composeMigrations (m1 m2 : MigrationSpec) : MigrationSpec := {
   stateMap := m1.stateMap.map (composeStateMapEntry m2)
 }
 
+def ComposeAssocCompatible (m1 m2 m3 : MigrationSpec) : Prop :=
+  (m1.transforms.map (composeEventTransform m2)).map (composeEventTransform m3) =
+    m1.transforms.map (composeEventTransform (composeMigrations m2 m3)) ∧
+  (m1.stateMap.map (composeStateMapEntry m2)).map (composeStateMapEntry m3) =
+    m1.stateMap.map (composeStateMapEntry (composeMigrations m2 m3))
+
+theorem composeMigrations_assoc_of_compatible
+  (m1 m2 m3 : MigrationSpec)
+  (hcompat : ComposeAssocCompatible m1 m2 m3)
+  (htype : m1.entityType = m2.entityType ∧ m2.entityType = m3.entityType) :
+  composeMigrations (composeMigrations m1 m2) m3 =
+    composeMigrations m1 (composeMigrations m2 m3) := by
+  rcases hcompat with ⟨htr, hst⟩
+  rcases htype with ⟨h12, h23⟩
+  cases m1
+  cases m2
+  cases m3
+  simp [composeMigrations] at htr hst ⊢
+  constructor
+  · exact htr
+  constructor
+  · exact hst
+  · exact h12.trans h23
+
 end Cicsc.Evolution
