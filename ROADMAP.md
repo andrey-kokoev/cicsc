@@ -91,7 +91,7 @@
 - [x] Add policy DSL (optional) compiled to intrinsics
 - [x] Add per-command authorization mapping in Spec DSL
 - [x] Add row-level security for views
-- [ ] Add audit trail for policy changes
+- [x] Add audit trail for policy changes
 
 ## L. Documentation & Proofs
 - [ ] Formalize constructive invariance proof sketch for v0
