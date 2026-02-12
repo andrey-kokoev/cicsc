@@ -6,7 +6,7 @@
 - [x] Add snapshot constraint enforcement inside tx for all affected entities (not only touched one)
 - [x] Add SLA constraint enforcement inside tx
 - [x] Add rollback-safe error propagation for all write paths
-- [ ] Add idempotency guarantees for duplicate command submissions across restarts
+- [x] Add idempotency guarantees for duplicate command submissions across restarts
 - [ ] Add command deduplication windowing (optional: TTL for receipts)
 
 ## B. IR Soundness & Type Safety
