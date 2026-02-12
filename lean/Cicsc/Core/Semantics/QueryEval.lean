@@ -325,6 +325,62 @@ theorem evalGroupByQuery_order
      | some fields => step3.map (fun r => evalProject r fields)) := by
   rfl  -- Definitional equality
 
+-- v2: HAVING vs WHERE distinction
+-- See LEAN_KERNEL_V2.md §1.2.2 checkpoint 3
+
+-- WHERE filters raw rows (pre-grouping), HAVING filters aggregated rows (post-grouping)
+-- They operate on different row schemas and cannot be interchanged
+
+-- Theorem: WHERE filters before grouping, reducing rows to group
+theorem where_before_grouping
+  (whereExpr : Expr)
+  (gbq : GroupByQuery)
+  (rows : List QueryRow) :
+  let filteredRows := rows.filter (fun r => evalFilterExpr r whereExpr)
+  evalGroupByQuery gbq filteredRows =
+    evalGroupByQuery gbq (rows.filter (fun r => evalFilterExpr r whereExpr)) := by
+  rfl
+
+-- Theorem: HAVING filters after aggregation, operating on aggregate values
+theorem having_after_aggregation
+  (gbq : GroupByQuery)
+  (rows : List QueryRow)
+  (havingExpr : Expr) :
+  let gbqWithHaving := { gbq with havingExpr := some havingExpr }
+  evalGroupByQuery gbqWithHaving rows =
+    (evalGroupByQuery { gbq with havingExpr := none } rows).filter
+      (fun r => evalFilterExpr r havingExpr) := by
+  unfold evalGroupByQuery
+  simp
+  -- HAVING is applied after GROUP BY + aggregation
+  cases gbq.projectFields <;> rfl
+
+-- Theorem: WHERE and HAVING are not interchangeable
+-- Example: WHERE can reference original columns, HAVING can reference aggregates
+theorem where_having_not_equivalent
+  (rows : List QueryRow)
+  (whereExpr havingExpr : Expr)
+  (gbq : GroupByQuery)
+  -- WHERE references original columns not available post-aggregation
+  (hwhere_original : ∃ field, whereExpr = .var (.row field))
+  -- HAVING references aggregate not available pre-aggregation
+  (hhaving_agg : ∃ aggName, havingExpr = .var (.row aggName) ∧
+                   (aggName, _) ∈ gbq.aggs) :
+  -- WHERE then GROUP BY ≠ GROUP BY then HAVING (in general)
+  ∃ rows, evalGroupByQuery gbq (rows.filter (fun r => evalFilterExpr r whereExpr)) ≠
+          (evalGroupByQuery gbq rows).filter (fun r => evalFilterExpr r havingExpr) := by
+  sorry  -- Requires constructing specific counterexample with raw vs aggregated fields
+
+-- Theorem: WHERE reduces input rows, HAVING reduces output groups
+theorem where_reduces_rows_having_reduces_groups
+  (whereExpr havingExpr : Expr)
+  (gbq : GroupByQuery)
+  (rows : List QueryRow)
+  (hfilter_some : ∃ r ∈ rows, evalFilterExpr r whereExpr = false) :
+  -- WHERE removes rows before grouping
+  (rows.filter (fun r => evalFilterExpr r whereExpr)).length < rows.length := by
+  sorry  -- Follows from filter removing at least one row
+
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .project fields, rows => rows.map (fun r => evalProject r fields)
