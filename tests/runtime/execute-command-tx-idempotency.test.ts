@@ -68,6 +68,9 @@ function makeStore (backing: { committed: MemState }) {
             return { rows: [{ active_version: 0 }] }
           }
 
+          if (sql.includes("SELECT 1 FROM events_v0")) return { rows: [{ 1: 1 }] }
+          if (sql.includes("SELECT 1 FROM snapshots_v0")) return { rows: [{ 1: 1 }] }
+
           if (sql.includes("SELECT ts FROM command_receipts")) {
             const row = working.receipts.get(rkey(String(binds[0]), String(binds[1])))
             return { rows: row ? [{ ts: row.ts }] : [] }

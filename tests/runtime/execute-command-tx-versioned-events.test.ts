@@ -21,6 +21,8 @@ describe("versioned event table routing", () => {
             if (sql.includes("SELECT result_json FROM command_receipts")) return { rows: [] }
             if (sql.includes("SELECT ts FROM command_receipts")) return { rows: [] }
             if (sql.includes("SELECT active_version FROM tenant_versions")) return { rows: [{ active_version: 2 }] }
+            if (sql.includes("SELECT 1 FROM events_v2")) return { rows: [{ 1: 1 }] }
+            if (sql.includes("SELECT 1 FROM snapshots_v2")) return { rows: [{ 1: 1 }] }
 
             if (sql.includes("FROM snapshots_v2") && sql.includes("LIMIT 1")) {
               return { rows: [{ state: "new", attrs_json: "{}", updated_ts: 1, severity_i: null, created_at: null }] }

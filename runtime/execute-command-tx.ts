@@ -60,6 +60,7 @@ export async function executeCommandTx (params: {
     if (existing) return existing
 
     const activeVersion = await getActiveVersionTx(tx, req.tenant_id)
+    await ensureSchemaVersionCompatibilityTx(tx, activeVersion)
 
     // 1) load snapshot (or init)
     const snapRow = await readSnapshot(tx, req.tenant_id, req.entity_type, req.entity_id, activeVersion)
@@ -421,6 +422,16 @@ async function getActiveVersionTx (tx: TxCtx, tenant_id: string): Promise<number
   )
   const row = r.rows?.[0] as any
   return Number(row?.active_version ?? 0)
+}
+
+async function ensureSchemaVersionCompatibilityTx (tx: TxCtx, version: number): Promise<void> {
+  try {
+    await tx.exec(`SELECT 1 FROM events_v${version} LIMIT 1`)
+    await tx.exec(`SELECT 1 FROM snapshots_v${version} LIMIT 1`)
+  } catch (e: any) {
+    const msg = String(e?.message ?? "missing versioned tables")
+    throw new Error(`schema incompatible for active_version=${version}: ${msg}`)
+  }
 }
 
 async function readAllSnapshotsByType (tx: TxCtx, tenant_id: string, entity_type: string, version: number): Promise<SnapRow[]> {
