@@ -62,59 +62,63 @@ def evalVar (env : Env) : VarRef → Val
       | some e => getPath e.ePayload p
       | none => .vNull
 
-partial def evalExpr (env : Env) : Expr → Val
-  | .litBool b => .vBool b
-  | .litInt n => .vInt n
-  | .litString s => .vString s
-  | .litNull => .vNull
-  | .var v => evalVar env v
-  | .get e path => getPath (evalExpr env e) path
-  | .has e path => .vBool (hasPath (evalExpr env e) path)
-  | .not e => .vBool (!(toBool (evalExpr env e)))
-  | .and xs => .vBool (xs.all (fun e => toBool (evalExpr env e)))
-  | .or xs => .vBool (xs.any (fun e => toBool (evalExpr env e)))
-  | .eq a b => .vBool (valEq (evalExpr env a) (evalExpr env b))
-  | .ne a b => .vBool (!(valEq (evalExpr env a) (evalExpr env b)))
-  | .lt a b =>
-      match evalExpr env a, evalExpr env b with
+def evalExprFuel (env : Env) : Nat → Expr → Val
+  | 0, _ => .vNull
+  | Nat.succ fuel, .litBool b => .vBool b
+  | Nat.succ fuel, .litInt n => .vInt n
+  | Nat.succ fuel, .litString s => .vString s
+  | Nat.succ fuel, .litNull => .vNull
+  | Nat.succ fuel, .var v => evalVar env v
+  | Nat.succ fuel, .get e path => getPath (evalExprFuel env fuel e) path
+  | Nat.succ fuel, .has e path => .vBool (hasPath (evalExprFuel env fuel e) path)
+  | Nat.succ fuel, .not e => .vBool (!(toBool (evalExprFuel env fuel e)))
+  | Nat.succ fuel, .and xs => .vBool (xs.all (fun e => toBool (evalExprFuel env fuel e)))
+  | Nat.succ fuel, .or xs => .vBool (xs.any (fun e => toBool (evalExprFuel env fuel e)))
+  | Nat.succ fuel, .eq a b => .vBool (valEq (evalExprFuel env fuel a) (evalExprFuel env fuel b))
+  | Nat.succ fuel, .ne a b => .vBool (!(valEq (evalExprFuel env fuel a) (evalExprFuel env fuel b)))
+  | Nat.succ fuel, .lt a b =>
+      match evalExprFuel env fuel a, evalExprFuel env fuel b with
       | .vInt x, .vInt y => .vBool (x < y)
       | _, _ => .vNull
-  | .le a b =>
-      match evalExpr env a, evalExpr env b with
+  | Nat.succ fuel, .le a b =>
+      match evalExprFuel env fuel a, evalExprFuel env fuel b with
       | .vInt x, .vInt y => .vBool (x <= y)
       | _, _ => .vNull
-  | .gt a b =>
-      match evalExpr env a, evalExpr env b with
+  | Nat.succ fuel, .gt a b =>
+      match evalExprFuel env fuel a, evalExprFuel env fuel b with
       | .vInt x, .vInt y => .vBool (x > y)
       | _, _ => .vNull
-  | .ge a b =>
-      match evalExpr env a, evalExpr env b with
+  | Nat.succ fuel, .ge a b =>
+      match evalExprFuel env fuel a, evalExprFuel env fuel b with
       | .vInt x, .vInt y => .vBool (x >= y)
       | _, _ => .vNull
-  | .add a b =>
-      match evalExpr env a, evalExpr env b with
+  | Nat.succ fuel, .add a b =>
+      match evalExprFuel env fuel a, evalExprFuel env fuel b with
       | .vInt x, .vInt y => .vInt (x + y)
       | _, _ => .vNull
-  | .sub a b =>
-      match evalExpr env a, evalExpr env b with
+  | Nat.succ fuel, .sub a b =>
+      match evalExprFuel env fuel a, evalExprFuel env fuel b with
       | .vInt x, .vInt y => .vInt (x - y)
       | _, _ => .vNull
-  | .mul a b =>
-      match evalExpr env a, evalExpr env b with
+  | Nat.succ fuel, .mul a b =>
+      match evalExprFuel env fuel a, evalExprFuel env fuel b with
       | .vInt x, .vInt y => .vInt (x * y)
       | _, _ => .vNull
-  | .div a b =>
-      match evalExpr env a, evalExpr env b with
+  | Nat.succ fuel, .div a b =>
+      match evalExprFuel env fuel a, evalExprFuel env fuel b with
       | .vInt x, .vInt y =>
           if y = 0 then .vNull else .vInt (x / y)
       | _, _ => .vNull
-  | .ifThenElse c t f =>
-      if toBool (evalExpr env c) then evalExpr env t else evalExpr env f
-  | .coalesce xs =>
-      match xs.find? (fun e => evalExpr env e != .vNull) with
-      | some e => evalExpr env e
+  | Nat.succ fuel, .ifThenElse c t f =>
+      if toBool (evalExprFuel env fuel c) then evalExprFuel env fuel t else evalExprFuel env fuel f
+  | Nat.succ fuel, .coalesce xs =>
+      match xs.find? (fun e => evalExprFuel env fuel e != .vNull) with
+      | some e => evalExprFuel env fuel e
       | none => .vNull
-  | .call _fn _args => .vNull
+  | Nat.succ _, .call _fn _args => .vNull
+
+def evalExpr (env : Env) (e : Expr) : Val :=
+  evalExprFuel env (e.sizeOf + 1) e
 
 theorem evalExprDeterministic (env : Env) (e : Expr) :
   ∀ v1 v2, evalExpr env e = v1 → evalExpr env e = v2 → v1 = v2 := by

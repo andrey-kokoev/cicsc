@@ -33,12 +33,13 @@ def parseTyName : String → Option Ty
   | "arr" => some .tArr
   | _ => none
 
-partial def inferExprTy (Γ : TypeEnv) : Expr → Option Ty
-  | .litBool _ => some .tBool
-  | .litInt _ => some .tInt
-  | .litString _ => some .tString
-  | .litNull => some .tNull
-  | .var v =>
+def inferExprTyFuel (Γ : TypeEnv) : Nat → Expr → Option Ty
+  | 0, _ => none
+  | Nat.succ fuel, .litBool _ => some .tBool
+  | Nat.succ fuel, .litInt _ => some .tInt
+  | Nat.succ fuel, .litString _ => some .tString
+  | Nat.succ fuel, .litNull => some .tNull
+  | Nat.succ fuel, .var v =>
       match varKeyOfRef v with
       | some k => lookupTy Γ k
       | none =>
@@ -51,41 +52,59 @@ partial def inferExprTy (Γ : TypeEnv) : Expr → Option Ty
           | .eActor => some .tString
           | .eTime => some .tInt
           | .ePayload _ => none
-  | .get e _ =>
-      match inferExprTy Γ e with
+  | Nat.succ fuel, .get e _ =>
+      match inferExprTyFuel Γ fuel e with
       | some .tObj => none
       | _ => none
-  | .has e _ =>
-      match inferExprTy Γ e with
+  | Nat.succ fuel, .has e _ =>
+      match inferExprTyFuel Γ fuel e with
       | some .tObj => some .tBool
       | _ => none
-  | .not e =>
-      match inferExprTy Γ e with
+  | Nat.succ fuel, .not e =>
+      match inferExprTyFuel Γ fuel e with
       | some .tBool => some .tBool
       | _ => none
-  | .and xs =>
-      if xs.all (fun e => inferExprTy Γ e = some .tBool) then some .tBool else none
-  | .or xs =>
-      if xs.all (fun e => inferExprTy Γ e = some .tBool) then some .tBool else none
-  | .eq a b =>
-      if inferExprTy Γ a = inferExprTy Γ b then some .tBool else none
-  | .ne a b =>
-      if inferExprTy Γ a = inferExprTy Γ b then some .tBool else none
-  | .lt a b | .le a b | .gt a b | .ge a b =>
-      if inferExprTy Γ a = some .tInt ∧ inferExprTy Γ b = some .tInt then some .tBool else none
-  | .add a b | .sub a b | .mul a b | .div a b =>
-      if inferExprTy Γ a = some .tInt ∧ inferExprTy Γ b = some .tInt then some .tInt else none
-  | .ifThenElse c t f =>
-      if inferExprTy Γ c = some .tBool ∧ inferExprTy Γ t = inferExprTy Γ f then inferExprTy Γ t else none
-  | .coalesce xs =>
+  | Nat.succ fuel, .and xs =>
+      if xs.all (fun e => inferExprTyFuel Γ fuel e = some .tBool) then some .tBool else none
+  | Nat.succ fuel, .or xs =>
+      if xs.all (fun e => inferExprTyFuel Γ fuel e = some .tBool) then some .tBool else none
+  | Nat.succ fuel, .eq a b =>
+      if inferExprTyFuel Γ fuel a = inferExprTyFuel Γ fuel b then some .tBool else none
+  | Nat.succ fuel, .ne a b =>
+      if inferExprTyFuel Γ fuel a = inferExprTyFuel Γ fuel b then some .tBool else none
+  | Nat.succ fuel, .lt a b
+  | Nat.succ fuel, .le a b
+  | Nat.succ fuel, .gt a b
+  | Nat.succ fuel, .ge a b =>
+      if inferExprTyFuel Γ fuel a = some .tInt ∧ inferExprTyFuel Γ fuel b = some .tInt then
+        some .tBool
+      else
+        none
+  | Nat.succ fuel, .add a b
+  | Nat.succ fuel, .sub a b
+  | Nat.succ fuel, .mul a b
+  | Nat.succ fuel, .div a b =>
+      if inferExprTyFuel Γ fuel a = some .tInt ∧ inferExprTyFuel Γ fuel b = some .tInt then
+        some .tInt
+      else
+        none
+  | Nat.succ fuel, .ifThenElse c t f =>
+      if inferExprTyFuel Γ fuel c = some .tBool ∧ inferExprTyFuel Γ fuel t = inferExprTyFuel Γ fuel f then
+        inferExprTyFuel Γ fuel t
+      else
+        none
+  | Nat.succ fuel, .coalesce xs =>
       match xs with
       | [] => none
       | x :: rest =>
-          match inferExprTy Γ x with
+          match inferExprTyFuel Γ fuel x with
           | none => none
           | some tx =>
-              if rest.all (fun e => inferExprTy Γ e = some tx) then some tx else none
-  | .call _ _ => none
+              if rest.all (fun e => inferExprTyFuel Γ fuel e = some tx) then some tx else none
+  | Nat.succ _, .call _ _ => none
+
+def inferExprTy (Γ : TypeEnv) (e : Expr) : Option Ty :=
+  inferExprTyFuel Γ (e.sizeOf + 1) e
 
 def checkReducerOp (Γ : TypeEnv) : ReducerOp → Bool
   | .setState e => inferExprTy Γ e = some .tString
