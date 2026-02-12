@@ -75,7 +75,7 @@ Current 1.3 signal:
 
 - [x] 4.1 Stand up reproducible pilot environment.
 - [x] 4.2 Execute scripted command/view/verify workload with invariant checks.
-- [ ] 4.3 Classify findings into semantic bug/typechecker gap/lowering gap/ops gap.
+- [x] 4.3 Classify findings into semantic bug/typechecker gap/lowering gap/ops gap.
 - [ ] 4.4 Convert validated findings into roadmap checkboxes.
 - [ ] 4.5 Publish pilot findings report.
 
