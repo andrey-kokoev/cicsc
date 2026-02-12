@@ -76,12 +76,16 @@ def evalBoolQueryConstraintSubset (ir : IR) (c : Constraint) (snaps : SnapSet) :
   | _ => true
 
 -- Canonical constraint evaluator for the v1.5 kernel surface.
+-- Runtime alignment rule: downstream runtime/checking layers should call this
+-- surface for full constraint semantics on the supported bool_query subset.
 def holdsConstraint (ir : IR) (c : Constraint) (st : State) (snaps : SnapSet) : Bool :=
   match c with
   | .snapshot _ _ => evalSnapshotConstraint c st
   | .boolQuery _ _ _ => evalBoolQueryConstraintSubset ir c snaps
 
 -- Snapshot-only evaluator used by the proved snapshot constraint surface.
+-- This is intentionally a restricted helper; it is not the canonical full
+-- evaluator for runtime alignment.
 def holdsSnapshotConstraintOnly (c : Constraint) (st : State) : Bool :=
   match c with
   | .snapshot _ _ => evalSnapshotConstraint c st

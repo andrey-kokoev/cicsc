@@ -68,6 +68,10 @@ This document defines the work required to achieve 10/10 coherency with AGENTS.m
 
 **Objective:** Single canonical constraint evaluator with proved decomposition
 
+Canonical evaluator policy (runtime alignment):
+- `holdsConstraint` is the single full-surface evaluator for snapshot + bool_query subset semantics.
+- `holdsSnapshotConstraintOnly` is a restricted helper for snapshot-only theorem surfaces.
+
 #### 1.1 Define Canonical Semantics
 - [ ] Create `holdsConstraint : IR → Constraint → State → SnapSet → Bool`
   - Handles both snapshot and bool_query constraints
