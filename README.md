@@ -1,0 +1,168 @@
+# CICSC — Constructively Invariant Control System Compiler
+
+CICSC is a compiler + runtime substrate for constructing executable socio-technical control systems from formal specifications, with invariant-preserving evolution as a design constraint.
+
+The repository contains:
+- a user-facing Spec format,
+- a Core IR with enforced semantics,
+- backend lowering (SQLite/D1),
+- a transactional runtime,
+- and a roadmap toward constructive migrations.
+
+---
+
+## What CICSC Is (Operationally)
+
+CICSC implements the pipeline:
+
+```
+Spec (YAML/JSON)
+  → compile
+Core IR (typed, backend-agnostic)
+  → typecheck
+  → schema-gen
+SQLite/D1 schema + lowering
+  → install
+Runtime (tx, invariants, views, verify)
+```
+
+The runtime executes:
+- commands (append events),
+- reducers (history → state),
+- constraints (invariants),
+- views (queries),
+- verification (replay-checked).
+
+State is reducible from event history.
+
+---
+
+## Invariants Enforced
+
+- Transactional command execution  
+  Writes occur inside BEGIN IMMEDIATE transactions.
+
+- Deterministic replay  
+  State is a fold over event history.
+
+- Invariant enforcement  
+  Snapshot and global constraints are checked before commit.
+
+- Backend conformance  
+  SQL lowering is tested against an oracle interpreter.
+
+- Constructive invariance (planned)  
+  Migrations must be total and replay-verified.
+
+These properties are enforced by design and tests.
+
+---
+
+## What Exists Today (v0)
+
+- Spec → Core IR compiler (v0; Spec is IR-shaped YAML)
+- Core IR typechecker
+- SQLite/D1 schema generator from IR (shadow columns)
+- Transactional runtime (commands, views, verify)
+- Oracle interpreter + SQL lowering conformance tests
+- HTTP API:
+  - `POST /compile`
+  - `POST /install-from-spec` (optional patch)
+  - `POST /cmd/:type/:name`
+  - `GET /view/:name`
+  - `GET /verify`
+- Roadmap and working agreement
+- Category model of the substrate
+
+---
+
+## What Does Not Exist Yet
+
+- Spec DSL sugar (Spec remains IR-shaped)
+- Bundle registry (R2/KV)
+- Tenant → bundle binding
+- Migrations / versioned evolution
+- Postgres adapter
+- Index generation from views/constraints
+- Per-type snapshot tables
+
+These items are tracked in the roadmap.
+
+---
+
+## How to Run a Minimal System (v0)
+
+1) Compile Spec:
+```
+POST /compile
+```
+
+2) Install schema + bind tenant:
+```
+POST /install-from-spec?tenant_id=t1
+```
+
+3) Issue a command:
+```
+POST /cmd/Ticket/create
+```
+
+4) Query a view:
+```
+GET /view/tickets_by_lane?tenant_id=t1
+```
+
+5) Verify invariants:
+```
+GET /verify?tenant_id=t1
+```
+
+---
+
+## Normative Design Documents
+
+- `docs/foundations/category-model.md`  
+  Categorical model of CICSC.
+
+- `ROADMAP_WORKING_AGREEMENT.md`  
+  Roadmap execution rules.
+
+- `AGENTS.md`  
+  Contributor and agent guidelines.
+
+These documents constrain implementation choices.
+
+---
+
+## Roadmap
+
+The canonical roadmap is defined in:
+
+```
+# CICSC Completion TODO (Comprehensive)
+```
+
+This checklist defines the execution plan.
+
+---
+
+## Design Constraints
+
+- No bundle-specific logic in runtime.
+- No backend-only semantics.
+- No partial migrations.
+- No in-place mutation of history.
+- Compile-time rejection where possible.
+- Conformance tests for lowering changes.
+
+---
+
+## Status
+
+The system implements a working substrate with transactional semantics and invariant enforcement. Further work is required for bundle persistence, migrations, and additional backends.
+
+---
+
+## License
+
+Apache 2.0 License. See LICENSE file for details.
