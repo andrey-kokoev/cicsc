@@ -10,6 +10,7 @@ import { validateBundleV0 } from "../../core/ir/validate"
 import { verifyHistoryAgainstIr } from "../../core/runtime/verify"
 import { installFromIr } from "../db/install-from-ir"
 import ticketingBundle from "../../bundles/ticketing.v0.json"
+import { compileSpecToBundleV0, readSpecBody } from "./compile"
 
 export interface Env {
   DB: D1Database
@@ -53,6 +54,30 @@ export default {
         // set default active version for tenant if not set
         const body = (await req.json().catch(() => ({}))) as any
         const tenant_id = String(body.tenant_id ?? "t")
+        await store.setActiveVersion(tenant_id, 0)
+        return Response.json({ ok: true })
+      }
+
+      // POST /compile  (returns bundle JSON; does not persist)
+      if (url.pathname === "/compile" && req.method === "POST") {
+        const body = await readSpecBody(req)
+        const bundle = compileSpecToBundleV0(body)
+        return Response.json({ ok: true, bundle })
+      }
+
+      // POST /install-from-spec  (compile + install schema; does not persist bundle)
+      if (url.pathname === "/install-from-spec" && req.method === "POST") {
+        const body = await readSpecBody(req)
+        const bundle = compileSpecToBundleV0(body)
+        const irV = bundle.core_ir as CoreIrV0
+        await installFromIr({ db: env.DB as any, ir: irV, version: 0 })
+
+        const jsonBody = typeof body === "string" ? null : body
+        const tenant_id =
+          jsonBody && typeof jsonBody === "object" && (jsonBody as any).tenant_id
+            ? String((jsonBody as any).tenant_id)
+            : url.searchParams.get("tenant_id") ?? "t"
+
         await store.setActiveVersion(tenant_id, 0)
         return Response.json({ ok: true })
       }
