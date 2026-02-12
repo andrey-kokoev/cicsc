@@ -1,6 +1,7 @@
 import Cicsc.Core.Syntax
 import Cicsc.Core.Types
 import Cicsc.Core.Semantics.ExprEval
+import Cicsc.Core.Semantics.Common
 
 namespace Cicsc.Core
 
@@ -20,9 +21,6 @@ def setField (xs : List (String × Val)) (k : String) (v : Val) : List (String �
 
 def clearField (xs : List (String × Val)) (k : String) : List (String × Val) :=
   xs.filter (fun kv => kv.fst ≠ k)
-
-def mkRow (st : State) : List (String × Val) :=
-  ("state", .vString st.st) :: (st.attrs ++ st.shadows)
 
 def applyOp (env : Env) (st : State) : ReducerOp → State
   | .setState expr =>
