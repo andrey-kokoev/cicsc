@@ -125,7 +125,7 @@
 - [x] Stabilize Ticketing Spec v1 (priorities, SLAs, escalation rules)
 - [x] Stabilize CRM Spec v1 (leads, stages, ownership, conversions)
 - [x] Provide minimal migration examples (v0 → v1) for each vertical
-- [ ] Provide invariant proofs / explanations for each vertical
+- [x] Provide invariant proofs / explanations for each vertical
 - [ ] Publish performance envelopes for each vertical (ops/sec, latency under load)
 - [ ] Provide canonical demo datasets for replay verification
 
