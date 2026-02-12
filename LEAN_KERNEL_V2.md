@@ -51,7 +51,7 @@ v2 adds semantic coverage for:
   - Definitional lemmas `evalJoin_cross_def` and `evalJoin_inner_def` fix the executable meaning for core join cases.
   - `JoinType ::= Inner | LeftOuter | RightOuter | FullOuter | Cross`
   - Join condition as Expr (evaluated on combined row environment)
-- [ ] Implement join evaluation:
+- [x] Implement join evaluation:
   - Cross join: Cartesian product
   - Inner join: Filter on join predicate
   - Outer joins: Include nulls for unmatched rows

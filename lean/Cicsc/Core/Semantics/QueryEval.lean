@@ -1187,6 +1187,10 @@ theorem twoWayJoin_order_equiv
 -- See LEAN_KERNEL_V2.md §1.1.1
 -- Evaluates a join between two lists of rows based on join type and condition.
 def evalJoin (joinType : JoinType) (leftRows rightRows : List QueryRow) (condition : Expr) : List QueryRow :=
+  let leftFields := (leftRows.bind (fun r => r.map Prod.fst)).dedup
+  let rightFields := (rightRows.bind (fun r => r.map Prod.fst)).dedup
+  let nullLeft : QueryRow := leftFields.map (fun f => (f, .vNull))
+  let nullRight : QueryRow := rightFields.map (fun f => (f, .vNull))
   match joinType with
   | .cross =>
       -- Cross join: Cartesian product (condition ignored)
@@ -1198,31 +1202,31 @@ def evalJoin (joinType : JoinType) (leftRows rightRows : List QueryRow) (conditi
           let combined := combineRows l r
           if evalFilterExpr combined condition then some combined else none))
   | .leftOuter =>
-      -- Left outer join: all left rows, with matching right rows or nulls
+      -- Left outer join: all left rows, with matching right rows or right-side null padding.
       leftRows.flatMap (fun l =>
         let matches := rightRows.filterMap (fun r =>
           let combined := combineRows l r
           if evalFilterExpr combined condition then some combined else none)
-        if matches.isEmpty then [l] else matches)
+        if matches.isEmpty then [combineRows l nullRight] else matches)
   | .rightOuter =>
-      -- Right outer join: all right rows, with matching left rows or nulls
+      -- Right outer join: all right rows, with matching left rows or left-side null padding.
       rightRows.flatMap (fun r =>
         let matches := leftRows.filterMap (fun l =>
           let combined := combineRows l r
           if evalFilterExpr combined condition then some combined else none)
-        if matches.isEmpty then [r] else matches)
+        if matches.isEmpty then [combineRows r nullLeft] else matches)
   | .fullOuter =>
-      -- Full outer join: all rows from both sides, with nulls for non-matches
+      -- Full outer join: all rows from both sides, with null padding for non-matches.
       let leftWithMatches := leftRows.flatMap (fun l =>
         let matches := rightRows.filterMap (fun r =>
           let combined := combineRows l r
           if evalFilterExpr combined condition then some combined else none)
-        if matches.isEmpty then [l] else matches)
+        if matches.isEmpty then [combineRows l nullRight] else matches)
       let unmatchedRight := rightRows.filter (fun r =>
         !leftRows.any (fun l =>
           let combined := combineRows l r
           evalFilterExpr combined condition))
-      leftWithMatches ++ unmatchedRight
+      leftWithMatches ++ unmatchedRight.map (fun r => combineRows r nullLeft)
 
 theorem evalJoin_cross_def
   (leftRows rightRows : List QueryRow)
