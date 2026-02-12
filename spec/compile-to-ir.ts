@@ -125,6 +125,7 @@ function mapViews (views: Record<string, any>) {
       kind: v.kind ?? "metric",
       on_type: v.on,
       query,
+      row_policy: v.row_policy ?? undefined,
     }
   }
   return out

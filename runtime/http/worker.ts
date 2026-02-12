@@ -15,6 +15,7 @@ import { bindTenant } from "../db/tenant-binding"
 import { compileSpecToBundleV0, readSpecBody } from "./compile"
 import { loadTenantBundle } from "./tenant-bundle"
 import { TenantTokenBucketLimiter } from "./rate-limit"
+import { applyRowLevelSecurity } from "../view/rls"
 
 export interface Env {
   DB: D1Database
@@ -214,10 +215,20 @@ export default {
       if (viewMatch && req.method === "GET") {
         const view_name = decodeURIComponent(viewMatch[1]!)
         const tenant_id = url.searchParams.get("tenant_id") ?? "t"
+        const actor_id = url.searchParams.get("actor_id") ?? "u"
         const loaded = await loadTenantBundle(env.DB as any, tenant_id)
         const ir = loaded.bundle.core_ir as CoreIrV0
         const result = await store.execView({ tenant_id, ir, view_name, args: {} })
-        return Response.json({ ok: true, result })
+        const view: any = (ir.views ?? {})[view_name]
+        const rows = view?.row_policy
+          ? applyRowLevelSecurity({
+            rows: result.rows,
+            actor_id,
+            row_policy: view.row_policy,
+            intrinsics,
+          })
+          : result.rows
+        return Response.json({ ok: true, result: { rows } })
       }
 
       // GET /views?tenant_id=...  (list available views)

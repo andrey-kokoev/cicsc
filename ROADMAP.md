@@ -90,7 +90,7 @@
 - [x] Formalize auth/role intrinsics contract
 - [x] Add policy DSL (optional) compiled to intrinsics
 - [x] Add per-command authorization mapping in Spec DSL
-- [ ] Add row-level security for views
+- [x] Add row-level security for views
 - [ ] Add audit trail for policy changes
 
 ## L. Documentation & Proofs
