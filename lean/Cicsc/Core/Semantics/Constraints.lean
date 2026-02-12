@@ -23,11 +23,11 @@ def evalSnapshotConstraint (c : Constraint) (st : State) : Bool :=
   | _ => true
 
 -- bool_query semantics over the supported relational query subset.
-def evalBoolQueryConstraintSubset (c : Constraint) (rows : List State) : Bool :=
+def evalBoolQueryConstraintSubset (ir : IR) (c : Constraint) (rows : List State) : Bool :=
   match c with
   | .boolQuery _onType q assertExpr =>
       if supportsQuerySubset q then
-        let n := (evalQuerySubset q rows).length
+        let n := (evalQuery ir q rows).length
         toBool (evalExpr {
           now := 0
           actor := ""
@@ -48,13 +48,13 @@ def holdsAllKernelConstraints (cs : List (String × Constraint)) (st : State) : 
   cs.all (fun kv => holdsKernelConstraint kv.snd st)
 
 -- Legacy full surface including bool_query subset semantics.
-def holdsConstraintV0 (c : Constraint) (st : State) (rows : List State) : Bool :=
+def holdsConstraintV0 (ir : IR) (c : Constraint) (st : State) (rows : List State) : Bool :=
   match c with
   | .snapshot _ _ => evalSnapshotConstraint c st
-  | .boolQuery _ _ _ => evalBoolQueryConstraintSubset c rows
+  | .boolQuery _ _ _ => evalBoolQueryConstraintSubset ir c rows
 
-def holdsAllConstraintsV0 (cs : List (String × Constraint)) (st : State) (rows : List State) : Bool :=
-  cs.all (fun kv => holdsConstraintV0 kv.snd st rows)
+def holdsAllConstraintsV0 (ir : IR) (cs : List (String × Constraint)) (st : State) (rows : List State) : Bool :=
+  cs.all (fun kv => holdsConstraintV0 ir kv.snd st rows)
 
 def holdsAllSnapshotConstraints (cs : List (String × Constraint)) (st : State) : Bool :=
   cs.all (fun kv =>

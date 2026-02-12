@@ -93,6 +93,9 @@ def supportsQuerySubset (q : Query) : Bool :=
 def evalQuerySubset (q : Query) (rows : List State) : List QueryRow :=
   q.pipeline.foldl (fun acc op => applyQueryOpSubset op acc) (evalSourceSubset q.source rows)
 
+def evalQuery (_ir : IR) (q : Query) (rows : List State) : List QueryRow :=
+  evalQuerySubset q rows
+
 def oracleQueryEvalSubset (q : Query) (rows : List State) : List QueryRow :=
   q.pipeline.foldl (fun acc op => applyQueryOpSubset op acc) (evalSourceSubset q.source rows)
 

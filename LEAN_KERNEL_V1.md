@@ -155,7 +155,7 @@ v1 defines a minimal query semantics subset sufficient to support:
 - projection (no joins, no groupBy)
 
 ### 6.1 Implement QueryEval subset
-- [ ] Add `Core/Semantics/QueryEval.lean` (new)
+- [x] Add `Core/Semantics/QueryEval.lean` (new)
   - `evalQuery : IR → Query → List State → List State` (or over a SnapSet)
   - interpret Source.snap as “given rows” for v1 (external snapshot set passed in)
 
