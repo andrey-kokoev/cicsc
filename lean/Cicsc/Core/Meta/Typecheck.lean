@@ -3,23 +3,36 @@ import Cicsc.Core.Types
 
 namespace Cicsc.Core
 
-abbrev TypeEnv := List (String × Ty)
+inductive VarKey where
+  | input (field : String)
+  | attrs (field : String)
+  | row (field : String)
+  | arg (name : String)
+deriving Repr, DecidableEq
 
-def lookupTy (Γ : TypeEnv) (k : String) : Option Ty :=
+abbrev TypeEnv := List (VarKey × Ty)
+
+def lookupTy (Γ : TypeEnv) (k : VarKey) : Option Ty :=
   match Γ.find? (fun kv => kv.fst = k) with
   | some kv => some kv.snd
   | none => none
+
+def varKeyOfRef : VarRef → Option VarKey
+  | .input f => some (.input f)
+  | .attrs f => some (.attrs f)
+  | .row f => some (.row f)
+  | .arg f => some (.arg f)
+  | _ => none
 
 partial def inferExprTy (Γ : TypeEnv) : Expr → Option Ty
   | .litBool _ => some .tBool
   | .litInt _ => some .tInt
   | .litString _ => some .tString
   | .litNull => some .tNull
-  | .var (.input f) => lookupTy Γ s!"input.{f}"
-  | .var (.attrs f) => lookupTy Γ s!"attrs.{f}"
-  | .var (.row f) => lookupTy Γ s!"row.{f}"
-  | .var (.arg f) => lookupTy Γ s!"arg.{f}"
-  | .var _ => some .tString
+  | .var v =>
+      match varKeyOfRef v with
+      | some k => lookupTy Γ k
+      | none => some .tString
   | .get _ _ => some .tObj
   | .has _ _ => some .tBool
   | .not e =>
@@ -69,8 +82,17 @@ inductive HasType : TypeEnv → Expr → Ty → Prop where
   | litInt (Γ : TypeEnv) (n : Int) : HasType Γ (.litInt n) .tInt
   | litString (Γ : TypeEnv) (s : String) : HasType Γ (.litString s) .tString
   | varInput (Γ : TypeEnv) (f : String) (t : Ty)
-      (h : lookupTy Γ s!"input.{f}" = some t) :
+      (h : lookupTy Γ (.input f) = some t) :
       HasType Γ (.var (.input f)) t
+  | varAttrs (Γ : TypeEnv) (f : String) (t : Ty)
+      (h : lookupTy Γ (.attrs f) = some t) :
+      HasType Γ (.var (.attrs f)) t
+  | varRow (Γ : TypeEnv) (f : String) (t : Ty)
+      (h : lookupTy Γ (.row f) = some t) :
+      HasType Γ (.var (.row f)) t
+  | varArg (Γ : TypeEnv) (f : String) (t : Ty)
+      (h : lookupTy Γ (.arg f) = some t) :
+      HasType Γ (.var (.arg f)) t
   | eq (Γ : TypeEnv) (a b : Expr) (t : Ty)
       (ha : HasType Γ a t) (hb : HasType Γ b t) :
       HasType Γ (.eq a b) .tBool
@@ -81,15 +103,21 @@ inductive HasType : TypeEnv → Expr → Ty → Prop where
       (h : HasType Γ e .tBool) :
       HasType Γ (.not e) .tBool
 
+def lookupByKey (env : Env) : VarKey → Val
+  | .input f => lookupField env.input f
+  | .attrs f => lookupField env.attrs f
+  | .row f => lookupField env.row f
+  | .arg f => lookupField env.arg f
+
 def WellTypedEnv (Γ : TypeEnv) (env : Env) : Prop :=
-  ∀ (k : String) (t : Ty), lookupTy Γ k = some t →
-    let v := lookupField (env.input ++ env.attrs ++ env.row ++ env.arg) k
+  ∀ (k : VarKey) (t : Ty), lookupTy Γ k = some t →
+    let v := lookupByKey env k
     valTy v = t ∨ v = .vNull
 
 theorem lookupWellTypedNullOk
   (Γ : TypeEnv) (env : Env) (hEnv : WellTypedEnv Γ env) :
   ∀ k t, lookupTy Γ k = some t →
-    let v := lookupField (env.input ++ env.attrs ++ env.row ++ env.arg) k
+    let v := lookupByKey env k
     valTy v = t ∨ v = .vNull := by
   intro k t hk
   exact hEnv k t hk
