@@ -11,7 +11,7 @@ export function compileSpecV0ToCoreIr (spec: SpecV0): CoreIrV0 {
       attrs: e.attributes ?? {},
       shadows: e.shadows ?? {},
       commands: mapCommands(e.commands ?? {}),
-      reducer: e.reducers ?? {},
+      reducer: mapReducers(e.reducers ?? {}),
     } as any
   }
 
@@ -110,6 +110,49 @@ function mapViews (views: Record<string, any>) {
   return out
 }
 
+function mapReducers (reducers: Record<string, any[]>): Record<string, any[]> {
+  const out: Record<string, any[]> = {}
+  for (const [eventType, ops] of Object.entries(reducers ?? {})) {
+    out[eventType] = (ops ?? []).map((op) => lowerReducerOp(op))
+  }
+  return out
+}
+
+function lowerReducerOp (op: any): any {
+  if (!op || typeof op !== "object" || Array.isArray(op)) throw new Error("reducer op must be an object")
+  const tag = Object.keys(op)[0]
+  const body = (op as any)[tag]
+
+  if (tag === "set_state") {
+    if (body && typeof body === "object" && "expr" in body) return op
+    return { set_state: { expr: wrapExpr(body) } }
+  }
+
+  if (tag === "set_attr") {
+    if (body && typeof body === "object" && "name" in body && "expr" in body) return op
+    if (body && typeof body === "object" && typeof body.field === "string" && "value" in body) {
+      return { set_attr: { name: body.field, expr: wrapExpr(body.value) } }
+    }
+    throw new Error("set_attr sugar expects { field, value }")
+  }
+
+  if (tag === "set_shadow") {
+    if (body && typeof body === "object" && "name" in body && "expr" in body) return op
+    if (body && typeof body === "object" && typeof body.field === "string" && "value" in body) {
+      return { set_shadow: { name: body.field, expr: wrapExpr(body.value) } }
+    }
+    throw new Error("set_shadow sugar expects { field, value }")
+  }
+
+  if (tag === "clear_attr") {
+    if (body && typeof body === "object" && typeof body.name === "string") return op
+    if (typeof body === "string") return { clear_attr: { name: body } }
+    throw new Error("clear_attr sugar expects string attr name")
+  }
+
+  return op
+}
+
 const EXPR_TAGS = new Set([
   "lit", "var", "get", "has", "obj", "arr",
   "not", "and", "or", "bool",
@@ -124,4 +167,13 @@ function isExprTaggedObject (v: any): boolean {
   if (!v || typeof v !== "object" || Array.isArray(v)) return false
   const ks = Object.keys(v)
   return ks.length === 1 && EXPR_TAGS.has(ks[0]!)
+}
+
+function wrapExpr (v: any): any {
+  if (isExprTaggedObject(v)) return v
+  if (v === null) return { lit: { null: true } }
+  if (typeof v === "boolean") return { lit: { bool: v } }
+  if (typeof v === "number") return Number.isInteger(v) ? { lit: { int: v } } : { lit: { float: v } }
+  if (typeof v === "string") return { lit: { string: v } }
+  throw new Error("unsupported reducer sugar literal")
 }
