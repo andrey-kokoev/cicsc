@@ -57,12 +57,12 @@ Acceptance: the evolution proof uses the same event filtering semantics as `Core
 ## 2. Expr Typing v1 (Make typechecker match evaluator)
 
 ### 2.1 Fix `.get` typing (choose weak dynamic typing for v1)
-v1 chooses a conservative rule:
+v1 chooses a weak dynamic rule:
 - `.get e path` typechecks iff `e : tObj`
-- result type is `tNull` (i.e., “may return null”), unless/until object schemas exist
+- result type is `tDyn` (field value or null without schema precision)
 
 - [x] Fix `inferExprTyFuel` `.get` clause:
-  - from “always none” to “if e : tObj then some tNull else none”
+  - from “always none” to “if e : tObj then some tDyn else none”
 - [ ] Add corresponding declarative typing constructor in `HasType` (optional)
 - [x] Ensure `.has` remains `Obj → Bool`
 
