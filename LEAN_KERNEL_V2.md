@@ -176,7 +176,8 @@ v2 adds semantic coverage for:
 **Objective:** Formalize the TypeScript SQL lowering and prove it matches Lean semantics
 
 #### 2.1.1 SQL AST Representation
-- [ ] Define Lean representation of SQL AST:
+- [x] Define Lean representation of SQL AST:
+  - Added `lean/Cicsc/Sql/Ast.lean` with `SQLExpr`, `SQLFrom`, `SQLJoinType`, `SQLOrderBy`, and `SQLQuery`.
   - `SQLQuery`, `SQLExpr`, `SQLJoin`, `SQLGroupBy`, etc.
 - [ ] Define `lowerQuery : Query → SQLQuery` (Lean version of TS lowering)
 - [ ] Define `lowerExpr : Expr → SQLExpr`
