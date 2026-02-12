@@ -94,7 +94,7 @@ Define WF predicates that mirror CICSC’s intended static constraints (not SQL)
   - [x] `NoReservedCollisions ts`
   - [x] reducers only set state labels in `states` (if literal) OR accept dynamic state with constraint (choose one for v1)
   - [x] reducer ops refer only to declared attrs/shadows/reserved fields via typing env
-  - [ ] commands’ guards typecheck to Bool under env
+  - [x] commands’ guards typecheck to Bool under env
   - [ ] command emits payload expressions typecheck
 
 ### 3.2 WFIR
