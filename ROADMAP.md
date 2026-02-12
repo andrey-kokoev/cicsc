@@ -114,7 +114,7 @@
 - [x] Add concurrency stress tests (conflicting commands on same entity and across entities)
 - [x] Add migration fault-injection tests (partial transforms, schema mismatch, replay failure)
 - [x] Add fuzzing for Spec DSL within grammar bounds
-- [ ] Add fuzzing for IR typechecker (invalid field access, illegal intrinsics, malformed reducers)
+- [x] Add fuzzing for IR typechecker (invalid field access, illegal intrinsics, malformed reducers)
 - [ ] Add cross-backend differential tests (SQLite vs Postgres vs oracle)
 - [ ] Add history corruption detection tests (tampered events, missing seq)
 - [ ] Add invariant regression suite (known-bad Specs and migrations)
