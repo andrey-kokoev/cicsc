@@ -98,7 +98,7 @@ Define WF predicates that mirror CICSC’s intended static constraints (not SQL)
   - [x] command emits payload expressions typecheck
 
 ### 3.2 WFIR
-- [ ] Add `WFIR : IR → Prop`
+- [x] Add `WFIR : IR → Prop`
   - [ ] all types satisfy WFTypeSpec
   - [ ] constraints reference existing types
   - [ ] views reference existing types (query semantics subset gated; see §6)
