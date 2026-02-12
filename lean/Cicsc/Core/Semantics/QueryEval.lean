@@ -110,6 +110,91 @@ theorem evalGroupBy_partitions_rows
   ∃! (kvs, grp), (kvs, grp) ∈ evalGroupBy keys rows ∧ r ∈ grp := by
   sorry  -- Uniqueness from same key values
 
+-- v2: Aggregation function evaluation
+-- See LEAN_KERNEL_V2.md §1.2.1 checkpoint 2
+
+-- Helper: Convert Val to Int for aggregation (returns 0 if not convertible)
+def valToInt : Val → Int
+  | .vInt n => n
+  | _ => 0
+
+-- Helper: Convert Val to String for aggregation
+def valToString : Val → String
+  | .vString s => s
+  | .vInt n => toString n
+  | .vBool b => toString b
+  | .vNull => ""
+  | .vObj _ => "{}"
+  | .vArr _ => "[]"
+
+-- Evaluate aggregation function over a group of rows
+-- Empty groups: COUNT returns 0, others return NULL
+def evalAggregate (agg : AggExpr) (groupRows : List QueryRow) : Val :=
+  match agg with
+  | .count =>
+      .vInt groupRows.length
+  | .sum expr =>
+      if groupRows.isEmpty then .vNull
+      else
+        let values := groupRows.map (fun row => valToInt (evalExpr (rowEnv row) expr))
+        .vInt (values.foldl (· + ·) 0)
+  | .avg expr =>
+      if groupRows.isEmpty then .vNull
+      else
+        let values := groupRows.map (fun row => valToInt (evalExpr (rowEnv row) expr))
+        let sum := values.foldl (· + ·) 0
+        .vInt (sum / groupRows.length)
+  | .min expr =>
+      if groupRows.isEmpty then .vNull
+      else
+        let values := groupRows.map (fun row => evalExpr (rowEnv row) expr)
+        -- Compare values using structural ordering
+        values.foldl (fun acc v =>
+          if valLt v acc then v else acc) values.head!
+  | .max expr =>
+      if groupRows.isEmpty then .vNull
+      else
+        let values := groupRows.map (fun row => evalExpr (rowEnv row) expr)
+        values.foldl (fun acc v =>
+          if valLt acc v then v else acc) values.head!
+  | .stringAgg expr separator =>
+      if groupRows.isEmpty then .vNull
+      else
+        let values := groupRows.map (fun row => valToString (evalExpr (rowEnv row) expr))
+        .vString (String.intercalate separator values)
+
+-- Theorem: COUNT on empty group returns 0
+theorem count_empty_is_zero :
+  evalAggregate .count [] = .vInt 0 := by
+  rfl
+
+-- Theorem: Other aggregates on empty group return NULL
+theorem sum_empty_is_null (expr : Expr) :
+  evalAggregate (.sum expr) [] = .vNull := by
+  rfl
+
+theorem avg_empty_is_null (expr : Expr) :
+  evalAggregate (.avg expr) [] = .vNull := by
+  rfl
+
+-- Theorem: SUM is commutative (order doesn't matter)
+theorem sum_commutative
+  (expr : Expr)
+  (rows : List QueryRow)
+  (hne : rows ≠ []) :
+  evalAggregate (.sum expr) rows = evalAggregate (.sum expr) rows.reverse := by
+  unfold evalAggregate
+  simp [hne]
+  -- Sum is commutative in Int
+  sorry  -- Requires List.foldl commutativity
+
+-- Theorem: COUNT is independent of row order
+theorem count_order_independent
+  (rows : List QueryRow) :
+  evalAggregate .count rows = evalAggregate .count rows.reverse := by
+  unfold evalAggregate
+  simp
+
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .project fields, rows => rows.map (fun r => evalProject r fields)

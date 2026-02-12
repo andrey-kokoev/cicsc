@@ -78,11 +78,15 @@ structure GroupKey where
   expr : Expr
 deriving Repr, DecidableEq
 
+-- v2: Aggregation functions for GROUP BY
+-- See LEAN_KERNEL_V2.md §1.2.1
 inductive AggExpr where
   | count
   | sum (expr : Expr)
+  | avg (expr : Expr)
   | min (expr : Expr)
   | max (expr : Expr)
+  | stringAgg (expr : Expr) (separator : String := ",")
 deriving Repr, DecidableEq
 
 structure OrderKey where
