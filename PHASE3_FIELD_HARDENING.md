@@ -65,7 +65,7 @@ Current 1.3 signal:
 
 ## 3. Pilot Deployment Preparation
 
-- [ ] 3.1 Select pilot vertical and record explicit scope contract.
+- [x] 3.1 Select pilot vertical and record explicit scope contract.
 - [ ] 3.2 Define unsupported feature list for pilot (explicit rejections).
 - [ ] 3.3 Define tenant isolation and retention policy.
 - [ ] 3.4 Add pilot runbook (install/upgrade/rollback/verify-loop).
