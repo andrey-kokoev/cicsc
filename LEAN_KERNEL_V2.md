@@ -55,7 +55,7 @@ v2 adds semantic coverage for:
   - Cross join: Cartesian product
   - Inner join: Filter on join predicate
   - Outer joins: Include nulls for unmatched rows
-- [ ] Define row combination semantics:
+- [x] Define row combination semantics:
   - `combineRows : QueryRow → QueryRow → QueryRow` (merge field lists)
   - Prove field name collision handling (prefer left/right based on join type)
 

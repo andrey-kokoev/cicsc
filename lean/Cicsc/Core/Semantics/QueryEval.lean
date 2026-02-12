@@ -743,6 +743,9 @@ def combineRows (left right : QueryRow) : QueryRow :=
   let rightFiltered := right.filter (fun kv => !left.any (fun lkv => lkv.fst = kv.fst))
   left ++ rightFiltered
 
+def combineRowsRightPref (left right : QueryRow) : QueryRow :=
+  combineRows right left
+
 -- v2: Field collision handling properties
 -- See LEAN_KERNEL_V2.md §1.1.1 checkbox 3
 
@@ -821,6 +824,16 @@ theorem combineRows_includesRightNonColliding
       exact hlkv
     exact hnotleft lkv.snd this
   · exact hright
+
+theorem combineRowsRightPref_rightPrecedence
+  (left right : QueryRow)
+  (field : String)
+  (leftVal rightVal : Val)
+  (hleft : (field, leftVal) ∈ left)
+  (hright : (field, rightVal) ∈ right) :
+  lookupField (combineRowsRightPref left right) field = rightVal := by
+  unfold combineRowsRightPref
+  exact combineRows_leftPrecedence right left field rightVal leftVal hright hleft
 
 -- v2: Join properties
 -- See LEAN_KERNEL_V2.md §1.1.2
@@ -1212,8 +1225,8 @@ def evalJoin (joinType : JoinType) (leftRows rightRows : List QueryRow) (conditi
       -- Right outer join: all right rows, with matching left rows or left-side null padding.
       rightRows.flatMap (fun r =>
         let matches := leftRows.filterMap (fun l =>
-          let combined := combineRows l r
-          if evalFilterExpr combined condition then some combined else none)
+          let combinedForCond := combineRows l r
+          if evalFilterExpr combinedForCond condition then some (combineRowsRightPref l r) else none)
         if matches.isEmpty then [combineRows r nullLeft] else matches)
   | .fullOuter =>
       -- Full outer join: all rows from both sides, with null padding for non-matches.
