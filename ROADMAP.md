@@ -65,7 +65,7 @@
 ## H. Verification & Audit
 - [x] Add full-tenant verify (not single entity)
 - [x] Add version-stamped verification reports
-- [ ] Add invariant drift detection across versions
+- [x] Add invariant drift detection across versions
 - [ ] Add cryptographic hash of event history + snapshots (optional)
 - [ ] Add audit log export (NDJSON / Parquet)
 
