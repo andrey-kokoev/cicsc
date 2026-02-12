@@ -267,7 +267,8 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
 
 - [x] Conformance theorem is proved for `QueryV4Subset`.
   - Scoped Completion: theorem proved for executable v4 subset with explicit exclusions.
-- [ ] Replay-causality and deterministic replay theorems are stream-aligned.
+- [x] Replay-causality and deterministic replay theorems are stream-aligned.
+  - `CausalityReplay.lean` theorems are parameterized by `sid` and use `inStream`.
 - [ ] Isolation and transaction core guarantees are formalized and proved.
 - [ ] Migration compose/inverse/rollback theorems are present for scoped subset.
 - [ ] Typing fragment has soundness/completeness/principality.
