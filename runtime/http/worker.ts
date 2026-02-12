@@ -64,11 +64,13 @@ export default {
         return Response.json({ ok: true })
       }
 
-      // POST /compile  (returns bundle JSON; does not persist)
+      // POST /compile  (compile + persist bundle, return bundle_hash)
       if (url.pathname === "/compile" && req.method === "POST") {
+        if (!isAuthorized(req, env.BUNDLE_CREATE_TOKEN)) return jsonErr(403, "forbidden: bundle_create")
         const body = await readSpecBody(req)
         const bundle = compileSpecToBundleV0(body)
-        return Response.json({ ok: true, bundle })
+        const stored = await putBundle(env.DB as any, bundle)
+        return Response.json({ ok: true, bundle, bundle_hash: stored.bundle_hash })
       }
 
       // POST /bundle  (stores bundle, returns bundle_hash)
