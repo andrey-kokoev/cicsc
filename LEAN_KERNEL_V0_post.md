@@ -21,7 +21,7 @@ Goal: Lean is the source of truth for CICSC semantics.
 
 ### A2. Typechecker alignment (must-do)
 - [ ] Fix `.get` typing (choose one):
-  - [ ] weak dynamic: `get : Obj → Ty` returns `.tNull` or `.tObj` and treat as total/weak
+  - [x] weak dynamic: `get : Obj → Ty` returns dynamic/top (`.tDyn`) and treat as total/weak
   - [ ] option types: add `tOpt` and make `get : Obj → Opt α` (bigger change)
   - [ ] schema types: object fields typed (largest change)
 - [ ] Add `row.state : tString` as a primitive or VarRef (`.rowState`)
