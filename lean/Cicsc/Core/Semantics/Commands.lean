@@ -16,16 +16,27 @@ def materializePayload (env : Env) (pairs : List (String × Expr)) : List (Strin
 def materializeEvents (env : Env) (es : List (EventType × List (String × Expr))) : List (EventType × Val) :=
   es.map (fun e => (e.fst, .vObj (materializePayload env e.snd)))
 
-def canExecute (cmd : CommandSpec) (env : Env) : Bool :=
-  toBool (evalExpr env cmd.guard)
+def commandRow (st : State) : List (String × Val) :=
+  ("state", .vString st.st) :: (st.attrs ++ st.shadows)
+
+def commandEnv (st : State) (env : Env) : Env :=
+  { env with
+    state := st.st
+    attrs := st.attrs
+    row := commandRow st
+  }
+
+def canExecute (cmd : CommandSpec) (envExec : Env) : Bool :=
+  toBool (evalExpr envExec cmd.guard)
 
 def executeCommand (ts : TypeSpec) (sid : StreamId) (cmdName : String) (st : State) (env : Env) : Option State :=
   match lookupCommand ts cmdName with
   | none => none
   | some cmd =>
-      if !canExecute cmd env then none
+      let envExec := commandEnv st env
+      if !canExecute cmd envExec then none
       else
-        let es := materializeEvents env cmd.emits
+        let es := materializeEvents envExec cmd.emits
         let emittedHistory : History :=
           es.enum.map (fun (ix, e) => {
             tenantId := sid.tenantId
