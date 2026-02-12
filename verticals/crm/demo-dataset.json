@@ -1,0 +1,24 @@
+{
+  "events": [
+    {
+      "tenant_id": "demo",
+      "entity_type": "Lead",
+      "entity_id": "L-1",
+      "seq": 1,
+      "event_type": "lead_created",
+      "payload": { "name": "Acme", "owner_id": "sales-1" },
+      "ts": 1,
+      "actor_id": "sales-1"
+    },
+    {
+      "tenant_id": "demo",
+      "entity_type": "Lead",
+      "entity_id": "L-1",
+      "seq": 2,
+      "event_type": "lead_qualified",
+      "payload": {},
+      "ts": 2,
+      "actor_id": "sales-1"
+    }
+  ]
+}

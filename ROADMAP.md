@@ -127,7 +127,7 @@
 - [x] Provide minimal migration examples (v0 → v1) for each vertical
 - [x] Provide invariant proofs / explanations for each vertical
 - [x] Publish performance envelopes for each vertical (ops/sec, latency under load)
-- [ ] Provide canonical demo datasets for replay verification
+- [x] Provide canonical demo datasets for replay verification
 
 ## P. Formal Semantics and Specification
 
