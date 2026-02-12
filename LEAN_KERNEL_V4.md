@@ -39,6 +39,7 @@ Prove that SQL lowering/execution matches kernel query semantics for the scoped 
   - Added scoped theorem `execSQL_lowerQuery_conforms_execShape` in
     `lean/Cicsc/Sql/Conformance.lean` over executable v4 shape
     (`snap` source + `filter/project/offset/limit`) with explicit expression-bridge hypotheses.
+  - Scoped Completion: theorem currently excludes operators listed in K4.1.6.
 - [x] K4.1.6 Add explicit theorem exclusions list for out-of-scope operators.
   - Added explicit exclusion predicates and specs:
     `outOfScopeQueryOpForExecTheorem`, `outOfScopeExprForExecTheorem`,
@@ -136,6 +137,7 @@ Upgrade migration layer from operational transforms to proved algebraic behavior
     `inverseMigration_roundtrip_event_on_covered` and
     `inverseMigration_roundtrip_state_on_mapped`
     in `lean/Cicsc/Evolution/Migration.lean`.
+  - Scoped Completion: roundtrip proven on covered mappings with explicit lookup premises.
 - [x] K4.4.5 Define rollback semantics for multi-step version chains.
   - Added `applyMigrationChain`, `inverseMigrationChain`, and `rollbackHistory`
     in `lean/Cicsc/Evolution/Migration.lean`.
@@ -170,8 +172,9 @@ Close bidirectional typing for a clearly-scoped expression fragment.
     `lean/Cicsc/Core/Meta/Typecheck.lean`.
 - [x] K4.5.4 Prove inference completeness up to subsumption (`subsumes`).
   - Added `subsumes`, `HasTypeAlg`, and
-    `inferExprTy_complete_up_to_subsumption_v4` in
-    `lean/Cicsc/Core/Meta/Typecheck.lean` (scoped to algorithmic fragment derivations).
+  `inferExprTy_complete_up_to_subsumption_v4` in
+  `lean/Cicsc/Core/Meta/Typecheck.lean` (scoped to algorithmic fragment derivations).
+  - Scoped Completion: completeness currently stated for algorithmic derivations only.
 - [x] K4.5.5 Prove principal type property for the fragment.
   - Added `PrincipalType` and `inferExprTy_principal_v4` in
     `lean/Cicsc/Core/Meta/Typecheck.lean`.
@@ -220,7 +223,8 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
 - [x] K4.7.2 For each completed item, require file+theorem references.
   - Added `Completion References` section mapping each completed checkbox to
     concrete file/theorem (or definition) artifacts.
-- [ ] K4.7.3 Add “Scoped Completion” tags where full generality is deferred.
+- [x] K4.7.3 Add “Scoped Completion” tags where full generality is deferred.
+  - Added scoped tags on `K4.1.5`, `K4.4.4`, and `K4.5.4`.
 - [ ] K4.7.4 Add CI check that rejects `[x]` items missing references.
 
 ### Acceptance
