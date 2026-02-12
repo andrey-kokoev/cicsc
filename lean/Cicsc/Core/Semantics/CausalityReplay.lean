@@ -138,4 +138,47 @@ theorem replayFold_swap_adjacent_concurrent
     exact hcomm st0 e1 e2 hconc
   simp [List.foldl_append, st0, hswap]
 
+inductive CausallyEquivalent : History → History → Prop where
+  | refl (h : History) : CausallyEquivalent h h
+  | swap (pre post : List Event) (e1 e2 : Event) :
+      concurrent e1 e2 →
+      CausallyEquivalent (pre ++ e1 :: e2 :: post) (pre ++ e2 :: e1 :: post)
+  | trans {h1 h2 h3 : History} :
+      CausallyEquivalent h1 h2 →
+      CausallyEquivalent h2 h3 →
+      CausallyEquivalent h1 h3
+
+theorem replayFold_causallyEquivalent
+  (ts : TypeSpec)
+  (st : State)
+  (h1 h2 : History)
+  (hce : CausallyEquivalent h1 h2)
+  (hcomm : CommutesOnConcurrent ts) :
+  h1.foldl (fun acc e => applyReducer ts acc e) st =
+    h2.foldl (fun acc e => applyReducer ts acc e) st := by
+  induction hce with
+  | refl h =>
+      rfl
+  | swap pre post e1 e2 hconc =>
+      simpa using replayFold_swap_adjacent_concurrent ts st pre post e1 e2 hconc hcomm
+  | trans h12 h23 ih12 ih23 =>
+      exact ih12.trans ih23
+
+theorem replay_deterministic_on_causallyEquivalent_streams
+  (ir : IR)
+  (sid : StreamId)
+  (h1 h2 : History)
+  (ts : TypeSpec)
+  (hlookup : lookupTypeSpec ir sid.entityType = some ts)
+  (hce : CausallyEquivalent (h1.filter (inStream sid)) (h2.filter (inStream sid)))
+  (hcomm : CommutesOnConcurrent ts) :
+  replay ir sid h1 = replay ir sid h2 := by
+  unfold replay
+  simp [hlookup]
+  exact replayFold_causallyEquivalent ts (initialState ts)
+    (h1.filter (inStream sid))
+    (h2.filter (inStream sid))
+    hce
+    hcomm
+
 end Cicsc.Core

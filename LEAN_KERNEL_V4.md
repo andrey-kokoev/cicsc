@@ -73,7 +73,11 @@ Make replay-causality statements semantically aligned with stream-aware replay a
 - [x] K4.2.4 Prove replay order independence under `CommutesOnConcurrent`.
   - Added `replayFold_swap_adjacent_concurrent` in
     `lean/Cicsc/Core/Semantics/CausalityReplay.lean` (adjacent swap lemma).
-- [ ] K4.2.5 Prove deterministic replay for causally-equivalent histories.
+- [x] K4.2.5 Prove deterministic replay for causally-equivalent histories.
+  - Added `CausallyEquivalent` plus
+    `replayFold_causallyEquivalent` and
+    `replay_deterministic_on_causallyEquivalent_streams`
+    in `lean/Cicsc/Core/Semantics/CausalityReplay.lean`.
 
 ### Acceptance
 - [ ] No replay-causality theorem relies on unstated semantic mismatch.
