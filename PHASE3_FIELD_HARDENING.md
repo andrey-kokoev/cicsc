@@ -6,7 +6,7 @@ This phase executes post-v1.5 hardening before new research axes.
 ## 0. Phase Rules
 
 - [x] 0.1 Add execution contract for one-checkbox/one-commit discipline.
-- [ ] 0.2 Add per-checkbox Definition of Done aligned with AGENTS and roadmap agreement.
+- [x] 0.2 Add per-checkbox Definition of Done aligned with AGENTS and roadmap agreement.
 
 ### Execution Contract
 
@@ -19,6 +19,21 @@ This phase executes post-v1.5 hardening before new research axes.
   - `Docs: <paths changed>`
 - A checkbox is not marked complete without verification evidence.
 - If a checkbox is blocked, record blocker in this file and do not mark complete.
+
+### Definition of Done (Per Checkbox)
+
+A checkbox is complete only when all are true:
+
+- Code or docs for that checkbox are implemented.
+- Relevant typechecker/static guards are updated when semantics change.
+- Required tests are added/updated:
+  - oracle tests, and/or
+  - SQL-vs-oracle conformance tests, and/or
+  - typechecker negative tests, and/or
+  - schema/runtime regression tests.
+- No bundle-specific hacks are introduced.
+- Behavior/semantic docs are updated when externally visible behavior changes.
+- Verification evidence is present in commit message (`Proof/Test:` line).
 
 ## 1. Stabilization Gate (must pass before pilot)
 
