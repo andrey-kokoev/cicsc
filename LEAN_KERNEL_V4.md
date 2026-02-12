@@ -124,7 +124,9 @@ Formalize transaction visibility/isolation semantics and prove baseline guarante
 - [x] Isolation semantics compile and are used by at least one example theorem.
   - Example: `snapshotAt_ignores_other_stream_writes` in
     `lean/Cicsc/Core/Semantics/Isolation.lean`.
-- [ ] Conflict theorem includes explicit preconditions and failure mode.
+- [x] Conflict theorem includes explicit preconditions and failure mode.
+  - `writeWrite_conflict_abort_or_serialize` takes `hconflict` precondition and
+    resolves to explicit `TxConflictOutcome`.
 
 ---
 
