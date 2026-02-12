@@ -89,7 +89,9 @@ Make replay-causality statements semantically aligned with stream-aware replay a
 - [x] No replay-causality theorem relies on unstated semantic mismatch.
   - Bridge lemmas in `lean/Cicsc/Core/Semantics/CausalityReplay.lean`
     explicitly connect `isCausal` statements to replay stream filtering.
-- [ ] All causality theorems reference stream identity (`tenantId/entityType/entityId`) explicitly.
+- [x] All causality theorems reference stream identity (`tenantId/entityType/entityId`) explicitly.
+  - `inStream sid` is threaded through replay-causality theorems in
+    `lean/Cicsc/Core/Semantics/CausalityReplay.lean`.
 
 ---
 
