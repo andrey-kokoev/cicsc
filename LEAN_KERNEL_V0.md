@@ -143,6 +143,7 @@ For v0 snapshot constraints only, show:
 Bool-query status in v0:
 - query evaluation is currently a placeholder (`rows.length`-based)
 - no theorem should claim full bool-query semantic adequacy until `Query` semantics are formalized
+- code-level split: `holdsAllKernelConstraints` (proved surface, snapshot-only) vs `holdsAllConstraintsV0` (includes bool_query stub)
 
 ---
 
