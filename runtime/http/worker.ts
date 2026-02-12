@@ -5,16 +5,14 @@ import { executeCommandTx } from "../execute-command-tx"
 import type { VmIntrinsics } from "../../core/vm/eval"
 
 import { SqliteD1Adapter } from "../../adapters/sqlite/src/adapter"
-import type { CoreIrBundleV0, CoreIrV0 } from "../../core/ir/types"
-import { validateBundleV0 } from "../../core/ir/validate"
+import type { CoreIrV0 } from "../../core/ir/types"
 import { verifyHistoryAgainstIr } from "../../core/runtime/verify"
 import { activateVersion } from "../db/activate-version"
-import ticketingBundle from "../../bundles/ticketing.v0.json"
 import { compileSpecToBundleV0, readSpecBody } from "./compile"
+import { loadTenantBundle } from "./tenant-bundle"
 
 export interface Env {
   DB: D1Database
-  CICSC_BUNDLE?: string // JSON string of CoreIrBundleV0 (for now). Later: fetch from KV/R2.
 }
 
 type D1Database = {
@@ -27,9 +25,6 @@ export default {
   async fetch (req: Request, env: Env): Promise<Response> {
     try {
       const url = new URL(req.url)
-
-      const bundle = loadBundle(env)
-      const ir = bundle.core_ir as CoreIrV0
 
       const adapter = new SqliteD1Adapter(env.DB as any)
       const store = makeD1Store({ adapter })
@@ -52,10 +47,12 @@ export default {
       if (url.pathname === "/install" && req.method === "POST") {
         const body = (await req.json().catch(() => ({}))) as any
         const tenant_id = String(body.tenant_id ?? "t")
+        const loaded = await loadTenantBundle(env.DB as any, tenant_id)
+        const ir = loaded.bundle.core_ir as CoreIrV0
         await activateVersion({
           db: env.DB as any,
           ir,
-          version: 0,
+          version: loaded.active_version,
           tenant_id,
           setActiveVersion: store.setActiveVersion,
         })
@@ -107,6 +104,8 @@ export default {
           body.dedupe_window_seconds == null ? undefined : Number(body.dedupe_window_seconds)
 
         const now = Math.floor(Date.now() / 1000)
+        const loaded = await loadTenantBundle(env.DB as any, tenant_id)
+        const ir = loaded.bundle.core_ir as CoreIrV0
 
         const result = await executeCommandTx({
           ir,
@@ -138,6 +137,8 @@ export default {
       if (viewMatch && req.method === "GET") {
         const view_name = decodeURIComponent(viewMatch[1]!)
         const tenant_id = url.searchParams.get("tenant_id") ?? "t"
+        const loaded = await loadTenantBundle(env.DB as any, tenant_id)
+        const ir = loaded.bundle.core_ir as CoreIrV0
         const result = await store.execView({ tenant_id, ir, view_name, args: {} })
         return Response.json({ ok: true, result })
       }
@@ -146,6 +147,8 @@ export default {
       if (url.pathname === "/verify" && req.method === "POST") {
         const body = (await req.json().catch(() => ({}))) as any
         const tenant_id = String(body.tenant_id ?? "t")
+        const loaded = await loadTenantBundle(env.DB as any, tenant_id)
+        const ir = loaded.bundle.core_ir as CoreIrV0
         const entity_type = String(body.entity_type ?? "")
         const entity_id = String(body.entity_id ?? "")
         const limit = Math.max(1, Math.min(Number(body.limit ?? 5000), 20000))
@@ -184,18 +187,6 @@ export default {
       return jsonErr(500, e?.message ?? "error")
     }
   },
-}
-
-function loadBundle (env: Env): CoreIrBundleV0 {
-  if (env.CICSC_BUNDLE) {
-    const parsed = JSON.parse(env.CICSC_BUNDLE)
-    const v = validateBundleV0(parsed)
-    if (!v.ok) throw new Error(`invalid bundle: ${v.errors[0]?.path ?? "?"} ${v.errors[0]?.message ?? ""}`)
-    return v.value
-  }
-  const v = validateBundleV0(ticketingBundle as any)
-  if (!v.ok) throw new Error("invalid embedded bundle")
-  return v.value
 }
 
 function jsonErr (status: number, message: string) {
