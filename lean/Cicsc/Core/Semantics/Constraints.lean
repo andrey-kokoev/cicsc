@@ -10,6 +10,14 @@ def isSnapshotConstraint : Constraint → Bool
   | .snapshot _ _ => true
   | .boolQuery _ _ _ => false
 
+def snapshotEnv (st : State) : Env := {
+  now := 0
+  actor := ""
+  state := st.st
+  attrs := st.attrs
+  row := mkRow st
+}
+
 def assertExprRowsCountArgsOnly : Expr → Bool
   | .litBool _ => true
   | .litInt _ => true
@@ -41,14 +49,15 @@ def assertExprRowsCountArgsOnly : Expr → Bool
 def evalSnapshotConstraint (c : Constraint) (st : State) : Bool :=
   match c with
   | .snapshot _onType expr =>
-      toBool (evalExpr {
-        now := 0
-        actor := ""
-        state := st.st
-        attrs := st.attrs
-        row := mkRow st
-      } expr)
+      toBool (evalExpr (snapshotEnv st) expr)
   | _ => true
+
+theorem snapshotEnv_usesStateRowAttrs
+  (st : State) :
+  (snapshotEnv st).state = st.st ∧
+  (snapshotEnv st).attrs = st.attrs ∧
+  (snapshotEnv st).row = mkRow st := by
+  simp [snapshotEnv]
 
 -- bool_query semantics over the supported relational query subset.
 def evalBoolQueryConstraintSubset (ir : IR) (c : Constraint) (rows : List State) : Bool :=

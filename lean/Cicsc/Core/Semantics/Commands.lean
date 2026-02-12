@@ -33,6 +33,14 @@ def commandEnv (st : State) (env : Env) : Env :=
     row := mkRow st
   }
 
+theorem commandEnv_usesStateRowAttrs
+  (st : State)
+  (env : Env) :
+  (commandEnv st env).state = st.st ∧
+  (commandEnv st env).attrs = st.attrs ∧
+  (commandEnv st env).row = mkRow st := by
+  simp [commandEnv]
+
 def canExecute (cmd : CommandSpec) (envExec : Env) : Bool :=
   toBool (evalExpr envExec cmd.guard)
 

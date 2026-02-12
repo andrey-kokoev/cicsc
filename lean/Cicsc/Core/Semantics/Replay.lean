@@ -35,22 +35,32 @@ def applyOp (env : Env) (st : State) : ReducerOp → State
   | .setShadow name expr =>
       { st with shadows := setField st.shadows name (evalExpr env expr) }
 
+def reducerEnv (st : State) (e : Event) : Env := {
+  now := e.ts
+  actor := e.actor
+  state := st.st
+  attrs := st.attrs
+  row := mkRow st
+  eventCtx := some {
+    eType := e.eventType
+    eActor := e.actor
+    eTime := e.ts
+    ePayload := e.payload
+  }
+}
+
 def applyReducer (ts : TypeSpec) (st : State) (e : Event) : State :=
   let ops := lookupReducerOps ts e.eventType
-  let env : Env := {
-    now := e.ts
-    actor := e.actor
-    state := st.st
-    attrs := st.attrs
-    row := mkRow st
-    eventCtx := some {
-      eType := e.eventType
-      eActor := e.actor
-      eTime := e.ts
-      ePayload := e.payload
-    }
-  }
+  let env := reducerEnv st e
   ops.foldl (fun acc op => applyOp env acc op) st
+
+theorem reducerEnv_usesStateRowAttrs
+  (st : State)
+  (e : Event) :
+  (reducerEnv st e).state = st.st ∧
+  (reducerEnv st e).attrs = st.attrs ∧
+  (reducerEnv st e).row = mkRow st := by
+  simp [reducerEnv]
 
 def initialState (ts : TypeSpec) : State :=
   { st := ts.initialState, attrs := [], shadows := [] }

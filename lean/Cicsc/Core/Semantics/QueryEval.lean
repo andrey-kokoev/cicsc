@@ -19,6 +19,11 @@ def rowEnv (row : QueryRow) : Env := {
   row := row
 }
 
+theorem rowEnv_usesRowAndState
+  (row : QueryRow) :
+  (rowEnv row).row = row ∧ (rowEnv row).state = rowStateValue row := by
+  simp [rowEnv]
+
 def evalFilterExpr (row : QueryRow) (e : Expr) : Bool :=
   toBool (evalExpr (rowEnv row) e)
 

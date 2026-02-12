@@ -8,6 +8,7 @@ import Cicsc.Core.Semantics.Constraints
 import Cicsc.Core.Semantics.Commands
 import Cicsc.Core.Meta.Typecheck
 import Cicsc.Core.Meta.WF
+import Cicsc.Core.Meta.EnvCoherence
 import Cicsc.Evolution.Migration
 import Cicsc.Evolution.Naturality
 import Cicsc.Examples.Ticketing

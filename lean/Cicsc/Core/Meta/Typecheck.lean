@@ -171,6 +171,14 @@ def mkStateEnv (ts : TypeSpec) : Option TypeEnv :=
               (some rowWithAttrs)
           rowWithShadowsRes
 
+def stateTypeEnv (ts : TypeSpec) : Option TypeEnv :=
+  mkStateEnv ts
+
+def commandTypeEnv (ts : TypeSpec) (cmd : CommandSpec) : Option TypeEnv :=
+  match stateTypeEnv ts, mkInputEnv cmd.input with
+  | some Γstate, some Γinput => some (Γinput ++ Γstate)
+  | _, _ => none
+
 def checkTypeSpecNames (ts : TypeSpec) : Bool :=
   !hasReservedRowFieldCollision ts && !hasRowNameCollision ts
 
@@ -178,13 +186,13 @@ def checkTypeSpec (ts : TypeSpec) : Bool :=
   if !checkTypeSpecNames ts then
     false
   else
-    match mkStateEnv ts with
+    match stateTypeEnv ts with
     | none => false
     | some Γstate =>
         let okCommands := ts.commands.all (fun kv =>
-          match mkInputEnv kv.snd.input with
+          match commandTypeEnv ts kv.snd with
           | none => false
-          | some Γinput => checkCommand (Γinput ++ Γstate) kv.snd)
+          | some Γcmd => checkCommand Γcmd kv.snd)
         let okReducers := ts.reducer.all (fun kv => kv.snd.all (checkReducerOp Γstate))
         okCommands && okReducers
 
