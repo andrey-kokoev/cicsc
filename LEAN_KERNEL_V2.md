@@ -79,7 +79,9 @@ v2 adds semantic coverage for:
 - [x] Extend `Source` to support multiple snap sources
   - `Source.join` supports recursive multi-source trees.
   - `multiSnapSource` in `lean/Cicsc/Core/Semantics/QueryEval.lean` constructs multi-snap join sources.
-- [ ] Define join ordering and optimization hints (logical plan vs physical plan split)
+- [x] Define join ordering and optimization hints (logical plan vs physical plan split)
+  - `JoinOrder`, `PhysicalHints`, `LogicalPlan`, and `PhysicalPlan` are defined in `lean/Cicsc/Core/Syntax.lean`.
+  - `applyJoinOrder`, `logicalToPhysical`, and `evalPhysicalPlan` are defined in `lean/Cicsc/Core/Semantics/QueryEval.lean`.
 - [ ] Prove plan equivalence for different join orders (when semantically identical)
 
 **Acceptance:**
