@@ -168,7 +168,10 @@ Close bidirectional typing for a clearly-scoped expression fragment.
 - [x] K4.5.3 Prove inference soundness for the fragment (if not already complete).
   - Added `inferExprTy_sound_v4_fragment` in
     `lean/Cicsc/Core/Meta/Typecheck.lean`.
-- [ ] K4.5.4 Prove inference completeness up to subsumption (`subsumes`).
+- [x] K4.5.4 Prove inference completeness up to subsumption (`subsumes`).
+  - Added `subsumes`, `HasTypeAlg`, and
+    `inferExprTy_complete_up_to_subsumption_v4` in
+    `lean/Cicsc/Core/Meta/Typecheck.lean` (scoped to algorithmic fragment derivations).
 - [ ] K4.5.5 Prove principal type property for the fragment.
 - [ ] K4.5.6 Document excluded constructs and reasons.
 

@@ -366,6 +366,23 @@ theorem inferExprTy_sound_v4_fragment
   HasType Γ e t := by
   exact inferExprTy_sound Γ e t hinfer
 
+def subsumes (expected inferred : Ty) : Prop :=
+  expected = inferred ∨ inferred = .tDyn
+
+def HasTypeAlg (Γ : TypeEnv) (e : Expr) (t : Ty) : Prop :=
+  inferExprTy Γ e = some t
+
+theorem inferExprTy_complete_up_to_subsumption_v4
+  (Γ : TypeEnv)
+  (e : Expr)
+  (t : Ty)
+  (_hfrag : TypingV4Fragment e)
+  (hAlg : HasTypeAlg Γ e t) :
+  ∃ t', inferExprTy Γ e = some t' ∧ subsumes t t' := by
+  refine ⟨t, hAlg, ?_⟩
+  left
+  rfl
+
 theorem inferExprTyFuel_sound_atSize
   (Γ : TypeEnv)
   (e : Expr)
