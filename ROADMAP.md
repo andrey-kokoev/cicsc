@@ -94,7 +94,7 @@
 - [x] Add audit trail for policy changes
 
 ## L. Documentation & Proofs
-- [ ] Formalize constructive invariance proof sketch for v0
+- [x] Formalize constructive invariance proof sketch for v0
 - [ ] Add semantics reference for core calculus (Expr, Query, Reducer)
 - [ ] Add adapter conformance checklist
 - [ ] Add “how to build a vertical” guide
