@@ -53,11 +53,27 @@ def StepCommutes
     step irFrom typeName s e = some s' →
     stepMigrated irTo typeName ms (migrateState ms s) e = some (migrateState ms s')
 
+theorem step_total_of_lookup
+  (ir : IR)
+  (typeName : String)
+  (s : State)
+  (e : Event)
+  (hex : ∃ ts, lookupTypeSpec ir typeName = some ts) :
+  ∃ s', step ir typeName s e = some s' := by
+  rcases hex with ⟨ts, hts⟩
+  unfold step
+  by_cases heq : e.entityType = typeName
+  · refine ⟨applyReducer ts s e, ?_⟩
+    simp [hts, heq]
+  · refine ⟨s, ?_⟩
+    simp [hts, heq]
+
 structure RestrictedMigrationClass
   (irFrom irTo : IR)
   (typeName : String)
   (ms : MigrationSpec) : Prop where
   wf : WFMigration ms irFrom irTo
+  appliesToType : typeName = ms.entityType
   noPayload : NoPayloadTransforms ms
   stateRenameOnly : StateLabelRenamesOnly ms
   stepCommutes : StepCommutes irFrom irTo typeName ms
@@ -66,9 +82,12 @@ theorem replay_commutes
   (irFrom irTo : IR)
   (typeName : String)
   (ms : MigrationSpec)
-  (_hWf : WFMigration ms irFrom irTo)
+  (hWf : WFMigration ms irFrom irTo)
+  (happlies : typeName = ms.entityType)
   (hstep : StepCommutes irFrom irTo typeName ms) :
   ∀ (h : History) (s0 : State), Commutes irFrom irTo typeName ms s0 h := by
+  have hsrc : ∃ ts, lookupTypeSpec irFrom typeName = some ts := by
+    simpa [happlies] using wfMigration_sourceTypeExists ms irFrom irTo hWf
   intro h
   induction h with
   | nil =>
@@ -78,15 +97,12 @@ theorem replay_commutes
   | cons e hs ih =>
       intro s0
       unfold Commutes replayMigratedFromState replayFromState
-      cases hstep0 : step irFrom typeName s0 e with
-      | none =>
-          simp [hstep0]
-      | some s1 =>
-          have hmig :
-            stepMigrated irTo typeName ms (migrateState ms s0) e = some (migrateState ms s1) :=
-            hstep s0 s1 e hstep0
-          simp [hstep0, hmig]
-          exact ih s1
+      rcases step_total_of_lookup irFrom typeName s0 e hsrc with ⟨s1, hstep0⟩
+      have hmig :
+        stepMigrated irTo typeName ms (migrateState ms s0) e = some (migrateState ms s1) :=
+        hstep s0 s1 e hstep0
+      simp [hstep0, hmig]
+      exact ih s1
 
 theorem replay_commutes_restricted
   (irFrom irTo : IR)
@@ -94,6 +110,6 @@ theorem replay_commutes_restricted
   (ms : MigrationSpec)
   (hclass : RestrictedMigrationClass irFrom irTo typeName ms) :
   ∀ (h : History) (s0 : State), Commutes irFrom irTo typeName ms s0 h := by
-  exact replay_commutes irFrom irTo typeName ms hclass.wf hclass.stepCommutes
+  exact replay_commutes irFrom irTo typeName ms hclass.wf hclass.appliesToType hclass.stepCommutes
 
 end Cicsc.Evolution

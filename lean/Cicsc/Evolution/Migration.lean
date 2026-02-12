@@ -47,6 +47,12 @@ def sourceEventTypes (irFrom : IR) (typeName : String) : List String :=
 def eventCovered (ms : MigrationSpec) (eventType : String) : Prop :=
   ∃ t ∈ ms.transforms, t.source = eventType
 
+def eventCoveredOrDropped (ms : MigrationSpec) (eventType : String) : Prop :=
+  ∃ t ∈ ms.transforms, t.source = eventType
+
+def TotalOnTypeCoverage (ms : MigrationSpec) (irFrom : IR) : Prop :=
+  ∀ et, et ∈ sourceEventTypes irFrom ms.entityType → eventCoveredOrDropped ms et
+
 def targetReducerExists (irTo : IR) (typeName targetEventType : String) : Prop :=
   ∃ ts ops, lookupTypeSpec irTo typeName = some ts ∧ (targetEventType, ops) ∈ ts.reducer
 
@@ -56,8 +62,22 @@ def targetStateValid (irTo : IR) (typeName targetState : String) : Prop :=
 def WFMigration (ms : MigrationSpec) (irFrom irTo : IR) : Prop :=
   ms.fromVersion = irFrom.version ∧
   ms.toVersion = irTo.version ∧
+  (∃ tsFrom, lookupTypeSpec irFrom ms.entityType = some tsFrom) ∧
+  (∃ tsTo, lookupTypeSpec irTo ms.entityType = some tsTo) ∧
   (∀ tr, tr ∈ ms.transforms → tr.drop = false → targetReducerExists irTo ms.entityType tr.target) ∧
   (∀ kv, kv ∈ ms.stateMap → targetStateValid irTo ms.entityType kv.snd)
+
+theorem wfMigration_sourceTypeExists
+  (ms : MigrationSpec) (irFrom irTo : IR)
+  (hWf : WFMigration ms irFrom irTo) :
+  ∃ tsFrom, lookupTypeSpec irFrom ms.entityType = some tsFrom := by
+  exact hWf.2.2.1
+
+theorem wfMigration_targetTypeExists
+  (ms : MigrationSpec) (irFrom irTo : IR)
+  (hWf : WFMigration ms irFrom irTo) :
+  ∃ tsTo, lookupTypeSpec irTo ms.entityType = some tsTo := by
+  exact hWf.2.2.2.1
 
 def NoPayloadTransforms (ms : MigrationSpec) : Prop :=
   ∀ e e', migrateEvent ms e = some e' → e'.payload = e.payload
