@@ -44,7 +44,7 @@ v1 is defined by **alignment**, **tightened typing**, and **non-stub query seman
 - [ ] Enforce it in `WFTypeSpec` (see §3)
 
 ### 1.3 Replay semantics unification
-- [ ] Replace Evolution’s `step` and `replayFromState` to be StreamId-based:
+- [x] Replace Evolution’s `step` and `replayFromState` to be StreamId-based:
   - `step : IR → StreamId → State → Event → Option State`
   - applies reducer iff `inStream sid e`
 - [ ] Define `replayFromState` in terms of the same `step`
