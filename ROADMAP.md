@@ -10,7 +10,7 @@
 - [x] Add command deduplication windowing (optional: TTL for receipts)
 
 ## B. IR Soundness & Type Safety
-- [ ] Wire IR typechecker into validateBundleV0 and worker load path
+- [x] Wire IR typechecker into validateBundleV0 and worker load path
 - [ ] Reject bundles referencing non-materialized row fields (enforced)
 - [ ] Enforce shadow column type consistency across types
 - [ ] Enforce reducer writes only to declared attrs/shadows
