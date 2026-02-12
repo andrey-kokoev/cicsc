@@ -39,7 +39,7 @@ v1 is defined by **alignment**, **tightened typing**, and **non-stub query seman
 
 ### 1.2 Reserved field rule
 - [x] Define reserved keys: `["state"]` (v1)
-- [ ] Add `NoReservedCollisions : TypeSpec → Prop`
+- [x] Add `NoReservedCollisions : TypeSpec → Prop`
   - forbids attr/shadow named `"state"`
 - [ ] Enforce it in `WFTypeSpec` (see §3)
 
