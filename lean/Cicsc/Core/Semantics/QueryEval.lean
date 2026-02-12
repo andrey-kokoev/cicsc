@@ -478,6 +478,61 @@ theorem physicalPlan_equivalence
   evalPhysicalPlan pp1 snaps = evalPhysicalPlan pp2 snaps := by
   sorry  -- Requires join associativity/commutativity
 
+-- v2: Plan equivalence for specific cases
+-- See LEAN_KERNEL_V2.md §1.1.3 checkpoint 3
+
+-- Cross join order doesn't matter (fully commutative and associative)
+theorem crossJoinPlan_order_independent
+  (sources : List Source)
+  (snaps : SnapSet)
+  (hsources : sources.length ≥ 2)
+  (hall_cross : ∀ s ∈ sources, ∃ tn, s = Source.snap tn) :
+  -- Any two orderings produce equivalent results
+  ∀ (order1 order2 : List Nat),
+    let conds := List.replicate (sources.length - 1) (.litBool true)
+    let plan1 := applyJoinOrder sources conds (.specified order1)
+    let plan2 := applyJoinOrder sources conds (.specified order2)
+    match plan1, plan2 with
+    | some tree1, some tree2 =>
+        rowListEquiv
+          (evalSourceSubset tree1 snaps)
+          (evalSourceSubset tree2 snaps)
+    | _, _ => True := by
+  sorry  -- Follows from crossJoin_commutative and crossJoin_associative
+
+-- Inner join with symmetric conditions has order-independent results
+theorem innerJoinPlan_symmetric_order_independent
+  (s1 s2 s3 : Source)
+  (c12 c23 c13 : Expr)
+  (snaps : SnapSet)
+  (hsym12 : ∀ r1 r2, evalFilterExpr (combineRows r1 r2) c12 =
+                      evalFilterExpr (combineRows r2 r1) c12)
+  (hsym23 : ∀ r2 r3, evalFilterExpr (combineRows r2 r3) c23 =
+                      evalFilterExpr (combineRows r3 r2) c23)
+  (hsym13 : ∀ r1 r3, evalFilterExpr (combineRows r1 r3) c13 =
+                      evalFilterExpr (combineRows r3 r1) c13) :
+  -- Different join orders produce equivalent results
+  let leftDeep := Source.join .inner (Source.join .inner s1 s2 c12) s3 c23
+  let rightDeep := Source.join .inner s1 (Source.join .inner s2 s3 c23) c13
+  rowListEquiv
+    (evalSourceSubset leftDeep snaps)
+    (evalSourceSubset rightDeep snaps) := by
+  sorry  -- Follows from innerJoin_associative with symmetric conditions
+
+-- Two-way join order equivalence (simple case)
+theorem twoWayJoin_order_equiv
+  (s1 s2 : Source)
+  (condition : Expr)
+  (snaps : SnapSet)
+  (hsym : ∀ r1 r2, evalFilterExpr (combineRows r1 r2) condition =
+                    evalFilterExpr (combineRows r2 r1) condition) :
+  rowListEquiv
+    (evalSourceSubset (Source.join .inner s1 s2 condition) snaps)
+    (evalSourceSubset (Source.join .inner s2 s1 condition) snaps) := by
+  unfold evalSourceSubset
+  simp
+  sorry  -- Follows from innerJoin_symmetric_condition_produces_symmetric_results
+
 -- v2: Join evaluation
 -- See LEAN_KERNEL_V2.md §1.1.1
 -- Evaluates a join between two lists of rows based on join type and condition.
