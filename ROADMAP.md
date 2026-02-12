@@ -135,7 +135,7 @@
 - [x] Write formal semantics of constraint evaluation (snapshot + bool_query)
 - [x] Write formal definition of backend conformance (oracle equivalence)
 - [x] Write formal definition of migration correctness (commuting diagrams)
-- [ ] Specify the Core IR grammar and typing rules
+- [x] Specify the Core IR grammar and typing rules
 - [ ] Specify Spec DSL grammar and desugaring rules
 - [ ] Define versioning and compatibility rules
 - [ ] Publish spec as normative reference document
