@@ -48,6 +48,25 @@ structure State where
   shadows : ShadowMap := []
 deriving Repr, DecidableEq
 
+structure Event where
+  tenantId : String
+  entityType : String
+  entityId : String
+  seq : Nat
+  eventType : String
+  payload : Val
+  ts : Nat
+  actor : String
+deriving Repr, DecidableEq
+
+abbrev History := List Event
+
+structure StreamId where
+  tenantId : String
+  entityType : String
+  entityId : String
+deriving Repr, DecidableEq
+
 def valTy : Val → Ty
   | .vBool _ => .tBool
   | .vInt _ => .tInt
