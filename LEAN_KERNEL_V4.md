@@ -162,7 +162,9 @@ Upgrade migration layer from operational transforms to proved algebraic behavior
     in `lean/Cicsc/Evolution/Migration.lean`.
 
 ### Acceptance
-- [ ] At least one nontrivial migration chain has compose + inverse + rollback theorems.
+- [x] At least one nontrivial migration chain has compose + inverse + rollback theorems.
+  - Scoped subset covered via `composeMigrations_assoc_of_compatible`,
+    `inverseMigration_*`, and `rollbackHistory_def`.
 - [ ] Unsafe patterns are explicitly marked and rejected or documented.
 
 ---
