@@ -59,7 +59,7 @@
 - [x] Implement history transformer (events_vN → events_vN+1)
 - [x] Implement replay verification for migrations
 - [x] Implement cutover protocol (dual-write or pause + migrate + resume)
-- [ ] Enforce migration totality + executability (reject partial migrations)
+- [x] Enforce migration totality + executability (reject partial migrations)
 - [ ] Add migration conformance tests (oracle replay before/after)
 
 ## H. Verification & Audit
