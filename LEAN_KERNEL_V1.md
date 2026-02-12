@@ -61,7 +61,6 @@ v1 chooses a conservative rule:
 - `.get e path` typechecks iff `e : tObj`
 - result type is `tNull` (i.e., “may return null”), unless/until object schemas exist
 
-- [ ] Fix `inferExprTyFuel` `.get` clause:
 - [x] Fix `inferExprTyFuel` `.get` clause:
   - from “always none” to “if e : tObj then some tNull else none”
 - [ ] Add corresponding declarative typing constructor in `HasType` (optional)
