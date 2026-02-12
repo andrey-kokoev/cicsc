@@ -165,7 +165,7 @@
 
 - [x] Write technical whitepaper / preprint describing CICSC
 - [x] Prepare design note series (core calculus, migrations, conformance)
-- [ ] Prepare reference implementation walkthroughs
+- [x] Prepare reference implementation walkthroughs
 - [ ] Publish annotated examples for canonical verticals
 - [ ] Provide teaching material for Spec DSL
 - [ ] Curate “anti-patterns” and failure modes catalog
