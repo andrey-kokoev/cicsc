@@ -235,7 +235,8 @@ v2 adds semantic coverage for:
   - All query operators (filter, project, join, groupBy, etc.)
   - Edge cases (empty results, NULLs, type coercion)
   - Nested queries and correlated subqueries
-- [ ] Integrate into CI: fail build if Lean oracle ≠ SQL execution
+- [x] Integrate into CI: fail build if Lean oracle ≠ SQL execution
+  - `scripts/phase3_ci_target.sh` now runs `tests/conformance/sqlite-random-vs-oracle.test.ts` in addition to existing SQL-vs-oracle suites.
 
 **Acceptance:**
 - Differential tests exist and pass
