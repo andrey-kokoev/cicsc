@@ -65,7 +65,7 @@ v1 chooses a conservative rule:
 - [x] Fix `inferExprTyFuel` `.get` clause:
   - from “always none” to “if e : tObj then some tNull else none”
 - [ ] Add corresponding declarative typing constructor in `HasType` (optional)
-- [ ] Ensure `.has` remains `Obj → Bool`
+- [x] Ensure `.has` remains `Obj → Bool`
 
 ### 2.2 Row and state typing coherence
 - [ ] Introduce a dedicated VarRef for state-as-row OR type env entry:
