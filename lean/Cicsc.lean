@@ -12,3 +12,4 @@ import Cicsc.Evolution.Migration
 import Cicsc.Evolution.Naturality
 import Cicsc.Examples.Ticketing
 import Cicsc.Examples.Kanban
+import Cicsc.Examples.QueryConstraints

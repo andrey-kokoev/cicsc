@@ -171,7 +171,7 @@ Acceptance: bool_query constraints depend on actual query evaluation for the sup
 ## 7. Examples v1
 
 - [x] Update Ticketing and Kanban examples to use `mkRow` and WF constraints
-- [ ] Add one bool_query example that is nontrivial under QueryEval subset
+- [x] Add one bool_query example that is nontrivial under QueryEval subset
 - [ ] Add one migration proof that does not require `RestrictedMigrationClass` hypothesis (derives step commutation)
 
 ---
