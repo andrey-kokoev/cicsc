@@ -779,6 +779,30 @@ theorem any_correlated_flatten
   unfold anySubquery evalCorrelatedSubquery
   simp
 
+theorem selection_pushdown_cross_left
+  (left right : List QueryRow)
+  (pred : Expr)
+  (hleftOnly : ∀ l r, evalFilterExpr (combineRows l r) pred = evalFilterExpr l pred) :
+  (evalJoin .cross left right (.litBool true)).filter (fun row => evalFilterExpr row pred) =
+    evalJoin .cross (left.filter (fun l => evalFilterExpr l pred)) right (.litBool true) := by
+  unfold evalJoin
+  ext row
+  constructor
+  · intro h
+    simp at h
+    rcases h with ⟨l, hl, r, hr, hrow, hpred⟩
+    subst hrow
+    simp [hleftOnly l r] at hpred
+    simp
+    exact ⟨l, ⟨hl, hpred⟩, r, hr, rfl⟩
+  · intro h
+    simp at h
+    rcases h with ⟨l, hl, r, hr, hrow⟩
+    rcases hl with ⟨hlmem, hlpred⟩
+    subst hrow
+    simp
+    exact ⟨l, hlmem, r, hr, rfl, by simpa [hleftOnly l r] using hlpred⟩
+
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .project fields, rows => rows.map (fun r => evalProject r fields)

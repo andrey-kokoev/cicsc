@@ -157,7 +157,8 @@ v2 adds semantic coverage for:
     - `any_correlated_flatten`
 
 #### 1.3.3 Relational Algebra Equivalences
-- [ ] Prove selection pushdown: `σ(a ⋈ b) = σ(a) ⋈ b` (when predicate references only a)
+- [x] Prove selection pushdown: `σ(a ⋈ b) = σ(a) ⋈ b` (when predicate references only a)
+  - Restricted theorem `selection_pushdown_cross_left` proved for cross-join fragment with explicit left-only predicate premise.
 - [ ] Prove projection pushdown rules
 - [ ] Define query normalization and prove equivalence classes
 
