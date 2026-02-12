@@ -20,7 +20,7 @@ Goal: Lean is the source of truth for CICSC semantics.
 - [x] Decide reserved keys (`state`, etc.) and enforce non-collision at IR WF layer
 
 ### A2. Typechecker alignment (must-do)
-- [ ] Fix `.get` typing (choose one):
+- [x] Fix `.get` typing (choose one):
   - [x] weak dynamic: `get : Obj → Ty` returns dynamic/top (`.tDyn`) and treat as total/weak
   - [ ] option types: add `tOpt` and make `get : Obj → Opt α` (bigger change)
   - [ ] schema types: object fields typed (largest change)
