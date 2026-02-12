@@ -101,10 +101,11 @@ function mapConstraints (constraints: Record<string, any>) {
 function mapViews (views: Record<string, any>) {
   const out: Record<string, any> = {}
   for (const [name, v] of Object.entries(views)) {
+    const query = v.query ?? lowerViewSugar(v)
     out[name] = {
       kind: v.kind ?? "metric",
       on_type: v.on,
-      query: v.query,
+      query,
     }
   }
   return out
@@ -176,4 +177,43 @@ function wrapExpr (v: any): any {
   if (typeof v === "number") return Number.isInteger(v) ? { lit: { int: v } } : { lit: { float: v } }
   if (typeof v === "string") return { lit: { string: v } }
   throw new Error("unsupported reducer sugar literal")
+}
+
+function lowerViewSugar (v: any): any {
+  if (!v || typeof v !== "object") throw new Error("view must be object")
+  if (!v.lanes || typeof v.lanes !== "object") throw new Error("view.query missing and no lanes sugar provided")
+
+  const lanes = v.lanes as any
+  const pipeline: any[] = []
+
+  if (Array.isArray(lanes.states) && lanes.states.length > 0) {
+    pipeline.push({
+      filter: {
+        in: {
+          needle: { var: { row: { field: "state" } } },
+          haystack: { arr: { items: lanes.states.map((s: string) => ({ lit: { string: String(s) } })) } },
+        },
+      },
+    })
+  }
+
+  if (lanes.order_by && typeof lanes.order_by === "object" && typeof lanes.order_by.field === "string") {
+    pipeline.push({
+      order_by: [
+        {
+          expr: { var: { row: { field: lanes.order_by.field } } },
+          dir: lanes.order_by.dir === "asc" ? "asc" : "desc",
+        },
+      ],
+    })
+  }
+
+  if (typeof lanes.limit === "number") {
+    pipeline.push({ limit: Math.max(0, Math.trunc(lanes.limit)) })
+  }
+
+  return {
+    source: { snap: { type: String(v.on) } },
+    pipeline,
+  }
 }

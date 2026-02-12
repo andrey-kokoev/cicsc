@@ -40,6 +40,11 @@ export type SpecConstraintV0 =
 export type SpecViewV0 = {
   kind: string
   on: string
-  query: any
+  query?: any
+  lanes?: {
+    states?: string[]
+    order_by?: { field: string; dir?: "asc" | "desc" }
+    limit?: number
+  }
   [k: string]: any
 }
