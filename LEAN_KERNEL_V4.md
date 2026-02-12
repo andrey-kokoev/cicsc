@@ -175,7 +175,9 @@ Close bidirectional typing for a clearly-scoped expression fragment.
 - [x] K4.5.5 Prove principal type property for the fragment.
   - Added `PrincipalType` and `inferExprTy_principal_v4` in
     `lean/Cicsc/Core/Meta/Typecheck.lean`.
-- [ ] K4.5.6 Document excluded constructs and reasons.
+- [x] K4.5.6 Document excluded constructs and reasons.
+  - Added `docs/spec/typing-v4-fragment.md` documenting the frozen fragment and
+    excluded constructs (`call`) with rationale.
 
 ### Acceptance
 - [ ] Fragment has soundness + completeness + principality theorems.
