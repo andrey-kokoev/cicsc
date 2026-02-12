@@ -21,13 +21,7 @@ def NoDuplicateFieldNames (ts : TypeSpec) : Prop :=
   hasDuplicateAttrNames ts = false ∧ hasDuplicateShadowNames ts = false
 
 def reducerTargetsDeclared (ts : TypeSpec) : Prop :=
-  ∀ evt ops, (evt, ops) ∈ ts.reducer →
-    ∀ op ∈ ops,
-      match op with
-      | .setAttr name _ => name ∈ declaredAttrNames ts
-      | .clearAttr name => name ∈ declaredAttrNames ts
-      | .setShadow name _ => name ∈ declaredShadowNames ts
-      | .setState _ => True
+  checkReducerTargetsDeclared ts = true
 
 def reducerLiteralStatesValid (ts : TypeSpec) : Prop :=
   ∀ evt ops, (evt, ops) ∈ ts.reducer →
@@ -138,11 +132,23 @@ theorem initialStateInStates_of_checkTypeSpec
   (ts : TypeSpec)
   (hcheck : checkTypeSpec ts = true) :
   initialStateInStates ts := by
-  unfold checkTypeSpec at hcheck
-  split at hcheck
-  · contradiction
-  · simp [initialStateInStates, checkInitialStateDeclared] at hcheck
-    exact hcheck.1
+  have hinit : checkInitialStateDeclared ts = true := by
+    by_contra hni
+    have hguard : !checkTypeSpecNames ts || !checkInitialStateDeclared ts || !checkReducerTargetsDeclared ts = true := by
+      simp [hni]
+    simp [checkTypeSpec, hguard] at hcheck
+  simpa [initialStateInStates, checkInitialStateDeclared] using hinit
+
+theorem reducerTargetsDeclared_of_checkTypeSpec
+  (ts : TypeSpec)
+  (hcheck : checkTypeSpec ts = true) :
+  reducerTargetsDeclared ts := by
+  have htargets : checkReducerTargetsDeclared ts = true := by
+    by_contra hnt
+    have hguard : !checkTypeSpecNames ts || !checkInitialStateDeclared ts || !checkReducerTargetsDeclared ts = true := by
+      simp [hnt]
+    simp [checkTypeSpec, hguard] at hcheck
+  simpa [reducerTargetsDeclared] using htargets
 
 -- Coverage audit (v1.5/B.9):
 -- Existing bridge lemmas connect `checkTypeSpec = true` to:

@@ -198,8 +198,17 @@ def checkTypeSpecNames (ts : TypeSpec) : Bool :=
 def checkInitialStateDeclared (ts : TypeSpec) : Bool :=
   ts.states.contains ts.initialState
 
+def checkReducerTargetDeclared (ts : TypeSpec) : ReducerOp → Bool
+  | .setAttr name _ => ts.attrs.any (fun kv => kv.fst = name)
+  | .clearAttr name => ts.attrs.any (fun kv => kv.fst = name)
+  | .setShadow name _ => ts.shadows.any (fun kv => kv.fst = name)
+  | .setState _ => true
+
+def checkReducerTargetsDeclared (ts : TypeSpec) : Bool :=
+  ts.reducer.all (fun kv => kv.snd.all (checkReducerTargetDeclared ts))
+
 def checkTypeSpec (ts : TypeSpec) : Bool :=
-  if !checkTypeSpecNames ts || !checkInitialStateDeclared ts then
+  if !checkTypeSpecNames ts || !checkInitialStateDeclared ts || !checkReducerTargetsDeclared ts then
     false
   else
     match stateTypeEnv ts with

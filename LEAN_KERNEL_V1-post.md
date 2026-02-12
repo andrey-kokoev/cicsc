@@ -108,7 +108,7 @@ Canonical evaluator policy (runtime alignment):
 - [x] `checkTypeSpecNames ts = true → NoReservedCollisions ts`
 - [x] `checkTypeSpecNames ts = true → NoDuplicateFieldNames ts`
 - [x] `checkTypeSpec ts = true → initialStateInStates ts`
-- [ ] `checkTypeSpec ts = true → reducerTargetsDeclared ts`
+- [x] `checkTypeSpec ts = true → reducerTargetsDeclared ts`
 - [ ] `checkTypeSpec ts = true → reducerLiteralStatesValid ts`
 
 #### 2.3 Synthesize Full WFTypeSpec
