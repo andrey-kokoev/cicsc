@@ -27,7 +27,7 @@
 - [x] Add schema version compatibility checks
 
 ## D. SQL Lowering Coverage & Conformance
-- [ ] Extend SQL lowering to full Query AST coverage (group_by, aggs, joins)
+- [x] Extend SQL lowering to full Query AST coverage (group_by, aggs, joins)
 - [ ] Extend SQL lowering to full Expr coverage (coalesce, if, in, map_enum, etc.)
 - [ ] Add differential tests for every Query/Expr operator (SQL vs oracle)
 - [ ] Add Postgres adapter SQL lowering + exec-vs-oracle conformance tests
