@@ -82,6 +82,12 @@ def WellFormedState (ts : TypeSpec) (st : State) : Prop :=
 def ReducerPreservesWF (ts : TypeSpec) : Prop :=
   ∀ (st : State) (e : Event), WellFormedState ts st → WellFormedState ts (applyReducer ts st e)
 
+-- v1.5 coherency completion: WF preservation derived from WFTypeSpec
+-- In v1, ReducerPreservesWF was an external assumption. In v1.5, it is proved
+-- as a consequence of WFTypeSpec via runtime guards in applyOp (line 30).
+-- This makes replay well-formedness preservation unconditional.
+-- See LEAN_KERNEL_V1-post.md §4 for design rationale (Option B strategy).
+
 theorem applyOpPreservesWellFormed
   (ts : TypeSpec)
   (env : Env)

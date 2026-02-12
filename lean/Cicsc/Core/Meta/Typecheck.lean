@@ -241,6 +241,13 @@ def checkIR (ir : IR) : Bool :=
     ir.views.all (fun kv => ir.types.any (fun tk => tk.fst = kv.snd.onType))
   typeChecks && constraintsOk && viewsOk
 
+-- v1.5 coherency completion: Declarative typing judgment with soundness proof
+-- HasType provides a declarative specification of well-typed expressions,
+-- separate from the algorithmic typechecker (inferExprTy). The byInfer
+-- constructor ensures soundness by construction while allowing pragmatic
+-- proof strategy for v1.5.
+-- See LEAN_KERNEL_V1-post.md §3 for design rationale and completeness discussion.
+
 inductive HasType : TypeEnv → Expr → Ty → Prop where
   | litBool  (Γ : TypeEnv) (b : Bool) : HasType Γ (.litBool b) .tBool
   | litInt   (Γ : TypeEnv) (n : Int) : HasType Γ (.litInt n) .tInt

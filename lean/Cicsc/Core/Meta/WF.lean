@@ -66,6 +66,12 @@ def WFIR (ir : IR) : Prop :=
   constraintsReferenceExistingTypes ir ∧
   viewsReferenceExistingTypes ir
 
+-- v1.5 coherency completion: Static discipline bridge theorems
+-- These theorems connect executable IR checks (checkIR, checkTypeSpec) to
+-- semantic well-formedness predicates (WFIR, WFTypeSpec), ensuring that
+-- compile-time checks guarantee runtime semantic properties.
+-- See LEAN_KERNEL_V1-post.md §2 for design rationale and proof structure.
+
 theorem reducerOpsTypecheck_of_checkTypeSpec
   (ts : TypeSpec)
   (hcheck : checkTypeSpec ts = true) :

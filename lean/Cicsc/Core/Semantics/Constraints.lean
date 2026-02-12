@@ -9,6 +9,10 @@ namespace Cicsc.Core
 -- Versioning note:
 -- Lean kernel milestones (v0/v1/v1.5) describe proof/coherency maturity.
 -- IR.version values are runtime schema evolution markers and are separate.
+--
+-- v1.5 coherency completion: This file implements unified constraint semantics
+-- with a single canonical evaluator and proved decomposition properties.
+-- See LEAN_KERNEL_V1-post.md §1 for design rationale and migration path.
 
 def isSnapshotConstraint : Constraint → Bool
   | .snapshot _ _ => true
@@ -82,6 +86,12 @@ def evalBoolQueryConstraintSubset (ir : IR) (c : Constraint) (snaps : SnapSet) :
 -- Canonical constraint evaluator for the v1.5 kernel surface.
 -- Runtime alignment rule: downstream runtime/checking layers should call this
 -- surface for full constraint semantics on the supported bool_query subset.
+--
+-- Constraint evaluator evolution (v1.5):
+-- - v0: Dual evaluators (holdsKernelConstraint vs holdsConstraintV0) with unclear semantics
+-- - v1.5: Single canonical evaluator (holdsConstraint) with proved decomposition
+-- - holdsSnapshotConstraintOnly remains as restricted helper for snapshot-only theorem surfaces
+-- - See LEAN_KERNEL_V1-post.md §1 for unification design and acceptance criteria
 def holdsConstraint (ir : IR) (c : Constraint) (st : State) (snaps : SnapSet) : Bool :=
   match c with
   | .snapshot _ _ => evalSnapshotConstraint c st
