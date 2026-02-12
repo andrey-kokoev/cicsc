@@ -60,7 +60,7 @@
 - [x] Implement replay verification for migrations
 - [x] Implement cutover protocol (dual-write or pause + migrate + resume)
 - [x] Enforce migration totality + executability (reject partial migrations)
-- [ ] Add migration conformance tests (oracle replay before/after)
+- [x] Add migration conformance tests (oracle replay before/after)
 
 ## H. Verification & Audit
 - [ ] Add full-tenant verify (not single entity)
