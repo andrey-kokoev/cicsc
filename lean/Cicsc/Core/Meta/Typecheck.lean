@@ -132,9 +132,11 @@ def mkInputEnv (inputs : List (String × String)) : Option TypeEnv :=
       | _, _ => none)
     (some [])
 
-def hasReservedStateName (ts : TypeSpec) : Bool :=
-  ts.attrs.any (fun kv => kv.fst = "state") ||
-  ts.shadows.any (fun kv => kv.fst = "state")
+def reservedRowFields : List String := ["state"]
+
+def hasReservedRowFieldCollision (ts : TypeSpec) : Bool :=
+  ts.attrs.any (fun kv => reservedRowFields.contains kv.fst) ||
+  ts.shadows.any (fun kv => reservedRowFields.contains kv.fst)
 
 def hasRowNameCollision (ts : TypeSpec) : Bool :=
   ts.attrs.any (fun a => ts.shadows.any (fun s => s.fst = a.fst))
@@ -172,7 +174,7 @@ def mkStateEnv (ts : TypeSpec) : Option TypeEnv :=
           | some env => some ((.row "state", .tString) :: env)
 
 def checkTypeSpecNames (ts : TypeSpec) : Bool :=
-  !hasReservedStateName ts && !hasRowNameCollision ts
+  !hasReservedRowFieldCollision ts && !hasRowNameCollision ts
 
 def checkTypeSpec (ts : TypeSpec) : Bool :=
   if !checkTypeSpecNames ts then
