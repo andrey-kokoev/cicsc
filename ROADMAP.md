@@ -98,7 +98,7 @@
 - [x] Add semantics reference for core calculus (Expr, Query, Reducer)
 - [x] Add adapter conformance checklist
 - [x] Add “how to build a vertical” guide
-- [ ] Add migration cookbook
+- [x] Add migration cookbook
 - [ ] Add threat model
 
 ## M. Stress Verticals (Design Validation)
