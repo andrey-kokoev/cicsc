@@ -79,7 +79,7 @@
 - [x] Add local dev harness (sqlite file + worker emulation)
 
 ## J. Performance & Scaling
-- [ ] Add snapshot compaction policy (periodic snapshotting from events)
+- [x] Add snapshot compaction policy (periodic snapshotting from events)
 - [ ] Add projection materialization cache
 - [ ] Add batched command execution
 - [ ] Add background SLA evaluation worker
