@@ -39,4 +39,10 @@ theorem happensBefore_asymm (e1 e2 : Event) :
   intro h12 h21
   exact Nat.lt_asymm h12.2 h21.2
 
+def appearsBefore (h : History) (e1 e2 : Event) : Prop :=
+  ∃ pre mid post, h = pre ++ (e1 :: mid ++ e2 :: post)
+
+def isCausal (h : History) : Prop :=
+  ∀ e1 e2, e1 ∈ h → e2 ∈ h → happensBefore e1 e2 → appearsBefore h e1 e2
+
 end Cicsc.Core

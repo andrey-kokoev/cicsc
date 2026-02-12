@@ -260,7 +260,8 @@ v2 adds semantic coverage for:
   - Cross-stream causality via command emits (if tracked)
 - [x] Prove happens-before is a partial order (transitive, antisymmetric)
   - `happensBefore_trans` and `happensBefore_asymm` proved in `lean/Cicsc/Core/Semantics/Concurrency.lean`.
-- [ ] Define causal histories: `isCausal : History → Prop` (respects seq ordering per stream)
+- [x] Define causal histories: `isCausal : History → Prop` (respects seq ordering per stream)
+  - Added `appearsBefore` and `isCausal` in `lean/Cicsc/Core/Semantics/Concurrency.lean`.
 
 #### 3.1.2 Replay Causality
 - [ ] Prove replay respects causality:
