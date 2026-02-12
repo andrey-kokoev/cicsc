@@ -122,4 +122,13 @@ theorem ticket_v0_v1_non_identity_commutes_on_sample_by_computation :
   Commutes ticketIr ticketIrV1 ticketStream ticketMigrationV0V1 ticketInitialV0 ticketHistory := by
   decide
 
+theorem ticket_replay_wellFormed_fromWFTypeSpec :
+  ∃ st, replay ticketIr ticketStream ticketHistory = some st ∧ WellFormedState ticketType st := by
+  have hlookup : lookupTypeSpec ticketIr ticketStream.entityType = some ticketType := by
+    simp [lookupTypeSpec, ticketIr, ticketStream]
+  have hinit : WellFormedState ticketType (initialState ticketType) :=
+    initialStateWellFormedOfWFTypeSpec ticketType ticketTypeWF
+  exact replayPreservesWellFormedIfTypeExists
+    ticketIr ticketStream ticketHistory ticketType hlookup ticketTypeWF hinit
+
 end Cicsc.Examples

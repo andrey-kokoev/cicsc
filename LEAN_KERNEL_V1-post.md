@@ -176,7 +176,7 @@ Canonical evaluator policy (runtime alignment):
 #### 4.3 Update Replay Theorems
 - [x] Remove `ReducerPreservesWF` hypothesis from theorems
 - [ ] Replace with `WFTypeSpec` assumption
-- [ ] Update Examples to use unconditional theorems
+- [x] Update Examples to use unconditional theorems
 
 **Acceptance:**
 - No replay theorem assumes `ReducerPreservesWF` as external hypothesis
