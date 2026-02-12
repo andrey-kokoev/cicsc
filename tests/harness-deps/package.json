@@ -1,0 +1,11 @@
+{
+  "name": "@cicsc/harness-deps",
+  "private": true,
+  "version": "0.0.0",
+  "description": "Local/CI dependency bundle for CICSC phase3 checks",
+  "type": "module",
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "pg": "^8.13.0"
+  }
+}

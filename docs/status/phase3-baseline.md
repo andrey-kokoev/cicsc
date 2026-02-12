@@ -6,47 +6,32 @@ Command:
 
 `./scripts/phase3_baseline.sh`
 
+Bootstrap prerequisite:
+
+`./scripts/phase3_bootstrap.sh install`
+
 ## Result Snapshot
 
 - `lean build`: PASS
+- `dependency bootstrap check`: PASS
 - `adapter sqlite typecheck`: PASS
-- `adapter postgres typecheck`: FAIL
-- `phase3 CI target (oracle + conformance + typechecker negative)`: FAIL
+- `adapter postgres typecheck`: PASS
+- `phase3 CI target (oracle + conformance + typechecker negative)`: PASS
 
-Summary: 2 passed, 2 failed.
+Summary: 5 passed, 0 failed.
 
-## Failure Inventory
+## Verification Snapshot
 
-### 1) Postgres adapter typecheck
+Commands:
 
-Command:
+- `./scripts/phase3_bootstrap.sh check`
+- `./scripts/phase3_baseline.sh`
 
-`npm --prefix adapters/postgres run check`
+Observed result:
 
-Observed failure:
-
-- `Cannot find module 'pg' or its corresponding type declarations.`
-
-Classification:
-
-- Environment/dependency bootstrap issue (local runtime missing package install).
-
-### 2) Phase 3 CI target semantic failures
-
-Command:
-
-`./scripts/phase3_ci_target.sh`
-
-Observed failures:
-
-- `tests/oracle/replay-and-constraints.test.ts` failing assertions.
-
-Classification:
-
-- Semantic/runtime mismatch requiring code-level fix.
+- All baseline gates pass in current local environment.
 
 ## Immediate Next Steps
 
-1. Resolve local dependency/bootstrap policy for adapter checks (`pg` install strategy in CI/local).
-2. Fix oracle replay/constraint behavior regressions surfaced by CI target.
-3. Re-run baseline and update this artifact.
+1. Promote `scripts/phase3_ci_target.sh` as default validation entrypoint in automation.
+2. Finalize deterministic `.ts` module resolution policy for runtime tests.

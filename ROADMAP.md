@@ -174,6 +174,6 @@
 ## T. Phase 3 Forced Follow-Ups
 
 - [x] Resolve oracle replay + constraints regression currently failing `tests/oracle/replay-and-constraints.test.ts`
-- [ ] Standardize local/CI dependency bootstrap for adapter checks (`pg`, sqlite test harness drivers)
+- [x] Standardize local/CI dependency bootstrap for adapter checks (`pg`, sqlite test harness drivers)
 - [ ] Promote the Phase 3 CI target (`scripts/phase3_ci_target.sh`) to default validation entrypoint in automation
 - [ ] Add deterministic policy for `.ts` module resolution in test runtime (remove ad hoc execution variance)
