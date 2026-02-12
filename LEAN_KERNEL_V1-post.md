@@ -12,8 +12,8 @@ This document defines the work required to achieve 10/10 coherency with AGENTS.m
 
 ### Gap 1: Dual Constraint Semantics (Priority: CRITICAL)
 **Current Issue:** Two different constraint evaluators with unclear relationship:
-- `holdsKernelConstraint` (Constraints.lean:79) - ignores bool_query, returns true
-- `holdsConstraintV0` (Constraints.lean:88) - evaluates bool_query via QueryEval
+- `holdsSnapshotConstraintOnly` - ignores bool_query, returns true
+- `holdsConstraint` - evaluates bool_query via QueryEval
 
 **Violation:** AGENTS.md §5 "Respect the semantic split" - ambiguous which is Core IR truth
 
@@ -53,8 +53,7 @@ This document defines the work required to achieve 10/10 coherency with AGENTS.m
 
 ### Gap 5: v0/v1 Naming Confusion (Priority: LOW)
 **Current Issue:**
-- "v0" in `holdsConstraintV0` unclear (Lean Kernel v0 or IR version 0?)
-- Comment at Constraints.lean:78 says "v0" but LEAN_KERNEL_V1 complete
+- historical evaluator naming/comments can blur Lean-kernel milestone versioning vs IR schema versioning
 
 **Violation:** Code hygiene, documentation clarity
 
@@ -77,7 +76,7 @@ Canonical evaluator policy (runtime alignment):
   - Handles both snapshot and bool_query constraints
   - Uses QueryEval for bool_query when `supportsQuerySubset`
 - [ ] Mark `holdsKernelConstraint` as deprecated or rename to `holdsSnapshotConstraintOnly`
-- [ ] Rename `holdsConstraintV0` → `holdsConstraintV1` (align with LEAN_KERNEL_V1)
+- [x] Rename legacy `holdsConstraintV0` surface to canonical `holdsConstraint`
 
 #### 1.2 Prove Decomposition Properties
 - [ ] Theorem: `holdsConstraint ir (.snapshot _ _) st _ = evalSnapshotConstraint ...`
@@ -195,9 +194,9 @@ Canonical evaluator policy (runtime alignment):
 - [ ] Document distinction:
   - **Lean Kernel Version** (v0, v1, v1.5): Proof completeness milestones
   - **IR Version** (ir.version): Schema version in IR data structure
-- [ ] Rename functions with "V0" suffix:
-  - `holdsConstraintV0` → `holdsConstraint` (canonical) or `holdsConstraintV1` (if Lean kernel v1 specific)
-  - Update comment at Constraints.lean:78 from "v0" to "v1"
+- [x] Rename functions with "V0" suffix:
+  - `holdsConstraintV0` → `holdsConstraint` (canonical)
+  - Snapshot-only helper named `holdsSnapshotConstraintOnly` to avoid semantic ambiguity
 
 #### 5.2 Documentation Updates
 - [ ] Add comment header to Constraints.lean explaining evaluator evolution
