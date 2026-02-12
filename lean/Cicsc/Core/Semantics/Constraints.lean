@@ -1,6 +1,7 @@
 import Cicsc.Core.Syntax
 import Cicsc.Core.Types
 import Cicsc.Core.Semantics.ExprEval
+import Cicsc.Core.Semantics.Replay
 
 namespace Cicsc.Core
 
@@ -16,7 +17,7 @@ def evalSnapshotConstraint (c : Constraint) (st : State) : Bool :=
         actor := ""
         state := st.st
         attrs := st.attrs
-        row := st.attrs ++ st.shadows ++ [("state", .vString st.st)]
+        row := runtimeRow st
       } expr)
   | _ => true
 

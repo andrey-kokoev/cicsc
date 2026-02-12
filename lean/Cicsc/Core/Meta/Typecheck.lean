@@ -132,34 +132,61 @@ def mkInputEnv (inputs : List (String × String)) : Option TypeEnv :=
       | _, _ => none)
     (some [])
 
+def hasReservedStateName (ts : TypeSpec) : Bool :=
+  ts.attrs.any (fun kv => kv.fst = "state") ||
+  ts.shadows.any (fun kv => kv.fst = "state")
+
+def hasRowNameCollision (ts : TypeSpec) : Bool :=
+  ts.attrs.any (fun a => ts.shadows.any (fun s => s.fst = a.fst))
+
 def mkStateEnv (ts : TypeSpec) : Option TypeEnv :=
-  let attrsRes :=
+  let attrsOnlyRes :=
     ts.attrs.foldl
       (fun acc kv =>
         match acc, parseTyName kv.snd with
         | some env, some t => some ((.attrs kv.fst, t) :: env)
         | _, _ => none)
       (some [])
-  match attrsRes with
+  match attrsOnlyRes with
   | none => none
-  | some env =>
-      ts.shadows.foldl
-        (fun acc kv =>
-          match acc, parseTyName kv.snd with
-          | some env', some t => some ((.row kv.fst, t) :: env')
-          | _, _ => none)
-        (some env)
+  | some attrsOnly =>
+      let rowWithAttrsRes :=
+        ts.attrs.foldl
+          (fun acc kv =>
+            match acc, parseTyName kv.snd with
+            | some env, some t => some ((.row kv.fst, t) :: env)
+            | _, _ => none)
+          (some attrsOnly)
+      match rowWithAttrsRes with
+      | none => none
+      | some rowWithAttrs =>
+          let rowWithShadowsRes :=
+            ts.shadows.foldl
+              (fun acc kv =>
+                match acc, parseTyName kv.snd with
+                | some env, some t => some ((.row kv.fst, t) :: env)
+                | _, _ => none)
+              (some rowWithAttrs)
+          match rowWithShadowsRes with
+          | none => none
+          | some env => some ((.row "state", .tString) :: env)
+
+def checkTypeSpecNames (ts : TypeSpec) : Bool :=
+  !hasReservedStateName ts && !hasRowNameCollision ts
 
 def checkTypeSpec (ts : TypeSpec) : Bool :=
-  match mkStateEnv ts with
-  | none => false
-  | some Γstate =>
-      let okCommands := ts.commands.all (fun kv =>
-        match mkInputEnv kv.snd.input with
-        | none => false
-        | some Γinput => checkCommand (Γinput ++ Γstate) kv.snd)
-      let okReducers := ts.reducer.all (fun kv => kv.snd.all (checkReducerOp Γstate))
-      okCommands && okReducers
+  if !checkTypeSpecNames ts then
+    false
+  else
+    match mkStateEnv ts with
+    | none => false
+    | some Γstate =>
+        let okCommands := ts.commands.all (fun kv =>
+          match mkInputEnv kv.snd.input with
+          | none => false
+          | some Γinput => checkCommand (Γinput ++ Γstate) kv.snd)
+        let okReducers := ts.reducer.all (fun kv => kv.snd.all (checkReducerOp Γstate))
+        okCommands && okReducers
 
 def checkIR (ir : IR) : Bool :=
   ir.types.all (fun kv => checkTypeSpec kv.snd)
