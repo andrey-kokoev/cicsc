@@ -566,6 +566,9 @@ def evalUnion (left right : List QueryRow) : List QueryRow :=
 def evalUnionDistinct (left right : List QueryRow) : List QueryRow :=
   (left ++ right).dedup
 
+def evalDistinct (rows : List QueryRow) : List QueryRow :=
+  rows.dedup
+
 -- INTERSECT: set intersection (rows in both)
 def evalIntersect (left right : List QueryRow) : List QueryRow :=
   left.filter (fun l => right.any (rowEq l))
@@ -704,6 +707,17 @@ theorem deMorgan_intersect
       · exact hu
       · intro hab
         exact hnb hab.2
+
+theorem evalUnionDistinct_eq_distinct_union
+  (left right : List QueryRow) :
+  evalUnionDistinct left right = evalDistinct (evalUnion left right) := by
+  rfl
+
+theorem evalDistinct_idempotent
+  (rows : List QueryRow) :
+  evalDistinct (evalDistinct rows) = evalDistinct rows := by
+  unfold evalDistinct
+  simp
 
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)

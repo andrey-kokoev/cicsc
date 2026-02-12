@@ -140,7 +140,10 @@ v2 adds semantic coverage for:
   - Union commutativity, associativity
   - Intersection commutativity, idempotence
   - De Morgan's laws for set operations
-- [ ] Define DISTINCT semantics and prove relationship to set operations
+- [x] Define DISTINCT semantics and prove relationship to set operations
+  - `evalDistinct` defined in `lean/Cicsc/Core/Semantics/QueryEval.lean`.
+  - `evalUnionDistinct_eq_distinct_union` links DISTINCT to UNION semantics.
+  - `evalDistinct_idempotent` captures DISTINCT idempotence.
 
 #### 1.3.2 Subqueries
 - [ ] Define correlated subquery semantics (row-dependent evaluation)
