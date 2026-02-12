@@ -18,7 +18,7 @@ def declaredShadowNames (ts : TypeSpec) : List String :=
   ts.shadows.map Prod.fst
 
 def NoDuplicateFieldNames (ts : TypeSpec) : Prop :=
-  (declaredAttrNames ts).Nodup ∧ (declaredShadowNames ts).Nodup
+  hasDuplicateAttrNames ts = false ∧ hasDuplicateShadowNames ts = false
 
 def reducerTargetsDeclared (ts : TypeSpec) : Prop :=
   ∀ evt ops, (evt, ops) ∈ ts.reducer →
@@ -125,6 +125,14 @@ theorem noReservedCollisions_of_checkTypeSpecNames
   unfold checkTypeSpecNames at hnames
   simp [NoReservedCollisions] at hnames
   exact hnames.1
+
+theorem noDuplicateFieldNames_of_checkTypeSpecNames
+  (ts : TypeSpec)
+  (hnames : checkTypeSpecNames ts = true) :
+  NoDuplicateFieldNames ts := by
+  unfold checkTypeSpecNames at hnames
+  simp [NoDuplicateFieldNames] at hnames
+  exact ⟨hnames.3.1, hnames.3.2⟩
 
 -- Coverage audit (v1.5/B.9):
 -- Existing bridge lemmas connect `checkTypeSpec = true` to:
