@@ -132,7 +132,7 @@
 ## P. Formal Semantics and Specification
 
 - [x] Write formal semantics of event algebra and reducer fold
-- [ ] Write formal semantics of constraint evaluation (snapshot + bool_query)
+- [x] Write formal semantics of constraint evaluation (snapshot + bool_query)
 - [ ] Write formal definition of backend conformance (oracle equivalence)
 - [ ] Write formal definition of migration correctness (commuting diagrams)
 - [ ] Specify the Core IR grammar and typing rules
