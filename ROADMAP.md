@@ -5,7 +5,7 @@
 - [x] Enforce serializable seq allocation under concurrency (SELECT MAX(seq) + INSERT within tx)
 - [x] Add snapshot constraint enforcement inside tx for all affected entities (not only touched one)
 - [x] Add SLA constraint enforcement inside tx
-- [ ] Add rollback-safe error propagation for all write paths
+- [x] Add rollback-safe error propagation for all write paths
 - [ ] Add idempotency guarantees for duplicate command submissions across restarts
 - [ ] Add command deduplication windowing (optional: TTL for receipts)
 

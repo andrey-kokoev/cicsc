@@ -67,6 +67,19 @@ describe("sqlite adapter tx boundary", () => {
     assert.equal(fake.sqlLog.includes("ROLLBACK"), false)
   })
 
+  it("rolls back when set_active_version write fails", async () => {
+    const fake = makeFakeDb({ failSqlIncludes: "INSERT INTO tenant_versions" })
+    const adapter = new SqliteD1Adapter(fake.db as any)
+
+    await assert.rejects(async () => {
+      await adapter.set_active_version("t", 3)
+    })
+
+    assert.equal(fake.sqlLog[0], "BEGIN IMMEDIATE")
+    assert.equal(fake.sqlLog.includes("ROLLBACK"), true)
+    assert.equal(fake.sqlLog.includes("COMMIT"), false)
+  })
+
   it("wraps append_events in BEGIN IMMEDIATE/COMMIT", async () => {
     const fake = makeFakeDb()
     const adapter = new SqliteD1Adapter(fake.db as any)
@@ -99,6 +112,69 @@ describe("sqlite adapter tx boundary", () => {
         entity_id: "e1",
         command_id: "cmd1",
         events: [{ event_type: "created", payload: {}, ts: 1, actor_id: "u" }],
+      })
+    })
+
+    assert.equal(fake.sqlLog[0], "BEGIN IMMEDIATE")
+    assert.equal(fake.sqlLog.includes("ROLLBACK"), true)
+    assert.equal(fake.sqlLog.includes("COMMIT"), false)
+  })
+
+  it("rolls back when put_snapshot write fails", async () => {
+    const fake = makeFakeDb({ failSqlIncludes: "UPDATE snapshots_v0" })
+    const adapter = new SqliteD1Adapter(fake.db as any)
+
+    await assert.rejects(async () => {
+      await adapter.put_snapshot({
+        tenant_id: "t",
+        entity_type: "Ticket",
+        entity_id: "e1",
+        state: "done",
+        attrs_json: "{}",
+        updated_ts: 10,
+        shadows: {},
+      })
+    })
+
+    assert.equal(fake.sqlLog[0], "BEGIN IMMEDIATE")
+    assert.equal(fake.sqlLog.includes("ROLLBACK"), true)
+    assert.equal(fake.sqlLog.includes("COMMIT"), false)
+  })
+
+  it("rolls back when sla_upsert_status write fails", async () => {
+    const fake = makeFakeDb({ failSqlIncludes: "INSERT INTO sla_status" })
+    const adapter = new SqliteD1Adapter(fake.db as any)
+
+    await assert.rejects(async () => {
+      await adapter.sla_upsert_status({
+        tenant_id: "t",
+        name: "response_time",
+        entity_type: "Ticket",
+        entity_id: "e1",
+        start_ts: 1,
+        stop_ts: null,
+        deadline_ts: 100,
+        breached: 0,
+        updated_ts: 1,
+      })
+    })
+
+    assert.equal(fake.sqlLog[0], "BEGIN IMMEDIATE")
+    assert.equal(fake.sqlLog.includes("ROLLBACK"), true)
+    assert.equal(fake.sqlLog.includes("COMMIT"), false)
+  })
+
+  it("rolls back when sla_mark_breached write fails", async () => {
+    const fake = makeFakeDb({ failSqlIncludes: "UPDATE sla_status" })
+    const adapter = new SqliteD1Adapter(fake.db as any)
+
+    await assert.rejects(async () => {
+      await adapter.sla_mark_breached({
+        tenant_id: "t",
+        name: "response_time",
+        entity_type: "Ticket",
+        entity_id: "e1",
+        now: 10,
       })
     })
 
