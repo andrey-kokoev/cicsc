@@ -236,3 +236,23 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
 - [ ] Typing fragment has soundness/completeness/principality.
 - [ ] Proof automation baseline is operational and adopted.
 - [ ] This document has theorem-indexed completion entries only.
+
+## Theorem Index
+
+- `lean/Cicsc/Sql/Conformance.lean`
+  - `execSQL_lowerQuery_conforms_execShape`
+  - `rowSetEquiv_refl`
+- `lean/Cicsc/Core/Semantics/CausalityReplay.lean`
+  - `replay_stream_preserves_happensBefore_order`
+  - `replay_deterministic_on_causallyEquivalent_streams`
+- `lean/Cicsc/Core/Semantics/Isolation.lean`
+  - `snapshot_repeatable_reads`
+  - `snapshotAt_ignores_other_stream_writes`
+- `lean/Cicsc/Evolution/Migration.lean`
+  - `composeMigrations_assoc_of_compatible`
+  - `inverseMigration_roundtrip_event_on_covered`
+  - `rollbackHistory_def`
+- `lean/Cicsc/Core/Meta/Typecheck.lean`
+  - `inferExprTy_sound_v4_fragment`
+  - `inferExprTy_complete_up_to_subsumption_v4`
+  - `inferExprTy_principal_v4`
