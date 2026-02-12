@@ -193,7 +193,8 @@ Reduce proof maintenance overhead with focused tactics for repeated proof patter
 ### TODOs
 - [x] K4.6.1 Add `query_equiv` tactic for row-equivalence goals.
   - Added `lean/Cicsc/Tactics/QueryEquiv.lean` with `query_equiv`.
-- [ ] K4.6.2 Add `snap_irrelevant` tactic for irrelevant snapset entries.
+- [x] K4.6.2 Add `snap_irrelevant` tactic for irrelevant snapset entries.
+  - Added `snap_irrelevant` in `lean/Cicsc/Tactics/QueryEquiv.lean`.
 - [ ] K4.6.3 Add `wf_auto` bridge tactic from checker booleans to WF props.
 - [ ] K4.6.4 Add migration tactic helpers for compose/roundtrip proofs.
 - [ ] K4.6.5 Convert at least 5 existing long proofs to tactic-assisted versions.
