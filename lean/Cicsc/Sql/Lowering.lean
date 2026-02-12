@@ -98,6 +98,39 @@ def lowerQuery (q : Query) : SQLQuery :=
     from := lowerSource q.source
   }
 
+theorem lowerQueryOp_filter_correct (q : SQLQuery) (e : Expr) :
+  lowerQueryOp q (.filter e) = { q with whereClause := appendWhere q.whereClause (lowerExpr e) } := by
+  rfl
+
+theorem lowerQueryOp_project_correct (q : SQLQuery) (fields : List ProjectField) :
+  lowerQueryOp q (.project fields) = { q with select := fields.map (fun f => (f.name, lowerExpr f.expr)) } := by
+  rfl
+
+theorem lowerQueryOp_groupBy_correct (q : SQLQuery) (keys : List GroupKey) (aggs : List (String × AggExpr)) :
+  lowerQueryOp q (.groupBy keys aggs) = { q with groupBy := keys.map (fun k => lowerExpr k.expr) } := by
+  rfl
+
+theorem lowerQueryOp_having_correct (q : SQLQuery) (e : Expr) :
+  lowerQueryOp q (.having e) = { q with having := appendHaving q.having (lowerExpr e) } := by
+  rfl
+
+theorem lowerQueryOp_orderBy_correct (q : SQLQuery) (keys : List OrderKey) :
+  lowerQueryOp q (.orderBy keys) = { q with orderBy := keys.map (fun k => { expr := lowerExpr k.expr, asc := k.asc }) } := by
+  rfl
+
+theorem lowerQueryOp_limit_correct (q : SQLQuery) (n : Nat) :
+  lowerQueryOp q (.limit n) = { q with limit := some n } := by
+  rfl
+
+theorem lowerQueryOp_offset_correct (q : SQLQuery) (n : Nat) :
+  lowerQueryOp q (.offset n) = { q with offset := some n } := by
+  rfl
+
+theorem lowerQuery_base (src : Source) :
+  lowerQuery { source := src, pipeline := [] } =
+    { select := [("_row", .column "*")], from := lowerSource src } := by
+  rfl
+
 theorem lowerExpr_litBool (b : Bool) :
   lowerExpr (.litBool b) = .litBool b := by
   rfl
