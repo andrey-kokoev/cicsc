@@ -44,4 +44,58 @@ partial def lowerExpr : Expr → SQLExpr
   | .coalesce xs => .func "coalesce" (xs.map lowerExpr)
   | .call fn args => .func fn (args.map lowerExpr)
 
+def lowerJoinType : JoinType → SQLJoinType
+  | .inner => .inner
+  | .leftOuter => .left
+  | .rightOuter => .right
+  | .fullOuter => .full
+  | .cross => .cross
+
+partial def lowerSource : Source → SQLFrom
+  | .snap _typeName => .table "snapshots_v0"
+  | .slaStatus name _onType => .table s!"sla_status_{name}"
+  | .join jt left right onExpr =>
+      let onClause :=
+        match jt with
+        | .cross => none
+        | _ => some (lowerExpr onExpr)
+      .join (lowerJoinType jt) (lowerSource left) (lowerSource right) onClause
+
+def sqlAnd (a b : SQLExpr) : SQLExpr :=
+  .binOp "AND" a b
+
+def appendWhere (w : Option SQLExpr) (e : SQLExpr) : Option SQLExpr :=
+  match w with
+  | none => some e
+  | some w0 => some (sqlAnd w0 e)
+
+def appendHaving (h : Option SQLExpr) (e : SQLExpr) : Option SQLExpr :=
+  match h with
+  | none => some e
+  | some h0 => some (sqlAnd h0 e)
+
+def lowerQueryOp (q : SQLQuery) (op : QueryOp) : SQLQuery :=
+  match op with
+  | .filter e => { q with whereClause := appendWhere q.whereClause (lowerExpr e) }
+  | .project fields =>
+      { q with select := fields.map (fun f => (f.name, lowerExpr f.expr)) }
+  | .groupBy keys _aggs =>
+      { q with groupBy := keys.map (fun k => lowerExpr k.expr) }
+  | .having e =>
+      { q with having := appendHaving q.having (lowerExpr e) }
+  | .orderBy keys =>
+      { q with orderBy := keys.map (fun k => { expr := lowerExpr k.expr, asc := k.asc }) }
+  | .limit n =>
+      { q with limit := some n }
+  | .offset n =>
+      { q with offset := some n }
+  | .setOp _ _ =>
+      q
+
+def lowerQuery (q : Query) : SQLQuery :=
+  q.pipeline.foldl lowerQueryOp {
+    select := [("_row", .column "*")]
+    from := lowerSource q.source
+  }
+
 end Cicsc.Sql

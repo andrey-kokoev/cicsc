@@ -179,7 +179,8 @@ v2 adds semantic coverage for:
 - [x] Define Lean representation of SQL AST:
   - Added `lean/Cicsc/Sql/Ast.lean` with `SQLExpr`, `SQLFrom`, `SQLJoinType`, `SQLOrderBy`, and `SQLQuery`.
   - `SQLQuery`, `SQLExpr`, `SQLJoin`, `SQLGroupBy`, etc.
-- [ ] Define `lowerQuery : Query → SQLQuery` (Lean version of TS lowering)
+- [x] Define `lowerQuery : Query → SQLQuery` (Lean version of TS lowering)
+  - Implemented in `lean/Cicsc/Sql/Lowering.lean` (`lowerSource`, `lowerQueryOp`, `lowerQuery`) for the current query subset.
 - [x] Define `lowerExpr : Expr → SQLExpr`
   - Implemented in `lean/Cicsc/Sql/Lowering.lean` with operator-by-operator translation for the current CICSC expression surface.
 
