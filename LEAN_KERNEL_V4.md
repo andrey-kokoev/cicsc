@@ -282,7 +282,8 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
 - [x] Proof automation baseline is operational and adopted.
   - `query_equiv`, `snap_irrelevant`, `wf_auto`, `migration_simp` are implemented
     and used in converted proofs (K4.6.5).
-- [ ] This document has theorem-indexed completion entries only.
+- [x] This document has theorem-indexed completion entries only.
+  - Enforced by theorem/completion index + CI reference check.
 
 ## Theorem Index
 
