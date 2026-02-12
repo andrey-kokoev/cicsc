@@ -41,7 +41,7 @@ v1 is defined by **alignment**, **tightened typing**, and **non-stub query seman
 - [x] Define reserved keys: `["state"]` (v1)
 - [x] Add `NoReservedCollisions : TypeSpec → Prop`
   - forbids attr/shadow named `"state"`
-- [ ] Enforce it in `WFTypeSpec` (see §3)
+- [x] Enforce it in `WFTypeSpec` (see §3)
 
 ### 1.3 Replay semantics unification
 - [x] Replace Evolution’s `step` and `replayFromState` to be StreamId-based:
