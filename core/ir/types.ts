@@ -11,7 +11,7 @@ export type CoreIrV0 = {
   constraints?: Record<string, ConstraintSpecV0>
   views?: Record<string, ViewSpecV0>
   slas?: Record<string, SlaSpecV0>
-  migrations?: unknown // v0 placeholder; formalize when implementing migration transforms
+  migrations?: Record<string, MigrationSpecV0>
 }
 
 export type EntityTypeSpecV0 = {
@@ -85,6 +85,20 @@ export type SlaSpecV0 = {
   | { none: true }
   | { notify: { emit_event: string; payload: Record<string, ExprV0> } }
   | { auto_transition: { to_state: string } }
+}
+
+export type MigrationSpecV0 = {
+  from_version: number
+  to_version: number
+  on_type: string
+  event_transforms: Record<string, EventTransformV0>
+  state_map?: Record<string, string>
+}
+
+export type EventTransformV0 = {
+  emit_as?: string
+  payload_map?: Record<string, ExprV0>
+  drop?: boolean
 }
 
 export type EventSelectorV0 = {

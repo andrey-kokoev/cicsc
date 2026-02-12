@@ -3,6 +3,7 @@ export type SpecV0 = {
   entities: Record<string, SpecEntityV0>
   constraints?: Record<string, SpecConstraintV0>
   views?: Record<string, SpecViewV0>
+  migrations?: Record<string, SpecMigrationV0>
 }
 
 export type SpecEntityV0 = {
@@ -47,4 +48,18 @@ export type SpecViewV0 = {
     limit?: number
   }
   [k: string]: any
+}
+
+export type SpecMigrationV0 = {
+  from: number
+  to: number
+  entity: string
+  event_transforms: Record<string, SpecEventTransformV0>
+  state_map?: Record<string, string>
+}
+
+export type SpecEventTransformV0 = {
+  emit_as?: string
+  payload_map?: Record<string, any>
+  drop?: boolean
 }

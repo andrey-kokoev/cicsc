@@ -54,7 +54,7 @@
 - [x] Add Spec linter (detect anti-patterns, unreachable states, dead commands)
 
 ## G. Migrations & Constructive Invariance (CIS → CICSC)
-- [ ] Define migration spec (event transforms + state mapping)
+- [x] Define migration spec (event transforms + state mapping)
 - [ ] Implement migration compiler (Spec vN → Spec vN+1)
 - [ ] Implement history transformer (events_vN → events_vN+1)
 - [ ] Implement replay verification for migrations
