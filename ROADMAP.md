@@ -84,7 +84,7 @@
 - [x] Add batched command execution
 - [x] Add background SLA evaluation worker
 - [x] Add load-shedding / rate limits per tenant
-- [ ] Add memory bounds for oracle verifier (streaming replay)
+- [x] Add memory bounds for oracle verifier (streaming replay)
 
 ## K. Security & Policy
 - [ ] Formalize auth/role intrinsics contract
