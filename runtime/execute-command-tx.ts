@@ -121,23 +121,42 @@ export async function executeCommandTx (params: {
       })
     }
 
-    // 6) snapshot constraints (touched entity only)
-    const thisRow: SnapRow = {
-      entity_type: req.entity_type,
-      entity_id: req.entity_id,
-      state: next.state,
-      updated_ts: req.now,
-      ...(next.attrs as any),
-      ...(next.shadows as any),
+    // 6) snapshot constraints across all constrained types (inside same tx)
+    const snapshotConstraintTypes = listSnapshotConstraintTypes(ir)
+    const snapshotRowsByType = new Map<string, SnapRow[]>()
+
+    for (const t of snapshotConstraintTypes) {
+      snapshotRowsByType.set(t, await readAllSnapshotsByType(tx, req.tenant_id, t))
     }
 
+    if (snapshotRowsByType.has(req.entity_type)) {
+      const thisRow: SnapRow = {
+        entity_type: req.entity_type,
+        entity_id: req.entity_id,
+        state: next.state,
+        updated_ts: req.now,
+        ...(next.attrs as any),
+        ...(next.shadows as any),
+      }
+      const rows = snapshotRowsByType.get(req.entity_type) ?? []
+      upsertByEntityId(rows, thisRow)
+      snapshotRowsByType.set(req.entity_type, rows)
+    }
+
+    const snapshotOnlyIr = {
+      ...ir,
+      constraints: Object.fromEntries(
+        Object.entries(ir.constraints ?? {}).filter(([, c]) => (c as any).kind === "snapshot")
+      ),
+    } as CoreIrV0
+
     const snapshotViolations = runAllConstraints({
-      ir,
+      ir: snapshotOnlyIr,
       intrinsics,
       policies,
       now: req.now,
       actor: req.actor_id,
-      snapshotsByType: (t) => (t === req.entity_type ? [thisRow] : []),
+      snapshotsByType: (t) => snapshotRowsByType.get(t) ?? [],
       slaStatus: () => [],
     }).filter((v) => v.kind === "snapshot")
 
@@ -316,9 +335,54 @@ async function appendEventsTx (tx: TxCtx, p: {
   return { seq_from, seq_to }
 }
 
+async function readAllSnapshotsByType (tx: TxCtx, tenant_id: string, entity_type: string): Promise<SnapRow[]> {
+  const r = await tx.exec(
+    `SELECT *
+     FROM snapshots_v0
+     WHERE tenant_id=? AND entity_type=?`,
+    [tenant_id, entity_type]
+  )
+  const rows = (r.rows ?? []) as any[]
+  return rows.map(toSnapRow)
+}
+
 // --------------------------------
 // helpers
 // --------------------------------
+
+function listSnapshotConstraintTypes (ir: CoreIrV0): string[] {
+  const out = new Set<string>()
+  for (const c of Object.values(ir.constraints ?? {})) {
+    if ((c as any).kind === "snapshot") out.add(String((c as any).on_type))
+  }
+  return Array.from(out)
+}
+
+function upsertByEntityId (rows: SnapRow[], row: SnapRow): void {
+  const id = String((row as any).entity_id ?? "")
+  const i = rows.findIndex((r) => String((r as any).entity_id ?? "") === id)
+  if (i >= 0) rows[i] = row
+  else rows.push(row)
+}
+
+function toSnapRow (raw: Record<string, any>): SnapRow {
+  const out: SnapRow = {
+    entity_type: String(raw.entity_type ?? ""),
+    entity_id: String(raw.entity_id ?? ""),
+    state: String(raw.state ?? ""),
+    updated_ts: Number(raw.updated_ts ?? 0),
+  }
+
+  const attrs = safeParseJson(String(raw.attrs_json ?? "{}"))
+  for (const [k, v] of Object.entries(attrs)) (out as any)[k] = v as any
+
+  for (const [k, v] of Object.entries(raw)) {
+    if (k === "tenant_id" || k === "entity_type" || k === "entity_id" || k === "state" || k === "attrs_json" || k === "updated_ts") continue
+    ;(out as any)[k] = v as any
+  }
+
+  return out
+}
 
 function pickShadows (row: Record<string, any>, names: string[]): Record<string, any> {
   const out: Record<string, any> = {}

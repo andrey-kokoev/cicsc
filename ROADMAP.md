@@ -3,7 +3,7 @@
 ## A. Runtime Correctness & Robustness
 - [x] Add true transactional API to SQLite/D1 adapter (tx(fn) everywhere)
 - [x] Enforce serializable seq allocation under concurrency (SELECT MAX(seq) + INSERT within tx)
-- [ ] Add snapshot constraint enforcement inside tx for all affected entities (not only touched one)
+- [x] Add snapshot constraint enforcement inside tx for all affected entities (not only touched one)
 - [ ] Add SLA constraint enforcement inside tx
 - [ ] Add rollback-safe error propagation for all write paths
 - [ ] Add idempotency guarantees for duplicate command submissions across restarts
