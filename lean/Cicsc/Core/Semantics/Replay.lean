@@ -21,6 +21,9 @@ def setField (xs : List (String × Val)) (k : String) (v : Val) : List (String �
 def clearField (xs : List (String × Val)) (k : String) : List (String × Val) :=
   xs.filter (fun kv => kv.fst ≠ k)
 
+def runtimeRow (st : State) : List (String × Val) :=
+  ("state", .vString st.st) :: (st.attrs ++ st.shadows)
+
 def applyOp (env : Env) (st : State) : ReducerOp → State
   | .setState expr =>
       match evalExpr env expr with
@@ -40,6 +43,7 @@ def applyReducer (ts : TypeSpec) (st : State) (e : Event) : State :=
     actor := e.actor
     state := st.st
     attrs := st.attrs
+    row := runtimeRow st
     eventCtx := some {
       eType := e.eventType
       eActor := e.actor

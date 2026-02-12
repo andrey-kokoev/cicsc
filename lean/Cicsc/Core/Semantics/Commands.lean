@@ -16,14 +16,11 @@ def materializePayload (env : Env) (pairs : List (String × Expr)) : List (Strin
 def materializeEvents (env : Env) (es : List (EventType × List (String × Expr))) : List (EventType × Val) :=
   es.map (fun e => (e.fst, .vObj (materializePayload env e.snd)))
 
-def commandRow (st : State) : List (String × Val) :=
-  ("state", .vString st.st) :: (st.attrs ++ st.shadows)
-
 def commandEnv (st : State) (env : Env) : Env :=
   { env with
     state := st.st
     attrs := st.attrs
-    row := commandRow st
+    row := runtimeRow st
   }
 
 def canExecute (cmd : CommandSpec) (envExec : Env) : Bool :=
