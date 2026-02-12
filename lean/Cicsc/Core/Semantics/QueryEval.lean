@@ -64,10 +64,60 @@ def insertSorted (ks : List OrderKey) (x : QueryRow) : List QueryRow → List Qu
 def sortRows (ks : List OrderKey) (rows : List QueryRow) : List QueryRow :=
   rows.foldl (fun acc r => insertSorted ks r acc) []
 
+-- v2: GroupBy and aggregation support
+-- See LEAN_KERNEL_V2.md §1.2.1
+
+-- Helper: Evaluate grouping key expressions for a row
+def evalGroupKeys (row : QueryRow) (keys : List GroupKey) : List Val :=
+  keys.map (fun k => evalExpr (rowEnv row) k.expr)
+
+-- Helper: Check if two rows have the same grouping key values
+def sameGroupKeys (keys : List GroupKey) (r1 r2 : QueryRow) : Bool :=
+  evalGroupKeys r1 keys == evalGroupKeys r2 keys
+
+-- Group rows by equivalence classes on grouping expressions
+-- Returns list of (keyValues, groupRows) pairs
+def evalGroupBy (keys : List GroupKey) (rows : List QueryRow) : List (List Val × List QueryRow) :=
+  -- Fold over rows, building groups
+  let groups := rows.foldl (fun acc row =>
+    let keyVals := evalGroupKeys row keys
+    -- Find existing group with same key or create new one
+    match acc.find? (fun (kvs, _) => kvs == keyVals) with
+    | some (kvs, grp) =>
+        -- Add to existing group
+        acc.map (fun (k, g) => if k == kvs then (k, row :: g) else (k, g))
+    | none =>
+        -- Create new group
+        (keyVals, [row]) :: acc
+  ) []
+  -- Reverse each group's rows (they were consed in reverse order)
+  groups.map (fun (k, g) => (k, g.reverse))
+
+-- Theorem: All rows in result groups came from input
+theorem evalGroupBy_preserves_rows
+  (keys : List GroupKey)
+  (rows : List QueryRow) :
+  ∀ (kvs, grp) ∈ evalGroupBy keys rows,
+    ∀ r ∈ grp, r ∈ rows := by
+  sorry  -- Induction over foldl
+
+-- Theorem: Every input row appears in exactly one group
+theorem evalGroupBy_partitions_rows
+  (keys : List GroupKey)
+  (rows : List QueryRow)
+  (r : QueryRow)
+  (hr : r ∈ rows) :
+  ∃! (kvs, grp), (kvs, grp) ∈ evalGroupBy keys rows ∧ r ∈ grp := by
+  sorry  -- Uniqueness from same key values
+
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .project fields, rows => rows.map (fun r => evalProject r fields)
-  | .groupBy _ _, rows => rows
+  | .groupBy keys aggs, rows =>
+      -- For now, groupBy without aggregation just returns distinct key rows
+      -- Full aggregation support added in next checkpoint
+      let groups := evalGroupBy keys rows
+      groups.map (fun (_, grp) => grp.head!)
   | .orderBy keys, rows => sortRows keys rows
   | .limit n, rows => rows.take n
   | .offset n, rows => rows.drop n
