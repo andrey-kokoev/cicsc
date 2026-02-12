@@ -125,7 +125,9 @@ Upgrade migration layer from operational transforms to proved algebraic behavior
 - [x] K4.4.1 Prove associativity of `composeMigrations` under explicit compatibility assumptions.
   - Added `ComposeAssocCompatible` and
     `composeMigrations_assoc_of_compatible` in `lean/Cicsc/Evolution/Migration.lean`.
-- [ ] K4.4.2 Define migration commutativity predicate and sufficient conditions.
+- [x] K4.4.2 Define migration commutativity predicate and sufficient conditions.
+  - Added `MigrationsCommuteOnHistory`, `MigrationsCommute`, and
+    `migrations_commute_of_equal_compose` in `lean/Cicsc/Evolution/Migration.lean`.
 - [ ] K4.4.3 Implement `inverseMigration` for reversible subset.
 - [ ] K4.4.4 Prove roundtrip property for reversible migrations.
 - [ ] K4.4.5 Define rollback semantics for multi-step version chains.

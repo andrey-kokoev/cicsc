@@ -173,4 +173,18 @@ theorem composeMigrations_assoc_of_compatible
   · exact hst
   · exact h12.trans h23
 
+def MigrationsCommuteOnHistory (m1 m2 : MigrationSpec) (h : History) : Prop :=
+  migrateHist (composeMigrations m1 m2) h = migrateHist (composeMigrations m2 m1) h
+
+def MigrationsCommute (m1 m2 : MigrationSpec) : Prop :=
+  ∀ h, MigrationsCommuteOnHistory m1 m2 h
+
+theorem migrations_commute_of_equal_compose
+  (m1 m2 : MigrationSpec)
+  (hcompose : composeMigrations m1 m2 = composeMigrations m2 m1) :
+  MigrationsCommute m1 m2 := by
+  intro h
+  unfold MigrationsCommuteOnHistory
+  simpa [hcompose]
+
 end Cicsc.Evolution
