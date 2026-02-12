@@ -202,6 +202,19 @@ export default {
         return Response.json({ ok: true, result })
       }
 
+      // GET /views?tenant_id=...  (list available views)
+      if (url.pathname === "/views" && req.method === "GET") {
+        const tenant_id = url.searchParams.get("tenant_id") ?? "t"
+        const loaded = await loadTenantBundle(env.DB as any, tenant_id)
+        const ir = loaded.bundle.core_ir as CoreIrV0
+        const views = Object.entries(ir.views ?? {}).map(([name, v]: [string, any]) => ({
+          name,
+          kind: String(v?.kind ?? "metric"),
+          on_type: typeof v?.on_type === "string" ? v.on_type : null,
+        }))
+        return Response.json({ ok: true, views })
+      }
+
       // POST /verify
       // - stream mode: { tenant_id, entity_type, entity_id, limit? }
       // - tenant mode: { tenant_id, limit? } (full-tenant verification)
