@@ -132,7 +132,7 @@ v1 migration class is restricted to:
 - [x] Fix coverage predicate naming:
   - `eventCoveredOrDropped` must reflect drop vs rename
 - [x] Decide explicit-coverage vs identity-fallback; in v1 keep identity-fallback but require:
-  - [ ] for every rename `tr`, target reducer exists in irTo
+  - [x] for every rename `tr`, target reducer exists in irTo
   - [ ] mapped target states exist in irTo
 
 ### 5.2 Proof obligations
