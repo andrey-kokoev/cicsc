@@ -48,7 +48,7 @@
 - [x] Implement sugar for guards (state predicates, role predicates)
 - [x] Implement sugar for reducers (set_state, set_attr, set_shadow shorthand)
 - [x] Implement sugar for views (lanes, ordering, limits)
-- [ ] Implement Spec → IR lowering (non-trivial compiler)
+- [x] Implement Spec → IR lowering (non-trivial compiler)
 - [ ] Add Spec-level typechecking + error reporting (before IR typecheck)
 - [ ] Add Spec examples for Kanban, Ticketing, CRM
 - [ ] Add Spec linter (detect anti-patterns, unreachable states, dead commands)
