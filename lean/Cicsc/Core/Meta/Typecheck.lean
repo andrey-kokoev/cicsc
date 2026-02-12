@@ -22,7 +22,6 @@ def varKeyOfRef : VarRef → Option VarKey
   | .input f => some (.input f)
   | .attrs f => some (.attrs f)
   | .row f => some (.row f)
-  | .rowState => some (.row "state")
   | .arg f => some (.arg f)
   | _ => none
 
@@ -50,6 +49,7 @@ def inferExprTyFuel (Γ : TypeEnv) : Nat → Expr → Option Ty
           | .now => some .tInt
           | .actor => some .tString
           | .state => some .tString
+          | .rowState => some .tString
           | .rowsCount => some .tInt
           | .eType => some .tString
           | .eActor => some .tString
@@ -169,9 +169,7 @@ def mkStateEnv (ts : TypeSpec) : Option TypeEnv :=
                 | some env, some t => some ((.row kv.fst, t) :: env)
                 | _, _ => none)
               (some rowWithAttrs)
-          match rowWithShadowsRes with
-          | none => none
-          | some env => some ((.row "state", .tString) :: env)
+          rowWithShadowsRes
 
 def checkTypeSpecNames (ts : TypeSpec) : Bool :=
   !hasReservedRowFieldCollision ts && !hasRowNameCollision ts
