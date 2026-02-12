@@ -159,6 +159,30 @@ theorem reducerLiteralStatesValid_of_checkTypeSpec
     simp [checkTypeSpec, hguard] at hcheck
   simpa [reducerLiteralStatesValid] using hlit
 
+theorem checkTypeSpecNames_of_checkTypeSpec
+  (ts : TypeSpec)
+  (hcheck : checkTypeSpec ts = true) :
+  checkTypeSpecNames ts = true := by
+  by_contra hnn
+  have hguard : !checkTypeSpecNames ts || !checkInitialStateDeclared ts ||
+      !checkReducerTargetsDeclared ts || !checkReducerLiteralStatesValid ts = true := by
+    simp [hnn]
+  simp [checkTypeSpec, hguard] at hcheck
+
+theorem wfTypeSpec_of_checkTypeSpec
+  (ts : TypeSpec)
+  (hcheck : checkTypeSpec ts = true) :
+  WFTypeSpec ts := by
+  refine ⟨
+    initialStateInStates_of_checkTypeSpec ts hcheck,
+    noReservedCollisions_of_checkTypeSpecNames ts (checkTypeSpecNames_of_checkTypeSpec ts hcheck),
+    noDuplicateFieldNames_of_checkTypeSpecNames ts (checkTypeSpecNames_of_checkTypeSpec ts hcheck),
+    reducerTargetsDeclared_of_checkTypeSpec ts hcheck,
+    reducerLiteralStatesValid_of_checkTypeSpec ts hcheck,
+    reducerOpsTypecheck_of_checkTypeSpec ts hcheck,
+    commandsTypecheck_of_checkTypeSpec ts hcheck
+  ⟩
+
 -- Coverage audit (v1.5/B.9):
 -- Existing bridge lemmas connect `checkTypeSpec = true` to:
 --   * `reducerOpsTypecheck ts`

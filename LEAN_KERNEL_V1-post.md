@@ -112,7 +112,7 @@ Canonical evaluator policy (runtime alignment):
 - [x] `checkTypeSpec ts = true → reducerLiteralStatesValid ts`
 
 #### 2.3 Synthesize Full WFTypeSpec
-- [ ] Theorem: `checkTypeSpec ts = true → WFTypeSpec ts`
+- [x] Theorem: `checkTypeSpec ts = true → WFTypeSpec ts`
   - Combines all component lemmas
 
 #### 2.4 Prove IR-Level Connection
