@@ -131,4 +131,18 @@ theorem ticket_replay_wellFormed_fromWFTypeSpec :
   exact replayPreservesWellFormedIfTypeExists
     ticketIr ticketStream ticketHistory ticketType hlookup ticketTypeWF hinit
 
+theorem ticket_checkTypeSpec_true : checkTypeSpec ticketType = true := by
+  decide
+
+theorem ticket_replay_wellFormed_from_checkTypeSpec :
+  ∃ st, replay ticketIr ticketStream ticketHistory = some st ∧ WellFormedState ticketType st := by
+  have hWf : WFTypeSpec ticketType :=
+    wfTypeSpec_of_checkTypeSpec ticketType ticket_checkTypeSpec_true
+  have hlookup : lookupTypeSpec ticketIr ticketStream.entityType = some ticketType := by
+    simp [lookupTypeSpec, ticketIr, ticketStream]
+  have hinit : WellFormedState ticketType (initialState ticketType) :=
+    initialStateWellFormedOfWFTypeSpec ticketType hWf
+  exact replayPreservesWellFormedIfTypeExists
+    ticketIr ticketStream ticketHistory ticketType hlookup hWf hinit
+
 end Cicsc.Examples
