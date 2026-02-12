@@ -106,7 +106,9 @@ Formalize transaction visibility/isolation semantics and prove baseline guarante
   - Added `writeWriteConflict`, `TxConflictOutcome`, `resolveWriteWriteConflict`,
     and `writeWrite_conflict_abort_or_serialize` in
     `lean/Cicsc/Core/Semantics/Isolation.lean`.
-- [ ] K4.3.6 Provide at least one multi-stream transaction proof example.
+- [x] K4.3.6 Provide at least one multi-stream transaction proof example.
+  - Added `snapshotAt_ignores_other_stream_writes` in
+    `lean/Cicsc/Core/Semantics/Isolation.lean`.
 
 ### Acceptance
 - [ ] Isolation semantics compile and are used by at least one example theorem.

@@ -97,4 +97,52 @@ theorem writeWrite_conflict_abort_or_serialize
   unfold resolveWriteWriteConflict
   simp [hconflict]
 
+theorem inStream_false_of_sid_ne
+  (sid1 sid2 : StreamId)
+  (hsid : sid1 ≠ sid2)
+  (e : Event)
+  (hin2 : inStream sid2 e = true) :
+  inStream sid1 e = false := by
+  unfold inStream at *
+  simp at hin2
+  rcases hin2 with ⟨ht2, hty2, hid2⟩
+  by_cases h1 : sid1.tenantId = sid2.tenantId
+  · by_cases h2 : sid1.entityType = sid2.entityType
+    · by_cases h3 : sid1.entityId = sid2.entityId
+      · exfalso
+        apply hsid
+        cases sid1
+        cases sid2
+        simp at *
+        simp [h1, h2, h3]
+      · simp [h1, h2, h3, ht2, hty2, hid2]
+    · simp [h1, h2, ht2, hty2, hid2]
+  · simp [h1, ht2, hty2, hid2]
+
+theorem snapshotAt_ignores_other_stream_writes
+  (ir : IR)
+  (sidRead sidWrite : StreamId)
+  (h : History)
+  (writes : History)
+  (cutoffSeq : Nat)
+  (hsid : sidRead ≠ sidWrite)
+  (hwrites : ∀ e ∈ writes, inStream sidWrite e = true) :
+  snapshotAt ir sidRead (h ++ writes) cutoffSeq = snapshotAt ir sidRead h cutoffSeq := by
+  unfold snapshotAt
+  simp [List.filter_append]
+  suffices hdrop : (writes.filter (visibleAtSeq sidRead cutoffSeq)) = [] by
+    simp [hdrop]
+  apply List.eq_nil_iff_forall_not_mem.2
+  intro e he
+  have hInFiltered : e ∈ writes.filter (visibleAtSeq sidRead cutoffSeq) := he
+  have heInWrites : e ∈ writes := by
+    exact (List.mem_filter.1 hInFiltered).1
+  have hVis : visibleAtSeq sidRead cutoffSeq e = true := by
+    exact (List.mem_filter.1 hInFiltered).2
+  have hInWriteStream : inStream sidWrite e = true := hwrites e heInWrites
+  have hInReadStreamFalse : inStream sidRead e = false :=
+    inStream_false_of_sid_ne sidRead sidWrite hsid e hInWriteStream
+  unfold visibleAtSeq in hVis
+  simp [hInReadStreamFalse] at hVis
+
 end Cicsc.Core
