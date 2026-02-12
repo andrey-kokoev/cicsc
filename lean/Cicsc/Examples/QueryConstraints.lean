@@ -45,4 +45,11 @@ theorem boolQuery_subset_example_true :
   holdsConstraint qcIr openCountPositive { st := "open", attrs := [], shadows := [] } qcSnapSet = true := by
   decide
 
+def qcConstraints : List (String × Constraint) :=
+  [("open_count_positive", openCountPositive)]
+
+theorem boolQuery_subset_example_all_true :
+  holdsAllConstraints qcIr qcConstraints { st := "open", attrs := [], shadows := [] } qcSnapSet = true := by
+  decide
+
 end Cicsc.Examples
