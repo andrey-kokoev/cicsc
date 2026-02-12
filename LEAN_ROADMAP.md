@@ -10,7 +10,7 @@
 - [x] Define events/history/state primitives in syntax/types with typed records
 
 ## C. Semantics
-- [ ] Implement expression evaluator in `Semantics/ExprEval.lean`
+- [x] Implement expression evaluator in `Semantics/ExprEval.lean`
 - [ ] Implement replay fold semantics in `Semantics/Replay.lean`
 - [ ] Implement constraint semantics in `Semantics/Constraints.lean`
 - [ ] Implement abstract command semantics in `Semantics/Commands.lean`
