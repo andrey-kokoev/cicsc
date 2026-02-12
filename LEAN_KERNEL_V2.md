@@ -223,7 +223,9 @@ v2 adds semantic coverage for:
   - Generate random Query + SnapSet pairs
   - Generate random IR schemas
   - Ensure generated queries are well-typed
-- [ ] Define test oracle:
+- [x] Define test oracle:
+  - Added reusable SQL-vs-oracle assertion harness in `tests/conformance/random-oracle-harness.ts`.
+  - Added generated differential runner test `tests/conformance/sqlite-random-vs-oracle.test.ts`.
   - Run `evalQuery` in Lean (via `#eval`)
   - Run lowered SQL against SQLite
   - Compare result sets (modulo order)

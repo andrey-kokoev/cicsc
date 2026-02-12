@@ -46,6 +46,11 @@ export function generateCase (seed: number): GeneratedCase {
       },
     })
   }
+  if (maybeOrder) {
+    pipeline.push({
+      order_by: [{ expr: { var: { row: { field: "severity_i" } } }, dir: "desc" }],
+    })
+  }
   pipeline.push({
     project: {
       fields: [
@@ -55,11 +60,6 @@ export function generateCase (seed: number): GeneratedCase {
       ],
     },
   })
-  if (maybeOrder) {
-    pipeline.push({
-      order_by: [{ expr: { var: { row: { field: "sev" } } }, dir: "desc" }],
-    })
-  }
   if (maybeLimit) {
     pipeline.push({ limit: 1 + Math.floor(rng() * n) })
   }
