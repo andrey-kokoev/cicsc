@@ -252,7 +252,10 @@ v2 adds semantic coverage for:
 **Objective:** Formalize happens-before relationships and prove ordering guarantees
 
 #### 3.1.1 Happens-Before Relation
-- [ ] Define `happensBefore : Event → Event → Prop`:
+- [x] Define `happensBefore : Event → Event → Prop`:
+  - Added in `lean/Cicsc/Core/Semantics/Concurrency.lean`:
+    - `sameStream`
+    - `happensBefore := sameStream ∧ seq-order`
   - Same stream + lower seq → happens-before
   - Cross-stream causality via command emits (if tracked)
 - [ ] Prove happens-before is a partial order (transitive, antisymmetric)
