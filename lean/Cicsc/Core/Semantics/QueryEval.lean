@@ -195,6 +195,78 @@ theorem count_order_independent
   unfold evalAggregate
   simp
 
+-- v2: Aggregation associativity and commutativity
+-- See LEAN_KERNEL_V2.md §1.2.1 checkpoint 3
+
+-- SUM is associative: SUM(a ++ b) = SUM(a) + SUM(b) - SUM([])
+theorem sum_associative
+  (expr : Expr)
+  (rows1 rows2 : List QueryRow)
+  (h1 : rows1 ≠ [])
+  (h2 : rows2 ≠ []) :
+  let sum1 := evalAggregate (.sum expr) rows1
+  let sum2 := evalAggregate (.sum expr) rows2
+  let sumBoth := evalAggregate (.sum expr) (rows1 ++ rows2)
+  match sum1, sum2, sumBoth with
+  | .vInt n1, .vInt n2, .vInt nBoth => nBoth = n1 + n2
+  | _, _, _ => False := by
+  unfold evalAggregate
+  simp [h1, h2]
+  sorry  -- Requires List.foldl distributivity over ++
+
+-- COUNT is additive: COUNT(a ++ b) = COUNT(a) + COUNT(b)
+theorem count_additive
+  (rows1 rows2 : List QueryRow) :
+  let c1 := evalAggregate .count rows1
+  let c2 := evalAggregate .count rows2
+  let cBoth := evalAggregate .count (rows1 ++ rows2)
+  match c1, c2, cBoth with
+  | .vInt n1, .vInt n2, .vInt nBoth => nBoth = n1 + n2
+  | _, _, _ => False := by
+  unfold evalAggregate
+  simp
+
+-- MIN is associative: MIN(a ++ b) = MIN(MIN(a), MIN(b))
+theorem min_associative
+  (expr : Expr)
+  (rows1 rows2 : List QueryRow)
+  (h1 : rows1 ≠ [])
+  (h2 : rows2 ≠ []) :
+  let min1 := evalAggregate (.min expr) rows1
+  let min2 := evalAggregate (.min expr) rows2
+  let minBoth := evalAggregate (.min expr) (rows1 ++ rows2)
+  minBoth = (if valLt min1 min2 then min1 else min2) := by
+  sorry  -- Requires reasoning about List.foldl and min
+
+-- MAX is associative: MAX(a ++ b) = MAX(MAX(a), MAX(b))
+theorem max_associative
+  (expr : Expr)
+  (rows1 rows2 : List QueryRow)
+  (h1 : rows1 ≠ [])
+  (h2 : rows2 ≠ []) :
+  let max1 := evalAggregate (.max expr) rows1
+  let max2 := evalAggregate (.max expr) rows2
+  let maxBoth := evalAggregate (.max expr) (rows1 ++ rows2)
+  maxBoth = (if valLt max1 max2 then max2 else max1) := by
+  sorry  -- Requires reasoning about List.foldl and max
+
+-- AVG is NOT associative (counterexample: AVG([1,3]) ≠ (AVG([1]) + AVG([3]))/2)
+-- But AVG can be computed from SUM and COUNT
+theorem avg_from_sum_and_count
+  (expr : Expr)
+  (rows : List QueryRow)
+  (hne : rows ≠ []) :
+  let avgVal := evalAggregate (.avg expr) rows
+  let sumVal := evalAggregate (.sum expr) rows
+  let countVal := evalAggregate .count rows
+  match sumVal, countVal, avgVal with
+  | .vInt s, .vInt c, .vInt a => c ≠ 0 → a = s / c
+  | _, _, _ => False := by
+  unfold evalAggregate
+  simp [hne]
+  intro hc
+  rfl
+
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .project fields, rows => rows.map (fun r => evalProject r fields)
