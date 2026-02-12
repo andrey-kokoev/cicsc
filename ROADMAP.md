@@ -35,7 +35,7 @@
 - [x] Add explain-plan checks for generated SQL (no full table scans on indexed paths)
 
 ## E. Bundle Registry & Multi-Tenancy
-- [ ] Add bundle registry (R2 or KV): bundle_hash → CoreIrBundleV0
+- [x] Add bundle registry (R2 or KV): bundle_hash → CoreIrBundleV0
 - [ ] Add tenant binding table: tenant_id → bundle_hash, active_version
 - [ ] Modify worker to load bundle by tenant binding (remove CICSC_BUNDLE env)
 - [ ] Add POST /bundle (store compiled bundle, return bundle_hash)
