@@ -19,3 +19,17 @@ Where equality means:
 3. Differential tests must exercise every lowered operator class.
 
 Backend is conformant iff all required differential tests pass.
+
+## v4 Lean Scoped Theorem Exclusions
+
+Current Lean `execSQL ∘ lowerQuery` theorem scope excludes these operators for the
+executable theorem surface:
+
+- Query operators: `groupBy`, `having`, `orderBy`, `setOp`
+- Expressions: `get`, `has`, `coalesce`, `call`
+
+These exclusions are formalized in:
+
+- `lean/Cicsc/Core/Semantics/ConformanceScope.lean`
+  - `outOfScopeQueryOpForExecTheorem`
+  - `outOfScopeExprForExecTheorem`

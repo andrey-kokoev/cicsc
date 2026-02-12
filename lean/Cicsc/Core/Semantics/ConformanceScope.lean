@@ -72,4 +72,38 @@ def supportsQueryV4 (q : Query) : Bool :=
 def QueryV4Subset (q : Query) : Prop :=
   supportsQueryV4 q = true
 
+def outOfScopeQueryOpForExecTheorem : QueryOp → Bool
+  | .groupBy _ _ => true
+  | .having _ => true
+  | .orderBy _ => true
+  | .setOp _ _ => true
+  | _ => false
+
+def outOfScopeExprForExecTheorem : Expr → Bool
+  | .get _ _ => true
+  | .has _ _ => true
+  | .coalesce _ => true
+  | .call _ _ => true
+  | _ => false
+
+theorem outOfScopeQueryOpForExecTheorem_spec (op : QueryOp) :
+  outOfScopeQueryOpForExecTheorem op = true ↔
+    (match op with
+     | .groupBy _ _ => True
+     | .having _ => True
+     | .orderBy _ => True
+     | .setOp _ _ => True
+     | _ => False) := by
+  cases op <;> simp [outOfScopeQueryOpForExecTheorem]
+
+theorem outOfScopeExprForExecTheorem_spec (e : Expr) :
+  outOfScopeExprForExecTheorem e = true ↔
+    (match e with
+     | .get _ _ => True
+     | .has _ _ => True
+     | .coalesce _ => True
+     | .call _ _ => True
+     | _ => False) := by
+  cases e <;> simp [outOfScopeExprForExecTheorem]
+
 end Cicsc.Core

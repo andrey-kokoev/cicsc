@@ -39,7 +39,11 @@ Prove that SQL lowering/execution matches kernel query semantics for the scoped 
   - Added scoped theorem `execSQL_lowerQuery_conforms_execShape` in
     `lean/Cicsc/Sql/Conformance.lean` over executable v4 shape
     (`snap` source + `filter/project/offset/limit`) with explicit expression-bridge hypotheses.
-- [ ] K4.1.6 Add explicit theorem exclusions list for out-of-scope operators.
+- [x] K4.1.6 Add explicit theorem exclusions list for out-of-scope operators.
+  - Added explicit exclusion predicates and specs:
+    `outOfScopeQueryOpForExecTheorem`, `outOfScopeExprForExecTheorem`,
+    `outOfScopeQueryOpForExecTheorem_spec`, and `outOfScopeExprForExecTheorem_spec`
+    in `lean/Cicsc/Core/Semantics/ConformanceScope.lean`.
 
 ### Acceptance
 - [ ] Main conformance theorem compiles without `sorry`.
