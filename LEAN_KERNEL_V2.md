@@ -185,7 +185,9 @@ v2 adds semantic coverage for:
   - Implemented in `lean/Cicsc/Sql/Lowering.lean` with operator-by-operator translation for the current CICSC expression surface.
 
 #### 2.1.2 SQL Execution Model
-- [ ] Define abstract SQL execution semantics:
+- [x] Define abstract SQL execution semantics:
+  - Added `lean/Cicsc/Sql/Exec.lean` with `DB`, `execFrom`, and `execSQL`.
+  - Current model covers table lookup, join execution, where/select/limit/offset for the supported subset.
   - `execSQL : SQLQuery → DB → List Row` (DB = snapshot database state)
   - Model SQLite/Postgres evaluation order
 - [ ] Define row/value representation mapping:
