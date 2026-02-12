@@ -452,6 +452,51 @@ theorem avg_not_distributive_example :
   True := by  -- Placeholder, need better counterexample
   trivial
 
+-- v2: GROUP BY with single group
+-- See LEAN_KERNEL_V2.md §1.2.3 checkpoint 2
+
+-- Theorem: GROUP BY with no keys produces single group (global aggregation)
+theorem groupBy_empty_keys_single_group
+  (rows : List QueryRow)
+  (hne : rows ≠ []) :
+  let groups := evalGroupBy [] rows
+  groups.length = 1 ∧
+  ∃ (keyVals, grp), groups = [(keyVals, grp)] ∧ grp.length = rows.length := by
+  sorry  -- All rows have same (empty) key, so single group
+
+-- Theorem: GROUP BY constant expression produces single group
+theorem groupBy_constant_single_group
+  (rows : List QueryRow)
+  (constExpr : Expr)
+  (hconst : ∀ r1 r2 ∈ rows, evalExpr (rowEnv r1) constExpr = evalExpr (rowEnv r2) constExpr)
+  (hne : rows ≠ []) :
+  let key := { name := "const", expr := constExpr : GroupKey }
+  let groups := evalGroupBy [key] rows
+  groups.length = 1 := by
+  sorry  -- All rows evaluate to same constant, so single group
+
+-- Theorem: Aggregation over single group = global aggregation
+theorem single_group_agg_eq_global
+  (agg : AggExpr)
+  (rows : List QueryRow)
+  (hne : rows ≠ []) :
+  let groups := evalGroupBy [] rows
+  match groups with
+  | [(_, grp)] => evalAggregate agg grp = evalAggregate agg rows
+  | _ => False := by
+  sorry  -- Single group contains all rows, so aggregate is same
+
+-- Corollary: GROUP BY () is equivalent to aggregating all rows
+theorem groupBy_empty_eq_global_agg
+  (aggs : List (String × AggExpr))
+  (rows : List QueryRow)
+  (hne : rows ≠ []) :
+  let grouped := applyGroupByWithAggs [] aggs rows
+  grouped.length = 1 ∧
+  ∀ (name, agg) ∈ aggs,
+    ∃ v, lookupField grouped.head! name = v ∧ v = evalAggregate agg rows := by
+  sorry  -- Follows from single group theorem
+
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .project fields, rows => rows.map (fun r => evalProject r fields)
