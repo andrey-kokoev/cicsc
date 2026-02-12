@@ -136,9 +136,13 @@ If reducer preservation assumption holds, then one-step reducer application pres
 - state label in allowed states
 
 ### Theorem D — Constraint Preservation Under Replay
-If constraints are defined over replayed state, show:
-- constraints are decidable
-- constraints depend only on replay result (extensionality)
+For v0 snapshot constraints only, show:
+- snapshot constraints are decidable
+- snapshot constraints depend only on replay result (extensionality)
+
+Bool-query status in v0:
+- query evaluation is currently a placeholder (`rows.length`-based)
+- no theorem should claim full bool-query semantic adequacy until `Query` semantics are formalized
 
 ---
 
