@@ -14,11 +14,13 @@ import { getBundle, putBundle } from "../db/bundle-registry"
 import { bindTenant } from "../db/tenant-binding"
 import { compileSpecToBundleV0, readSpecBody } from "./compile"
 import { loadTenantBundle } from "./tenant-bundle"
+import { TenantTokenBucketLimiter } from "./rate-limit"
 
 export interface Env {
   DB: D1Database
   BUNDLE_CREATE_TOKEN?: string
   TENANT_BIND_TOKEN?: string
+  RATE_LIMIT_PER_MINUTE?: string
 }
 
 type D1Database = {
@@ -34,6 +36,7 @@ export default {
 
       const adapter = new SqliteD1Adapter(env.DB as any)
       const store = makeD1Store({ adapter })
+      const limiter = getLimiter(env.RATE_LIMIT_PER_MINUTE)
 
       // Intrinsics: wire your auth/roles here. v0: permissive defaults.
       const intrinsics: VmIntrinsics = {
@@ -164,6 +167,20 @@ export default {
           body.dedupe_window_seconds == null ? undefined : Number(body.dedupe_window_seconds)
 
         const now = Math.floor(Date.now() / 1000)
+
+        if (limiter) {
+          const allow = limiter.check(tenant_id, Date.now())
+          if (!allow.ok) {
+            return new Response(JSON.stringify({ ok: false, error: "rate limit exceeded" }), {
+              status: 429,
+              headers: {
+                "content-type": "application/json",
+                "retry-after": String(allow.retry_after_seconds ?? 1),
+              },
+            })
+          }
+        }
+
         const loaded = await loadTenantBundle(env.DB as any, tenant_id)
         const ir = loaded.bundle.core_ir as CoreIrV0
 
@@ -315,4 +332,19 @@ function isAuthorized (req: Request, expectedToken?: string): boolean {
   const alt = req.headers.get("x-cicsc-token") ?? ""
   const provided = bearer || alt
   return provided.length > 0 && provided === expectedToken
+}
+
+let _limiter: TenantTokenBucketLimiter | null = null
+let _limiterCfg = ""
+
+function getLimiter (ratePerMinuteRaw?: string): TenantTokenBucketLimiter | null {
+  const n = Number(ratePerMinuteRaw ?? "0")
+  if (!Number.isFinite(n) || n <= 0) return null
+  const cfg = String(Math.trunc(n))
+  if (!_limiter || _limiterCfg !== cfg) {
+    const perMin = Math.max(1, Math.trunc(n))
+    _limiter = new TenantTokenBucketLimiter(perMin, perMin / 60)
+    _limiterCfg = cfg
+  }
+  return _limiter
 }

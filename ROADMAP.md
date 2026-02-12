@@ -83,7 +83,7 @@
 - [x] Add projection materialization cache
 - [x] Add batched command execution
 - [x] Add background SLA evaluation worker
-- [ ] Add load-shedding / rate limits per tenant
+- [x] Add load-shedding / rate limits per tenant
 - [ ] Add memory bounds for oracle verifier (streaming replay)
 
 ## K. Security & Policy
