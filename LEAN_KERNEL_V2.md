@@ -100,7 +100,8 @@ v2 adds semantic coverage for:
   - Implemented as typed-key variant `evalGroupBy : List GroupKey → List QueryRow → List (List Val × List QueryRow)` in `lean/Cicsc/Core/Semantics/QueryEval.lean`.
   - Group rows by equivalence classes on grouping expressions
   - Return groups with their key values
-- [ ] Define aggregation functions:
+- [x] Define aggregation functions:
+  - `AggExpr` includes `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`, `STRING_AGG` in `lean/Cicsc/Core/Syntax.lean`.
   - `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`, `STRING_AGG`
 - [ ] Define `evalAggregate : AggFn → List QueryRow → Val`
   - Handle empty groups (COUNT=0, others=NULL)
