@@ -40,7 +40,7 @@
 - [x] Modify worker to load bundle by tenant binding (remove CICSC_BUNDLE env)
 - [x] Add POST /bundle (store compiled bundle, return bundle_hash)
 - [x] Add POST /bind (bind tenant to bundle_hash + version)
-- [ ] Add GET /bundle/:hash (retrieve bundle)
+- [x] Add GET /bundle/:hash (retrieve bundle)
 - [ ] Add authz for bundle creation vs tenant binding
 
 ## F. Spec DSL (User Intent Layer)

@@ -86,6 +86,15 @@ export default {
         return Response.json({ ok: true, bundle_hash: out.bundle_hash })
       }
 
+      // GET /bundle/:hash  (retrieves bundle by hash)
+      const getBundleMatch = url.pathname.match(/^\/bundle\/([^\/]+)$/)
+      if (getBundleMatch && req.method === "GET") {
+        const bundle_hash = decodeURIComponent(getBundleMatch[1]!)
+        const bundle = await getBundle(env.DB as any, bundle_hash)
+        if (!bundle) return jsonErr(404, "bundle not found")
+        return Response.json({ ok: true, bundle })
+      }
+
       // POST /bind  (bind tenant -> bundle_hash + active_version)
       if (url.pathname === "/bind" && req.method === "POST") {
         const body = (await req.json().catch(() => ({}))) as any
