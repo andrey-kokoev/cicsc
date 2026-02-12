@@ -146,7 +146,7 @@
 - [x] Remove HTTP/Workers/SQL dependencies from kernel
 - [x] Add pure in-memory backend for kernel testing
 - [x] Add kernel API stability guarantees
-- [ ] Add kernel-level conformance test suite
+- [x] Add kernel-level conformance test suite
 - [ ] Add minimal embedding examples (CLI, library integration)
 - [ ] Document kernel extension points
 
