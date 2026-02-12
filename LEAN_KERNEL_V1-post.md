@@ -138,7 +138,7 @@ Canonical evaluator policy (runtime alignment):
   - Explicit rule for `.var .rowState`: `HasType Γ (.var .rowState) tString`
 
 #### 3.2 Prove Algorithmic Soundness
-- [ ] Theorem: `inferExprTy Γ e = some t → HasType Γ e t`
+- [x] Theorem: `inferExprTy Γ e = some t → HasType Γ e t`
   - Prove by structural induction on Expr
   - May need auxiliary fuel lemma: `inferExprTyFuel Γ (fuel ≥ e.sizeOf) e = some t → HasType Γ e t`
 

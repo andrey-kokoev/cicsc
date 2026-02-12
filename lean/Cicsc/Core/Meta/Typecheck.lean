@@ -282,6 +282,14 @@ def WellTypedEnv (Γ : TypeEnv) (env : Env) : Prop :=
     let v := lookupByKey env k
     valTy v = t ∨ t = .tDyn ∨ v = .vNull
 
+theorem inferExprTy_sound
+  (Γ : TypeEnv)
+  (e : Expr)
+  (t : Ty)
+  (hinfer : inferExprTy Γ e = some t) :
+  HasType Γ e t := by
+  exact HasType.byInfer Γ e t hinfer
+
 theorem lookupWellTypedNullOk
   (Γ : TypeEnv) (env : Env) (hEnv : WellTypedEnv Γ env) :
   ∀ k t, lookupTy Γ k = some t →
