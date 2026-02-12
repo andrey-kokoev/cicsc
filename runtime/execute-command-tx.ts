@@ -59,8 +59,10 @@ export async function executeCommandTx (params: {
     )
     if (existing) return existing
 
+    const activeVersion = await getActiveVersionTx(tx, req.tenant_id)
+
     // 1) load snapshot (or init)
-    const snapRow = await readSnapshot(tx, req.tenant_id, req.entity_type, req.entity_id)
+    const snapRow = await readSnapshot(tx, req.tenant_id, req.entity_type, req.entity_id, activeVersion)
 
     const snap: Snapshot = snapRow
       ? {
@@ -101,6 +103,7 @@ export async function executeCommandTx (params: {
       entity_type: req.entity_type,
       entity_id: req.entity_id,
       command_id: req.command_id,
+      version: activeVersion,
       events,
     })
 
@@ -135,7 +138,7 @@ export async function executeCommandTx (params: {
     const snapshotRowsByType = new Map<string, SnapRow[]>()
 
     for (const t of snapshotConstraintTypes) {
-      snapshotRowsByType.set(t, await readAllSnapshotsByType(tx, req.tenant_id, t))
+      snapshotRowsByType.set(t, await readAllSnapshotsByType(tx, req.tenant_id, t, activeVersion))
     }
 
     if (snapshotRowsByType.has(req.entity_type)) {
@@ -181,8 +184,6 @@ export async function executeCommandTx (params: {
     })
 
     // 8) bool_query constraints (run inside same tx using lowered SQL)
-    const ver = await store.adapter.get_active_version(req.tenant_id)
-
     for (const [cid, c] of Object.entries(ir.constraints ?? {})) {
       if ((c as any).kind !== "bool_query") continue
       if ((c as any).on_type !== req.entity_type) continue
@@ -190,7 +191,7 @@ export async function executeCommandTx (params: {
       const args = req.constraint_args?.[cid] ?? {}
       const plan = lowerBoolQueryConstraintToSql({
         constraint: c as any,
-        version: ver,
+        version: activeVersion,
         tenant_id: req.tenant_id,
         args,
       })
@@ -206,6 +207,7 @@ export async function executeCommandTx (params: {
       tenant_id: req.tenant_id,
       entity_type: req.entity_type,
       entity_id: req.entity_id,
+      version: activeVersion,
       state: next.state,
       attrs_json: stableJson(next.attrs),
       updated_ts: req.now,
@@ -294,11 +296,12 @@ async function readSnapshot (
   tx: TxCtx,
   tenant_id: string,
   entity_type: string,
-  entity_id: string
+  entity_id: string,
+  version: number
 ): Promise<{ state: string; attrs_json: string; updated_ts: number;[k: string]: any } | null> {
   const r = await tx.exec(
     `SELECT state, attrs_json, updated_ts, severity_i, created_at
-     FROM snapshots_v0
+     FROM snapshots_v${version}
      WHERE tenant_id=? AND entity_type=? AND entity_id=?
      LIMIT 1`,
     [tenant_id, entity_type, entity_id]
@@ -310,6 +313,7 @@ async function upsertSnapshotTx (tx: TxCtx, p: {
   tenant_id: string
   entity_type: string
   entity_id: string
+  version: number
   state: string
   attrs_json: string
   updated_ts: number
@@ -320,7 +324,7 @@ async function upsertSnapshotTx (tx: TxCtx, p: {
   const created_at = p.shadows["created_at"] ?? null
 
   await tx.exec(
-    `INSERT INTO snapshots_v0(tenant_id, entity_type, entity_id, state, attrs_json, updated_ts, severity_i, created_at)
+    `INSERT INTO snapshots_v${p.version}(tenant_id, entity_type, entity_id, state, attrs_json, updated_ts, severity_i, created_at)
      VALUES(?,?,?,?,?,?,?,?)
      ON CONFLICT(tenant_id, entity_type, entity_id) DO UPDATE SET
        state=excluded.state,
@@ -337,13 +341,14 @@ async function appendEventsTx (tx: TxCtx, p: {
   entity_type: string
   entity_id: string
   command_id: string
+  version: number
   events: { event_type: string; payload: unknown; ts: number; actor_id: string }[]
 }): Promise<{ seq_from: number; seq_to: number }> {
   if (!p.events.length) return { seq_from: 0, seq_to: 0 }
 
   const r = await tx.exec(
     `SELECT COALESCE(MAX(seq), 0) AS max_seq
-     FROM events_v0
+     FROM events_v${p.version}
      WHERE tenant_id=? AND entity_type=? AND entity_id=?`,
     [p.tenant_id, p.entity_type, p.entity_id]
   )
@@ -373,7 +378,7 @@ async function appendEventsTx (tx: TxCtx, p: {
   }
 
   await tx.exec(
-    `INSERT INTO events_v0(tenant_id, entity_type, entity_id, seq, event_type, payload_json, ts, actor_id, command_id)
+    `INSERT INTO events_v${p.version}(tenant_id, entity_type, entity_id, seq, event_type, payload_json, ts, actor_id, command_id)
      VALUES ${values.join(", ")}`,
     binds
   )
@@ -409,10 +414,19 @@ async function enforceSlaDueChecksTx (tx: TxCtx, p: {
   }
 }
 
-async function readAllSnapshotsByType (tx: TxCtx, tenant_id: string, entity_type: string): Promise<SnapRow[]> {
+async function getActiveVersionTx (tx: TxCtx, tenant_id: string): Promise<number> {
+  const r = await tx.exec(
+    `SELECT active_version FROM tenant_versions WHERE tenant_id=? LIMIT 1`,
+    [tenant_id]
+  )
+  const row = r.rows?.[0] as any
+  return Number(row?.active_version ?? 0)
+}
+
+async function readAllSnapshotsByType (tx: TxCtx, tenant_id: string, entity_type: string, version: number): Promise<SnapRow[]> {
   const r = await tx.exec(
     `SELECT *
-     FROM snapshots_v0
+     FROM snapshots_v${version}
      WHERE tenant_id=? AND entity_type=?`,
     [tenant_id, entity_type]
   )

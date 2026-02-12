@@ -80,6 +80,10 @@ function makeTxAdapter (initial: MemState) {
             return { rows: row ? [{ result_json: row }] : [] }
           }
 
+          if (sql.includes("SELECT active_version FROM tenant_versions")) {
+            return { rows: [{ active_version: 0 }] }
+          }
+
           if (sql.includes("SELECT state, attrs_json, updated_ts, severity_i, created_at")) {
             const row = working.snapshots.get(skey(String(binds[0]), String(binds[1]), String(binds[2])))
             if (!row) return { rows: [] }

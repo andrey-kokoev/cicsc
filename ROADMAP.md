@@ -23,7 +23,7 @@
 - [x] Generate indexes from constraints (fields referenced in filters)
 - [x] Add schema diff/migration generator for snapshots when IR changes
 - [x] Add automatic schema install on version activation
-- [ ] Add per-version event tables (events_vN) management
+- [x] Add per-version event tables (events_vN) management
 - [ ] Add schema version compatibility checks
 
 ## D. SQL Lowering Coverage & Conformance

@@ -64,6 +64,10 @@ function makeStore (backing: { committed: MemState }) {
             return { rows: row ? [{ result_json: row.result_json }] : [] }
           }
 
+          if (sql.includes("SELECT active_version FROM tenant_versions")) {
+            return { rows: [{ active_version: 0 }] }
+          }
+
           if (sql.includes("SELECT ts FROM command_receipts")) {
             const row = working.receipts.get(rkey(String(binds[0]), String(binds[1])))
             return { rows: row ? [{ ts: row.ts }] : [] }
