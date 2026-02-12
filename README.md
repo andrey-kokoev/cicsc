@@ -127,6 +127,14 @@ node cli/cicsc.mjs install --spec ./spec.json --tenant t1 --server http://localh
 node cli/cicsc.mjs verify --tenant t1 --server http://localhost
 ```
 
+## Local Dev Harness
+
+Run the worker locally against a file-backed SQLite DB:
+
+```bash
+CICSC_DB_PATH=./cicsc.dev.sqlite node runtime/dev/harness.mjs
+```
+
 ---
 
 ## Normative Design Documents

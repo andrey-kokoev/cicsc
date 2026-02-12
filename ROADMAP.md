@@ -76,7 +76,7 @@
 - [x] Add GET /schema (introspect generated schema)
 - [x] Add OpenAPI spec for runtime endpoints
 - [x] Add CLI for compile/install/verify
-- [ ] Add local dev harness (sqlite file + worker emulation)
+- [x] Add local dev harness (sqlite file + worker emulation)
 
 ## J. Performance & Scaling
 - [ ] Add snapshot compaction policy (periodic snapshotting from events)
