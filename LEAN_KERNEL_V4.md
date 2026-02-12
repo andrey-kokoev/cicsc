@@ -272,7 +272,9 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
 - [x] Isolation and transaction core guarantees are formalized and proved.
   - Covered by `snapshot_repeatable_reads`, `writeWrite_conflict_abort_or_serialize`,
     and `snapshotAt_ignores_other_stream_writes`.
-- [ ] Migration compose/inverse/rollback theorems are present for scoped subset.
+- [x] Migration compose/inverse/rollback theorems are present for scoped subset.
+  - Scoped Completion: `composeMigrations_assoc_of_compatible`,
+    `inverseMigration_roundtrip_*`, and `rollbackHistory_def`.
 - [ ] Typing fragment has soundness/completeness/principality.
 - [ ] Proof automation baseline is operational and adopted.
 - [ ] This document has theorem-indexed completion entries only.
