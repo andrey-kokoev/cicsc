@@ -21,7 +21,7 @@
 
 ## E. Proof Milestone v0
 - [x] Prove expression evaluation determinism theorem
-- [ ] Prove replay totality theorem
+- [x] Prove replay totality theorem
 - [ ] Prove reducer well-formedness preservation theorem
 
 ## F. Migration Formalization

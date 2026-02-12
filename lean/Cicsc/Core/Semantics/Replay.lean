@@ -59,4 +59,12 @@ def replay (ir : IR) (typeName : String) (h : History) : Option State :=
       let stream := h.filter (fun e => e.entityType = typeName)
       some (stream.foldl (fun acc e => applyReducer ts acc e) (initialState ts))
 
+theorem replayTotalIfTypeExists
+  (ir : IR) (typeName : String) (h : History)
+  (hex : ∃ ts, lookupTypeSpec ir typeName = some ts) :
+  ∃ st, replay ir typeName h = some st := by
+  rcases hex with ⟨ts, hts⟩
+  unfold replay
+  simp [lookupTypeSpec, hts]
+
 end Cicsc.Core
