@@ -26,7 +26,7 @@
 
 ## F. Migration Formalization
 - [x] Define migration primitives in `Evolution/Migration.lean`
-- [ ] Prove naturality/commuting-diagram theorem in `Evolution/Naturality.lean`
+- [x] Prove naturality/commuting-diagram theorem in `Evolution/Naturality.lean`
 
 ## G. Examples and Closure
 - [ ] Add Ticketing example in `Examples/Ticketing.lean`
