@@ -102,7 +102,7 @@
 - [x] Add threat model
 
 ## M. Stress Verticals (Design Validation)
-- [ ] Implement CRM vertical Spec (leads, stages, owners, SLAs)
+- [x] Implement CRM vertical Spec (leads, stages, owners, SLAs)
 - [ ] Implement Kanban vertical Spec (lanes, WIP limits, swimlanes)
 - [ ] Implement Ticketing v1 Spec (priorities, assignees, escalations)
 - [ ] Identify missing primitives from real verticals
