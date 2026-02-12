@@ -39,7 +39,7 @@ A checkbox is complete only when all are true:
 
 - [x] 1.1 Add deterministic baseline script for build/test/typecheck/conformance.
 - [x] 1.2 Eliminate known build graph inconsistencies blocking reliable CI signal.
-- [ ] 1.3 Add a single CI target running oracle tests + SQL conformance + typechecker negatives.
+- [x] 1.3 Add a single CI target running oracle tests + SQL conformance + typechecker negatives.
 - [ ] 1.4 Add baseline conformance artifact doc.
 
 Baseline command: `./scripts/phase3_baseline.sh`
@@ -48,6 +48,12 @@ Current blocker inventory after 1.2:
 
 - `adapter postgres typecheck`: external `pg` module not installed in local env.
 - Node test execution on `.ts` files with extensionless relative imports requires runner/tooling alignment (address in 1.3 CI target).
+
+CI target command: `./scripts/phase3_ci_target.sh`
+
+Current 1.3 signal:
+
+- Target runs with resolver alignment and currently reports semantic test failures in oracle replay assertions.
 
 ## 2. Conformance Hardening
 
