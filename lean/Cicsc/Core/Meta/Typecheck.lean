@@ -57,7 +57,7 @@ def inferExprTyFuel (Γ : TypeEnv) : Nat → Expr → Option Ty
           | .ePayload _ => none
   | Nat.succ fuel, .get e _ =>
       match inferExprTyFuel Γ fuel e with
-      | some .tObj => some .tDyn
+      | some .tObj => some .tNull
       | _ => none
   | Nat.succ fuel, .has e _ =>
       match inferExprTyFuel Γ fuel e with
