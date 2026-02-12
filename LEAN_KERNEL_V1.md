@@ -138,7 +138,7 @@ v1 migration class is restricted to:
 ### 5.2 Proof obligations
 - [x] Prove `StepCommutes` for the restricted class without taking it as hypothesis
   - derive it from WFMigration + reducer compatibility conditions
-- [ ] Prove `replay_commutes` using StreamId-based replay semantics
+- [x] Prove `replay_commutes` using StreamId-based replay semantics
 - [ ] Add an end-to-end example:
   - Ticketing v0→v1 migration commutes on all histories (not just sample)
 
