@@ -32,7 +32,7 @@
 - [x] Add differential tests for every Query/Expr operator (SQL vs oracle)
 - [x] Add Postgres adapter SQL lowering + exec-vs-oracle conformance tests
 - [x] Add performance regression tests for large snapshot tables
-- [ ] Add explain-plan checks for generated SQL (no full table scans on indexed paths)
+- [x] Add explain-plan checks for generated SQL (no full table scans on indexed paths)
 
 ## E. Bundle Registry & Multi-Tenancy
 - [ ] Add bundle registry (R2 or KV): bundle_hash → CoreIrBundleV0
