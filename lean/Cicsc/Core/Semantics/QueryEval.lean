@@ -387,6 +387,47 @@ theorem innerJoin_dedup_right_equiv
     exact List.dedup_eq_self.mpr hnodup
   rw [this]
 
+-- v2: Multi-source query support
+-- See LEAN_KERNEL_V2.md §1.1.3
+
+-- Helper: Build multi-way join from list of sources
+-- Constructs left-deep join tree: ((s1 ⋈ s2) ⋈ s3) ⋈ ... ⋈ sn
+def multiJoin (sources : List (Source × Expr)) (defaultJoinType : JoinType := .inner) : Option Source :=
+  match sources with
+  | [] => none
+  | (s, _) :: [] => some s
+  | (s1, cond1) :: (s2, cond2) :: rest =>
+      let firstJoin := Source.join defaultJoinType s1 s2 cond1
+      multiJoin ((firstJoin, cond2) :: rest) defaultJoinType
+
+-- Theorem: Multi-way join can be constructed from any non-empty source list
+theorem multiJoin_nonempty
+  (sources : List (Source × Expr))
+  (hne : sources ≠ []) :
+  (multiJoin sources).isSome := by
+  unfold multiJoin
+  cases sources with
+  | nil => contradiction
+  | cons hd tl =>
+      cases tl with
+      | nil => simp
+      | cons hd2 tl2 => sorry  -- Recursive case
+
+-- Helper: Count number of base sources (snaps) in a source tree
+def countBaseSources : Source → Nat
+  | .snap _ => 1
+  | .slaStatus _ _ => 1
+  | .join _ left right _ => countBaseSources left + countBaseSources right
+
+-- Theorem: Multi-join from n sources produces tree with n base sources
+theorem multiJoin_preserves_source_count
+  (sources : List (Source × Expr))
+  (hsources : ∀ (s, _) ∈ sources, countBaseSources s = 1) :
+  match multiJoin sources with
+  | none => sources = []
+  | some tree => countBaseSources tree = sources.length := by
+  sorry  -- Structural induction on sources list
+
 -- v2: Join evaluation
 -- See LEAN_KERNEL_V2.md §1.1.1
 -- Evaluates a join between two lists of rows based on join type and condition.
