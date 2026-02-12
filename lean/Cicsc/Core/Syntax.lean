@@ -101,7 +101,7 @@ inductive ReducerOp where
 deriving Repr, DecidableEq
 
 structure CommandSpec where
-  input : List String
+  input : List (String × String)
   guard : Expr
   emits : List (EventType × List (String × Expr))
 deriving Repr, DecidableEq

@@ -24,6 +24,15 @@ def varKeyOfRef : VarRef → Option VarKey
   | .arg f => some (.arg f)
   | _ => none
 
+def parseTyName : String → Option Ty
+  | "bool" => some .tBool
+  | "int" => some .tInt
+  | "string" => some .tString
+  | "null" => some .tNull
+  | "obj" => some .tObj
+  | "arr" => some .tArr
+  | _ => none
+
 partial def inferExprTy (Γ : TypeEnv) : Expr → Option Ty
   | .litBool _ => some .tBool
   | .litInt _ => some .tInt
@@ -32,9 +41,24 @@ partial def inferExprTy (Γ : TypeEnv) : Expr → Option Ty
   | .var v =>
       match varKeyOfRef v with
       | some k => lookupTy Γ k
-      | none => some .tString
-  | .get _ _ => some .tObj
-  | .has _ _ => some .tBool
+      | none =>
+          match v with
+          | .now => some .tInt
+          | .actor => some .tString
+          | .state => some .tString
+          | .rowsCount => some .tInt
+          | .eType => some .tString
+          | .eActor => some .tString
+          | .eTime => some .tInt
+          | .ePayload _ => none
+  | .get e _ =>
+      match inferExprTy Γ e with
+      | some .tObj => none
+      | _ => none
+  | .has e _ =>
+      match inferExprTy Γ e with
+      | some .tObj => some .tBool
+      | _ => none
   | .not e =>
       match inferExprTy Γ e with
       | some .tBool => some .tBool
@@ -56,8 +80,12 @@ partial def inferExprTy (Γ : TypeEnv) : Expr → Option Ty
   | .coalesce xs =>
       match xs with
       | [] => none
-      | x :: _ => inferExprTy Γ x
-  | .call _ _ => some .tNull
+      | x :: rest =>
+          match inferExprTy Γ x with
+          | none => none
+          | some tx =>
+              if rest.all (fun e => inferExprTy Γ e = some tx) then some tx else none
+  | .call _ _ => none
 
 def checkReducerOp (Γ : TypeEnv) : ReducerOp → Bool
   | .setState e => inferExprTy Γ e = some .tString
@@ -66,13 +94,46 @@ def checkReducerOp (Γ : TypeEnv) : ReducerOp → Bool
   | .setShadow _ e => (inferExprTy Γ e).isSome
 
 def checkCommand (Γ : TypeEnv) (c : CommandSpec) : Bool :=
-  inferExprTy Γ c.guard = some .tBool
+  inferExprTy Γ c.guard = some .tBool &&
+  c.emits.all (fun e =>
+    e.snd.all (fun kv => (inferExprTy Γ kv.snd).isSome))
+
+def mkInputEnv (inputs : List (String × String)) : Option TypeEnv :=
+  inputs.foldl
+    (fun acc kv =>
+      match acc, parseTyName kv.snd with
+      | some env, some t => some ((.input kv.fst, t) :: env)
+      | _, _ => none)
+    (some [])
+
+def mkStateEnv (ts : TypeSpec) : Option TypeEnv :=
+  let attrsRes :=
+    ts.attrs.foldl
+      (fun acc kv =>
+        match acc, parseTyName kv.snd with
+        | some env, some t => some ((.attrs kv.fst, t) :: env)
+        | _, _ => none)
+      (some [])
+  match attrsRes with
+  | none => none
+  | some env =>
+      ts.shadows.foldl
+        (fun acc kv =>
+          match acc, parseTyName kv.snd with
+          | some env', some t => some ((.row kv.fst, t) :: env')
+          | _, _ => none)
+        (some env)
 
 def checkTypeSpec (ts : TypeSpec) : Bool :=
-  let Γ : TypeEnv := []
-  let okCommands := ts.commands.all (fun kv => checkCommand Γ kv.snd)
-  let okReducers := ts.reducer.all (fun kv => kv.snd.all (checkReducerOp Γ))
-  okCommands && okReducers
+  match mkStateEnv ts with
+  | none => false
+  | some Γstate =>
+      let okCommands := ts.commands.all (fun kv =>
+        match mkInputEnv kv.snd.input with
+        | none => false
+        | some Γinput => checkCommand (Γinput ++ Γstate) kv.snd)
+      let okReducers := ts.reducer.all (fun kv => kv.snd.all (checkReducerOp Γstate))
+      okCommands && okReducers
 
 def checkIR (ir : IR) : Bool :=
   ir.types.all (fun kv => checkTypeSpec kv.snd)
