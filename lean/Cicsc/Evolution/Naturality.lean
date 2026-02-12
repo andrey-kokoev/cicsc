@@ -21,6 +21,65 @@ def replayFromState (ir : IR) (sid : StreamId) (s : State) (h : History) : Optio
       | some st => step ir sid st e)
     (some s)
 
+def stepWithTs (sid : StreamId) (ts : TypeSpec) (s : State) (e : Event) : State :=
+  if inStream sid e then applyReducer ts s e else s
+
+theorem replayFromState_eq_some_stepFold
+  (ir : IR)
+  (sid : StreamId)
+  (ts : TypeSpec)
+  (hlookup : lookupTypeSpec ir sid.entityType = some ts) :
+  ∀ (h : History) (s : State),
+    replayFromState ir sid s h = some (h.foldl (stepWithTs sid ts) s) := by
+  intro h
+  induction h with
+  | nil =>
+      intro s
+      simp [replayFromState]
+  | cons e hs ih =>
+      intro s
+      unfold replayFromState
+      unfold step
+      simp [hlookup]
+      exact ih _
+
+theorem stepFold_eq_filterFold
+  (sid : StreamId)
+  (ts : TypeSpec) :
+  ∀ (h : History) (s : State),
+    h.foldl (stepWithTs sid ts) s =
+      (h.filter (inStream sid)).foldl (fun acc e => applyReducer ts acc e) s := by
+  intro h
+  induction h with
+  | nil =>
+      intro s
+      simp
+  | cons e hs ih =>
+      intro s
+      by_cases hin : inStream sid e
+      · simp [stepWithTs, hin, ih]
+      · simp [stepWithTs, hin, ih]
+
+theorem replayFromState_eq_replay_of_lookup
+  (ir : IR)
+  (sid : StreamId)
+  (ts : TypeSpec)
+  (h : History)
+  (hlookup : lookupTypeSpec ir sid.entityType = some ts) :
+  replayFromState ir sid (initialState ts) h = replay ir sid h := by
+  have hleft :
+    replayFromState ir sid (initialState ts) h =
+      some (h.foldl (stepWithTs sid ts) (initialState ts)) :=
+    replayFromState_eq_some_stepFold ir sid ts hlookup h (initialState ts)
+  calc
+    replayFromState ir sid (initialState ts) h
+        = some (h.foldl (stepWithTs sid ts) (initialState ts)) := hleft
+    _ = some ((h.filter (inStream sid)).foldl (fun acc e => applyReducer ts acc e) (initialState ts)) := by
+          simp [stepFold_eq_filterFold]
+    _ = replay ir sid h := by
+          unfold replay
+          simp [hlookup]
+
 def stepMigrated (irTo : IR) (sid : StreamId) (ms : MigrationSpec) (s : State) (e : Event) : Option State :=
   match migrateEvent ms e with
   | none => some s
