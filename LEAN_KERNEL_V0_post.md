@@ -27,7 +27,7 @@ Goal: Lean is the source of truth for CICSC semantics.
 - [x] Add `row.state : tString` as a primitive or VarRef (`.rowState`)
 
 ### A3. Replace stubs with semantics (incremental)
-- [ ] Define relational semantics for a Query subset:
+- [x] Define relational semantics for a Query subset:
   - filter, project, orderBy, limit, offset, (no join/groupBy yet)
 - [ ] Prove oracle QueryEval = relational semantics for that subset
 - [ ] Reinterpret bool_query constraints against that semantics

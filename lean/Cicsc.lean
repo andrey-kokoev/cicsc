@@ -2,6 +2,7 @@ import Cicsc.Core.Syntax
 import Cicsc.Core.Types
 import Cicsc.Core.Semantics.ExprEval
 import Cicsc.Core.Semantics.Replay
+import Cicsc.Core.Semantics.QueryEval
 import Cicsc.Core.Semantics.Constraints
 import Cicsc.Core.Semantics.Commands
 import Cicsc.Core.Meta.Typecheck
