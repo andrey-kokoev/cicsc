@@ -22,4 +22,9 @@ elab "wf_auto" : tactic => do
       | exact Cicsc.Core.wfTypeSpec_of_checkTypeSpec _ ‹Cicsc.Core.checkTypeSpec _ = true›
       | simp at *)))
 
+elab "migration_simp" : tactic => do
+  evalTactic (← `(tactic|
+    (simp [Cicsc.Evolution.composeMigrations, Cicsc.Evolution.inverseMigration,
+      Cicsc.Evolution.applyMigrationChain, Cicsc.Evolution.rollbackHistory] at *)))
+
 end Cicsc.Tactics
