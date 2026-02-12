@@ -80,7 +80,7 @@
 
 ## J. Performance & Scaling
 - [x] Add snapshot compaction policy (periodic snapshotting from events)
-- [ ] Add projection materialization cache
+- [x] Add projection materialization cache
 - [ ] Add batched command execution
 - [ ] Add background SLA evaluation worker
 - [ ] Add load-shedding / rate limits per tenant
