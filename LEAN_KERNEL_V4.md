@@ -63,7 +63,10 @@ Make replay-causality statements semantically aligned with stream-aware replay a
     `mem_streamFilter_iff`, `sameStream_of_inStream_true_true`,
     `isCausal_implies_appearsBefore_in_replayStream`,
     and `replay_stream_events_respect_causal_order`.
-- [ ] K4.2.2 Prove replay respects happens-before for same-stream events.
+- [x] K4.2.2 Prove replay respects happens-before for same-stream events.
+  - Added `appearsBefore_filter_preserved` and
+    `replay_stream_preserves_happensBefore_order` in
+    `lean/Cicsc/Core/Semantics/CausalityReplay.lean`.
 - [ ] K4.2.3 Define concurrency commutativity premise for reducers (`CommutesOnConcurrent`).
 - [ ] K4.2.4 Prove replay order independence under `CommutesOnConcurrent`.
 - [ ] K4.2.5 Prove deterministic replay for causally-equivalent histories.

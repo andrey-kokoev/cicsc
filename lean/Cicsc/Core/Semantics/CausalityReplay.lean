@@ -79,4 +79,32 @@ theorem replay_stream_events_respect_causal_order
     ((mem_streamFilter_iff sid h e2).1 he2).1
     hbefore
 
+theorem appearsBefore_filter_preserved
+  (p : Event → Bool)
+  (h : History)
+  (e1 e2 : Event)
+  (hbefore : appearsBefore h e1 e2)
+  (h1 : p e1 = true)
+  (h2 : p e2 = true) :
+  appearsBefore (h.filter p) e1 e2 := by
+  rcases hbefore with ⟨pre, mid, post, hdecomp⟩
+  subst hdecomp
+  refine ⟨pre.filter p, mid.filter p, post.filter p, ?_⟩
+  simp [List.filter_append, h1, h2, List.append_assoc]
+
+theorem replay_stream_preserves_happensBefore_order
+  (h : History)
+  (sid : StreamId)
+  (hcausal : isCausal h)
+  (e1 e2 : Event)
+  (he1 : e1 ∈ h.filter (inStream sid))
+  (he2 : e2 ∈ h.filter (inStream sid))
+  (hbefore : happensBefore e1 e2) :
+  appearsBefore (h.filter (inStream sid)) e1 e2 := by
+  have hInOriginal : appearsBefore h e1 e2 :=
+    replay_stream_events_respect_causal_order h sid hcausal e1 e2 he1 he2 hbefore
+  have hin1 : inStream sid e1 = true := ((mem_streamFilter_iff sid h e1).1 he1).2
+  have hin2 : inStream sid e2 = true := ((mem_streamFilter_iff sid h e2).1 he2).2
+  exact appearsBefore_filter_preserved (inStream sid) h e1 e2 hInOriginal hin1 hin2
+
 end Cicsc.Core
