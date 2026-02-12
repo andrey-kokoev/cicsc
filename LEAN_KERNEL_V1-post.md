@@ -206,6 +206,7 @@ Canonical evaluator policy (runtime alignment):
 - [ ] Add comment header to Constraints.lean explaining evaluator evolution
 - [x] Update LEAN_KERNEL_V1.md §8 checklist to clarify v1 is complete
 - [ ] Add forward reference to LEAN_KERNEL_V1-post.md for remaining work
+- [x] Add migration note documenting naming-only compatibility for constraint evaluator surface cleanup
 
 **Acceptance:**
 - No ambiguous "v0" references in v1-complete code
@@ -310,6 +311,7 @@ For users currently depending on v1:
 - `checkIR` still works identically (but now has soundness proof)
 - `inferExprTy` still works identically (but now has declarative spec)
 - All Examples still compile (updated to use new names)
+- Constraint evaluator rename path (`holdsConstraintV0` → `holdsConstraint`) does not change evaluation behavior; it only canonicalizes the public naming surface.
 
 ### Validation
 - [ ] All Examples type-check with v1.5
