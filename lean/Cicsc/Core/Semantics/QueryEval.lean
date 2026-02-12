@@ -93,6 +93,85 @@ def combineRows (left right : QueryRow) : QueryRow :=
   let rightFiltered := right.filter (fun kv => !left.any (fun lkv => lkv.fst = kv.fst))
   left ++ rightFiltered
 
+-- v2: Field collision handling properties
+-- See LEAN_KERNEL_V2.md §1.1.1 checkbox 3
+
+theorem combineRows_preservesLeftFields
+  (left right : QueryRow)
+  (field : String)
+  (value : Val)
+  (hmem : (field, value) ∈ left) :
+  (field, value) ∈ combineRows left right := by
+  unfold combineRows
+  simp
+  left
+  exact hmem
+
+theorem combineRows_leftPrecedence
+  (left right : QueryRow)
+  (field : String)
+  (leftVal rightVal : Val)
+  (hleft : (field, leftVal) ∈ left)
+  (hright : (field, rightVal) ∈ right) :
+  lookupField (combineRows left right) field = leftVal := by
+  unfold combineRows
+  have : (field, leftVal) ∈ left := hleft
+  induction left with
+  | nil => contradiction
+  | cons hd tl ih =>
+      simp [lookupField]
+      cases heq : hd.fst = field
+      · simp at heq
+        cases hmem : hd ∈ left with
+        | false =>
+            simp at this
+            cases this with
+            | inl h =>
+                cases h
+                contradiction
+            | inr h =>
+                have ih' := ih h
+                simp [lookupField] at ih'
+                exact ih'
+        | true =>
+            simp at this
+            cases this with
+            | inl h =>
+                cases h
+                contradiction
+            | inr h =>
+                have ih' := ih h
+                simp [lookupField] at ih'
+                exact ih'
+      · simp at heq
+        simp at this
+        cases this with
+        | inl h =>
+            cases h
+            rfl
+        | inr _ =>
+            rfl
+
+theorem combineRows_includesRightNonColliding
+  (left right : QueryRow)
+  (field : String)
+  (value : Val)
+  (hright : (field, value) ∈ right)
+  (hnotleft : ∀ v, (field, v) ∉ left) :
+  (field, value) ∈ combineRows left right := by
+  unfold combineRows
+  simp
+  right
+  constructor
+  · intro lkv hlkv
+    by_contra hcontra
+    simp at hcontra
+    have : (field, lkv.snd) ∈ left := by
+      rw [← hcontra] at hlkv
+      exact hlkv
+    exact hnotleft lkv.snd this
+  · exact hright
+
 -- v2: Join evaluation
 -- See LEAN_KERNEL_V2.md §1.1.1
 -- Evaluates a join between two lists of rows based on join type and condition.
