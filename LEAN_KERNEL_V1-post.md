@@ -132,7 +132,7 @@ Canonical evaluator policy (runtime alignment):
 **Objective:** Separate typechecker specification from algorithm, prove algorithm correct
 
 #### 3.1 Define Declarative Typing Judgment
-- [ ] Add `inductive HasType : TypeEnv → Expr → Ty → Prop` in Typecheck.lean
+- [x] Add `inductive HasType : TypeEnv → Expr → Ty → Prop` in Typecheck.lean
   - Constructors for v1 fragment: lit*, var, .get (with tDyn), .has, boolean ops, arithmetic, conditionals
   - Explicit rule for `.get`: `HasType Γ e tObj → HasType Γ (.get e path) tDyn`
   - Explicit rule for `.var .rowState`: `HasType Γ (.var .rowState) tString`

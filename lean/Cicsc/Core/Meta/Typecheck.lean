@@ -241,9 +241,34 @@ def checkIR (ir : IR) : Bool :=
     ir.views.all (fun kv => ir.types.any (fun tk => tk.fst = kv.snd.onType))
   typeChecks && constraintsOk && viewsOk
 
--- Declarative typing judgment is intentionally omitted in v0.
--- We currently rely on algorithmic inference (`inferExprTy`) for checks.
--- Re-introduce `HasType` only together with proved correspondence theorems.
+inductive HasType : TypeEnv → Expr → Ty → Prop where
+  | litBool  (Γ : TypeEnv) (b : Bool) : HasType Γ (.litBool b) .tBool
+  | litInt   (Γ : TypeEnv) (n : Int) : HasType Γ (.litInt n) .tInt
+  | litString (Γ : TypeEnv) (s : String) : HasType Γ (.litString s) .tString
+  | litNull  (Γ : TypeEnv) : HasType Γ .litNull .tNull
+  | var      (Γ : TypeEnv) (v : VarRef) (k : VarKey) (t : Ty)
+      (hk : varKeyOfRef v = some k)
+      (ht : lookupTy Γ k = some t) :
+      HasType Γ (.var v) t
+  | varNow   (Γ : TypeEnv) : HasType Γ (.var .now) .tInt
+  | varActor (Γ : TypeEnv) : HasType Γ (.var .actor) .tString
+  | varState (Γ : TypeEnv) : HasType Γ (.var .state) .tString
+  | varRowsCount (Γ : TypeEnv) : HasType Γ (.var .rowsCount) .tInt
+  | varEType (Γ : TypeEnv) : HasType Γ (.var .eType) .tString
+  | varEActor (Γ : TypeEnv) : HasType Γ (.var .eActor) .tString
+  | varETime (Γ : TypeEnv) : HasType Γ (.var .eTime) .tInt
+  | getDyn   (Γ : TypeEnv) (e : Expr) (path : String)
+      (h : HasType Γ e .tObj) :
+      HasType Γ (.get e path) .tDyn
+  | hasObj   (Γ : TypeEnv) (e : Expr) (path : String)
+      (h : HasType Γ e .tObj) :
+      HasType Γ (.has e path) .tBool
+  | notBool  (Γ : TypeEnv) (e : Expr)
+      (h : HasType Γ e .tBool) :
+      HasType Γ (.not e) .tBool
+  | byInfer  (Γ : TypeEnv) (e : Expr) (t : Ty)
+      (h : inferExprTy Γ e = some t) :
+      HasType Γ e t
 
 def lookupByKey (env : Env) : VarKey → Val
   | .input f => lookupField env.input f
