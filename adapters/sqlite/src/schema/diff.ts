@@ -1,4 +1,4 @@
-import type { CoreIrV0 } from "../../../core/ir/types"
+import type { CoreIrV0 } from "../../../../core/ir/types"
 
 export type SnapshotSchemaDiff = {
   statements: string[]

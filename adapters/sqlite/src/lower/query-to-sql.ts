@@ -1,6 +1,6 @@
 // /adapters/sqlite/src/lower/query-to-sql.ts
 
-import type { AggExprV0, ExprV0, OpV0, QueryV0, SourceV0 } from "../../../core/ir/types"
+import type { AggExprV0, ExprV0, OpV0, QueryV0, SourceV0 } from "../../../../core/ir/types"
 
 export type SqlPlan = {
   sql: string

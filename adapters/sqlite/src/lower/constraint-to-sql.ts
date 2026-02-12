@@ -1,4 +1,4 @@
-import type { BoolQueryConstraintV0, ExprV0 } from "../../../core/ir/types"
+import type { BoolQueryConstraintV0, ExprV0 } from "../../../../core/ir/types"
 import type { SqlPlan } from "./query-to-sql"
 import { lowerQueryToSql, lowerExprToSqlValue } from "./query-to-sql"
 
