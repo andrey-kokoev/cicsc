@@ -1,5 +1,6 @@
 import Cicsc.Core.Syntax
 import Cicsc.Core.Types
+import Cicsc.Core.Semantics.Common
 
 namespace Cicsc.Core
 
@@ -133,11 +134,9 @@ def mkInputEnv (inputs : List (String × String)) : Option TypeEnv :=
       | _, _ => none)
     (some [])
 
-def reservedRowFields : List String := ["state"]
-
 def hasReservedRowFieldCollision (ts : TypeSpec) : Bool :=
-  ts.attrs.any (fun kv => reservedRowFields.contains kv.fst) ||
-  ts.shadows.any (fun kv => reservedRowFields.contains kv.fst)
+  ts.attrs.any (fun kv => ReservedRowKeys.contains kv.fst) ||
+  ts.shadows.any (fun kv => ReservedRowKeys.contains kv.fst)
 
 def hasRowNameCollision (ts : TypeSpec) : Bool :=
   ts.attrs.any (fun a => ts.shadows.any (fun s => s.fst = a.fst))

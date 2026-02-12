@@ -38,7 +38,7 @@ v1 is defined by **alignment**, **tightened typing**, and **non-stub query seman
   - [x] `Core/Semantics/Constraints.lean` (snapshot constraint env uses `mkRow st`)
 
 ### 1.2 Reserved field rule
-- [ ] Define reserved keys: `["state"]` (v1)
+- [x] Define reserved keys: `["state"]` (v1)
 - [ ] Add `NoReservedCollisions : TypeSpec → Prop`
   - forbids attr/shadow named `"state"`
 - [ ] Enforce it in `WFTypeSpec` (see §3)
