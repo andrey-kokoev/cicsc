@@ -14,7 +14,7 @@
 - [x] Reject bundles referencing non-materialized row fields (enforced)
 - [x] Enforce shadow column type consistency across types
 - [x] Enforce reducer writes only to declared attrs/shadows
-- [ ] Enforce SQL-lowerable intrinsics in views/constraints
+- [x] Enforce SQL-lowerable intrinsics in views/constraints
 - [ ] Add static detection of non-deterministic intrinsics in reducers/guards
 
 ## C. Schema Generation & Storage Model
