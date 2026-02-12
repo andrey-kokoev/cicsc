@@ -20,7 +20,7 @@
 - [x] Add typing judgments for Expr subset and well-typed env relation
 
 ## E. Proof Milestone v0
-- [ ] Prove expression evaluation determinism theorem
+- [x] Prove expression evaluation determinism theorem
 - [ ] Prove replay totality theorem
 - [ ] Prove reducer well-formedness preservation theorem
 

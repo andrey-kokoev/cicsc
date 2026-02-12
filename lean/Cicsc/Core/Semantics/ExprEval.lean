@@ -116,4 +116,9 @@ partial def evalExpr (env : Env) : Expr → Val
       | none => .vNull
   | .call _fn _args => .vNull
 
+theorem evalExprDeterministic (env : Env) (e : Expr) :
+  ∀ v1 v2, evalExpr env e = v1 → evalExpr env e = v2 → v1 = v2 := by
+  intro v1 v2 h1 h2
+  simpa [h1] using h2
+
 end Cicsc.Core
