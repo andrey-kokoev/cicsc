@@ -1,0 +1,79 @@
+{
+  "version": 0,
+  "entities": {
+    "Ticket": {
+      "id": "string",
+      "states": ["open", "triage", "in_progress", "escalated", "resolved", "closed"],
+      "initial": "open",
+      "attributes": {
+        "title": { "type": "string" },
+        "priority": { "type": "enum", "values": ["low", "medium", "high", "critical"] },
+        "assignee_id": { "type": "string", "optional": true }
+      },
+      "shadows": {
+        "escalation_level_i": { "type": "int" }
+      },
+      "commands": {
+        "create": {
+          "inputs": {
+            "title": { "type": "string" },
+            "priority": { "type": "enum", "values": ["low", "medium", "high", "critical"] }
+          },
+          "emit": [{ "type": "created", "payload": { "title": { "var": { "input": { "field": "title" } } }, "priority": { "var": { "input": { "field": "priority" } } } } }]
+        },
+        "triage": {
+          "when": { "state_is": "open" },
+          "emit": [{ "type": "triaged", "payload": {} }]
+        },
+        "assign": {
+          "when": { "state_is": "triage" },
+          "inputs": { "assignee_id": { "type": "string" } },
+          "emit": [{ "type": "assigned", "payload": { "assignee_id": { "var": { "input": { "field": "assignee_id" } } } } }]
+        },
+        "start": {
+          "when": { "state_is": "triage" },
+          "emit": [{ "type": "started", "payload": {} }]
+        },
+        "escalate": {
+          "when": { "any": [{ "state_is": "triage" }, { "state_is": "in_progress" }] },
+          "emit": [{ "type": "escalated", "payload": {} }]
+        },
+        "resolve": {
+          "when": { "any": [{ "state_is": "in_progress" }, { "state_is": "escalated" }] },
+          "emit": [{ "type": "resolved", "payload": {} }]
+        },
+        "close": {
+          "when": { "state_is": "resolved" },
+          "emit": [{ "type": "closed", "payload": {} }]
+        }
+      },
+      "reducers": {
+        "created": [
+          { "set_attr": { "field": "title", "value": { "var": { "e_payload": { "path": "title" } } } } },
+          { "set_attr": { "field": "priority", "value": { "var": { "e_payload": { "path": "priority" } } } } },
+          { "set_shadow": { "field": "escalation_level_i", "value": 0 } }
+        ],
+        "triaged": [{ "set_state": "triage" }],
+        "assigned": [{ "set_attr": { "field": "assignee_id", "value": { "var": { "e_payload": { "path": "assignee_id" } } } } }],
+        "started": [{ "set_state": "in_progress" }],
+        "escalated": [
+          { "set_state": "escalated" },
+          { "set_shadow": { "field": "escalation_level_i", "value": 1 } }
+        ],
+        "resolved": [{ "set_state": "resolved" }],
+        "closed": [{ "set_state": "closed" }]
+      }
+    }
+  },
+  "views": {
+    "ticket_queue": {
+      "kind": "lanes",
+      "on": "Ticket",
+      "lanes": {
+        "states": ["open", "triage", "in_progress", "escalated", "resolved"],
+        "order_by": { "field": "updated_ts", "dir": "desc" },
+        "limit": 1000
+      }
+    }
+  }
+}
