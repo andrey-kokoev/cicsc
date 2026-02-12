@@ -6,8 +6,10 @@ import type { VmIntrinsics } from "../../core/vm/eval"
 
 import { SqliteD1Adapter } from "../../adapters/sqlite/src/adapter"
 import type { CoreIrV0 } from "../../core/ir/types"
+import { validateBundleV0 } from "../../core/ir/validate"
 import { verifyHistoryAgainstIr } from "../../core/runtime/verify"
 import { activateVersion } from "../db/activate-version"
+import { putBundle } from "../db/bundle-registry"
 import { compileSpecToBundleV0, readSpecBody } from "./compile"
 import { loadTenantBundle } from "./tenant-bundle"
 
@@ -64,6 +66,23 @@ export default {
         const body = await readSpecBody(req)
         const bundle = compileSpecToBundleV0(body)
         return Response.json({ ok: true, bundle })
+      }
+
+      // POST /bundle  (stores bundle, returns bundle_hash)
+      if (url.pathname === "/bundle" && req.method === "POST") {
+        const body = (await req.json().catch(() => ({}))) as any
+
+        let bundle: any
+        if (body && typeof body === "object" && body.core_ir && typeof body.core_ir === "object") {
+          const v = validateBundleV0(body)
+          if (!v.ok) return jsonErr(400, `invalid bundle: ${v.errors[0]?.path ?? "?"} ${v.errors[0]?.message ?? ""}`)
+          bundle = v.value
+        } else {
+          bundle = compileSpecToBundleV0(body)
+        }
+
+        const out = await putBundle(env.DB as any, bundle)
+        return Response.json({ ok: true, bundle_hash: out.bundle_hash })
       }
 
       // POST /install-from-spec  (compile + install schema; does not persist bundle)

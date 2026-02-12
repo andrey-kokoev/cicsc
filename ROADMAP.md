@@ -38,7 +38,7 @@
 - [x] Add bundle registry (R2 or KV): bundle_hash → CoreIrBundleV0
 - [x] Add tenant binding table: tenant_id → bundle_hash, active_version
 - [x] Modify worker to load bundle by tenant binding (remove CICSC_BUNDLE env)
-- [ ] Add POST /bundle (store compiled bundle, return bundle_hash)
+- [x] Add POST /bundle (store compiled bundle, return bundle_hash)
 - [ ] Add POST /bind (bind tenant to bundle_hash + version)
 - [ ] Add GET /bundle/:hash (retrieve bundle)
 - [ ] Add authz for bundle creation vs tenant binding
