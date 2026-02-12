@@ -133,7 +133,7 @@ v1 migration class is restricted to:
   - `eventCoveredOrDropped` must reflect drop vs rename
 - [x] Decide explicit-coverage vs identity-fallback; in v1 keep identity-fallback but require:
   - [x] for every rename `tr`, target reducer exists in irTo
-  - [ ] mapped target states exist in irTo
+  - [x] mapped target states exist in irTo
 
 ### 5.2 Proof obligations
 - [ ] Prove `StepCommutes` for the restricted class without taking it as hypothesis
