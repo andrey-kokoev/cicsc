@@ -26,7 +26,7 @@ def migrateEvent (ms : MigrationSpec) (e : Event) : Option Event :=
     some e
   else
     match lookupTransform ms e.eventType with
-    | none => none
+    | none => some e
     | some t =>
         if t.drop then none
         else some { e with eventType := t.target }

@@ -32,3 +32,10 @@
 - [x] Add Ticketing example in `Examples/Ticketing.lean`
 - [x] Add Kanban example in `Examples/Kanban.lean`
 - [x] Add Lean kernel acceptance checklist document (maps to v0 acceptance criteria)
+
+## H. Evolution Milestone
+- [x] Make migration event handling total (unknown transform falls back to identity; `none` means explicit drop only)
+- [ ] Add `WFMigration` predicate with coverage/target/state validity checks
+- [ ] Replace naturality tautology with real theorem statement (`replay_commutes`)
+- [ ] Prove `replay_commutes` by induction on `History`
+- [ ] Add non-identity Ticketing v0→v1 migration example proof (event + state rename)
