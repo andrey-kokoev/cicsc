@@ -13,7 +13,7 @@
 - [x] Implement expression evaluator in `Semantics/ExprEval.lean`
 - [x] Implement replay fold semantics in `Semantics/Replay.lean`
 - [x] Implement constraint semantics in `Semantics/Constraints.lean`
-- [ ] Implement abstract command semantics in `Semantics/Commands.lean`
+- [x] Implement abstract command semantics in `Semantics/Commands.lean`
 
 ## D. Meta and Typechecking
 - [ ] Add decidable typechecker skeleton in `Meta/Typecheck.lean`
