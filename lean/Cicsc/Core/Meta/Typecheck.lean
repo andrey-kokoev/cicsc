@@ -253,6 +253,7 @@ inductive HasType : TypeEnv → Expr → Ty → Prop where
   | varNow   (Γ : TypeEnv) : HasType Γ (.var .now) .tInt
   | varActor (Γ : TypeEnv) : HasType Γ (.var .actor) .tString
   | varState (Γ : TypeEnv) : HasType Γ (.var .state) .tString
+  | varRowState (Γ : TypeEnv) : HasType Γ (.var .rowState) .tString
   | varRowsCount (Γ : TypeEnv) : HasType Γ (.var .rowsCount) .tInt
   | varEType (Γ : TypeEnv) : HasType Γ (.var .eType) .tString
   | varEActor (Γ : TypeEnv) : HasType Γ (.var .eActor) .tString
