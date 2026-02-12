@@ -120,13 +120,14 @@ function runBoolQueryConstraint (id: string, c: BoolQueryConstraintV0, inputs: C
 }
 
 function extractAttrs (row: Record<string, Value>): Record<string, Value> {
-  // Convention: attrs are in row keys `attrs.<k>` or raw keys (if already flattened).
-  // v0 oracle uses raw keys; keep both.
+  // Convention: attrs may be present as `attrs.<k>` or as flattened keys.
+  // Keep both so replay-projected rows and query-projected rows share behavior.
   const out: Record<string, Value> = {}
+  const core = new Set(["entity_type", "entity_id", "state", "updated_ts", "attrs_json"])
   for (const [k, v] of Object.entries(row)) {
     if (k.startsWith("attrs.")) out[k.slice("attrs.".length)] = v
+    else if (!core.has(k)) out[k] = v
   }
-  // If attrs.* not present, do nothing. Reducers typically write raw attr names into snapshots in early tests.
   return out
 }
 

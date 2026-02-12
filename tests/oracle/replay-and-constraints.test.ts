@@ -13,7 +13,9 @@ describe("oracle: replay + constraints", () => {
             id_type: "string",
             states: ["new", "triage", "closed"],
             initial_state: "new",
-            attrs: {},
+            attrs: {
+              title: { type: "string" },
+            },
             commands: {},
             reducer: {
               created: [{ set_attr: { name: "title", expr: { var: { e_payload: { path: "title" } } } } }],
@@ -25,7 +27,7 @@ describe("oracle: replay + constraints", () => {
           title_required: {
             kind: "snapshot",
             on_type: "Ticket",
-            expr: { and: [{ not: { is_null: { var: { row: { field: "title" } } } } }, { ne: [{ var: { row: { field: "title" } } }, { lit: { string: "" } }] }] },
+            expr: { and: [{ not: { is_null: { var: { attrs: { field: "title" } } } } }, { ne: [{ var: { attrs: { field: "title" } } }, { lit: { string: "" } }] }] },
           },
         },
       },
@@ -87,7 +89,9 @@ describe("oracle: replay + constraints", () => {
             id_type: "string",
             states: ["new"],
             initial_state: "new",
-            attrs: {},
+            attrs: {
+              title: { type: "string" },
+            },
             commands: {},
             reducer: {
               created: [{ set_attr: { name: "title", expr: { var: { e_payload: { path: "title" } } } } }],
@@ -98,7 +102,7 @@ describe("oracle: replay + constraints", () => {
           title_required: {
             kind: "snapshot",
             on_type: "Ticket",
-            expr: { not: { is_null: { var: { row: { field: "title" } } } } },
+            expr: { not: { is_null: { var: { attrs: { field: "title" } } } } },
           },
         },
       },
