@@ -17,12 +17,14 @@ export function compileSpecV0ToCoreIr (spec: SpecV0): CoreIrV0 {
 
   const constraints = mapConstraints(spec.constraints ?? {})
   const views = mapViews(spec.views ?? {})
+  const migrations = mapMigrations(spec.migrations ?? {})
 
   return {
     version: 0,
     types,
     constraints: Object.keys(constraints).length ? constraints : undefined,
     views: Object.keys(views).length ? views : undefined,
+    migrations: Object.keys(migrations).length ? migrations : undefined,
   }
 }
 
@@ -106,6 +108,38 @@ function mapViews (views: Record<string, any>) {
       kind: v.kind ?? "metric",
       on_type: v.on,
       query,
+    }
+  }
+  return out
+}
+
+function mapMigrations (migrations: Record<string, any>) {
+  const out: Record<string, any> = {}
+  for (const [name, m] of Object.entries(migrations ?? {})) {
+    const from = Number((m as any).from)
+    const to = Number((m as any).to)
+    if (!Number.isInteger(from) || !Number.isInteger(to) || to !== from + 1) {
+      throw new Error(`migration '${name}' must define adjacent versions (from N to N+1)`)
+    }
+
+    out[name] = {
+      from_version: from,
+      to_version: to,
+      on_type: String((m as any).entity ?? ""),
+      event_transforms: mapEventTransforms((m as any).event_transforms ?? {}),
+      state_map: (m as any).state_map ?? undefined,
+    }
+  }
+  return out
+}
+
+function mapEventTransforms (eventTransforms: Record<string, any>) {
+  const out: Record<string, any> = {}
+  for (const [eventType, t] of Object.entries(eventTransforms ?? {})) {
+    out[eventType] = {
+      emit_as: typeof (t as any)?.emit_as === "string" ? (t as any).emit_as : undefined,
+      payload_map: (t as any)?.payload_map ?? undefined,
+      drop: Boolean((t as any)?.drop ?? false),
     }
   }
   return out
