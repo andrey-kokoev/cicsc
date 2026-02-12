@@ -162,7 +162,16 @@ export async function executeCommandTx (params: {
 
     if (snapshotViolations.length) throw new Error(`constraint violated: ${snapshotViolations[0]!.constraint_id}`)
 
-    // 7) bool_query constraints (run inside same tx using lowered SQL)
+    // 7) SLA due checks (run inside same tx)
+    await enforceSlaDueChecksTx(tx, {
+      ir,
+      tenant_id: req.tenant_id,
+      entity_type: req.entity_type,
+      entity_id: req.entity_id,
+      now: req.now,
+    })
+
+    // 8) bool_query constraints (run inside same tx using lowered SQL)
     const ver = await store.adapter.get_active_version(req.tenant_id)
 
     for (const [cid, c] of Object.entries(ir.constraints ?? {})) {
@@ -183,7 +192,7 @@ export async function executeCommandTx (params: {
       if (!ok) throw new Error(`constraint violated: ${cid}`)
     }
 
-    // 8) write snapshot (including shadows)
+    // 9) write snapshot (including shadows)
     await upsertSnapshotTx(tx, {
       tenant_id: req.tenant_id,
       entity_type: req.entity_type,
@@ -202,7 +211,7 @@ export async function executeCommandTx (params: {
       updated_ts: req.now,
     }
 
-    // 9) receipt
+    // 10) receipt
     await writeReceipt(tx, req.tenant_id, req.command_id, req.entity_type, req.entity_id, result, req.now)
 
     return result
@@ -333,6 +342,34 @@ async function appendEventsTx (tx: TxCtx, p: {
   )
 
   return { seq_from, seq_to }
+}
+
+async function enforceSlaDueChecksTx (tx: TxCtx, p: {
+  ir: CoreIrV0
+  tenant_id: string
+  entity_type: string
+  entity_id: string
+  now: number
+}): Promise<void> {
+  for (const sla of Object.values(p.ir.slas ?? {})) {
+    if (sla.on_type !== p.entity_type) continue
+
+    const r = await tx.exec(
+      `SELECT 1 AS due
+       FROM sla_status
+       WHERE tenant_id=? AND name=? AND entity_type=? AND entity_id=?
+         AND breached=0
+         AND stop_ts IS NULL
+         AND deadline_ts IS NOT NULL
+         AND deadline_ts < ?
+       LIMIT 1`,
+      [p.tenant_id, sla.name, p.entity_type, p.entity_id, p.now]
+    )
+
+    if ((r.rows?.length ?? 0) > 0) {
+      throw new Error(`sla violated: ${sla.name}`)
+    }
+  }
 }
 
 async function readAllSnapshotsByType (tx: TxCtx, tenant_id: string, entity_type: string): Promise<SnapRow[]> {
