@@ -204,7 +204,7 @@ Canonical evaluator policy (runtime alignment):
 
 #### 5.2 Documentation Updates
 - [ ] Add comment header to Constraints.lean explaining evaluator evolution
-- [ ] Update LEAN_KERNEL_V1.md §8 checklist to clarify v1 is complete
+- [x] Update LEAN_KERNEL_V1.md §8 checklist to clarify v1 is complete
 - [ ] Add forward reference to LEAN_KERNEL_V1-post.md for remaining work
 
 **Acceptance:**

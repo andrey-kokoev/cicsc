@@ -186,3 +186,7 @@ Lean Kernel v1 is complete when all are true:
 - [x] bool_query no longer uses the rowsCount stub; QueryEval subset exists
 - [x] Naturality theorem is proved without assuming `StepCommutes` as a hypothesis
 - [x] Ticketing v0→v1 migration proof does not rely on injected commutation premises
+
+Status note:
+- v1 acceptance is complete.
+- v1.5 is the coherency-closure pass tracked in `LEAN_KERNEL_V1-post.md` (semantic unification + checker-to-WF soundness closure).
