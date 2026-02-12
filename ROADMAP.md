@@ -103,7 +103,7 @@
 
 ## M. Stress Verticals (Design Validation)
 - [x] Implement CRM vertical Spec (leads, stages, owners, SLAs)
-- [ ] Implement Kanban vertical Spec (lanes, WIP limits, swimlanes)
+- [x] Implement Kanban vertical Spec (lanes, WIP limits, swimlanes)
 - [ ] Implement Ticketing v1 Spec (priorities, assignees, escalations)
 - [ ] Identify missing primitives from real verticals
 - [ ] Feed primitives back into core calculus (if needed)
