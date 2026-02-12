@@ -551,6 +551,37 @@ theorem groupBy_null_semantics_matches_sql
   intro r1 hr1 r2 hr2 h1 h2
   exact groupBy_nulls_group_together key r1 r2 h1 h2
 
+-- v2: Set operations over QueryRow lists
+-- See LEAN_KERNEL_V2.md §1.3.1
+
+-- Helper: Check if two rows are equal (all fields match)
+def rowEq (r1 r2 : QueryRow) : Bool :=
+  r1 == r2
+
+-- UNION ALL: bag union (preserves duplicates)
+def evalUnion (left right : List QueryRow) : List QueryRow :=
+  left ++ right
+
+-- UNION: set union (removes duplicates)
+def evalUnionDistinct (left right : List QueryRow) : List QueryRow :=
+  (left ++ right).dedup
+
+-- INTERSECT: set intersection (rows in both)
+def evalIntersect (left right : List QueryRow) : List QueryRow :=
+  left.filter (fun l => right.any (rowEq l))
+
+-- EXCEPT: set difference (rows in left but not right)
+def evalExcept (left right : List QueryRow) : List QueryRow :=
+  left.filter (fun l => !right.any (rowEq l))
+
+-- Apply set operation
+def applySetOp (op : SetOp) (left right : List QueryRow) : List QueryRow :=
+  match op with
+  | .union => evalUnion left right
+  | .unionDistinct => evalUnionDistinct left right
+  | .intersect => evalIntersect left right
+  | .except => evalExcept left right
+
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .project fields, rows => rows.map (fun r => evalProject r fields)
@@ -559,6 +590,12 @@ def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .orderBy keys, rows => sortRows keys rows
   | .limit n, rows => rows.take n
   | .offset n, rows => rows.drop n
+  | .setOp op rightQuery, leftRows =>
+      -- Note: This is a simplified version
+      -- Full implementation requires evaluating right query in context
+      -- For now, we can't evaluate the right query without IR and snaps
+      -- This would need to be handled at a higher level
+      leftRows  -- Placeholder
 
 def supportsQueryOpSubset : QueryOp → Bool
   | .filter _ => true
@@ -568,6 +605,7 @@ def supportsQueryOpSubset : QueryOp → Bool
   | .orderBy _ => true
   | .limit _ => true
   | .offset _ => true
+  | .setOp _ _ => false  -- Not yet supported in subset
 
 def lookupSnapRows (snaps : SnapSet) (typeName : TypeName) : List State :=
   match snaps.find? (fun kv => kv.fst = typeName) with

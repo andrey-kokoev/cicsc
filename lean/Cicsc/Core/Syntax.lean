@@ -94,6 +94,15 @@ structure OrderKey where
   asc : Bool
 deriving Repr, DecidableEq
 
+-- v2: Set operations for query algebra
+-- See LEAN_KERNEL_V2.md §1.3.1
+inductive SetOp where
+  | union       -- UNION ALL (bag union, preserves duplicates)
+  | unionDistinct  -- UNION (set union, removes duplicates)
+  | intersect   -- INTERSECT (set intersection)
+  | except      -- EXCEPT (set difference)
+deriving Repr, DecidableEq
+
 inductive QueryOp where
   | filter (expr : Expr)
   | project (fields : List ProjectField)
@@ -102,6 +111,7 @@ inductive QueryOp where
   | orderBy (keys : List OrderKey)
   | limit (n : Nat)
   | offset (n : Nat)
+  | setOp (op : SetOp) (right : Query)  -- v2: Set operations between queries
 deriving Repr, DecidableEq
 
 structure Query where
