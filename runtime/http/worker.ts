@@ -8,7 +8,7 @@ import { SqliteD1Adapter } from "../../adapters/sqlite/src/adapter"
 import type { CoreIrBundleV0, CoreIrV0 } from "../../core/ir/types"
 import { validateBundleV0 } from "../../core/ir/validate"
 import { verifyHistoryAgainstIr } from "../../core/runtime/verify"
-import { installFromIr } from "../db/install-from-ir"
+import { activateVersion } from "../db/activate-version"
 import ticketingBundle from "../../bundles/ticketing.v0.json"
 import { compileSpecToBundleV0, readSpecBody } from "./compile"
 
@@ -50,11 +50,15 @@ export default {
 
       // POST /install  (idempotent)
       if (url.pathname === "/install" && req.method === "POST") {
-        await installFromIr({ db: env.DB as any, ir, version: 0 })
-        // set default active version for tenant if not set
         const body = (await req.json().catch(() => ({}))) as any
         const tenant_id = String(body.tenant_id ?? "t")
-        await store.setActiveVersion(tenant_id, 0)
+        await activateVersion({
+          db: env.DB as any,
+          ir,
+          version: 0,
+          tenant_id,
+          setActiveVersion: store.setActiveVersion,
+        })
         return Response.json({ ok: true })
       }
 
@@ -70,7 +74,6 @@ export default {
         const body = await readSpecBody(req)
         const bundle = compileSpecToBundleV0(body)
         const irV = bundle.core_ir as CoreIrV0
-        await installFromIr({ db: env.DB as any, ir: irV, version: 0 })
 
         const jsonBody = typeof body === "string" ? null : body
         const tenant_id =
@@ -78,7 +81,13 @@ export default {
             ? String((jsonBody as any).tenant_id)
             : url.searchParams.get("tenant_id") ?? "t"
 
-        await store.setActiveVersion(tenant_id, 0)
+        await activateVersion({
+          db: env.DB as any,
+          ir: irV,
+          version: 0,
+          tenant_id,
+          setActiveVersion: store.setActiveVersion,
+        })
         return Response.json({ ok: true })
       }
 
