@@ -117,6 +117,16 @@ GET /view/tickets_by_lane?tenant_id=t1
 GET /verify?tenant_id=t1
 ```
 
+## CLI
+
+Use the lightweight CLI wrapper:
+
+```bash
+node cli/cicsc.mjs compile --spec ./spec.json --server http://localhost
+node cli/cicsc.mjs install --spec ./spec.json --tenant t1 --server http://localhost
+node cli/cicsc.mjs verify --tenant t1 --server http://localhost
+```
+
 ---
 
 ## Normative Design Documents

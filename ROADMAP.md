@@ -75,7 +75,7 @@
 - [x] Add GET /views (list available views)
 - [x] Add GET /schema (introspect generated schema)
 - [x] Add OpenAPI spec for runtime endpoints
-- [ ] Add CLI for compile/install/verify
+- [x] Add CLI for compile/install/verify
 - [ ] Add local dev harness (sqlite file + worker emulation)
 
 ## J. Performance & Scaling
