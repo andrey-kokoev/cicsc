@@ -163,7 +163,7 @@
 
 ## S. Knowledge Externalization
 
-- [ ] Write technical whitepaper / preprint describing CICSC
+- [x] Write technical whitepaper / preprint describing CICSC
 - [ ] Prepare design note series (core calculus, migrations, conformance)
 - [ ] Prepare reference implementation walkthroughs
 - [ ] Publish annotated examples for canonical verticals
