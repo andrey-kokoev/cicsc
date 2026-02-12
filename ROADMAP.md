@@ -168,5 +168,5 @@
 - [x] Prepare reference implementation walkthroughs
 - [x] Publish annotated examples for canonical verticals
 - [x] Provide teaching material for Spec DSL
-- [ ] Curate “anti-patterns” and failure modes catalog
+- [x] Curate “anti-patterns” and failure modes catalog
 - [ ] Define glossary of terms and primitives
