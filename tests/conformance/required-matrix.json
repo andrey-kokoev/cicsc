@@ -1,0 +1,66 @@
+{
+  "version": "cicsc/conformance-matrix-v1",
+  "description": "Required conformance suites by backend and execution environment.",
+  "suites": [
+    {
+      "id": "sqlite-lowering-shape",
+      "backend": "sqlite",
+      "required": true,
+      "ci_profile": "default",
+      "test_files": [
+        "tests/conformance/sqlite-lowering-vs-oracle.test.ts"
+      ]
+    },
+    {
+      "id": "sqlite-exec-smoke",
+      "backend": "sqlite",
+      "required": true,
+      "ci_profile": "default",
+      "test_files": [
+        "tests/conformance/sqlite-exec-vs-oracle-smoke.test.ts"
+      ]
+    },
+    {
+      "id": "sqlite-exec-random",
+      "backend": "sqlite",
+      "required": true,
+      "ci_profile": "default",
+      "test_files": [
+        "tests/conformance/sqlite-random-vs-oracle.test.ts"
+      ]
+    },
+    {
+      "id": "sqlite-exec-full",
+      "backend": "sqlite",
+      "required": false,
+      "ci_profile": "extended",
+      "test_files": [
+        "tests/conformance/sqlite-exec-vs-oracle.test.ts"
+      ]
+    },
+    {
+      "id": "postgres-exec-core",
+      "backend": "postgres",
+      "required": false,
+      "ci_profile": "postgres",
+      "test_files": [
+        "tests/conformance/postgres-exec-vs-oracle.test.ts"
+      ],
+      "requires": [
+        "postgres_harness"
+      ]
+    },
+    {
+      "id": "cross-backend-differential",
+      "backend": "multi",
+      "required": false,
+      "ci_profile": "postgres",
+      "test_files": [
+        "tests/conformance/cross-backend-differential.test.ts"
+      ],
+      "requires": [
+        "postgres_harness"
+      ]
+    }
+  ]
+}

@@ -23,7 +23,7 @@ Reach a state where:
 Turn conformance from best-effort testing into hard CI entry criteria.
 
 ### TODOs
-- [ ] P5.1.1 Define required conformance suite matrix (sqlite + postgres where supported).
+- [x] P5.1.1 Define required conformance suite matrix (sqlite + postgres where supported).
 - [ ] P5.1.2 Promote sqlite execution-vs-oracle matrix to required CI gate.
 - [ ] P5.1.3 Add differential coverage for join/group/having/subquery operators in supported scope.
 - [ ] P5.1.4 Gate merges on conformance coverage report threshold and no untracked regressions.
@@ -150,4 +150,3 @@ Prevent phase transition without verified closure.
 - [ ] Bundle registry + tenant binding are operational and deterministic.
 - [ ] Postgres parity is validated for declared scope.
 - [ ] At least one real deployment cycle validates the system end-to-end.
-
