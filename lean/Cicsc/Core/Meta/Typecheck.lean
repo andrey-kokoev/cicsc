@@ -207,8 +207,17 @@ def checkReducerTargetDeclared (ts : TypeSpec) : ReducerOp → Bool
 def checkReducerTargetsDeclared (ts : TypeSpec) : Bool :=
   ts.reducer.all (fun kv => kv.snd.all (checkReducerTargetDeclared ts))
 
+def checkReducerLiteralStateValid (ts : TypeSpec) : ReducerOp → Bool
+  | .setState (.litString s) => ts.states.contains s
+  | .setState _ => true
+  | _ => true
+
+def checkReducerLiteralStatesValid (ts : TypeSpec) : Bool :=
+  ts.reducer.all (fun kv => kv.snd.all (checkReducerLiteralStateValid ts))
+
 def checkTypeSpec (ts : TypeSpec) : Bool :=
-  if !checkTypeSpecNames ts || !checkInitialStateDeclared ts || !checkReducerTargetsDeclared ts then
+  if !checkTypeSpecNames ts || !checkInitialStateDeclared ts ||
+      !checkReducerTargetsDeclared ts || !checkReducerLiteralStatesValid ts then
     false
   else
     match stateTypeEnv ts with

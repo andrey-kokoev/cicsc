@@ -24,12 +24,7 @@ def reducerTargetsDeclared (ts : TypeSpec) : Prop :=
   checkReducerTargetsDeclared ts = true
 
 def reducerLiteralStatesValid (ts : TypeSpec) : Prop :=
-  ∀ evt ops, (evt, ops) ∈ ts.reducer →
-    ∀ op ∈ ops,
-      match op with
-      | .setState (.litString s) => s ∈ ts.states
-      | .setState _ => True
-      | _ => True
+  checkReducerLiteralStatesValid ts = true
 
 def reducerOpsTypecheck (ts : TypeSpec) : Prop :=
   match stateTypeEnv ts with
@@ -134,7 +129,8 @@ theorem initialStateInStates_of_checkTypeSpec
   initialStateInStates ts := by
   have hinit : checkInitialStateDeclared ts = true := by
     by_contra hni
-    have hguard : !checkTypeSpecNames ts || !checkInitialStateDeclared ts || !checkReducerTargetsDeclared ts = true := by
+    have hguard : !checkTypeSpecNames ts || !checkInitialStateDeclared ts ||
+      !checkReducerTargetsDeclared ts || !checkReducerLiteralStatesValid ts = true := by
       simp [hni]
     simp [checkTypeSpec, hguard] at hcheck
   simpa [initialStateInStates, checkInitialStateDeclared] using hinit
@@ -145,10 +141,23 @@ theorem reducerTargetsDeclared_of_checkTypeSpec
   reducerTargetsDeclared ts := by
   have htargets : checkReducerTargetsDeclared ts = true := by
     by_contra hnt
-    have hguard : !checkTypeSpecNames ts || !checkInitialStateDeclared ts || !checkReducerTargetsDeclared ts = true := by
+    have hguard : !checkTypeSpecNames ts || !checkInitialStateDeclared ts ||
+      !checkReducerTargetsDeclared ts || !checkReducerLiteralStatesValid ts = true := by
       simp [hnt]
     simp [checkTypeSpec, hguard] at hcheck
   simpa [reducerTargetsDeclared] using htargets
+
+theorem reducerLiteralStatesValid_of_checkTypeSpec
+  (ts : TypeSpec)
+  (hcheck : checkTypeSpec ts = true) :
+  reducerLiteralStatesValid ts := by
+  have hlit : checkReducerLiteralStatesValid ts = true := by
+    by_contra hnl
+    have hguard : !checkTypeSpecNames ts || !checkInitialStateDeclared ts ||
+      !checkReducerTargetsDeclared ts || !checkReducerLiteralStatesValid ts = true := by
+      simp [hnl]
+    simp [checkTypeSpec, hguard] at hcheck
+  simpa [reducerLiteralStatesValid] using hlit
 
 -- Coverage audit (v1.5/B.9):
 -- Existing bridge lemmas connect `checkTypeSpec = true` to:
