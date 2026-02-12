@@ -177,3 +177,61 @@
 - [x] Standardize local/CI dependency bootstrap for adapter checks (`pg`, sqlite test harness drivers)
 - [x] Promote the Phase 3 CI target (`scripts/phase3_ci_target.sh`) to default validation entrypoint in automation
 - [x] Add deterministic policy for `.ts` module resolution in test runtime (remove ad hoc execution variance)
+
+## U. Phase 5: Deployment-Grade Semantic Closure
+
+### U1. Conformance Gate Enforcement
+
+- [ ] U1.1 Define required conformance suite matrix (sqlite + postgres where supported)
+- [ ] U1.2 Promote sqlite execution-vs-oracle matrix to required CI gate
+- [ ] U1.3 Add differential coverage for join/group/having/subquery operators in supported scope
+- [ ] U1.4 Gate merges on conformance coverage threshold and no untracked regressions
+- [ ] U1.5 Add deterministic replay artifact retention policy for CI failures
+
+### U2. Migration Cutover and Rollback Protocol
+
+- [ ] U2.1 Define executable migration preflight checklist (`SafeMigration` + runtime preconditions)
+- [ ] U2.2 Implement migration dry-run with replay verification report artifact
+- [ ] U2.3 Implement cutover workflow with explicit pause/switch/resume boundaries
+- [ ] U2.4 Implement rollback workflow for reversible subset with explicit failure handling
+- [ ] U2.5 Add operator runbook and CLI commands for preflight/cutover/rollback
+
+### U3. Spec DSL Ergonomics and Compiler Guarantees
+
+- [ ] U3.1 Freeze v1 Spec DSL grammar and desugaring contract
+- [ ] U3.2 Add compiler diagnostics with path-qualified errors for all rejected constructs
+- [ ] U3.3 Add negative compiler tests for invariant-weakening patterns
+- [ ] U3.4 Add roundtrip fixtures (`spec -> ir -> validated semantics artifacts`)
+- [ ] U3.5 Add documentation and examples for non-programmer-authored workflows
+
+### U4. Bundle Registry and Tenant Binding
+
+- [ ] U4.1 Implement bundle registry API/storage contract (publish, resolve, pin)
+- [ ] U4.2 Implement tenant-to-bundle/version binding with immutable audit trail
+- [ ] U4.3 Implement bundle signature/hash verification on install
+- [ ] U4.4 Add lifecycle tests for publish/bind/upgrade/rollback
+- [ ] U4.5 Add policy controls for who may bind or migrate tenant bundles
+
+### U5. Postgres Adapter Semantic Parity
+
+- [ ] U5.1 Define Postgres supported-scope contract mirroring sqlite scope model
+- [ ] U5.2 Add postgres execution-vs-oracle differential matrix for in-scope operators
+- [ ] U5.3 Add postgres constraint/reducer conformance checks where lowering exists
+- [ ] U5.4 Align NULL/ordering/collation semantics policy and document deltas
+- [ ] U5.5 Add cross-backend consistency gate (sqlite vs postgres vs oracle)
+
+### U6. Field Validation Vertical
+
+- [ ] U6.1 Select one reference vertical and freeze evaluation criteria
+- [ ] U6.2 Run staged workload with invariants, conformance, and migration checks enabled
+- [ ] U6.3 Capture drift/perf/missing-primitive incidents with severity labels
+- [ ] U6.4 Convert findings into roadmap checkboxes (no hidden backlog)
+- [ ] U6.5 Publish phase report with forced-next priorities only
+
+### U7. Governance Gate for Phase 6
+
+- [ ] U7.1 Define objective Phase 5 exit checklist mapped to artifacts
+- [ ] U7.2 Require green required conformance gates for sqlite + postgres scoped matrices
+- [ ] U7.3 Require migration runbook and cutover/rollback drill evidence
+- [ ] U7.4 Require Spec DSL usability evidence from reference vertical
+- [ ] U7.5 Add CI/doc checks rejecting unchecked claims in phase/status docs
