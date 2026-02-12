@@ -68,7 +68,7 @@ v1 chooses a conservative rule:
 - [x] Ensure `.has` remains `Obj → Bool`
 
 ### 2.2 Row and state typing coherence
-- [ ] Introduce a dedicated VarRef for state-as-row OR type env entry:
+- [x] Introduce a dedicated VarRef for state-as-row OR type env entry:
   - Option 1: add `VarRef.rowState`
   - Option 2: treat `.row "state"` as valid with `tString` in `mkStateEnv`
 - [ ] Ensure evaluator exposes the same mechanism consistently in Commands/Replay/Constraints
