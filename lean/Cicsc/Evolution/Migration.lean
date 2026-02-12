@@ -267,4 +267,54 @@ theorem rollbackHistory_def
     | some invChain => some (applyMigrationChain invChain h) := by
   rfl
 
+def AddPattern (t : EventTransform) : Prop :=
+  t.drop = false ∧ t.source = t.target
+
+def RenamePattern (t : EventTransform) : Prop :=
+  t.drop = false ∧ t.source ≠ t.target
+
+def RemovePattern (t : EventTransform) : Prop :=
+  t.drop = true
+
+def SafeMigration (ms : MigrationSpec) (irFrom irTo : IR) : Prop :=
+  WFMigration ms irFrom irTo ∧
+  NoPayloadTransforms ms ∧
+  StateLabelRenamesOnly ms
+
+theorem safeMigration_of_add_pattern
+  (ms : MigrationSpec)
+  (irFrom irTo : IR)
+  (hwf : WFMigration ms irFrom irTo)
+  (hpat : ∀ t ∈ ms.transforms, AddPattern t) :
+  SafeMigration ms irFrom irTo := by
+  constructor
+  · exact hwf
+  constructor
+  · exact migrateEvent_noPayloadTransforms ms
+  · exact migrateState_stateLabelRenamesOnly ms
+
+theorem safeMigration_of_rename_pattern
+  (ms : MigrationSpec)
+  (irFrom irTo : IR)
+  (hwf : WFMigration ms irFrom irTo)
+  (hpat : ∀ t ∈ ms.transforms, RenamePattern t) :
+  SafeMigration ms irFrom irTo := by
+  constructor
+  · exact hwf
+  constructor
+  · exact migrateEvent_noPayloadTransforms ms
+  · exact migrateState_stateLabelRenamesOnly ms
+
+theorem safeMigration_of_remove_pattern
+  (ms : MigrationSpec)
+  (irFrom irTo : IR)
+  (hwf : WFMigration ms irFrom irTo)
+  (hpat : ∀ t ∈ ms.transforms, RemovePattern t) :
+  SafeMigration ms irFrom irTo := by
+  constructor
+  · exact hwf
+  constructor
+  · exact migrateEvent_noPayloadTransforms ms
+  · exact migrateState_stateLabelRenamesOnly ms
+
 end Cicsc.Evolution

@@ -139,7 +139,12 @@ Upgrade migration layer from operational transforms to proved algebraic behavior
 - [x] K4.4.5 Define rollback semantics for multi-step version chains.
   - Added `applyMigrationChain`, `inverseMigrationChain`, and `rollbackHistory`
     in `lean/Cicsc/Evolution/Migration.lean`.
-- [ ] K4.4.6 Define `SafeMigration` and prove safety for add/rename/remove basic patterns.
+- [x] K4.4.6 Define `SafeMigration` and prove safety for add/rename/remove basic patterns.
+  - Added `SafeMigration` and pattern safety theorems
+    (`safeMigration_of_add_pattern`,
+    `safeMigration_of_rename_pattern`,
+    `safeMigration_of_remove_pattern`)
+    in `lean/Cicsc/Evolution/Migration.lean`.
 
 ### Acceptance
 - [ ] At least one nontrivial migration chain has compose + inverse + rollback theorems.
