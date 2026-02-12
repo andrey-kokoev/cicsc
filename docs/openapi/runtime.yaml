@@ -1,0 +1,114 @@
+openapi: 3.1.0
+info:
+  title: CICSC Runtime API
+  version: "0.1.0"
+servers:
+  - url: http://localhost
+paths:
+  /_caps:
+    get:
+      summary: Adapter capabilities
+      responses:
+        "200":
+          description: Capabilities payload
+  /compile:
+    post:
+      summary: Compile Spec and persist bundle
+      responses:
+        "200":
+          description: Bundle compiled and stored
+  /bundle:
+    post:
+      summary: Persist bundle or compile+persist from Spec body
+      responses:
+        "200":
+          description: Bundle hash returned
+  /bundle/{hash}:
+    get:
+      summary: Get bundle by hash
+      parameters:
+        - name: hash
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Bundle payload
+        "404":
+          description: Not found
+  /bind:
+    post:
+      summary: Bind tenant to bundle/version
+      responses:
+        "200":
+          description: Binding updated
+  /install:
+    post:
+      summary: Install active tenant bundle schema
+      responses:
+        "200":
+          description: Installed
+  /install-from-spec:
+    post:
+      summary: Compile Spec, persist bundle, bind tenant, and activate
+      responses:
+        "200":
+          description: Installed from Spec
+  /cmd/{entity_type}/{command_name}:
+    post:
+      summary: Execute command transactionally
+      parameters:
+        - name: entity_type
+          in: path
+          required: true
+          schema: { type: string }
+        - name: command_name
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Command execution result
+  /view/{name}:
+    get:
+      summary: Execute one view
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema: { type: string }
+        - name: tenant_id
+          in: query
+          required: false
+          schema: { type: string }
+      responses:
+        "200":
+          description: View rows
+  /views:
+    get:
+      summary: List available views
+      parameters:
+        - name: tenant_id
+          in: query
+          required: false
+          schema: { type: string }
+      responses:
+        "200":
+          description: View metadata list
+  /schema:
+    get:
+      summary: Introspect generated schema SQL
+      parameters:
+        - name: tenant_id
+          in: query
+          required: false
+          schema: { type: string }
+      responses:
+        "200":
+          description: Schema SQL
+  /verify:
+    post:
+      summary: Verify one stream or full tenant history
+      responses:
+        "200":
+          description: Verification report

@@ -74,7 +74,7 @@
 - [x] Add POST /install-from-spec (compile + install + bind tenant)
 - [x] Add GET /views (list available views)
 - [x] Add GET /schema (introspect generated schema)
-- [ ] Add OpenAPI spec for runtime endpoints
+- [x] Add OpenAPI spec for runtime endpoints
 - [ ] Add CLI for compile/install/verify
 - [ ] Add local dev harness (sqlite file + worker emulation)
 
