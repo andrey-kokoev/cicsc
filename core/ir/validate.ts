@@ -1,6 +1,7 @@
 // /core/ir/validate.ts
 
 import type { CoreIrBundleV0, CoreIrV0, EntityTypeSpecV0, ExprV0, QueryV0, ReducerOpV0 } from "./types"
+import { typecheckCoreIrV0 } from "./typecheck"
 
 export type ValidationError = {
   path: string
@@ -31,7 +32,14 @@ export function validateBundleV0 (bundle: unknown): { ok: true; value: CoreIrBun
   if (ir.views != null && !isObject(ir.views)) errors.push({ path: "$.core_ir.views", message: "views must be an object" })
   if (ir.slas != null && !isObject(ir.slas)) errors.push({ path: "$.core_ir.slas", message: "slas must be an object" })
 
-  return errors.length ? { ok: false, errors } : { ok: true, value: bundle as CoreIrBundleV0 }
+  if (errors.length) return { ok: false, errors }
+
+  const tc = typecheckCoreIrV0(ir as CoreIrV0)
+  if (!tc.ok) {
+    return { ok: false, errors: tc.errors.map((e) => ({ path: e.path, message: e.message })) }
+  }
+
+  return { ok: true, value: bundle as CoreIrBundleV0 }
 }
 
 function validateEntityType (errors: ValidationError[], path: string, typeName: string, spec: any) {
