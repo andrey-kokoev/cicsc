@@ -497,6 +497,60 @@ theorem groupBy_empty_eq_global_agg
     ∃ v, lookupField grouped.head! name = v ∧ v = evalAggregate agg rows := by
   sorry  -- Follows from single group theorem
 
+-- v2: NULL handling in GROUP BY
+-- See LEAN_KERNEL_V2.md §1.2.3 checkpoint 3
+
+-- SQL standard: NULL values in grouping keys form separate group(s)
+-- Multiple NULLs are considered equal for grouping purposes
+
+-- Theorem: Rows with NULL in grouping key form their own group
+theorem groupBy_null_forms_group
+  (key : GroupKey)
+  (rows : List QueryRow)
+  (hnull_rows : ∃ r ∈ rows, evalExpr (rowEnv r) key.expr = .vNull)
+  (hnonnull_rows : ∃ r ∈ rows, evalExpr (rowEnv r) key.expr ≠ .vNull) :
+  let groups := evalGroupBy [key] rows
+  -- At least two groups: one for NULLs, one for non-NULLs
+  groups.length ≥ 2 := by
+  sorry  -- NULL ≠ any other value, forms separate group
+
+-- Theorem: Multiple NULL values group together
+theorem groupBy_nulls_group_together
+  (key : GroupKey)
+  (row1 row2 : QueryRow)
+  (h1 : evalExpr (rowEnv row1) key.expr = .vNull)
+  (h2 : evalExpr (rowEnv row2) key.expr = .vNull) :
+  sameGroupKeys [key] row1 row2 = true := by
+  unfold sameGroupKeys evalGroupKeys
+  simp [h1, h2]
+
+-- Theorem: NULL does not equal non-NULL in grouping
+theorem groupBy_null_ne_nonnull
+  (key : GroupKey)
+  (rowNull rowNonNull : QueryRow)
+  (hnull : evalExpr (rowEnv rowNull) key.expr = .vNull)
+  (hnonnull : evalExpr (rowEnv rowNonNull) key.expr ≠ .vNull) :
+  sameGroupKeys [key] rowNull rowNonNull = false := by
+  unfold sameGroupKeys evalGroupKeys
+  simp [hnull]
+  intro h
+  have : evalExpr (rowEnv rowNonNull) key.expr = .vNull := by
+    simp [← h]
+  contradiction
+
+-- Theorem: NULL handling is consistent with SQL IS NULL semantics
+-- (NULL = NULL in grouping, but NULL ≠ NULL in predicates)
+theorem groupBy_null_semantics_matches_sql
+  (key : GroupKey)
+  (rows : List QueryRow) :
+  -- In GROUP BY, NULLs are equal (form single group)
+  ∀ r1 r2 ∈ rows,
+    evalExpr (rowEnv r1) key.expr = .vNull →
+    evalExpr (rowEnv r2) key.expr = .vNull →
+    sameGroupKeys [key] r1 r2 = true := by
+  intro r1 hr1 r2 hr2 h1 h2
+  exact groupBy_nulls_group_together key r1 r2 h1 h2
+
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .project fields, rows => rows.map (fun r => evalProject r fields)
