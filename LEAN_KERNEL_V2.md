@@ -116,8 +116,8 @@ v2 adds semantic coverage for:
 #### 1.3.1 Set Operations
 - [x] Define `evalUnion`, `evalIntersect`, `evalExcept` over QueryRow sets
   - Set operators are implemented in `lean/Cicsc/Core/Semantics/QueryEval.lean` via `applySetOp`.
-  - v2 evaluator path `evalQuerySubsetWithSetOps` in `lean/Cicsc/Core/Semantics/SetOpEval.lean` executes `.setOp` by evaluating the right query and applying the chosen set operator.
-- [ ] Prove set operation properties:
+  - Canonical query evaluation path (`evalQuery`) now executes `.setOp` via `evalQuerySubsetWithSetOps` in `lean/Cicsc/Core/Semantics/QueryEval.lean`.
+- [x] Prove set operation properties:
   - Union commutativity, associativity
   - Intersection commutativity, idempotence
   - De Morgan's laws for set operations

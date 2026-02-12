@@ -582,6 +582,129 @@ def applySetOp (op : SetOp) (left right : List QueryRow) : List QueryRow :=
   | .intersect => evalIntersect left right
   | .except => evalExcept left right
 
+-- v2: Set operation properties
+-- See LEAN_KERNEL_V2.md §1.3.1 checkpoint 2
+
+-- UNION is commutative (modulo order)
+theorem union_commutative
+  (a b : List QueryRow) :
+  rowListEquiv (evalUnion a b) (evalUnion b a) := by
+  unfold evalUnion rowListEquiv
+  constructor <;> intro r hr <;> simp at hr <;> simp
+  · cases hr with
+    | inl h => right; exact h
+    | inr h => left; exact h
+  · cases hr with
+    | inl h => right; exact h
+    | inr h => left; exact h
+
+-- UNION is associative
+theorem union_associative
+  (a b c : List QueryRow) :
+  rowListEquiv (evalUnion (evalUnion a b) c) (evalUnion a (evalUnion b c)) := by
+  unfold evalUnion rowListEquiv
+  simp
+  constructor <;> intro r hr
+  · cases hr with
+    | inl h =>
+        cases h with
+        | inl ha => left; exact ha
+        | inr hb => right; left; exact hb
+    | inr hc => right; right; exact hc
+  · cases hr with
+    | inl ha => left; left; exact ha
+    | inr h =>
+        cases h with
+        | inl hb => left; right; exact hb
+        | inr hc => right; exact hc
+
+-- INTERSECT is commutative
+theorem intersect_commutative
+  (a b : List QueryRow) :
+  rowListEquiv (evalIntersect a b) (evalIntersect b a) := by
+  unfold evalIntersect rowListEquiv
+  constructor <;> intro r hr <;> simp at hr <;> simp
+  · exact ⟨hr.2, hr.1⟩
+  · exact ⟨hr.2, hr.1⟩
+
+-- INTERSECT is idempotent: A ∩ A = A
+theorem intersect_idempotent
+  (a : List QueryRow) :
+  rowListEquiv (evalIntersect a a) a := by
+  unfold evalIntersect rowListEquiv
+  constructor <;> intro r hr <;> simp at hr <;> simp
+  · exact hr.1
+  · constructor <;> exact hr
+
+-- De Morgan's law: NOT (A ∪ B) = (NOT A) ∩ (NOT B)
+-- Expressed as: universe \ (A ∪ B) = (universe \ A) ∩ (universe \ B)
+theorem deMorgan_union
+  (universe a b : List QueryRow)
+  (ha : ∀ r ∈ a, r ∈ universe)
+  (hb : ∀ r ∈ b, r ∈ universe) :
+  rowListEquiv
+    (evalExcept universe (evalUnion a b))
+    (evalIntersect (evalExcept universe a) (evalExcept universe b)) := by
+  unfold evalExcept evalUnion evalIntersect rowListEquiv
+  constructor <;> intro r hr <;> simp at hr <;> simp
+  · constructor
+    · constructor
+      · exact hr.1
+      · intro contra
+        have : r ∈ a ∨ r ∈ b := by simp [contra]
+        exact hr.2 this
+    · constructor
+      · exact hr.1
+      · intro contra
+        have : r ∈ a ∨ r ∈ b := by simp [contra]
+        exact hr.2 this
+  · obtain ⟨⟨hu1, hna⟩, hu2, hnb⟩ := hr
+    constructor
+    · exact hu1
+    · intro h
+      cases h with
+      | inl ha => exact hna ha
+      | inr hb => exact hnb hb
+
+-- De Morgan's law: universe \ (A ∩ B) = (universe \ A) ∪ (universe \ B)
+theorem deMorgan_intersect
+  (universe a b : List QueryRow)
+  (ha : ∀ r ∈ a, r ∈ universe)
+  (hb : ∀ r ∈ b, r ∈ universe) :
+  rowListEquiv
+    (evalExcept universe (evalIntersect a b))
+    (evalUnion (evalExcept universe a) (evalExcept universe b)) := by
+  unfold evalExcept evalIntersect evalUnion rowListEquiv
+  constructor
+  · intro r hr
+    simp at hr
+    rcases hr with ⟨hu, hnotab⟩
+    by_cases hra : r ∈ a
+    · right
+      simp
+      constructor
+      · exact hu
+      · intro hrb
+        exact hnotab ⟨hra, hrb⟩
+    · left
+      simp
+      exact ⟨hu, hra⟩
+  · intro r hr
+    simp at hr
+    rcases hr with hleft | hright
+    · rcases hleft with ⟨hu, hna⟩
+      simp
+      constructor
+      · exact hu
+      · intro hab
+        exact hna hab.1
+    · rcases hright with ⟨hu, hnb⟩
+      simp
+      constructor
+      · exact hu
+      · intro hab
+        exact hnb hab.2
+
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .project fields, rows => rows.map (fun r => evalProject r fields)
@@ -1131,8 +1254,35 @@ def supportsQuerySubset (q : Query) : Bool :=
 def evalQuerySubset (q : Query) (snaps : SnapSet) : List QueryRow :=
   q.pipeline.foldl (fun acc op => applyQueryOpSubset op acc) (evalSourceSubset q.source snaps)
 
+mutual
+  partial def evalQuerySubsetWithSetOps (q : Query) (snaps : SnapSet) : List QueryRow :=
+    evalQueryOpsWithSetOps q.pipeline (evalSourceSubset q.source snaps) snaps
+
+  partial def evalQueryOpsWithSetOps (ops : List QueryOp) (rows : List QueryRow) (snaps : SnapSet) : List QueryRow :=
+    match ops with
+    | [] => rows
+    | op :: rest =>
+        let nextRows :=
+          match op with
+          | .setOp setOp rightQuery =>
+              let rightRows := evalQuerySubsetWithSetOps rightQuery snaps
+              applySetOp setOp rows rightRows
+          | _ =>
+              applyQueryOpSubset op rows
+        evalQueryOpsWithSetOps rest nextRows snaps
+end
+
+theorem evalQueryOpsWithSetOps_single_setOp
+  (snaps : SnapSet)
+  (leftRows : List QueryRow)
+  (setOp : SetOp)
+  (rightQuery : Query) :
+  evalQueryOpsWithSetOps [QueryOp.setOp setOp rightQuery] leftRows snaps =
+    applySetOp setOp leftRows (evalQuerySubsetWithSetOps rightQuery snaps) := by
+  rfl
+
 def evalQuery (_ir : IR) (q : Query) (snaps : SnapSet) : List QueryRow :=
-  evalQuerySubset q snaps
+  evalQuerySubsetWithSetOps q snaps
 
 def evalQueryOpsOracle : List QueryOp → List QueryRow → List QueryRow
   | [], rows => rows
