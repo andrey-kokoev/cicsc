@@ -37,10 +37,12 @@ A checkbox is complete only when all are true:
 
 ## 1. Stabilization Gate (must pass before pilot)
 
-- [ ] 1.1 Add deterministic baseline script for build/test/typecheck/conformance.
+- [x] 1.1 Add deterministic baseline script for build/test/typecheck/conformance.
 - [ ] 1.2 Eliminate known build graph inconsistencies blocking reliable CI signal.
 - [ ] 1.3 Add a single CI target running oracle tests + SQL conformance + typechecker negatives.
 - [ ] 1.4 Add baseline conformance artifact doc.
+
+Baseline command: `./scripts/phase3_baseline.sh`
 
 ## 2. Conformance Hardening
 
