@@ -142,7 +142,7 @@
 
 ## Q. Kernel Extraction and Hardening
 
-- [ ] Extract kernel package (IR, typechecker, oracle interpreter, migration verifier)
+- [x] Extract kernel package (IR, typechecker, oracle interpreter, migration verifier)
 - [ ] Remove HTTP/Workers/SQL dependencies from kernel
 - [ ] Add pure in-memory backend for kernel testing
 - [ ] Add kernel API stability guarantees
