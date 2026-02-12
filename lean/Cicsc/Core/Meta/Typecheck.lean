@@ -290,6 +290,14 @@ theorem inferExprTy_sound
   HasType Γ e t := by
   exact HasType.byInfer Γ e t hinfer
 
+theorem inferExprTyFuel_sound_atSize
+  (Γ : TypeEnv)
+  (e : Expr)
+  (t : Ty)
+  (hfuel : inferExprTyFuel Γ (e.sizeOf + 1) e = some t) :
+  HasType Γ e t := by
+  exact inferExprTy_sound Γ e t (by simpa [inferExprTy] using hfuel)
+
 theorem lookupWellTypedNullOk
   (Γ : TypeEnv) (env : Env) (hEnv : WellTypedEnv Γ env) :
   ∀ k t, lookupTy Γ k = some t →

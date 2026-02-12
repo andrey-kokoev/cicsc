@@ -141,6 +141,7 @@ Canonical evaluator policy (runtime alignment):
 - [x] Theorem: `inferExprTy Γ e = some t → HasType Γ e t`
   - Prove by structural induction on Expr
   - May need auxiliary fuel lemma: `inferExprTyFuel Γ (fuel ≥ e.sizeOf) e = some t → HasType Γ e t`
+- [x] Add auxiliary canonical-fuel lemma for `inferExprTyFuel` at `e.sizeOf + 1`.
 
 #### 3.3 Document Completeness Gap (Optional for v1.5)
 - [ ] Document: `HasType Γ e t` does not imply `inferExprTy Γ e = some t` (completeness)
