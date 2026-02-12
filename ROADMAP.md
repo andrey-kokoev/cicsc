@@ -159,7 +159,7 @@
 - [x] Add long-term support (LTS) branch
 - [x] Define contribution and review process for semantic changes
 - [x] Define security and vulnerability handling process
-- [ ] Archive research branch
+- [x] Archive research branch
 
 ## S. Knowledge Externalization
 
