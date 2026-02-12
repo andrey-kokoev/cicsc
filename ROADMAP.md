@@ -147,7 +147,7 @@
 - [x] Add pure in-memory backend for kernel testing
 - [x] Add kernel API stability guarantees
 - [x] Add kernel-level conformance test suite
-- [ ] Add minimal embedding examples (CLI, library integration)
+- [x] Add minimal embedding examples (CLI, library integration)
 - [ ] Document kernel extension points
 
 ## R. Release, Stability, and Governance
