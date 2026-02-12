@@ -89,5 +89,5 @@ Current 1.3 signal:
 ## 6. Phase Exit and Freeze Decision
 
 - [x] 6.1 Add objective Phase 3 exit checklist and pass/fail criteria.
-- [ ] 6.2 Run full exit suite and publish evidence bundle.
+- [x] 6.2 Run full exit suite and publish evidence bundle.
 - [ ] 6.3 Record decision commit: freeze core (v1.x) or open exactly one research axis.
