@@ -1,0 +1,167 @@
+// /bundles/ticketing.v0.json
+{
+  "core_ir": {
+    "version": 0,
+    "types": {
+      "Ticket": {
+        "id_type": "string",
+        "states": ["new", "triage", "in_progress", "closed"],
+        "initial_state": "new",
+        "attrs": {
+          "title": { "type": "string" },
+          "description": { "type": "string", "optional": true },
+          "severity": { "type": "enum", "values": ["low", "med", "high"], "optional": true },
+          "created_at": { "type": "time" }
+        },
+        "shadows": {
+          "severity_i": { "type": "int" },
+          "created_at": { "type": "int" }
+        },
+        "commands": {
+          "create": {
+            "input": {
+              "title": { "type": "string" },
+              "description": { "type": "string", "optional": true },
+              "severity": { "type": "enum", "values": ["low", "med", "high"], "optional": true }
+            },
+            "guard": {
+              "expr": { "call": { "fn": "auth_ok", "args": [{ "var": { "actor": true } }, { "lit": { "string": "Ticket.create" } }] } }
+            },
+            "emits": [
+              {
+                "event_type": "created",
+                "payload": {
+                  "title": { "var": { "input": { "field": "title" } } },
+                  "description": { "var": { "input": { "field": "description" } } },
+                  "severity": { "coalesce": [{ "var": { "input": { "field": "severity" } } }, { "lit": { "string": "med" } }] },
+                  "created_at": { "var": { "now": true } }
+                }
+              }
+            ]
+          },
+          "triage": {
+            "input": {
+              "severity": { "type": "enum", "values": ["low", "med", "high"] }
+            },
+            "guard": {
+              "expr": {
+                "and": [
+                  { "call": { "fn": "auth_ok", "args": [{ "var": { "actor": true } }, { "lit": { "string": "Ticket.triage" } }] } },
+                  { "eq": [{ "var": { "state": true } }, { "lit": { "string": "new" } }] }
+                ]
+              }
+            },
+            "emits": [
+              {
+                "event_type": "triaged",
+                "payload": {
+                  "severity": { "var": { "input": { "field": "severity" } } }
+                }
+              }
+            ]
+          },
+          "start": {
+            "input": {},
+            "guard": {
+              "expr": {
+                "and": [
+                  { "call": { "fn": "auth_ok", "args": [{ "var": { "actor": true } }, { "lit": { "string": "Ticket.start" } }] } },
+                  { "eq": [{ "var": { "state": true } }, { "lit": { "string": "triage" } }] }
+                ]
+              }
+            },
+            "emits": [{ "event_type": "started", "payload": {} }]
+          },
+          "close": {
+            "input": {},
+            "guard": {
+              "expr": {
+                "and": [
+                  { "call": { "fn": "auth_ok", "args": [{ "var": { "actor": true } }, { "lit": { "string": "Ticket.close" } }] } },
+                  { "or": [{ "eq": [{ "var": { "state": true } }, { "lit": { "string": "in_progress" } }] }, { "eq": [{ "var": { "state": true } }, { "lit": { "string": "triage" } }] }] }
+                ]
+              }
+            },
+            "emits": [{ "event_type": "closed", "payload": {} }]
+          }
+        },
+        "reducer": {
+          "created": [
+            { "set_attr": { "name": "title", "expr": { "var": { "e_payload": { "path": "title" } } } } },
+            { "set_attr": { "name": "description", "expr": { "var": { "e_payload": { "path": "description" } } } } },
+            { "set_attr": { "name": "severity", "expr": { "var": { "e_payload": { "path": "severity" } } } } },
+            { "set_attr": { "name": "created_at", "expr": { "var": { "e_payload": { "path": "created_at" } } } } },
+            { "set_shadow": { "name": "created_at", "expr": { "var": { "e_payload": { "path": "created_at" } } } } },
+            {
+              "set_shadow": {
+                "name": "severity_i",
+                "expr": { "map_enum": { "expr": { "var": { "e_payload": { "path": "severity" } } }, "mapping": { "low": 1, "med": 2, "high": 3 } } }
+              }
+            }
+          ],
+          "triaged": [
+            { "set_state": { "expr": { "lit": { "string": "triage" } } } },
+            { "set_attr": { "name": "severity", "expr": { "var": { "e_payload": { "path": "severity" } } } } },
+            {
+              "set_shadow": {
+                "name": "severity_i",
+                "expr": { "map_enum": { "expr": { "var": { "e_payload": { "path": "severity" } } }, "mapping": { "low": 1, "med": 2, "high": 3 } } }
+              }
+            }
+          ],
+          "started": [{ "set_state": { "expr": { "lit": { "string": "in_progress" } } } }],
+          "closed": [{ "set_state": { "expr": { "lit": { "string": "closed" } } } }]
+        }
+      }
+    },
+    "constraints": {
+      "ticket_title_required": {
+        "kind": "snapshot",
+        "on_type": "Ticket",
+        "expr": {
+          "and": [
+            { "not": { "is_null": { "var": { "row": { "field": "title" } } } } },
+            { "ne": [{ "var": { "row": { "field": "title" } } }, { "lit": { "string": "" } }] }
+          ]
+        }
+      },
+      "wip_limit_new": {
+        "kind": "bool_query",
+        "on_type": "Ticket",
+        "args": { "limit": { "type": "int" } },
+        "query": {
+          "source": { "snap": { "type": "Ticket" } },
+          "pipeline": [
+            { "filter": { "eq": [{ "var": { "row": { "field": "state" } } }, { "lit": { "string": "new" } }] } }
+          ]
+        },
+        "assert": { "le": [{ "var": { "rows_count": true } }, { "var": { "arg": { "name": "limit" } } }] }
+      }
+    },
+    "views": {
+      "tickets_new": {
+        "kind": "lanes",
+        "on_type": "Ticket",
+        "lanes": ["new"],
+        "query": {
+          "source": { "snap": { "type": "Ticket" } },
+          "pipeline": [
+            { "filter": { "eq": [{ "var": { "row": { "field": "state" } } }, { "lit": { "string": "new" } }] } },
+            {
+              "project": {
+                "fields": [
+                  { "name": "id", "expr": { "var": { "row": { "field": "entity_id" } } } },
+                  { "name": "title", "expr": { "get": { "expr": { "var": { "row": { "field": "attrs_json" } } }, "path": "title" } } },
+                  { "name": "severity_i", "expr": { "var": { "row": { "field": "severity_i" } } } },
+                  { "name": "created_at", "expr": { "var": { "row": { "field": "created_at" } } } }
+                ]
+              }
+            },
+            { "order_by": [{ "expr": { "var": { "row": { "field": "severity_i" } } }, "dir": "desc" }, { "expr": { "var": { "row": { "field": "created_at" } } }, "dir": "desc" }] },
+            { "limit": 200 }
+          ]
+        }
+      }
+    }
+  }
+}
