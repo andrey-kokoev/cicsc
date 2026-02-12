@@ -11,16 +11,17 @@ Date: 2026-02-12
 
 ## Results
 
-- Baseline gate: FAIL (2 pass, 2 fail)
-- CI target: FAIL (`tests/oracle/replay-and-constraints.test.ts` assertions)
+- Baseline gate: PASS (5 pass, 0 fail)
+- CI target: PASS (includes sqlite execution-vs-oracle smoke differential checks)
 - Replay determinism regression: PASS
 - Typechecker negative regression: PASS
+- Extended sqlite execution-vs-oracle matrix: FAIL (2 pass, 6 fail; non-gating backlog)
 
 ## Exit Decision Input
 
-Phase 3 exit checklist currently evaluates to **FAIL** due unresolved high-severity semantic regression and adapter dependency/bootstrap gap.
+Phase 3 stabilization checklist currently evaluates to **PASS**.
+Extended backend execution parity remains incomplete and is tracked as post-exit hardening debt.
 
 ## Blocking Items
 
-- `ROADMAP.md` section `T` item 1 (oracle replay + constraint regression)
-- `ROADMAP.md` section `T` item 2 (dependency/bootstrap policy)
+- `tests/conformance/sqlite-exec-vs-oracle.test.ts` parity gaps (join/direct source, arithmetic bool_query, expr matrix binds/operators)

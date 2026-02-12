@@ -1,5 +1,8 @@
 // /tests/harness/sqlite-memory.ts
 
+import { createRequire } from "node:module"
+import { fileURLToPath } from "node:url"
+
 import type { SqlPlan } from "../../adapters/sqlite/src/lower/query-to-sql"
 import type { QueryV0, SourceV0 } from "../../core/ir/types"
 
@@ -14,11 +17,17 @@ type Db = {
 }
 
 export function openSqliteMemory (): Db {
-  // Prefer better-sqlite3 (sync, simple). Fallback to sqlite3 if present (wrapped sync-ish via deasync is not done).
-  // If neither exists, fail fast with an actionable error.
+  const require = createRequire(import.meta.url)
+  // Prefer better-sqlite3 (sync, simple) from normal resolution first, then
+  // the phase3 harness dependency bundle for deterministic local/CI usage.
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const BetterSqlite3 = require("better-sqlite3")
+    let BetterSqlite3: any
+    try {
+      BetterSqlite3 = require("better-sqlite3")
+    } catch {
+      const bundledPath = fileURLToPath(new URL("../harness-deps/node_modules/better-sqlite3", import.meta.url))
+      BetterSqlite3 = require(bundledPath)
+    }
     const db = new BetterSqlite3(":memory:")
     db.pragma("foreign_keys = ON")
     return {

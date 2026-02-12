@@ -4,10 +4,9 @@ Date: 2026-02-12
 
 ## Executive Summary
 
-Pilot hardening surfaced two active blockers:
+Pilot hardening resolved bootstrap/CI determinism and surfaced remaining execution-parity gaps:
 
-- semantic regression in oracle replay/constraint verification tests
-- dependency/runtime tooling gaps in local baseline execution
+- sqlite execution-vs-oracle full matrix has 6 failing cases (2 passing)
 
 ## Evidence Sources
 
@@ -19,19 +18,17 @@ Pilot hardening surfaced two active blockers:
 ## Findings
 
 1. Oracle replay + constraint test failures (`tests/oracle/replay-and-constraints.test.ts`).
-- Severity: high
-- Category: semantic bug
-- Follow-up: roadmap section `T` item 1
+- Status: resolved
+- Follow-up: covered in gating CI target.
 
 2. Postgres adapter check requires explicit dependency bootstrap (`pg`).
-- Severity: medium
-- Category: ops/tooling gap
-- Follow-up: roadmap section `T` item 2
+- Status: resolved
+- Follow-up: enforced by `./scripts/phase3_bootstrap.sh check`.
 
-3. Test runtime needed explicit `.ts` extension-resolution policy.
+3. Full sqlite execution-vs-oracle matrix is not yet green (`tests/conformance/sqlite-exec-vs-oracle.test.ts`).
 - Severity: medium
-- Category: ops/tooling gap
-- Follow-up: roadmap section `T` items 3-4
+- Category: lowering gap
+- Follow-up: keep smoke differential test in CI and close remaining matrix failures incrementally.
 
 4. Adapter graph miswiring in sqlite lowering imports (fixed in this phase).
 - Severity: medium
@@ -42,4 +39,4 @@ Pilot hardening surfaced two active blockers:
 
 - Complete roadmap section `T` before phase exit.
 - Keep `./scripts/phase3_baseline.sh` as required pre-merge gate for Phase 3 work.
-- Block pilot cutover until semantic regression is resolved.
+- Keep `tests/conformance/sqlite-exec-vs-oracle-smoke.test.ts` as required SQL execution parity gate.

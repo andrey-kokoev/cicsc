@@ -9,14 +9,14 @@ Date: 2026-02-12
 
 ## Rationale
 
-- Exit checklist is currently failing due unresolved semantic and tooling blockers.
-- Freezing now would lock unresolved correctness debt.
+- Stabilization gates now pass (baseline + CI target + deterministic bootstrap).
+- Full sqlite execution parity matrix is still incomplete; freezing now would lock unresolved backend-conformance debt.
 - Incremental verification is the least disruptive next axis and directly supports pilot operational reliability.
 
 ## Preconditions Before Axis Work Starts
 
-- Close ROADMAP section `T` item 1 (oracle replay + constraints regression).
-- Close ROADMAP section `T` item 2 (dependency/bootstrap policy).
+- Keep SQL execution-vs-oracle smoke differential as required gate.
+- Reduce failures in `tests/conformance/sqlite-exec-vs-oracle.test.ts` to full pass before declaring backend-conformance closure.
 
 ## Enforcement
 

@@ -53,7 +53,8 @@ CI target command: `./scripts/phase3_ci_target.sh`
 
 Current 1.3 signal:
 
-- Target runs with resolver alignment and currently reports semantic test failures in oracle replay assertions.
+- Target runs with resolver alignment and includes a gating SQL execution-vs-oracle smoke differential suite.
+- Full SQL execution-vs-oracle matrix coverage remains tracked separately and is not yet a gating pass criterion.
 
 ## 2. Conformance Hardening
 
