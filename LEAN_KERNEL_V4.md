@@ -217,7 +217,9 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
 
 ### TODOs
 - [ ] K4.7.1 Add theorem index section at end of this document.
-- [ ] K4.7.2 For each completed item, require file+theorem references.
+- [x] K4.7.2 For each completed item, require file+theorem references.
+  - Added `Completion References` section mapping each completed checkbox to
+    concrete file/theorem (or definition) artifacts.
 - [ ] K4.7.3 Add “Scoped Completion” tags where full generality is deferred.
 - [ ] K4.7.4 Add CI check that rejects `[x]` items missing references.
 
@@ -256,3 +258,48 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
   - `inferExprTy_sound_v4_fragment`
   - `inferExprTy_complete_up_to_subsumption_v4`
   - `inferExprTy_principal_v4`
+
+## Completion References
+
+- `K4.1.1`: `lean/Cicsc/Core/Semantics/ConformanceScope.lean` (`QueryV4Subset`)
+- `K4.1.2`: `lean/Cicsc/Sql/Lowering.lean` (`lowerExpr_*` correctness lemmas)
+- `K4.1.3`: `lean/Cicsc/Sql/Lowering.lean` (`lowerQueryOp_*_correct`)
+- `K4.1.4`: `lean/Cicsc/Sql/Conformance.lean` (`rowSetEquiv`, `rowsEquiv`)
+- `K4.1.5`: `lean/Cicsc/Sql/Conformance.lean` (`execSQL_lowerQuery_conforms_execShape`)
+- `K4.1.6`: `lean/Cicsc/Core/Semantics/ConformanceScope.lean`
+  (`outOfScopeQueryOpForExecTheorem_spec`, `outOfScopeExprForExecTheorem_spec`)
+- `K4.2.1`: `lean/Cicsc/Core/Semantics/CausalityReplay.lean`
+  (`isCausal_implies_appearsBefore_in_replayStream`)
+- `K4.2.2`: `lean/Cicsc/Core/Semantics/CausalityReplay.lean`
+  (`replay_stream_preserves_happensBefore_order`)
+- `K4.2.3`: `lean/Cicsc/Core/Semantics/CausalityReplay.lean` (`CommutesOnConcurrent`)
+- `K4.2.4`: `lean/Cicsc/Core/Semantics/CausalityReplay.lean` (`replayFold_swap_adjacent_concurrent`)
+- `K4.2.5`: `lean/Cicsc/Core/Semantics/CausalityReplay.lean`
+  (`replay_deterministic_on_causallyEquivalent_streams`)
+- `K4.3.1`: `lean/Cicsc/Core/Semantics/Isolation.lean` (`snapshotAt`)
+- `K4.3.2`: `lean/Cicsc/Core/Semantics/Isolation.lean` (`IsolationLevel`)
+- `K4.3.3`: `lean/Cicsc/Core/Semantics/Isolation.lean` (`TxExecRel`)
+- `K4.3.4`: `lean/Cicsc/Core/Semantics/Isolation.lean` (`snapshot_no_dirty_reads`, `snapshot_repeatable_reads`)
+- `K4.3.5`: `lean/Cicsc/Core/Semantics/Isolation.lean` (`writeWrite_conflict_abort_or_serialize`)
+- `K4.3.6`: `lean/Cicsc/Core/Semantics/Isolation.lean` (`snapshotAt_ignores_other_stream_writes`)
+- `K4.4.1`: `lean/Cicsc/Evolution/Migration.lean` (`composeMigrations_assoc_of_compatible`)
+- `K4.4.2`: `lean/Cicsc/Evolution/Migration.lean` (`migrations_commute_of_equal_compose`)
+- `K4.4.3`: `lean/Cicsc/Evolution/Migration.lean` (`inverseMigration`)
+- `K4.4.4`: `lean/Cicsc/Evolution/Migration.lean`
+  (`inverseMigration_roundtrip_event_on_covered`, `inverseMigration_roundtrip_state_on_mapped`)
+- `K4.4.5`: `lean/Cicsc/Evolution/Migration.lean` (`rollbackHistory`)
+- `K4.4.6`: `lean/Cicsc/Evolution/Migration.lean`
+  (`SafeMigration`, `safeMigration_of_add_pattern`, `safeMigration_of_rename_pattern`, `safeMigration_of_remove_pattern`)
+- `K4.5.1`: `lean/Cicsc/Core/Meta/Typecheck.lean` (`TypingV4Fragment`)
+- `K4.5.2`: `lean/Cicsc/Core/Meta/Typecheck.lean` (`HasType` extended constructors)
+- `K4.5.3`: `lean/Cicsc/Core/Meta/Typecheck.lean` (`inferExprTy_sound_v4_fragment`)
+- `K4.5.4`: `lean/Cicsc/Core/Meta/Typecheck.lean` (`inferExprTy_complete_up_to_subsumption_v4`)
+- `K4.5.5`: `lean/Cicsc/Core/Meta/Typecheck.lean` (`inferExprTy_principal_v4`)
+- `K4.5.6`: `docs/spec/typing-v4-fragment.md`
+- `K4.6.1`: `lean/Cicsc/Tactics/QueryEquiv.lean` (`query_equiv`)
+- `K4.6.2`: `lean/Cicsc/Tactics/QueryEquiv.lean` (`snap_irrelevant`)
+- `K4.6.3`: `lean/Cicsc/Tactics/QueryEquiv.lean` (`wf_auto`)
+- `K4.6.4`: `lean/Cicsc/Tactics/QueryEquiv.lean` (`migration_simp`)
+- `K4.6.5`: `lean/Cicsc/Sql/Conformance.lean`, `lean/Cicsc/Evolution/Migration.lean`
+  (proofs converted: `rowSetEquiv_refl`, `rowsEquiv_unordered_refl`, `rowsEquiv_ordered_refl`,
+  `inverseMigration_exists_of_reversible`, `rollbackHistory_def`)
