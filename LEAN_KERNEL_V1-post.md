@@ -10,6 +10,10 @@ This document defines the work required to achieve 10/10 coherency with AGENTS.m
 
 ## Coherency Gaps to Address
 
+Versioning clarification:
+- Lean kernel versions (`v0`, `v1`, `v1.5`) describe proof/coherency milestones.
+- `IR.version` is runtime schema/evolution data, independent from Lean proof milestone labels.
+
 ### Gap 1: Dual Constraint Semantics (Priority: CRITICAL)
 **Current Issue:** Two different constraint evaluators with unclear relationship:
 - `holdsSnapshotConstraintOnly` - ignores bool_query, returns true
@@ -191,7 +195,7 @@ Canonical evaluator policy (runtime alignment):
 **Objective:** Clear, consistent naming scheme for Lean kernel versions vs IR versions
 
 #### 5.1 Naming Convention Audit
-- [ ] Document distinction:
+- [x] Document distinction:
   - **Lean Kernel Version** (v0, v1, v1.5): Proof completeness milestones
   - **IR Version** (ir.version): Schema version in IR data structure
 - [x] Rename functions with "V0" suffix:

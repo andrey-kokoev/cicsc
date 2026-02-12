@@ -6,6 +6,10 @@ import Cicsc.Core.Semantics.QueryEval
 
 namespace Cicsc.Core
 
+-- Versioning note:
+-- Lean kernel milestones (v0/v1/v1.5) describe proof/coherency maturity.
+-- IR.version values are runtime schema evolution markers and are separate.
+
 def isSnapshotConstraint : Constraint → Bool
   | .snapshot _ _ => true
   | .boolQuery _ _ _ => false
