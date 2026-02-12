@@ -24,3 +24,7 @@ export {
 export {
   verifyMigrationReplay,
 } from "../../core/runtime/migration-verify"
+
+export {
+  KernelMemoryBackend,
+} from "./memory-backend"
