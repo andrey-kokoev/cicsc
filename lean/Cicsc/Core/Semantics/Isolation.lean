@@ -56,4 +56,26 @@ theorem txExecRel_appends
   h' = h ++ tx.writes := by
   exact hexec.1
 
+theorem snapshot_no_dirty_reads
+  (sid : StreamId)
+  (beginSeq : Nat)
+  (e : Event)
+  (hvis : visibleAtSeq sid beginSeq e = true) :
+  e.seq ≤ beginSeq := by
+  unfold visibleAtSeq at hvis
+  simp at hvis
+  exact hvis.2
+
+theorem snapshot_repeatable_reads
+  (ir : IR)
+  (h : History)
+  (tx1 tx2 : Transaction)
+  (hiso1 : tx1.isolation = .snapshot)
+  (hiso2 : tx2.isolation = .snapshot)
+  (hsid : tx1.sid = tx2.sid)
+  (hbegin : tx1.beginSeq = tx2.beginSeq) :
+  readSnapshot ir h tx1 = readSnapshot ir h tx2 := by
+  unfold readSnapshot snapshotAt readCutoff
+  simp [hiso1, hiso2, hsid, hbegin]
+
 end Cicsc.Core
