@@ -239,6 +239,11 @@ export default {
           actor: "verifier",
           intrinsics,
           policies: {},
+          version_stamp: {
+            tenant_id,
+            bundle_hash: loaded.bundle_hash,
+            active_version: loaded.active_version,
+          },
         })
 
         return Response.json({ ok: report.ok, report })

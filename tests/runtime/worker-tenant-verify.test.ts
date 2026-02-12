@@ -134,5 +134,8 @@ describe("worker full-tenant verify", () => {
     assert.equal(body.ok, true)
     assert.equal(body.report.events_count, 2)
     assert.equal(body.report.entities_count, 2)
+    assert.equal(body.report.version_stamp.tenant_id, "t")
+    assert.equal(body.report.version_stamp.active_version, 0)
+    assert.equal(typeof body.report.version_stamp.bundle_hash, "string")
   })
 })

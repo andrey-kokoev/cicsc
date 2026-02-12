@@ -19,6 +19,12 @@ export type VerifyReport = {
   violations: ConstraintViolation[]
 
   ts: number
+  version_stamp?: {
+    tenant_id?: string
+    bundle_hash?: string
+    active_version?: number
+    verified_at_ts: number
+  }
 }
 
 export function verifyHistoryAgainstIr (params: {
@@ -31,6 +37,11 @@ export function verifyHistoryAgainstIr (params: {
 
   intrinsics: VmIntrinsics
   policies?: any
+  version_stamp?: {
+    tenant_id?: string
+    bundle_hash?: string
+    active_version?: number
+  }
 }): VerifyReport {
   const validated = validateBundleV0(params.bundle)
   if (!validated.ok) {
@@ -48,6 +59,12 @@ export function verifyHistoryAgainstIr (params: {
         message: `${e.path}: ${e.message}`,
       })),
       ts: params.now,
+      version_stamp: {
+        tenant_id: params.version_stamp?.tenant_id,
+        bundle_hash: params.version_stamp?.bundle_hash,
+        active_version: params.version_stamp?.active_version,
+        verified_at_ts: params.now,
+      },
     }
   }
 
@@ -95,5 +112,11 @@ export function verifyHistoryAgainstIr (params: {
     constraints_count: Object.keys(ir.constraints ?? {}).length,
     violations,
     ts: params.now,
+    version_stamp: {
+      tenant_id: params.version_stamp?.tenant_id,
+      bundle_hash: params.version_stamp?.bundle_hash,
+      active_version: params.version_stamp?.active_version,
+      verified_at_ts: params.now,
+    },
   }
 }
