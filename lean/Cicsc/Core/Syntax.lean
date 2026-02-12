@@ -104,6 +104,38 @@ structure Query where
   pipeline : List QueryOp
 deriving Repr, DecidableEq
 
+-- v2: Query plan representation for optimization
+-- See LEAN_KERNEL_V2.md §1.1.3
+
+-- Join ordering hint for query optimization
+inductive JoinOrder where
+  | leftDeep   -- ((A ⋈ B) ⋈ C) ⋈ D
+  | rightDeep  -- A ⋈ (B ⋈ (C ⋈ D))
+  | bushy      -- (A ⋈ B) ⋈ (C ⋈ D)
+  | specified (order : List Nat)  -- Explicit join order by source index
+deriving Repr, DecidableEq
+
+-- Physical plan hints for execution
+structure PhysicalHints where
+  joinOrder : JoinOrder := .leftDeep
+  preferHashJoin : Bool := false
+  estimatedSize : Option Nat := none
+deriving Repr, DecidableEq
+
+-- Logical query plan (source-level, pre-optimization)
+structure LogicalPlan where
+  sources : List Source
+  conditions : List Expr
+  operations : List QueryOp
+deriving Repr, DecidableEq
+
+-- Physical query plan (execution-level, post-optimization)
+structure PhysicalPlan where
+  logical : LogicalPlan
+  hints : PhysicalHints
+  selectedJoinTree : Source  -- Optimized join order
+deriving Repr, DecidableEq
+
 inductive ReducerOp where
   | setState (expr : Expr)
   | setAttr (name : AttrName) (expr : Expr)

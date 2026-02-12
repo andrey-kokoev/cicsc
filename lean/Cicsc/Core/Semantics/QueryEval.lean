@@ -428,6 +428,56 @@ theorem multiJoin_preserves_source_count
   | some tree => countBaseSources tree = sources.length := by
   sorry  -- Structural induction on sources list
 
+-- v2: Logical to physical plan conversion
+-- See LEAN_KERNEL_V2.md §1.1.3 checkpoint 2
+
+-- Apply join ordering hint to build specific join tree
+def applyJoinOrder (sources : List Source) (conditions : List Expr) (order : JoinOrder) : Option Source :=
+  match order, sources, conditions with
+  | .leftDeep, s :: rest, c :: conds =>
+      -- Build left-deep tree: ((s₁ ⋈ s₂) ⋈ s₃) ⋈ ...
+      multiJoin (sources.zip (c :: conds))
+  | .rightDeep, _, _ =>
+      -- Build right-deep tree by reversing then left-deep
+      multiJoin (sources.reverse.zip conditions.reverse)
+  | .bushy, _, _ =>
+      -- Build bushy tree (balanced when possible)
+      -- For now, fall back to left-deep
+      multiJoin (sources.zip conditions)
+  | .specified order, _, _ =>
+      -- Reorder sources according to specified indices
+      -- Then build left-deep tree
+      sorry  -- Requires index permutation logic
+  | _, [], _ => none
+  | _, _, [] => none
+
+-- Convert logical plan to physical plan with hints
+def logicalToPhysical (lp : LogicalPlan) (hints : PhysicalHints := {}) : Option PhysicalPlan :=
+  match applyJoinOrder lp.sources lp.conditions hints.joinOrder with
+  | none => none
+  | some joinTree => some {
+      logical := lp
+      hints := hints
+      selectedJoinTree := joinTree
+    }
+
+-- Execute physical plan
+def evalPhysicalPlan (pp : PhysicalPlan) (snaps : SnapSet) : List QueryRow :=
+  let sourceRows := evalSourceSubset pp.selectedJoinTree snaps
+  pp.logical.operations.foldl (fun acc op => applyQueryOpSubset op acc) sourceRows
+
+-- Theorem: Different physical plans with same logical plan produce same results
+-- (when join order doesn't affect semantics due to associativity/commutativity)
+theorem physicalPlan_equivalence
+  (lp : LogicalPlan)
+  (hints1 hints2 : PhysicalHints)
+  (pp1 pp2 : PhysicalPlan)
+  (hpp1 : logicalToPhysical lp hints1 = some pp1)
+  (hpp2 : logicalToPhysical lp hints2 = some pp2)
+  (snaps : SnapSet) :
+  evalPhysicalPlan pp1 snaps = evalPhysicalPlan pp2 snaps := by
+  sorry  -- Requires join associativity/commutativity
+
 -- v2: Join evaluation
 -- See LEAN_KERNEL_V2.md §1.1.1
 -- Evaluates a join between two lists of rows based on join type and condition.
