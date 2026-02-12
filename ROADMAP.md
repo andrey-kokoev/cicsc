@@ -30,7 +30,7 @@
 - [x] Extend SQL lowering to full Query AST coverage (group_by, aggs, joins)
 - [x] Extend SQL lowering to full Expr coverage (coalesce, if, in, map_enum, etc.)
 - [x] Add differential tests for every Query/Expr operator (SQL vs oracle)
-- [ ] Add Postgres adapter SQL lowering + exec-vs-oracle conformance tests
+- [x] Add Postgres adapter SQL lowering + exec-vs-oracle conformance tests
 - [ ] Add performance regression tests for large snapshot tables
 - [ ] Add explain-plan checks for generated SQL (no full table scans on indexed paths)
 
