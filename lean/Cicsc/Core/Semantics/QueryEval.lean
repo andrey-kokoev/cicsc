@@ -737,6 +737,29 @@ theorem correlated_subquery_preserves_outer_fields
   subst hr
   exact combineRows_preservesLeftFields outer inner field value hmem
 
+def existsSubquery (rows : List QueryRow) : Bool :=
+  !rows.isEmpty
+
+def inSubquery (needle : Val) (field : String) (rows : List QueryRow) : Bool :=
+  rows.any (fun r => valEq (lookupField r field) needle)
+
+def anySubquery (p : QueryRow → Bool) (rows : List QueryRow) : Bool :=
+  rows.any p
+
+def allSubquery (p : QueryRow → Bool) (rows : List QueryRow) : Bool :=
+  rows.all p
+
+theorem existsSubquery_iff_nonempty
+  (rows : List QueryRow) :
+  existsSubquery rows = true ↔ rows ≠ [] := by
+  unfold existsSubquery
+  cases rows <;> simp
+
+theorem allSubquery_empty_true
+  (p : QueryRow → Bool) :
+  allSubquery p [] = true := by
+  rfl
+
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .project fields, rows => rows.map (fun r => evalProject r fields)

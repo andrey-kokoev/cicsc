@@ -149,7 +149,8 @@ v2 adds semantic coverage for:
 - [x] Define correlated subquery semantics (row-dependent evaluation)
   - `evalCorrelatedSubquery` defined in `lean/Cicsc/Core/Semantics/QueryEval.lean`.
   - Outer-row field preservation captured by `correlated_subquery_preserves_outer_fields`.
-- [ ] Define EXISTS, IN, ANY, ALL predicates over subqueries
+- [x] Define EXISTS, IN, ANY, ALL predicates over subqueries
+  - `existsSubquery`, `inSubquery`, `anySubquery`, and `allSubquery` defined in `lean/Cicsc/Core/Semantics/QueryEval.lean`.
 - [ ] Prove subquery flattening equivalences (decorrelation rules)
 
 #### 1.3.3 Relational Algebra Equivalences
