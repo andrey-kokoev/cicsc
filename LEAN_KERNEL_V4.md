@@ -91,7 +91,9 @@ Make replay-causality statements semantically aligned with stream-aware replay a
 Formalize transaction visibility/isolation semantics and prove baseline guarantees.
 
 ### TODOs
-- [ ] K4.3.1 Define `snapshotAt` over history for stream/state lookup.
+- [x] K4.3.1 Define `snapshotAt` over history for stream/state lookup.
+  - Added `visibleAtSeq` and `snapshotAt` in
+    `lean/Cicsc/Core/Semantics/Isolation.lean`.
 - [ ] K4.3.2 Define `IsolationLevel := ReadCommitted | Snapshot | Serializable`.
 - [ ] K4.3.3 Define transaction model and execution relation over history.
 - [ ] K4.3.4 Prove no dirty reads and non-repeatable-read exclusion for Snapshot.
