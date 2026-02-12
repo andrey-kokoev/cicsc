@@ -58,13 +58,13 @@ export class SqliteD1Adapter {
   }
 
   async set_active_version (tenant_id: TenantId, version: number): Promise<void> {
-    await this.db
-      .prepare(
+    await this.tx(async (tx) => {
+      await tx.exec(
         `INSERT INTO tenant_versions(tenant_id, active_version) VALUES(?,?)
-         ON CONFLICT(tenant_id) DO UPDATE SET active_version=excluded.active_version`
+         ON CONFLICT(tenant_id) DO UPDATE SET active_version=excluded.active_version`,
+        [tenant_id, version]
       )
-      .bind(tenant_id, version)
-      .run()
+    })
   }
 
   // --------------------------
@@ -81,43 +81,41 @@ export class SqliteD1Adapter {
     const { tenant_id, entity_type, entity_id, command_id, events } = params
     if (events.length === 0) throw new Error("append_events: empty batch")
 
-    // Idempotency: if receipt exists, return it.
-    const receipt = await this.db
-      .prepare(`SELECT result_json FROM command_receipts WHERE tenant_id=? AND command_id=?`)
-      .bind(tenant_id, command_id)
-      .first<{ result_json: string }>()
+    return this.tx(async (tx) => {
+      // Idempotency: if receipt exists, return it.
+      const receipt = firstRow<{ result_json: string }>(
+        await tx.exec(
+          `SELECT result_json FROM command_receipts WHERE tenant_id=? AND command_id=?`,
+          [tenant_id, command_id]
+        )
+      )
 
-    if (receipt?.result_json) {
-      const parsed = JSON.parse(receipt.result_json) as AppendResult
-      return parsed
-    }
+      if (receipt?.result_json) {
+        return JSON.parse(receipt.result_json) as AppendResult
+      }
 
-    // Compute next seq (serialized per stream). D1 has transactional semantics per request,
-    // but we still do "max(seq)+1" inside the same request transaction boundary.
-    const ver = await this.get_active_version(tenant_id)
-    const eventsTable = `events_v${ver}`
-    const snapshotsTable = `snapshots_v${ver}`
+      // Compute next seq and append in the same explicit tx boundary.
+      const ver = await this.get_active_version_tx(tx, tenant_id)
+      const eventsTable = `events_v${ver}`
+      const snapshotsTable = `snapshots_v${ver}`
 
-    const maxRow = await this.db
-      .prepare(`SELECT COALESCE(MAX(seq), 0) AS max_seq FROM ${eventsTable}
-                WHERE tenant_id=? AND entity_type=? AND entity_id=?`)
-      .bind(tenant_id, entity_type, entity_id)
-      .first<{ max_seq: number }>()
-    const seqStart = (maxRow?.max_seq ?? 0) + 1
+      const maxRow = firstRow<{ max_seq: number }>(
+        await tx.exec(
+          `SELECT COALESCE(MAX(seq), 0) AS max_seq FROM ${eventsTable}
+           WHERE tenant_id=? AND entity_type=? AND entity_id=?`,
+          [tenant_id, entity_type, entity_id]
+        )
+      )
+      const seqStart = (maxRow?.max_seq ?? 0) + 1
 
-    // Insert events
-    const stmts: D1PreparedStatement[] = []
-    for (let i = 0; i < events.length; i++) {
-      const e = events[i]!
-      const seq = seqStart + i
-      stmts.push(
-        this.db
-          .prepare(
-            `INSERT INTO ${eventsTable}
-             (tenant_id, entity_type, entity_id, seq, event_type, payload_json, ts, actor_id)
-             VALUES (?,?,?,?,?,?,?,?)`
-          )
-          .bind(
+      for (let i = 0; i < events.length; i++) {
+        const e = events[i]!
+        const seq = seqStart + i
+        await tx.exec(
+          `INSERT INTO ${eventsTable}
+           (tenant_id, entity_type, entity_id, seq, event_type, payload_json, ts, actor_id)
+           VALUES (?,?,?,?,?,?,?,?)`,
+          [
             tenant_id,
             entity_type,
             entity_id,
@@ -125,40 +123,30 @@ export class SqliteD1Adapter {
             e.event_type,
             JSON.stringify(e.payload ?? null),
             e.ts,
-            e.actor_id
-          )
+            e.actor_id,
+          ]
+        )
+      }
+
+      const result: AppendResult = { entity_id, seq_from: seqStart, seq_to: seqStart + events.length - 1 }
+
+      await tx.exec(
+        `INSERT INTO command_receipts(tenant_id, command_id, entity_type, entity_id, result_json, ts)
+         VALUES (?,?,?,?,?,?)
+         ON CONFLICT(tenant_id, command_id) DO NOTHING`,
+        [tenant_id, command_id, entity_type, entity_id, JSON.stringify(result), nowUnix()]
       )
-    }
 
-    const result: AppendResult = { entity_id, seq_from: seqStart, seq_to: seqStart + events.length - 1 }
+      // Ensure snapshot row exists (runtime will overwrite full snapshot after reducer)
+      await tx.exec(
+        `INSERT INTO ${snapshotsTable}(tenant_id, entity_type, entity_id, state, attrs_json, updated_ts)
+         VALUES (?,?,?,?,?,?)
+         ON CONFLICT(tenant_id, entity_type, entity_id) DO NOTHING`,
+        [tenant_id, entity_type, entity_id, "new", "{}", nowUnix()]
+      )
 
-    // Write receipt (idempotency)
-    stmts.push(
-      this.db
-        .prepare(
-          `INSERT INTO command_receipts(tenant_id, command_id, entity_type, entity_id, result_json, ts)
-           VALUES (?,?,?,?,?,?)
-           ON CONFLICT(tenant_id, command_id) DO NOTHING`
-        )
-        .bind(tenant_id, command_id, entity_type, entity_id, JSON.stringify(result), nowUnix())
-    )
-
-    // Ensure snapshot row exists (runtime will overwrite full snapshot after reducer)
-    stmts.push(
-      this.db
-        .prepare(
-          `INSERT INTO ${snapshotsTable}(tenant_id, entity_type, entity_id, state, attrs_json, updated_ts)
-           VALUES (?,?,?,?,?,?)
-           ON CONFLICT(tenant_id, entity_type, entity_id) DO NOTHING`
-        )
-        .bind(tenant_id, entity_type, entity_id, "new", "{}", nowUnix())
-    )
-
-    const batchRes = await this.db.batch(stmts)
-    const ok = batchRes.every((r) => r.success)
-    if (!ok) throw new Error("append_events: D1 batch failed")
-
-    return result
+      return result
+    })
   }
 
   async read_stream (params: {
@@ -222,32 +210,29 @@ export class SqliteD1Adapter {
     shadows?: Record<string, string | number | null>
   }): Promise<void> {
     const { tenant_id, entity_type, entity_id, state, attrs_json, updated_ts, shadows } = params
-    const ver = await this.get_active_version(tenant_id)
-    const snapshotsTable = `snapshots_v${ver}`
+    await this.tx(async (tx) => {
+      const ver = await this.get_active_version_tx(tx, tenant_id)
+      const snapshotsTable = `snapshots_v${ver}`
 
-    const shadowCols = shadows ? Object.keys(shadows) : []
-    const setShadowSql =
-      shadowCols.length === 0
-        ? ""
-        : ", " +
-        shadowCols
-          .map((c) => `${escapeIdent(c)}=?`)
-          .join(", ")
+      const shadowCols = shadows ? Object.keys(shadows) : []
+      const setShadowSql =
+        shadowCols.length === 0
+          ? ""
+          : ", " +
+          shadowCols
+            .map((c) => `${escapeIdent(c)}=?`)
+            .join(", ")
 
-    const bindShadowVals = shadowCols.map((c) => (shadows as any)[c])
+      const bindShadowVals = shadowCols.map((c) => (shadows as any)[c])
 
-    const sql =
-      `UPDATE ${snapshotsTable}
-       SET state=?, attrs_json=?, updated_ts=?` +
-      setShadowSql +
-      ` WHERE tenant_id=? AND entity_type=? AND entity_id=?`
+      const sql =
+        `UPDATE ${snapshotsTable}
+         SET state=?, attrs_json=?, updated_ts=?` +
+        setShadowSql +
+        ` WHERE tenant_id=? AND entity_type=? AND entity_id=?`
 
-    const res = await this.db
-      .prepare(sql)
-      .bind(state, attrs_json, updated_ts, ...bindShadowVals, tenant_id, entity_type, entity_id)
-      .run()
-
-    if (!res.success) throw new Error("put_snapshot: update failed")
+      await tx.exec(sql, [state, attrs_json, updated_ts, ...bindShadowVals, tenant_id, entity_type, entity_id])
+    })
   }
 
   // --------------------------
@@ -290,8 +275,8 @@ export class SqliteD1Adapter {
     updated_ts: UnixSeconds
   }): Promise<void> {
     const p = params
-    const res = await this.db
-      .prepare(
+    await this.tx(async (tx) => {
+      await tx.exec(
         `INSERT INTO sla_status(tenant_id,name,entity_type,entity_id,start_ts,stop_ts,deadline_ts,breached,updated_ts)
          VALUES (?,?,?,?,?,?,?,?,?)
          ON CONFLICT(tenant_id,name,entity_type,entity_id)
@@ -300,21 +285,20 @@ export class SqliteD1Adapter {
            stop_ts=COALESCE(excluded.stop_ts, sla_status.stop_ts),
            deadline_ts=COALESCE(excluded.deadline_ts, sla_status.deadline_ts),
            breached=excluded.breached,
-           updated_ts=excluded.updated_ts`
+           updated_ts=excluded.updated_ts`,
+        [
+          p.tenant_id,
+          p.name,
+          p.entity_type,
+          p.entity_id,
+          p.start_ts ?? null,
+          p.stop_ts ?? null,
+          p.deadline_ts ?? null,
+          p.breached,
+          p.updated_ts,
+        ]
       )
-      .bind(
-        p.tenant_id,
-        p.name,
-        p.entity_type,
-        p.entity_id,
-        p.start_ts ?? null,
-        p.stop_ts ?? null,
-        p.deadline_ts ?? null,
-        p.breached,
-        p.updated_ts
-      )
-      .run()
-    if (!res.success) throw new Error("sla_upsert_status failed")
+    })
   }
 
   async sla_check_due (params: {
@@ -344,15 +328,21 @@ export class SqliteD1Adapter {
     entity_id: EntityId
     now: UnixSeconds
   }): Promise<void> {
-    const res = await this.db
-      .prepare(
+    await this.tx(async (tx) => {
+      await tx.exec(
         `UPDATE sla_status
          SET breached=1, updated_ts=?
-         WHERE tenant_id=? AND name=? AND entity_type=? AND entity_id=?`
+         WHERE tenant_id=? AND name=? AND entity_type=? AND entity_id=?`,
+        [params.now, params.tenant_id, params.name, params.entity_type, params.entity_id]
       )
-      .bind(params.now, params.tenant_id, params.name, params.entity_type, params.entity_id)
-      .run()
-    if (!res.success) throw new Error("sla_mark_breached failed")
+    })
+  }
+
+  private async get_active_version_tx (tx: TxCtx, tenant_id: TenantId): Promise<number> {
+    const row = firstRow<{ active_version: number }>(
+      await tx.exec(`SELECT active_version FROM tenant_versions WHERE tenant_id=?`, [tenant_id])
+    )
+    return row?.active_version ?? 0
   }
 }
 
@@ -365,4 +355,8 @@ function escapeIdent (name: string): string {
   // Compiler MUST generate shadow names that pass this.
   if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) throw new Error(`Invalid identifier: ${name}`)
   return name
+}
+
+function firstRow<T> (r: { rows?: any[] }): T | null {
+  return (r.rows?.[0] as T | undefined) ?? null
 }

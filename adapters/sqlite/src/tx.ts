@@ -18,6 +18,10 @@ export async function withImmediateTx<T> (db: D1Database, fn: (tx: TxCtx) => Pro
     const stmt = db.prepare(sql).bind(...binds)
     const res = await db.batch([stmt])
     const r0: any = res[0] ?? {}
+    if (r0?.success === false) {
+      const msg = typeof r0?.error === "string" ? r0.error : `statement failed: ${sql}`
+      throw new Error(msg)
+    }
     // D1 returns { results } / { success } depending on API; normalize into { rows } for SELECT.
     const rows = (r0?.results ?? r0?.rows ?? undefined) as any[] | undefined
     return { rows }
