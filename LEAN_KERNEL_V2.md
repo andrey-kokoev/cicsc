@@ -112,7 +112,9 @@ v2 adds semantic coverage for:
 - [x] Extend Query with `HAVING Expr` (filter on aggregated results)
   - `QueryOp.having` is defined in `lean/Cicsc/Core/Syntax.lean`.
   - Evaluated in `applyQueryOpSubset` in `lean/Cicsc/Core/Semantics/QueryEval.lean`.
-- [ ] Define evaluation order: GROUP BY → aggregation → HAVING → projection
+- [x] Define evaluation order: GROUP BY → aggregation → HAVING → projection
+  - Canonical ordering is encoded in `evalGroupByQuery`.
+  - Definitional theorem `evalGroupByQuery_order` fixes the order explicitly.
 - [ ] Prove HAVING vs WHERE distinction (pre-grouping vs post-aggregation)
 
 #### 1.2.3 GroupBy Properties
