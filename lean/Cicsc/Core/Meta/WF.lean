@@ -6,8 +6,7 @@ import Cicsc.Core.Semantics.Replay
 namespace Cicsc.Core
 
 def NoReservedCollisions (ts : TypeSpec) : Prop :=
-  (∀ kv ∈ ts.attrs, kv.fst ∉ ReservedRowKeys) ∧
-  (∀ kv ∈ ts.shadows, kv.fst ∉ ReservedRowKeys)
+  hasReservedRowFieldCollision ts = false
 
 def initialStateInStates (ts : TypeSpec) : Prop :=
   ts.initialState ∈ ts.states
@@ -118,6 +117,14 @@ theorem commandsTypecheck_of_checkTypeSpec
             simp [hΓ] at hcmd
         | some Γcmd =>
             exact ⟨Γcmd, hΓ, by simpa [hΓ] using hcmd⟩
+
+theorem noReservedCollisions_of_checkTypeSpecNames
+  (ts : TypeSpec)
+  (hnames : checkTypeSpecNames ts = true) :
+  NoReservedCollisions ts := by
+  unfold checkTypeSpecNames at hnames
+  simp [NoReservedCollisions] at hnames
+  exact hnames.1
 
 -- Coverage audit (v1.5/B.9):
 -- Existing bridge lemmas connect `checkTypeSpec = true` to:

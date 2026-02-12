@@ -105,7 +105,7 @@ Canonical evaluator policy (runtime alignment):
 - [x] Audit: Do these cover all of `WFTypeSpec`?
 
 #### 2.2 Prove Missing TypeSpec Properties
-- [ ] `checkTypeSpecNames ts = true → NoReservedCollisions ts`
+- [x] `checkTypeSpecNames ts = true → NoReservedCollisions ts`
 - [ ] `checkTypeSpecNames ts = true → NoDuplicateFieldNames ts`
 - [ ] `checkTypeSpec ts = true → initialStateInStates ts`
 - [ ] `checkTypeSpec ts = true → reducerTargetsDeclared ts`
