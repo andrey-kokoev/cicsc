@@ -93,4 +93,14 @@ def supportsQuerySubset (q : Query) : Bool :=
 def evalQuerySubset (q : Query) (rows : List State) : List QueryRow :=
   q.pipeline.foldl (fun acc op => applyQueryOpSubset op acc) (evalSourceSubset q.source rows)
 
+def oracleQueryEvalSubset (q : Query) (rows : List State) : List QueryRow :=
+  q.pipeline.foldl (fun acc op => applyQueryOpSubset op acc) (evalSourceSubset q.source rows)
+
+theorem oracleQueryEvalSubset_eq_relational
+  (q : Query)
+  (rows : List State)
+  (hsupported : supportsQuerySubset q = true) :
+  oracleQueryEvalSubset q rows = evalQuerySubset q rows := by
+  rfl
+
 end Cicsc.Core

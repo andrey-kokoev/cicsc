@@ -29,7 +29,7 @@ Goal: Lean is the source of truth for CICSC semantics.
 ### A3. Replace stubs with semantics (incremental)
 - [x] Define relational semantics for a Query subset:
   - filter, project, orderBy, limit, offset, (no join/groupBy yet)
-- [ ] Prove oracle QueryEval = relational semantics for that subset
+- [x] Prove oracle QueryEval = relational semantics for that subset
 - [ ] Reinterpret bool_query constraints against that semantics
 
 Outcome: Lean can drive TS conformance work; proofs match runtime.
