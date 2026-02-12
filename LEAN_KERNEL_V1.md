@@ -160,7 +160,7 @@ v1 defines a minimal query semantics subset sufficient to support:
   - interpret Source.snap as “given rows” for v1 (external snapshot set passed in)
 
 ### 6.2 Use it in bool_query constraints
-- [ ] Replace `evalQueryRowsCount` stub with:
+- [x] Replace `evalQueryRowsCount` stub with:
   - `n := (evalQuery ...).length`
 - [ ] Keep assertExpr restricted to rowsCount + args (if args exist)
 
