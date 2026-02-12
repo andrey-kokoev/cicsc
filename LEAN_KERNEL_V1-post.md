@@ -144,7 +144,7 @@ Canonical evaluator policy (runtime alignment):
 - [x] Add auxiliary canonical-fuel lemma for `inferExprTyFuel` at `e.sizeOf + 1`.
 
 #### 3.3 Document Completeness Gap (Optional for v1.5)
-- [ ] Document: `HasType Γ e t` does not imply `inferExprTy Γ e = some t` (completeness)
+- [x] Document: `HasType Γ e t` does not imply `inferExprTy Γ e = some t` (completeness)
   - Algorithmic typechecker may be more restrictive than declarative spec
   - This is acceptable for v1.5; completeness is future work
 

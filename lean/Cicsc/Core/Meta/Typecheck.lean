@@ -271,6 +271,9 @@ inductive HasType : TypeEnv → Expr → Ty → Prop where
       (h : inferExprTy Γ e = some t) :
       HasType Γ e t
 
+-- v1.5 note: we prove algorithmic soundness (`inferExprTy -> HasType`) but do
+-- not claim completeness (`HasType -> inferExprTy`) for the full fragment yet.
+
 def lookupByKey (env : Env) : VarKey → Val
   | .input f => lookupField env.input f
   | .attrs f => lookupField env.attrs f
