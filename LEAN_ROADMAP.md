@@ -2,7 +2,7 @@
 
 ## A. Lean Scaffold
 - [x] Create `lean/` workspace scaffold and module layout
-- [ ] Add Lean project configuration (`lakefile.lean`, root module)
+- [x] Add Lean project configuration (`lakefile.lean`, root module)
 
 ## B. Core Syntax and Types
 - [ ] Define kernel syntax in `Cicsc/Core/Syntax.lean` (Expr, Query, ReducerOp, IR)
