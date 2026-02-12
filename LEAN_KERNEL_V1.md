@@ -89,7 +89,7 @@ Acceptance: no supported Expr constructor is accepted by evaluator but rejected 
 Define WF predicates that mirror CICSC’s intended static constraints (not SQL).
 
 ### 3.1 WFTypeSpec
-- [ ] Add `WFTypeSpec : TypeSpec → Prop` in `Core/Meta/WF.lean` (new)
+- [x] Add `WFTypeSpec : TypeSpec → Prop` in `Core/Meta/WF.lean` (new)
   - [ ] `initialState ∈ states`
   - [ ] `NoReservedCollisions ts`
   - [ ] reducers only set state labels in `states` (if literal) OR accept dynamic state with constraint (choose one for v1)
