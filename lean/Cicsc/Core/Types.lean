@@ -19,7 +19,7 @@ inductive Val where
   | vNull
   | vObj (fields : List (String × Val))
   | vArr (items : List Val)
-deriving Repr, DecidableEq
+deriving Repr, DecidableEq, Ord
 
 abbrev AttrMap := List (String × Val)
 abbrev ShadowMap := List (String × Val)

@@ -38,11 +38,8 @@ def orderKeyVal (row : QueryRow) (k : OrderKey) : Val :=
   evalExpr (rowEnv row) k.expr
 
 def valLt (a b : Val) : Bool :=
-  match a, b with
-  | .vInt x, .vInt y => x < y
-  | .vString x, .vString y => x < y
-  | .vBool x, .vBool y => x = false && y = true
-  | _, _ => false
+  -- Structural total order over Val (not SQL collation/NULLS mode semantics).
+  compare a b = Ordering.lt
 
 def rowLtByKeys : List OrderKey → QueryRow → QueryRow → Bool
   | [], _, _ => false
