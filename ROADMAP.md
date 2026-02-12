@@ -138,7 +138,7 @@
 - [x] Specify the Core IR grammar and typing rules
 - [x] Specify Spec DSL grammar and desugaring rules
 - [x] Define versioning and compatibility rules
-- [ ] Publish spec as normative reference document
+- [x] Publish spec as normative reference document
 
 ## Q. Kernel Extraction and Hardening
 
