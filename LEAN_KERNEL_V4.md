@@ -230,7 +230,9 @@ Reduce proof maintenance overhead with focused tactics for repeated proof patter
     `inverseMigration_exists_of_reversible`, `rollbackHistory_def`.
 
 ### Acceptance
-- [ ] Demonstrated reduction in proof script size on representative targets.
+- [x] Demonstrated reduction in proof script size on representative targets.
+  - Demonstrated through K4.6.5 conversions where repeated unfold/simp proof
+    bodies were replaced by `query_equiv` / `migration_simp`.
 - [ ] Tactics documented with usage examples.
 
 ---
