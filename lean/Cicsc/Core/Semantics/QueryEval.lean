@@ -6,6 +6,7 @@ import Cicsc.Core.Semantics.Replay
 namespace Cicsc.Core
 
 abbrev QueryRow := List (String × Val)
+abbrev SnapSet := List (TypeName × List State)
 
 def rowStateValue (row : QueryRow) : String :=
   match lookupField row "state" with
@@ -82,9 +83,14 @@ def supportsQueryOpSubset : QueryOp → Bool
   | .limit _ => true
   | .offset _ => true
 
-def evalSourceSubset (src : Source) (rows : List State) : List QueryRow :=
+def lookupSnapRows (snaps : SnapSet) (typeName : TypeName) : List State :=
+  match snaps.find? (fun kv => kv.fst = typeName) with
+  | some kv => kv.snd
+  | none => []
+
+def evalSourceSubset (src : Source) (snaps : SnapSet) : List QueryRow :=
   match src with
-  | .snap _ => rows.map mkRow
+  | .snap typeName => (lookupSnapRows snaps typeName).map mkRow
   | .slaStatus _ _ => []
   | .join _ _ _ _ => []
 
@@ -95,20 +101,20 @@ def supportsSourceSubset : Source → Bool
 def supportsQuerySubset (q : Query) : Bool :=
   supportsSourceSubset q.source && q.pipeline.all supportsQueryOpSubset
 
-def evalQuerySubset (q : Query) (rows : List State) : List QueryRow :=
-  q.pipeline.foldl (fun acc op => applyQueryOpSubset op acc) (evalSourceSubset q.source rows)
+def evalQuerySubset (q : Query) (snaps : SnapSet) : List QueryRow :=
+  q.pipeline.foldl (fun acc op => applyQueryOpSubset op acc) (evalSourceSubset q.source snaps)
 
-def evalQuery (_ir : IR) (q : Query) (rows : List State) : List QueryRow :=
-  evalQuerySubset q rows
+def evalQuery (_ir : IR) (q : Query) (snaps : SnapSet) : List QueryRow :=
+  evalQuerySubset q snaps
 
-def oracleQueryEvalSubset (q : Query) (rows : List State) : List QueryRow :=
-  q.pipeline.foldl (fun acc op => applyQueryOpSubset op acc) (evalSourceSubset q.source rows)
+def oracleQueryEvalSubset (q : Query) (snaps : SnapSet) : List QueryRow :=
+  q.pipeline.foldl (fun acc op => applyQueryOpSubset op acc) (evalSourceSubset q.source snaps)
 
 theorem oracleQueryEvalSubset_eq_relational
   (q : Query)
-  (rows : List State)
+  (snaps : SnapSet)
   (hsupported : supportsQuerySubset q = true) :
-  oracleQueryEvalSubset q rows = evalQuerySubset q rows := by
+  oracleQueryEvalSubset q snaps = evalQuerySubset q snaps := by
   rfl
 
 end Cicsc.Core

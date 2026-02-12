@@ -155,8 +155,8 @@ v1 defines a minimal query semantics subset sufficient to support:
 
 ### 6.1 Implement QueryEval subset
 - [x] Add `Core/Semantics/QueryEval.lean` (new)
-  - `evalQuery : IR → Query → List State → List State` (or over a SnapSet)
-  - interpret Source.snap as “given rows” for v1 (external snapshot set passed in)
+  - `evalQuery : IR → Query → SnapSet → List QueryRow`
+  - interpret `Source.snap typeName` by selecting rows for `typeName` from external `SnapSet`
 
 ### 6.2 Use it in bool_query constraints
 - [x] Replace `evalQueryRowsCount` stub with:

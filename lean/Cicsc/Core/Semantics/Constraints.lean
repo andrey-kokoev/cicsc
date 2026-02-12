@@ -60,11 +60,11 @@ theorem snapshotEnv_usesStateRowAttrs
   simp [snapshotEnv]
 
 -- bool_query semantics over the supported relational query subset.
-def evalBoolQueryConstraintSubset (ir : IR) (c : Constraint) (rows : List State) : Bool :=
+def evalBoolQueryConstraintSubset (ir : IR) (c : Constraint) (snaps : SnapSet) : Bool :=
   match c with
   | .boolQuery _onType q assertExpr =>
       if supportsQuerySubset q && assertExprRowsCountArgsOnly assertExpr then
-        let n := (evalQuery ir q rows).length
+        let n := (evalQuery ir q snaps).length
         toBool (evalExpr {
           now := 0
           actor := ""
@@ -85,13 +85,13 @@ def holdsAllKernelConstraints (cs : List (String × Constraint)) (st : State) : 
   cs.all (fun kv => holdsKernelConstraint kv.snd st)
 
 -- Legacy full surface including bool_query subset semantics.
-def holdsConstraintV0 (ir : IR) (c : Constraint) (st : State) (rows : List State) : Bool :=
+def holdsConstraintV0 (ir : IR) (c : Constraint) (st : State) (snaps : SnapSet) : Bool :=
   match c with
   | .snapshot _ _ => evalSnapshotConstraint c st
-  | .boolQuery _ _ _ => evalBoolQueryConstraintSubset ir c rows
+  | .boolQuery _ _ _ => evalBoolQueryConstraintSubset ir c snaps
 
-def holdsAllConstraintsV0 (ir : IR) (cs : List (String × Constraint)) (st : State) (rows : List State) : Bool :=
-  cs.all (fun kv => holdsConstraintV0 ir kv.snd st rows)
+def holdsAllConstraintsV0 (ir : IR) (cs : List (String × Constraint)) (st : State) (snaps : SnapSet) : Bool :=
+  cs.all (fun kv => holdsConstraintV0 ir kv.snd st snaps)
 
 def holdsAllSnapshotConstraints (cs : List (String × Constraint)) (st : State) : Bool :=
   cs.all (fun kv =>

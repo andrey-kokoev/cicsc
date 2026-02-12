@@ -26,6 +26,10 @@ def qcRows : List State := [
   { st := "closed", attrs := [], shadows := [] }
 ]
 
+def qcSnapSet : SnapSet := [
+  ("Ticket", qcRows)
+]
+
 def openOnlyQuery : Query := {
   source := .snap "Ticket"
   pipeline := [
@@ -38,7 +42,7 @@ def openCountPositive : Constraint :=
   .boolQuery "Ticket" openOnlyQuery (.gt (.var .rowsCount) (.litInt 0))
 
 theorem boolQuery_subset_example_true :
-  holdsConstraintV0 qcIr openCountPositive { st := "open", attrs := [], shadows := [] } qcRows = true := by
+  holdsConstraintV0 qcIr openCountPositive { st := "open", attrs := [], shadows := [] } qcSnapSet = true := by
   decide
 
 end Cicsc.Examples
