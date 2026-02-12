@@ -47,7 +47,7 @@ v1 is defined by **alignment**, **tightened typing**, and **non-stub query seman
 - [x] Replace Evolution’s `step` and `replayFromState` to be StreamId-based:
   - `step : IR → StreamId → State → Event → Option State`
   - applies reducer iff `inStream sid e`
-- [ ] Define `replayFromState` in terms of the same `step`
+- [x] Define `replayFromState` in terms of the same `step`
 - [ ] Update `Commutes` and `StepCommutes` to take `StreamId`, not `typeName`
 
 Acceptance: the evolution proof uses the same event filtering semantics as `Core.Semantics.Replay.replay`.
