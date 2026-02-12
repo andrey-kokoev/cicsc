@@ -30,7 +30,7 @@ def commandEnv (st : State) (env : Env) : Env :=
   { env with
     state := st.st
     attrs := st.attrs
-    row := runtimeRow st
+    row := mkRow st
   }
 
 def canExecute (cmd : CommandSpec) (envExec : Env) : Bool :=

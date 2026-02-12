@@ -15,7 +15,7 @@ Goal: Lean is the source of truth for CICSC semantics.
 ### A1. Semantic alignment (must-do)
 - [x] Unify replay semantics: Evolution proofs must use StreamId + inStream filtering
 - [ ] Unify reducer env with command env:
-  - [ ] define `mkRow : State → AttrMap` (canonical ordering + reserved fields)
+  - [x] define `mkRow : State → AttrMap` (canonical ordering + reserved fields)
   - [ ] set `env.row := mkRow st` inside `applyReducer`
 - [ ] Decide reserved keys (`state`, etc.) and enforce non-collision at IR WF layer
 

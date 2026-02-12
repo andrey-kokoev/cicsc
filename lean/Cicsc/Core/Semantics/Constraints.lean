@@ -17,7 +17,7 @@ def evalSnapshotConstraint (c : Constraint) (st : State) : Bool :=
         actor := ""
         state := st.st
         attrs := st.attrs
-        row := runtimeRow st
+        row := mkRow st
       } expr)
   | _ => true
 
