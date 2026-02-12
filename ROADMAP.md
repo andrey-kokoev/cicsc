@@ -137,7 +137,7 @@
 - [x] Write formal definition of migration correctness (commuting diagrams)
 - [x] Specify the Core IR grammar and typing rules
 - [x] Specify Spec DSL grammar and desugaring rules
-- [ ] Define versioning and compatibility rules
+- [x] Define versioning and compatibility rules
 - [ ] Publish spec as normative reference document
 
 ## Q. Kernel Extraction and Hardening
