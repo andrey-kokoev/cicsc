@@ -148,7 +148,7 @@
 - [x] Add kernel API stability guarantees
 - [x] Add kernel-level conformance test suite
 - [x] Add minimal embedding examples (CLI, library integration)
-- [ ] Document kernel extension points
+- [x] Document kernel extension points
 
 ## R. Release, Stability, and Governance
 
