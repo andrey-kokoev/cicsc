@@ -183,7 +183,7 @@ Lean Kernel v1 is complete when all are true:
 - [x] Evolution uses the same replay semantics as Core (StreamId filtering)
 - [x] Reducer env exposes `.row` and `"state"` consistently across all contexts
 - [x] Typechecker and evaluator agree on the v1 Expr fragment (including `.get`)
-- [ ] WF(IR) predicates exist and are used as assumptions for theorems
+- [x] WF(IR) predicates exist and are used as assumptions for theorems
 - [ ] bool_query no longer uses the rowsCount stub; QueryEval subset exists
 - [ ] Naturality theorem is proved without assuming `StepCommutes` as a hypothesis
 - [ ] Ticketing v0→v1 migration proof does not rely on injected commutation premises
