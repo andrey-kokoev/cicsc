@@ -70,7 +70,9 @@ Make replay-causality statements semantically aligned with stream-aware replay a
 - [x] K4.2.3 Define concurrency commutativity premise for reducers (`CommutesOnConcurrent`).
   - Added `concurrent`, `CommutesOnConcurrent`, and `concurrent_symm` in
     `lean/Cicsc/Core/Semantics/CausalityReplay.lean`.
-- [ ] K4.2.4 Prove replay order independence under `CommutesOnConcurrent`.
+- [x] K4.2.4 Prove replay order independence under `CommutesOnConcurrent`.
+  - Added `replayFold_swap_adjacent_concurrent` in
+    `lean/Cicsc/Core/Semantics/CausalityReplay.lean` (adjacent swap lemma).
 - [ ] K4.2.5 Prove deterministic replay for causally-equivalent histories.
 
 ### Acceptance

@@ -122,4 +122,20 @@ theorem concurrent_symm (e1 e2 : Event) :
   rcases h with ⟨hss, h12, h21⟩
   exact ⟨sameStream_symm e1 e2 hss, h21, h12⟩
 
+theorem replayFold_swap_adjacent_concurrent
+  (ts : TypeSpec)
+  (st : State)
+  (pre post : List Event)
+  (e1 e2 : Event)
+  (hconc : concurrent e1 e2)
+  (hcomm : CommutesOnConcurrent ts) :
+  (pre ++ e1 :: e2 :: post).foldl (fun acc e => applyReducer ts acc e) st =
+    (pre ++ e2 :: e1 :: post).foldl (fun acc e => applyReducer ts acc e) st := by
+  let st0 := pre.foldl (fun acc e => applyReducer ts acc e) st
+  have hswap :
+      applyReducer ts (applyReducer ts st0 e1) e2 =
+        applyReducer ts (applyReducer ts st0 e2) e1 := by
+    exact hcomm st0 e1 e2 hconc
+  simp [List.foldl_append, st0, hswap]
+
 end Cicsc.Core
