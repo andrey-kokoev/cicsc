@@ -243,4 +243,28 @@ theorem inverseMigration_roundtrip_state_on_mapped
   unfold migrateState
   simp [hmap, hinvMap]
 
+def applyMigrationChain (chain : List MigrationSpec) (h : History) : History :=
+  chain.foldl (fun acc ms => migrateHist ms acc) h
+
+def inverseMigrationChain (chain : List MigrationSpec) : Option (List MigrationSpec) :=
+  let invs := chain.map inverseMigration
+  if invs.all Option.isSome then
+    some ((invs.filterMap id).reverse)
+  else
+    none
+
+def rollbackHistory (chain : List MigrationSpec) (h : History) : Option History :=
+  match inverseMigrationChain chain with
+  | none => none
+  | some invChain => some (applyMigrationChain invChain h)
+
+theorem rollbackHistory_def
+  (chain : List MigrationSpec)
+  (h : History) :
+  rollbackHistory chain h =
+    match inverseMigrationChain chain with
+    | none => none
+    | some invChain => some (applyMigrationChain invChain h) := by
+  rfl
+
 end Cicsc.Evolution
