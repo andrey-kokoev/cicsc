@@ -69,7 +69,7 @@ Current 1.3 signal:
 - [x] 3.2 Define unsupported feature list for pilot (explicit rejections).
 - [x] 3.3 Define tenant isolation and retention policy.
 - [x] 3.4 Add pilot runbook (install/upgrade/rollback/verify-loop).
-- [ ] 3.5 Add structured pilot error taxonomy.
+- [x] 3.5 Add structured pilot error taxonomy.
 
 ## 4. Pilot Execution (Validation-by-Usage)
 
