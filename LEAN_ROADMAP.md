@@ -1,0 +1,34 @@
+# CICSC Lean Kernel Roadmap (Derived from LEAD_KERNEL_V0.md)
+
+## A. Lean Scaffold
+- [x] Create `lean/` workspace scaffold and module layout
+- [ ] Add Lean project configuration (`lakefile.lean`, root module)
+
+## B. Core Syntax and Types
+- [ ] Define kernel syntax in `Cicsc/Core/Syntax.lean` (Expr, Query, ReducerOp, IR)
+- [ ] Define value/type domains in `Cicsc/Core/Types.lean` (Val, Ty, Env, State)
+- [ ] Define events/history/state primitives in syntax/types with typed records
+
+## C. Semantics
+- [ ] Implement expression evaluator in `Semantics/ExprEval.lean`
+- [ ] Implement replay fold semantics in `Semantics/Replay.lean`
+- [ ] Implement constraint semantics in `Semantics/Constraints.lean`
+- [ ] Implement abstract command semantics in `Semantics/Commands.lean`
+
+## D. Meta and Typechecking
+- [ ] Add decidable typechecker skeleton in `Meta/Typecheck.lean`
+- [ ] Add typing judgments for Expr subset and well-typed env relation
+
+## E. Proof Milestone v0
+- [ ] Prove expression evaluation determinism theorem
+- [ ] Prove replay totality theorem
+- [ ] Prove reducer well-formedness preservation theorem
+
+## F. Migration Formalization
+- [ ] Define migration primitives in `Evolution/Migration.lean`
+- [ ] Prove naturality/commuting-diagram theorem in `Evolution/Naturality.lean`
+
+## G. Examples and Closure
+- [ ] Add Ticketing example in `Examples/Ticketing.lean`
+- [ ] Add Kanban example in `Examples/Kanban.lean`
+- [ ] Add Lean kernel acceptance checklist document (maps to v0 acceptance criteria)
