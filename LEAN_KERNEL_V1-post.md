@@ -169,7 +169,7 @@ Canonical evaluator policy (runtime alignment):
 - [ ] Update `checkTypeSpec` to verify this property
 
 #### 4.2 Option B: Prove from Existing WFTypeSpec (Alternative)
-- [ ] Theorem: `WFTypeSpec ts → ReducerPreservesWF ts`
+- [x] Theorem: `WFTypeSpec ts → ReducerPreservesWF ts`
   - Derive from `reducerLiteralStatesValid` + `reducerOpsTypecheck`
   - May require strengthening `reducerOpsTypecheck` to track state reachability
 

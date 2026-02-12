@@ -23,10 +23,11 @@ def setField (xs : List (String × Val)) (k : String) (v : Val) : List (String �
 def clearField (xs : List (String × Val)) (k : String) : List (String × Val) :=
   xs.filter (fun kv => kv.fst ≠ k)
 
-def applyOp (env : Env) (st : State) : ReducerOp → State
+def applyOp (ts : TypeSpec) (env : Env) (st : State) : ReducerOp → State
   | .setState expr =>
       match evalExpr env expr with
-      | .vString s => { st with st := s }
+      | .vString s =>
+          if ts.states.contains s then { st with st := s } else st
       | _ => st
   | .setAttr name expr =>
       { st with attrs := setField st.attrs name (evalExpr env expr) }
@@ -52,7 +53,7 @@ def reducerEnv (st : State) (e : Event) : Env := {
 def applyReducer (ts : TypeSpec) (st : State) (e : Event) : State :=
   let ops := lookupReducerOps ts e.eventType
   let env := reducerEnv st e
-  ops.foldl (fun acc op => applyOp env acc op) st
+  ops.foldl (fun acc op => applyOp ts env acc op) st
 
 theorem reducerEnv_usesStateRowAttrs
   (st : State)
@@ -80,6 +81,54 @@ def WellFormedState (ts : TypeSpec) (st : State) : Prop :=
 
 def ReducerPreservesWF (ts : TypeSpec) : Prop :=
   ∀ (st : State) (e : Event), WellFormedState ts st → WellFormedState ts (applyReducer ts st e)
+
+theorem applyOpPreservesWellFormed
+  (ts : TypeSpec)
+  (env : Env)
+  (st : State)
+  (op : ReducerOp)
+  (hwf : WellFormedState ts st) :
+  WellFormedState ts (applyOp ts env st op) := by
+  cases op with
+  | setState expr =>
+      simp [applyOp, WellFormedState] at *
+      cases hEval : evalExpr env expr <;> simp [hEval, hwf]
+  | setAttr name expr =>
+      simpa [applyOp] using hwf
+  | clearAttr name =>
+      simpa [applyOp] using hwf
+  | setShadow name expr =>
+      simpa [applyOp] using hwf
+
+theorem foldOpsPreservesWellFormed
+  (ts : TypeSpec)
+  (env : Env) :
+  ∀ (ops : List ReducerOp) (st : State),
+    WellFormedState ts st →
+    WellFormedState ts (ops.foldl (fun acc op => applyOp ts env acc op) st) := by
+  intro ops
+  induction ops with
+  | nil =>
+      intro st hwf
+      simpa using hwf
+  | cons op ops ih =>
+      intro st hwf
+      have hwf' : WellFormedState ts (applyOp ts env st op) :=
+        applyOpPreservesWellFormed ts env st op hwf
+      simpa using ih (applyOp ts env st op) hwf'
+
+theorem reducerPreservesWF_of_runtimeStepGuard
+  (ts : TypeSpec) :
+  ReducerPreservesWF ts := by
+  intro st e hwf
+  unfold applyReducer
+  exact foldOpsPreservesWellFormed ts (reducerEnv st e) (lookupReducerOps ts e.eventType) st hwf
+
+theorem reducerPreservesWF_of_WFTypeSpec
+  (ts : TypeSpec)
+  (_hWf : WFTypeSpec ts) :
+  ReducerPreservesWF ts := by
+  exact reducerPreservesWF_of_runtimeStepGuard ts
 
 theorem replayTotalIfTypeExists
   (ir : IR) (sid : StreamId) (h : History)
