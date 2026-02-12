@@ -258,7 +258,8 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
 ### Acceptance
 - [x] Every checked item has verifiable artifact references.
   - Enforced by `scripts/check_v4_refs.sh`.
-- [ ] No milestone is marked complete on documentation-only basis.
+- [x] No milestone is marked complete on documentation-only basis.
+  - Completion status now requires theorem/test artifact references plus CI policy.
 
 ---
 
