@@ -19,7 +19,7 @@
 
 ## C. Schema Generation & Storage Model
 - [x] Generate snapshots schema per IR version (vN) from shadows
-- [ ] Generate indexes from views (order_by, filter fields)
+- [x] Generate indexes from views (order_by, filter fields)
 - [ ] Generate indexes from constraints (fields referenced in filters)
 - [ ] Add schema diff/migration generator for snapshots when IR changes
 - [ ] Add automatic schema install on version activation

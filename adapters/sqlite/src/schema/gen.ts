@@ -12,11 +12,12 @@ export function genSqliteSchemaFromIr (ir: CoreIrV0, opts: SchemaGenOpts): Schem
   const v = opts.version
   const events = genEventsTable(v)
   const snapshots = genSnapshotsTable(ir, v)
+  const viewIndexes = genViewIndexes(ir, v)
   const versions = genTenantVersions()
   const receipts = genCommandReceipts()
   const sla = genSlaStatus()
 
-  const sql = [versions, receipts, events, snapshots, sla].join("\n\n")
+  const sql = [versions, receipts, events, snapshots, viewIndexes, sla].join("\n\n")
   return { sql }
 }
 
@@ -96,6 +97,23 @@ ${idxState}
 `.trim()
 }
 
+function genViewIndexes (ir: CoreIrV0, version: number): string {
+  const fields = collectIndexedFieldsFromViews(ir)
+    .filter((f) => f !== "attrs_json" && f !== "state")
+
+  if (fields.length === 0) return ""
+
+  return fields
+    .map((f) => {
+      const safe = sanitizeIndexToken(f)
+      return `
+CREATE INDEX IF NOT EXISTS idx_snapshots_v${version}_view_${safe}
+  ON snapshots_v${version}(tenant_id, entity_type, ${escapeIdent(f)});
+`.trim()
+    })
+    .join("\n\n")
+}
+
 function genSlaStatus (): string {
   return `
 CREATE TABLE IF NOT EXISTS sla_status (
@@ -143,6 +161,104 @@ function collectShadowColumns (ir: CoreIrV0): ShadowCol[] {
     .map(([name, sqliteType]) => ({ name: escapeIdent(name), sqliteType }))
 }
 
+function collectIndexedFieldsFromViews (ir: CoreIrV0): string[] {
+  const out = new Set<string>()
+  for (const view of Object.values(ir.views ?? {})) {
+    const q: any = (view as any).query
+    collectFieldsFromQuery(q, out)
+  }
+  return Array.from(out).sort()
+}
+
+function collectFieldsFromQuery (q: any, out: Set<string>): void {
+  if (!q || typeof q !== "object") return
+  const pipeline = Array.isArray(q.pipeline) ? q.pipeline : []
+  for (const op of pipeline) {
+    const tag = soleKey(op)
+    const body = (op as any)[tag]
+    if (tag === "filter") {
+      collectFieldsFromExpr(body, out)
+      continue
+    }
+    if (tag === "order_by") {
+      const xs = Array.isArray(body) ? body : []
+      for (const k of xs) collectFieldsFromExpr((k as any)?.expr, out)
+      continue
+    }
+  }
+}
+
+function collectFieldsFromExpr (expr: any, out: Set<string>): void {
+  if (!expr || typeof expr !== "object") return
+  const tag = soleKey(expr)
+  const body = (expr as any)[tag]
+
+  if (tag === "var") {
+    const vTag = soleKey(body)
+    const vBody = body[vTag]
+    if (vTag === "row") {
+      const f = String(vBody?.field ?? "")
+      if (f) out.add(f)
+    }
+    return
+  }
+
+  if (tag === "not" || tag === "bool" || tag === "is_null") {
+    collectFieldsFromExpr(body, out)
+    return
+  }
+
+  if (tag === "and" || tag === "or" || tag === "coalesce") {
+    for (const x of (Array.isArray(body) ? body : [])) collectFieldsFromExpr(x, out)
+    return
+  }
+
+  if (tag === "eq" || tag === "ne" || tag === "lt" || tag === "le" || tag === "gt" || tag === "ge" || tag === "add" || tag === "sub" || tag === "mul" || tag === "div" || tag === "time_between") {
+    const xs = Array.isArray(body) ? body : []
+    for (const x of xs) collectFieldsFromExpr(x, out)
+    return
+  }
+
+  if (tag === "in") {
+    collectFieldsFromExpr(body?.needle, out)
+    collectFieldsFromExpr(body?.haystack, out)
+    return
+  }
+
+  if (tag === "if") {
+    collectFieldsFromExpr(body?.cond, out)
+    collectFieldsFromExpr(body?.then, out)
+    collectFieldsFromExpr(body?.else, out)
+    return
+  }
+
+  if (tag === "get" || tag === "has") {
+    collectFieldsFromExpr(body?.expr, out)
+    return
+  }
+
+  if (tag === "obj") {
+    const fields = body?.fields ?? {}
+    for (const v of Object.values(fields)) collectFieldsFromExpr(v, out)
+    return
+  }
+
+  if (tag === "arr") {
+    for (const x of (Array.isArray(body?.items) ? body.items : [])) collectFieldsFromExpr(x, out)
+    return
+  }
+
+  if (tag === "map_enum") {
+    collectFieldsFromExpr(body?.expr, out)
+    return
+  }
+
+  if (tag === "call") {
+    for (const a of (Array.isArray(body?.args) ? body.args : [])) collectFieldsFromExpr(a, out)
+    return
+  }
+}
+
 function toSqliteType (t: string): ShadowCol["sqliteType"] {
   switch (t) {
     case "int":
@@ -162,4 +278,14 @@ function escapeIdent (name: string): string {
   // Columns: strict; no dots.
   if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) throw new Error(`invalid column ident: ${name}`)
   return `"${name}"`
+}
+
+function sanitizeIndexToken (name: string): string {
+  return name.replace(/[^A-Za-z0-9_]/g, "_")
+}
+
+function soleKey (o: any): string {
+  const ks = Object.keys(o ?? {})
+  if (ks.length !== 1) throw new Error("invalid tagged object")
+  return ks[0]!
 }
