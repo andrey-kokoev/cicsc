@@ -2,6 +2,12 @@ import Cicsc.Core.Semantics.Replay
 
 namespace Cicsc.Core
 
+inductive IsolationLevel where
+  | readCommitted
+  | snapshot
+  | serializable
+deriving Repr, DecidableEq
+
 def visibleAtSeq (sid : StreamId) (cutoffSeq : Nat) (e : Event) : Bool :=
   inStream sid e && e.seq ≤ cutoffSeq
 
