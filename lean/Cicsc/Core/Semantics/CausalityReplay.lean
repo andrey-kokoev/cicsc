@@ -107,4 +107,19 @@ theorem replay_stream_preserves_happensBefore_order
   have hin2 : inStream sid e2 = true := ((mem_streamFilter_iff sid h e2).1 he2).2
   exact appearsBefore_filter_preserved (inStream sid) h e1 e2 hInOriginal hin1 hin2
 
+def concurrent (e1 e2 : Event) : Prop :=
+  sameStream e1 e2 ∧ ¬ happensBefore e1 e2 ∧ ¬ happensBefore e2 e1
+
+def CommutesOnConcurrent (ts : TypeSpec) : Prop :=
+  ∀ (st : State) (e1 e2 : Event),
+    concurrent e1 e2 →
+      applyReducer ts (applyReducer ts st e1) e2 =
+      applyReducer ts (applyReducer ts st e2) e1
+
+theorem concurrent_symm (e1 e2 : Event) :
+  concurrent e1 e2 → concurrent e2 e1 := by
+  intro h
+  rcases h with ⟨hss, h12, h21⟩
+  exact ⟨sameStream_symm e1 e2 hss, h21, h12⟩
+
 end Cicsc.Core
