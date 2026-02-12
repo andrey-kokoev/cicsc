@@ -111,7 +111,7 @@
 ## N. Validation, Formalization, and Closure
 
 - [x] Add adversarial test suite for transactional semantics (crash mid-tx, duplicate commands, out-of-order events)
-- [ ] Add concurrency stress tests (conflicting commands on same entity and across entities)
+- [x] Add concurrency stress tests (conflicting commands on same entity and across entities)
 - [ ] Add migration fault-injection tests (partial transforms, schema mismatch, replay failure)
 - [ ] Add fuzzing for Spec DSL within grammar bounds
 - [ ] Add fuzzing for IR typechecker (invalid field access, illegal intrinsics, malformed reducers)
