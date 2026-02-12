@@ -10,6 +10,34 @@ def isSnapshotConstraint : Constraint → Bool
   | .snapshot _ _ => true
   | .boolQuery _ _ _ => false
 
+def assertExprRowsCountArgsOnly : Expr → Bool
+  | .litBool _ => true
+  | .litInt _ => true
+  | .litString _ => true
+  | .litNull => true
+  | .var (.rowsCount) => true
+  | .var (.arg _) => true
+  | .var _ => false
+  | .get e _ => assertExprRowsCountArgsOnly e
+  | .has e _ => assertExprRowsCountArgsOnly e
+  | .not e => assertExprRowsCountArgsOnly e
+  | .and xs => xs.all assertExprRowsCountArgsOnly
+  | .or xs => xs.all assertExprRowsCountArgsOnly
+  | .eq a b
+  | .ne a b
+  | .lt a b
+  | .le a b
+  | .gt a b
+  | .ge a b
+  | .add a b
+  | .sub a b
+  | .mul a b
+  | .div a b => assertExprRowsCountArgsOnly a && assertExprRowsCountArgsOnly b
+  | .ifThenElse c t f =>
+      assertExprRowsCountArgsOnly c && assertExprRowsCountArgsOnly t && assertExprRowsCountArgsOnly f
+  | .coalesce xs => xs.all assertExprRowsCountArgsOnly
+  | .call _ args => args.all assertExprRowsCountArgsOnly
+
 def evalSnapshotConstraint (c : Constraint) (st : State) : Bool :=
   match c with
   | .snapshot _onType expr =>
@@ -26,7 +54,7 @@ def evalSnapshotConstraint (c : Constraint) (st : State) : Bool :=
 def evalBoolQueryConstraintSubset (ir : IR) (c : Constraint) (rows : List State) : Bool :=
   match c with
   | .boolQuery _onType q assertExpr =>
-      if supportsQuerySubset q then
+      if supportsQuerySubset q && assertExprRowsCountArgsOnly assertExpr then
         let n := (evalQuery ir q rows).length
         toBool (evalExpr {
           now := 0

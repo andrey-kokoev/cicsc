@@ -162,7 +162,7 @@ v1 defines a minimal query semantics subset sufficient to support:
 ### 6.2 Use it in bool_query constraints
 - [x] Replace `evalQueryRowsCount` stub with:
   - `n := (evalQuery ...).length`
-- [ ] Keep assertExpr restricted to rowsCount + args (if args exist)
+- [x] Keep assertExpr restricted to rowsCount + args (if args exist)
 
 Acceptance: bool_query constraints depend on actual query evaluation for the supported subset.
 
