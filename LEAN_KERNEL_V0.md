@@ -164,7 +164,7 @@ Well-formedness predicate:
 
 ### Theorem E — Naturality / Commutation
 Prove (history induction):
-- `replay_commutes : WFMigration ... → (typeName = ms.entityType) → StepCommutes ... → ∀ h s0, Commutes ... s0 h`
+- `replay_commutes : WFMigration ... → (sid.entityType = ms.entityType) → StepCommutes ... → ∀ h s0, Commutes ... s0 h`
 
 This is the categorical tightness core.
 

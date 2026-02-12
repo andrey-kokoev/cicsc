@@ -92,13 +92,13 @@ def ticketMigrationV0V1 : MigrationSpec := {
 def ticketInitialV0 : State := initialState ticketType
 
 theorem ticket_v0_v1_non_identity_commutes_on_sample_from_restricted
-  (hclass : RestrictedMigrationClass ticketIr ticketIrV1 "Ticket" ticketMigrationV0V1) :
-  Commutes ticketIr ticketIrV1 "Ticket" ticketMigrationV0V1 ticketInitialV0 ticketHistory := by
+  (hclass : RestrictedMigrationClass ticketIr ticketIrV1 ticketStream ticketMigrationV0V1) :
+  Commutes ticketIr ticketIrV1 ticketStream ticketMigrationV0V1 ticketInitialV0 ticketHistory := by
   exact replay_commutes_restricted
-    ticketIr ticketIrV1 "Ticket" ticketMigrationV0V1 hclass ticketHistory ticketInitialV0
+    ticketIr ticketIrV1 ticketStream ticketMigrationV0V1 hclass ticketHistory ticketInitialV0
 
 theorem ticket_v0_v1_non_identity_commutes_on_sample_by_computation :
-  Commutes ticketIr ticketIrV1 "Ticket" ticketMigrationV0V1 ticketInitialV0 ticketHistory := by
+  Commutes ticketIr ticketIrV1 ticketStream ticketMigrationV0V1 ticketInitialV0 ticketHistory := by
   decide
 
 end Cicsc.Examples
