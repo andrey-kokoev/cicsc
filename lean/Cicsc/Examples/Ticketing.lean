@@ -111,12 +111,12 @@ theorem ticket_v0_v1_commutes_all_histories_from_restricted
 
 theorem ticket_v0_v1_commutes_all_histories
   (hWf : WFMigration ticketMigrationV0V1 ticketIr ticketIrV1)
-  (hcompat : ReducerCompatibility ticketIr ticketIrV1 ticketStream ticketMigrationV0V1) :
+  (hlocal : LocalStepCompatibility ticketIr ticketIrV1 ticketStream ticketMigrationV0V1) :
   ∀ (h : History) (s0 : State),
     Commutes ticketIr ticketIrV1 ticketStream ticketMigrationV0V1 s0 h := by
   exact replay_commutes
     ticketIr ticketIrV1 ticketStream ticketMigrationV0V1
-    hWf rfl hcompat
+    hWf rfl hlocal
 
 theorem ticket_v0_v1_non_identity_commutes_on_sample_by_computation :
   Commutes ticketIr ticketIrV1 ticketStream ticketMigrationV0V1 ticketInitialV0 ticketHistory := by

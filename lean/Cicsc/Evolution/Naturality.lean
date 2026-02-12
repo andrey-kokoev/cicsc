@@ -112,6 +112,19 @@ def StepCommutes
     step irFrom sid s e = some s' →
     stepMigrated irTo sid ms (migrateState ms s) e = some (migrateState ms s')
 
+def LocalStepCompatibility
+  (irFrom irTo : IR)
+  (sid : StreamId)
+  (ms : MigrationSpec) : Prop :=
+  ∀ (s : State) (e : Event) (tsFrom tsTo : TypeSpec),
+    lookupTypeSpec irFrom sid.entityType = some tsFrom →
+    lookupTypeSpec irTo sid.entityType = some tsTo →
+    inStream sid e = true →
+    match migrateEvent ms e with
+    | none => migrateState ms (applyReducer tsFrom s e) = migrateState ms s
+    | some e' =>
+        applyReducer tsTo (migrateState ms s) e' = migrateState ms (applyReducer tsFrom s e)
+
 def ReducerCompatibility
   (irFrom irTo : IR)
   (sid : StreamId)
@@ -119,6 +132,34 @@ def ReducerCompatibility
   ∀ (s : State) (e : Event),
     stepMigrated irTo sid ms (migrateState ms s) e =
       Option.map (migrateState ms) (step irFrom sid s e)
+
+theorem reducerCompatibility_ofLocalStepCompatibility
+  (irFrom irTo : IR)
+  (sid : StreamId)
+  (ms : MigrationSpec)
+  (hsrc : ∃ tsFrom, lookupTypeSpec irFrom sid.entityType = some tsFrom)
+  (htgt : ∃ tsTo, lookupTypeSpec irTo sid.entityType = some tsTo)
+  (hlocal : LocalStepCompatibility irFrom irTo sid ms) :
+  ReducerCompatibility irFrom irTo sid ms := by
+  intro s e
+  rcases hsrc with ⟨tsFrom, hFrom⟩
+  rcases htgt with ⟨tsTo, hTo⟩
+  unfold stepMigrated step
+  by_cases hin : inStream sid e = true
+  · specialize hlocal s e tsFrom tsTo hFrom hTo hin
+    cases hmig : migrateEvent ms e with
+    | none =>
+        simp [hTo, hmig, hFrom, hin, hlocal]
+    | some e' =>
+        simp [hTo, hmig, hFrom, hin, hlocal]
+  · -- Out-of-stream events are no-ops on both sides.
+    have hnot : inStream sid e = false := by
+      exact Bool.eq_false_of_ne_true hin
+    cases hmig : migrateEvent ms e with
+    | none =>
+        simp [hTo, hmig, hFrom, hnot]
+    | some _ =>
+        simp [hTo, hmig, hFrom, hnot]
 
 theorem stepCommutes_ofReducerCompatibility
   (irFrom irTo : IR)
@@ -154,7 +195,7 @@ structure RestrictedMigrationClass
   appliesToType : sid.entityType = ms.entityType
   noPayload : NoPayloadTransforms ms
   stateRenameOnly : StateLabelRenamesOnly ms
-  reducerCompatibility : ReducerCompatibility irFrom irTo sid ms
+  localStepCompatibility : LocalStepCompatibility irFrom irTo sid ms
 
 theorem replay_commutes
   (irFrom irTo : IR)
@@ -162,10 +203,14 @@ theorem replay_commutes
   (ms : MigrationSpec)
   (hWf : WFMigration ms irFrom irTo)
   (happlies : sid.entityType = ms.entityType)
-  (hcompat : ReducerCompatibility irFrom irTo sid ms) :
+  (hlocal : LocalStepCompatibility irFrom irTo sid ms) :
   ∀ (h : History) (s0 : State), Commutes irFrom irTo sid ms s0 h := by
   have hsrc : ∃ ts, lookupTypeSpec irFrom sid.entityType = some ts := by
     simpa [happlies] using wfMigration_sourceTypeExists ms irFrom irTo hWf
+  have htgt : ∃ ts, lookupTypeSpec irTo sid.entityType = some ts := by
+    simpa [happlies] using wfMigration_targetTypeExists ms irFrom irTo hWf
+  have hcompat : ReducerCompatibility irFrom irTo sid ms :=
+    reducerCompatibility_ofLocalStepCompatibility irFrom irTo sid ms hsrc htgt hlocal
   have hstep : StepCommutes irFrom irTo sid ms :=
     stepCommutes_ofReducerCompatibility irFrom irTo sid ms hcompat
   intro h
@@ -190,6 +235,6 @@ theorem replay_commutes_restricted
   (ms : MigrationSpec)
   (hclass : RestrictedMigrationClass irFrom irTo sid ms) :
   ∀ (h : History) (s0 : State), Commutes irFrom irTo sid ms s0 h := by
-  exact replay_commutes irFrom irTo sid ms hclass.wf hclass.appliesToType hclass.reducerCompatibility
+  exact replay_commutes irFrom irTo sid ms hclass.wf hclass.appliesToType hclass.localStepCompatibility
 
 end Cicsc.Evolution
