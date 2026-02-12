@@ -109,7 +109,9 @@ v2 adds semantic coverage for:
   - Prove aggregation commutativity/associativity where applicable
 
 #### 1.2.2 HAVING Clause
-- [ ] Extend Query with `HAVING Expr` (filter on aggregated results)
+- [x] Extend Query with `HAVING Expr` (filter on aggregated results)
+  - `QueryOp.having` is defined in `lean/Cicsc/Core/Syntax.lean`.
+  - Evaluated in `applyQueryOpSubset` in `lean/Cicsc/Core/Semantics/QueryEval.lean`.
 - [ ] Define evaluation order: GROUP BY → aggregation → HAVING → projection
 - [ ] Prove HAVING vs WHERE distinction (pre-grouping vs post-aggregation)
 
