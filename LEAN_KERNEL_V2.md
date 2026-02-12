@@ -103,7 +103,8 @@ v2 adds semantic coverage for:
 - [x] Define aggregation functions:
   - `AggExpr` includes `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`, `STRING_AGG` in `lean/Cicsc/Core/Syntax.lean`.
   - `COUNT`, `SUM`, `AVG`, `MIN`, `MAX`, `STRING_AGG`
-- [ ] Define `evalAggregate : AggFn → List QueryRow → Val`
+- [x] Define `evalAggregate : AggFn → List QueryRow → Val`
+  - Implemented as `evalAggregate : AggExpr → List QueryRow → Val` in `lean/Cicsc/Core/Semantics/QueryEval.lean`, with empty-group behavior and aggregate laws captured by local theorems.
   - Handle empty groups (COUNT=0, others=NULL)
   - Prove aggregation commutativity/associativity where applicable
 
