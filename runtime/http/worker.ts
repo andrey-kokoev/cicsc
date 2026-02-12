@@ -8,7 +8,7 @@ import { SqliteD1Adapter } from "../../adapters/sqlite/src/adapter"
 import type { CoreIrBundleV0, CoreIrV0 } from "../../core/ir/types"
 import { validateBundleV0 } from "../../core/ir/validate"
 import { verifyHistoryAgainstIr } from "../../core/runtime/verify"
-import { installSchemaV0 } from "../db/install-schema"
+import { installFromIr } from "../db/install-from-ir"
 import ticketingBundle from "../../bundles/ticketing.v0.json"
 
 export interface Env {
@@ -49,7 +49,7 @@ export default {
 
       // POST /install  (idempotent)
       if (url.pathname === "/install" && req.method === "POST") {
-        await installSchemaV0(env.DB as any)
+        await installFromIr({ db: env.DB as any, ir, version: 0 })
         // set default active version for tenant if not set
         const body = (await req.json().catch(() => ({}))) as any
         const tenant_id = String(body.tenant_id ?? "t")
