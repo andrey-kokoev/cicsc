@@ -301,4 +301,88 @@ describe("conformance: sqlite execution vs oracle", () => {
       db.close()
     }
   })
+
+  it("exec lowered query equals oracle rows for expr operator coverage", () => {
+    const db = openSqliteMemory()
+    try {
+      installSqliteSchemaV0(db)
+
+      upsertSnapshot(db, { tenant_id: "t", entity_type: "Ticket", entity_id: "a", state: "new", attrs: {}, updated_ts: 1 })
+
+      const q: any = {
+        source: { snap: { type: "Ticket" } },
+        pipeline: [
+          {
+            project: {
+              fields: [
+                { name: "co", expr: { coalesce: [{ lit: { null: true } }, { lit: { string: "fallback" } }] } },
+                {
+                  name: "iff",
+                  expr: {
+                    if: {
+                      cond: { eq: [{ var: { row: { field: "state" } } }, { lit: { string: "new" } }] },
+                      then: { lit: { int: 1 } },
+                      else: { lit: { int: 0 } },
+                    },
+                  },
+                },
+                {
+                  name: "isin",
+                  expr: {
+                    in: {
+                      needle: { var: { row: { field: "state" } } },
+                      haystack: { arr: { items: [{ lit: { string: "new" } }, { lit: { string: "done" } }] } },
+                    },
+                  },
+                },
+                {
+                  name: "mapped",
+                  expr: {
+                    map_enum: {
+                      expr: { var: { row: { field: "state" } } },
+                      mapping: { new: 10, done: 20 },
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      }
+
+      const plan = lowerQueryToSql(q, { version: 0, tenant_id: "t" })
+      const sqlRows = runLoweredQueryPlan(db, { tenant_id: "t", query: q, plan })
+
+      const ctx: any = {
+        now: 1,
+        actor: "u",
+        snap: () => [{ entity_id: "a", state: "new" }],
+        sla_status: () => [],
+        baseEnv: {
+          now: 1,
+          actor: "u",
+          state: "",
+          input: {},
+          attrs: {},
+          arg: {},
+          intrinsics: {
+            has_role: () => false,
+            role_of: () => "agent",
+            auth_ok: () => true,
+            constraint: () => true,
+            len: () => 0,
+            str: (v: any) => (v === null ? null : String(v)),
+            int: (v: any) => (typeof v === "number" ? Math.trunc(v) : null),
+            float: (v: any) => (typeof v === "number" ? v : null),
+          },
+        },
+      }
+
+      const oracle = interpretQuery(q, ctx)
+      const sqlProjected = sqlRows.map((r: any) => ({ co: r.co, iff: r.iff, isin: r.isin, mapped: r.mapped }))
+      assert.deepEqual(canonRows(sqlProjected), canonRows(oracle.rows))
+    } finally {
+      db.close()
+    }
+  })
 })
