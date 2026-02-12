@@ -1,5 +1,6 @@
 import Cicsc.Core.Types
 import Cicsc.Core.Semantics.Replay
+import Cicsc.Tactics.QueryEquiv
 
 namespace Cicsc.Evolution
 open Cicsc.Core
@@ -209,8 +210,7 @@ theorem inverseMigration_exists_of_reversible
   (ms : MigrationSpec)
   (hreversible : ms.transforms.all (fun t => !t.drop) = true) :
   ∃ inv, inverseMigration ms = some inv := by
-  unfold inverseMigration
-  simp [hreversible]
+  migration_simp
 
 theorem inverseMigration_roundtrip_event_on_covered
   (ms inv : MigrationSpec)
@@ -265,7 +265,7 @@ theorem rollbackHistory_def
     match inverseMigrationChain chain with
     | none => none
     | some invChain => some (applyMigrationChain invChain h) := by
-  rfl
+  migration_simp
 
 def AddPattern (t : EventTransform) : Prop :=
   t.drop = false ∧ t.source = t.target

@@ -199,7 +199,10 @@ Reduce proof maintenance overhead with focused tactics for repeated proof patter
   - Added `wf_auto` in `lean/Cicsc/Tactics/QueryEquiv.lean`.
 - [x] K4.6.4 Add migration tactic helpers for compose/roundtrip proofs.
   - Added `migration_simp` in `lean/Cicsc/Tactics/QueryEquiv.lean`.
-- [ ] K4.6.5 Convert at least 5 existing long proofs to tactic-assisted versions.
+- [x] K4.6.5 Convert at least 5 existing long proofs to tactic-assisted versions.
+  - Converted tactic-assisted proofs using `query_equiv`/`migration_simp` in:
+    `rowSetEquiv_refl`, `rowsEquiv_unordered_refl`, `rowsEquiv_ordered_refl`,
+    `inverseMigration_exists_of_reversible`, `rollbackHistory_def`.
 
 ### Acceptance
 - [ ] Demonstrated reduction in proof script size on representative targets.
