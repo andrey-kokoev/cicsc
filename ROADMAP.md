@@ -44,7 +44,7 @@
 - [x] Add authz for bundle creation vs tenant binding
 
 ## F. Spec DSL (User Intent Layer)
-- [ ] Define Spec DSL syntax (YAML) distinct from IR shape
+- [x] Define Spec DSL syntax (YAML) distinct from IR shape
 - [ ] Implement sugar for guards (state predicates, role predicates)
 - [ ] Implement sugar for reducers (set_state, set_attr, set_shadow shorthand)
 - [ ] Implement sugar for views (lanes, ordering, limits)

@@ -9,8 +9,9 @@ import { typecheckCoreIrV0 } from "../../core/ir/typecheck"
  * Compile Spec (YAML string or JSON object) -> validated CoreIrBundleV0
  *
  * v0 contract:
- * - Spec expressions/queries are already in tagged-object IR form.
- * - This function normalizes + typechecks; schema generation happens at install time.
+ * - Spec DSL shape uses `entities` (not IR `types`) and compiles to Core IR.
+ * - Expressions/queries remain tagged-object form in v0.
+ * - This function compiles + typechecks; schema generation happens at install time.
  */
 export function compileSpecToBundleV0 (input: string | unknown): CoreIrBundleV0 {
   const spec = parseSpecV0(input)
