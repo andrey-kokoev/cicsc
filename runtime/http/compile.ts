@@ -3,6 +3,7 @@
 import type { CoreIrBundleV0, CoreIrV0 } from "../../core/ir/types"
 import { parseSpecV0 } from "../../spec/parse-yaml"
 import { compileSpecV0ToCoreIr } from "../../spec/compile-to-ir"
+import { typecheckSpecV0 } from "../../spec/typecheck"
 import { typecheckCoreIrV0 } from "../../core/ir/typecheck"
 
 /**
@@ -15,6 +16,12 @@ import { typecheckCoreIrV0 } from "../../core/ir/typecheck"
  */
 export function compileSpecToBundleV0 (input: string | unknown): CoreIrBundleV0 {
   const spec = parseSpecV0(input)
+  const stc = typecheckSpecV0(spec)
+  if (!stc.ok) {
+    const first = stc.errors[0]!
+    throw new Error(`spec typecheck failed at ${first.path}: ${first.message}`)
+  }
+
   const ir = compileSpecV0ToCoreIr(spec)
 
   const tc = typecheckCoreIrV0(ir)
