@@ -910,6 +910,11 @@ theorem leftOuter_not_commutative_example :
   -- But they differ in field precedence
   -- This is a simplification; full proof would need to show field order difference
 
+theorem outerJoin_noncommutative_concrete :
+  evalJoin .leftOuter [[("a", .vInt 1)]] [] (.litBool true) ≠
+  evalJoin .rightOuter [[("a", .vInt 1)]] [] (.litBool true) := by
+  simp [evalJoin, combineRows]
+
 -- v2: Join associativity
 -- See LEAN_KERNEL_V2.md §1.1.2 checkpoint 2
 

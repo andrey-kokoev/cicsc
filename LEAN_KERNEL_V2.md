@@ -66,7 +66,8 @@ v2 adds semantic coverage for:
   - `evalJoin Inner a b e = evalJoin Inner b e[swapped] a` (modulo row order)
 - [ ] Prove join associativity for inner joins:
   - `(a ⋈ b) ⋈ c = a ⋈ (b ⋈ c)` (modulo projection)
-- [ ] Prove outer join non-commutativity examples
+- [x] Prove outer join non-commutativity examples
+  - Covered by `outerJoin_noncommutative_concrete` in `lean/Cicsc/Core/Semantics/QueryEval.lean`.
 - [ ] Define and prove join elimination rules:
   - `(a ⋈ b) WHERE false = ∅`
   - `a ⋈ (SELECT DISTINCT ...) = a ⋈ ...` (under conditions)
