@@ -32,7 +32,7 @@ v1 is defined by **alignment**, **tightened typing**, and **non-stub query seman
 - [x] Add `mkRow : State → AttrMap` in `Cicsc/Core/Semantics/Common.lean` (new)
   - includes reserved `"state"` exactly once
   - defines precedence and forbids collisions
-- [ ] Use `mkRow` in:
+- [x] Use `mkRow` in:
   - [x] `Core/Semantics/Commands.lean` (`commandRow` removed or becomes wrapper)
   - [x] `Core/Semantics/Replay.lean` (set `env.row := mkRow st`)
   - [x] `Core/Semantics/Constraints.lean` (snapshot constraint env uses `mkRow st`)
