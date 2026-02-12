@@ -57,6 +57,12 @@ def kanbanHistory : History := [
   }
 ]
 
-def kanbanReplay : Option State := replay kanbanIr "Card" kanbanHistory
+def kanbanStream : StreamId := {
+  tenantId := "t"
+  entityType := "Card"
+  entityId := "C1"
+}
+
+def kanbanReplay : Option State := replay kanbanIr kanbanStream kanbanHistory
 
 end Cicsc.Examples

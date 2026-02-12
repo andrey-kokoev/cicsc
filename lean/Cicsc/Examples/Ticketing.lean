@@ -49,7 +49,13 @@ def ticketHistory : History := [
   }
 ]
 
-def ticketReplay : Option State := replay ticketIr "Ticket" ticketHistory
+def ticketStream : StreamId := {
+  tenantId := "t"
+  entityType := "Ticket"
+  entityId := "A"
+}
+
+def ticketReplay : Option State := replay ticketIr ticketStream ticketHistory
 
 def ticketTypeV1 : TypeSpec := {
   idType := "string"

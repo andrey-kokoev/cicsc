@@ -52,11 +52,14 @@ def applyReducer (ts : TypeSpec) (st : State) (e : Event) : State :=
 def initialState (ts : TypeSpec) : State :=
   { st := ts.initialState, attrs := [], shadows := [] }
 
-def replay (ir : IR) (typeName : String) (h : History) : Option State :=
-  match lookupTypeSpec ir typeName with
+def inStream (sid : StreamId) (e : Event) : Bool :=
+  e.tenantId = sid.tenantId && e.entityType = sid.entityType && e.entityId = sid.entityId
+
+def replay (ir : IR) (sid : StreamId) (h : History) : Option State :=
+  match lookupTypeSpec ir sid.entityType with
   | none => none
   | some ts =>
-      let stream := h.filter (fun e => e.entityType = typeName)
+      let stream := h.filter (inStream sid)
       some (stream.foldl (fun acc e => applyReducer ts acc e) (initialState ts))
 
 def WellFormedState (ts : TypeSpec) (st : State) : Prop :=
@@ -66,9 +69,9 @@ def ReducerPreservesWF (ts : TypeSpec) : Prop :=
   ∀ (st : State) (e : Event), WellFormedState ts st → WellFormedState ts (applyReducer ts st e)
 
 theorem replayTotalIfTypeExists
-  (ir : IR) (typeName : String) (h : History)
-  (hex : ∃ ts, lookupTypeSpec ir typeName = some ts) :
-  ∃ st, replay ir typeName h = some st := by
+  (ir : IR) (sid : StreamId) (h : History)
+  (hex : ∃ ts, lookupTypeSpec ir sid.entityType = some ts) :
+  ∃ st, replay ir sid h = some st := by
   rcases hex with ⟨ts, hts⟩
   unfold replay
   simp [lookupTypeSpec, hts]

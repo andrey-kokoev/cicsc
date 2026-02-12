@@ -19,25 +19,25 @@ def materializeEvents (env : Env) (es : List (EventType × List (String × Expr)
 def canExecute (cmd : CommandSpec) (env : Env) : Bool :=
   toBool (evalExpr env cmd.guard)
 
-def executeCommand (ts : TypeSpec) (cmdName : String) (st : State) (env : Env) : Option State :=
+def executeCommand (ts : TypeSpec) (sid : StreamId) (cmdName : String) (st : State) (env : Env) : Option State :=
   match lookupCommand ts cmdName with
   | none => none
   | some cmd =>
       if !canExecute cmd env then none
       else
         let es := materializeEvents env cmd.emits
-        let fakeHistory : History :=
+        let emittedHistory : History :=
           es.enum.map (fun (ix, e) => {
-            tenantId := ""
-            entityType := ""
-            entityId := ""
+            tenantId := sid.tenantId
+            entityType := sid.entityType
+            entityId := sid.entityId
             seq := ix.succ
             eventType := e.fst
             payload := e.snd
             ts := env.now
             actor := env.actor
           })
-        let out := fakeHistory.foldl (fun acc e => applyReducer ts acc e) st
+        let out := emittedHistory.foldl (fun acc e => applyReducer ts acc e) st
         some out
 
 end Cicsc.Core
