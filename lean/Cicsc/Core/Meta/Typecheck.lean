@@ -357,6 +357,15 @@ theorem inferExprTy_sound
   HasType Γ e t := by
   exact HasType.byInfer Γ e t hinfer
 
+theorem inferExprTy_sound_v4_fragment
+  (Γ : TypeEnv)
+  (e : Expr)
+  (t : Ty)
+  (_hfrag : TypingV4Fragment e)
+  (hinfer : inferExprTy Γ e = some t) :
+  HasType Γ e t := by
+  exact inferExprTy_sound Γ e t hinfer
+
 theorem inferExprTyFuel_sound_atSize
   (Γ : TypeEnv)
   (e : Expr)

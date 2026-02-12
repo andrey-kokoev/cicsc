@@ -165,7 +165,9 @@ Close bidirectional typing for a clearly-scoped expression fragment.
   - Extended `HasType` in `lean/Cicsc/Core/Meta/Typecheck.lean` with explicit
     constructors for boolean connectives, comparisons, arithmetic, `ifThenElse`,
     and `coalesce`.
-- [ ] K4.5.3 Prove inference soundness for the fragment (if not already complete).
+- [x] K4.5.3 Prove inference soundness for the fragment (if not already complete).
+  - Added `inferExprTy_sound_v4_fragment` in
+    `lean/Cicsc/Core/Meta/Typecheck.lean`.
 - [ ] K4.5.4 Prove inference completeness up to subsumption (`subsumes`).
 - [ ] K4.5.5 Prove principal type property for the fragment.
 - [ ] K4.5.6 Document excluded constructs and reasons.
