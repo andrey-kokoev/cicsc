@@ -219,13 +219,16 @@ Reduce proof maintenance overhead with focused tactics for repeated proof patter
 Prevent checkbox drift by enforcing theorem-indexed completion standards.
 
 ### TODOs
-- [ ] K4.7.1 Add theorem index section at end of this document.
+- [x] K4.7.1 Add theorem index section at end of this document.
+  - Added `Theorem Index` section with cross-module references.
 - [x] K4.7.2 For each completed item, require file+theorem references.
   - Added `Completion References` section mapping each completed checkbox to
     concrete file/theorem (or definition) artifacts.
 - [x] K4.7.3 Add “Scoped Completion” tags where full generality is deferred.
   - Added scoped tags on `K4.1.5`, `K4.4.4`, and `K4.5.4`.
-- [ ] K4.7.4 Add CI check that rejects `[x]` items missing references.
+- [x] K4.7.4 Add CI check that rejects `[x]` items missing references.
+  - Added `scripts/check_v4_refs.sh` and wired it into
+    `scripts/phase3_ci_target.sh`.
 
 ### Acceptance
 - [ ] Every checked item has verifiable artifact references.
@@ -307,3 +310,7 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
 - `K4.6.5`: `lean/Cicsc/Sql/Conformance.lean`, `lean/Cicsc/Evolution/Migration.lean`
   (proofs converted: `rowSetEquiv_refl`, `rowsEquiv_unordered_refl`, `rowsEquiv_ordered_refl`,
   `inverseMigration_exists_of_reversible`, `rollbackHistory_def`)
+- `K4.7.1`: `LEAN_KERNEL_V4.md` (`Theorem Index`)
+- `K4.7.2`: `LEAN_KERNEL_V4.md` (`Completion References`)
+- `K4.7.3`: `LEAN_KERNEL_V4.md` (Scoped Completion tags on K4.1.5/K4.4.4/K4.5.4)
+- `K4.7.4`: `scripts/check_v4_refs.sh`, `scripts/phase3_ci_target.sh`
