@@ -98,4 +98,76 @@ def lowerQuery (q : Query) : SQLQuery :=
     from := lowerSource q.source
   }
 
+theorem lowerExpr_litBool (b : Bool) :
+  lowerExpr (.litBool b) = .litBool b := by
+  rfl
+
+theorem lowerExpr_litInt (n : Int) :
+  lowerExpr (.litInt n) = .litInt n := by
+  rfl
+
+theorem lowerExpr_litString (s : String) :
+  lowerExpr (.litString s) = .litString s := by
+  rfl
+
+theorem lowerExpr_litNull :
+  lowerExpr .litNull = .litNull := by
+  rfl
+
+theorem lowerExpr_var (v : VarRef) :
+  lowerExpr (.var v) = lowerVarRef v := by
+  rfl
+
+theorem lowerExpr_not (e : Expr) :
+  lowerExpr (.not e) = .unOp "NOT" (lowerExpr e) := by
+  rfl
+
+theorem lowerExpr_and (xs : List Expr) :
+  lowerExpr (.and xs) = xs.foldl (fun acc e => .binOp "AND" acc (lowerExpr e)) (.litBool true) := by
+  rfl
+
+theorem lowerExpr_or (xs : List Expr) :
+  lowerExpr (.or xs) = xs.foldl (fun acc e => .binOp "OR" acc (lowerExpr e)) (.litBool false) := by
+  rfl
+
+theorem lowerExpr_eq (a b : Expr) :
+  lowerExpr (.eq a b) = .binOp "=" (lowerExpr a) (lowerExpr b) := by
+  rfl
+
+theorem lowerExpr_ne (a b : Expr) :
+  lowerExpr (.ne a b) = .binOp "!=" (lowerExpr a) (lowerExpr b) := by
+  rfl
+
+theorem lowerExpr_lt (a b : Expr) :
+  lowerExpr (.lt a b) = .binOp "<" (lowerExpr a) (lowerExpr b) := by
+  rfl
+
+theorem lowerExpr_le (a b : Expr) :
+  lowerExpr (.le a b) = .binOp "<=" (lowerExpr a) (lowerExpr b) := by
+  rfl
+
+theorem lowerExpr_gt (a b : Expr) :
+  lowerExpr (.gt a b) = .binOp ">" (lowerExpr a) (lowerExpr b) := by
+  rfl
+
+theorem lowerExpr_ge (a b : Expr) :
+  lowerExpr (.ge a b) = .binOp ">=" (lowerExpr a) (lowerExpr b) := by
+  rfl
+
+theorem lowerExpr_add (a b : Expr) :
+  lowerExpr (.add a b) = .binOp "+" (lowerExpr a) (lowerExpr b) := by
+  rfl
+
+theorem lowerExpr_sub (a b : Expr) :
+  lowerExpr (.sub a b) = .binOp "-" (lowerExpr a) (lowerExpr b) := by
+  rfl
+
+theorem lowerExpr_mul (a b : Expr) :
+  lowerExpr (.mul a b) = .binOp "*" (lowerExpr a) (lowerExpr b) := by
+  rfl
+
+theorem lowerExpr_div (a b : Expr) :
+  lowerExpr (.div a b) = .binOp "/" (lowerExpr a) (lowerExpr b) := by
+  rfl
+
 end Cicsc.Sql
