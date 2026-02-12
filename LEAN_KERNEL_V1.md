@@ -71,7 +71,7 @@ v1 chooses a conservative rule:
 - [x] Introduce a dedicated VarRef for state-as-row OR type env entry:
   - Option 1: add `VarRef.rowState`
   - Option 2: treat `.row "state"` as valid with `tString` in `mkStateEnv`
-- [ ] Ensure evaluator exposes the same mechanism consistently in Commands/Replay/Constraints
+- [x] Ensure evaluator exposes the same mechanism consistently in Commands/Replay/Constraints
 
 ### 2.3 Remove divergence between algorithmic and declarative typing
 Pick one:
