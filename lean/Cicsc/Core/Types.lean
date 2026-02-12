@@ -9,6 +9,7 @@ inductive Ty where
   | tNull
   | tObj
   | tArr
+  | tDyn
 deriving Repr, DecidableEq
 
 inductive Val where

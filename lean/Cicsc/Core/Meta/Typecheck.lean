@@ -31,6 +31,7 @@ def parseTyName : String → Option Ty
   | "null" => some .tNull
   | "obj" => some .tObj
   | "arr" => some .tArr
+  | "dyn" => some .tDyn
   | _ => none
 
 def inferExprTyFuel (Γ : TypeEnv) : Nat → Expr → Option Ty
@@ -54,7 +55,7 @@ def inferExprTyFuel (Γ : TypeEnv) : Nat → Expr → Option Ty
           | .ePayload _ => none
   | Nat.succ fuel, .get e _ =>
       match inferExprTyFuel Γ fuel e with
-      | some .tObj => none
+      | some .tObj => some .tDyn
       | _ => none
   | Nat.succ fuel, .has e _ =>
       match inferExprTyFuel Γ fuel e with
@@ -69,9 +70,15 @@ def inferExprTyFuel (Γ : TypeEnv) : Nat → Expr → Option Ty
   | Nat.succ fuel, .or xs =>
       if xs.all (fun e => inferExprTyFuel Γ fuel e = some .tBool) then some .tBool else none
   | Nat.succ fuel, .eq a b =>
-      if inferExprTyFuel Γ fuel a = inferExprTyFuel Γ fuel b then some .tBool else none
+      match inferExprTyFuel Γ fuel a, inferExprTyFuel Γ fuel b with
+      | some ta, some tb =>
+          if ta = tb ∨ ta = .tDyn ∨ tb = .tDyn then some .tBool else none
+      | _, _ => none
   | Nat.succ fuel, .ne a b =>
-      if inferExprTyFuel Γ fuel a = inferExprTyFuel Γ fuel b then some .tBool else none
+      match inferExprTyFuel Γ fuel a, inferExprTyFuel Γ fuel b with
+      | some ta, some tb =>
+          if ta = tb ∨ ta = .tDyn ∨ tb = .tDyn then some .tBool else none
+      | _, _ => none
   | Nat.succ fuel, .lt a b
   | Nat.succ fuel, .le a b
   | Nat.succ fuel, .gt a b
@@ -192,13 +199,13 @@ def lookupByKey (env : Env) : VarKey → Val
 def WellTypedEnv (Γ : TypeEnv) (env : Env) : Prop :=
   ∀ (k : VarKey) (t : Ty), lookupTy Γ k = some t →
     let v := lookupByKey env k
-    valTy v = t ∨ v = .vNull
+    valTy v = t ∨ t = .tDyn ∨ v = .vNull
 
 theorem lookupWellTypedNullOk
   (Γ : TypeEnv) (env : Env) (hEnv : WellTypedEnv Γ env) :
   ∀ k t, lookupTy Γ k = some t →
     let v := lookupByKey env k
-    valTy v = t ∨ v = .vNull := by
+    valTy v = t ∨ t = .tDyn ∨ v = .vNull := by
   intro k t hk
   exact hEnv k t hk
 
