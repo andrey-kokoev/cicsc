@@ -5,6 +5,7 @@ import { executeCommandTx } from "../execute-command-tx"
 import type { VmIntrinsics } from "../../core/vm/eval"
 
 import { SqliteD1Adapter } from "../../adapters/sqlite/src/adapter"
+import { genSqliteSchemaFromIr } from "../../adapters/sqlite/src/schema/gen"
 import type { CoreIrV0 } from "../../core/ir/types"
 import { validateBundleV0 } from "../../core/ir/validate"
 import { verifyHistoryAgainstIr } from "../../core/runtime/verify"
@@ -213,6 +214,20 @@ export default {
           on_type: typeof v?.on_type === "string" ? v.on_type : null,
         }))
         return Response.json({ ok: true, views })
+      }
+
+      // GET /schema?tenant_id=...  (introspect generated schema for active tenant version)
+      if (url.pathname === "/schema" && req.method === "GET") {
+        const tenant_id = url.searchParams.get("tenant_id") ?? "t"
+        const loaded = await loadTenantBundle(env.DB as any, tenant_id)
+        const ir = loaded.bundle.core_ir as CoreIrV0
+        const schema = genSqliteSchemaFromIr(ir, { version: loaded.active_version })
+        return Response.json({
+          ok: true,
+          tenant_id,
+          active_version: loaded.active_version,
+          schema_sql: schema.sql,
+        })
       }
 
       // POST /verify

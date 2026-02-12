@@ -73,7 +73,7 @@
 - [x] Add POST /compile (already stubbed) + persist bundles
 - [x] Add POST /install-from-spec (compile + install + bind tenant)
 - [x] Add GET /views (list available views)
-- [ ] Add GET /schema (introspect generated schema)
+- [x] Add GET /schema (introspect generated schema)
 - [ ] Add OpenAPI spec for runtime endpoints
 - [ ] Add CLI for compile/install/verify
 - [ ] Add local dev harness (sqlite file + worker emulation)
