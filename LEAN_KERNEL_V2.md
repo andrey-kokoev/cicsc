@@ -68,7 +68,10 @@ v2 adds semantic coverage for:
   - `(a ⋈ b) ⋈ c = a ⋈ (b ⋈ c)` (modulo projection)
 - [x] Prove outer join non-commutativity examples
   - Covered by `outerJoin_noncommutative_concrete` in `lean/Cicsc/Core/Semantics/QueryEval.lean`.
-- [ ] Define and prove join elimination rules:
+- [x] Define and prove join elimination rules:
+  - `(a ⋈ b) WHERE false = ∅` covered by `innerJoin_false_condition_empty`.
+  - `cross join + filter` equivalence to inner join covered by `crossJoin_then_filter_eq_innerJoin`.
+  - Duplicate-free right-side elimination covered by `innerJoin_dedup_right_equiv`.
   - `(a ⋈ b) WHERE false = ∅`
   - `a ⋈ (SELECT DISTINCT ...) = a ⋈ ...` (under conditions)
 
