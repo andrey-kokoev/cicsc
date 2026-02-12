@@ -107,3 +107,66 @@
 - [x] Implement Ticketing v1 Spec (priorities, assignees, escalations)
 - [x] Identify missing primitives from real verticals
 - [x] Feed primitives back into core calculus (if needed)
+
+## N. Validation, Formalization, and Closure
+
+- [x] Add adversarial test suite for transactional semantics (crash mid-tx, duplicate commands, out-of-order events)
+- [ ] Add concurrency stress tests (conflicting commands on same entity and across entities)
+- [ ] Add migration fault-injection tests (partial transforms, schema mismatch, replay failure)
+- [ ] Add fuzzing for Spec DSL within grammar bounds
+- [ ] Add fuzzing for IR typechecker (invalid field access, illegal intrinsics, malformed reducers)
+- [ ] Add cross-backend differential tests (SQLite vs Postgres vs oracle)
+- [ ] Add history corruption detection tests (tampered events, missing seq)
+- [ ] Add invariant regression suite (known-bad Specs and migrations)
+
+## O. Canonical Reference Verticals
+
+- [ ] Stabilize Kanban Spec v1 (lanes, WIP limits, swimlanes, policies)
+- [ ] Stabilize Ticketing Spec v1 (priorities, SLAs, escalation rules)
+- [ ] Stabilize CRM Spec v1 (leads, stages, ownership, conversions)
+- [ ] Provide minimal migration examples (v0 → v1) for each vertical
+- [ ] Provide invariant proofs / explanations for each vertical
+- [ ] Publish performance envelopes for each vertical (ops/sec, latency under load)
+- [ ] Provide canonical demo datasets for replay verification
+
+## P. Formal Semantics and Specification
+
+- [ ] Write formal semantics of event algebra and reducer fold
+- [ ] Write formal semantics of constraint evaluation (snapshot + bool_query)
+- [ ] Write formal definition of backend conformance (oracle equivalence)
+- [ ] Write formal definition of migration correctness (commuting diagrams)
+- [ ] Specify the Core IR grammar and typing rules
+- [ ] Specify Spec DSL grammar and desugaring rules
+- [ ] Define versioning and compatibility rules
+- [ ] Publish spec as normative reference document
+
+## Q. Kernel Extraction and Hardening
+
+- [ ] Extract kernel package (IR, typechecker, oracle interpreter, migration verifier)
+- [ ] Remove HTTP/Workers/SQL dependencies from kernel
+- [ ] Add pure in-memory backend for kernel testing
+- [ ] Add kernel API stability guarantees
+- [ ] Add kernel-level conformance test suite
+- [ ] Add minimal embedding examples (CLI, library integration)
+- [ ] Document kernel extension points
+
+## R. Release, Stability, and Governance
+
+- [ ] Cut v1.0.0 release tag
+- [ ] Define semantic versioning policy for Spec, IR, runtime, kernel
+- [ ] Define deprecation policy for Spec constructs
+- [ ] Freeze Core IR v1 grammar
+- [ ] Add long-term support (LTS) branch
+- [ ] Define contribution and review process for semantic changes
+- [ ] Define security and vulnerability handling process
+- [ ] Archive research branch
+
+## S. Knowledge Externalization
+
+- [ ] Write technical whitepaper / preprint describing CICSC
+- [ ] Prepare design note series (core calculus, migrations, conformance)
+- [ ] Prepare reference implementation walkthroughs
+- [ ] Publish annotated examples for canonical verticals
+- [ ] Provide teaching material for Spec DSL
+- [ ] Curate “anti-patterns” and failure modes catalog
+- [ ] Define glossary of terms and primitives
