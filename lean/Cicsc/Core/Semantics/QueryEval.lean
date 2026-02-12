@@ -1068,6 +1068,13 @@ def multiJoin (sources : List (Source × Expr)) (defaultJoinType : JoinType := .
       let firstJoin := Source.join defaultJoinType s1 s2 cond1
       multiJoin ((firstJoin, cond2) :: rest) defaultJoinType
 
+def multiSnapSource (types : List TypeName) (joinType : JoinType := .inner) : Option Source :=
+  match types with
+  | [] => none
+  | t :: ts =>
+      let seeded : List (Source × Expr) := (Source.snap t, .litBool true) :: ts.map (fun tn => (Source.snap tn, .litBool true))
+      multiJoin seeded joinType
+
 -- Theorem: Multi-way join can be constructed from any non-empty source list
 theorem multiJoin_nonempty
   (sources : List (Source × Expr))

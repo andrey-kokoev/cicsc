@@ -76,7 +76,9 @@ v2 adds semantic coverage for:
   - `a ⋈ (SELECT DISTINCT ...) = a ⋈ ...` (under conditions)
 
 #### 1.1.3 Multi-Source Queries
-- [ ] Extend `Source` to support multiple snap sources
+- [x] Extend `Source` to support multiple snap sources
+  - `Source.join` supports recursive multi-source trees.
+  - `multiSnapSource` in `lean/Cicsc/Core/Semantics/QueryEval.lean` constructs multi-snap join sources.
 - [ ] Define join ordering and optimization hints (logical plan vs physical plan split)
 - [ ] Prove plan equivalence for different join orders (when semantically identical)
 
