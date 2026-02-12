@@ -33,7 +33,7 @@ v1 is defined by **alignment**, **tightened typing**, and **non-stub query seman
   - includes reserved `"state"` exactly once
   - defines precedence and forbids collisions
 - [ ] Use `mkRow` in:
-  - [ ] `Core/Semantics/Commands.lean` (`commandRow` removed or becomes wrapper)
+  - [x] `Core/Semantics/Commands.lean` (`commandRow` removed or becomes wrapper)
   - [ ] `Core/Semantics/Replay.lean` (set `env.row := mkRow st`)
   - [ ] `Core/Semantics/Constraints.lean` (snapshot constraint env uses `mkRow st`)
 
