@@ -3,6 +3,8 @@ import Cicsc.Core.Types
 import Cicsc.Core.Semantics.ExprEval
 import Cicsc.Core.Semantics.Common
 import Cicsc.Core.Semantics.Replay
+import Cicsc.Core.Semantics.Concurrency
+import Cicsc.Core.Semantics.CausalityReplay
 import Cicsc.Core.Semantics.QueryEval
 import Cicsc.Core.Semantics.Constraints
 import Cicsc.Core.Semantics.Commands
