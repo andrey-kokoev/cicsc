@@ -90,14 +90,8 @@ def holdsSnapshotConstraintOnly (c : Constraint) (st : State) : Bool :=
 def holdsAllKernelConstraints (cs : List (String × Constraint)) (st : State) : Bool :=
   cs.all (fun kv => holdsSnapshotConstraintOnly kv.snd st)
 
--- Legacy full surface including bool_query subset semantics.
-def holdsConstraintV0 (ir : IR) (c : Constraint) (st : State) (snaps : SnapSet) : Bool :=
-  match c with
-  | .snapshot _ _ => evalSnapshotConstraint c st
-  | .boolQuery _ _ _ => evalBoolQueryConstraintSubset ir c snaps
-
-def holdsAllConstraintsV0 (ir : IR) (cs : List (String × Constraint)) (st : State) (snaps : SnapSet) : Bool :=
-  cs.all (fun kv => holdsConstraintV0 ir kv.snd st snaps)
+def holdsAllConstraints (ir : IR) (cs : List (String × Constraint)) (st : State) (snaps : SnapSet) : Bool :=
+  cs.all (fun kv => holdsConstraint ir kv.snd st snaps)
 
 def holdsAllSnapshotConstraints (cs : List (String × Constraint)) (st : State) : Bool :=
   cs.all (fun kv =>
