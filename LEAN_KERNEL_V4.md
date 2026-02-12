@@ -158,7 +158,9 @@ Upgrade migration layer from operational transforms to proved algebraic behavior
 Close bidirectional typing for a clearly-scoped expression fragment.
 
 ### TODOs
-- [ ] K4.5.1 Freeze fragment definition `TypingV4Fragment`.
+- [x] K4.5.1 Freeze fragment definition `TypingV4Fragment`.
+  - Added `supportsTypingV4Expr` and `TypingV4Fragment`
+    in `lean/Cicsc/Core/Meta/Typecheck.lean`.
 - [ ] K4.5.2 Align declarative `HasType` constructors with all fragment constructs.
 - [ ] K4.5.3 Prove inference soundness for the fragment (if not already complete).
 - [ ] K4.5.4 Prove inference completeness up to subsumption (`subsumes`).

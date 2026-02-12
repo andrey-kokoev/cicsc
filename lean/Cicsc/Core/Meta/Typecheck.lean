@@ -115,6 +115,34 @@ def inferExprTyFuel (Γ : TypeEnv) : Nat → Expr → Option Ty
 def inferExprTy (Γ : TypeEnv) (e : Expr) : Option Ty :=
   inferExprTyFuel Γ (e.sizeOf + 1) e
 
+partial def supportsTypingV4Expr : Expr → Bool
+  | .litBool _ => true
+  | .litInt _ => true
+  | .litString _ => true
+  | .litNull => true
+  | .var _ => true
+  | .get e _ => supportsTypingV4Expr e
+  | .has e _ => supportsTypingV4Expr e
+  | .not e => supportsTypingV4Expr e
+  | .and xs => xs.all supportsTypingV4Expr
+  | .or xs => xs.all supportsTypingV4Expr
+  | .eq a b => supportsTypingV4Expr a && supportsTypingV4Expr b
+  | .ne a b => supportsTypingV4Expr a && supportsTypingV4Expr b
+  | .lt a b => supportsTypingV4Expr a && supportsTypingV4Expr b
+  | .le a b => supportsTypingV4Expr a && supportsTypingV4Expr b
+  | .gt a b => supportsTypingV4Expr a && supportsTypingV4Expr b
+  | .ge a b => supportsTypingV4Expr a && supportsTypingV4Expr b
+  | .add a b => supportsTypingV4Expr a && supportsTypingV4Expr b
+  | .sub a b => supportsTypingV4Expr a && supportsTypingV4Expr b
+  | .mul a b => supportsTypingV4Expr a && supportsTypingV4Expr b
+  | .div a b => supportsTypingV4Expr a && supportsTypingV4Expr b
+  | .ifThenElse c t f => supportsTypingV4Expr c && supportsTypingV4Expr t && supportsTypingV4Expr f
+  | .coalesce xs => xs.all supportsTypingV4Expr
+  | .call _ _ => false
+
+def TypingV4Fragment (e : Expr) : Prop :=
+  supportsTypingV4Expr e = true
+
 def checkReducerOp (Γ : TypeEnv) : ReducerOp → Bool
   | .setState e => inferExprTy Γ e = some .tString
   | .setAttr _ e => (inferExprTy Γ e).isSome
