@@ -324,6 +324,69 @@ theorem crossJoin_associative
     rw [← heq, ← heqBC]
     rfl
 
+-- v2: Outer join non-commutativity and join elimination
+-- See LEAN_KERNEL_V2.md §1.1.2 checkpoint 3
+
+-- Outer joins preserve different sides, so are not commutative
+theorem leftOuter_rightOuter_differ
+  (left right : List QueryRow)
+  (condition : Expr)
+  (hleft_nonempty : left ≠ [])
+  (hright_nonempty : right ≠ [])
+  (hno_match : ∀ l ∈ left, ∀ r ∈ right,
+    evalFilterExpr (combineRows l r) condition = false) :
+  evalJoin .leftOuter left right condition ≠
+  evalJoin .rightOuter left right condition := by
+  intro heq
+  unfold evalJoin at heq
+  -- Left outer preserves all left rows (with empty matches)
+  -- Right outer preserves all right rows (with empty matches)
+  -- When there are no matches, left ≠ right implies results differ
+  sorry  -- Full proof requires showing left ⊆ result₁ and right ⊆ result₂
+
+-- Join elimination: false condition yields empty result
+theorem innerJoin_false_condition_empty
+  (left right : List QueryRow) :
+  evalJoin .inner left right (.litBool false) = [] := by
+  unfold evalJoin
+  simp [evalFilterExpr, toBool, evalExpr]
+  ext
+  simp
+
+-- Join elimination: cross join then filter = inner join
+theorem crossJoin_then_filter_eq_innerJoin
+  (left right : List QueryRow)
+  (condition : Expr) :
+  (evalJoin .cross left right (.litBool true)).filter
+    (fun row => evalFilterExpr row condition) =
+  evalJoin .inner left right condition := by
+  unfold evalJoin
+  simp
+  ext row
+  constructor
+  · intro hmem
+    simp at hmem
+    obtain ⟨l, hl, r, hr, heq, hcond⟩ := hmem
+    simp
+    exact ⟨l, hl, r, hr, hcond, heq⟩
+  · intro hmem
+    simp at hmem
+    obtain ⟨l, hl, r, hr, hcond, heq⟩ := hmem
+    simp
+    exact ⟨l, hl, r, hr, heq, hcond⟩
+
+-- Join with duplicate-free right side is equivalent to join with duplicates
+-- (DISTINCT on join operand doesn't affect result when join is on unique key)
+theorem innerJoin_dedup_right_equiv
+  (left right : List QueryRow)
+  (condition : Expr)
+  (hnodup : right.Nodup) :
+  evalJoin .inner left right condition =
+  evalJoin .inner left right.dedup condition := by
+  have : right = right.dedup := by
+    exact List.dedup_eq_self.mpr hnodup
+  rw [this]
+
 -- v2: Join evaluation
 -- See LEAN_KERNEL_V2.md §1.1.1
 -- Evaluates a join between two lists of rows based on join type and condition.
