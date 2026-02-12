@@ -12,6 +12,7 @@ inductive VarRef where
   | input (field : String)
   | attrs (field : String)
   | row (field : String)
+  | rowState
   | arg (name : String)
   | rowsCount
   | eType

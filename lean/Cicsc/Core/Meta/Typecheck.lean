@@ -21,6 +21,7 @@ def varKeyOfRef : VarRef → Option VarKey
   | .input f => some (.input f)
   | .attrs f => some (.attrs f)
   | .row f => some (.row f)
+  | .rowState => some (.row "state")
   | .arg f => some (.arg f)
   | _ => none
 

@@ -40,6 +40,7 @@ def evalVar (env : Env) : VarRef → Val
   | .input f => lookupField env.input f
   | .attrs f => lookupField env.attrs f
   | .row f => lookupField env.row f
+  | .rowState => .vString env.state
   | .arg n => lookupField env.arg n
   | .rowsCount =>
       match env.rowsCount with

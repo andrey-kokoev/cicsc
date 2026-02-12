@@ -24,7 +24,7 @@ Goal: Lean is the source of truth for CICSC semantics.
   - [x] weak dynamic: `get : Obj → Ty` returns dynamic/top (`.tDyn`) and treat as total/weak
   - [ ] option types: add `tOpt` and make `get : Obj → Opt α` (bigger change)
   - [ ] schema types: object fields typed (largest change)
-- [ ] Add `row.state : tString` as a primitive or VarRef (`.rowState`)
+- [x] Add `row.state : tString` as a primitive or VarRef (`.rowState`)
 
 ### A3. Replace stubs with semantics (incremental)
 - [ ] Define relational semantics for a Query subset:
