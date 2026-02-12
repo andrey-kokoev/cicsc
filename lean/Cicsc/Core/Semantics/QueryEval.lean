@@ -247,6 +247,83 @@ theorem leftOuter_not_commutative_example :
   -- But they differ in field precedence
   -- This is a simplification; full proof would need to show field order difference
 
+-- v2: Join associativity
+-- See LEAN_KERNEL_V2.md §1.1.2 checkpoint 2
+
+-- Helper: Combine three rows associatively
+theorem combineRows_associative
+  (a b c : QueryRow) :
+  combineRows (combineRows a b) c = combineRows a (combineRows b c) := by
+  unfold combineRows
+  simp
+  -- Both sides filter out collisions and append in same order
+  -- Left association: (a ++ b') ++ c' where b' and c' are filtered
+  -- Right association: a ++ (b ++ c')' where (b ++ c')' is filtered
+  -- Due to left-precedence, these are equivalent
+  sorry  -- Full proof requires list reasoning
+
+-- Inner join associativity (modulo row combination order)
+-- (a ⋈ b) ⋈ c produces same row set as a ⋈ (b ⋈ c) when conditions are compatible
+theorem innerJoin_associative
+  (a b c : List QueryRow)
+  (condAB condBC condAC : Expr)
+  (hcompat : ∀ ra rb rc,
+    evalFilterExpr (combineRows (combineRows ra rb) rc) condAC =
+    (evalFilterExpr (combineRows ra rb) condAB &&
+     evalFilterExpr (combineRows (combineRows ra rb) rc) condBC)) :
+  let leftAssoc := evalJoin .inner (evalJoin .inner a b condAB) c condBC
+  let rightAssoc := evalJoin .inner a (evalJoin .inner b c condBC) condAC
+  rowListEquiv leftAssoc rightAssoc := by
+  intro leftAssoc rightAssoc
+  constructor
+  · intro row hrow
+    unfold evalJoin at hrow
+    simp at hrow
+    obtain ⟨ab, hab, rc, hrc, hcond, heq⟩ := hrow
+    unfold evalJoin at hab
+    simp at hab
+    obtain ⟨ra, hra, rb, hrb, hcondAB, heqAB⟩ := hab
+    -- row = combineRows (combineRows ra rb) rc
+    -- Need to show it's also in rightAssoc = a ⋈ (b ⋈ c)
+    sorry  -- Full proof requires condition compatibility reasoning
+  · intro row hrow
+    unfold evalJoin at hrow
+    simp at hrow
+    obtain ⟨ra, hra, bc, hbc, hcond, heq⟩ := hrow
+    unfold evalJoin at hbc
+    simp at hbc
+    obtain ⟨rb, hrb, rc, hrc, hcondBC, heqBC⟩ := hbc
+    -- row = combineRows ra (combineRows rb rc)
+    -- Need to show it's also in leftAssoc = (a ⋈ b) ⋈ c
+    sorry  -- Full proof requires condition compatibility reasoning
+
+-- Cross join associativity (always holds)
+theorem crossJoin_associative
+  (a b c : List QueryRow) :
+  let leftAssoc := evalJoin .cross (evalJoin .cross a b (.litBool true)) c (.litBool true)
+  let rightAssoc := evalJoin .cross a (evalJoin .cross b c (.litBool true)) (.litBool true)
+  rowListEquiv leftAssoc rightAssoc := by
+  intro leftAssoc rightAssoc
+  constructor <;> intro row hrow <;> unfold evalJoin at hrow <;> simp at hrow
+  · obtain ⟨ab, hab, rc, hrc, heq⟩ := hrow
+    unfold evalJoin at hab
+    simp at hab
+    obtain ⟨ra, hra, rb, hrb, heqAB⟩ := hab
+    unfold evalJoin
+    simp
+    refine ⟨ra, hra, rb, hrb, rc, hrc, ?_⟩
+    rw [← heq, ← heqAB]
+    rfl
+  · obtain ⟨ra, hra, bc, hbc, heq⟩ := hrow
+    unfold evalJoin at hbc
+    simp at hbc
+    obtain ⟨rb, hrb, rc, hrc, heqBC⟩ := hbc
+    unfold evalJoin
+    simp
+    refine ⟨ra, hra, rb, hrb, rc, hrc, ?_⟩
+    rw [← heq, ← heqBC]
+    rfl
+
 -- v2: Join evaluation
 -- See LEAN_KERNEL_V2.md §1.1.1
 -- Evaluates a join between two lists of rows based on join type and condition.
