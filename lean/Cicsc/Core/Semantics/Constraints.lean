@@ -75,6 +75,12 @@ def evalBoolQueryConstraintSubset (ir : IR) (c : Constraint) (snaps : SnapSet) :
         false
   | _ => true
 
+-- Canonical constraint evaluator for the v1.5 kernel surface.
+def holdsConstraint (ir : IR) (c : Constraint) (st : State) (snaps : SnapSet) : Bool :=
+  match c with
+  | .snapshot _ _ => evalSnapshotConstraint c st
+  | .boolQuery _ _ _ => evalBoolQueryConstraintSubset ir c snaps
+
 -- Proved kernel semantics (v0): snapshot constraints only.
 def holdsKernelConstraint (c : Constraint) (st : State) : Bool :=
   match c with
