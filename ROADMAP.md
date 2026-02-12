@@ -158,7 +158,7 @@
 - [x] Freeze Core IR v1 grammar
 - [x] Add long-term support (LTS) branch
 - [x] Define contribution and review process for semantic changes
-- [ ] Define security and vulnerability handling process
+- [x] Define security and vulnerability handling process
 - [ ] Archive research branch
 
 ## S. Knowledge Externalization
