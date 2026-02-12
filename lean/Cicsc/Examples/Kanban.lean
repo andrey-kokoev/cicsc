@@ -1,6 +1,7 @@
 import Cicsc.Core.Syntax
 import Cicsc.Core.Types
 import Cicsc.Core.Semantics.Replay
+import Cicsc.Core.Meta.WF
 
 namespace Cicsc.Examples
 open Cicsc.Core
@@ -64,5 +65,10 @@ def kanbanStream : StreamId := {
 }
 
 def kanbanReplay : Option State := replay kanbanIr kanbanStream kanbanHistory
+
+theorem cardTypeWF : WFTypeSpec cardType := by
+  unfold WFTypeSpec initialStateInStates NoReservedCollisions reducerTargetsDeclared
+  unfold reducerLiteralStatesValid reducerOpsTypecheck commandsTypecheck
+  simp [mkStateEnv, mkInputEnv, checkReducerOp, checkCommand]
 
 end Cicsc.Examples

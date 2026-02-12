@@ -1,6 +1,7 @@
 import Cicsc.Core.Syntax
 import Cicsc.Core.Types
 import Cicsc.Core.Semantics.Replay
+import Cicsc.Core.Meta.WF
 import Cicsc.Evolution.Migration
 import Cicsc.Evolution.Naturality
 
@@ -57,6 +58,11 @@ def ticketStream : StreamId := {
 
 def ticketReplay : Option State := replay ticketIr ticketStream ticketHistory
 
+theorem ticketTypeWF : WFTypeSpec ticketType := by
+  unfold WFTypeSpec initialStateInStates NoReservedCollisions reducerTargetsDeclared
+  unfold reducerLiteralStatesValid reducerOpsTypecheck commandsTypecheck
+  simp [mkStateEnv, mkInputEnv, checkReducerOp, checkCommand]
+
 def ticketTypeV1 : TypeSpec := {
   idType := "string"
   states := ["open", "closed"]
@@ -102,6 +108,15 @@ theorem ticket_v0_v1_commutes_all_histories_from_restricted
   ∀ (h : History) (s0 : State),
     Commutes ticketIr ticketIrV1 ticketStream ticketMigrationV0V1 s0 h := by
   exact replay_commutes_restricted ticketIr ticketIrV1 ticketStream ticketMigrationV0V1 hclass
+
+theorem ticket_v0_v1_commutes_all_histories
+  (hWf : WFMigration ticketMigrationV0V1 ticketIr ticketIrV1)
+  (hcompat : ReducerCompatibility ticketIr ticketIrV1 ticketStream ticketMigrationV0V1) :
+  ∀ (h : History) (s0 : State),
+    Commutes ticketIr ticketIrV1 ticketStream ticketMigrationV0V1 s0 h := by
+  exact replay_commutes
+    ticketIr ticketIrV1 ticketStream ticketMigrationV0V1
+    hWf rfl hcompat
 
 theorem ticket_v0_v1_non_identity_commutes_on_sample_by_computation :
   Commutes ticketIr ticketIrV1 ticketStream ticketMigrationV0V1 ticketInitialV0 ticketHistory := by
