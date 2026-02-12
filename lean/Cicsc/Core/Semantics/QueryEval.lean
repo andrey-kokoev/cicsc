@@ -1224,6 +1224,23 @@ def evalJoin (joinType : JoinType) (leftRows rightRows : List QueryRow) (conditi
           evalFilterExpr combined condition))
       leftWithMatches ++ unmatchedRight
 
+theorem evalJoin_cross_def
+  (leftRows rightRows : List QueryRow)
+  (condition : Expr) :
+  evalJoin .cross leftRows rightRows condition =
+    leftRows.flatMap (fun l => rightRows.map (fun r => combineRows l r)) := by
+  rfl
+
+theorem evalJoin_inner_def
+  (leftRows rightRows : List QueryRow)
+  (condition : Expr) :
+  evalJoin .inner leftRows rightRows condition =
+    leftRows.flatMap (fun l =>
+      rightRows.filterMap (fun r =>
+        let combined := combineRows l r
+        if evalFilterExpr combined condition then some combined else none)) := by
+  rfl
+
 theorem lookupSnapRows_cons_ne
   (snaps : SnapSet)
   (typeName otherType : TypeName)

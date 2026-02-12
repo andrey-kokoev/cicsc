@@ -46,7 +46,9 @@ v2 adds semantic coverage for:
 **Objective:** Define and prove correct semantics for join operations
 
 #### 1.1.1 Join Types
-- [ ] Define `evalJoin : JoinType → List QueryRow → List QueryRow → Expr → List QueryRow`
+- [x] Define `evalJoin : JoinType → List QueryRow → List QueryRow → Expr → List QueryRow`
+  - Implemented in `lean/Cicsc/Core/Semantics/QueryEval.lean` as the canonical join evaluator.
+  - Definitional lemmas `evalJoin_cross_def` and `evalJoin_inner_def` fix the executable meaning for core join cases.
   - `JoinType ::= Inner | LeftOuter | RightOuter | FullOuter | Cross`
   - Join condition as Expr (evaluated on combined row environment)
 - [ ] Implement join evaluation:
