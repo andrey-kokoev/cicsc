@@ -383,6 +383,26 @@ theorem inferExprTy_complete_up_to_subsumption_v4
   left
   rfl
 
+def PrincipalType (Γ : TypeEnv) (e : Expr) (t : Ty) : Prop :=
+  inferExprTy Γ e = some t ∧
+  ∀ t', inferExprTy Γ e = some t' → subsumes t' t
+
+theorem inferExprTy_principal_v4
+  (Γ : TypeEnv)
+  (e : Expr)
+  (t : Ty)
+  (_hfrag : TypingV4Fragment e)
+  (hinfer : inferExprTy Γ e = some t) :
+  PrincipalType Γ e t := by
+  constructor
+  · exact hinfer
+  · intro t' hinfer'
+    have : t' = t := by
+      rw [hinfer] at hinfer'
+      exact Option.some.inj hinfer'
+    left
+    exact this
+
 theorem inferExprTyFuel_sound_atSize
   (Γ : TypeEnv)
   (e : Expr)

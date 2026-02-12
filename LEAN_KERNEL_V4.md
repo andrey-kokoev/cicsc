@@ -172,7 +172,9 @@ Close bidirectional typing for a clearly-scoped expression fragment.
   - Added `subsumes`, `HasTypeAlg`, and
     `inferExprTy_complete_up_to_subsumption_v4` in
     `lean/Cicsc/Core/Meta/Typecheck.lean` (scoped to algorithmic fragment derivations).
-- [ ] K4.5.5 Prove principal type property for the fragment.
+- [x] K4.5.5 Prove principal type property for the fragment.
+  - Added `PrincipalType` and `inferExprTy_principal_v4` in
+    `lean/Cicsc/Core/Meta/Typecheck.lean`.
 - [ ] K4.5.6 Document excluded constructs and reasons.
 
 ### Acceptance
