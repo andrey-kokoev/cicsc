@@ -302,6 +302,35 @@ inductive HasType : TypeEnv → Expr → Ty → Prop where
   | notBool  (Γ : TypeEnv) (e : Expr)
       (h : HasType Γ e .tBool) :
       HasType Γ (.not e) .tBool
+  | andBool  (Γ : TypeEnv) (xs : List Expr)
+      (h : ∀ e ∈ xs, HasType Γ e .tBool) :
+      HasType Γ (.and xs) .tBool
+  | orBool   (Γ : TypeEnv) (xs : List Expr)
+      (h : ∀ e ∈ xs, HasType Γ e .tBool) :
+      HasType Γ (.or xs) .tBool
+  | eqTy     (Γ : TypeEnv) (a b : Expr) (t : Ty)
+      (ha : HasType Γ a t) (hb : HasType Γ b t) :
+      HasType Γ (.eq a b) .tBool
+  | neTy     (Γ : TypeEnv) (a b : Expr) (t : Ty)
+      (ha : HasType Γ a t) (hb : HasType Γ b t) :
+      HasType Γ (.ne a b) .tBool
+  | cmpInt   (Γ : TypeEnv) (mk : Expr → Expr → Expr) (a b : Expr)
+      (ha : HasType Γ a .tInt) (hb : HasType Γ b .tInt)
+      (hcmp : mk = Expr.lt ∨ mk = Expr.le ∨ mk = Expr.gt ∨ mk = Expr.ge) :
+      HasType Γ (mk a b) .tBool
+  | arithInt (Γ : TypeEnv) (mk : Expr → Expr → Expr) (a b : Expr)
+      (ha : HasType Γ a .tInt) (hb : HasType Γ b .tInt)
+      (hop : mk = Expr.add ∨ mk = Expr.sub ∨ mk = Expr.mul ∨ mk = Expr.div) :
+      HasType Γ (mk a b) .tInt
+  | ifThenElse (Γ : TypeEnv) (c t f : Expr) (τ : Ty)
+      (hc : HasType Γ c .tBool)
+      (ht : HasType Γ t τ)
+      (hf : HasType Γ f τ) :
+      HasType Γ (.ifThenElse c t f) τ
+  | coalesce (Γ : TypeEnv) (xs : List Expr) (τ : Ty)
+      (hne : xs ≠ [])
+      (hall : ∀ e ∈ xs, HasType Γ e τ) :
+      HasType Γ (.coalesce xs) τ
   | byInfer  (Γ : TypeEnv) (e : Expr) (t : Ty)
       (h : inferExprTy Γ e = some t) :
       HasType Γ e t

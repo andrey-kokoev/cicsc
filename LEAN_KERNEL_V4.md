@@ -161,7 +161,10 @@ Close bidirectional typing for a clearly-scoped expression fragment.
 - [x] K4.5.1 Freeze fragment definition `TypingV4Fragment`.
   - Added `supportsTypingV4Expr` and `TypingV4Fragment`
     in `lean/Cicsc/Core/Meta/Typecheck.lean`.
-- [ ] K4.5.2 Align declarative `HasType` constructors with all fragment constructs.
+- [x] K4.5.2 Align declarative `HasType` constructors with all fragment constructs.
+  - Extended `HasType` in `lean/Cicsc/Core/Meta/Typecheck.lean` with explicit
+    constructors for boolean connectives, comparisons, arithmetic, `ifThenElse`,
+    and `coalesce`.
 - [ ] K4.5.3 Prove inference soundness for the fragment (if not already complete).
 - [ ] K4.5.4 Prove inference completeness up to subsumption (`subsumes`).
 - [ ] K4.5.5 Prove principal type property for the fragment.
