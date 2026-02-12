@@ -157,7 +157,7 @@
 - [x] Define deprecation policy for Spec constructs
 - [x] Freeze Core IR v1 grammar
 - [x] Add long-term support (LTS) branch
-- [ ] Define contribution and review process for semantic changes
+- [x] Define contribution and review process for semantic changes
 - [ ] Define security and vulnerability handling process
 - [ ] Archive research branch
 
