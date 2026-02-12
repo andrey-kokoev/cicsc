@@ -96,7 +96,8 @@ v2 adds semantic coverage for:
 **Objective:** Define aggregation semantics over grouped rows
 
 #### 1.2.1 Grouping Semantics
-- [ ] Define `evalGroupBy : List Expr → List QueryRow → List (List Expr × List QueryRow)`
+- [x] Define `evalGroupBy : List Expr → List QueryRow → List (List Expr × List QueryRow)`
+  - Implemented as typed-key variant `evalGroupBy : List GroupKey → List QueryRow → List (List Val × List QueryRow)` in `lean/Cicsc/Core/Semantics/QueryEval.lean`.
   - Group rows by equivalence classes on grouping expressions
   - Return groups with their key values
 - [ ] Define aggregation functions:
