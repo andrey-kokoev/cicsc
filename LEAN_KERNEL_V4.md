@@ -96,7 +96,9 @@ Formalize transaction visibility/isolation semantics and prove baseline guarante
     `lean/Cicsc/Core/Semantics/Isolation.lean`.
 - [x] K4.3.2 Define `IsolationLevel := ReadCommitted | Snapshot | Serializable`.
   - Added `IsolationLevel` in `lean/Cicsc/Core/Semantics/Isolation.lean`.
-- [ ] K4.3.3 Define transaction model and execution relation over history.
+- [x] K4.3.3 Define transaction model and execution relation over history.
+  - Added `Transaction`, `readCutoff`, `readSnapshot`, `appendWrites`, and `TxExecRel`
+    in `lean/Cicsc/Core/Semantics/Isolation.lean`.
 - [ ] K4.3.4 Prove no dirty reads and non-repeatable-read exclusion for Snapshot.
 - [ ] K4.3.5 Define write-write conflict condition and prove abort-or-serialize property.
 - [ ] K4.3.6 Provide at least one multi-stream transaction proof example.
