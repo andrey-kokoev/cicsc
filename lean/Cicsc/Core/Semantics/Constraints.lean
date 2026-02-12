@@ -99,6 +99,15 @@ def holdsAllSnapshotConstraints (cs : List (String × Constraint)) (st : State) 
     | .snapshot _ _ => evalSnapshotConstraint kv.snd st
     | .boolQuery _ _ _ => true)
 
+theorem holdsConstraint_snapshot_decompose
+  (ir : IR)
+  (onType : String)
+  (expr : Expr)
+  (st : State)
+  (snaps : SnapSet) :
+  holdsConstraint ir (.snapshot onType expr) st snaps = evalSnapshotConstraint (.snapshot onType expr) st := by
+  simp [holdsConstraint]
+
 theorem holdsAllKernelConstraints_onlySnapshot
   (cs : List (String × Constraint))
   (st : State) :
