@@ -31,7 +31,7 @@ type SnapshotRec = {
 type MemState = {
   events: EventRec[]
   snapshots: Map<string, SnapshotRec>
-  receipts: Map<string, string>
+  receipts: Map<string, { result_json: string; ts: number }>
 }
 
 function skey (tenant_id: string, entity_type: string, entity_id: string): string {
@@ -61,7 +61,12 @@ function makeStore (backing: { committed: MemState }) {
         async exec (sql: string, binds: any[] = []): Promise<{ rows?: any[] }> {
           if (sql.includes("SELECT result_json FROM command_receipts")) {
             const row = working.receipts.get(rkey(String(binds[0]), String(binds[1])))
-            return { rows: row ? [{ result_json: row }] : [] }
+            return { rows: row ? [{ result_json: row.result_json }] : [] }
+          }
+
+          if (sql.includes("SELECT ts FROM command_receipts")) {
+            const row = working.receipts.get(rkey(String(binds[0]), String(binds[1])))
+            return { rows: row ? [{ ts: row.ts }] : [] }
           }
 
           if (sql.includes("SELECT state, attrs_json, updated_ts, severity_i, created_at")) {
@@ -119,9 +124,11 @@ function makeStore (backing: { committed: MemState }) {
           }
 
           if (sql.includes("INSERT INTO command_receipts")) {
-            const [tenant_id, command_id, _entity_type, _entity_id, result_json] = binds
+            const [tenant_id, command_id, _entity_type, _entity_id, result_json, ts] = binds
             const key = rkey(String(tenant_id), String(command_id))
-            if (!working.receipts.has(key)) working.receipts.set(key, String(result_json))
+            if (!working.receipts.has(key)) {
+              working.receipts.set(key, { result_json: String(result_json), ts: Number(ts) })
+            }
             return { rows: [] }
           }
 
@@ -231,5 +238,68 @@ describe("command idempotency across restart", () => {
 
     assert.deepEqual(second, first)
     assert.equal(backing.committed.events.length, 1)
+  })
+
+  it("re-executes duplicate command when receipt is older than dedupe window", async () => {
+    const backing = {
+      committed: {
+        events: [],
+        snapshots: new Map([
+          [
+            skey("t", "Ticket", "e1"),
+            {
+              tenant_id: "t",
+              entity_type: "Ticket",
+              entity_id: "e1",
+              state: "new",
+              attrs_json: "{}",
+              updated_ts: 1,
+              severity_i: null,
+              created_at: null,
+            },
+          ],
+        ]),
+        receipts: new Map(),
+      } as MemState,
+    }
+
+    const store1 = makeStore(backing)
+    const first = await executeCommandTx({
+      ir,
+      store: { adapter: store1.adapter as any },
+      intrinsics,
+      req: {
+        tenant_id: "t",
+        actor_id: "u",
+        command_id: "c1",
+        entity_type: "Ticket",
+        entity_id: "e1",
+        command_name: "close",
+        input: {},
+        now: 10,
+      },
+    })
+
+    const store2 = makeStore(backing)
+    const second = await executeCommandTx({
+      ir,
+      store: { adapter: store2.adapter as any },
+      intrinsics,
+      req: {
+        tenant_id: "t",
+        actor_id: "u",
+        command_id: "c1",
+        entity_type: "Ticket",
+        entity_id: "e1",
+        command_name: "close",
+        input: {},
+        now: 20,
+        dedupe_window_seconds: 5,
+      },
+    })
+
+    assert.equal(first.seq_from, 1)
+    assert.equal(second.seq_from, 2)
+    assert.equal(backing.committed.events.length, 2)
   })
 })

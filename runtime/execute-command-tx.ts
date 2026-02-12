@@ -20,6 +20,9 @@ export type ExecuteCommandInput = {
 
   // optional constraint args, keyed by constraint_id
   constraint_args?: Record<string, Record<string, any>>
+
+  // optional dedupe receipt window; when set, receipts older than this are ignored
+  dedupe_window_seconds?: number
 }
 
 export type ExecuteCommandResult = {
@@ -47,7 +50,13 @@ export async function executeCommandTx (params: {
 
   return store.adapter.tx(async (tx) => {
     // 0) idempotency: receipt fast-path
-    const existing = await readReceipt(tx, req.tenant_id, req.command_id)
+    const existing = await readReceipt(
+      tx,
+      req.tenant_id,
+      req.command_id,
+      req.now,
+      req.dedupe_window_seconds
+    )
     if (existing) return existing
 
     // 1) load snapshot (or init)
@@ -226,7 +235,35 @@ export type TxCtx = {
   exec: (sql: string, binds?: any[]) => Promise<{ rows?: any[] }>
 }
 
-async function readReceipt (tx: TxCtx, tenant_id: string, command_id: string): Promise<ExecuteCommandResult | null> {
+async function readReceipt (
+  tx: TxCtx,
+  tenant_id: string,
+  command_id: string,
+  now: number,
+  dedupe_window_seconds?: number
+): Promise<ExecuteCommandResult | null> {
+  const parsed = await readReceiptRaw(tx, tenant_id, command_id)
+  if (!parsed) return null
+
+  if (dedupe_window_seconds == null) return parsed
+
+  const tsRow = await tx.exec(
+    `SELECT ts FROM command_receipts WHERE tenant_id=? AND command_id=? LIMIT 1`,
+    [tenant_id, command_id]
+  )
+  const row = tsRow.rows?.[0] as any
+  const ts = Number(row?.ts ?? now)
+  const age = now - ts
+
+  if (age > dedupe_window_seconds) return null
+  return parsed
+}
+
+async function readReceiptRaw (
+  tx: TxCtx,
+  tenant_id: string,
+  command_id: string
+): Promise<ExecuteCommandResult | null> {
   const r = await tx.exec(
     `SELECT result_json FROM command_receipts WHERE tenant_id=? AND command_id=? LIMIT 1`,
     [tenant_id, command_id]

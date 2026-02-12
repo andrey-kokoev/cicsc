@@ -7,7 +7,7 @@
 - [x] Add SLA constraint enforcement inside tx
 - [x] Add rollback-safe error propagation for all write paths
 - [x] Add idempotency guarantees for duplicate command submissions across restarts
-- [ ] Add command deduplication windowing (optional: TTL for receipts)
+- [x] Add command deduplication windowing (optional: TTL for receipts)
 
 ## B. IR Soundness & Type Safety
 - [ ] Wire IR typechecker into validateBundleV0 and worker load path

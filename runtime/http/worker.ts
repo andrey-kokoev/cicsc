@@ -94,6 +94,8 @@ export default {
         const command_id = String(body.command_id ?? crypto.randomUUID())
         const entity_id = String(body.entity_id ?? crypto.randomUUID())
         const input = (body.input ?? {}) as any
+        const dedupe_window_seconds =
+          body.dedupe_window_seconds == null ? undefined : Number(body.dedupe_window_seconds)
 
         const now = Math.floor(Date.now() / 1000)
 
@@ -110,6 +112,10 @@ export default {
             command_name,
             input,
             now,
+            dedupe_window_seconds:
+              dedupe_window_seconds != null && Number.isFinite(dedupe_window_seconds)
+                ? dedupe_window_seconds
+                : undefined,
             // example: allow constraint args in request body
             constraint_args: body.constraint_args ?? {},
           },
