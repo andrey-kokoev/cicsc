@@ -187,4 +187,29 @@ theorem migrations_commute_of_equal_compose
   unfold MigrationsCommuteOnHistory
   simpa [hcompose]
 
+def invertEventTransform (t : EventTransform) : EventTransform :=
+  { source := t.target, target := t.source, drop := false }
+
+def invertStateMapEntry (kv : String × String) : (String × String) :=
+  (kv.snd, kv.fst)
+
+def inverseMigration (ms : MigrationSpec) : Option MigrationSpec :=
+  if ms.transforms.all (fun t => !t.drop) then
+    some {
+      fromVersion := ms.toVersion
+      toVersion := ms.fromVersion
+      entityType := ms.entityType
+      transforms := ms.transforms.map invertEventTransform
+      stateMap := ms.stateMap.map invertStateMapEntry
+    }
+  else
+    none
+
+theorem inverseMigration_exists_of_reversible
+  (ms : MigrationSpec)
+  (hreversible : ms.transforms.all (fun t => !t.drop) = true) :
+  ∃ inv, inverseMigration ms = some inv := by
+  unfold inverseMigration
+  simp [hreversible]
+
 end Cicsc.Evolution

@@ -128,7 +128,9 @@ Upgrade migration layer from operational transforms to proved algebraic behavior
 - [x] K4.4.2 Define migration commutativity predicate and sufficient conditions.
   - Added `MigrationsCommuteOnHistory`, `MigrationsCommute`, and
     `migrations_commute_of_equal_compose` in `lean/Cicsc/Evolution/Migration.lean`.
-- [ ] K4.4.3 Implement `inverseMigration` for reversible subset.
+- [x] K4.4.3 Implement `inverseMigration` for reversible subset.
+  - Added `inverseMigration` plus invert helpers in `lean/Cicsc/Evolution/Migration.lean`
+    for the no-drop reversible subset.
 - [ ] K4.4.4 Prove roundtrip property for reversible migrations.
 - [ ] K4.4.5 Define rollback semantics for multi-step version chains.
 - [ ] K4.4.6 Define `SafeMigration` and prove safety for add/rename/remove basic patterns.
