@@ -44,6 +44,7 @@ export type SpecViewV0 = {
   kind: string
   on: string
   query?: any
+  row_policy?: any
   lanes?: {
     states?: string[]
     order_by?: { field: string; dir?: "asc" | "desc" }

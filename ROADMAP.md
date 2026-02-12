@@ -106,4 +106,4 @@
 - [x] Implement Kanban vertical Spec (lanes, WIP limits, swimlanes)
 - [x] Implement Ticketing v1 Spec (priorities, assignees, escalations)
 - [x] Identify missing primitives from real verticals
-- [ ] Feed primitives back into core calculus (if needed)
+- [x] Feed primitives back into core calculus (if needed)

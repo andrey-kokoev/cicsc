@@ -196,6 +196,15 @@ export function typecheckCoreIrV0 (ir: CoreIrV0): TypecheckResult {
       errors,
       allowSqlOnlyIntrinsics: true,
     })
+
+    if (v.row_policy != null) {
+      walkExpr(v.row_policy, `views.${viewName}.row_policy`, {
+        allowedRowFields: buildAllowedRowFields(shadows),
+        attrs,
+        errors,
+        allowSqlOnlyIntrinsics: false,
+      })
+    }
   }
 
   // 3) Constraints

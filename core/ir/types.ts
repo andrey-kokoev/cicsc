@@ -72,6 +72,7 @@ export type ViewSpecV0 = {
   on_type?: string
   lanes?: string[]
   args?: Record<string, AttrTypeSpecV0>
+  row_policy?: ExprV0
   query: QueryV0
 }
 
