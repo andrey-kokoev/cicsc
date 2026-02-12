@@ -66,7 +66,7 @@
 - [x] Add full-tenant verify (not single entity)
 - [x] Add version-stamped verification reports
 - [x] Add invariant drift detection across versions
-- [ ] Add cryptographic hash of event history + snapshots (optional)
+- [x] Add cryptographic hash of event history + snapshots (optional)
 - [ ] Add audit log export (NDJSON / Parquet)
 
 ## I. API & Developer Ergonomics
