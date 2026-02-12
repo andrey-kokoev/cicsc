@@ -1,0 +1,21 @@
+{
+  "migrations": {
+    "kanban_v0_to_v1": {
+      "from": 0,
+      "to": 1,
+      "entity": "Card",
+      "event_transforms": {
+        "created": { "emit_as": "created_v1" },
+        "started": { "emit_as": "started_v1" },
+        "moved_to_review": { "emit_as": "moved_to_review_v1" },
+        "completed": { "emit_as": "completed_v1" }
+      },
+      "state_map": {
+        "backlog": "backlog",
+        "in_progress": "in_progress",
+        "review": "review",
+        "done": "done"
+      }
+    }
+  }
+}

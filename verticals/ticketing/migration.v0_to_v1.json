@@ -1,0 +1,26 @@
+{
+  "migrations": {
+    "ticketing_v0_to_v1": {
+      "from": 0,
+      "to": 1,
+      "entity": "Ticket",
+      "event_transforms": {
+        "created": { "emit_as": "created_v1" },
+        "triaged": { "emit_as": "triaged_v1" },
+        "assigned": { "emit_as": "assigned_v1" },
+        "started": { "emit_as": "started_v1" },
+        "escalated": { "emit_as": "escalated_v1" },
+        "resolved": { "emit_as": "resolved_v1" },
+        "closed": { "emit_as": "closed_v1" }
+      },
+      "state_map": {
+        "open": "open",
+        "triage": "triage",
+        "in_progress": "in_progress",
+        "escalated": "escalated",
+        "resolved": "resolved",
+        "closed": "closed"
+      }
+    }
+  }
+}

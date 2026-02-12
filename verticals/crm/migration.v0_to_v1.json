@@ -1,0 +1,23 @@
+{
+  "migrations": {
+    "crm_v0_to_v1": {
+      "from": 0,
+      "to": 1,
+      "entity": "Lead",
+      "event_transforms": {
+        "lead_created": { "emit_as": "lead_created_v1" },
+        "lead_qualified": { "emit_as": "lead_qualified_v1" },
+        "proposal_sent": { "emit_as": "proposal_sent_v1" },
+        "lead_won": { "emit_as": "lead_won_v1" },
+        "lead_lost": { "emit_as": "lead_lost_v1" }
+      },
+      "state_map": {
+        "new": "new",
+        "qualified": "qualified",
+        "proposal": "proposal",
+        "won": "won",
+        "lost": "lost"
+      }
+    }
+  }
+}
