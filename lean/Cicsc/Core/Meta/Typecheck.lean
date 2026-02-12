@@ -193,31 +193,9 @@ def checkTypeSpec (ts : TypeSpec) : Bool :=
 def checkIR (ir : IR) : Bool :=
   ir.types.all (fun kv => checkTypeSpec kv.snd)
 
-inductive HasType : TypeEnv → Expr → Ty → Prop where
-  | litBool (Γ : TypeEnv) (b : Bool) : HasType Γ (.litBool b) .tBool
-  | litInt (Γ : TypeEnv) (n : Int) : HasType Γ (.litInt n) .tInt
-  | litString (Γ : TypeEnv) (s : String) : HasType Γ (.litString s) .tString
-  | varInput (Γ : TypeEnv) (f : String) (t : Ty)
-      (h : lookupTy Γ (.input f) = some t) :
-      HasType Γ (.var (.input f)) t
-  | varAttrs (Γ : TypeEnv) (f : String) (t : Ty)
-      (h : lookupTy Γ (.attrs f) = some t) :
-      HasType Γ (.var (.attrs f)) t
-  | varRow (Γ : TypeEnv) (f : String) (t : Ty)
-      (h : lookupTy Γ (.row f) = some t) :
-      HasType Γ (.var (.row f)) t
-  | varArg (Γ : TypeEnv) (f : String) (t : Ty)
-      (h : lookupTy Γ (.arg f) = some t) :
-      HasType Γ (.var (.arg f)) t
-  | eq (Γ : TypeEnv) (a b : Expr) (t : Ty)
-      (ha : HasType Γ a t) (hb : HasType Γ b t) :
-      HasType Γ (.eq a b) .tBool
-  | and (Γ : TypeEnv) (xs : List Expr)
-      (h : ∀ e ∈ xs, HasType Γ e .tBool) :
-      HasType Γ (.and xs) .tBool
-  | not (Γ : TypeEnv) (e : Expr)
-      (h : HasType Γ e .tBool) :
-      HasType Γ (.not e) .tBool
+-- Declarative typing judgment is intentionally omitted in v0.
+-- We currently rely on algorithmic inference (`inferExprTy`) for checks.
+-- Re-introduce `HasType` only together with proved correspondence theorems.
 
 def lookupByKey (env : Env) : VarKey → Val
   | .input f => lookupField env.input f
