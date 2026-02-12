@@ -32,11 +32,15 @@ export async function installSchemaV0 (db: D1Database): Promise<void> {
       payload_json TEXT NOT NULL,
       ts          INTEGER NOT NULL,
       actor_id    TEXT NOT NULL,
+      command_id  TEXT,
       PRIMARY KEY (tenant_id, entity_type, entity_id, seq)
     );
 
     CREATE INDEX IF NOT EXISTS idx_events_stream_v0
       ON events_v0(tenant_id, entity_type, entity_id, ts);
+
+    CREATE INDEX IF NOT EXISTS idx_events_command_v0
+      ON events_v0(tenant_id, command_id, ts);
 
     CREATE INDEX IF NOT EXISTS idx_events_type_time_v0
       ON events_v0(tenant_id, entity_type, event_type, ts);

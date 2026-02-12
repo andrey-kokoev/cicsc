@@ -1,3 +1,4 @@
+import { withImmediateTx, type TxCtx } from "./tx"
 import type {
   AppendResult,
   Capabilities,
@@ -39,6 +40,10 @@ export class SqliteD1Adapter {
   };
 
   constructor(private readonly db: D1Database) { }
+
+  async tx<T> (fn: (tx: TxCtx) => Promise<T>): Promise<T> {
+    return withImmediateTx(this.db as any, fn)
+  }
 
   // --------------------------
   // Versioning

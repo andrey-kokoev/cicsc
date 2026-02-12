@@ -1,7 +1,6 @@
 // /runtime/http/worker.ts
 
 import { makeD1Store } from "../db/d1-store"
-import { executeCommand } from "../execute-command"
 import { executeCommandTx } from "../execute-command-tx"
 import type { VmIntrinsics } from "../../core/vm/eval"
 
@@ -75,7 +74,7 @@ export default {
 
         const result = await executeCommandTx({
           ir,
-          store,
+          store: { adapter: store.adapter }, // store created by makeD1Store; has adapter on it
           intrinsics,
           req: {
             tenant_id,

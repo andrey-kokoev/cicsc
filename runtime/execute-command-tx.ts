@@ -1,11 +1,9 @@
-// /runtime/execute-command-tx.ts
-
 import type { CoreIrV0, ExprV0 } from "../core/ir/types"
 import { evalExpr, type VmEnv, type VmIntrinsics, type Value } from "../core/vm/eval"
 import { applyReducerOps, type Snapshot } from "../core/reducer/apply"
-import type { D1Store } from "./db/d1-store"
 import { runAllConstraints } from "../core/runtime/constraints"
 import type { SnapRow } from "../core/query/interpret"
+import { lowerBoolQueryConstraintToSql } from "../adapters/sqlite/src/lower/constraint-to-sql"
 
 export type ExecuteCommandInput = {
   tenant_id: string
@@ -32,15 +30,9 @@ export type ExecuteCommandResult = {
   updated_ts: number
 }
 
-type Tx = {
-  // D1 batch is atomic in Workers when used as a transaction via "BEGIN ... COMMIT" on same connection.
-  // Our adapter provides transactional ops; if not available, we emulate with explicit SQL begin/commit.
-  exec: (sql: string, binds?: any[]) => Promise<{ rows?: any[] }>
-}
-
 export async function executeCommandTx (params: {
   ir: CoreIrV0
-  store: D1Store
+  store: { adapter: { tx: <T>(fn: (tx: TxCtx) => Promise<T>) => Promise<T>; get_active_version: (tenant_id: string) => Promise<number> } }
   intrinsics: VmIntrinsics
   policies?: VmEnv["policies"]
   req: ExecuteCommandInput
@@ -53,175 +45,171 @@ export async function executeCommandTx (params: {
   const cmd = typeSpec.commands[req.command_name]
   if (!cmd) throw new Error(`unknown command: ${req.entity_type}.${req.command_name}`)
 
-  // NOTE: store/adapter currently does not expose a native tx API in our scaffold.
-  // So we do best-effort "atomicity" by:
-  // - writing command_receipts first (idempotency gate)
-  // - if it already exists, return recorded result
-  // - else, perform append+snapshot+constraints
-  //
-  // This is correct w.r.t. idempotency, but not fully serializable across concurrent commands.
-  // Next tightening step: true transaction in adapter (BEGIN IMMEDIATE).
-  //
-  // For now this is still the right next file: it centralizes invariants and gives one place to add tx later.
+  return store.adapter.tx(async (tx) => {
+    // 0) idempotency: receipt fast-path
+    const existing = await readReceipt(tx, req.tenant_id, req.command_id)
+    if (existing) return existing
 
-  // 0) command receipt fast-path
-  const existing = await tryReadReceipt(store, req.tenant_id, req.command_id)
-  if (existing) return existing
+    // 1) load snapshot (or init)
+    const snapRow = await readSnapshot(tx, req.tenant_id, req.entity_type, req.entity_id)
 
-  // 1) load snapshot
-  const snapRow = await store.getSnapshot({
-    tenant_id: req.tenant_id,
-    entity_type: req.entity_type,
-    entity_id: req.entity_id,
-  })
+    const snap: Snapshot = snapRow
+      ? {
+        state: snapRow.state,
+        attrs: safeParseJson(snapRow.attrs_json) as any,
+        shadows: pickShadows(snapRow, Object.keys(typeSpec.shadows ?? {})),
+        updated_ts: snapRow.updated_ts,
+      }
+      : { state: typeSpec.initial_state, attrs: {}, shadows: {}, updated_ts: req.now }
 
-  const snap: Snapshot = snapRow
-    ? {
-      state: snapRow.state,
-      attrs: safeParseJson(snapRow.attrs_json) as any,
-      shadows: extractShadows(snapRow, ["tenant_id", "entity_type", "entity_id", "state", "attrs_json", "updated_ts"]),
-      updated_ts: snapRow.updated_ts,
-    }
-    : {
-      state: typeSpec.initial_state,
-      attrs: {},
-      shadows: {},
-      updated_ts: req.now,
-    }
-
-  // 2) guard
-  const guardEnv: VmEnv = {
-    now: req.now,
-    actor: req.actor_id,
-    state: snap.state,
-    input: req.input ?? {},
-    attrs: snap.attrs,
-    row: {},
-    arg: {},
-    intrinsics,
-    policies,
-  }
-
-  if (!toBool(evalExpr(cmd.guard.expr as any, guardEnv))) throw new Error("guard rejected")
-
-  // 3) materialize events
-  const events = cmd.emits.map((e) => {
-    const payload: Record<string, Value> = {}
-    for (const [k, ex] of Object.entries(e.payload)) payload[k] = evalExpr(ex as any, guardEnv)
-    return {
-      event_type: e.event_type,
-      payload,
-      ts: req.now,
-      actor_id: req.actor_id,
-    }
-  })
-
-  // 4) append events (idempotent by command_id)
-  const append = await store.appendEvents({
-    tenant_id: req.tenant_id,
-    entity_type: req.entity_type,
-    entity_id: req.entity_id,
-    command_id: req.command_id,
-    events: events.map((e) => ({ ...e, payload: e.payload })),
-  })
-
-  // 5) apply reducer
-  let next = snap
-  for (const e of events) {
-    const ops = typeSpec.reducer[e.event_type]
-    if (!ops) throw new Error(`missing reducer for event_type ${e.event_type}`)
-
-    const reducerEnv: Omit<VmEnv, "row"> = {
-      now: e.ts,
-      actor: e.actor_id,
-      state: next.state,
-      input: {},
-      attrs: next.attrs,
+    // 2) guard
+    const guardEnv: VmEnv = {
+      now: req.now,
+      actor: req.actor_id,
+      state: snap.state,
+      input: req.input ?? {},
+      attrs: snap.attrs,
       row: {},
       arg: {},
       intrinsics,
       policies,
-      e: { type: e.event_type, actor: e.actor_id, time: e.ts, payload: (e.payload as any) ?? {} },
     }
 
-    next = applyReducerOps({
-      snapshot: next,
-      ops: ops as any,
-      now: e.ts,
-      eval: (expr: ExprV0) => evalExpr(expr, { ...(reducerEnv as any), row: {} }),
+    if (!toBool(evalExpr(cmd.guard.expr as any, guardEnv))) {
+      throw new Error(`guard rejected: ${req.entity_type}.${req.command_name}`)
+    }
+
+    // 3) materialize events
+    const events = cmd.emits.map((e) => {
+      const payload: Record<string, Value> = {}
+      for (const [k, ex] of Object.entries(e.payload)) payload[k] = evalExpr(ex as any, guardEnv)
+      return { event_type: e.event_type, payload, ts: req.now, actor_id: req.actor_id }
     })
-  }
 
-  // 6) enforce constraints before writing snapshot (logical tx)
-  // Build snapshot rows for just this type (needed for snapshot constraints).
-  const thisRow: SnapRow = {
-    entity_type: req.entity_type,
-    entity_id: req.entity_id,
-    state: next.state,
-    updated_ts: req.now,
-    // flatten attrs + shadows (for v0 constraints that refer to row.field directly)
-    ...(next.attrs as any),
-    ...(next.shadows as any),
-  }
+    // 4) append events with atomic seq allocation
+    const { seq_from, seq_to } = await appendEventsTx(tx, {
+      tenant_id: req.tenant_id,
+      entity_type: req.entity_type,
+      entity_id: req.entity_id,
+      command_id: req.command_id,
+      events,
+    })
 
-  const violations = runAllConstraints({
-    ir,
-    intrinsics,
-    policies,
-    now: req.now,
-    actor: req.actor_id,
-    snapshotsByType: (t) => (t === req.entity_type ? [thisRow] : []),
-    slaStatus: () => [],
+    // 5) apply reducer
+    let next = snap
+    for (const e of events) {
+      const ops = typeSpec.reducer[e.event_type]
+      if (!ops) throw new Error(`missing reducer for event_type ${e.event_type}`)
+
+      const reducerEnv: Omit<VmEnv, "row"> = {
+        now: e.ts,
+        actor: e.actor_id,
+        state: next.state,
+        input: {},
+        attrs: next.attrs,
+        arg: {},
+        intrinsics,
+        policies,
+        e: { type: e.event_type, actor: e.actor_id, time: e.ts, payload: (e.payload as any) ?? {} },
+      }
+
+      next = applyReducerOps({
+        snapshot: next,
+        ops: ops as any,
+        now: e.ts,
+        eval: (expr: ExprV0) => evalExpr(expr, { ...(reducerEnv as any), row: {} }),
+      })
+    }
+
+    // 6) snapshot constraints (touched entity only)
+    const thisRow: SnapRow = {
+      entity_type: req.entity_type,
+      entity_id: req.entity_id,
+      state: next.state,
+      updated_ts: req.now,
+      ...(next.attrs as any),
+      ...(next.shadows as any),
+    }
+
+    const snapshotViolations = runAllConstraints({
+      ir,
+      intrinsics,
+      policies,
+      now: req.now,
+      actor: req.actor_id,
+      snapshotsByType: (t) => (t === req.entity_type ? [thisRow] : []),
+      slaStatus: () => [],
+    }).filter((v) => v.kind === "snapshot")
+
+    if (snapshotViolations.length) throw new Error(`constraint violated: ${snapshotViolations[0]!.constraint_id}`)
+
+    // 7) bool_query constraints (run inside same tx using lowered SQL)
+    const ver = await store.adapter.get_active_version(req.tenant_id)
+
+    for (const [cid, c] of Object.entries(ir.constraints ?? {})) {
+      if ((c as any).kind !== "bool_query") continue
+      if ((c as any).on_type !== req.entity_type) continue
+
+      const args = req.constraint_args?.[cid] ?? {}
+      const plan = lowerBoolQueryConstraintToSql({
+        constraint: c as any,
+        version: ver,
+        tenant_id: req.tenant_id,
+        args,
+      })
+
+      const r = await tx.exec(plan.sql, plan.binds)
+      const row = (r.rows?.[0] ?? null) as any
+      const ok = row && (row.ok === 1 || row.ok === true)
+      if (!ok) throw new Error(`constraint violated: ${cid}`)
+    }
+
+    // 8) write snapshot (including shadows)
+    await upsertSnapshotTx(tx, {
+      tenant_id: req.tenant_id,
+      entity_type: req.entity_type,
+      entity_id: req.entity_id,
+      state: next.state,
+      attrs_json: stableJson(next.attrs),
+      updated_ts: req.now,
+      shadows: Object.keys(typeSpec.shadows ?? {}).length ? (next.shadows as any) : {},
+    })
+
+    const result: ExecuteCommandResult = {
+      entity_id: req.entity_id,
+      seq_from,
+      seq_to,
+      state: next.state,
+      updated_ts: req.now,
+    }
+
+    // 9) receipt
+    await writeReceipt(tx, req.tenant_id, req.command_id, req.entity_type, req.entity_id, result, req.now)
+
+    return result
   })
-
-  if (violations.length) throw new Error(`constraint violated: ${violations[0]!.constraint_id}`)
-
-  // bool_query constraints (global) via store (SQL) with args
-  for (const [cid, c] of Object.entries(ir.constraints ?? {})) {
-    if ((c as any).kind !== "bool_query") continue
-    if ((c as any).on_type !== req.entity_type) continue
-
-    const args = req.constraint_args?.[cid] ?? {}
-    const ok = await store.checkBoolQueryConstraint({ tenant_id: req.tenant_id, ir, constraint_id: cid, args })
-    if (!ok) throw new Error(`constraint violated: ${cid}`)
-  }
-
-  // 7) write snapshot
-  await store.putSnapshot({
-    tenant_id: req.tenant_id,
-    entity_type: req.entity_type,
-    entity_id: req.entity_id,
-    state: next.state,
-    attrs_json: stableJson(next.attrs),
-    updated_ts: req.now,
-    shadows: Object.keys(typeSpec.shadows ?? {}).length ? (next.shadows as any) : undefined,
-  })
-
-  const result: ExecuteCommandResult = { ...append, state: next.state, updated_ts: req.now }
-
-  // 8) write receipt (for idempotency)
-  await writeReceipt(store, req.tenant_id, req.command_id, req.entity_type, req.entity_id, result, req.now)
-
-  return result
 }
 
-// ------------------------
-// receipt helpers (requires adapter support via exec_view_sql)
-// ------------------------
+// --------------------------------
+// Tx primitives
+// --------------------------------
 
-async function tryReadReceipt (store: D1Store, tenant_id: string, command_id: string): Promise<ExecuteCommandResult | null> {
-  // D1Store doesn't expose receipt read yet; use adapter exec_view_sql via store.adapter.
-  const r = await store.adapter.exec_view_sql({
-    sql: `SELECT result_json FROM command_receipts WHERE tenant_id=? AND command_id=? LIMIT 1`,
-    binds: [tenant_id, command_id],
-  })
+export type TxCtx = {
+  exec: (sql: string, binds?: any[]) => Promise<{ rows?: any[] }>
+}
+
+async function readReceipt (tx: TxCtx, tenant_id: string, command_id: string): Promise<ExecuteCommandResult | null> {
+  const r = await tx.exec(
+    `SELECT result_json FROM command_receipts WHERE tenant_id=? AND command_id=? LIMIT 1`,
+    [tenant_id, command_id]
+  )
   const row = r.rows?.[0] as any
   if (!row) return null
   return safeParseJson(String(row.result_json ?? "{}")) as ExecuteCommandResult
 }
 
 async function writeReceipt (
-  store: D1Store,
+  tx: TxCtx,
   tenant_id: string,
   command_id: string,
   entity_type: string,
@@ -229,18 +217,114 @@ async function writeReceipt (
   result: ExecuteCommandResult,
   ts: number
 ) {
-  await store.adapter.exec_view_sql({
-    sql:
-      `INSERT INTO command_receipts(tenant_id, command_id, entity_type, entity_id, result_json, ts)\n` +
-      `VALUES(?,?,?,?,?,?)\n` +
-      `ON CONFLICT(tenant_id, command_id) DO NOTHING`,
-    binds: [tenant_id, command_id, entity_type, entity_id, JSON.stringify(result), ts],
-  })
+  await tx.exec(
+    `INSERT INTO command_receipts(tenant_id, command_id, entity_type, entity_id, result_json, ts)
+     VALUES(?,?,?,?,?,?)
+     ON CONFLICT(tenant_id, command_id) DO NOTHING`,
+    [tenant_id, command_id, entity_type, entity_id, JSON.stringify(result), ts]
+  )
 }
 
-// ------------------------
+async function readSnapshot (
+  tx: TxCtx,
+  tenant_id: string,
+  entity_type: string,
+  entity_id: string
+): Promise<{ state: string; attrs_json: string; updated_ts: number;[k: string]: any } | null> {
+  const r = await tx.exec(
+    `SELECT state, attrs_json, updated_ts, severity_i, created_at
+     FROM snapshots_v0
+     WHERE tenant_id=? AND entity_type=? AND entity_id=?
+     LIMIT 1`,
+    [tenant_id, entity_type, entity_id]
+  )
+  return (r.rows?.[0] as any) ?? null
+}
+
+async function upsertSnapshotTx (tx: TxCtx, p: {
+  tenant_id: string
+  entity_type: string
+  entity_id: string
+  state: string
+  attrs_json: string
+  updated_ts: number
+  shadows: Record<string, any>
+}) {
+  // v0: we only persist known shadow columns we created in install-schema.ts (severity_i, created_at).
+  const severity_i = p.shadows["severity_i"] ?? null
+  const created_at = p.shadows["created_at"] ?? null
+
+  await tx.exec(
+    `INSERT INTO snapshots_v0(tenant_id, entity_type, entity_id, state, attrs_json, updated_ts, severity_i, created_at)
+     VALUES(?,?,?,?,?,?,?,?)
+     ON CONFLICT(tenant_id, entity_type, entity_id) DO UPDATE SET
+       state=excluded.state,
+       attrs_json=excluded.attrs_json,
+       updated_ts=excluded.updated_ts,
+       severity_i=excluded.severity_i,
+       created_at=excluded.created_at`,
+    [p.tenant_id, p.entity_type, p.entity_id, p.state, p.attrs_json, p.updated_ts, severity_i, created_at]
+  )
+}
+
+async function appendEventsTx (tx: TxCtx, p: {
+  tenant_id: string
+  entity_type: string
+  entity_id: string
+  command_id: string
+  events: { event_type: string; payload: unknown; ts: number; actor_id: string }[]
+}): Promise<{ seq_from: number; seq_to: number }> {
+  if (!p.events.length) return { seq_from: 0, seq_to: 0 }
+
+  const r = await tx.exec(
+    `SELECT COALESCE(MAX(seq), 0) AS max_seq
+     FROM events_v0
+     WHERE tenant_id=? AND entity_type=? AND entity_id=?`,
+    [p.tenant_id, p.entity_type, p.entity_id]
+  )
+  const maxSeq = Number((r.rows?.[0] as any)?.max_seq ?? 0)
+  const seq_from = maxSeq + 1
+  const seq_to = maxSeq + p.events.length
+
+  // Multi-row insert (including command_id for event-level traceability)
+  const values: string[] = []
+  const binds: any[] = []
+  let seq = seq_from
+
+  for (const e of p.events) {
+    values.push("(?,?,?,?,?,?,?,?,?)")
+    binds.push(
+      p.tenant_id,
+      p.entity_type,
+      p.entity_id,
+      seq,
+      e.event_type,
+      JSON.stringify(e.payload ?? {}),
+      e.ts,
+      e.actor_id,
+      p.command_id
+    )
+    seq++
+  }
+
+  await tx.exec(
+    `INSERT INTO events_v0(tenant_id, entity_type, entity_id, seq, event_type, payload_json, ts, actor_id, command_id)
+     VALUES ${values.join(", ")}`,
+    binds
+  )
+
+  return { seq_from, seq_to }
+}
+
+// --------------------------------
 // helpers
-// ------------------------
+// --------------------------------
+
+function pickShadows (row: Record<string, any>, names: string[]): Record<string, any> {
+  const out: Record<string, any> = {}
+  for (const n of names) if (n in row) out[n] = row[n]
+  return out
+}
 
 function toBool (v: Value): boolean {
   if (v === null) return false
@@ -258,16 +342,6 @@ function safeParseJson (s: string): any {
   } catch {
     return {}
   }
-}
-
-function extractShadows (row: Record<string, any>, skip: string[]): Record<string, any> {
-  const out: Record<string, any> = {}
-  const skipSet = new Set(skip)
-  for (const [k, v] of Object.entries(row)) {
-    if (skipSet.has(k)) continue
-    out[k] = v as any
-  }
-  return out
 }
 
 function stableJson (v: any): string {
