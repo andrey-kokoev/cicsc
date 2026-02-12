@@ -87,7 +87,7 @@
 - [x] Add memory bounds for oracle verifier (streaming replay)
 
 ## K. Security & Policy
-- [ ] Formalize auth/role intrinsics contract
+- [x] Formalize auth/role intrinsics contract
 - [ ] Add policy DSL (optional) compiled to intrinsics
 - [ ] Add per-command authorization mapping in Spec DSL
 - [ ] Add row-level security for views
