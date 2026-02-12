@@ -21,7 +21,7 @@
 - [x] Generate snapshots schema per IR version (vN) from shadows
 - [x] Generate indexes from views (order_by, filter fields)
 - [x] Generate indexes from constraints (fields referenced in filters)
-- [ ] Add schema diff/migration generator for snapshots when IR changes
+- [x] Add schema diff/migration generator for snapshots when IR changes
 - [ ] Add automatic schema install on version activation
 - [ ] Add per-version event tables (events_vN) management
 - [ ] Add schema version compatibility checks
