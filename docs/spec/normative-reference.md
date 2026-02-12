@@ -20,6 +20,11 @@ This document is the canonical index for normative CICSC specifications.
 - `docs/spec/formal-backend-conformance.md`
 - `docs/spec/versioning-compatibility-rules.md`
 
+## Status and Scope Documents
+
+- `docs/spec/truth-audit-v1.md`
+- `docs/spec/type-discipline.md`
+
 ## Conformance
 
 An implementation is conformant only if behavior is consistent with all normative documents above.
