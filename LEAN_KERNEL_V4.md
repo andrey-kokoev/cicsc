@@ -279,7 +279,9 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
   - `inferExprTy_sound_v4_fragment`,
     `inferExprTy_complete_up_to_subsumption_v4`,
     `inferExprTy_principal_v4`.
-- [ ] Proof automation baseline is operational and adopted.
+- [x] Proof automation baseline is operational and adopted.
+  - `query_equiv`, `snap_irrelevant`, `wf_auto`, `migration_simp` are implemented
+    and used in converted proofs (K4.6.5).
 - [ ] This document has theorem-indexed completion entries only.
 
 ## Theorem Index
