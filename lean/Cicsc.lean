@@ -12,6 +12,7 @@ import Cicsc.Core.Semantics.Commands
 import Cicsc.Core.Meta.Typecheck
 import Cicsc.Core.Meta.WF
 import Cicsc.Core.Meta.EnvCoherence
+import Cicsc.Tactics.QueryEquiv
 import Cicsc.Evolution.Migration
 import Cicsc.Evolution.Naturality
 import Cicsc.Examples.Ticketing

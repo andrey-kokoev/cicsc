@@ -191,7 +191,8 @@ Close bidirectional typing for a clearly-scoped expression fragment.
 Reduce proof maintenance overhead with focused tactics for repeated proof patterns.
 
 ### TODOs
-- [ ] K4.6.1 Add `query_equiv` tactic for row-equivalence goals.
+- [x] K4.6.1 Add `query_equiv` tactic for row-equivalence goals.
+  - Added `lean/Cicsc/Tactics/QueryEquiv.lean` with `query_equiv`.
 - [ ] K4.6.2 Add `snap_irrelevant` tactic for irrelevant snapset entries.
 - [ ] K4.6.3 Add `wf_auto` bridge tactic from checker booleans to WF props.
 - [ ] K4.6.4 Add migration tactic helpers for compose/roundtrip proofs.
