@@ -101,7 +101,7 @@ Define WF predicates that mirror CICSC’s intended static constraints (not SQL)
 - [x] Add `WFIR : IR → Prop`
   - [x] all types satisfy WFTypeSpec
   - [x] constraints reference existing types
-  - [ ] views reference existing types (query semantics subset gated; see §6)
+  - [x] views reference existing types (query semantics subset gated; see §6)
 
 Acceptance: `checkIR` is either replaced by proofs about `WFIR`, or accompanied by lemmas connecting them.
 
