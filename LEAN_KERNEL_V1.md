@@ -78,7 +78,7 @@ Pick one:
 - [ ] (Preferred) Prove soundness for the fragment:
   - `inferExprTy Γ e = some t → HasType Γ e t`
   - for the supported constructors
-- [ ] Or delete `HasType` until it is used.
+- [x] Or delete `HasType` until it is used.
 
 Acceptance: no supported Expr constructor is accepted by evaluator but rejected by the typechecker (and vice versa) on the v1 fragment.
 
