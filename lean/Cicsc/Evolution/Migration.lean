@@ -212,4 +212,35 @@ theorem inverseMigration_exists_of_reversible
   unfold inverseMigration
   simp [hreversible]
 
+theorem inverseMigration_roundtrip_event_on_covered
+  (ms inv : MigrationSpec)
+  (e : Event)
+  (t : EventTransform)
+  (hinv : inverseMigration ms = some inv)
+  (hentity : e.entityType = ms.entityType)
+  (hlookup : lookupTransform ms e.eventType = some t)
+  (hdrop : t.drop = false)
+  (hinvLookup : lookupTransform inv t.target = some (invertEventTransform t)) :
+  ∃ e', migrateEvent ms e = some e' ∧ migrateEvent inv e' = some { e with eventType := t.source } := by
+  refine ⟨{ e with eventType := t.target }, ?_, ?_⟩
+  · unfold migrateEvent
+    simp [hentity, hlookup, hdrop]
+  · unfold migrateEvent
+    have hInvEntity : inv.entityType = e.entityType := by
+      unfold inverseMigration at hinv
+      split at hinv <;> cases hinv
+      simp [hentity]
+    simp [hInvEntity, hinvLookup]
+
+theorem inverseMigration_roundtrip_state_on_mapped
+  (ms inv : MigrationSpec)
+  (st : State)
+  (kv : String × String)
+  (hinv : inverseMigration ms = some inv)
+  (hmap : ms.stateMap.find? (fun kv0 => kv0.fst = st.st) = some kv)
+  (hinvMap : inv.stateMap.find? (fun kv0 => kv0.fst = kv.snd) = some (kv.snd, kv.fst)) :
+  (migrateState inv (migrateState ms st)).st = st.st := by
+  unfold migrateState
+  simp [hmap, hinvMap]
+
 end Cicsc.Evolution

@@ -131,7 +131,11 @@ Upgrade migration layer from operational transforms to proved algebraic behavior
 - [x] K4.4.3 Implement `inverseMigration` for reversible subset.
   - Added `inverseMigration` plus invert helpers in `lean/Cicsc/Evolution/Migration.lean`
     for the no-drop reversible subset.
-- [ ] K4.4.4 Prove roundtrip property for reversible migrations.
+- [x] K4.4.4 Prove roundtrip property for reversible migrations.
+  - Added scoped roundtrip lemmas
+    `inverseMigration_roundtrip_event_on_covered` and
+    `inverseMigration_roundtrip_state_on_mapped`
+    in `lean/Cicsc/Evolution/Migration.lean`.
 - [ ] K4.4.5 Define rollback semantics for multi-step version chains.
 - [ ] K4.4.6 Define `SafeMigration` and prove safety for add/rename/remove basic patterns.
 
