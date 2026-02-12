@@ -200,7 +200,10 @@ Close bidirectional typing for a clearly-scoped expression fragment.
     excluded constructs (`call`) with rationale.
 
 ### Acceptance
-- [ ] Fragment has soundness + completeness + principality theorems.
+- [x] Fragment has soundness + completeness + principality theorems.
+  - `inferExprTy_sound_v4_fragment`,
+    `inferExprTy_complete_up_to_subsumption_v4`,
+    `inferExprTy_principal_v4`.
 - [ ] No theorem depends on `byInfer`-style shortcut rules.
 
 ---
