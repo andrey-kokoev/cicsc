@@ -60,7 +60,9 @@ v2 adds semantic coverage for:
   - Prove field name collision handling (prefer left/right based on join type)
 
 #### 1.1.2 Join Properties
-- [ ] Prove join commutativity (where applicable):
+- [x] Prove join commutativity (where applicable):
+  - Covered by `crossJoin_commutative_modulo_combineRows`.
+  - Covered by `innerJoin_symmetric_condition_produces_symmetric_results` under explicit symmetry premise on join condition.
   - `evalJoin Inner a b e = evalJoin Inner b e[swapped] a` (modulo row order)
 - [ ] Prove join associativity for inner joins:
   - `(a ⋈ b) ⋈ c = a ⋈ (b ⋈ c)` (modulo projection)
