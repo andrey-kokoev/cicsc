@@ -118,7 +118,7 @@ export default {
         return Response.json({ ok: true })
       }
 
-      // POST /install-from-spec  (compile + install schema; does not persist bundle)
+      // POST /install-from-spec  (compile + persist + bind tenant + install/activate)
       if (url.pathname === "/install-from-spec" && req.method === "POST") {
         const body = await readSpecBody(req)
         const bundle = compileSpecToBundleV0(body)
@@ -130,6 +130,13 @@ export default {
             ? String((jsonBody as any).tenant_id)
             : url.searchParams.get("tenant_id") ?? "t"
 
+        const stored = await putBundle(env.DB as any, bundle)
+        await bindTenant(env.DB as any, {
+          tenant_id,
+          bundle_hash: stored.bundle_hash,
+          active_version: 0,
+        })
+
         await activateVersion({
           db: env.DB as any,
           ir: irV,
@@ -137,7 +144,7 @@ export default {
           tenant_id,
           setActiveVersion: store.setActiveVersion,
         })
-        return Response.json({ ok: true })
+        return Response.json({ ok: true, tenant_id, bundle_hash: stored.bundle_hash, active_version: 0 })
       }
 
       // POST /cmd/:type/:name

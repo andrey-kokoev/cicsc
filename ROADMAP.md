@@ -71,7 +71,7 @@
 
 ## I. API & Developer Ergonomics
 - [x] Add POST /compile (already stubbed) + persist bundles
-- [ ] Add POST /install-from-spec (compile + install + bind tenant)
+- [x] Add POST /install-from-spec (compile + install + bind tenant)
 - [ ] Add GET /views (list available views)
 - [ ] Add GET /schema (introspect generated schema)
 - [ ] Add OpenAPI spec for runtime endpoints
