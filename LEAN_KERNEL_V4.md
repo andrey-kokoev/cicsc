@@ -275,7 +275,10 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
 - [x] Migration compose/inverse/rollback theorems are present for scoped subset.
   - Scoped Completion: `composeMigrations_assoc_of_compatible`,
     `inverseMigration_roundtrip_*`, and `rollbackHistory_def`.
-- [ ] Typing fragment has soundness/completeness/principality.
+- [x] Typing fragment has soundness/completeness/principality.
+  - `inferExprTy_sound_v4_fragment`,
+    `inferExprTy_complete_up_to_subsumption_v4`,
+    `inferExprTy_principal_v4`.
 - [ ] Proof automation baseline is operational and adopted.
 - [ ] This document has theorem-indexed completion entries only.
 
