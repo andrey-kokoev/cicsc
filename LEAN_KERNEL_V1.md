@@ -139,7 +139,7 @@ v1 migration class is restricted to:
 - [x] Prove `StepCommutes` for the restricted class without taking it as hypothesis
   - derive it from WFMigration + reducer compatibility conditions
 - [x] Prove `replay_commutes` using StreamId-based replay semantics
-- [ ] Add an end-to-end example:
+- [x] Add an end-to-end example:
   - Ticketing v0→v1 migration commutes on all histories (not just sample)
 
 Acceptance: naturality is a theorem with explicit assumptions, not an injected premise.
