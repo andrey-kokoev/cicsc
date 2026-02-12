@@ -108,6 +108,17 @@ theorem holdsConstraint_snapshot_decompose
   holdsConstraint ir (.snapshot onType expr) st snaps = evalSnapshotConstraint (.snapshot onType expr) st := by
   simp [holdsConstraint]
 
+theorem holdsConstraint_boolQuery_decompose
+  (ir : IR)
+  (onType : String)
+  (q : Query)
+  (assertExpr : Expr)
+  (st : State)
+  (snaps : SnapSet) :
+  holdsConstraint ir (.boolQuery onType q assertExpr) st snaps =
+    evalBoolQueryConstraintSubset ir (.boolQuery onType q assertExpr) snaps := by
+  simp [holdsConstraint]
+
 theorem holdsAllKernelConstraints_onlySnapshot
   (cs : List (String × Constraint))
   (st : State) :
