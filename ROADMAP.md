@@ -117,7 +117,7 @@
 - [x] Add fuzzing for IR typechecker (invalid field access, illegal intrinsics, malformed reducers)
 - [x] Add cross-backend differential tests (SQLite vs Postgres vs oracle)
 - [x] Add history corruption detection tests (tampered events, missing seq)
-- [ ] Add invariant regression suite (known-bad Specs and migrations)
+- [x] Add invariant regression suite (known-bad Specs and migrations)
 
 ## O. Canonical Reference Verticals
 
