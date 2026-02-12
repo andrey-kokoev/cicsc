@@ -224,6 +224,7 @@ v1.5 is complete when all are true:
 - [ ] **Typing Soundness:** Declarative `HasType` exists with soundness theorem
 - [ ] **WF Completeness:** Replay well-formedness is unconditional consequence of `WFTypeSpec`
 - [ ] **Naming Hygiene:** No v0/v1 confusion; clear versioning documentation
+- [x] **Execution Validation Pass:** `lake build` run before closure checkbox completion updates
 
 ---
 
