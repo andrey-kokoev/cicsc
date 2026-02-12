@@ -5,6 +5,16 @@ import Cicsc.Core.Semantics.Replay
 
 namespace Cicsc.Core
 
+structure EmittedEvent where
+  tenantId : String
+  entityType : String
+  entityId : String
+  eventType : String
+  payload : Val
+  ts : Nat
+  actor : String
+deriving Repr, DecidableEq
+
 def lookupCommand (ts : TypeSpec) (name : String) : Option CommandSpec :=
   match ts.commands.find? (fun (kv) => kv.fst = name) with
   | some kv => some kv.snd
@@ -26,7 +36,8 @@ def commandEnv (st : State) (env : Env) : Env :=
 def canExecute (cmd : CommandSpec) (envExec : Env) : Bool :=
   toBool (evalExpr envExec cmd.guard)
 
-def executeCommand (ts : TypeSpec) (sid : StreamId) (cmdName : String) (st : State) (env : Env) : Option State :=
+def executeCommand (ts : TypeSpec) (sid : StreamId) (cmdName : String) (st : State) (env : Env) :
+  Option (List EmittedEvent) :=
   match lookupCommand ts cmdName with
   | none => none
   | some cmd =>
@@ -34,18 +45,32 @@ def executeCommand (ts : TypeSpec) (sid : StreamId) (cmdName : String) (st : Sta
       if !canExecute cmd envExec then none
       else
         let es := materializeEvents envExec cmd.emits
-        let emittedHistory : History :=
-          es.enum.map (fun (ix, e) => {
+        let emitted : List EmittedEvent :=
+          es.map (fun e => {
             tenantId := sid.tenantId
             entityType := sid.entityType
             entityId := sid.entityId
-            seq := ix.succ
             eventType := e.fst
             payload := e.snd
             ts := env.now
             actor := env.actor
           })
-        let out := emittedHistory.foldl (fun acc e => applyReducer ts acc e) st
-        some out
+        some emitted
+
+def applyEmittedEvents (ts : TypeSpec) (st : State) (es : List EmittedEvent) : State :=
+  es.foldl
+    (fun acc e =>
+      applyReducer ts acc {
+        tenantId := e.tenantId
+        entityType := e.entityType
+        entityId := e.entityId
+        -- Local projection only; persistent sequence assignment belongs to runtime storage.
+        seq := 0
+        eventType := e.eventType
+        payload := e.payload
+        ts := e.ts
+        actor := e.actor
+      })
+    st
 
 end Cicsc.Core
