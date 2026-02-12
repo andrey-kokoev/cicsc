@@ -50,7 +50,9 @@ Prove that SQL lowering/execution matches kernel query semantics for the scoped 
 - [x] Main conformance theorem compiles without `sorry`.
   - Verified by theorem body in `lean/Cicsc/Sql/Conformance.lean`
     (`execSQL_lowerQuery_conforms_execShape`) with no `sorry`.
-- [ ] Differential generated tests pass for all in-scope operators.
+- [x] Differential generated tests pass for all in-scope operators.
+  - Covered by `tests/conformance/sqlite-random-vs-oracle.test.ts`
+    and `tests/conformance/sqlite-exec-vs-oracle-smoke.test.ts` in CI target.
 - [ ] Theorem and scope are documented in `docs/spec/formal-backend-conformance.md`.
 
 ---
