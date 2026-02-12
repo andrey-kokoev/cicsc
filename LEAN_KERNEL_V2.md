@@ -405,7 +405,8 @@ v2 adds semantic coverage for:
 **Objective:** Define semantics for multi-step migrations and prove composition properties
 
 #### 5.1.1 Composition Semantics
-- [ ] Define `composeMigrations : MigrationSpec → MigrationSpec → MigrationSpec`
+- [x] Define `composeMigrations : MigrationSpec → MigrationSpec → MigrationSpec`
+  - Added in `lean/Cicsc/Evolution/Migration.lean` with composed event-transform and state-map entry semantics.
   - Chain event transforms: `m1.transform >> m2.transform`
   - Compose state maps: `m2.stateMap ∘ m1.stateMap`
 - [ ] Prove composition associativity:

@@ -124,4 +124,29 @@ theorem migrateState_stateLabelRenamesOnly (ms : MigrationSpec) : StateLabelRena
   · simp
   · simp
 
+def composeEventTransform (m2 : MigrationSpec) (t1 : EventTransform) : EventTransform :=
+  if t1.drop then
+    t1
+  else
+    match lookupTransform m2 t1.target with
+    | none => { t1 with target := t1.target }
+    | some t2 =>
+        if t2.drop then
+          { source := t1.source, target := t2.target, drop := true }
+        else
+          { source := t1.source, target := t2.target, drop := false }
+
+def composeStateMapEntry (m2 : MigrationSpec) (kv : String × String) : (String × String) :=
+  match m2.stateMap.find? (fun kv2 => kv2.fst = kv.snd) with
+  | none => kv
+  | some kv2 => (kv.fst, kv2.snd)
+
+def composeMigrations (m1 m2 : MigrationSpec) : MigrationSpec := {
+  fromVersion := m1.fromVersion
+  toVersion := m2.toVersion
+  entityType := m1.entityType
+  transforms := m1.transforms.map (composeEventTransform m2)
+  stateMap := m1.stateMap.map (composeStateMapEntry m2)
+}
+
 end Cicsc.Evolution
