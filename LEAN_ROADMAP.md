@@ -25,7 +25,7 @@
 - [x] Prove reducer well-formedness preservation theorem
 
 ## F. Migration Formalization
-- [ ] Define migration primitives in `Evolution/Migration.lean`
+- [x] Define migration primitives in `Evolution/Migration.lean`
 - [ ] Prove naturality/commuting-diagram theorem in `Evolution/Naturality.lean`
 
 ## G. Examples and Closure
