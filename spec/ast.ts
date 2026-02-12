@@ -1,6 +1,7 @@
 export type SpecV0 = {
   version: 0
   entities: Record<string, SpecEntityV0>
+  policies?: Record<string, SpecPolicyV0>
   constraints?: Record<string, SpecConstraintV0>
   views?: Record<string, SpecViewV0>
   migrations?: Record<string, SpecMigrationV0>
@@ -48,6 +49,11 @@ export type SpecViewV0 = {
     limit?: number
   }
   [k: string]: any
+}
+
+export type SpecPolicyV0 = {
+  params?: string[]
+  allow?: any
 }
 
 export type SpecMigrationV0 = {

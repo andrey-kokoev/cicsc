@@ -88,7 +88,7 @@
 
 ## K. Security & Policy
 - [x] Formalize auth/role intrinsics contract
-- [ ] Add policy DSL (optional) compiled to intrinsics
+- [x] Add policy DSL (optional) compiled to intrinsics
 - [ ] Add per-command authorization mapping in Spec DSL
 - [ ] Add row-level security for views
 - [ ] Add audit trail for policy changes

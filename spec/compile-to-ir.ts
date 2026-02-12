@@ -18,10 +18,12 @@ export function compileSpecV0ToCoreIr (spec: SpecV0): CoreIrV0 {
   const constraints = mapConstraints(spec.constraints ?? {})
   const views = mapViews(spec.views ?? {})
   const migrations = mapMigrations(spec.migrations ?? {})
+  const policies = mapPolicies(spec.policies ?? {})
 
   return {
     version: 0,
     types,
+    policies: Object.keys(policies).length ? policies : undefined,
     constraints: Object.keys(constraints).length ? constraints : undefined,
     views: Object.keys(views).length ? views : undefined,
     migrations: Object.keys(migrations).length ? migrations : undefined,
@@ -128,6 +130,17 @@ function mapMigrations (migrations: Record<string, any>) {
       on_type: String((m as any).entity ?? ""),
       event_transforms: mapEventTransforms((m as any).event_transforms ?? {}),
       state_map: (m as any).state_map ?? undefined,
+    }
+  }
+  return out
+}
+
+function mapPolicies (policies: Record<string, any>) {
+  const out: Record<string, any> = {}
+  for (const [name, p] of Object.entries(policies ?? {})) {
+    out[name] = {
+      params: Array.isArray((p as any).params) ? (p as any).params.map(String) : [],
+      expr: lowerGuard((p as any).allow ?? null),
     }
   }
   return out
