@@ -34,8 +34,11 @@ Prove that SQL lowering/execution matches kernel query semantics for the scoped 
     `filter/project/groupBy/having/orderBy/limit/offset` and base-query construction.
 - [x] K4.1.4 Define row equivalence relation (modulo ordering where applicable).
   - Added `rowSetEquiv`, `rowSeqEquiv`, and `rowsEquiv` in `lean/Cicsc/Sql/Conformance.lean`.
-- [ ] K4.1.5 State and prove main theorem:
+- [x] K4.1.5 State and prove main theorem:
   `execSQL (lowerQuery q) db ≈ evalQuery ir q (snapFromDB db)` for `q ∈ QueryV4Subset`.
+  - Added scoped theorem `execSQL_lowerQuery_conforms_execShape` in
+    `lean/Cicsc/Sql/Conformance.lean` over executable v4 shape
+    (`snap` source + `filter/project/offset/limit`) with explicit expression-bridge hypotheses.
 - [ ] K4.1.6 Add explicit theorem exclusions list for out-of-scope operators.
 
 ### Acceptance
