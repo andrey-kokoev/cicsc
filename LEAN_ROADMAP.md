@@ -17,7 +17,7 @@
 
 ## D. Meta and Typechecking
 - [x] Add decidable typechecker skeleton in `Meta/Typecheck.lean`
-- [ ] Add typing judgments for Expr subset and well-typed env relation
+- [x] Add typing judgments for Expr subset and well-typed env relation
 
 ## E. Proof Milestone v0
 - [ ] Prove expression evaluation determinism theorem

@@ -64,4 +64,34 @@ def checkTypeSpec (ts : TypeSpec) : Bool :=
 def checkIR (ir : IR) : Bool :=
   ir.types.all (fun kv => checkTypeSpec kv.snd)
 
+inductive HasType : TypeEnv → Expr → Ty → Prop where
+  | litBool (Γ : TypeEnv) (b : Bool) : HasType Γ (.litBool b) .tBool
+  | litInt (Γ : TypeEnv) (n : Int) : HasType Γ (.litInt n) .tInt
+  | litString (Γ : TypeEnv) (s : String) : HasType Γ (.litString s) .tString
+  | varInput (Γ : TypeEnv) (f : String) (t : Ty)
+      (h : lookupTy Γ s!"input.{f}" = some t) :
+      HasType Γ (.var (.input f)) t
+  | eq (Γ : TypeEnv) (a b : Expr) (t : Ty)
+      (ha : HasType Γ a t) (hb : HasType Γ b t) :
+      HasType Γ (.eq a b) .tBool
+  | and (Γ : TypeEnv) (xs : List Expr)
+      (h : ∀ e ∈ xs, HasType Γ e .tBool) :
+      HasType Γ (.and xs) .tBool
+  | not (Γ : TypeEnv) (e : Expr)
+      (h : HasType Γ e .tBool) :
+      HasType Γ (.not e) .tBool
+
+def WellTypedEnv (Γ : TypeEnv) (env : Env) : Prop :=
+  ∀ (k : String) (t : Ty), lookupTy Γ k = some t →
+    let v := lookupField (env.input ++ env.attrs ++ env.row ++ env.arg) k
+    valTy v = t ∨ v = .vNull
+
+theorem lookupWellTypedNullOk
+  (Γ : TypeEnv) (env : Env) (hEnv : WellTypedEnv Γ env) :
+  ∀ k t, lookupTy Γ k = some t →
+    let v := lookupField (env.input ++ env.attrs ++ env.row ++ env.arg) k
+    valTy v = t ∨ v = .vNull := by
+  intro k t hk
+  exact hEnv k t hk
+
 end Cicsc.Core
