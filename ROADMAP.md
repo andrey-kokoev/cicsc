@@ -96,7 +96,7 @@
 ## L. Documentation & Proofs
 - [x] Formalize constructive invariance proof sketch for v0
 - [x] Add semantics reference for core calculus (Expr, Query, Reducer)
-- [ ] Add adapter conformance checklist
+- [x] Add adapter conformance checklist
 - [ ] Add “how to build a vertical” guide
 - [ ] Add migration cookbook
 - [ ] Add threat model
