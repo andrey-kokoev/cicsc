@@ -155,7 +155,6 @@ Current v0 migration contract:
 
 Well-formedness predicate:
 - `WFMigration ms irFrom irTo`
-- source event coverage for migrated entity type
 - non-dropped target reducer existence in `irTo`
 - `stateMap` target state validity in `irTo`
 

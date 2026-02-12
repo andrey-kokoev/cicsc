@@ -56,8 +56,40 @@ def targetStateValid (irTo : IR) (typeName targetState : String) : Prop :=
 def WFMigration (ms : MigrationSpec) (irFrom irTo : IR) : Prop :=
   ms.fromVersion = irFrom.version ∧
   ms.toVersion = irTo.version ∧
-  (∀ et, et ∈ sourceEventTypes irFrom ms.entityType → eventCovered ms et) ∧
   (∀ tr, tr ∈ ms.transforms → tr.drop = false → targetReducerExists irTo ms.entityType tr.target) ∧
   (∀ kv, kv ∈ ms.stateMap → targetStateValid irTo ms.entityType kv.snd)
+
+def NoPayloadTransforms (ms : MigrationSpec) : Prop :=
+  ∀ e e', migrateEvent ms e = some e' → e'.payload = e.payload
+
+theorem migrateEvent_noPayloadTransforms (ms : MigrationSpec) : NoPayloadTransforms ms := by
+  intro e e' hmig
+  unfold migrateEvent at hmig
+  by_cases hent : e.entityType ≠ ms.entityType
+  · simp [hent] at hmig
+    cases hmig
+    rfl
+  · simp [hent] at hmig
+    cases hfind : lookupTransform ms e.eventType with
+    | none =>
+        simp [hfind] at hmig
+        cases hmig
+        rfl
+    | some t =>
+        by_cases hdrop : t.drop
+        · simp [hfind, hdrop] at hmig
+        · simp [hfind, hdrop] at hmig
+          cases hmig
+          rfl
+
+def StateLabelRenamesOnly (ms : MigrationSpec) : Prop :=
+  ∀ st, (migrateState ms st).attrs = st.attrs ∧ (migrateState ms st).shadows = st.shadows
+
+theorem migrateState_stateLabelRenamesOnly (ms : MigrationSpec) : StateLabelRenamesOnly ms := by
+  intro st
+  unfold migrateState
+  split
+  · simp
+  · simp
 
 end Cicsc.Evolution

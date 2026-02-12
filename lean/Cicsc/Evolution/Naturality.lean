@@ -53,11 +53,20 @@ def StepCommutes
     step irFrom typeName s e = some s' →
     stepMigrated irTo typeName ms (migrateState ms s) e = some (migrateState ms s')
 
+structure RestrictedMigrationClass
+  (irFrom irTo : IR)
+  (typeName : String)
+  (ms : MigrationSpec) : Prop where
+  wf : WFMigration ms irFrom irTo
+  noPayload : NoPayloadTransforms ms
+  stateRenameOnly : StateLabelRenamesOnly ms
+  stepCommutes : StepCommutes irFrom irTo typeName ms
+
 theorem replay_commutes
   (irFrom irTo : IR)
   (typeName : String)
   (ms : MigrationSpec)
-  (hWf : WFMigration ms irFrom irTo)
+  (_hWf : WFMigration ms irFrom irTo)
   (hstep : StepCommutes irFrom irTo typeName ms) :
   ∀ (h : History) (s0 : State), Commutes irFrom irTo typeName ms s0 h := by
   intro h
@@ -78,5 +87,13 @@ theorem replay_commutes
             hstep s0 s1 e hstep0
           simp [hstep0, hmig]
           exact ih s1
+
+theorem replay_commutes_restricted
+  (irFrom irTo : IR)
+  (typeName : String)
+  (ms : MigrationSpec)
+  (hclass : RestrictedMigrationClass irFrom irTo typeName ms) :
+  ∀ (h : History) (s0 : State), Commutes irFrom irTo typeName ms s0 h := by
+  exact replay_commutes irFrom irTo typeName ms hclass.wf hclass.stepCommutes
 
 end Cicsc.Evolution
