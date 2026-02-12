@@ -60,10 +60,10 @@ Make multi-user execution semantics explicit and testable.
 - [x] P4.3.2 Add transaction model tests for atomicity across multiple streams.
 - [x] P4.3.3 Add write-write conflict tests and expected abort outcomes.
 - [x] P4.3.4 Add deterministic replay tests under causally-equivalent history permutations.
-- [ ] P4.3.5 Document supported isolation guarantees and excluded scenarios.
+- [x] P4.3.5 Document supported isolation guarantees and excluded scenarios.
 
 ### Acceptance
-- [ ] Concurrency claims in docs are backed by theorem or executable conformance tests.
+- [x] Concurrency claims in docs are backed by theorem or executable conformance tests.
 
 ---
 
@@ -148,5 +148,6 @@ Prevent premature phase transitions.
   `tests/conformance/sqlite-random-vs-oracle.test.ts`,
   `tests/conformance/operator-coverage-report.ts`.
 - `P4.3`: `tests/concurrency/causality-replay.test.ts`,
-  `tests/concurrency/transaction-model.test.ts`.
+  `tests/concurrency/transaction-model.test.ts`,
+  `docs/spec/isolation-guarantees.md`.
 - `P4.4`: `tests/conformance/migration-composition.test.ts`.
