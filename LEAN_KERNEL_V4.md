@@ -256,7 +256,8 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
     `scripts/phase3_ci_target.sh`.
 
 ### Acceptance
-- [ ] Every checked item has verifiable artifact references.
+- [x] Every checked item has verifiable artifact references.
+  - Enforced by `scripts/check_v4_refs.sh`.
 - [ ] No milestone is marked complete on documentation-only basis.
 
 ---
