@@ -169,4 +169,4 @@
 - [x] Publish annotated examples for canonical verticals
 - [x] Provide teaching material for Spec DSL
 - [x] Curate “anti-patterns” and failure modes catalog
-- [ ] Define glossary of terms and primitives
+- [x] Define glossary of terms and primitives
