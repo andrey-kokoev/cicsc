@@ -151,7 +151,10 @@ v2 adds semantic coverage for:
   - Outer-row field preservation captured by `correlated_subquery_preserves_outer_fields`.
 - [x] Define EXISTS, IN, ANY, ALL predicates over subqueries
   - `existsSubquery`, `inSubquery`, `anySubquery`, and `allSubquery` defined in `lean/Cicsc/Core/Semantics/QueryEval.lean`.
-- [ ] Prove subquery flattening equivalences (decorrelation rules)
+- [x] Prove subquery flattening equivalences (decorrelation rules)
+  - Restricted decorrelation laws are proved for current correlated encoding:
+    - `exists_correlated_flatten`
+    - `any_correlated_flatten`
 
 #### 1.3.3 Relational Algebra Equivalences
 - [ ] Prove selection pushdown: `σ(a ⋈ b) = σ(a) ⋈ b` (when predicate references only a)

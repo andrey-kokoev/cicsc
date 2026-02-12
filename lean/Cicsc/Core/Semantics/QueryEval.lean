@@ -760,6 +760,25 @@ theorem allSubquery_empty_true
   allSubquery p [] = true := by
   rfl
 
+theorem exists_correlated_flatten
+  (outer : QueryRow)
+  (subquery : Query)
+  (snaps : SnapSet) :
+  existsSubquery (evalCorrelatedSubquery outer subquery snaps) =
+    existsSubquery (evalQuerySubsetWithSetOps subquery snaps) := by
+  unfold existsSubquery evalCorrelatedSubquery
+  simp
+
+theorem any_correlated_flatten
+  (outer : QueryRow)
+  (subquery : Query)
+  (snaps : SnapSet)
+  (p : QueryRow → Bool) :
+  anySubquery p (evalCorrelatedSubquery outer subquery snaps) =
+    (evalQuerySubsetWithSetOps subquery snaps).any (fun inner => p (combineRows outer inner)) := by
+  unfold anySubquery evalCorrelatedSubquery
+  simp
+
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .project fields, rows => rows.map (fun r => evalProject r fields)
