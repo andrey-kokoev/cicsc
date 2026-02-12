@@ -324,11 +324,37 @@ For users currently depending on v1:
 
 When v1.5 is complete:
 
+- [x] Add final acceptance theorem index section with file + theorem references
 - [ ] Update LEAN_KERNEL_V1.md §8 checklist to reference v1.5 completion
 - [ ] Add comments in code referencing relevant LEAN_KERNEL_V1-post.md sections
 - [ ] Update README (if exists) with v1.5 status
 - [ ] Add migration guide for users updating from v1 to v1.5
 - [ ] Update AGENTS.md to reference Lean kernel v1.5 as "coherency complete"
+
+## Acceptance Theorem Index
+
+- `lean/Cicsc/Core/Semantics/Constraints.lean`
+  - `holdsConstraint_snapshot_decompose`
+  - `holdsConstraint_boolQuery_decompose`
+  - `holdsConstraint_boolQuery_irrelevantOutOfScopeSnapEntry`
+- `lean/Cicsc/Core/Meta/WF.lean`
+  - `noReservedCollisions_of_checkTypeSpecNames`
+  - `noDuplicateFieldNames_of_checkTypeSpecNames`
+  - `initialStateInStates_of_checkTypeSpec`
+  - `reducerTargetsDeclared_of_checkTypeSpec`
+  - `reducerLiteralStatesValid_of_checkTypeSpec`
+  - `wfTypeSpec_of_checkTypeSpec`
+  - `wfIR_of_checkIR`
+- `lean/Cicsc/Core/Semantics/Replay.lean`
+  - `reducerPreservesWF_of_WFTypeSpec`
+  - `applyReducerPreservesWellFormed`
+  - `replayPreservesWellFormedIfTypeExists`
+- `lean/Cicsc/Core/Meta/Typecheck.lean`
+  - `inferExprTy_sound`
+  - `inferExprTyFuel_sound_atSize`
+- `lean/Cicsc/Examples/Ticketing.lean`
+  - `ticket_replay_wellFormed_fromWFTypeSpec`
+  - `ticket_replay_wellFormed_from_checkTypeSpec`
 
 ---
 
