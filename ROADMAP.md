@@ -67,7 +67,7 @@
 - [x] Add version-stamped verification reports
 - [x] Add invariant drift detection across versions
 - [x] Add cryptographic hash of event history + snapshots (optional)
-- [ ] Add audit log export (NDJSON / Parquet)
+- [x] Add audit log export (NDJSON / Parquet)
 
 ## I. API & Developer Ergonomics
 - [ ] Add POST /compile (already stubbed) + persist bundles
