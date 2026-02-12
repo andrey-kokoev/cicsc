@@ -82,7 +82,7 @@
 - [x] Add snapshot compaction policy (periodic snapshotting from events)
 - [x] Add projection materialization cache
 - [x] Add batched command execution
-- [ ] Add background SLA evaluation worker
+- [x] Add background SLA evaluation worker
 - [ ] Add load-shedding / rate limits per tenant
 - [ ] Add memory bounds for oracle verifier (streaming replay)
 
