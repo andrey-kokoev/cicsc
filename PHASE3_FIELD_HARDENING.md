@@ -82,7 +82,7 @@ Current 1.3 signal:
 ## 5. Productization Minimum (forced by pilot only)
 
 - [x] 5.1 Add stable bundle registry protocol doc + reference contract.
-- [ ] 5.2 Add tenant->bundle binding lifecycle semantics (idempotent).
+- [x] 5.2 Add tenant->bundle binding lifecycle semantics (idempotent).
 - [ ] 5.3 Add migration/verification operator command set for cutovers.
 - [ ] 5.4 Add compatibility matrix: bundle x runtime x adapter.
 
