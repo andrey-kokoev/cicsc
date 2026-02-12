@@ -35,7 +35,7 @@ v1 is defined by **alignment**, **tightened typing**, and **non-stub query seman
 - [ ] Use `mkRow` in:
   - [x] `Core/Semantics/Commands.lean` (`commandRow` removed or becomes wrapper)
   - [x] `Core/Semantics/Replay.lean` (set `env.row := mkRow st`)
-  - [ ] `Core/Semantics/Constraints.lean` (snapshot constraint env uses `mkRow st`)
+  - [x] `Core/Semantics/Constraints.lean` (snapshot constraint env uses `mkRow st`)
 
 ### 1.2 Reserved field rule
 - [ ] Define reserved keys: `["state"]` (v1)
