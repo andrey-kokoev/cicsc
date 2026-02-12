@@ -98,4 +98,46 @@ describe("sqlite schema generation", () => {
     assert.match(out, /CREATE INDEX IF NOT EXISTS idx_snapshots_v3_view_severity_i/i)
     assert.doesNotMatch(out, /idx_snapshots_v3_view_state/i)
   })
+
+  it("generates indexes from bool_query constraint filter fields", () => {
+    const ir: CoreIrV0 = {
+      version: 0,
+      types: {
+        Ticket: {
+          id_type: "string",
+          states: ["new"],
+          initial_state: "new",
+          attrs: {},
+          shadows: {
+            created_at: { type: "time" },
+          },
+          commands: {
+            c: { input: {}, guard: { expr: { lit: { bool: true } } as any }, emits: [] },
+          },
+          reducer: {},
+        },
+      },
+      constraints: {
+        c1: {
+          kind: "bool_query",
+          on_type: "Ticket",
+          args: {},
+          query: {
+            source: { snap: { type: "Ticket" } },
+            pipeline: [
+              {
+                filter: {
+                  lt: [{ var: { row: { field: "created_at" } } }, { lit: { int: 100 } }],
+                },
+              },
+            ],
+          },
+          assert: { lit: { bool: true } },
+        },
+      },
+    }
+
+    const out = genSqliteSchemaFromIr(ir, { version: 4 }).sql
+    assert.match(out, /CREATE INDEX IF NOT EXISTS idx_snapshots_v4_constraint_created_at/i)
+  })
 })

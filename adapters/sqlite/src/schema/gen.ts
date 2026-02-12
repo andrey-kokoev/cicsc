@@ -12,12 +12,17 @@ export function genSqliteSchemaFromIr (ir: CoreIrV0, opts: SchemaGenOpts): Schem
   const v = opts.version
   const events = genEventsTable(v)
   const snapshots = genSnapshotsTable(ir, v)
-  const viewIndexes = genViewIndexes(ir, v)
+  const viewFields = collectIndexedFieldsFromViews(ir).filter((f) => f !== "attrs_json" && f !== "state")
+  const viewIndexes = genSnapshotIndexes(v, "view", viewFields)
+  const constraintFields = collectIndexedFieldsFromConstraints(ir)
+    .filter((f) => f !== "attrs_json" && f !== "state")
+    .filter((f) => !viewFields.includes(f))
+  const constraintIndexes = genSnapshotIndexes(v, "constraint", constraintFields)
   const versions = genTenantVersions()
   const receipts = genCommandReceipts()
   const sla = genSlaStatus()
 
-  const sql = [versions, receipts, events, snapshots, viewIndexes, sla].join("\n\n")
+  const sql = [versions, receipts, events, snapshots, viewIndexes, constraintIndexes, sla].join("\n\n")
   return { sql }
 }
 
@@ -97,17 +102,14 @@ ${idxState}
 `.trim()
 }
 
-function genViewIndexes (ir: CoreIrV0, version: number): string {
-  const fields = collectIndexedFieldsFromViews(ir)
-    .filter((f) => f !== "attrs_json" && f !== "state")
-
+function genSnapshotIndexes (version: number, kind: "view" | "constraint", fields: string[]): string {
   if (fields.length === 0) return ""
 
   return fields
     .map((f) => {
       const safe = sanitizeIndexToken(f)
       return `
-CREATE INDEX IF NOT EXISTS idx_snapshots_v${version}_view_${safe}
+CREATE INDEX IF NOT EXISTS idx_snapshots_v${version}_${kind}_${safe}
   ON snapshots_v${version}(tenant_id, entity_type, ${escapeIdent(f)});
 `.trim()
     })
@@ -166,6 +168,15 @@ function collectIndexedFieldsFromViews (ir: CoreIrV0): string[] {
   for (const view of Object.values(ir.views ?? {})) {
     const q: any = (view as any).query
     collectFieldsFromQuery(q, out)
+  }
+  return Array.from(out).sort()
+}
+
+function collectIndexedFieldsFromConstraints (ir: CoreIrV0): string[] {
+  const out = new Set<string>()
+  for (const c of Object.values(ir.constraints ?? {})) {
+    if ((c as any).kind !== "bool_query") continue
+    collectFieldsFromQuery((c as any).query, out)
   }
   return Array.from(out).sort()
 }
