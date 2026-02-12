@@ -138,6 +138,16 @@ def hasReservedRowFieldCollision (ts : TypeSpec) : Bool :=
   ts.attrs.any (fun kv => ReservedRowKeys.contains kv.fst) ||
   ts.shadows.any (fun kv => ReservedRowKeys.contains kv.fst)
 
+def listHasDuplicates : List String → Bool
+  | [] => false
+  | x :: xs => xs.contains x || listHasDuplicates xs
+
+def hasDuplicateAttrNames (ts : TypeSpec) : Bool :=
+  listHasDuplicates (ts.attrs.map Prod.fst)
+
+def hasDuplicateShadowNames (ts : TypeSpec) : Bool :=
+  listHasDuplicates (ts.shadows.map Prod.fst)
+
 def hasRowNameCollision (ts : TypeSpec) : Bool :=
   ts.attrs.any (fun a => ts.shadows.any (fun s => s.fst = a.fst))
 
@@ -180,7 +190,10 @@ def commandTypeEnv (ts : TypeSpec) (cmd : CommandSpec) : Option TypeEnv :=
   | _, _ => none
 
 def checkTypeSpecNames (ts : TypeSpec) : Bool :=
-  !hasReservedRowFieldCollision ts && !hasRowNameCollision ts
+  !hasReservedRowFieldCollision ts &&
+  !hasRowNameCollision ts &&
+  !hasDuplicateAttrNames ts &&
+  !hasDuplicateShadowNames ts
 
 def checkTypeSpec (ts : TypeSpec) : Bool :=
   if !checkTypeSpecNames ts then

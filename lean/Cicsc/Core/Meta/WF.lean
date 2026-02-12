@@ -18,6 +18,9 @@ def declaredAttrNames (ts : TypeSpec) : List String :=
 def declaredShadowNames (ts : TypeSpec) : List String :=
   ts.shadows.map Prod.fst
 
+def NoDuplicateFieldNames (ts : TypeSpec) : Prop :=
+  (declaredAttrNames ts).Nodup ∧ (declaredShadowNames ts).Nodup
+
 def reducerTargetsDeclared (ts : TypeSpec) : Prop :=
   ∀ evt ops, (evt, ops) ∈ ts.reducer →
     ∀ op ∈ ops,
@@ -53,6 +56,7 @@ def commandsTypecheck (ts : TypeSpec) : Prop :=
 def WFTypeSpec (ts : TypeSpec) : Prop :=
   initialStateInStates ts ∧
   NoReservedCollisions ts ∧
+  NoDuplicateFieldNames ts ∧
   reducerTargetsDeclared ts ∧
   reducerLiteralStatesValid ts ∧
   reducerOpsTypecheck ts ∧
