@@ -16,6 +16,8 @@ import { loadTenantBundle } from "./tenant-bundle"
 
 export interface Env {
   DB: D1Database
+  BUNDLE_CREATE_TOKEN?: string
+  TENANT_BIND_TOKEN?: string
 }
 
 type D1Database = {
@@ -71,6 +73,7 @@ export default {
 
       // POST /bundle  (stores bundle, returns bundle_hash)
       if (url.pathname === "/bundle" && req.method === "POST") {
+        if (!isAuthorized(req, env.BUNDLE_CREATE_TOKEN)) return jsonErr(403, "forbidden: bundle_create")
         const body = (await req.json().catch(() => ({}))) as any
 
         let bundle: any
@@ -97,6 +100,7 @@ export default {
 
       // POST /bind  (bind tenant -> bundle_hash + active_version)
       if (url.pathname === "/bind" && req.method === "POST") {
+        if (!isAuthorized(req, env.TENANT_BIND_TOKEN)) return jsonErr(403, "forbidden: tenant_bind")
         const body = (await req.json().catch(() => ({}))) as any
         const tenant_id = String(body.tenant_id ?? "")
         const bundle_hash = String(body.bundle_hash ?? "")
@@ -248,4 +252,13 @@ function safeParseJson (s: string) {
   } catch {
     return {}
   }
+}
+
+function isAuthorized (req: Request, expectedToken?: string): boolean {
+  if (!expectedToken) return true
+  const auth = req.headers.get("authorization") ?? ""
+  const bearer = auth.startsWith("Bearer ") ? auth.slice("Bearer ".length).trim() : ""
+  const alt = req.headers.get("x-cicsc-token") ?? ""
+  const provided = bearer || alt
+  return provided.length > 0 && provided === expectedToken
 }

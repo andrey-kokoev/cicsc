@@ -41,7 +41,7 @@
 - [x] Add POST /bundle (store compiled bundle, return bundle_hash)
 - [x] Add POST /bind (bind tenant to bundle_hash + version)
 - [x] Add GET /bundle/:hash (retrieve bundle)
-- [ ] Add authz for bundle creation vs tenant binding
+- [x] Add authz for bundle creation vs tenant binding
 
 ## F. Spec DSL (User Intent Layer)
 - [ ] Define Spec DSL syntax (YAML) distinct from IR shape

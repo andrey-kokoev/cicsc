@@ -128,4 +128,45 @@ describe("worker /bundle endpoint", () => {
     )
     assert.equal(res.status, 404)
   })
+
+  it("enforces bundle creation auth when token configured", async () => {
+    const fake = makeFakeDb()
+    const bundle: any = {
+      core_ir: {
+        version: 0,
+        types: {
+          Ticket: {
+            id_type: "string",
+            states: ["new"],
+            initial_state: "new",
+            attrs: {},
+            commands: {
+              c: { input: {}, guard: { expr: { lit: { bool: true } } }, emits: [] },
+            },
+            reducer: {},
+          },
+        },
+      },
+    }
+
+    const denied = await workerDefault.fetch(
+      new Request("http://localhost/bundle", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(bundle),
+      }),
+      { DB: fake.db as any, BUNDLE_CREATE_TOKEN: "secret" } as any
+    )
+    assert.equal(denied.status, 403)
+
+    const allowed = await workerDefault.fetch(
+      new Request("http://localhost/bundle", {
+        method: "POST",
+        headers: { "content-type": "application/json", authorization: "Bearer secret" },
+        body: JSON.stringify(bundle),
+      }),
+      { DB: fake.db as any, BUNDLE_CREATE_TOKEN: "secret" } as any
+    )
+    assert.equal(allowed.status, 200)
+  })
 })
