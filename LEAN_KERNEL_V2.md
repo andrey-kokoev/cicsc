@@ -146,7 +146,9 @@ v2 adds semantic coverage for:
   - `evalDistinct_idempotent` captures DISTINCT idempotence.
 
 #### 1.3.2 Subqueries
-- [ ] Define correlated subquery semantics (row-dependent evaluation)
+- [x] Define correlated subquery semantics (row-dependent evaluation)
+  - `evalCorrelatedSubquery` defined in `lean/Cicsc/Core/Semantics/QueryEval.lean`.
+  - Outer-row field preservation captured by `correlated_subquery_preserves_outer_fields`.
 - [ ] Define EXISTS, IN, ANY, ALL predicates over subqueries
 - [ ] Prove subquery flattening equivalences (decorrelation rules)
 

@@ -719,6 +719,24 @@ theorem evalDistinct_idempotent
   unfold evalDistinct
   simp
 
+def evalCorrelatedSubquery (outer : QueryRow) (subquery : Query) (snaps : SnapSet) : List QueryRow :=
+  (evalQuerySubsetWithSetOps subquery snaps).map (fun inner => combineRows outer inner)
+
+theorem correlated_subquery_preserves_outer_fields
+  (outer : QueryRow)
+  (subquery : Query)
+  (snaps : SnapSet)
+  (field : String)
+  (value : Val)
+  (hmem : (field, value) ∈ outer) :
+  ∀ row ∈ evalCorrelatedSubquery outer subquery snaps, (field, value) ∈ row := by
+  intro row hrow
+  unfold evalCorrelatedSubquery at hrow
+  simp at hrow
+  rcases hrow with ⟨inner, _, hr⟩
+  subst hr
+  exact combineRows_preservesLeftFields outer inner field value hmem
+
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .project fields, rows => rows.map (fun r => evalProject r fields)
