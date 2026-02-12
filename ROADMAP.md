@@ -176,4 +176,4 @@
 - [x] Resolve oracle replay + constraints regression currently failing `tests/oracle/replay-and-constraints.test.ts`
 - [x] Standardize local/CI dependency bootstrap for adapter checks (`pg`, sqlite test harness drivers)
 - [x] Promote the Phase 3 CI target (`scripts/phase3_ci_target.sh`) to default validation entrypoint in automation
-- [ ] Add deterministic policy for `.ts` module resolution in test runtime (remove ad hoc execution variance)
+- [x] Add deterministic policy for `.ts` module resolution in test runtime (remove ad hoc execution variance)
