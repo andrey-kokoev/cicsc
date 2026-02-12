@@ -160,6 +160,69 @@ describe("conformance: sqlite execution vs oracle", () => {
     }
   })
 
+  it("exec lowered bool_query arithmetic assert equals oracle truth", () => {
+    const db = openSqliteMemory()
+    try {
+      installSqliteSchemaV0(db)
+
+      upsertSnapshot(db, { tenant_id: "t", entity_type: "Ticket", entity_id: "a", state: "new", attrs: {}, updated_ts: 1 })
+      upsertSnapshot(db, { tenant_id: "t", entity_type: "Ticket", entity_id: "b", state: "new", attrs: {}, updated_ts: 1 })
+      upsertSnapshot(db, { tenant_id: "t", entity_type: "Ticket", entity_id: "c", state: "triage", attrs: {}, updated_ts: 1 })
+
+      const constraint: any = {
+        kind: "bool_query",
+        on_type: "Ticket",
+        args: { delta: { type: "int" } },
+        query: {
+          source: { snap: { type: "Ticket" } },
+          pipeline: [{ filter: { eq: [{ var: { row: { field: "state" } } }, { lit: { string: "new" } }] } }],
+        },
+        assert: { eq: [{ add: [{ var: { rows_count: true } }, { var: { arg: { name: "delta" } } }] }, { lit: { int: 3 } }] },
+      }
+
+      const plan = lowerBoolQueryConstraintToSql({ constraint, version: 0, tenant_id: "t", args: { delta: 1 } })
+      const row = runPlanAll(db, plan.sql, plan.binds)[0]
+      assert.ok(row)
+      const okSql = row.ok === 1 || row.ok === true
+
+      const ctx: any = {
+        now: 1,
+        actor: "u",
+        snap: () => [
+          { entity_id: "a", state: "new" },
+          { entity_id: "b", state: "new" },
+          { entity_id: "c", state: "triage" },
+        ],
+        sla_status: () => [],
+        baseEnv: {
+          now: 1,
+          actor: "u",
+          state: "",
+          input: {},
+          attrs: {},
+          arg: {},
+          intrinsics: {
+            has_role: () => false,
+            role_of: () => "agent",
+            auth_ok: () => true,
+            constraint: () => true,
+            len: () => 0,
+            str: (v: any) => (v === null ? null : String(v)),
+            int: (v: any) => (typeof v === "number" ? Math.trunc(v) : null),
+            float: (v: any) => (typeof v === "number" ? v : null),
+          },
+        },
+      }
+
+      const qOut = interpretQuery(constraint.query, ctx)
+      const okOracle = (qOut.rows_count + 1) === 3
+
+      assert.equal(okSql, okOracle)
+    } finally {
+      db.close()
+    }
+  })
+
   it("exec lowered query equals oracle rows for group_by + aggregations", () => {
     const db = openSqliteMemory()
     try {
