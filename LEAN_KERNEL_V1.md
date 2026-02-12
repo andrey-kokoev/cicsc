@@ -109,7 +109,7 @@ Acceptance: `checkIR` is either replaced by proofs about `WFIR`, or accompanied 
 
 ## 4. Replay Properties v1
 
-- [ ] Prove replay determinism (definitional)
+- [x] Prove replay determinism (definitional)
 - [ ] Prove replay preserves state well-formedness:
   - `WFTypeSpec ts → st0 WF → replayFromState ... WF`
 - [ ] Ensure initial state is well-formed:

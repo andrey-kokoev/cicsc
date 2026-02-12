@@ -2,6 +2,7 @@ import Cicsc.Core.Syntax
 import Cicsc.Core.Types
 import Cicsc.Core.Semantics.ExprEval
 import Cicsc.Core.Semantics.Common
+import Cicsc.Core.Meta.WF
 
 namespace Cicsc.Core
 
@@ -86,5 +87,49 @@ theorem applyReducerPreservesWellFormed
   (hwf : WellFormedState ts st) :
   WellFormedState ts (applyReducer ts st e) := by
   exact hpres st e hwf
+
+theorem replayDeterministic (ir : IR) (sid : StreamId) (h : History) :
+  ∀ s1 s2, replay ir sid h = some s1 → replay ir sid h = some s2 → s1 = s2 := by
+  intro s1 s2 h1 h2
+  simpa [h1] using h2
+
+theorem initialStateWellFormedOfWFTypeSpec
+  (ts : TypeSpec)
+  (hWf : WFTypeSpec ts) :
+  WellFormedState ts (initialState ts) := by
+  exact hWf.1
+
+theorem replayFoldPreservesWellFormed
+  (ts : TypeSpec)
+  (hpres : ReducerPreservesWF ts) :
+  ∀ (events : List Event) (st : State),
+    WellFormedState ts st →
+    WellFormedState ts (events.foldl (fun acc e => applyReducer ts acc e) st) := by
+  intro events
+  induction events with
+  | nil =>
+      intro st hwf
+      simpa using hwf
+  | cons e es ih =>
+      intro st hwf
+      have hwf' : WellFormedState ts (applyReducer ts st e) := hpres st e hwf
+      simpa using ih (applyReducer ts st e) hwf'
+
+theorem replayPreservesWellFormedIfTypeExists
+  (ir : IR)
+  (sid : StreamId)
+  (h : History)
+  (ts : TypeSpec)
+  (hlookup : lookupTypeSpec ir sid.entityType = some ts)
+  (hpres : ReducerPreservesWF ts)
+  (hinit : WellFormedState ts (initialState ts)) :
+  ∃ st, replay ir sid h = some st ∧ WellFormedState ts st := by
+  unfold replay
+  simp [hlookup]
+  let stream := h.filter (inStream sid)
+  refine ⟨stream.foldl (fun acc e => applyReducer ts acc e) (initialState ts), ?_⟩
+  constructor
+  · rfl
+  · exact replayFoldPreservesWellFormed ts hpres stream (initialState ts) hinit
 
 end Cicsc.Core
