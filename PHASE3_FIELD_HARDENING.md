@@ -57,7 +57,7 @@ Current 1.3 signal:
 
 ## 2. Conformance Hardening
 
-- [ ] 2.1 Add missing differential tests for lowering paths without oracle-vs-SQL coverage.
+- [x] 2.1 Add missing differential tests for lowering paths without oracle-vs-SQL coverage.
 - [ ] 2.2 Add typechecker negative tests for fail-fast semantic mismatches.
 - [ ] 2.3 Add replay determinism regression suite across representative histories/streams.
 - [ ] 2.4 Add constraint parity tests (oracle interpreter vs lowered backend).

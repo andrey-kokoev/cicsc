@@ -302,6 +302,71 @@ describe("conformance: sqlite execution vs oracle", () => {
     }
   })
 
+  it("exec lowered query equals oracle rows for direct sla_status source", () => {
+    const db = openSqliteMemory()
+    try {
+      installSqliteSchemaV0(db)
+
+      upsertSlaStatus(db, { tenant_id: "t", name: "response", entity_type: "Ticket", entity_id: "a", breached: 0, updated_ts: 1 })
+      upsertSlaStatus(db, { tenant_id: "t", name: "response", entity_type: "Ticket", entity_id: "b", breached: 1, updated_ts: 1 })
+      upsertSlaStatus(db, { tenant_id: "t", name: "response", entity_type: "Ticket", entity_id: "c", breached: 1, updated_ts: 1 })
+
+      const q: any = {
+        source: { sla_status: { name: "response", on_type: "Ticket" } },
+        pipeline: [
+          { filter: { eq: [{ var: { row: { field: "breached" } } }, { lit: { int: 1 } }] } },
+          {
+            project: {
+              fields: [
+                { name: "id", expr: { var: { row: { field: "entity_id" } } } },
+                { name: "breached", expr: { var: { row: { field: "breached" } } } },
+              ],
+            },
+          },
+          { order_by: [{ expr: { var: { row: { field: "id" } } }, dir: "asc" }] },
+        ],
+      }
+
+      const plan = lowerQueryToSql(q, { version: 0, tenant_id: "t" })
+      const sqlRows = runLoweredQueryPlan(db, { tenant_id: "t", query: q, plan })
+
+      const ctx: any = {
+        now: 1,
+        actor: "u",
+        snap: () => [],
+        sla_status: () => [
+          { entity_id: "a", breached: 0 },
+          { entity_id: "b", breached: 1 },
+          { entity_id: "c", breached: 1 },
+        ],
+        baseEnv: {
+          now: 1,
+          actor: "u",
+          state: "",
+          input: {},
+          attrs: {},
+          arg: {},
+          intrinsics: {
+            has_role: () => false,
+            role_of: () => "agent",
+            auth_ok: () => true,
+            constraint: () => true,
+            len: () => 0,
+            str: (v: any) => (v === null ? null : String(v)),
+            int: (v: any) => (typeof v === "number" ? Math.trunc(v) : null),
+            float: (v: any) => (typeof v === "number" ? v : null),
+          },
+        },
+      }
+
+      const oracle = interpretQuery(q, ctx)
+      const sqlProjected = sqlRows.map((r: any) => ({ id: r.id, breached: r.breached }))
+      assert.deepEqual(canonRows(sqlProjected), canonRows(oracle.rows))
+    } finally {
+      db.close()
+    }
+  })
+
   it("exec lowered query equals oracle rows for expr operator coverage", () => {
     const db = openSqliteMemory()
     try {
