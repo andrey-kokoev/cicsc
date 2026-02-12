@@ -61,7 +61,7 @@ Current 1.3 signal:
 - [x] 2.2 Add typechecker negative tests for fail-fast semantic mismatches.
 - [x] 2.3 Add replay determinism regression suite across representative histories/streams.
 - [x] 2.4 Add constraint parity tests (oracle interpreter vs lowered backend).
-- [ ] 2.5 Add migration replay-verification regression suite for v1 migration class.
+- [x] 2.5 Add migration replay-verification regression suite for v1 migration class.
 
 ## 3. Pilot Deployment Preparation
 
