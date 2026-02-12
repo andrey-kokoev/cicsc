@@ -12,7 +12,7 @@
 ## B. IR Soundness & Type Safety
 - [x] Wire IR typechecker into validateBundleV0 and worker load path
 - [x] Reject bundles referencing non-materialized row fields (enforced)
-- [ ] Enforce shadow column type consistency across types
+- [x] Enforce shadow column type consistency across types
 - [ ] Enforce reducer writes only to declared attrs/shadows
 - [ ] Enforce SQL-lowerable intrinsics in views/constraints
 - [ ] Add static detection of non-deterministic intrinsics in reducers/guards

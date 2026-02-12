@@ -13,6 +13,7 @@ export type TypecheckError = {
   | "ILLEGAL_EXPR"
   | "ILLEGAL_INTRINSIC"
   | "ILLEGAL_REDUCER_WRITE"
+  | "SHADOW_TYPE_MISMATCH"
   path: string
   message: string
 }
@@ -28,6 +29,54 @@ export function typecheckCoreIrV0 (ir: CoreIrV0): TypecheckResult {
   const warnings: TypecheckError[] = []
 
   const typeNames = new Set(Object.keys(ir.types ?? {}))
+
+  // 0) Cross-type shadow type consistency
+  {
+    const byShadow = new Map<string, { typeName: string; path: string; declaredType: string | null }[]>()
+
+    for (const [typeName, tSpecAny] of Object.entries(ir.types ?? {})) {
+      const tSpec: any = tSpecAny
+      for (const [shadowName, sAny] of Object.entries(tSpec.shadows ?? {})) {
+        const s: any = sAny
+        const declaredType = typeof s?.type === "string" && s.type.trim() !== "" ? s.type.trim() : null
+        const arr = byShadow.get(shadowName) ?? []
+        arr.push({
+          typeName,
+          path: `${typeName}.shadows.${shadowName}.type`,
+          declaredType,
+        })
+        byShadow.set(shadowName, arr)
+      }
+    }
+
+    for (const [shadowName, entries] of byShadow.entries()) {
+      const explicit = new Set(entries.map((e) => e.declaredType).filter((x): x is string => x != null))
+
+      if (explicit.size > 1) {
+        const got = Array.from(explicit).sort().join(", ")
+        for (const e of entries) {
+          errors.push({
+            code: "SHADOW_TYPE_MISMATCH",
+            path: e.path,
+            message: `shadow '${shadowName}' has inconsistent types across entity types: ${got}`,
+          })
+        }
+        continue
+      }
+
+      if (explicit.size === 1 && entries.some((e) => e.declaredType == null)) {
+        const only = Array.from(explicit)[0]!
+        for (const e of entries) {
+          if (e.declaredType != null) continue
+          errors.push({
+            code: "SHADOW_TYPE_MISMATCH",
+            path: e.path,
+            message: `shadow '${shadowName}' type must be explicitly '${only}' to match other entity types`,
+          })
+        }
+      }
+    }
+  }
 
   // 1) Per-type checks
   for (const [tName, tSpecAny] of Object.entries(ir.types ?? {})) {
