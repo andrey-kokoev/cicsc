@@ -190,7 +190,9 @@ v2 adds semantic coverage for:
   - Current model covers table lookup, join execution, where/select/limit/offset for the supported subset.
   - `execSQL : SQLQuery → DB → List Row` (DB = snapshot database state)
   - Model SQLite/Postgres evaluation order
-- [ ] Define row/value representation mapping:
+- [x] Define row/value representation mapping:
+  - Added `SQLVal`, `toSQLVal`, and `fromSQLVal` in `lean/Cicsc/Sql/Exec.lean`.
+  - Added scalar-domain roundtrip lemmas (`sqlVal_roundtrip_scalar`, `val_to_from_sql_scalar`).
   - Lean `Val` ↔ SQL types (INTEGER, TEXT, BLOB, NULL)
   - Handle type coercion rules
 

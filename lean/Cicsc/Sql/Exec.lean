@@ -6,6 +6,57 @@ open Cicsc.Core
 
 abbrev DB := List (String × List QueryRow)
 
+inductive SQLVal where
+  | null
+  | integer (n : Int)
+  | text (s : String)
+  | boolean (b : Bool)
+  | blob (bytes : List UInt8)
+deriving Repr, DecidableEq
+
+def toSQLVal : Val → SQLVal
+  | .vNull => .null
+  | .vInt n => .integer n
+  | .vString s => .text s
+  | .vBool b => .boolean b
+  | .vObj _ => .blob []
+  | .vArr _ => .blob []
+
+def fromSQLVal : SQLVal → Val
+  | .null => .vNull
+  | .integer n => .vInt n
+  | .text s => .vString s
+  | .boolean b => .vBool b
+  | .blob _ => .vNull
+
+theorem sqlVal_roundtrip_scalar
+  (v : Val)
+  (hscalar : ∃ n, v = .vInt n ∨ ∃ s, v = .vString s ∨ ∃ b, v = .vBool b ∨ v = .vNull) :
+  fromSQLVal (toSQLVal v) = v := by
+  rcases hscalar with ⟨n, hint | ⟨s, hstr | ⟨b, hbool | hnull⟩⟩⟩
+  · cases hint
+    rfl
+  · cases hstr
+    rfl
+  · cases hbool
+    rfl
+  · cases hnull
+    rfl
+
+theorem val_to_from_sql_scalar
+  (sv : SQLVal)
+  (hscalar : ∃ n, sv = .integer n ∨ ∃ s, sv = .text s ∨ ∃ b, sv = .boolean b ∨ sv = .null) :
+  toSQLVal (fromSQLVal sv) = sv := by
+  rcases hscalar with ⟨n, hint | ⟨s, hstr | ⟨b, hbool | hnull⟩⟩⟩
+  · cases hint
+    rfl
+  · cases hstr
+    rfl
+  · cases hbool
+    rfl
+  · cases hnull
+    rfl
+
 def lookupTable (db : DB) (name : String) : List QueryRow :=
   match db.find? (fun kv => kv.fst = name) with
   | some (_, rows) => rows
