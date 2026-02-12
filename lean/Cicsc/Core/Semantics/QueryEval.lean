@@ -85,6 +85,55 @@ def lookupSnapRows (snaps : SnapSet) (typeName : TypeName) : List State :=
   | some kv => kv.snd
   | none => []
 
+-- v2: Row combination for joins
+-- See LEAN_KERNEL_V2.md §1.1.1
+-- Combines two query rows by concatenating their field lists.
+-- In case of field name collision, left row fields take precedence.
+def combineRows (left right : QueryRow) : QueryRow :=
+  let rightFiltered := right.filter (fun kv => !left.any (fun lkv => lkv.fst = kv.fst))
+  left ++ rightFiltered
+
+-- v2: Join evaluation
+-- See LEAN_KERNEL_V2.md §1.1.1
+-- Evaluates a join between two lists of rows based on join type and condition.
+def evalJoin (joinType : JoinType) (leftRows rightRows : List QueryRow) (condition : Expr) : List QueryRow :=
+  match joinType with
+  | .cross =>
+      -- Cross join: Cartesian product (condition ignored)
+      leftRows.flatMap (fun l => rightRows.map (fun r => combineRows l r))
+  | .inner =>
+      -- Inner join: Cartesian product filtered by condition
+      leftRows.flatMap (fun l =>
+        rightRows.filterMap (fun r =>
+          let combined := combineRows l r
+          if evalFilterExpr combined condition then some combined else none))
+  | .leftOuter =>
+      -- Left outer join: all left rows, with matching right rows or nulls
+      leftRows.flatMap (fun l =>
+        let matches := rightRows.filterMap (fun r =>
+          let combined := combineRows l r
+          if evalFilterExpr combined condition then some combined else none)
+        if matches.isEmpty then [l] else matches)
+  | .rightOuter =>
+      -- Right outer join: all right rows, with matching left rows or nulls
+      rightRows.flatMap (fun r =>
+        let matches := leftRows.filterMap (fun l =>
+          let combined := combineRows l r
+          if evalFilterExpr combined condition then some combined else none)
+        if matches.isEmpty then [r] else matches)
+  | .fullOuter =>
+      -- Full outer join: all rows from both sides, with nulls for non-matches
+      let leftWithMatches := leftRows.flatMap (fun l =>
+        let matches := rightRows.filterMap (fun r =>
+          let combined := combineRows l r
+          if evalFilterExpr combined condition then some combined else none)
+        if matches.isEmpty then [l] else matches)
+      let unmatchedRight := rightRows.filter (fun r =>
+        !leftRows.any (fun l =>
+          let combined := combineRows l r
+          evalFilterExpr combined condition))
+      leftWithMatches ++ unmatchedRight
+
 theorem lookupSnapRows_cons_ne
   (snaps : SnapSet)
   (typeName otherType : TypeName)
@@ -93,14 +142,20 @@ theorem lookupSnapRows_cons_ne
   lookupSnapRows ((otherType, rows) :: snaps) typeName = lookupSnapRows snaps typeName := by
   simp [lookupSnapRows, hne]
 
-def evalSourceSubset (src : Source) (snaps : SnapSet) : List QueryRow :=
+-- v2: Recursive source evaluation with join support
+-- See LEAN_KERNEL_V2.md §1.1.1
+partial def evalSourceSubset (src : Source) (snaps : SnapSet) : List QueryRow :=
   match src with
   | .snap typeName => (lookupSnapRows snaps typeName).map mkRow
   | .slaStatus _ _ => []
-  | .join _ _ _ _ => []
+  | .join joinType left right condition =>
+      let leftRows := evalSourceSubset left snaps
+      let rightRows := evalSourceSubset right snaps
+      evalJoin joinType leftRows rightRows condition
 
 def supportsSourceSubset : Source → Bool
   | .snap _ => true
+  | .join _ left right _ => supportsSourceSubset left && supportsSourceSubset right
   | _ => false
 
 def supportsQuerySubset (q : Query) : Bool :=

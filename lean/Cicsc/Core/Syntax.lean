@@ -52,10 +52,20 @@ structure EventSelector where
   whereExpr : Option Expr := none
 deriving Repr, DecidableEq
 
+-- v2: Join types for relational algebra
+-- See LEAN_KERNEL_V2.md §1.1.1
+inductive JoinType where
+  | inner
+  | leftOuter
+  | rightOuter
+  | fullOuter
+  | cross
+deriving Repr, DecidableEq
+
 inductive Source where
   | snap (typeName : TypeName)
   | slaStatus (name : String) (onType : TypeName)
-  | join (left : Source) (right : Source) (leftField : String) (rightField : String)
+  | join (joinType : JoinType) (left : Source) (right : Source) (condition : Expr)
 deriving Repr, DecidableEq
 
 structure ProjectField where
