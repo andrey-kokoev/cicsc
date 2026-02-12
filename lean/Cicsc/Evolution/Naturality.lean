@@ -53,12 +53,30 @@ def StepCommutes
     step irFrom typeName s e = some s' →
     stepMigrated irTo typeName ms (migrateState ms s) e = some (migrateState ms s')
 
-axiom replay_commutes
+theorem replay_commutes
   (irFrom irTo : IR)
   (typeName : String)
   (ms : MigrationSpec)
   (hWf : WFMigration ms irFrom irTo)
   (hstep : StepCommutes irFrom irTo typeName ms) :
-  ∀ (h : History) (s0 : State), Commutes irFrom irTo typeName ms s0 h
+  ∀ (h : History) (s0 : State), Commutes irFrom irTo typeName ms s0 h := by
+  intro h
+  induction h with
+  | nil =>
+      intro s0
+      unfold Commutes replayMigratedFromState replayFromState
+      simp
+  | cons e hs ih =>
+      intro s0
+      unfold Commutes replayMigratedFromState replayFromState
+      cases hstep0 : step irFrom typeName s0 e with
+      | none =>
+          simp [hstep0]
+      | some s1 =>
+          have hmig :
+            stepMigrated irTo typeName ms (migrateState ms s0) e = some (migrateState ms s1) :=
+            hstep s0 s1 e hstep0
+          simp [hstep0, hmig]
+          exact ih s1
 
 end Cicsc.Evolution
