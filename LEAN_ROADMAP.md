@@ -16,7 +16,7 @@
 - [x] Implement abstract command semantics in `Semantics/Commands.lean`
 
 ## D. Meta and Typechecking
-- [ ] Add decidable typechecker skeleton in `Meta/Typecheck.lean`
+- [x] Add decidable typechecker skeleton in `Meta/Typecheck.lean`
 - [ ] Add typing judgments for Expr subset and well-typed env relation
 
 ## E. Proof Milestone v0
