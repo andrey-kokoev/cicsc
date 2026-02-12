@@ -18,7 +18,7 @@
 - [x] Add static detection of non-deterministic intrinsics in reducers/guards
 
 ## C. Schema Generation & Storage Model
-- [ ] Generate snapshots schema per IR version (vN) from shadows
+- [x] Generate snapshots schema per IR version (vN) from shadows
 - [ ] Generate indexes from views (order_by, filter fields)
 - [ ] Generate indexes from constraints (fields referenced in filters)
 - [ ] Add schema diff/migration generator for snapshots when IR changes
