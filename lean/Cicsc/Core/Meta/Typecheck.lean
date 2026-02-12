@@ -231,7 +231,15 @@ def checkTypeSpec (ts : TypeSpec) : Bool :=
         okCommands && okReducers
 
 def checkIR (ir : IR) : Bool :=
-  ir.types.all (fun kv => checkTypeSpec kv.snd)
+  let typeChecks := ir.types.all (fun kv => checkTypeSpec kv.snd)
+  let constraintsOk :=
+    ir.constraints.all (fun kv =>
+      match kv.snd with
+      | .snapshot onType _ => ir.types.any (fun tk => tk.fst = onType)
+      | .boolQuery onType _ _ => ir.types.any (fun tk => tk.fst = onType))
+  let viewsOk :=
+    ir.views.all (fun kv => ir.types.any (fun tk => tk.fst = kv.snd.onType))
+  typeChecks && constraintsOk && viewsOk
 
 -- Declarative typing judgment is intentionally omitted in v0.
 -- We currently rely on algorithmic inference (`inferExprTy`) for checks.

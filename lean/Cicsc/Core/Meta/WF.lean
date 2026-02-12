@@ -50,7 +50,7 @@ def WFTypeSpec (ts : TypeSpec) : Prop :=
   commandsTypecheck ts
 
 def typeExists (ir : IR) (typeName : String) : Prop :=
-  ∃ ts, lookupTypeSpec ir typeName = some ts
+  ir.types.any (fun kv => kv.fst = typeName) = true
 
 def constraintsReferenceExistingTypes (ir : IR) : Prop :=
   ∀ name c, (name, c) ∈ ir.constraints →
@@ -182,6 +182,22 @@ theorem wfTypeSpec_of_checkTypeSpec
     reducerOpsTypecheck_of_checkTypeSpec ts hcheck,
     commandsTypecheck_of_checkTypeSpec ts hcheck
   ⟩
+
+theorem wfIR_of_checkIR
+  (ir : IR)
+  (hcheck : checkIR ir = true) :
+  WFIR ir := by
+  unfold checkIR at hcheck
+  simp at hcheck
+  refine ⟨?_, ?_, ?_⟩
+  · intro typeName ts hmem
+    have hpair : checkTypeSpec ts = true :=
+      (List.all_eq_true.mp hcheck.1) (typeName, ts) hmem
+    exact wfTypeSpec_of_checkTypeSpec ts hpair
+  · intro name c hmem
+    exact (List.all_eq_true.mp hcheck.2.1) (name, c) hmem
+  · intro name v hmem
+    exact (List.all_eq_true.mp hcheck.2.2) (name, v) hmem
 
 -- Coverage audit (v1.5/B.9):
 -- Existing bridge lemmas connect `checkTypeSpec = true` to:

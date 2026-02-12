@@ -116,7 +116,7 @@ Canonical evaluator policy (runtime alignment):
   - Combines all component lemmas
 
 #### 2.4 Prove IR-Level Connection
-- [ ] Theorem: `checkIR ir = true → WFIR ir`
+- [x] Theorem: `checkIR ir = true → WFIR ir`
   - Uses `checkTypeSpec → WFTypeSpec` for each type
   - Proves constraint and view type existence
 
