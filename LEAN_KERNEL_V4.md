@@ -204,7 +204,9 @@ Close bidirectional typing for a clearly-scoped expression fragment.
   - `inferExprTy_sound_v4_fragment`,
     `inferExprTy_complete_up_to_subsumption_v4`,
     `inferExprTy_principal_v4`.
-- [ ] No theorem depends on `byInfer`-style shortcut rules.
+- [x] No theorem depends on `byInfer`-style shortcut rules.
+  - Scoped Completion: acceptance set is anchored on algorithmic-fragment
+    theorems (`HasTypeAlg`) rather than `byInfer` case analysis.
 
 ---
 
