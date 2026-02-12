@@ -39,4 +39,25 @@ def migrateState (ms : MigrationSpec) (st : State) : State :=
   | some kv => { st with st := kv.snd }
   | none => st
 
+def sourceEventTypes (irFrom : IR) (typeName : String) : List String :=
+  match lookupTypeSpec irFrom typeName with
+  | none => []
+  | some ts => ts.reducer.map Prod.fst
+
+def eventCovered (ms : MigrationSpec) (eventType : String) : Prop :=
+  ∃ t ∈ ms.transforms, t.source = eventType
+
+def targetReducerExists (irTo : IR) (typeName targetEventType : String) : Prop :=
+  ∃ ts ops, lookupTypeSpec irTo typeName = some ts ∧ (targetEventType, ops) ∈ ts.reducer
+
+def targetStateValid (irTo : IR) (typeName targetState : String) : Prop :=
+  ∃ ts, lookupTypeSpec irTo typeName = some ts ∧ targetState ∈ ts.states
+
+def WFMigration (ms : MigrationSpec) (irFrom irTo : IR) : Prop :=
+  ms.fromVersion = irFrom.version ∧
+  ms.toVersion = irTo.version ∧
+  (∀ et, et ∈ sourceEventTypes irFrom ms.entityType → eventCovered ms et) ∧
+  (∀ tr, tr ∈ ms.transforms → tr.drop = false → targetReducerExists irTo ms.entityType tr.target) ∧
+  (∀ kv, kv ∈ ms.stateMap → targetStateValid irTo ms.entityType kv.snd)
+
 end Cicsc.Evolution
