@@ -15,7 +15,7 @@
 - [x] Enforce shadow column type consistency across types
 - [x] Enforce reducer writes only to declared attrs/shadows
 - [x] Enforce SQL-lowerable intrinsics in views/constraints
-- [ ] Add static detection of non-deterministic intrinsics in reducers/guards
+- [x] Add static detection of non-deterministic intrinsics in reducers/guards
 
 ## C. Schema Generation & Storage Model
 - [ ] Generate snapshots schema per IR version (vN) from shadows

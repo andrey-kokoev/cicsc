@@ -23,6 +23,8 @@ export type TypecheckResult =
   | { ok: false; errors: TypecheckError[]; warnings: TypecheckError[] }
 
 const CORE_ROW_FIELDS = new Set(["entity_id", "state", "updated_ts", "attrs_json"])
+const KNOWN_INTRINSICS = new Set(["has_role", "role_of", "auth_ok", "allowed", "constraint", "len", "str", "int", "float"])
+const NON_DETERMINISTIC_INTRINSICS = new Set(["now", "random", "rand", "uuid"])
 
 export function typecheckCoreIrV0 (ir: CoreIrV0): TypecheckResult {
   const errors: TypecheckError[] = []
@@ -486,6 +488,24 @@ function walkExpr (expr: any, path: string, ctx: WalkCtx) {
           code: "ILLEGAL_INTRINSIC",
           path: `${path}.call.fn`,
           message: `intrinsic '${fn}' not allowed in SQL-lowered context`,
+        })
+        return
+      }
+
+      if (NON_DETERMINISTIC_INTRINSICS.has(fn)) {
+        ctx.errors.push({
+          code: "ILLEGAL_INTRINSIC",
+          path: `${path}.call.fn`,
+          message: `non-deterministic intrinsic '${fn}' is not allowed`,
+        })
+        return
+      }
+
+      if (!KNOWN_INTRINSICS.has(fn)) {
+        ctx.errors.push({
+          code: "ILLEGAL_INTRINSIC",
+          path: `${path}.call.fn`,
+          message: `unknown intrinsic '${fn}'`,
         })
         return
       }
