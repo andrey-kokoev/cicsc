@@ -9,7 +9,8 @@ import type { CoreIrV0 } from "../../core/ir/types"
 import { validateBundleV0 } from "../../core/ir/validate"
 import { verifyHistoryAgainstIr } from "../../core/runtime/verify"
 import { activateVersion } from "../db/activate-version"
-import { putBundle } from "../db/bundle-registry"
+import { getBundle, putBundle } from "../db/bundle-registry"
+import { bindTenant } from "../db/tenant-binding"
 import { compileSpecToBundleV0, readSpecBody } from "./compile"
 import { loadTenantBundle } from "./tenant-bundle"
 
@@ -83,6 +84,23 @@ export default {
 
         const out = await putBundle(env.DB as any, bundle)
         return Response.json({ ok: true, bundle_hash: out.bundle_hash })
+      }
+
+      // POST /bind  (bind tenant -> bundle_hash + active_version)
+      if (url.pathname === "/bind" && req.method === "POST") {
+        const body = (await req.json().catch(() => ({}))) as any
+        const tenant_id = String(body.tenant_id ?? "")
+        const bundle_hash = String(body.bundle_hash ?? "")
+        const active_version = Number(body.active_version ?? 0)
+
+        if (!tenant_id || !bundle_hash) return jsonErr(400, "tenant_id and bundle_hash required")
+        if (!Number.isFinite(active_version) || active_version < 0) return jsonErr(400, "active_version must be >= 0")
+
+        const bundle = await getBundle(env.DB as any, bundle_hash)
+        if (!bundle) return jsonErr(404, "bundle not found")
+
+        await bindTenant(env.DB as any, { tenant_id, bundle_hash, active_version })
+        return Response.json({ ok: true })
       }
 
       // POST /install-from-spec  (compile + install schema; does not persist bundle)
