@@ -53,7 +53,8 @@ Prove that SQL lowering/execution matches kernel query semantics for the scoped 
 - [x] Differential generated tests pass for all in-scope operators.
   - Covered by `tests/conformance/sqlite-random-vs-oracle.test.ts`
     and `tests/conformance/sqlite-exec-vs-oracle-smoke.test.ts` in CI target.
-- [ ] Theorem and scope are documented in `docs/spec/formal-backend-conformance.md`.
+- [x] Theorem and scope are documented in `docs/spec/formal-backend-conformance.md`.
+  - Includes v4 scoped theorem exclusions and conformance contract.
 
 ---
 
