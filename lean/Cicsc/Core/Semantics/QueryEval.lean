@@ -267,14 +267,23 @@ theorem avg_from_sum_and_count
   intro hc
   rfl
 
+-- v2: HAVING clause evaluation
+-- See LEAN_KERNEL_V2.md §1.2.2
+
+-- Apply GROUP BY with aggregation, producing aggregated rows
+def applyGroupByWithAggs (keys : List GroupKey) (aggs : List (String × AggExpr)) (rows : List QueryRow) : List QueryRow :=
+  let groups := evalGroupBy keys rows
+  groups.map (fun (keyVals, grp) =>
+    -- Build row with group keys and aggregated values
+    let keyFields := keys.zip keyVals |>.map (fun (k, v) => (k.name, v))
+    let aggFields := aggs.map (fun (name, agg) => (name, evalAggregate agg grp))
+    keyFields ++ aggFields)
+
 def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
   | .filter e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .project fields, rows => rows.map (fun r => evalProject r fields)
-  | .groupBy keys aggs, rows =>
-      -- For now, groupBy without aggregation just returns distinct key rows
-      -- Full aggregation support added in next checkpoint
-      let groups := evalGroupBy keys rows
-      groups.map (fun (_, grp) => grp.head!)
+  | .groupBy keys aggs, rows => applyGroupByWithAggs keys aggs rows
+  | .having e, rows => rows.filter (fun r => evalFilterExpr r e)
   | .orderBy keys, rows => sortRows keys rows
   | .limit n, rows => rows.take n
   | .offset n, rows => rows.drop n
@@ -282,7 +291,8 @@ def applyQueryOpSubset : QueryOp → List QueryRow → List QueryRow
 def supportsQueryOpSubset : QueryOp → Bool
   | .filter _ => true
   | .project _ => true
-  | .groupBy _ _ => false
+  | .groupBy _ _ => true
+  | .having _ => true
   | .orderBy _ => true
   | .limit _ => true
   | .offset _ => true

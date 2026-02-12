@@ -98,6 +98,7 @@ inductive QueryOp where
   | filter (expr : Expr)
   | project (fields : List ProjectField)
   | groupBy (keys : List GroupKey) (aggs : List (String × AggExpr))
+  | having (expr : Expr)  -- v2: Filter on aggregated results (post-grouping)
   | orderBy (keys : List OrderKey)
   | limit (n : Nat)
   | offset (n : Nat)
