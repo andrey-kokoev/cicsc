@@ -136,7 +136,7 @@
 - [x] Write formal definition of backend conformance (oracle equivalence)
 - [x] Write formal definition of migration correctness (commuting diagrams)
 - [x] Specify the Core IR grammar and typing rules
-- [ ] Specify Spec DSL grammar and desugaring rules
+- [x] Specify Spec DSL grammar and desugaring rules
 - [ ] Define versioning and compatibility rules
 - [ ] Publish spec as normative reference document
 
