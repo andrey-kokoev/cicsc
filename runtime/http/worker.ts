@@ -193,7 +193,9 @@ export default {
         return Response.json({ ok: true, result })
       }
 
-      // POST /verify { tenant_id, entity_type, entity_id, limit? }
+      // POST /verify
+      // - stream mode: { tenant_id, entity_type, entity_id, limit? }
+      // - tenant mode: { tenant_id, limit? } (full-tenant verification)
       if (url.pathname === "/verify" && req.method === "POST") {
         const body = (await req.json().catch(() => ({}))) as any
         const tenant_id = String(body.tenant_id ?? "t")
@@ -203,22 +205,32 @@ export default {
         const entity_id = String(body.entity_id ?? "")
         const limit = Math.max(1, Math.min(Number(body.limit ?? 5000), 20000))
 
-        if (!entity_type || !entity_id) return jsonErr(400, "entity_type and entity_id required")
-
-        // Read events stream and verify against IR using oracle verifier.
-        const stream = await store.readStream({ tenant_id, entity_type, entity_id, limit })
-
-        // Adapt adapter rows into verifier Event format (payload_json -> payload object).
-        const events = (stream.events ?? []).map((e: any) => ({
-          tenant_id,
-          entity_type,
-          entity_id,
-          seq: e.seq,
-          event_type: e.event_type,
-          payload: safeParseJson(e.payload_json),
-          ts: e.ts,
-          actor_id: e.actor_id,
-        }))
+        let events: any[]
+        if (entity_type && entity_id) {
+          const stream = await store.readStream({ tenant_id, entity_type, entity_id, limit })
+          events = (stream.events ?? []).map((e: any) => ({
+            tenant_id,
+            entity_type,
+            entity_id,
+            seq: e.seq,
+            event_type: e.event_type,
+            payload: safeParseJson(e.payload_json),
+            ts: e.ts,
+            actor_id: e.actor_id,
+          }))
+        } else {
+          const tenantEvents = await store.readTenantEvents({ tenant_id, limit: Math.max(limit, 50000) })
+          events = (tenantEvents.events ?? []).map((e: any) => ({
+            tenant_id: String(e.tenant_id ?? tenant_id),
+            entity_type: String(e.entity_type ?? ""),
+            entity_id: String(e.entity_id ?? ""),
+            seq: Number(e.seq ?? 0),
+            event_type: String(e.event_type ?? ""),
+            payload: safeParseJson(String(e.payload_json ?? "{}")),
+            ts: Number(e.ts ?? 0),
+            actor_id: String(e.actor_id ?? "unknown"),
+          }))
+        }
 
         const report = verifyHistoryAgainstIr({
           bundle: { core_ir: ir },

@@ -63,7 +63,7 @@
 - [x] Add migration conformance tests (oracle replay before/after)
 
 ## H. Verification & Audit
-- [ ] Add full-tenant verify (not single entity)
+- [x] Add full-tenant verify (not single entity)
 - [ ] Add version-stamped verification reports
 - [ ] Add invariant drift detection across versions
 - [ ] Add cryptographic hash of event history + snapshots (optional)

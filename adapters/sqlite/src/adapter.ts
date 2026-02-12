@@ -178,6 +178,29 @@ export class SqliteD1Adapter {
     return { events, next }
   }
 
+  async read_tenant_events (params: {
+    tenant_id: TenantId
+    limit?: number
+  }): Promise<EventRow[]> {
+    const { tenant_id, limit } = params
+    const ver = await this.get_active_version(tenant_id)
+    const eventsTable = `events_v${ver}`
+    const lim = Math.max(1, Math.min(limit ?? 50000, 200000))
+
+    const rows = await this.db
+      .prepare(
+        `SELECT tenant_id, entity_type, entity_id, seq, event_type, payload_json, ts, actor_id
+         FROM ${eventsTable}
+         WHERE tenant_id=?
+         ORDER BY entity_type ASC, entity_id ASC, seq ASC
+         LIMIT ?`
+      )
+      .bind(tenant_id, lim)
+      .all<EventRow>()
+
+    return rows.results ?? []
+  }
+
   // --------------------------
   // Snapshots
   // --------------------------

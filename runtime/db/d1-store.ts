@@ -50,6 +50,11 @@ export type D1Store = {
     limit?: number
   }) => Promise<{ events: any[]; next_seq?: number }>
 
+  readTenantEvents: (params: {
+    tenant_id: string
+    limit?: number
+  }) => Promise<{ events: any[] }>
+
   // Views / constraints executed via lowered SQL (preferred), with oracle fallback (development)
   execView: (params: {
     tenant_id: string
@@ -90,6 +95,11 @@ export function makeD1Store (params: { adapter: SqliteD1Adapter }): D1Store {
         limit,
       })
       return { events: out.events, next_seq: out.next?.seq }
+    },
+
+    readTenantEvents: async ({ tenant_id, limit }) => {
+      const events = await adapter.read_tenant_events({ tenant_id, limit })
+      return { events }
     },
 
     execView: async ({ tenant_id, ir, view_name, args }) => {
