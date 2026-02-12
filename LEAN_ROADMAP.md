@@ -6,7 +6,7 @@
 
 ## B. Core Syntax and Types
 - [x] Define kernel syntax in `Cicsc/Core/Syntax.lean` (Expr, Query, ReducerOp, IR)
-- [ ] Define value/type domains in `Cicsc/Core/Types.lean` (Val, Ty, Env, State)
+- [x] Define value/type domains in `Cicsc/Core/Types.lean` (Val, Ty, Env, State)
 - [ ] Define events/history/state primitives in syntax/types with typed records
 
 ## C. Semantics
