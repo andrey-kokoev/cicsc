@@ -102,7 +102,10 @@ Formalize transaction visibility/isolation semantics and prove baseline guarante
 - [x] K4.3.4 Prove no dirty reads and non-repeatable-read exclusion for Snapshot.
   - Added `snapshot_no_dirty_reads` and `snapshot_repeatable_reads` in
     `lean/Cicsc/Core/Semantics/Isolation.lean`.
-- [ ] K4.3.5 Define write-write conflict condition and prove abort-or-serialize property.
+- [x] K4.3.5 Define write-write conflict condition and prove abort-or-serialize property.
+  - Added `writeWriteConflict`, `TxConflictOutcome`, `resolveWriteWriteConflict`,
+    and `writeWrite_conflict_abort_or_serialize` in
+    `lean/Cicsc/Core/Semantics/Isolation.lean`.
 - [ ] K4.3.6 Provide at least one multi-stream transaction proof example.
 
 ### Acceptance

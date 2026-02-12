@@ -78,4 +78,23 @@ theorem snapshot_repeatable_reads
   unfold readSnapshot snapshotAt readCutoff
   simp [hiso1, hiso2, hsid, hbegin]
 
+def writeWriteConflict (tx1 tx2 : Transaction) : Prop :=
+  tx1.sid = tx2.sid ∧ tx1.beginSeq < tx2.commitSeq ∧ tx2.beginSeq < tx1.commitSeq
+
+inductive TxConflictOutcome where
+  | abort
+  | serialize
+deriving Repr, DecidableEq
+
+def resolveWriteWriteConflict (tx1 tx2 : Transaction) : TxConflictOutcome :=
+  if writeWriteConflict tx1 tx2 then .abort else .serialize
+
+theorem writeWrite_conflict_abort_or_serialize
+  (tx1 tx2 : Transaction)
+  (hconflict : writeWriteConflict tx1 tx2) :
+  resolveWriteWriteConflict tx1 tx2 = .abort ∨
+    resolveWriteWriteConflict tx1 tx2 = .serialize := by
+  unfold resolveWriteWriteConflict
+  simp [hconflict]
+
 end Cicsc.Core
