@@ -17,6 +17,7 @@ export function compileSpecV0ToCoreIr (spec: SpecV0): CoreIrV0 {
 
   const constraints = mapConstraints(spec.constraints ?? {})
   const views = mapViews(spec.views ?? {})
+  const slas = mapSlas(spec.slas ?? {})
   const migrations = mapMigrations(spec.migrations ?? {})
   const policies = mapPolicies(spec.policies ?? {})
 
@@ -26,6 +27,7 @@ export function compileSpecV0ToCoreIr (spec: SpecV0): CoreIrV0 {
     policies: Object.keys(policies).length ? policies : undefined,
     constraints: Object.keys(constraints).length ? constraints : undefined,
     views: Object.keys(views).length ? views : undefined,
+    slas: Object.keys(slas).length ? slas : undefined,
     migrations: Object.keys(migrations).length ? migrations : undefined,
   }
 }
@@ -157,6 +159,21 @@ function mapPolicies (policies: Record<string, any>) {
     out[name] = {
       params: Array.isArray((p as any).params) ? (p as any).params.map(String) : [],
       expr: lowerGuard((p as any).allow ?? null),
+    }
+  }
+  return out
+}
+
+function mapSlas (slas: Record<string, any>) {
+  const out: Record<string, any> = {}
+  for (const [name, s] of Object.entries(slas ?? {})) {
+    out[name] = {
+      name,
+      on_type: String((s as any).on ?? ""),
+      start: { event: { name: String((s as any).start_event ?? "") } },
+      stop: { event: { name: String((s as any).stop_event ?? "") } },
+      within_seconds: Number((s as any).within_seconds ?? 0),
+      enforce: { none: true },
     }
   }
   return out

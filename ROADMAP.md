@@ -122,7 +122,7 @@
 ## O. Canonical Reference Verticals
 
 - [x] Stabilize Kanban Spec v1 (lanes, WIP limits, swimlanes, policies)
-- [ ] Stabilize Ticketing Spec v1 (priorities, SLAs, escalation rules)
+- [x] Stabilize Ticketing Spec v1 (priorities, SLAs, escalation rules)
 - [ ] Stabilize CRM Spec v1 (leads, stages, ownership, conversions)
 - [ ] Provide minimal migration examples (v0 → v1) for each vertical
 - [ ] Provide invariant proofs / explanations for each vertical

@@ -4,6 +4,7 @@ export type SpecV0 = {
   policies?: Record<string, SpecPolicyV0>
   constraints?: Record<string, SpecConstraintV0>
   views?: Record<string, SpecViewV0>
+  slas?: Record<string, SpecSlaV0>
   migrations?: Record<string, SpecMigrationV0>
 }
 
@@ -56,6 +57,13 @@ export type SpecViewV0 = {
 export type SpecPolicyV0 = {
   params?: string[]
   allow?: any
+}
+
+export type SpecSlaV0 = {
+  on: string
+  start_event: string
+  stop_event: string
+  within_seconds: number
 }
 
 export type SpecMigrationV0 = {

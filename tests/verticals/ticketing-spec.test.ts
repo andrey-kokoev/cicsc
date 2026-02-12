@@ -12,5 +12,7 @@ describe("Ticketing v1 vertical spec", () => {
     const bundle = compileSpecToBundleV0(spec)
     assert.equal(bundle.core_ir.version, 0)
     assert.ok((bundle.core_ir.types as any).Ticket)
+    assert.ok((bundle.core_ir.slas as any).first_response)
+    assert.ok((bundle.core_ir.slas as any).time_to_resolution)
   })
 })

@@ -75,5 +75,19 @@
         "limit": 1000
       }
     }
+  },
+  "slas": {
+    "first_response": {
+      "on": "Ticket",
+      "start_event": "created",
+      "stop_event": "triaged",
+      "within_seconds": 3600
+    },
+    "time_to_resolution": {
+      "on": "Ticket",
+      "start_event": "started",
+      "stop_event": "resolved",
+      "within_seconds": 86400
+    }
   }
 }
