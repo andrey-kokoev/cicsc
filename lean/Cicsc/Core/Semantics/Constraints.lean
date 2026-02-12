@@ -81,14 +81,14 @@ def holdsConstraint (ir : IR) (c : Constraint) (st : State) (snaps : SnapSet) : 
   | .snapshot _ _ => evalSnapshotConstraint c st
   | .boolQuery _ _ _ => evalBoolQueryConstraintSubset ir c snaps
 
--- Proved kernel semantics (v0): snapshot constraints only.
-def holdsKernelConstraint (c : Constraint) (st : State) : Bool :=
+-- Snapshot-only evaluator used by the proved snapshot constraint surface.
+def holdsSnapshotConstraintOnly (c : Constraint) (st : State) : Bool :=
   match c with
   | .snapshot _ _ => evalSnapshotConstraint c st
   | .boolQuery _ _ _ => true
 
 def holdsAllKernelConstraints (cs : List (String × Constraint)) (st : State) : Bool :=
-  cs.all (fun kv => holdsKernelConstraint kv.snd st)
+  cs.all (fun kv => holdsSnapshotConstraintOnly kv.snd st)
 
 -- Legacy full surface including bool_query subset semantics.
 def holdsConstraintV0 (ir : IR) (c : Constraint) (st : State) (snaps : SnapSet) : Bool :=
@@ -112,8 +112,8 @@ theorem holdsAllKernelConstraints_onlySnapshot
     (cs.filter (fun kv => isSnapshotConstraint kv.snd)).all (fun kv => evalSnapshotConstraint kv.snd st) := by
   induction cs with
   | nil =>
-      simp [holdsAllKernelConstraints, holdsKernelConstraint]
+      simp [holdsAllKernelConstraints, holdsSnapshotConstraintOnly]
   | cons hd tl ih =>
-      cases hd.snd <;> simp [holdsAllKernelConstraints, holdsKernelConstraint, isSnapshotConstraint, ih]
+      cases hd.snd <;> simp [holdsAllKernelConstraints, holdsSnapshotConstraintOnly, isSnapshotConstraint, ih]
 
 end Cicsc.Core
