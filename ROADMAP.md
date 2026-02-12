@@ -145,7 +145,7 @@
 - [x] Extract kernel package (IR, typechecker, oracle interpreter, migration verifier)
 - [x] Remove HTTP/Workers/SQL dependencies from kernel
 - [x] Add pure in-memory backend for kernel testing
-- [ ] Add kernel API stability guarantees
+- [x] Add kernel API stability guarantees
 - [ ] Add kernel-level conformance test suite
 - [ ] Add minimal embedding examples (CLI, library integration)
 - [ ] Document kernel extension points
