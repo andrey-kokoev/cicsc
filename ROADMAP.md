@@ -152,7 +152,7 @@
 
 ## R. Release, Stability, and Governance
 
-- [ ] Cut v1.0.0 release tag
+- [x] Cut v1.0.0 release tag
 - [ ] Define semantic versioning policy for Spec, IR, runtime, kernel
 - [ ] Define deprecation policy for Spec constructs
 - [ ] Freeze Core IR v1 grammar
