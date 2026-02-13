@@ -62,7 +62,7 @@ Harden control-surface integrity checks for expanded deployments.
 
 ### TODOs
 - [x] P22.3.1 Freeze control-surface integrity hardening matrix and policy.
-- [ ] P22.3.2 Add control-surface integrity verification harnesses.
+- [x] P22.3.2 Add control-surface integrity verification harnesses.
 - [ ] P22.3.3 Publish control-surface integrity closure report with residual policy.
 
 ### Acceptance
