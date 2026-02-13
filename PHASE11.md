@@ -43,7 +43,7 @@ Promote DSL usability objective from partial to pass using objective task eviden
 
 ### TODOs
 - [x] P11.2.1 Define non-programmer task suite and success rubric.
-- [ ] P11.2.2 Add reproducible usability harness and evidence artifact.
+- [x] P11.2.2 Add reproducible usability harness and evidence artifact.
 - [ ] P11.2.3 Publish DSL usability closure report with residuals policy.
 
 ### Acceptance
