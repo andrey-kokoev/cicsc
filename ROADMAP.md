@@ -311,7 +311,7 @@ Phase 7 parity delta mapping:
 - [x] X3.2 Add tenant-batch fault-injected migration drills with deterministic recovery checks
 - [x] X3.3 Add post-cutover SQL execution-vs-oracle differential checks
 - [x] X3.4 Add migration/verify SLO and error-budget artifact
-- [ ] X3.5 Publish migration safety report with critical disposition closure
+- [x] X3.5 Publish migration safety report with critical disposition closure
 
 ### X4. Governance Gate for Phase 8
 
