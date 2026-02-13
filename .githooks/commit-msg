@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+MSG_FILE="$1"
+SUBJECT="$(head -n 1 "$MSG_FILE")"
+
+is_allowed() {
+  local s="$1"
+
+  # Roadmap checkbox completion commits
+  if [[ "$s" =~ ^phase[0-9]+[[:space:]][a-z]{1,2}[0-9]+(\.[0-9]+)?:[[:space:]].+ ]]; then
+    return 0
+  fi
+
+  # Non-checkbox maintenance/documentation commits
+  if [[ "$s" =~ ^(docs|chore|ci|test|refactor|governance|release)(/[a-z0-9._-]+)?:[[:space:]].+ ]]; then
+    return 0
+  fi
+
+  # Git-generated/administrative subjects
+  if [[ "$s" =~ ^Merge[[:space:]].+ ]] || [[ "$s" =~ ^Revert[[:space:]].+ ]]; then
+    return 0
+  fi
+
+  return 1
+}
+
+if ! is_allowed "$SUBJECT"; then
+  cat <<'MSG' >&2
+commit subject rejected by policy.
+
+Allowed patterns:
+- phase<phase> <milestone>[.<item>]: <summary>
+  examples:
+  - phase12 ac3.2: add parity envelope differential harnesses
+  - phase12 ac0: bootstrap phase12 plan and roadmap section
+- <type>[/scope]: <summary>
+  types: docs, chore, ci, test, refactor, governance, release
+  example: docs/agents: add canonical execution model requirements
+- Merge ...
+- Revert ...
+
+If this commit completes a roadmap checkbox, use the phase/milestone.item format.
+MSG
+  echo "got: ${SUBJECT}" >&2
+  exit 1
+fi

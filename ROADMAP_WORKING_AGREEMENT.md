@@ -159,3 +159,23 @@ The roadmap is complete when:
 > and invariants are preserved provably over time.
 
 All work should move the system closer to this state.
+
+---
+
+## 13. Commit Subject Enforcement
+
+Commit subjects are policy-validated.
+
+Accepted subject forms:
+- `phase<phase> <milestone>[.<item>]: <summary>`
+  - checkbox example: `phase12 ac3.2: add parity envelope differential harnesses`
+  - phase-bootstrap example: `phase12 ac0: bootstrap phase12 plan and roadmap section`
+- `<type>[/scope]: <summary>` where type is one of:
+  - `docs`, `chore`, `ci`, `test`, `refactor`, `governance`, `release`
+
+Local hook setup:
+- `git config core.hooksPath .githooks`
+
+Checks:
+- local hook: `.githooks/commit-msg`
+- range/CI check: `./scripts/check_commit_subjects.sh <base> <head>`
