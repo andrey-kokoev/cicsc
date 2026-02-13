@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase21-exit-checklist-v1",
+  "timestamp_unix": 1772316600,
+  "items": [
+    {
+      "id": "scope_baseline_status",
+      "artifact": "docs/pilot/phase21-status-register.json",
+      "status": "pass"
+    },
+    {
+      "id": "cross_environment_stability_status",
+      "artifact": "docs/pilot/phase21-cross-environment-stability-closure-report.json",
+      "status": "pass"
+    },
+    {
+      "id": "operational_continuity_status",
+      "artifact": "docs/pilot/phase21-operational-continuity-closure-report.json",
+      "status": "pass"
+    },
+    {
+      "id": "phase21_gate_state",
+      "artifact": "docs/pilot/phase21-gate.json",
+      "status": "pass"
+    }
+  ],
+  "overall": "pass"
+}

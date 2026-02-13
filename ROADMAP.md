@@ -720,7 +720,7 @@ Phase 9 forced-next mapping:
 
 ### AL4. Governance Closure and Phase 22 Gate
 
-- [ ] AL4.1 Define objective Phase 21 exit checklist mapped to artifacts
+- [x] AL4.1 Define objective Phase 21 exit checklist mapped to artifacts
 - [ ] AL4.2 Add PHASE21↔ROADMAP drift consistency gate
 - [ ] AL4.3 Add Phase 22 block gate from Phase 21 checklist
 - [ ] AL4.4 Publish Phase 21 closure report and mark exit criteria
