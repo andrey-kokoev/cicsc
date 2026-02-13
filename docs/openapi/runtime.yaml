@@ -4,6 +4,14 @@ info:
   version: "0.1.0"
 servers:
   - url: http://localhost
+x-cicsc-feature-gates:
+  proven_paths:
+    - /compile
+    - /install
+    - /install-from-spec
+    - /cmd/{entity_type}/{command_name}
+    - /verify
+  experimental_paths: []
 paths:
   /_caps:
     get:

@@ -271,7 +271,7 @@ Comparative incident mapping:
 - [x] W3.2 Add SDK contract tests for bundle lifecycle and tenant binding policies
 - [x] W3.3 Add operator playbook for multi-tenant rollout/rollback/incident triage
 - [x] W3.4 Add policy control matrix with executable checks
-- [ ] W3.5 Add proven-vs-experimental feature gating across docs/API surfaces
+- [x] W3.5 Add proven-vs-experimental feature gating across docs/API surfaces
 
 ### W4. Governance Gate for Phase 7
 

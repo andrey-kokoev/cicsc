@@ -67,11 +67,11 @@ Expose stable operational interfaces only for already-proven semantics.
 - [x] P6.3.2 Add SDK contract tests for bundle lifecycle and tenant binding policies.
 - [x] P6.3.3 Add operator playbook for multi-tenant rollout, rollback, and incident triage.
 - [x] P6.3.4 Add policy control matrix (who can publish/bind/migrate) with executable checks.
-- [ ] P6.3.5 Add “proven vs experimental” feature gating in docs and API surfaces.
+- [x] P6.3.5 Add “proven vs experimental” feature gating in docs and API surfaces.
 
 ### Acceptance
-- [ ] Public operational surface is stable and mapped to proven backend semantics.
-- [ ] No product-facing capability is exposed without conformance evidence.
+- [x] Public operational surface is stable and mapped to proven backend semantics.
+- [x] No product-facing capability is exposed without conformance evidence.
 
 ---
 
