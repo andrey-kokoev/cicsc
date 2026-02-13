@@ -24,8 +24,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch AX1.2 obligations and required gate contract.",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE33_AX22_DISPATCH",
@@ -68,8 +68,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch AX1.2 obligations and required gate contract.",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "closed",
+          "event_count": 5
         }
       ],
       "outbox": []

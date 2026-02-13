@@ -1689,7 +1689,7 @@ phases:
       status: done
     - id: AX1.2
       title: Add executable checks rejecting claims without required proof-evidence coupling
-      status: open
+      status: done
     - id: AX1.3
       title: Publish coupling conformance report with residual gaps register
       status: open

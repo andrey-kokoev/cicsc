@@ -11,7 +11,7 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/kimi",
       "branch": "phase33.ax1.2",
-      "status": "assigned",
+      "status": "done",
       "notes": "Implement executable coupling checks and ensure canonical gate coverage."
     },
     {
