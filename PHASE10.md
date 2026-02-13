@@ -29,10 +29,10 @@ Execute the three forced-next tracks from Phase 9 with artifact-backed status.
 - [x] P10.1.1 Freeze forced-next execution scope and ownership contract.
 - [x] P10.1.2 Add Postgres HAVING harness continuity artifact and validation test.
 - [x] P10.1.3 Publish EXISTS lowering decision contract (enablement or explicit deferred policy).
-- [ ] P10.1.4 Add forced-next execution status register with owner/date discipline.
+- [x] P10.1.4 Add forced-next execution status register with owner/date discipline.
 
 ### Acceptance
-- [ ] Every forced-next item is either objectively closed or explicitly deferred with owner/date.
+- [x] Every forced-next item is either objectively closed or explicitly deferred with owner/date.
 
 ---
 
