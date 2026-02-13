@@ -1,0 +1,30 @@
+{
+  "version": "cicsc/phase16-scope-contract-v1",
+  "timestamp_unix": 1771079700,
+  "phase": "phase16",
+  "tracks": [
+    {
+      "id": "P16-EXTERNAL-VALIDATION",
+      "goal": "Expand objective evidence with explicit external-validation closure gates.",
+      "owner": "phase16-validation-owner",
+      "target_date": "2026-11-28"
+    },
+    {
+      "id": "P16-EXPANSION-READINESS",
+      "goal": "Harden deployment and operations readiness for expansion without invariant regressions.",
+      "owner": "phase16-ops-owner",
+      "target_date": "2026-12-05"
+    },
+    {
+      "id": "P16-GOVERNANCE-CLOSURE",
+      "goal": "Close Phase 16 with objective checklist and Phase 17 gate discipline.",
+      "owner": "phase16-governance-owner",
+      "target_date": "2026-12-12"
+    }
+  ],
+  "guardrails": [
+    "No weakening of category-model obligations",
+    "No weakening of conformance, migration, or deployment safety gates",
+    "One-checkbox-one-commit for Phase 16"
+  ]
+}
