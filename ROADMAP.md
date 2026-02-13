@@ -670,3 +670,30 @@ Phase 9 forced-next mapping:
 - [x] AJ4.2 Add PHASE19↔ROADMAP drift consistency gate
 - [x] AJ4.3 Add Phase 20 block gate from Phase 19 checklist
 - [x] AJ4.4 Publish Phase 19 closure report and mark exit criteria
+
+## AK. Phase 20: Multi-Environment Assurance and Scale Transition Discipline
+
+### AK1. Scope Freeze and Baseline Continuity
+
+- [ ] AK1.1 Freeze Phase 20 scope and owner contract
+- [ ] AK1.2 Publish Phase 20 baseline continuity snapshot
+- [ ] AK1.3 Add Phase 20 status register with owner/date discipline
+
+### AK2. Multi-Environment Assurance Validation Closure
+
+- [ ] AK2.1 Freeze multi-environment assurance matrix and evidence contract
+- [ ] AK2.2 Run multi-environment assurance required gates
+- [ ] AK2.3 Publish multi-environment assurance closure report with findings disposition
+
+### AK3. Scale-Transition Hardening
+
+- [ ] AK3.1 Freeze scale-transition hardening matrix and policy
+- [ ] AK3.2 Add scale-transition verification harnesses
+- [ ] AK3.3 Publish scale-transition closure report with residual policy
+
+### AK4. Governance Closure and Phase 21 Gate
+
+- [ ] AK4.1 Define objective Phase 20 exit checklist mapped to artifacts
+- [ ] AK4.2 Add PHASE20↔ROADMAP drift consistency gate
+- [ ] AK4.3 Add Phase 21 block gate from Phase 20 checklist
+- [ ] AK4.4 Publish Phase 20 closure report and mark exit criteria
