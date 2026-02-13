@@ -737,7 +737,7 @@ Phase 9 forced-next mapping:
 
 - [x] AM2.1 Freeze resilience-expansion matrix and evidence contract
 - [x] AM2.2 Run resilience-expansion required gates
-- [ ] AM2.3 Publish resilience-expansion closure report with findings disposition
+- [x] AM2.3 Publish resilience-expansion closure report with findings disposition
 
 ### AM3. Control-Surface Integrity Hardening
 

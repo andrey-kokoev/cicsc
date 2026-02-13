@@ -48,7 +48,7 @@ Close resilience-expansion validation with explicit evidence contract and findin
 ### TODOs
 - [x] P22.2.1 Freeze resilience-expansion matrix and evidence contract.
 - [x] P22.2.2 Run resilience-expansion required gates.
-- [ ] P22.2.3 Publish resilience-expansion closure report with findings disposition.
+- [x] P22.2.3 Publish resilience-expansion closure report with findings disposition.
 
 ### Acceptance
 - [ ] Resilience-expansion validation remains evidence-backed with explicit findings governance.
