@@ -662,7 +662,7 @@ Phase 9 forced-next mapping:
 
 - [x] AJ3.1 Freeze runtime-reliability hardening matrix and policy
 - [x] AJ3.2 Add runtime-reliability verification harnesses
-- [ ] AJ3.3 Publish runtime reliability closure report with residual policy
+- [x] AJ3.3 Publish runtime reliability closure report with residual policy
 
 ### AJ4. Governance Closure and Phase 20 Gate
 

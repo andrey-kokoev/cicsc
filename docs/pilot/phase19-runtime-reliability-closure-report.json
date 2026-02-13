@@ -1,0 +1,12 @@
+{
+  "version": "cicsc/phase19-runtime-reliability-closure-report-v1",
+  "timestamp_unix": 1771105200,
+  "inputs": {
+    "runtime_reliability_matrix": "docs/pilot/phase19-runtime-reliability-matrix.json",
+    "runtime_reliability_harnesses": "docs/pilot/phase19-runtime-reliability-harnesses.json"
+  },
+  "residual_policy": {"allowed_open_status": ["deferred"],"deferred_requires": ["owner", "target_date"]},
+  "residuals": [{"id":"P19RUNTIME-OPS-001","status":"deferred","owner":"phase19-ops-owner","target_date":"2027-05-01","reason":"Runtime reliability tuning is tracked post-closure and does not alter semantic guarantees."}],
+  "unresolved_criticals": [],
+  "status": "pass"
+}
