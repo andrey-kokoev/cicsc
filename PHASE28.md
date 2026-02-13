@@ -36,7 +36,7 @@ Start Phase 28 from explicit scope, owners, and reproducible baseline truth.
 - [x] P28.1.3 Add Phase 28 status register with owner/date discipline.
 
 ### Acceptance
-- [ ] Phase 28 starts from objective scope and reproducible baseline truth.
+- [x] Phase 28 starts from objective scope and reproducible baseline truth.
 
 ---
 
@@ -51,7 +51,7 @@ Close assurance-scaling validation with explicit evidence contract and findings 
 - [x] P28.2.3 Publish assurance-scaling closure report with findings disposition.
 
 ### Acceptance
-- [ ] Assurance-scaling validation remains evidence-backed with explicit findings governance.
+- [x] Assurance-scaling validation remains evidence-backed with explicit findings governance.
 
 ---
 
@@ -66,7 +66,7 @@ Harden operational-continuity checks for expanded deployments.
 - [x] P28.3.3 Publish operational-continuity closure report with residual policy.
 
 ### Acceptance
-- [ ] Operational-continuity hardening remains explicit, test-backed, and governed.
+- [x] Operational-continuity hardening remains explicit, test-backed, and governed.
 
 ---
 
@@ -79,17 +79,17 @@ Close Phase 28 with objective checklist and enforce entry gate for Phase 29.
 - [x] P28.4.1 Define objective Phase 28 exit checklist mapped to artifacts.
 - [x] P28.4.2 Add PHASE28↔ROADMAP drift consistency gate.
 - [x] P28.4.3 Add Phase 29 block gate from Phase 28 checklist.
-- [ ] P28.4.4 Publish Phase 28 closure report and mark exit criteria.
+- [x] P28.4.4 Publish Phase 28 closure report and mark exit criteria.
 
 ### Acceptance
-- [ ] Phase 29 remains blocked unless Phase 28 checklist is fully pass.
+- [x] Phase 29 remains blocked unless Phase 28 checklist is fully pass.
 
 ---
 
 ## Exit Criteria (Phase 28)
 
-- [ ] Scope, baseline, and status governance remain explicit and reproducible.
-- [ ] Assurance-scaling validation is evidence-backed and invariant-preserving.
-- [ ] Operational-continuity hardening is verifiable with executable harnesses.
-- [ ] Governance checks enforce code/doc/artifact consistency.
-- [ ] Phase 29 remains blocked without full checklist pass.
+- [x] Scope, baseline, and status governance remain explicit and reproducible.
+- [x] Assurance-scaling validation is evidence-backed and invariant-preserving.
+- [x] Operational-continuity hardening is verifiable with executable harnesses.
+- [x] Governance checks enforce code/doc/artifact consistency.
+- [x] Phase 29 remains blocked without full checklist pass.

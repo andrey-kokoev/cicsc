@@ -912,4 +912,4 @@ Phase 9 forced-next mapping:
 - [x] AS4.1 Define objective Phase 28 exit checklist mapped to artifacts
 - [x] AS4.2 Add PHASE28↔ROADMAP drift consistency gate
 - [x] AS4.3 Add Phase 29 block gate from Phase 28 checklist
-- [ ] AS4.4 Publish Phase 28 closure report and mark exit criteria
+- [x] AS4.4 Publish Phase 28 closure report and mark exit criteria
