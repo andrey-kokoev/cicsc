@@ -36,7 +36,7 @@ Start Phase 21 from explicit scope, owners, and reproducible baseline truth.
 - [x] P21.1.3 Add Phase 21 status register with owner/date discipline.
 
 ### Acceptance
-- [ ] Phase 21 starts from objective scope and reproducible baseline truth.
+- [x] Phase 21 starts from objective scope and reproducible baseline truth.
 
 ---
 
@@ -51,7 +51,7 @@ Close cross-environment stability validation with explicit evidence contract and
 - [x] P21.2.3 Publish cross-environment stability closure report with findings disposition.
 
 ### Acceptance
-- [ ] Cross-environment stability validation remains evidence-backed with explicit findings governance.
+- [x] Cross-environment stability validation remains evidence-backed with explicit findings governance.
 
 ---
 
@@ -66,7 +66,7 @@ Harden operational continuity checks for expanded deployments.
 - [x] P21.3.3 Publish operational-continuity closure report with residual policy.
 
 ### Acceptance
-- [ ] Operational continuity hardening remains explicit, test-backed, and governed.
+- [x] Operational continuity hardening remains explicit, test-backed, and governed.
 
 ---
 
@@ -79,17 +79,17 @@ Close Phase 21 with objective checklist and enforce entry gate for Phase 22.
 - [x] P21.4.1 Define objective Phase 21 exit checklist mapped to artifacts.
 - [x] P21.4.2 Add PHASE21↔ROADMAP drift consistency gate.
 - [x] P21.4.3 Add Phase 22 block gate from Phase 21 checklist.
-- [ ] P21.4.4 Publish Phase 21 closure report and mark exit criteria.
+- [x] P21.4.4 Publish Phase 21 closure report and mark exit criteria.
 
 ### Acceptance
-- [ ] Phase 22 remains blocked unless Phase 21 checklist is fully pass.
+- [x] Phase 22 remains blocked unless Phase 21 checklist is fully pass.
 
 ---
 
 ## Exit Criteria (Phase 21)
 
-- [ ] Scope, baseline, and status governance remain explicit and reproducible.
-- [ ] Cross-environment stability validation is evidence-backed and invariant-preserving.
-- [ ] Operational continuity hardening is verifiable with executable harnesses.
-- [ ] Governance checks enforce code/doc/artifact consistency.
-- [ ] Phase 22 remains blocked without full checklist pass.
+- [x] Scope, baseline, and status governance remain explicit and reproducible.
+- [x] Cross-environment stability validation is evidence-backed and invariant-preserving.
+- [x] Operational continuity hardening is verifiable with executable harnesses.
+- [x] Governance checks enforce code/doc/artifact consistency.
+- [x] Phase 22 remains blocked without full checklist pass.
