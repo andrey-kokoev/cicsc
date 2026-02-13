@@ -5,6 +5,9 @@ Selected reference vertical: `ticketing`
 Frozen evaluation criteria artifact:
 - `verticals/ticketing/evaluation-criteria.phase5.json`
 
+Staged run artifact (latest):
+- `docs/pilot/phase5-ticketing-staged-run.json`
+
 This selection is fixed for Phase 5 closure work so that:
 - conformance and migration evidence target one stable workload,
 - usability and drift feedback are measured against one operational context,

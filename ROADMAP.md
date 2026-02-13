@@ -223,7 +223,7 @@
 ### U6. Field Validation Vertical
 
 - [x] U6.1 Select one reference vertical and freeze evaluation criteria
-- [ ] U6.2 Run staged workload with invariants, conformance, and migration checks enabled
+- [x] U6.2 Run staged workload with invariants, conformance, and migration checks enabled
 - [ ] U6.3 Capture drift/perf/missing-primitive incidents with severity labels
 - [ ] U6.4 Convert findings into roadmap checkboxes (no hidden backlog)
 - [ ] U6.5 Publish phase report with forced-next priorities only

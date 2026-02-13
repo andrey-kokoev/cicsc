@@ -1,0 +1,12 @@
+{
+  "version": "cicsc/phase5-ticketing-staged-run-v1",
+  "vertical": "ticketing",
+  "timestamp_unix": 1770943394,
+  "overall": "fail",
+  "checks": {
+    "invariants":{"status":"pass","log":"docs/pilot/phase5-ticketing-staged-run.invariants.log"},
+    "conformance_sqlite":{"status":"pass","log":"docs/pilot/phase5-ticketing-staged-run.conformance_sqlite.log"},
+    "migration_protocol":{"status":"pass","log":"docs/pilot/phase5-ticketing-staged-run.migration_protocol.log"},
+    "conformance_postgres":{"status":"fail","log":"docs/pilot/phase5-ticketing-staged-run.conformance_postgres.log"}
+  }
+}
