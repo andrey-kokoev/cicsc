@@ -702,7 +702,7 @@ Phase 9 forced-next mapping:
 
 ### AL1. Scope Freeze and Baseline Continuity
 
-- [ ] AL1.1 Freeze Phase 21 scope and owner contract
+- [x] AL1.1 Freeze Phase 21 scope and owner contract
 - [ ] AL1.2 Publish Phase 21 baseline continuity snapshot
 - [ ] AL1.3 Add Phase 21 status register with owner/date discipline
 
