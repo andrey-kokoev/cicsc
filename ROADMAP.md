@@ -715,7 +715,7 @@ Phase 9 forced-next mapping:
 ### AL3. Operational Continuity Hardening
 
 - [x] AL3.1 Freeze operational-continuity hardening matrix and policy
-- [ ] AL3.2 Add operational-continuity verification harnesses
+- [x] AL3.2 Add operational-continuity verification harnesses
 - [ ] AL3.3 Publish operational-continuity closure report with residual policy
 
 ### AL4. Governance Closure and Phase 22 Gate
