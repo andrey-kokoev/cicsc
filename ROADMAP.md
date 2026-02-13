@@ -764,7 +764,7 @@ Phase 9 forced-next mapping:
 
 - [x] AN2.1 Freeze integrity-scaling matrix and evidence contract
 - [x] AN2.2 Run integrity-scaling required gates
-- [ ] AN2.3 Publish integrity-scaling closure report with findings disposition
+- [x] AN2.3 Publish integrity-scaling closure report with findings disposition
 
 ### AN3. Runtime-Assurance Hardening
 
