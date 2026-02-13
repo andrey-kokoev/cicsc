@@ -61,7 +61,7 @@ Close assurance-expansion validation with explicit evidence contract and finding
 Harden governance-continuity checks for expanded deployments.
 
 ### TODOs
-- [ ] P29.3.1 Freeze governance-continuity hardening matrix and policy.
+- [x] P29.3.1 Freeze governance-continuity hardening matrix and policy.
 - [ ] P29.3.2 Add governance-continuity verification harnesses.
 - [ ] P29.3.3 Publish governance-continuity closure report with residual policy.
 

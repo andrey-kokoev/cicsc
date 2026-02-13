@@ -1,0 +1,15 @@
+{
+  "version": "cicsc/phase29-governance-continuity-matrix-v1",
+  "timestamp_unix": 1770996007,
+  "policy": {
+    "residual_risk_owner_required": true,
+    "owner_date_discipline_required": true,
+    "evidence_replay_required": true
+  },
+  "surfaces": [
+    { "id": "status_register", "evidence": "docs/pilot/phase29-status-register.json", "status": "pass" },
+    { "id": "assurance_closure", "evidence": "docs/pilot/phase29-assurance-expansion-closure-report.json", "status": "pass" },
+    { "id": "gate_integrity", "evidence": "docs/pilot/phase29-gate.json", "status": "pass" }
+  ],
+  "status": "pass"
+}
