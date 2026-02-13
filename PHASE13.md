@@ -34,10 +34,10 @@ Begin Phase 13 from explicit scope and reproducible baseline status.
 ### TODOs
 - [x] P13.1.1 Freeze Phase 13 scope and owner contract.
 - [x] P13.1.2 Publish Phase 13 baseline continuity snapshot.
-- [ ] P13.1.3 Add Phase 13 status register with owner/date discipline.
+- [x] P13.1.3 Add Phase 13 status register with owner/date discipline.
 
 ### Acceptance
-- [ ] Phase 13 starts from objective scope and reproducible baseline truth.
+- [x] Phase 13 starts from objective scope and reproducible baseline truth.
 
 ---
 

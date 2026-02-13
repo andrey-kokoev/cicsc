@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase13-status-register-v1",
+  "timestamp_unix": 1771060500,
+  "items": [
+    {
+      "id": "P13-OPERATIONAL-SCALE",
+      "status": "in_progress",
+      "owner": "phase13-ops-owner",
+      "target_date": "2026-07-10",
+      "basis": "AD2"
+    },
+    {
+      "id": "P13-MIGRATION-PARITY-HARDENING",
+      "status": "pending",
+      "owner": "phase13-parity-owner",
+      "target_date": "2026-07-17",
+      "basis": "AD3"
+    },
+    {
+      "id": "P13-GOVERNANCE-CLOSURE",
+      "status": "pending",
+      "owner": "phase13-governance-owner",
+      "target_date": "2026-07-24",
+      "basis": "AD4"
+    }
+  ]
+}
