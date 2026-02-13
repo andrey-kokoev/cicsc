@@ -32,7 +32,7 @@ Begin Phase 14 from explicit scope and reproducible baseline status.
 
 ### TODOs
 - [x] P14.1.1 Freeze Phase 14 scope and owner contract.
-- [ ] P14.1.2 Publish Phase 14 baseline continuity snapshot.
+- [x] P14.1.2 Publish Phase 14 baseline continuity snapshot.
 - [ ] P14.1.3 Add Phase 14 status register with owner/date discipline.
 
 ### Acceptance

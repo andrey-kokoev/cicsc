@@ -1,0 +1,23 @@
+{
+  "version": "cicsc/phase14-baseline-continuity-v1",
+  "timestamp_unix": 1770956393,
+  "overall": "pass",
+  "checks": {
+    "phase13_exit_checklist": {
+      "basis": "docs/pilot/phase13-exit-checklist.json",
+      "status": "pass"
+    },
+    "phase14_gate_open": {
+      "basis": "docs/pilot/phase14-gate.json",
+      "status": "pass"
+    },
+    "scale_continuity": {
+      "basis": "docs/pilot/phase13-scale-envelope-report.json",
+      "status": "pass"
+    },
+    "hardening_continuity": {
+      "basis": "docs/pilot/phase13-hardening-closure-report.json",
+      "status": "pass"
+    }
+  }
+}

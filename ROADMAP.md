@@ -514,7 +514,7 @@ Phase 9 forced-next mapping:
 ### AE1. Scope Freeze and Baseline Continuity
 
 - [x] AE1.1 Freeze Phase 14 scope and owner contract
-- [ ] AE1.2 Publish Phase 14 baseline continuity snapshot
+- [x] AE1.2 Publish Phase 14 baseline continuity snapshot
 - [ ] AE1.3 Add Phase 14 status register with owner/date discipline
 
 ### AE2. Generalization Envelope Expansion
