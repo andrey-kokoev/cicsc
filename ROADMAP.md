@@ -580,7 +580,7 @@ Phase 9 forced-next mapping:
 ### AG3. Deployment and Operations Expansion Hardening
 
 - [x] AG3.1 Freeze deployment-expansion hardening matrix and policy
-- [ ] AG3.2 Add expansion-readiness verification harnesses
+- [x] AG3.2 Add expansion-readiness verification harnesses
 - [ ] AG3.3 Publish expansion hardening closure report with residual policy
 
 ### AG4. Governance Closure and Phase 17 Gate

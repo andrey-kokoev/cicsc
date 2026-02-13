@@ -63,7 +63,7 @@ Harden deployment/operations readiness for expansion without invariant regressio
 
 ### TODOs
 - [x] P16.3.1 Freeze deployment-expansion hardening matrix and policy.
-- [ ] P16.3.2 Add expansion-readiness verification harnesses.
+- [x] P16.3.2 Add expansion-readiness verification harnesses.
 - [ ] P16.3.3 Publish expansion hardening closure report with residual policy.
 
 ### Acceptance
