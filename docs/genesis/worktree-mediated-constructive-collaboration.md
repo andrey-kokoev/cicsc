@@ -121,6 +121,14 @@ Messages are validated against:
 Operationally, collaboration flow is projected as generated inbox/outbox views
 per worktree in `worktree-mailboxes.generated.json`.
 
+Normative operator loop:
+- each worktree starts from mailbox projection, not ad hoc local task notes,
+- messages are consumed from inbox while actionable states exist,
+- lifecycle progress is represented only via append-only `message_events`.
+
+`WORKTREE_ASSIGNMENT.md` can exist as a local convenience memo but is not part
+of WMCC protocol truth.
+
 Message lifecycle states currently supported:
 
 - `queued`, `sent`, `acknowledged`, `fulfilled`,

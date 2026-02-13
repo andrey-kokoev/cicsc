@@ -34,6 +34,9 @@ projections used for executable validation and gating.
   - Includes immutable message envelopes with append-only `message_events`, transition policy, rescind/supersede semantics, and evidence bindings (`commit` + `digest`).
   - Binds collaboration claims to objective/capability/ledger scope.
   - No execution status.
+  - Canonical worktree processing entry point is mailbox projection:
+    `control-plane/views/worktree-mailboxes.generated.json`.
+  - `WORKTREE_ASSIGNMENT.md` files are optional helper text and non-normative.
 
 - `execution/execution-ledger.yaml`
   - Canonical phase/milestone/checkbox status model.
@@ -111,3 +114,13 @@ Generated views:
 - `control-plane/views/execution-status.generated.json`
 - `control-plane/views/assignments.generated.json`
 - `control-plane/views/worktree-mailboxes.generated.json`
+
+## Worktree Agent Loop (Normative)
+
+For each execution worktree:
+1. Read `control-plane/views/worktree-mailboxes.generated.json`.
+2. Select inbox messages addressed to that worktree with actionable status
+   (`queued` or `sent`).
+3. Execute assignment scope on the bound branch.
+4. Append immutable `message_events` with status transitions and evidence bindings.
+5. Stop when no actionable inbox messages remain.

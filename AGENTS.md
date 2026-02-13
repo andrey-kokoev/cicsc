@@ -77,6 +77,17 @@ This gate enforces:
 - phase-view sync with execution-ledger,
 - commit-evidence presence for checked checkboxes.
 
+### 0.1 Canonical Collaboration Entry Point (Mandatory)
+Worktree agents must use mailbox-driven execution:
+- single entry point: `control-plane/views/worktree-mailboxes.generated.json`
+- read inbox messages for the current worktree
+- process actionable messages (`queued`/`sent`) in order
+- append immutable `message_events` for lifecycle transitions and evidence
+
+Protocol rule:
+- `WORKTREE_ASSIGNMENT.md` is optional convenience text only
+- it is not canonical input and must not be required by automation
+
 ### 1. Preserve invariants before adding features
 Never add functionality that weakens:
 - transactional semantics
