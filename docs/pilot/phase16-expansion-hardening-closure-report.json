@@ -1,0 +1,23 @@
+{
+  "version": "cicsc/phase16-expansion-hardening-closure-report-v1",
+  "timestamp_unix": 1771083900,
+  "inputs": {
+    "expansion_hardening_matrix": "docs/pilot/phase16-expansion-hardening-matrix.json",
+    "expansion_harnesses": "docs/pilot/phase16-expansion-harnesses.json"
+  },
+  "residual_policy": {
+    "allowed_open_status": ["deferred"],
+    "deferred_requires": ["owner", "target_date"]
+  },
+  "residuals": [
+    {
+      "id": "P16EXP-OPS-001",
+      "status": "deferred",
+      "owner": "phase16-ops-owner",
+      "target_date": "2026-12-26",
+      "reason": "Expansion traffic-shape tuning is tracked post-closure and does not alter semantic guarantees."
+    }
+  ],
+  "unresolved_criticals": [],
+  "status": "pass"
+}
