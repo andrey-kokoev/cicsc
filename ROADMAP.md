@@ -743,7 +743,7 @@ Phase 9 forced-next mapping:
 
 - [x] AM3.1 Freeze control-surface integrity hardening matrix and policy
 - [x] AM3.2 Add control-surface integrity verification harnesses
-- [ ] AM3.3 Publish control-surface integrity closure report with residual policy
+- [x] AM3.3 Publish control-surface integrity closure report with residual policy
 
 ### AM4. Governance Closure and Phase 23 Gate
 
