@@ -1,0 +1,36 @@
+execution-ledger integrity check passed
+phase view sync (ledger) check passed
+checkbox commit evidence (ledger) check passed
+workflow single-source check passed
+validated /home/andrey/src/cicsc/control-plane/objectives/objective-model.yaml against /home/andrey/src/cicsc/control-plane/objectives/objective-model.schema.json
+objective model check passed
+validated /home/andrey/src/cicsc/control-plane/capabilities/capability-model.yaml against /home/andrey/src/cicsc/control-plane/capabilities/capability-model.schema.json
+capability model check passed
+validated /home/andrey/src/cicsc/control-plane/execution/execution-ledger.yaml against /home/andrey/src/cicsc/control-plane/execution/execution-ledger.schema.json
+execution ledger model check passed
+validated /home/andrey/src/cicsc/control-plane/gates/gate-model.yaml against /home/andrey/src/cicsc/control-plane/gates/gate-model.schema.json
+gate model check passed
+cross-model validation passed
+control-plane model checks passed
+control-plane sync check passed
+execution structure sync check passed
+execution structure roundtrip (ledger) check passed
+status source mode check passed (execution_ledger_yaml_canonical)
+status projection sync (ledger) check passed (execution_ledger_yaml_canonical)
+generated artifacts policy check passed
+category-model conformance check passed: /home/andrey/src/cicsc/docs/pilot/category-model-conformance.json
+gate-model roundtrip check passed
+==> [GATE_EXECUTION_LEDGER_INTEGRITY] scripts/check_execution_ledger_integrity.sh
+==> [GATE_PHASE_VIEWS_SYNC_LEDGER] scripts/check_phase_views_sync_ledger.sh
+==> [GATE_CHECKBOX_COMMIT_EVIDENCE_LEDGER] scripts/check_checkbox_commit_evidence_ledger.sh
+==> [GATE_WORKFLOW_SINGLE_SOURCE] scripts/check_workflow_single_source.sh
+==> [GATE_CONTROL_PLANE_SYNC] scripts/check_control_plane_sync.sh
+==> [GATE_EXECUTION_STRUCTURE_SYNC] scripts/check_execution_structure_sync.sh
+==> [GATE_EXECUTION_STRUCTURE_ROUNDTRIP_LEDGER] scripts/check_execution_structure_roundtrip_ledger.sh
+==> [GATE_STATUS_SOURCE_MODE] scripts/check_status_source_mode.sh
+==> [GATE_STATUS_PROJECTION_SYNC_LEDGER] scripts/check_status_projection_sync.sh
+==> [GATE_GENERATED_ARTIFACT_POLICY] scripts/check_generated_artifacts_policy.sh
+==> [GATE_CATEGORY_MODEL_CONFORMANCE] scripts/check_category_model_conformance.sh
+==> [GATE_GATE_MODEL_ROUNDTRIP] scripts/check_gate_model_roundtrip.sh
+gate model execution passed
+canonical execution model checks passed

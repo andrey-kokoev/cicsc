@@ -1,13 +1,13 @@
-(node:817974) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:28309) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:817974) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/cross-backend-differential.test.ts is not specified and it doesn't parse as CommonJS.
+(node:28309) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/cross-backend-differential.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ cross-backend differential conformance
-  ✔ matches SQLite and Postgres execution against oracle semantics (121.948748ms)
-✔ cross-backend differential conformance (122.60114ms)
+  ✔ matches SQLite and Postgres execution against oracle semantics (111.060733ms)
+✔ cross-backend differential conformance (111.892777ms)
 ℹ tests 1
 ℹ suites 1
 ℹ pass 1
@@ -15,4 +15,4 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 268.044353
+ℹ duration_ms 236.663621
