@@ -11,6 +11,7 @@ The declared supported subset contract is tracked in `/tests/conformance/postgre
 and mirrored against `/tests/conformance/sqlite-supported-scope.json`.
 Constraint conformance matrix is tracked in `/tests/conformance/postgres-constraint-matrix.json`;
 reducer conformance is deferred until reducer SQL lowering exists.
+NULL/ordering/collation deltas are governed by `docs/spec/backend-semantics-policy.md`.
 
 ---
 

@@ -1,0 +1,33 @@
+{
+  "version": "cicsc/backend-semantics-policy-v1",
+  "canonical_comparison": {
+    "mode": "oracle_normalized",
+    "row_order": "explicit_order_by_or_canonicalized_for_differential_tests"
+  },
+  "semantics": {
+    "sqlite": {
+      "null_ordering_default": "nulls_first_on_asc",
+      "string_collation_default": "binary",
+      "numeric_affinity": "dynamic"
+    },
+    "postgres": {
+      "null_ordering_default": "nulls_last_on_asc",
+      "string_collation_default": "locale_dependent",
+      "numeric_affinity": "strict"
+    },
+    "oracle_interpreter": {
+      "null_ordering_default": "comparison_driven",
+      "string_collation_default": "js_locale_compare",
+      "numeric_affinity": "js_number"
+    }
+  },
+  "alignment_policy": {
+    "order_by": "always_generate_explicit_order_by_for_deterministic_queries",
+    "nulls": "normalize_oracle_vs_sql_expectations_using_declared_backend_defaults",
+    "collation": "treat_string_order_as_backend_specific_unless_explicitly_modeled"
+  },
+  "known_deltas": [
+    "sqlite_vs_postgres_default_null_ordering_differs_without explicit NULLS FIRST/LAST",
+    "sqlite_binary_vs_postgres_locale collation may diverge for non-ascii text"
+  ]
+}

@@ -83,6 +83,15 @@
       "requires": [
         "postgres_harness"
       ]
+    },
+    {
+      "id": "backend-semantics-policy",
+      "backend": "multi",
+      "required": false,
+      "ci_profile": "postgres",
+      "test_files": [
+        "tests/conformance/backend-semantics-policy.test.ts"
+      ]
     }
   ]
 }
