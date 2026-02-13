@@ -507,4 +507,4 @@ Phase 9 forced-next mapping:
 - [x] AD4.1 Define objective Phase 13 exit checklist mapped to artifacts
 - [x] AD4.2 Add PHASE13↔ROADMAP drift consistency gate
 - [x] AD4.3 Add Phase 14 block gate from Phase 13 checklist
-- [ ] AD4.4 Publish Phase 13 closure report and mark exit criteria
+- [x] AD4.4 Publish Phase 13 closure report and mark exit criteria

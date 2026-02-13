@@ -38,7 +38,7 @@
         "scripts/check_phase13_docs_consistency.sh",
         "docs/pilot/phase13-doc-consistency.json"
       ],
-      "status": "pending"
+      "status": "pass"
     },
     {
       "id": "P13_EXIT_PHASE14_GATE",
@@ -47,7 +47,7 @@
         "scripts/check_phase14_block.sh",
         "docs/pilot/phase14-gate.json"
       ],
-      "status": "pending"
+      "status": "pass"
     }
   ]
 }
