@@ -2302,6 +2302,60 @@
       "phase_number": 31,
       "checkbox_id": "AV1.4",
       "status": "done"
+    },
+    {
+      "phase_id": "AW",
+      "phase_number": 32,
+      "checkbox_id": "AW1.1",
+      "status": "done"
+    },
+    {
+      "phase_id": "AW",
+      "phase_number": 32,
+      "checkbox_id": "AW1.2",
+      "status": "open"
+    },
+    {
+      "phase_id": "AW",
+      "phase_number": 32,
+      "checkbox_id": "AW1.3",
+      "status": "open"
+    },
+    {
+      "phase_id": "AW",
+      "phase_number": 32,
+      "checkbox_id": "AW1.4",
+      "status": "open"
+    },
+    {
+      "phase_id": "AW",
+      "phase_number": 32,
+      "checkbox_id": "AW1.5",
+      "status": "open"
+    },
+    {
+      "phase_id": "AW",
+      "phase_number": 32,
+      "checkbox_id": "AW2.1",
+      "status": "open"
+    },
+    {
+      "phase_id": "AW",
+      "phase_number": 32,
+      "checkbox_id": "AW2.2",
+      "status": "open"
+    },
+    {
+      "phase_id": "AW",
+      "phase_number": 32,
+      "checkbox_id": "AW2.3",
+      "status": "open"
+    },
+    {
+      "phase_id": "AW",
+      "phase_number": 32,
+      "checkbox_id": "AW2.4",
+      "status": "open"
     }
   ]
 }

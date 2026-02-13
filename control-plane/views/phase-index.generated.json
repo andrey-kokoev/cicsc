@@ -2763,7 +2763,7 @@
       "id": "AW",
       "number": 32,
       "title": "Expanded-Scope Objective Execution",
-      "status": "planned",
+      "status": "active",
       "milestones": [
         {
           "id": "AW1",
@@ -2772,7 +2772,7 @@
             {
               "id": "AW1.1",
               "title": "Implement OBJ1 expanded concurrency envelope artifacts and required checks",
-              "status": "open"
+              "status": "done"
             },
             {
               "id": "AW1.2",
