@@ -8,7 +8,7 @@
     "version": { "type": "string" },
     "status_source_mode": {
       "type": "string",
-      "enum": ["roadmap_md_canonical", "execution_ledger_yaml_canonical"]
+      "enum": ["execution_ledger_yaml_canonical"]
     },
     "notes": {
       "type": "array",

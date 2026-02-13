@@ -5,7 +5,7 @@ import fs from "node:fs"
 import path from "node:path"
 
 describe("phase12 doc consistency gates", () => {
-  it("passes status-drift check between PHASE12 and ROADMAP", () => {
+  it("passes status-drift check between PHASE12 and execution ledger", () => {
     const run = spawnSync("./scripts/check_phase12_docs_consistency.sh", {
       cwd: process.cwd(),
       encoding: "utf8",

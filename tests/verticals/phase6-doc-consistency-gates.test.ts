@@ -3,7 +3,7 @@ import assert from "node:assert/strict"
 import { spawnSync } from "node:child_process"
 
 describe("phase6 doc consistency gates", () => {
-  it("passes status-drift check between PHASE6 and ROADMAP", () => {
+  it("passes status-drift check between PHASE6 and execution ledger", () => {
     const run = spawnSync("./scripts/check_phase6_docs_consistency.sh", {
       cwd: process.cwd(),
       encoding: "utf8",

@@ -89,7 +89,6 @@ Policy enforcement:
 Generated views:
 - `control-plane/views/phase-level-roadmap.generated.md`
 - `control-plane/views/journey-vector.generated.md`
-- `control-plane/views/roadmap-structure.generated.md`
 - `control-plane/views/execution-structure.generated.md`
 - `control-plane/views/phase-index.generated.json`
 - `control-plane/views/gate-order.generated.json`

@@ -30,7 +30,7 @@ const code = rows[0]?.checkbox_id?.match(/^([A-Z]{1,2})\d+\.\d+$/)?.[1]?.toLower
 const blocked = !(checklistPass && allChecked)
 const reasons = []
 if (!checklistPass) reasons.push('phase21_exit_checklist_not_pass')
-if (!allChecked) reasons.push(`roadmap_${code}_series_incomplete`)
+if (!allChecked) reasons.push(`phase_${code}_series_incomplete`)
 
 const report = {
   version: 'cicsc/phase22-gate-v1',

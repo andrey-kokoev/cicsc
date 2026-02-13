@@ -12,7 +12,7 @@ root = Path('.')
 cfg = yaml.safe_load((root / 'control-plane/execution/execution-ledger.yaml').read_text(encoding='utf-8'))
 mode = cfg.get('status_source_mode')
 
-allowed = {'roadmap_md_canonical', 'execution_ledger_yaml_canonical'}
+allowed = {'execution_ledger_yaml_canonical'}
 if mode not in allowed:
     print('status source mode check failed')
     print(f'- unsupported status_source_mode: {mode}')

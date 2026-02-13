@@ -127,7 +127,6 @@ views = root / 'control-plane' / 'views'
 views.mkdir(parents=True, exist_ok=True)
 (views / 'phase-level-roadmap.generated.md').write_text(phase_level, encoding='utf-8')
 (views / 'journey-vector.generated.md').write_text(journey, encoding='utf-8')
-(views / 'roadmap-structure.generated.md').write_text(structure, encoding='utf-8')
 
 (views / 'execution-structure.generated.md').write_text(structure, encoding='utf-8')
 

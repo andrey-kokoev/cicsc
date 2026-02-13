@@ -1,7 +1,7 @@
 version: cicsc/execution-ledger-model-v1
 status_source_mode: execution_ledger_yaml_canonical
 notes:
-- Execution-ledger status is canonical for roadmap phase scope.
+- Execution-ledger status is canonical for execution phase scope.
 phases:
 - id: U
   number: 5
