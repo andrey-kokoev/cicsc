@@ -289,7 +289,13 @@ Comparative incident mapping:
 - [x] X1.2 Add full in-scope sqlite/postgres/oracle differential suites
 - [x] X1.3 Enforce fail-fast rejection for out-of-scope operators
 - [x] X1.4 Publish backend parity report with explicit exclusions
-- [ ] X1.5 Convert unresolved parity deltas into explicit roadmap items
+- [x] X1.5 Convert unresolved parity deltas into explicit roadmap items
+
+Phase 7 parity delta mapping:
+- `PDELTA-HAVING-001` -> `X1.3`
+- `PDELTA-SETOP-001` -> `X1.3`
+- `PDELTA-COLLATION-001` -> `X2.5`
+- `PDELTA-NUMERIC-001` -> `X2.3`
 
 ### X2. Concurrency and Isolation Strengthening
 
