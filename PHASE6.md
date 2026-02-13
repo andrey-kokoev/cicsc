@@ -45,7 +45,7 @@ Expand from one reference vertical to a comparative field baseline.
 Raise concurrency guarantees from implementation behavior to formalized contract.
 
 ### TODOs
-- [ ] P6.2.1 Define explicit supported concurrency model contract (stream-level + cross-stream boundaries).
+- [x] P6.2.1 Define explicit supported concurrency model contract (stream-level + cross-stream boundaries).
 - [ ] P6.2.2 Add causality/partial-order replay conformance suite for declared model.
 - [ ] P6.2.3 Add deterministic conflict outcome matrix (abort/retry/merge) with proofs/tests per case.
 - [ ] P6.2.4 Add migration-under-concurrency drill covering pause/migrate/resume under concurrent load.
