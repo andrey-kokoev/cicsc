@@ -1686,7 +1686,7 @@ phases:
     checkboxes:
     - id: AX1.1
       title: Bind expanded claim classes to explicit proof-obligation index
-      status: open
+      status: done
     - id: AX1.2
       title: Add executable checks rejecting claims without required proof-evidence coupling
       status: open

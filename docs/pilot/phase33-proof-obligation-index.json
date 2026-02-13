@@ -1,0 +1,58 @@
+{
+  "version": "cicsc/phase33-proof-obligation-index-v1",
+  "timestamp_unix": 1771012200,
+  "phase": 33,
+  "checkbox": "AX1.1",
+  "status": "defined",
+  "claim_classes": [
+    {
+      "id": "semantic_coherence",
+      "obligation_id": "OBL-SC-001",
+      "obligation": "Maintain declared CICSC semantic invariants and category-model conformance under expanded scope.",
+      "evidence_refs": [
+        "docs/pilot/category-model-conformance.json",
+        "docs/pilot/phase32-expanded-scope-required-gates.json"
+      ],
+      "formal_refs": [
+        "docs/genesis/constructive-invariance-evolution-control-plane.md",
+        "docs/foundations/category-model.md"
+      ]
+    },
+    {
+      "id": "backend_parity",
+      "obligation_id": "OBL-BP-001",
+      "obligation": "Preserve oracle-equivalence on declared parity envelope with explicit exclusions.",
+      "evidence_refs": [
+        "docs/pilot/phase32-obj5-parity-envelope.json",
+        "docs/pilot/phase12-parity-envelope-differentials.json"
+      ],
+      "formal_refs": [
+        "docs/spec/conformance-methodology.md"
+      ]
+    },
+    {
+      "id": "migration_safety",
+      "obligation_id": "OBL-MS-001",
+      "obligation": "Preserve migration totality and replay-verified continuity on declared envelope.",
+      "evidence_refs": [
+        "docs/pilot/phase32-obj4-migration-envelope.json",
+        "docs/pilot/phase10-migration-continuity.json"
+      ],
+      "formal_refs": [
+        "docs/spec/formal-migration-correctness.md"
+      ]
+    },
+    {
+      "id": "usability_safety",
+      "obligation_id": "OBL-US-001",
+      "obligation": "Preserve non-programmer usability envelope without weakening invariant guarantees.",
+      "evidence_refs": [
+        "docs/pilot/phase32-obj3-usability-envelope.json",
+        "docs/pilot/phase11-dsl-usability-evidence.json"
+      ],
+      "formal_refs": [
+        "docs/spec/non-programmer-workflows.md"
+      ]
+    }
+  ]
+}
