@@ -197,6 +197,10 @@ This checklist defines the execution plan.
 
 The system implements a working substrate with transactional semantics and invariant enforcement. Further work is required for bundle persistence, migrations, and additional backends.
 
+Lean kernel status:
+- Lean Kernel v1 acceptance: complete.
+- Lean Kernel v1.5 coherency closure: complete (canonical constraint semantics, `checkIR -> WFIR`, declarative typing soundness bridge, replay WF closure).
+
 ---
 
 ## License

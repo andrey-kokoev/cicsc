@@ -63,7 +63,7 @@ v1 chooses a weak dynamic rule:
 
 - [x] Fix `inferExprTyFuel` `.get` clause:
   - from “always none” to “if e : tObj then some tDyn else none”
-- [ ] Add corresponding declarative typing constructor in `HasType` (optional)
+- [x] Add corresponding declarative typing constructor in `HasType` (optional; completed in v1.5 closure)
 - [x] Ensure `.has` remains `Obj → Bool`
 
 ### 2.2 Row and state typing coherence
@@ -74,7 +74,7 @@ v1 chooses a weak dynamic rule:
 
 ### 2.3 Remove divergence between algorithmic and declarative typing
 Pick one:
-- [ ] (Preferred) Prove soundness for the fragment:
+- [x] (Preferred) Prove soundness for the fragment (completed in v1.5 closure):
   - `inferExprTy Γ e = some t → HasType Γ e t`
   - for the supported constructors
 - [x] Or delete `HasType` until it is used.
@@ -189,4 +189,4 @@ Lean Kernel v1 is complete when all are true:
 
 Status note:
 - v1 acceptance is complete.
-- v1.5 is the coherency-closure pass tracked in `LEAN_KERNEL_V1-post.md` (semantic unification + checker-to-WF soundness closure).
+- v1.5 coherency-closure is complete and tracked in `LEAN_KERNEL_V1.5.md` (semantic unification + checker-to-WF soundness closure).

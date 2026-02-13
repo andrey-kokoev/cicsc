@@ -76,20 +76,20 @@ Canonical evaluator policy (runtime alignment):
 - `holdsSnapshotConstraintOnly` is a restricted helper for snapshot-only theorem surfaces.
 
 #### 1.1 Define Canonical Semantics
-- [ ] Create `holdsConstraint : IR → Constraint → State → SnapSet → Bool`
+- [x] Create `holdsConstraint : IR → Constraint → State → SnapSet → Bool`
   - Handles both snapshot and bool_query constraints
   - Uses QueryEval for bool_query when `supportsQuerySubset`
-- [ ] Mark `holdsKernelConstraint` as deprecated or rename to `holdsSnapshotConstraintOnly`
+- [x] Mark `holdsKernelConstraint` as deprecated or rename to `holdsSnapshotConstraintOnly`
 - [x] Rename legacy `holdsConstraintV0` surface to canonical `holdsConstraint`
 
 #### 1.2 Prove Decomposition Properties
-- [ ] Theorem: `holdsConstraint ir (.snapshot _ _) st _ = evalSnapshotConstraint ...`
-- [ ] Theorem: `holdsConstraint ir (.boolQuery _ q e) _ snaps = evalBoolQueryConstraintSubset ...`
-- [ ] Theorem: Constraint holding is independent of out-of-scope SnapSet entries
+- [x] Theorem: `holdsConstraint ir (.snapshot _ _) st _ = evalSnapshotConstraint ...`
+- [x] Theorem: `holdsConstraint ir (.boolQuery _ q e) _ snaps = evalBoolQueryConstraintSubset ...`
+- [x] Theorem: Constraint holding is independent of out-of-scope SnapSet entries
 
 #### 1.3 Update Downstream Usage
-- [ ] Update Examples/QueryConstraints.lean to use canonical evaluator
-- [ ] Document which evaluator Runtime/TypeScript should use
+- [x] Update Examples/QueryConstraints.lean to use canonical evaluator
+- [x] Document which evaluator Runtime/TypeScript should use
 
 **Acceptance:**
 - Single source of truth for constraint semantics
@@ -163,14 +163,14 @@ Canonical evaluator policy (runtime alignment):
 **Objective:** Remove conditional assumption from replay well-formedness theorems
 
 #### 4.1 Option A: Add to WFTypeSpec (Preferred)
-- [ ] Extend `WFTypeSpec` with additional conjunct:
+- [x] Extend `WFTypeSpec` with additional conjunct: (N/A for v1.5; Option B selected in §4.2 and closed by theorem route)
   ```lean
   reducerPreservesStates : ∀ (st : State) (e : Event),
     st.st ∈ ts.states →
     (applyReducer ts st e).st ∈ ts.states
   ```
-- [ ] Prove this is computable (decidable) for finite state sets
-- [ ] Update `checkTypeSpec` to verify this property
+- [x] Prove this is computable (decidable) for finite state sets (N/A under Option B)
+- [x] Update `checkTypeSpec` to verify this property (N/A under Option B)
 
 #### 4.2 Option B: Prove from Existing WFTypeSpec (Alternative)
 - [x] Theorem: `WFTypeSpec ts → ReducerPreservesWF ts`
@@ -203,9 +203,9 @@ Canonical evaluator policy (runtime alignment):
   - Snapshot-only helper named `holdsSnapshotConstraintOnly` to avoid semantic ambiguity
 
 #### 5.2 Documentation Updates
-- [ ] Add comment header to Constraints.lean explaining evaluator evolution
+- [x] Add comment header to Constraints.lean explaining evaluator evolution
 - [x] Update LEAN_KERNEL_V1.md §8 checklist to clarify v1 is complete
-- [ ] Add forward reference to LEAN_KERNEL_V1-post.md for remaining work
+- [x] Add forward reference to LEAN_KERNEL_V1-post.md for remaining work
 - [x] Add migration note documenting naming-only compatibility for constraint evaluator surface cleanup
 
 **Acceptance:**
@@ -219,11 +219,11 @@ Canonical evaluator policy (runtime alignment):
 
 v1.5 is complete when all are true:
 
-- [ ] **Constraint Semantics:** Single canonical `holdsConstraint` evaluator with proved decomposition
-- [ ] **Static Discipline:** `checkIR ir = true → WFIR ir` theorem exists and is proved
-- [ ] **Typing Soundness:** Declarative `HasType` exists with soundness theorem
-- [ ] **WF Completeness:** Replay well-formedness is unconditional consequence of `WFTypeSpec`
-- [ ] **Naming Hygiene:** No v0/v1 confusion; clear versioning documentation
+- [x] **Constraint Semantics:** Single canonical `holdsConstraint` evaluator with proved decomposition
+- [x] **Static Discipline:** `checkIR ir = true → WFIR ir` theorem exists and is proved
+- [x] **Typing Soundness:** Declarative `HasType` exists with soundness theorem
+- [x] **WF Completeness:** Replay well-formedness is unconditional consequence of `WFTypeSpec`
+- [x] **Naming Hygiene:** No v0/v1 confusion; clear versioning documentation
 - [x] **Execution Validation Pass:** `lake build` run before closure checkbox completion updates
 
 ---
@@ -315,9 +315,9 @@ For users currently depending on v1:
 - Constraint evaluator rename path (`holdsConstraintV0` → `holdsConstraint`) does not change evaluation behavior; it only canonicalizes the public naming surface.
 
 ### Validation
-- [ ] All Examples type-check with v1.5
-- [ ] No change to evalExpr, evalQuery, or applyReducer semantics (pure refactor)
-- [ ] lakefile.lean builds cleanly
+- [x] All Examples type-check with v1.5
+- [x] No change to evalExpr, evalQuery, or applyReducer semantics (pure refactor)
+- [x] lakefile.lean builds cleanly
 
 ---
 
@@ -326,11 +326,11 @@ For users currently depending on v1:
 When v1.5 is complete:
 
 - [x] Add final acceptance theorem index section with file + theorem references
-- [ ] Update LEAN_KERNEL_V1.md §8 checklist to reference v1.5 completion
-- [ ] Add comments in code referencing relevant LEAN_KERNEL_V1-post.md sections
-- [ ] Update README (if exists) with v1.5 status
-- [ ] Add migration guide for users updating from v1 to v1.5
-- [ ] Update AGENTS.md to reference Lean kernel v1.5 as "coherency complete"
+- [x] Update LEAN_KERNEL_V1.md §8 checklist to reference v1.5 completion
+- [x] Add comments in code referencing relevant LEAN_KERNEL_V1-post.md sections
+- [x] Update README (if exists) with v1.5 status
+- [x] Add migration guide for users updating from v1 to v1.5
+- [x] Update AGENTS.md to reference Lean kernel v1.5 as "coherency complete"
 - [x] Add release note entry summarizing v1.5 coherence completion
 
 ## Acceptance Theorem Index

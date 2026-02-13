@@ -21,6 +21,10 @@ Primary success criteria:
 - Migrations are executable and replay-verified.
 - Backends (SQLite/D1, Postgres) are semantically equivalent to the oracle.
 
+Lean proof baseline:
+- Lean Kernel v1.5 is the coherency-complete baseline for kernel semantics.
+- New semantics work must preserve the canonical evaluator/typing/WF bridges established in v1.5.
+
 ---
 
 ## Working Style

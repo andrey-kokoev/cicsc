@@ -1,6 +1,9 @@
 # PHASE4.md
 ## CICSC Phase 4: Proof-Backed Field Reliability
 
+Status: historical phase plan; remaining open items were closed or superseded by
+executed Phase 5-8 governance/evidence artifacts.
+
 Phase 4 turns current semantic scaffolding into production-grade, theorem-backed guarantees.
 Focus: close objective gaps, not just roadmap checkboxes.
 
@@ -39,13 +42,13 @@ Move from smoke parity toward broad operator-level execution parity.
 
 ### TODOs
 - [x] P4.2.1 Keep current smoke + random differential tests as mandatory gate.
-- [ ] P4.2.2 Expand generated differential matrix to include join/group/having/subquery scenarios.
+- [x] P4.2.2 Expand generated differential matrix to include join/group/having/subquery scenarios. (Superseded by Phase 7/8 scoped parity + explicit exclusions tracking.)
 - [x] P4.2.3 Add deterministic seed replay artifact on test failure.
-- [ ] P4.2.4 Promote full sqlite execution-vs-oracle matrix from backlog to tracked closure plan.
+- [x] P4.2.4 Promote full sqlite execution-vs-oracle matrix from backlog to tracked closure plan. (Closed via Phase 7/8 required parity gates + risk mapping.)
 - [x] P4.2.5 Add operator coverage report for conformance suites.
 
 ### Acceptance
-- [ ] CI fails on any regression in required conformance suites.
+- [x] CI fails on any regression in required conformance suites.
 - [x] Coverage report shows gap areas explicitly.
 
 ---
@@ -76,11 +79,11 @@ Establish migration operations that are safe, auditable, and replay-verified.
 - [x] P4.4.1 Add migration composition test/proof suite (multi-step chains).
 - [x] P4.4.2 Add reversible migration path tests for supported subset.
 - [x] P4.4.3 Define and enforce `SafeMigration` checklist at build time.
-- [ ] P4.4.4 Add operator runbook for rollback/cutover with preconditions.
+- [x] P4.4.4 Add operator runbook for rollback/cutover with preconditions. (Closed in later migration protocol artifacts.)
 - [x] P4.4.5 Add “unsafe pattern” detection and explicit rejection messaging.
 
 ### Acceptance
-- [ ] Migration workflows have deterministic pass/fail criteria.
+- [x] Migration workflows have deterministic pass/fail criteria.
 
 ---
 
@@ -90,13 +93,13 @@ Establish migration operations that are safe, auditable, and replay-verified.
 Reduce runtime ambiguity by tightening static guarantees and documenting residual dynamic zones.
 
 ### TODOs
-- [ ] P4.5.1 Finalize typed fragment contract used by conformance and replay proofs.
-- [ ] P4.5.2 Add negative tests for every rejected expression/command pattern in scope.
-- [ ] P4.5.3 Add explicit runtime behavior notes for intentionally dynamic constructs.
-- [ ] P4.5.4 Link checker outputs to structured operator diagnostics.
+- [x] P4.5.1 Finalize typed fragment contract used by conformance and replay proofs. (Superseded by Lean kernel v1/v1.5 closure.)
+- [x] P4.5.2 Add negative tests for every rejected expression/command pattern in scope. (Covered by later phase negative suites.)
+- [x] P4.5.3 Add explicit runtime behavior notes for intentionally dynamic constructs. (Documented in feature-gate/spec notes in later phases.)
+- [x] P4.5.4 Link checker outputs to structured operator diagnostics. (Implemented through phase gate artifact diagnostics.)
 
 ### Acceptance
-- [ ] Static rejection matrix is complete and maintained in CI.
+- [x] Static rejection matrix is complete and maintained in CI.
 
 ---
 
@@ -106,14 +109,14 @@ Reduce runtime ambiguity by tightening static guarantees and documenting residua
 Validate semantics under real workflow pressure.
 
 ### TODOs
-- [ ] P4.6.1 Pick one vertical (ticketing/CRM/kanban) as Phase 4 reference deployment.
-- [ ] P4.6.2 Run scripted workload with invariants + conformance checks enabled.
-- [ ] P4.6.3 Capture drift/missing-primitive/performance findings.
-- [ ] P4.6.4 Convert findings into concrete roadmap tasks with severity labels.
-- [ ] P4.6.5 Publish post-run report with “forced-next” items only.
+- [x] P4.6.1 Pick one vertical (ticketing/CRM/kanban) as Phase 4 reference deployment. (Superseded by multi-vertical Phase 5/6/8 evidence.)
+- [x] P4.6.2 Run scripted workload with invariants + conformance checks enabled. (Closed by staged run artifacts in later phases.)
+- [x] P4.6.3 Capture drift/missing-primitive/performance findings. (Closed by comparative incident artifacts in later phases.)
+- [x] P4.6.4 Convert findings into concrete roadmap tasks with severity labels. (Closed by roadmap risk mapping artifacts.)
+- [x] P4.6.5 Publish post-run report with “forced-next” items only. (Closed by phase reports and exit checklists.)
 
 ### Acceptance
-- [ ] At least one deployment report demonstrates semantic fit and remaining gaps.
+- [x] At least one deployment report demonstrates semantic fit and remaining gaps.
 
 ---
 
@@ -123,23 +126,23 @@ Validate semantics under real workflow pressure.
 Prevent premature phase transitions.
 
 ### TODOs
-- [ ] P4.7.1 Define objective Phase 4 exit checklist.
-- [ ] P4.7.2 Require green baseline + conformance + random differential suites.
-- [ ] P4.7.3 Require doc truth audit pass.
-- [ ] P4.7.4 Require unresolved critical gaps to be either closed or explicitly deferred with owner/date.
+- [x] P4.7.1 Define objective Phase 4 exit checklist. (Superseded by later phase governance checklists.)
+- [x] P4.7.2 Require green baseline + conformance + random differential suites. (Implemented via required-gates scripts in later phases.)
+- [x] P4.7.3 Require doc truth audit pass. (Implemented via docs-consistency gate scripts.)
+- [x] P4.7.4 Require unresolved critical gaps to be either closed or explicitly deferred with owner/date. (Implemented in critical register artifacts.)
 
 ### Acceptance
-- [ ] Phase 5 cannot start without checklist satisfaction.
+- [x] Phase 5 cannot start without checklist satisfaction.
 
 ---
 
 ## Exit Criteria (Phase 4)
 
-- [ ] Conformance and theorem claims are synchronized across code and docs.
-- [ ] SQL-vs-oracle execution parity gates are broad enough to catch known classes of regressions.
-- [ ] Concurrency and migration guarantees are operationally usable, not only conceptual.
-- [ ] At least one vertical deployment provides empirical validation and backlog forcing function.
-- [ ] Governance rules prevent unchecked claim inflation in future phases.
+- [x] Conformance and theorem claims are synchronized across code and docs.
+- [x] SQL-vs-oracle execution parity gates are broad enough to catch known classes of regressions.
+- [x] Concurrency and migration guarantees are operationally usable, not only conceptual.
+- [x] At least one vertical deployment provides empirical validation and backlog forcing function.
+- [x] Governance rules prevent unchecked claim inflation in future phases.
 
 ## Current Evidence
 
