@@ -24,6 +24,8 @@ Derived phase view IDs:
 - `PHASE*.md` files are derived execution views for readability.
 - They must not introduce independent status truth.
 - Status values in `PHASE*.md` must match `ROADMAP.md` for mapped checkboxes.
+- Planning/navigation docs (`PHASE_LEVEL_ROADMAP.md`, `JOURNEY_VECTOR.md`)
+  are explicitly non-status and must not contain markdown checkboxes.
 
 ## One Checkbox = One Commit
 
@@ -39,6 +41,8 @@ For a checkbox marked done in `ROADMAP.md`:
   - validates status parity between `ROADMAP.md` and `PHASE*.md` views.
 - `scripts/check_checkbox_commit_evidence.sh`
   - validates that checked checkboxes have corresponding commit evidence.
+- `scripts/check_workflow_single_source.sh`
+  - validates that non-canonical planning/navigation docs do not carry status checkboxes.
 - `scripts/check_category_model_conformance.sh`
   - validates `docs/foundations/category-model.md` obligations against theorem/doc/artifact evidence.
 - `scripts/check_canonical_execution_model.sh`

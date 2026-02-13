@@ -14,6 +14,8 @@ The checklist in **`# CICSC Completion TODO (Comprehensive)`** is the canonical 
 - New work enters the system only by adding new checkboxes.
 - `ROADMAP.md` is the only canonical status ledger.
 - `PHASE*.md` files are derived views; they may aid readability but do not own truth.
+- Planning/navigation docs (`PHASE_LEVEL_ROADMAP.md`, `JOURNEY_VECTOR.md`, etc.)
+  are non-status artifacts and must not carry execution checkboxes.
 
 ---
 

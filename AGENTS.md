@@ -33,6 +33,8 @@ Lean proof baseline:
 Execution status truth is single-source:
 - `ROADMAP.md` is the only canonical status ledger.
 - `PHASE*.md` files are derived views; they are not authoritative for status.
+- Planning/navigation docs (for example `PHASE_LEVEL_ROADMAP.md`, `JOURNEY_VECTOR.md`)
+  must not contain execution status checkboxes.
 
 Work unit policy:
 - one checkbox = one commit,
