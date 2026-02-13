@@ -171,5 +171,32 @@ assignments_view = {
     json.dumps(assignments_view, indent=2) + "\n", encoding='utf-8'
 )
 
+messages = collab.get('messages', [])
+worktree_mailboxes = {}
+for a in collab.get('agents', []):
+    wt = a.get('worktree')
+    if wt:
+        worktree_mailboxes[wt] = {'inbox': [], 'outbox': []}
+for msg in messages:
+    from_wt = msg.get('from_worktree')
+    to_wt = msg.get('to_worktree')
+    if from_wt not in worktree_mailboxes:
+        worktree_mailboxes[from_wt] = {'inbox': [], 'outbox': []}
+    if to_wt not in worktree_mailboxes:
+        worktree_mailboxes[to_wt] = {'inbox': [], 'outbox': []}
+    worktree_mailboxes[from_wt]['outbox'].append(msg)
+    worktree_mailboxes[to_wt]['inbox'].append(msg)
+
+mailboxes_view = {
+    "_generated": True,
+    "_source": "control-plane/collaboration/collab-model.yaml",
+    "_generator": "control-plane/scripts/generate_views.sh",
+    "version": "cicsc/worktree-mailboxes-v1",
+    "mailboxes": worktree_mailboxes,
+}
+(views / 'worktree-mailboxes.generated.json').write_text(
+    json.dumps(mailboxes_view, indent=2) + "\n", encoding='utf-8'
+)
+
 print('generated control-plane views')
 PY

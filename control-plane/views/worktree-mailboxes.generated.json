@@ -1,0 +1,91 @@
+{
+  "_generated": true,
+  "_source": "control-plane/collaboration/collab-model.yaml",
+  "_generator": "control-plane/scripts/generate_views.sh",
+  "version": "cicsc/worktree-mailboxes-v1",
+  "mailboxes": {
+    "/home/andrey/src/cicsc": {
+      "inbox": [],
+      "outbox": [
+        {
+          "id": "MSG_PHASE33_AX12_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE33_AX12_KIMI",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/kimi",
+          "branch": "phase33.ax1.2",
+          "status": "sent",
+          "payload_refs": [
+            "control-plane/collaboration/collab-model.yaml",
+            "docs/genesis/worktree-mediated-constructive-collaboration.md"
+          ],
+          "evidence_refs": [],
+          "notes": "Dispatch AX1.2 obligations and required gate contract."
+        },
+        {
+          "id": "MSG_PHASE33_AX22_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE33_AX22_ANTIGRAVITY",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_ANTIGRAVITY",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/antigravity",
+          "branch": "phase33.ax2.2",
+          "status": "sent",
+          "payload_refs": [
+            "control-plane/collaboration/collab-model.yaml",
+            "docs/genesis/worktree-mediated-constructive-collaboration.md"
+          ],
+          "evidence_refs": [],
+          "notes": "Dispatch AX2.2 obligations and formalization admissibility criteria."
+        }
+      ]
+    },
+    "/home/andrey/src/kimi": {
+      "inbox": [
+        {
+          "id": "MSG_PHASE33_AX12_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE33_AX12_KIMI",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/kimi",
+          "branch": "phase33.ax1.2",
+          "status": "sent",
+          "payload_refs": [
+            "control-plane/collaboration/collab-model.yaml",
+            "docs/genesis/worktree-mediated-constructive-collaboration.md"
+          ],
+          "evidence_refs": [],
+          "notes": "Dispatch AX1.2 obligations and required gate contract."
+        }
+      ],
+      "outbox": []
+    },
+    "/home/andrey/src/antigravity": {
+      "inbox": [
+        {
+          "id": "MSG_PHASE33_AX22_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE33_AX22_ANTIGRAVITY",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_ANTIGRAVITY",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/antigravity",
+          "branch": "phase33.ax2.2",
+          "status": "sent",
+          "payload_refs": [
+            "control-plane/collaboration/collab-model.yaml",
+            "docs/genesis/worktree-mediated-constructive-collaboration.md"
+          ],
+          "evidence_refs": [],
+          "notes": "Dispatch AX2.2 obligations and formalization admissibility criteria."
+        }
+      ],
+      "outbox": []
+    }
+  }
+}

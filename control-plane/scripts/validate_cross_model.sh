@@ -57,6 +57,7 @@ def main() -> int:
     claim_kind_ids = {c.get("id") for c in collab.get("claim_kinds", [])}
     evidence_kind_ids = {e.get("id") for e in collab.get("evidence_kinds", [])}
     obligation_ids = {o.get("id") for o in collab.get("obligation_profiles", [])}
+    message_kind_ids = {m.get("id") for m in collab.get("message_kinds", [])}
 
     for ck in collab.get("claim_kinds", []):
         for ref in ck.get("required_obligation_profile_refs", []):
@@ -196,6 +197,7 @@ def main() -> int:
                 checkbox_status[cb.get("id")] = cb.get("status")
 
     active_assignment_statuses = {"assigned", "in_progress", "submitted"}
+    assignment_map = {}
     active_by_checkbox = {}
     for a in collab.get("assignments", []):
         aid = a.get("id")
@@ -205,6 +207,7 @@ def main() -> int:
         worktree = a.get("worktree")
         branch = a.get("branch")
         astatus = a.get("status")
+        assignment_map[aid] = a
 
         if agent_ref not in agent_map:
             errors.append(f"collab-model: assignment {aid} unknown agent_ref {agent_ref}")
@@ -235,6 +238,73 @@ def main() -> int:
                 )
             else:
                 active_by_checkbox[checkbox_ref] = aid
+
+    def maybe_path_ref(ref: str) -> bool:
+        return (
+            ref.startswith("docs/")
+            or ref.startswith("scripts/")
+            or ref.startswith("control-plane/")
+            or ref.startswith("lean/")
+        )
+
+    seen_message_ids = set()
+    for msg in collab.get("messages", []):
+        mid = msg.get("id")
+        if mid in seen_message_ids:
+            errors.append(f"collab-model: duplicate message id {mid}")
+        seen_message_ids.add(mid)
+
+        kind_ref = msg.get("kind_ref")
+        assignment_ref = msg.get("assignment_ref")
+        from_agent_ref = msg.get("from_agent_ref")
+        to_agent_ref = msg.get("to_agent_ref")
+        from_worktree = msg.get("from_worktree")
+        to_worktree = msg.get("to_worktree")
+        branch = msg.get("branch")
+
+        if kind_ref not in message_kind_ids:
+            errors.append(f"collab-model: message {mid} unknown kind_ref {kind_ref}")
+        if assignment_ref not in assignment_map:
+            errors.append(f"collab-model: message {mid} unknown assignment_ref {assignment_ref}")
+            continue
+
+        if from_agent_ref not in agent_map:
+            errors.append(f"collab-model: message {mid} unknown from_agent_ref {from_agent_ref}")
+        else:
+            expected = agent_map[from_agent_ref].get("worktree")
+            if expected != from_worktree:
+                errors.append(
+                    f"collab-model: message {mid} from_worktree mismatch (got {from_worktree}, expected {expected})"
+                )
+
+        if to_agent_ref not in agent_map:
+            errors.append(f"collab-model: message {mid} unknown to_agent_ref {to_agent_ref}")
+        else:
+            expected = agent_map[to_agent_ref].get("worktree")
+            if expected != to_worktree:
+                errors.append(
+                    f"collab-model: message {mid} to_worktree mismatch (got {to_worktree}, expected {expected})"
+                )
+
+        assignment = assignment_map[assignment_ref]
+        if assignment.get("agent_ref") != to_agent_ref:
+            errors.append(
+                f"collab-model: message {mid} to_agent_ref {to_agent_ref} does not match assignment agent_ref {assignment.get('agent_ref')}"
+            )
+        if assignment.get("branch") != branch:
+            errors.append(
+                f"collab-model: message {mid} branch {branch} does not match assignment branch {assignment.get('branch')}"
+            )
+
+        if branch_re and isinstance(branch, str) and not branch_re.match(branch):
+            errors.append(f"collab-model: message {mid} branch {branch} violates handoff branch_pattern")
+
+        for ref in msg.get("payload_refs", []):
+            if isinstance(ref, str) and maybe_path_ref(ref) and not path_exists(ref):
+                errors.append(f"collab-model: message {mid} missing payload ref {ref}")
+        for ref in msg.get("evidence_refs", []):
+            if isinstance(ref, str) and maybe_path_ref(ref) and not path_exists(ref):
+                errors.append(f"collab-model: message {mid} missing evidence ref {ref}")
 
     seen_gate_ids = set()
     seen_gate_scripts = set()

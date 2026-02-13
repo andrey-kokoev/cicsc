@@ -13,3 +13,4 @@ Current generated artifacts include:
 - `gate-order.generated.json`
 - `execution-status.generated.json`
 - `assignments.generated.json`
+- `worktree-mailboxes.generated.json`
