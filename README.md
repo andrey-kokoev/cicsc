@@ -176,9 +176,6 @@ The canonical execution plan/status ledger is:
 
 - `control-plane/execution/execution-ledger.yaml`
 
-Compatibility alias (generated):
-
-- `ROADMAP.md`
 
 ---
 

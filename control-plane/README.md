@@ -30,17 +30,15 @@ Provide a single coherent model stack for:
 ## Current Canonical Rule
 
 Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
-- `control-plane/execution/execution-ledger.yaml` is canonical status truth for roadmap phase scope.
-- `ROADMAP.md` is generated compatibility alias and is validated as synchronized execution view.
+- `control-plane/execution/execution-ledger.yaml` is canonical status truth.
 - `PHASE*.md` remain derived status views.
 - `control-plane/*` models are authoritative for structure, status (modeled scope), and gating intent.
 
-## Derivation Flow (Target)
+## Derivation Flow
 
 1. Validate schemas and model cross-references.
 2. Generate views into `control-plane/views/`.
-3. Generate/verify derived markdown artifacts (`ROADMAP.md` compatibility alias, phase views).
-4. Run canonical execution gates.
+3. Run canonical execution gates.
 
 ## Validation Entry Points
 
@@ -51,8 +49,6 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `control-plane/scripts/validate_cross_model.sh`
 - `control-plane/scripts/validate_all.sh`
 - `control-plane/scripts/generate_views.sh`
-- `control-plane/scripts/sync_execution_ledger_from_roadmap.py`
-  - one-time/transition sync utility from roadmap markdown to execution-ledger model.
 
 Sync gate:
 - `scripts/check_control_plane_sync.sh`
@@ -67,8 +63,6 @@ Sync gate:
   - validates allowed status source mode values.
 - `scripts/check_status_projection_sync.sh`
   - validates execution status projection coverage for execution-ledger non-planned checkbox scope.
-- `scripts/check_roadmap_compat_alias_sync.sh`
-  - validates generated roadmap compatibility alias stays in sync.
 
 ## Status-Data Discipline
 
@@ -85,9 +79,9 @@ Generated files must be explicitly marked:
   - `Source: <path>`
   - `Generator: <path>`
 - json formats: include metadata fields:
-  - `\"_generated\": true`
-  - `\"_source\": \"<path>\"`
-  - `\"_generator\": \"<path>\"`
+  - `"_generated": true`
+  - `"_source": "<path>"`
+  - `"_generator": "<path>"`
 
 Policy enforcement:
 - `scripts/check_generated_artifacts_policy.sh`
@@ -100,4 +94,3 @@ Generated views:
 - `control-plane/views/phase-index.generated.json`
 - `control-plane/views/gate-order.generated.json`
 - `control-plane/views/execution-status.generated.json`
-- `control-plane/views/roadmap-status.generated.json`

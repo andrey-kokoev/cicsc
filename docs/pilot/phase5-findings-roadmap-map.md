@@ -4,7 +4,7 @@ Incident source:
 - `docs/pilot/phase5-ticketing-incidents.json`
 
 Mapped roadmap section:
-- `ROADMAP.md` -> `## V. Field-Derived Backlog (Ticketing Phase 5)`
+- `control-plane/execution/execution-ledger.yaml` -> `## V. Field-Derived Backlog (Ticketing Phase 5)`
 
 ## Mapping
 

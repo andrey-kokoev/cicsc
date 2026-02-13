@@ -28,7 +28,7 @@ Post-v1.0.0 Lean kernel coherency closure completed:
 
 Current repository status after v1.0.0:
 - Lean kernel milestones through `LEAN_KERNEL_V4.md` are completed (scoped where documented).
-- Phase 6 governance closure is complete (`PHASE6.md` all checked, `ROADMAP.md` W-series all checked).
+- Phase 6 governance closure is complete (`PHASE6.md` all checked, W-series all checked in execution ledger).
 - Phase transition gating is artifact-driven via:
   - `docs/pilot/phase6-exit-checklist.json`
   - `docs/pilot/phase7-gate.json`

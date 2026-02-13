@@ -1,7 +1,7 @@
 # PHASE8.md
 > Derived View: This file is a non-canonical execution view.
-> Canonical status ledger: `ROADMAP.md`.
-> Do not update checkbox truth here without matching `ROADMAP.md` update.
+> Canonical status ledger: `control-plane/execution/execution-ledger.yaml`.
+> Do not update checkbox truth here without matching `control-plane/execution/execution-ledger.yaml` update.
 
 ## CICSC Phase 8: Production Equivalence and Scale Hardening
 

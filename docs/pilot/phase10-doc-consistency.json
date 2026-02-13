@@ -4,7 +4,7 @@
   "status": "pass",
   "basis": {
     "phase10": "PHASE10.md",
-    "roadmap": "ROADMAP.md",
+    "roadmap": "control-plane/execution/execution-ledger.yaml",
     "checklist": "docs/pilot/phase10-exit-checklist.json"
   },
   "checked_ids": [

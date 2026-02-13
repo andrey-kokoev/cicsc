@@ -27,10 +27,6 @@ Derived phase view IDs:
 - Planning/navigation docs (`PHASE_LEVEL_ROADMAP.md`, `JOURNEY_VECTOR.md`)
   are explicitly non-status and must not contain markdown checkboxes.
 
-Compatibility alias (temporary):
-- `ROADMAP.md` is generated from `execution-ledger.yaml` for transition safety.
-- It is non-canonical and must not be edited directly.
-
 ## One Checkbox = One Commit
 
 For a checkbox marked done in `control-plane/execution/execution-ledger.yaml`:
@@ -53,8 +49,6 @@ For a checkbox marked done in `control-plane/execution/execution-ledger.yaml`:
   - validates generated execution structure/index views against `execution-ledger.yaml`.
 - `scripts/check_execution_structure_roundtrip_ledger.sh`
   - validates execution status projection coverage/parity for non-planned ledger scope.
-- `scripts/check_roadmap_compat_alias_sync.sh`
-  - validates generated `ROADMAP.md` compatibility alias remains in sync.
 - `scripts/check_gate_model_roundtrip.sh`
   - validates canonical gate wrapper delegation and gate-order parity to gate-model.
 - `scripts/check_status_source_mode.sh`

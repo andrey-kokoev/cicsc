@@ -6,6 +6,6 @@ Canonical generated journey navigation view:
 - `control-plane/views/journey-vector.generated.md`
 
 Canonical execution status truth:
-- `ROADMAP.md`
+- `control-plane/execution/execution-ledger.yaml`
 
 Do not duplicate planning or status data here.

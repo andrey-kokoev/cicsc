@@ -5,9 +5,6 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "${ROOT_DIR}"
 
 ./control-plane/scripts/export_execution_status.py control-plane/execution/execution-ledger.yaml > control-plane/views/execution-status.generated.json
-# Compatibility alias retained during transition window.
-cp control-plane/views/execution-status.generated.json control-plane/views/roadmap-status.generated.json
-./control-plane/scripts/generate_roadmap_compat.py > /dev/null
 
 python3 - <<'PY'
 from pathlib import Path
@@ -132,7 +129,6 @@ views.mkdir(parents=True, exist_ok=True)
 (views / 'journey-vector.generated.md').write_text(journey, encoding='utf-8')
 (views / 'roadmap-structure.generated.md').write_text(structure, encoding='utf-8')
 
-# Temporary alias for transition safety.
 (views / 'execution-structure.generated.md').write_text(structure, encoding='utf-8')
 
 gate_steps = []

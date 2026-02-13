@@ -4,13 +4,21 @@ import { spawnSync } from "node:child_process"
 import fs from "node:fs"
 import path from "node:path"
 
+
+function loadExecutionStatus() {
+  const run = spawnSync("./control-plane/scripts/export_execution_status.py", ["control-plane/execution/execution-ledger.yaml"], {
+    cwd: process.cwd(),
+    encoding: "utf8",
+  })
+  assert.equal(run.status, 0, run.stderr || run.stdout)
+  return JSON.parse(run.stdout)
+}
+
 describe("phase20 block gate", () => {
   it("blocks unless phase19 checklist passes and AJ series is complete", () => {
     const checklist = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), "docs/pilot/phase19-exit-checklist.json"), "utf8"))
     const checklistPass = (checklist.items ?? []).every((i: any) => i.status === "pass")
-    const executionStatus = JSON.parse(
-      fs.readFileSync(path.resolve(process.cwd(), "control-plane/views/execution-status.generated.json"), "utf8")
-    )
+    const executionStatus = loadExecutionStatus()
     const rows = (executionStatus.rows ?? []).filter((r: any) => Number(r.phase_number) === 20)
     const allAj = rows.length > 0 && rows.every((r: any) => r.status === "done")
     const expectedBlocked = !(checklistPass && allAj)

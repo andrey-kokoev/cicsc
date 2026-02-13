@@ -41,10 +41,6 @@
       "script": "scripts/check_status_projection_sync.sh"
     },
     {
-      "gate_id": "GATE_ROADMAP_COMPAT_ALIAS_SYNC",
-      "script": "scripts/check_roadmap_compat_alias_sync.sh"
-    },
-    {
       "gate_id": "GATE_GENERATED_ARTIFACT_POLICY",
       "script": "scripts/check_generated_artifacts_policy.sh"
     },

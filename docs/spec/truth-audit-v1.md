@@ -56,7 +56,7 @@ Status: `Proved + Scoped`.
 ## Governance Status
 
 - `PHASE6.md`: all checkboxes complete.
-- `ROADMAP.md`: `W1..W4` complete.
+- `control-plane/execution/execution-ledger.yaml`: `W1..W4` complete.
 - Phase transition is artifact-gated:
   - `docs/pilot/phase6-exit-checklist.json`
   - `docs/pilot/phase7-gate.json`

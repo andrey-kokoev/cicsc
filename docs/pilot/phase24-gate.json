@@ -4,7 +4,7 @@
   "blocked": false,
   "basis": {
     "checklist": "docs/pilot/phase23-exit-checklist.json",
-    "roadmap": "ROADMAP.md"
+    "roadmap": "control-plane/execution/execution-ledger.yaml"
   },
   "reasons": []
 }

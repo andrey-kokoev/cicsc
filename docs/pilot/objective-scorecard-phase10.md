@@ -5,7 +5,7 @@ Source mission: `AGENTS.md` (Mission + Primary success criteria).
 ## Executive Status
 
 - Overall state: **hardened pre-field substrate**
-- Phase state: **Phase 10 closed** (`PHASE10.md`, `ROADMAP.md` AA-series all checked)
+- Phase state: **Phase 10 closed** (`PHASE10.md`, `control-plane/execution/execution-ledger.yaml` AA-series all checked)
 - Readiness posture: **strong in governed lab/pilot evidence; partial for broad production generalization**
 
 ## Objective-by-Objective Score

@@ -14,18 +14,18 @@ describe("control-plane integrity", () => {
 
     const phaseIndexPath = path.resolve(process.cwd(), "control-plane/views/phase-index.generated.json")
     const gateOrderPath = path.resolve(process.cwd(), "control-plane/views/gate-order.generated.json")
-    const roadmapStatusPath = path.resolve(process.cwd(), "control-plane/views/roadmap-status.generated.json")
+    const executionStatusPath = path.resolve(process.cwd(), "control-plane/views/execution-status.generated.json")
 
     const phaseIndex = JSON.parse(readFileSync(phaseIndexPath, "utf8"))
     const gateOrder = JSON.parse(readFileSync(gateOrderPath, "utf8"))
-    const roadmapStatus = JSON.parse(readFileSync(roadmapStatusPath, "utf8"))
+    const executionStatus = JSON.parse(readFileSync(executionStatusPath, "utf8"))
 
     assert.equal(phaseIndex._generated, true)
     assert.equal(gateOrder._generated, true)
-    assert.equal(roadmapStatus._generated, true)
+    assert.equal(executionStatus._generated, true)
     assert.ok(Array.isArray(phaseIndex.phases) && phaseIndex.phases.length > 0)
     assert.ok(Array.isArray(gateOrder.steps) && gateOrder.steps.length > 0)
-    assert.ok(Array.isArray(roadmapStatus.rows) && roadmapStatus.rows.length > 0)
+    assert.ok(Array.isArray(executionStatus.rows) && executionStatus.rows.length > 0)
   })
 
   it("gate-model execution plan matches generated gate-order view", () => {

@@ -5,4 +5,4 @@ Artifacts:
 - `docs/pilot/phase28-doc-consistency.status.log`
 
 This gate checks checkbox status parity between `PHASE28.md` and the canonical
-`ROADMAP.md` section `AS.*`.
+`control-plane/execution/execution-ledger.yaml` section `AS.*`.

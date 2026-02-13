@@ -1,7 +1,7 @@
 # PHASE4.md
 > Derived View: This file is a non-canonical execution view.
-> Canonical status ledger: `ROADMAP.md`.
-> Do not update checkbox truth here without matching `ROADMAP.md` update.
+> Canonical status ledger: `control-plane/execution/execution-ledger.yaml`.
+> Do not update checkbox truth here without matching `control-plane/execution/execution-ledger.yaml` update.
 
 ## CICSC Phase 4: Proof-Backed Field Reliability
 
@@ -29,7 +29,7 @@ Reach a state where:
 Reconcile documentation claims with proven behavior and current test signal.
 
 ### TODOs
-- [x] P4.1.1 Audit `ROADMAP.md`, `LEAN_KERNEL_*`, `PHASE3_FIELD_HARDENING.md`, and status docs for claim drift.
+- [x] P4.1.1 Audit `control-plane/execution/execution-ledger.yaml`, `LEAN_KERNEL_*`, `PHASE3_FIELD_HARDENING.md`, and status docs for claim drift.
 - [x] P4.1.2 Introduce “Proved / Scoped / Deferred” status labels in normative docs.
 - [x] P4.1.3 Add a single source-of-truth theorem index doc.
 - [x] P4.1.4 Remove or reword any claim that exceeds proved scope.

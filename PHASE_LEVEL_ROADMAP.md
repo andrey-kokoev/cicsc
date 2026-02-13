@@ -10,7 +10,4 @@ Canonical generated phase-level planning view:
 Canonical execution status truth:
 - `control-plane/execution/execution-ledger.yaml`
 
-Compatibility alias (generated):
-- `ROADMAP.md`
-
 Do not duplicate planning or status data here.

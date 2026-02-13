@@ -36,10 +36,6 @@ gates:
     scope: global
     required_scripts:
       - scripts/check_status_projection_sync.sh
-  - id: GATE_ROADMAP_COMPAT_ALIAS_SYNC
-    scope: global
-    required_scripts:
-      - scripts/check_roadmap_compat_alias_sync.sh
   - id: GATE_GENERATED_ARTIFACT_POLICY
     scope: global
     required_scripts:
