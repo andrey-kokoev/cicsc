@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase11-baseline-gates-v1",
+  "timestamp_unix": 1770952934,
+  "overall": "pass",
+  "checks": {
+    "parity_continuity": {
+      "basis": "docs/pilot/phase10-parity-continuity.json",
+      "status": "pass"
+    },
+    "migration_continuity": {
+      "basis": "docs/pilot/phase10-migration-continuity.json",
+      "status": "pass"
+    },
+    "operational_slo_continuity": {
+      "basis": "docs/pilot/phase10-operational-slo-continuity.json",
+      "status": "pass"
+    },
+    "governance_drift_gate": {
+      "basis": "docs/pilot/phase10-doc-consistency.json",
+      "status": "pass"
+    },
+    "phase11_block_gate": {
+      "basis": "docs/pilot/phase11-gate.json",
+      "status": "pass"
+    }
+  }
+}
