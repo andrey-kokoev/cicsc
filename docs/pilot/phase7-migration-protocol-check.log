@@ -1,60 +1,60 @@
-(node:762996) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:818307) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:762996) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/cutover-protocol.test.ts is not specified and it doesn't parse as CommonJS.
+(node:818307) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/cutover-protocol.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ cutover protocol
-  ✔ runs pause->verify/migrate->activate->resume flow (4.966259ms)
-  ✔ resumes tenant even when verification fails (0.712984ms)
-✔ cutover protocol (7.422867ms)
-(node:762997) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+  ✔ runs pause->verify/migrate->activate->resume flow (4.994215ms)
+  ✔ resumes tenant even when verification fails (0.70484ms)
+✔ cutover protocol (7.025384ms)
+(node:818309) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:762997) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/migration-concurrency-drill.test.ts is not specified and it doesn't parse as CommonJS.
+(node:818309) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/migration-concurrency-drill.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ phase6 migration-under-concurrency drill
-  ✔ enforces pause/migrate/resume behavior under concurrent command attempts (1.295342ms)
-✔ phase6 migration-under-concurrency drill (2.66245ms)
-(node:763003) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+  ✔ enforces pause/migrate/resume behavior under concurrent command attempts (1.093426ms)
+✔ phase6 migration-under-concurrency drill (2.383028ms)
+(node:818314) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:763003) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/migration-dry-run.test.ts is not specified and it doesn't parse as CommonJS.
+(node:818314) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/migration-dry-run.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ migration dry-run artifacts
-  ✔ produces a passing dry-run artifact and writes it to sink (4.321749ms)
-  ✔ produces a failing dry-run artifact when preflight fails (0.90992ms)
-✔ migration dry-run artifacts (6.4271ms)
-(node:763004) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+  ✔ produces a passing dry-run artifact and writes it to sink (4.573419ms)
+  ✔ produces a failing dry-run artifact when preflight fails (0.708468ms)
+✔ migration dry-run artifacts (6.543987ms)
+(node:818317) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:763004) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/migration-preflight.test.ts is not specified and it doesn't parse as CommonJS.
+(node:818317) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/migration-preflight.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ migration preflight checklist
-  ✔ passes all checks for valid migration/bundles/history (4.156794ms)
-  ✔ fails preflight when history integrity has seq gaps (0.792507ms)
-  ✔ fails preflight when migration version is not forward (0.428811ms)
-✔ migration preflight checklist (6.465558ms)
-(node:763010) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+  ✔ passes all checks for valid migration/bundles/history (3.063041ms)
+  ✔ fails preflight when history integrity has seq gaps (0.689025ms)
+  ✔ fails preflight when migration version is not forward (0.327871ms)
+✔ migration preflight checklist (4.929203ms)
+(node:818321) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:763010) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/rollback-workflow.test.ts is not specified and it doesn't parse as CommonJS.
+(node:818321) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/rollback-workflow.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ rollback workflow (reversible subset)
-  ✔ rolls back history when migration is reversible (1.901577ms)
-  ✔ fails rollback when migration has drops (0.916529ms)
-  ✔ fails rollback when migration has payload_map (0.373165ms)
-  ✔ fails rollback when event mapping is non-injective (0.295395ms)
-✔ rollback workflow (reversible subset) (5.073386ms)
+  ✔ rolls back history when migration is reversible (1.757951ms)
+  ✔ fails rollback when migration has drops (0.881618ms)
+  ✔ fails rollback when migration has payload_map (0.370292ms)
+  ✔ fails rollback when event mapping is non-injective (0.250144ms)
+✔ rollback workflow (reversible subset) (4.637817ms)
 ℹ tests 12
 ℹ suites 5
 ℹ pass 12
@@ -62,4 +62,4 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 227.654386
+ℹ duration_ms 224.239249

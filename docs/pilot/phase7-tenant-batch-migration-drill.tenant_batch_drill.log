@@ -1,14 +1,14 @@
-(node:750526) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:818195) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:750526) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/phase7-tenant-batch-migration-drill.test.ts is not specified and it doesn't parse as CommonJS.
+(node:818195) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/phase7-tenant-batch-migration-drill.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ phase7 tenant-batch migration drill
-  ✔ migrates all tenants when no fault is injected (0.850678ms)
-  ✔ rolls back failed tenant deterministically and keeps others migrated (0.168151ms)
-✔ phase7 tenant-batch migration drill (1.7334ms)
+  ✔ migrates all tenants when no fault is injected (1.240596ms)
+  ✔ rolls back failed tenant deterministically and keeps others migrated (0.307218ms)
+✔ phase7 tenant-batch migration drill (2.5041ms)
 ℹ tests 2
 ℹ suites 1
 ℹ pass 2
@@ -16,4 +16,4 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 123.615238
+ℹ duration_ms 136.885519

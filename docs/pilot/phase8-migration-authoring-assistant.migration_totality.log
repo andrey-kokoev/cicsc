@@ -1,14 +1,14 @@
-(node:777625) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:818238) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:777625) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/spec/migration-totality.test.ts is not specified and it doesn't parse as CommonJS.
+(node:818238) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/spec/migration-totality.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ migration totality/executability
-  ✔ rejects partial event transform coverage (0.751721ms)
-  ✔ rejects partial state mapping (0.702534ms)
-✔ migration totality/executability (2.162268ms)
+  ✔ rejects partial event transform coverage (0.7421ms)
+  ✔ rejects partial state mapping (0.153712ms)
+✔ migration totality/executability (1.616446ms)
 ℹ tests 2
 ℹ suites 1
 ℹ pass 2
@@ -16,4 +16,4 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 122.495793
+ℹ duration_ms 147.571056

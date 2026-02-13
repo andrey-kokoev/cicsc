@@ -1,16 +1,16 @@
-(node:752107) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:818419) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:752107) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-exec-vs-oracle.test.ts is not specified and it doesn't parse as CommonJS.
+(node:818419) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-exec-vs-oracle.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ conformance: postgres execution vs oracle
-  ✔ exec lowered view query equals oracle rows (project/filter/order/limit) (129.297507ms)
-  ✔ exec lowered bool_query constraint equals oracle truth (26.131211ms)
-  ✔ exec lowered join query equals oracle rows (21.865524ms)
-  ✔ exec lowered grouped query with offset equals oracle rows (13.854416ms)
-✔ conformance: postgres execution vs oracle (192.136862ms)
+  ✔ exec lowered view query equals oracle rows (project/filter/order/limit) (122.813614ms)
+  ✔ exec lowered bool_query constraint equals oracle truth (23.859383ms)
+  ✔ exec lowered join query equals oracle rows (24.323928ms)
+  ✔ exec lowered grouped query with offset equals oracle rows (14.030539ms)
+✔ conformance: postgres execution vs oracle (186.243455ms)
 ℹ tests 4
 ℹ suites 1
 ℹ pass 4
@@ -18,4 +18,4 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 339.849733
+ℹ duration_ms 346.730882

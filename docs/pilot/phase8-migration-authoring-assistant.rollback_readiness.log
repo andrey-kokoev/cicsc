@@ -1,27 +1,27 @@
-(node:777661) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:818274) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:777661) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/migration-verify.test.ts is not specified and it doesn't parse as CommonJS.
+(node:818274) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/migration-verify.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ migration replay verification
-  ✔ verifies migrated history against target bundle (2.365643ms)
-  ✔ fails when migration id is missing (0.309106ms)
-✔ migration replay verification (3.433486ms)
-(node:777667) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+  ✔ verifies migrated history against target bundle (2.812093ms)
+  ✔ fails when migration id is missing (0.385561ms)
+✔ migration replay verification (4.159411ms)
+(node:818280) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:777667) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/rollback-workflow.test.ts is not specified and it doesn't parse as CommonJS.
+(node:818280) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/rollback-workflow.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ rollback workflow (reversible subset)
-  ✔ rolls back history when migration is reversible (0.93939ms)
-  ✔ fails rollback when migration has drops (0.240506ms)
-  ✔ fails rollback when migration has payload_map (0.161066ms)
-  ✔ fails rollback when event mapping is non-injective (0.123207ms)
-✔ rollback workflow (reversible subset) (2.380728ms)
+  ✔ rolls back history when migration is reversible (1.542255ms)
+  ✔ fails rollback when migration has drops (0.327331ms)
+  ✔ fails rollback when migration has payload_map (0.173057ms)
+  ✔ fails rollback when event mapping is non-injective (0.13512ms)
+✔ rollback workflow (reversible subset) (3.157839ms)
 ℹ tests 6
 ℹ suites 2
 ℹ pass 6
@@ -29,4 +29,4 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 152.670679
+ℹ duration_ms 171.328705

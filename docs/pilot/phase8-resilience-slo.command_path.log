@@ -1,24 +1,24 @@
-(node:783640) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:817496) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:783640) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/runtime/execute-command-tx-idempotency.test.ts is not specified and it doesn't parse as CommonJS.
+(node:817496) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/runtime/execute-command-tx-idempotency.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ command idempotency across restart
-  ✔ returns stored receipt and avoids duplicate events for repeated command_id (2.556341ms)
-  ✔ re-executes duplicate command when receipt is older than dedupe window (0.709483ms)
-✔ command idempotency across restart (4.112782ms)
-(node:783641) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+  ✔ returns stored receipt and avoids duplicate events for repeated command_id (3.814396ms)
+  ✔ re-executes duplicate command when receipt is older than dedupe window (0.764693ms)
+✔ command idempotency across restart (5.689039ms)
+(node:817497) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:783641) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/runtime/execute-command-tx-seq.test.ts is not specified and it doesn't parse as CommonJS.
+(node:817497) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/runtime/execute-command-tx-seq.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ runtime seq allocation under concurrency
-  ✔ allocates unique ordered seq values for concurrent commands on same stream (2.56664ms)
-✔ runtime seq allocation under concurrency (3.260689ms)
+  ✔ allocates unique ordered seq values for concurrent commands on same stream (3.383981ms)
+✔ runtime seq allocation under concurrency (4.094406ms)
 ℹ tests 3
 ℹ suites 2
 ℹ pass 3
@@ -26,4 +26,4 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 160.055857
+ℹ duration_ms 159.491623
