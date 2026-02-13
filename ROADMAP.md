@@ -391,6 +391,6 @@ Phase 8 production-equivalence risk mapping:
 
 - [x] Z4.1 Select and freeze Phase 9 reference deployment set (at least two verticals)
 - [x] Z4.2 Run scripted workloads with invariants + parity + migration gates enabled
-- [ ] Z4.3 Capture drift/missing-primitive/performance findings with severity labels
+- [x] Z4.3 Capture drift/missing-primitive/performance findings with severity labels
 - [ ] Z4.4 Convert findings into forced-next roadmap tasks (no speculative backlog inflation)
 - [ ] Z4.5 Define and enforce objective Phase 9 exit checklist + Phase 10 block gate
