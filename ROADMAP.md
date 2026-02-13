@@ -600,7 +600,7 @@ Phase 9 forced-next mapping:
 
 ### AH2. Field-Program Validation Expansion
 
-- [ ] AH2.1 Freeze field-program validation matrix and evidence contract
+- [x] AH2.1 Freeze field-program validation matrix and evidence contract
 - [ ] AH2.2 Run field-program required gates
 - [ ] AH2.3 Publish field-program closure report with findings disposition
 

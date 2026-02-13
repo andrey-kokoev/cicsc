@@ -47,7 +47,7 @@ Scale field-program validation with objective evidence contracts and closure
 discipline.
 
 ### TODOs
-- [ ] P17.2.1 Freeze field-program validation matrix and evidence contract.
+- [x] P17.2.1 Freeze field-program validation matrix and evidence contract.
 - [ ] P17.2.2 Run field-program required gates.
 - [ ] P17.2.3 Publish field-program closure report with findings disposition.
 
