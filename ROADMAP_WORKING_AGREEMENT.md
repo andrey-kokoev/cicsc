@@ -12,6 +12,8 @@ The checklist in **`# CICSC Completion TODO (Comprehensive)`** is the canonical 
 - Every checkbox corresponds to a concrete deliverable.
 - No work exists outside the roadmap.
 - New work enters the system only by adding new checkboxes.
+- `ROADMAP.md` is the only canonical status ledger.
+- `PHASE*.md` files are derived views; they may aid readability but do not own truth.
 
 ---
 

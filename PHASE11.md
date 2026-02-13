@@ -1,4 +1,8 @@
 # PHASE11.md
+> Derived View: This file is a non-canonical execution view.
+> Canonical status ledger: `ROADMAP.md`.
+> Do not update checkbox truth here without matching `ROADMAP.md` update.
+
 ## CICSC Phase 11: Envelope Expansion Under Equivalence Discipline
 
 Phase 11 starts after Phase 10 closure and executes objective scorecard closure

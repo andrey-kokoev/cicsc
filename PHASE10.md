@@ -1,4 +1,8 @@
 # PHASE10.md
+> Derived View: This file is a non-canonical execution view.
+> Canonical status ledger: `ROADMAP.md`.
+> Do not update checkbox truth here without matching `ROADMAP.md` update.
+
 ## CICSC Phase 10: Forced-Next Closure and Production Parity Continuity
 
 Phase 10 starts after Phase 9 closure and executes the forced-next items produced

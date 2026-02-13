@@ -1,4 +1,8 @@
 # PHASE7.md
+> Derived View: This file is a non-canonical execution view.
+> Canonical status ledger: `ROADMAP.md`.
+> Do not update checkbox truth here without matching `ROADMAP.md` update.
+
 ## CICSC Phase 7: Semantic Equivalence Hardening
 
 Phase 7 starts after Phase 6 closure and targets one outcome: raise currently

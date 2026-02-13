@@ -1,4 +1,8 @@
 # PHASE6.md
+> Derived View: This file is a non-canonical execution view.
+> Canonical status ledger: `ROADMAP.md`.
+> Do not update checkbox truth here without matching `ROADMAP.md` update.
+
 ## CICSC Phase 6: Field-Driven Concurrency Expansion
 
 Phase 6 starts after Phase 5 closure and uses real vertical pressure to drive the

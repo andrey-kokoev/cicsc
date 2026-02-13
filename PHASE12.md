@@ -1,4 +1,8 @@
 # PHASE12.md
+> Derived View: This file is a non-canonical execution view.
+> Canonical status ledger: `ROADMAP.md`.
+> Do not update checkbox truth here without matching `ROADMAP.md` update.
+
 ## CICSC Phase 12: Broad Deployment Generalization Under Kernel Discipline
 
 Phase 12 starts after Phase 11 closure and expands deployment/generalization

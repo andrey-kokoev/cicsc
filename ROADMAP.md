@@ -1,5 +1,10 @@
 # CICSC Completion TODO (Comprehensive)
 
+Canonical execution ledger policy:
+- `ROADMAP.md` is the single source of truth for phase/milestone/checkbox status.
+- `PHASE*.md` files are derived views and must not diverge from this file.
+- Linear execution thread is `Phase -> Milestone -> Checkbox`, one checkbox per commit.
+
 ## A. Runtime Correctness & Robustness
 - [x] Add true transactional API to SQLite/D1 adapter (tx(fn) everywhere)
 - [x] Enforce serializable seq allocation under concurrency (SELECT MAX(seq) + INSERT within tx)

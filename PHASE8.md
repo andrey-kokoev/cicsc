@@ -1,4 +1,8 @@
 # PHASE8.md
+> Derived View: This file is a non-canonical execution view.
+> Canonical status ledger: `ROADMAP.md`.
+> Do not update checkbox truth here without matching `ROADMAP.md` update.
+
 ## CICSC Phase 8: Production Equivalence and Scale Hardening
 
 Phase 8 starts after Phase 7 closure and focuses on converting scoped guarantees

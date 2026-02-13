@@ -1,4 +1,8 @@
 # PHASE5.md
+> Derived View: This file is a non-canonical execution view.
+> Canonical status ledger: `ROADMAP.md`.
+> Do not update checkbox truth here without matching `ROADMAP.md` update.
+
 ## CICSC Phase 5: Deployment-Grade Semantic Closure
 
 Phase 5 converts the proof-backed substrate into a deployment-grade system with

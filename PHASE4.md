@@ -1,4 +1,8 @@
 # PHASE4.md
+> Derived View: This file is a non-canonical execution view.
+> Canonical status ledger: `ROADMAP.md`.
+> Do not update checkbox truth here without matching `ROADMAP.md` update.
+
 ## CICSC Phase 4: Proof-Backed Field Reliability
 
 Status: historical phase plan; remaining open items were closed or superseded by
