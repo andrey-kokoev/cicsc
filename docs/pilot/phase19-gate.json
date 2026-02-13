@@ -1,12 +1,10 @@
 {
   "version": "cicsc/phase19-gate-v1",
-  "timestamp_unix": 1770990099,
-  "blocked": true,
+  "timestamp_unix": 1770990142,
+  "blocked": false,
   "basis": {
     "checklist": "docs/pilot/phase18-exit-checklist.json",
     "roadmap": "ROADMAP.md"
   },
-  "reasons": [
-    "roadmap_ai_series_incomplete"
-  ]
+  "reasons": []
 }

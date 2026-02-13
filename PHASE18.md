@@ -79,17 +79,17 @@ Close Phase 18 with objective checklist and enforce entry gate for Phase 19.
 - [x] P18.4.1 Define objective Phase 18 exit checklist mapped to artifacts.
 - [x] P18.4.2 Add PHASE18↔ROADMAP drift consistency gate.
 - [x] P18.4.3 Add Phase 19 block gate from Phase 18 checklist.
-- [ ] P18.4.4 Publish Phase 18 closure report and mark exit criteria.
+- [x] P18.4.4 Publish Phase 18 closure report and mark exit criteria.
 
 ### Acceptance
-- [ ] Phase 19 remains blocked unless Phase 18 checklist is fully pass.
+- [x] Phase 19 remains blocked unless Phase 18 checklist is fully pass.
 
 ---
 
 ## Exit Criteria (Phase 18)
 
-- [ ] Scope, baseline, and status governance remain explicit and reproducible.
-- [ ] Expansion-proof validation is evidence-backed and invariant-preserving.
-- [ ] Production continuity is verifiable with executable harnesses.
-- [ ] Governance checks enforce code/doc/artifact consistency.
-- [ ] Phase 19 remains blocked without full checklist pass.
+- [x] Scope, baseline, and status governance remain explicit and reproducible.
+- [x] Expansion-proof validation is evidence-backed and invariant-preserving.
+- [x] Production continuity is verifiable with executable harnesses.
+- [x] Governance checks enforce code/doc/artifact consistency.
+- [x] Phase 19 remains blocked without full checklist pass.
