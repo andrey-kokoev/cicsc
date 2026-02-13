@@ -1,0 +1,25 @@
+{
+  "version": "cicsc/phase12-closure-report-v1",
+  "timestamp_unix": 1771056900,
+  "inputs": {
+    "exit_checklist": "docs/pilot/phase12-exit-checklist.json",
+    "doc_consistency": "docs/pilot/phase12-doc-consistency.json",
+    "phase13_gate": "docs/pilot/phase13-gate.json",
+    "deployment_expansion": "docs/pilot/phase12-deployment-expansion-report.json",
+    "parity_envelope": "docs/pilot/phase12-parity-envelope-closure-report.json"
+  },
+  "status": "pass",
+  "summary": {
+    "scope_baseline_governance": "pass",
+    "deployment_expansion": "pass",
+    "parity_envelope": "pass",
+    "phase13_gate_state": "open_when_checklist_pass"
+  },
+  "exit_criteria": [
+    { "id": "P12_EXIT_SCOPE_BASELINE", "status": "pass" },
+    { "id": "P12_EXIT_DEPLOYMENT_EXPANSION", "status": "pass" },
+    { "id": "P12_EXIT_PARITY_ENVELOPE", "status": "pass" },
+    { "id": "P12_EXIT_GOVERNANCE", "status": "pass" },
+    { "id": "P12_EXIT_PHASE13_GATE", "status": "pass" }
+  ]
+}
