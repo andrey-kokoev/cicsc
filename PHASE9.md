@@ -69,11 +69,11 @@ Ensure new capability surface does not compromise migration determinism, rollbac
 - [x] P9.3.2 Add migration drill suites covering upgraded features (preflight/dry-run/cutover/rollback).
 - [x] P9.3.3 Add post-cutover execution-vs-oracle differential checks on migrated streams.
 - [x] P9.3.4 Add updated SLO/error-budget gates for verify/migrate/command paths under expanded load.
-- [ ] P9.3.5 Publish migration safety and operations report with unresolved criticals disposition.
+- [x] P9.3.5 Publish migration safety and operations report with unresolved criticals disposition.
 
 ### Acceptance
-- [ ] Expanded-surface migrations remain replay-verified and deterministic.
-- [ ] Operational gates detect and block regression before phase promotion.
+- [x] Expanded-surface migrations remain replay-verified and deterministic.
+- [x] Operational gates detect and block regression before phase promotion.
 
 ---
 
