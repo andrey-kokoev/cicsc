@@ -78,7 +78,7 @@ Close Phase 28 with objective checklist and enforce entry gate for Phase 29.
 ### TODOs
 - [x] P28.4.1 Define objective Phase 28 exit checklist mapped to artifacts.
 - [x] P28.4.2 Add PHASE28↔ROADMAP drift consistency gate.
-- [ ] P28.4.3 Add Phase 29 block gate from Phase 28 checklist.
+- [x] P28.4.3 Add Phase 29 block gate from Phase 28 checklist.
 - [ ] P28.4.4 Publish Phase 28 closure report and mark exit criteria.
 
 ### Acceptance
