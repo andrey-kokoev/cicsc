@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase15-objective-closure-report-v1",
+  "timestamp_unix": 1771074300,
+  "inputs": {
+    "scorecard_matrix": "docs/pilot/phase15-objective-scorecard-matrix.json",
+    "required_gates": "docs/pilot/phase15-objective-required-gates.json"
+  },
+  "findings": [
+    {
+      "id": "P15OBJ-DSL-VALIDATION-001",
+      "severity": "medium",
+      "status": "deferred",
+      "owner": "phase15-objective-owner",
+      "target_date": "2026-11-14",
+      "summary": "Non-programmer usability validation remains strong in known cohorts but requires one additional external cohort run."
+    },
+    {
+      "id": "P15OBJ-PARITY-STATUS-001",
+      "severity": "low",
+      "status": "closed",
+      "owner": "phase15-surface-owner",
+      "summary": "Declared parity envelope remains pass-backed across required objective gates."
+    }
+  ],
+  "unresolved_criticals": [],
+  "status": "pass"
+}
