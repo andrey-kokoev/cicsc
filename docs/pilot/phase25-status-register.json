@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase25-status-register-v1",
+  "timestamp_unix": 1774731300,
+  "items": [
+    {
+      "id": "P25-VERIFY-CONSOLIDATION",
+      "status": "in_progress",
+      "owner": "phase25-validation-owner",
+      "target_date": "2027-08-07",
+      "basis": "AP2"
+    },
+    {
+      "id": "P25-FIELD-CONTINUITY",
+      "status": "pending",
+      "owner": "phase25-ops-owner",
+      "target_date": "2027-08-14",
+      "basis": "AP3"
+    },
+    {
+      "id": "P25-GOVERNANCE-CLOSURE",
+      "status": "pending",
+      "owner": "phase25-governance-owner",
+      "target_date": "2027-08-21",
+      "basis": "AP4"
+    }
+  ]
+}

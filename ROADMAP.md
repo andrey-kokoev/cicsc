@@ -812,7 +812,7 @@ Phase 9 forced-next mapping:
 
 - [x] AP1.1 Freeze Phase 25 scope and owner contract
 - [x] AP1.2 Publish Phase 25 baseline continuity snapshot
-- [ ] AP1.3 Add Phase 25 status register with owner/date discipline
+- [x] AP1.3 Add Phase 25 status register with owner/date discipline
 
 ### AP2. Verification-Consolidation Validation Closure
 
