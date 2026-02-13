@@ -73,6 +73,7 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `control-plane/scripts/collab_append_event.sh`
 - `control-plane/scripts/collab_dispatch.sh`
 - `control-plane/scripts/collab_delegate_worktree.sh`
+- `control-plane/scripts/collab_help.sh`
 - `control-plane/scripts/collab_claim_next.sh`
 - `control-plane/scripts/collab_fulfill.sh`
 - `control-plane/scripts/collab_close_ingested.sh`
@@ -134,3 +135,7 @@ For each execution worktree:
 3. Execute assignment scope on the bound branch.
 4. Append immutable `message_events` with status transitions and evidence bindings.
 5. Stop when no actionable inbox messages remain.
+
+Quickstart helpers:
+- worker flow: `./control-plane/scripts/collab_help.sh --role worker --worktree "$PWD"`
+- main flow: `./control-plane/scripts/collab_help.sh --role main --worktree /home/andrey/src/cicsc`

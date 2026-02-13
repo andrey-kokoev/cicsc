@@ -99,6 +99,8 @@ Protocol rule:
 - mailbox messages are the only admissible worktree task input
 
 Message I/O command surface:
+- quickstart command map (worker/main):
+  - `./control-plane/scripts/collab_help.sh --role worker --worktree "$PWD"`
 - read inbox (actionable only):
   - `./control-plane/scripts/collab_inbox.sh --worktree "$PWD" --refresh --actionable-only`
 - main-side dispatch wrapper:
@@ -115,6 +117,13 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`
 - stale mailbox watcher (warn/fail thresholds):
   - `./control-plane/scripts/collab_stale_watch.sh --warn-hours 24 --fail-hours 72`
+
+Happy path:
+1. `./control-plane/scripts/collab_help.sh --role worker --worktree "$PWD"`
+2. `./control-plane/scripts/collab_run_once.sh --worktree "$PWD"`
+3. Execute required scripts and generate required artifacts for the claimed message.
+4. `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --script <script> --gate-report <report>`
+5. Main ingests/closes via `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`.
 
 ### 1. Preserve invariants before adding features
 Never add functionality that weakens:
