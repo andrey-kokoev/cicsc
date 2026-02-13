@@ -22,7 +22,7 @@
     {
       "id": "E4",
       "criterion": "reference_vertical_usability_evidence_present",
-      "artifact": "docs/pilot/phase5-ticketing-field-report.json",
+      "artifact": "docs/pilot/phase5-spec-usability-evidence.json",
       "status": "pass"
     },
     {

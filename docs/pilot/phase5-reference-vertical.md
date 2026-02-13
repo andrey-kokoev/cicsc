@@ -23,6 +23,9 @@ Exit checklist:
 Migration drill evidence:
 - `docs/pilot/phase5-migration-drill-evidence.json`
 
+Spec usability evidence:
+- `docs/pilot/phase5-spec-usability-evidence.json`
+
 This selection is fixed for Phase 5 closure work so that:
 - conformance and migration evidence target one stable workload,
 - usability and drift feedback are measured against one operational context,
