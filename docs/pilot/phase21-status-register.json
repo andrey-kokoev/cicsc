@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase21-status-register-v1",
+  "timestamp_unix": 1772312100,
+  "items": [
+    {
+      "id": "P21-CROSS-ENV-STABILITY",
+      "status": "in_progress",
+      "owner": "phase21-validation-owner",
+      "target_date": "2027-05-15",
+      "basis": "AL2"
+    },
+    {
+      "id": "P21-OPS-CONTINUITY",
+      "status": "pending",
+      "owner": "phase21-ops-owner",
+      "target_date": "2027-05-22",
+      "basis": "AL3"
+    },
+    {
+      "id": "P21-GOVERNANCE-CLOSURE",
+      "status": "pending",
+      "owner": "phase21-governance-owner",
+      "target_date": "2027-05-29",
+      "basis": "AL4"
+    }
+  ]
+}
