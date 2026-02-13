@@ -61,7 +61,7 @@ Close stability-consolidation validation with explicit evidence contract and fin
 Harden continuity-assurance checks for expanded deployments.
 
 ### TODOs
-- [ ] P26.3.1 Freeze continuity-assurance hardening matrix and policy.
+- [x] P26.3.1 Freeze continuity-assurance hardening matrix and policy.
 - [ ] P26.3.2 Add continuity-assurance verification harnesses.
 - [ ] P26.3.3 Publish continuity-assurance closure report with residual policy.
 

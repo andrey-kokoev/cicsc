@@ -1,0 +1,29 @@
+{
+  "version": "cicsc/phase26-continuity-assurance-matrix-v1",
+  "timestamp_unix": 1775338800,
+  "items": [
+    {
+      "id": "continuity_assurance_signal_auditability",
+      "class": "reliability",
+      "status": "in_scope",
+      "evidence_target": "phase26_continuity_assurance_harnesses"
+    },
+    {
+      "id": "continuity_assurance_recovery_discipline",
+      "class": "operations",
+      "status": "in_scope",
+      "evidence_target": "phase26_continuity_assurance_closure"
+    },
+    {
+      "id": "continuity_assurance_rollforward_control",
+      "class": "governance",
+      "status": "in_scope",
+      "evidence_target": "phase26_doc_consistency_and_gate_checks"
+    }
+  ],
+  "policy": {
+    "must_have_executable_evidence": true,
+    "deferred_requires_owner_date": true,
+    "no_invariant_regressions_allowed": true
+  }
+}
