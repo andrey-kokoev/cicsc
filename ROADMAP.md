@@ -406,7 +406,7 @@ Phase 9 forced-next mapping:
 
 - [x] AA1.1 Freeze forced-next execution scope and ownership contract
 - [x] AA1.2 Add Postgres HAVING harness continuity artifact and validation test
-- [ ] AA1.3 Publish EXISTS lowering decision contract (enablement or explicit deferred policy)
+- [x] AA1.3 Publish EXISTS lowering decision contract (enablement or explicit deferred policy)
 - [ ] AA1.4 Add forced-next execution status register with owner/date discipline
 
 ### AA2. Production Parity Continuity Gates
