@@ -745,3 +745,12 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 - AU1.3 Execute adversarial end-to-end run (Spec -> IR -> sqlite/postgres -> migration -> replay verification)
 - AU1.4 Publish objective verdict report (met/not_met per objective) with failure localization
 - AU1.5 If any objective is not_met, derive forced-next execution-ledger checkboxes only and block completion claim
+
+## AV. Phase 31: Era 2 Expansion Targeting
+
+### AV1. Next-Era Completion Target Definition
+
+- AV1.1 Define Era 2 completion target and closure criteria contract
+- AV1.2 Define objective extension contract for expanded semantic scope
+- AV1.3 Define proof-evidence coupling plan for expanded claims
+- AV1.4 Define expanded-scope gate and closure reporting contract

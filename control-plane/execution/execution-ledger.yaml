@@ -1618,3 +1618,23 @@ phases:
       title: If any objective is not_met, derive forced-next execution-ledger checkboxes
         only and block completion claim
       status: done
+- id: AV
+  number: 31
+  title: Era 2 Expansion Targeting
+  status: active
+  milestones:
+  - id: AV1
+    title: Next-Era Completion Target Definition
+    checkboxes:
+    - id: AV1.1
+      title: Define Era 2 completion target and closure criteria contract
+      status: done
+    - id: AV1.2
+      title: Define objective extension contract for expanded semantic scope
+      status: open
+    - id: AV1.3
+      title: Define proof-evidence coupling plan for expanded claims
+      status: open
+    - id: AV1.4
+      title: Define expanded-scope gate and closure reporting contract
+      status: open

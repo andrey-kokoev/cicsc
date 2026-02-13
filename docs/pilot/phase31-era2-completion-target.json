@@ -1,0 +1,29 @@
+{
+  "version": "cicsc/phase31-era2-completion-target-v1",
+  "timestamp_unix": 1771009800,
+  "phase": 31,
+  "status": "defined",
+  "target_name": "Era 2 Completion Target",
+  "purpose": "Define the next-era completion boundary after Phase 30 objective closure, with explicit criteria and evidence contracts.",
+  "completion_target": {
+    "statement": "CICSC + CIECP progress from declared-scope objective closure to expanded-scope closure with explicit objective extensions, stronger proof/evidence coupling, and sustained field continuity under versioned evolution.",
+    "constraints": [
+      "No weakening of existing invariants, migration safety, or backend parity guarantees",
+      "All expanded claims must remain artifact-backed and gate-enforced",
+      "Execution status remains canonical in control-plane/execution/execution-ledger.yaml"
+    ]
+  },
+  "acceptance_contract": {
+    "required_artifacts": [
+      "docs/pilot/phase31-objective-extension-contract.json",
+      "docs/pilot/phase31-proof-evidence-coupling-plan.json",
+      "docs/pilot/phase31-expanded-scope-gate.json",
+      "docs/pilot/phase31-era2-closure-report.json"
+    ],
+    "required_policy": [
+      "one_checkbox_one_commit",
+      "forced_next_on_not_met",
+      "canonical_execution_model_pass"
+    ]
+  }
+}

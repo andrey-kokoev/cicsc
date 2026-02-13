@@ -2278,6 +2278,30 @@
       "phase_number": 30,
       "checkbox_id": "AU1.5",
       "status": "done"
+    },
+    {
+      "phase_id": "AV",
+      "phase_number": 31,
+      "checkbox_id": "AV1.1",
+      "status": "done"
+    },
+    {
+      "phase_id": "AV",
+      "phase_number": 31,
+      "checkbox_id": "AV1.2",
+      "status": "open"
+    },
+    {
+      "phase_id": "AV",
+      "phase_number": 31,
+      "checkbox_id": "AV1.3",
+      "status": "open"
+    },
+    {
+      "phase_id": "AV",
+      "phase_number": 31,
+      "checkbox_id": "AV1.4",
+      "status": "open"
     }
   ]
 }

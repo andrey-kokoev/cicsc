@@ -8,7 +8,7 @@
 
 - Objectives: 5
 - Capabilities: 5
-- Phases in execution model: 26
+- Phases in execution model: 27
 - Gate contracts: 12
 - Status source mode: execution_ledger_yaml_canonical
 
@@ -40,6 +40,7 @@
 - Phase 28 (AS): Assurance Scaling and Operational Continuity Discipline [complete]
 - Phase 29 (AT): Assurance Expansion and Governance Continuity Discipline [complete]
 - Phase 30 (AU): Objective Closure Milestone [complete]
+- Phase 31 (AV): Era 2 Expansion Targeting [active]
 
 ## Canonical Rule
 
