@@ -31,11 +31,11 @@ Expand from one reference vertical to a comparative field baseline.
 - [x] P6.1.2 Run staged workload for second vertical with the same invariant/conformance/migration gates.
 - [x] P6.1.3 Add comparative incident register (ticketing vs second vertical) with severity and recurrence tags.
 - [x] P6.1.4 Convert comparative findings into explicit roadmap checkboxes (no hidden backlog).
-- [ ] P6.1.5 Publish Phase 6 field baseline report with forced-next priorities only.
+- [x] P6.1.5 Publish Phase 6 field baseline report with forced-next priorities only.
 
 ### Acceptance
-- [ ] Two verticals have reproducible staged-run evidence with artifacted outcomes.
-- [ ] Cross-vertical gaps are explicit and sequenced.
+- [x] Two verticals have reproducible staged-run evidence with artifacted outcomes.
+- [x] Cross-vertical gaps are explicit and sequenced.
 
 ---
 

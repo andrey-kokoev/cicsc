@@ -250,7 +250,7 @@
 - [x] W1.2 Run staged workload for second vertical with invariant/conformance/migration gates
 - [x] W1.3 Add comparative incident register (ticketing vs second vertical) with severity/recurrence tags
 - [x] W1.4 Convert comparative findings into explicit roadmap checkboxes (no hidden backlog)
-- [ ] W1.5 Publish Phase 6 field baseline report with forced-next priorities only
+- [x] W1.5 Publish Phase 6 field baseline report with forced-next priorities only
 
 Comparative incident mapping:
 - `CINC-CONFORMANCE-001` -> `W4.2`
