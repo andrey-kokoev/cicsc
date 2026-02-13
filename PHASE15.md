@@ -34,10 +34,10 @@ Start Phase 15 from explicit scope, owners, and reproducible baseline truth.
 ### TODOs
 - [x] P15.1.1 Freeze Phase 15 scope and owner contract.
 - [x] P15.1.2 Publish Phase 15 baseline continuity snapshot.
-- [ ] P15.1.3 Add Phase 15 status register with owner/date discipline.
+- [x] P15.1.3 Add Phase 15 status register with owner/date discipline.
 
 ### Acceptance
-- [ ] Phase 15 starts from objective scope and reproducible baseline truth.
+- [x] Phase 15 starts from objective scope and reproducible baseline truth.
 
 ---
 
