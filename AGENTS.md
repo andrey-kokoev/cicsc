@@ -101,10 +101,10 @@ Protocol rule:
 Message I/O command surface:
 - read inbox (actionable only):
   - `./control-plane/scripts/collab_inbox.sh --worktree "$PWD" --refresh --actionable-only`
-- append acknowledge event:
-  - `./control-plane/scripts/collab_append_event.sh --message-ref MSG_... --to-status acknowledged --actor-agent-ref AGENT_... --commit <sha>`
-- append fulfilled event with typed evidence:
-  - `./control-plane/scripts/collab_append_event.sh --message-ref MSG_... --to-status fulfilled --actor-agent-ref AGENT_... --commit <sha> --evidence "scripts/check_x.sh|EVID_SCRIPT|<sha>|sha256:<digest>" --evidence "docs/pilot/report.json|EVID_GATE_REPORT|<sha>|sha256:<digest>"`
+- acknowledge next actionable message:
+  - `./control-plane/scripts/collab_claim_next.sh --worktree "$PWD"`
+- fulfill message with typed evidence (digest auto-computed):
+  - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --script scripts/check_x.sh --gate-report docs/pilot/report.json`
 
 ### 1. Preserve invariants before adding features
 Never add functionality that weakens:
