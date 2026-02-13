@@ -48,7 +48,13 @@ Until explicit migration is completed:
 - `control-plane/scripts/validate_capability_model.sh`
 - `control-plane/scripts/validate_execution_ledger_model.sh`
 - `control-plane/scripts/validate_gate_model.sh`
+- `control-plane/scripts/validate_cross_model.sh`
 - `control-plane/scripts/validate_all.sh`
+- `control-plane/scripts/generate_views.sh`
+
+Sync gate:
+- `scripts/check_control_plane_sync.sh`
+  - validates models, regenerates control-plane views, and fails on generated-view drift.
 
 ## Status-Data Discipline
 
@@ -71,3 +77,7 @@ Generated files must be explicitly marked:
 
 Policy enforcement:
 - `scripts/check_generated_artifacts_policy.sh`
+
+Generated views:
+- `control-plane/views/phase-level-roadmap.generated.md`
+- `control-plane/views/journey-vector.generated.md`
