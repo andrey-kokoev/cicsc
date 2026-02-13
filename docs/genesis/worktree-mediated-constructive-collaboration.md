@@ -154,3 +154,11 @@ WMCC is the collaboration semantics for constructive evolution workflows.
 If CICSC defines what is right and CIECP defines how rightness survives change,
 WMCC defines how multiple executors coordinate that change without losing
 semantic control.
+
+## Appendix: Message-Passing Sequence Diagram
+
+See:
+- `docs/genesis/worktree-collab-sequence.mmd`
+
+This Mermaid sequence diagram captures the normative mailbox-driven WMCC flow:
+dispatch, acknowledge, fulfill with evidence, ingest, close, and rescind path.
