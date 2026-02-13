@@ -365,7 +365,7 @@ Phase 8 production-equivalence risk mapping:
 
 ### Z1. SQL Capability Expansion With Conformance
 
-- [ ] Z1.1 Freeze Phase 9 SQL scope matrix (supported/deferred operators and query forms)
+- [x] Z1.1 Freeze Phase 9 SQL scope matrix (supported/deferred operators and query forms)
 - [ ] Z1.2 Implement selected deferred query lowering candidates (`HAVING`, `EXISTS`) behind explicit gates
 - [ ] Z1.3 Add SQL execution-vs-oracle differential suites for each newly enabled construct
 - [ ] Z1.4 Add negative typecheck coverage for unsupported forms to enforce compile-time rejection

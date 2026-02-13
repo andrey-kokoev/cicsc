@@ -29,7 +29,7 @@ Reach a state where:
 Close highest-value deferred SQL surface gaps using fail-fast typing and oracle differential tests.
 
 ### TODOs
-- [ ] P9.1.1 Freeze Phase 9 SQL scope matrix (supported/deferred operators and query forms).
+- [x] P9.1.1 Freeze Phase 9 SQL scope matrix (supported/deferred operators and query forms).
 - [ ] P9.1.2 Implement selected deferred query lowering candidates (e.g., `HAVING`, `EXISTS`) behind explicit gates.
 - [ ] P9.1.3 Add SQL execution-vs-oracle differential suites for each newly enabled construct.
 - [ ] P9.1.4 Add negative typecheck coverage for unsupported forms to enforce compile-time rejection.

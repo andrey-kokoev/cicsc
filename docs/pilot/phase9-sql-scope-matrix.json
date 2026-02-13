@@ -1,0 +1,40 @@
+{
+  "version": "cicsc/phase9-sql-scope-matrix-v1",
+  "timestamp_unix": 1770954600,
+  "purpose": "Freeze Phase 9 SQL expansion envelope before enabling deferred operators.",
+  "supported_now": [
+    "where",
+    "order_by",
+    "limit",
+    "offset",
+    "projection"
+  ],
+  "expansion_candidates": [
+    {
+      "id": "PSQL-HAVING-001",
+      "construct": "having",
+      "status": "candidate",
+      "gate": "oracle_differential_required"
+    },
+    {
+      "id": "PSQL-EXISTS-001",
+      "construct": "exists",
+      "status": "candidate",
+      "gate": "oracle_differential_required"
+    }
+  ],
+  "deferred": [
+    {
+      "id": "PSQL-SETOPS-001",
+      "construct": "set_operations",
+      "status": "deferred",
+      "owner": "phase10-query-surface-owner",
+      "target_date": "2026-04-15"
+    }
+  ],
+  "scale_envelope": {
+    "max_snapshot_rows": 100000,
+    "max_group_cardinality": 10000,
+    "max_query_seed_sweeps": 500
+  }
+}
