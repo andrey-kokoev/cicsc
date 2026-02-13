@@ -797,7 +797,7 @@ Phase 9 forced-next mapping:
 
 - [x] AO3.1 Freeze continuity-proof hardening matrix and policy
 - [x] AO3.2 Add continuity-proof verification harnesses
-- [ ] AO3.3 Publish continuity-proof closure report with residual policy
+- [x] AO3.3 Publish continuity-proof closure report with residual policy
 
 ### AO4. Governance Closure and Phase 25 Gate
 
