@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase28-status-register-v1",
+  "timestamp_unix": 1776545700,
+  "items": [
+    {
+      "id": "P28-ASSURANCE-SCALING",
+      "status": "in_progress",
+      "owner": "phase28-validation-owner",
+      "target_date": "2027-10-09",
+      "basis": "AS2"
+    },
+    {
+      "id": "P28-OPS-CONTINUITY",
+      "status": "pending",
+      "owner": "phase28-ops-owner",
+      "target_date": "2027-10-16",
+      "basis": "AS3"
+    },
+    {
+      "id": "P28-GOVERNANCE-CLOSURE",
+      "status": "pending",
+      "owner": "phase28-governance-owner",
+      "target_date": "2027-10-23",
+      "basis": "AS4"
+    }
+  ]
+}

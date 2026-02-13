@@ -893,7 +893,7 @@ Phase 9 forced-next mapping:
 
 - [x] AS1.1 Freeze Phase 28 scope and owner contract
 - [x] AS1.2 Publish Phase 28 baseline continuity snapshot
-- [ ] AS1.3 Add Phase 28 status register with owner/date discipline
+- [x] AS1.3 Add Phase 28 status register with owner/date discipline
 
 ### AS2. Assurance-Scaling Validation Closure
 
