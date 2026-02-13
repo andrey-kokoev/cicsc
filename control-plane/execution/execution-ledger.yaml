@@ -1609,7 +1609,7 @@ phases:
     - id: AU1.3
       title: Execute adversarial end-to-end run (Spec -> IR -> sqlite/postgres -> migration
         -> replay verification)
-      status: open
+      status: done
     - id: AU1.4
       title: Publish objective verdict report (met/not_met per objective) with failure
         localization

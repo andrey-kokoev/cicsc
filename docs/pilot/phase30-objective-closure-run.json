@@ -1,0 +1,13 @@
+{
+  "version": "cicsc/phase30-objective-closure-run-v1",
+  "timestamp_unix": 1771003698,
+  "overall": "pass",
+  "checks": {
+    "spec_to_ir_compile":{"status":"pass","log":"docs/pilot/phase30-objective-closure-run.spec_to_ir_compile.log"},
+    "sqlite_exec_vs_oracle":{"status":"pass","log":"docs/pilot/phase30-objective-closure-run.sqlite_exec_vs_oracle.log"},
+    "postgres_exec_vs_oracle":{"status":"pass","log":"docs/pilot/phase30-objective-closure-run.postgres_exec_vs_oracle.log"},
+    "migration_replay_verify":{"status":"pass","log":"docs/pilot/phase30-objective-closure-run.migration_replay_verify.log"},
+    "concurrency_replay":{"status":"pass","log":"docs/pilot/phase30-objective-closure-run.concurrency_replay.log"},
+    "dsl_usability":{"status":"pass","log":"docs/pilot/phase30-objective-closure-run.dsl_usability.log"}
+  }
+}

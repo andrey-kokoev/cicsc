@@ -1,0 +1,62 @@
+(node:5009) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5009) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/concurrency/causality-replay.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ P4.3.1: isCausal connected to replay behavior
+  ✔ rejects histories where events are out of sequence order (0.556129ms)
+  ✔ accepts histories where events respect sequence order (0.851926ms)
+  ✔ allows interleaved events from different streams (0.149155ms)
+✔ P4.3.1: isCausal connected to replay behavior (2.23065ms)
+▶ P4.3.4: Deterministic replay under causally-equivalent permutations
+  ✔ produces same state for histories with different interleaving (0.276738ms)
+  ✔ detects concurrent events and verifies commutativity (0.20414ms)
+✔ P4.3.4: Deterministic replay under causally-equivalent permutations (0.618012ms)
+▶ happensBefore partial order properties (matches Lean theorems)
+  ✔ is irreflexive (no event happens before itself) (0.132841ms)
+  ✔ is transitive (0.120222ms)
+  ✔ is asymmetric (0.113524ms)
+✔ happensBefore partial order properties (matches Lean theorems) (0.539718ms)
+(node:5010) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5010) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/concurrency/transaction-model.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ P4.3.2: Transaction model tests for atomicity across multiple streams
+  ✔ commits all events atomically for multi-stream transaction (0.714251ms)
+  ✔ aborts entire transaction if any guard fails (simulated) (0.178157ms)
+  ✔ maintains stream isolation - one stream's seq doesn't affect another (0.142307ms)
+✔ P4.3.2: Transaction model tests for atomicity across multiple streams (2.324296ms)
+▶ P4.3.3: Write-write conflict tests and expected abort outcomes
+  ✔ detects write-write conflict on same stream (0.341726ms)
+  ✔ allows concurrent transactions on different streams (0.180432ms)
+  ✔ aborts transaction with explicit conflict reason (0.123234ms)
+  ✔ enforces abort-or-serialize property for conflicting streams (0.15584ms)
+✔ P4.3.3: Write-write conflict tests and expected abort outcomes (1.004275ms)
+▶ Transaction ACID properties
+  ✔ Atomicity: all events commit or none do (0.171343ms)
+  ✔ Consistency: history maintains causal order after transactions (0.141575ms)
+✔ Transaction ACID properties (0.439941ms)
+(node:5016) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5016) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/replay-determinism-multistream.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ oracle replay determinism across representative streams
+  ✔ is deterministic under repeated evaluation of the same mixed history (2.014437ms)
+  ✔ preserves per-stream isolation for same-type interleaved entities (0.383725ms)
+✔ oracle replay determinism across representative streams (3.289955ms)
+ℹ tests 19
+ℹ suites 7
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 124.832879
