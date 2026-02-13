@@ -24,10 +24,11 @@ This document defines CIECP as the evolution-control layer above CICSC.
 - CICSC defines semantic truth and executable system behavior.
 - CIECP defines how that truth may evolve without losing correctness.
 
-Formally, for any proposed change set `Δ`:
+Operationally, for any proposed change set `Δ` within declared scope:
 
 accept(Δ) iff gate(Δ) = pass  
-and pass implies preservation of declared invariants and compatibility contracts.
+and gate pass is treated as sufficient evidence for preservation of declared
+invariants and compatibility contracts.
 
 ## 2. CICSC -> CIECP mapping
 
@@ -36,7 +37,7 @@ and pass implies preservation of declared invariants and compatibility contracts
 | Spec/IR semantics                | objective/capability models                     |
 | Valid evolution step             | checked checkbox + evidence-bearing commit      |
 | Compatibility contract           | gate model + required artifacts                 |
-| Replay/parity/migration proofs   | executable validation scripts + reports         |
+| Replay/parity/migration verification | executable validation scripts + reports     |
 | Transformability preservation    | forced-next derivation and block policy         |
 | Closure claim                    | objective verdict report (`met` / `not_met`)    |
 
@@ -53,17 +54,17 @@ Minimal governance algebra:
 
 This is a closed-loop controller over semantic evolution.
 
-## 4. Constructive governance guarantees
+## 4. Constructive governance guarantees (operational)
 
-**Theorem 1 — Admission by Evidence**  
+**Guarantee 1 — Admission by Evidence**  
 No state transition in execution truth is valid without executable evidence.
 
-**Theorem 2 — Monotone Correctness Pressure**  
+**Guarantee 2 — Monotone Correctness Pressure**  
 A failed objective verdict cannot be masked; it must either:
 - block completion, or
 - produce explicit forced-next work items.
 
-**Theorem 3 — Localized Failure Surface**  
+**Guarantee 3 — Localized Failure Surface**  
 Every rejected transition is localized to explicit artifact/gate failures, not
 informal judgment.
 
@@ -86,7 +87,8 @@ Any claim about progress, correctness, readiness, or completion MUST be backed b
 - required gate evidence,
 - objective-level verdict artifacts.
 
-Claims outside this path are non-semantic and non-authoritative.
+Within this repository's governance contract, claims outside this path are
+non-semantic and non-authoritative.
 
 ## 7. Failure modes
 
@@ -95,7 +97,7 @@ Claims outside this path are non-semantic and non-authoritative.
 - completion claims without objective verdicting
 - process artifacts drifting from semantic contracts
 
-Each failure mode invalidates constructive governance.
+Within declared scope, each failure mode invalidates constructive governance.
 
 ## 8. Consequences
 
