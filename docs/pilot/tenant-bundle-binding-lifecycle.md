@@ -44,5 +44,6 @@ Audit trail (append-only):
 ## Guard Conditions
 
 - Reject bind/rebind if bundle hash not present in registry.
+- Reject install/load if stored bundle bytes re-hash to a value different from bound `bundle_hash`.
 - Reject rebind if verification artifact is missing or failing.
 - Reject requests without explicit `tenant_id`.

@@ -1,4 +1,5 @@
 import type { CoreIrBundleV0 } from "../../core/ir/types"
+import { bundleHash } from "../db/bundle-registry"
 import { getBundle } from "../db/bundle-registry"
 import { getTenantBinding } from "../db/tenant-binding"
 
@@ -22,6 +23,10 @@ export async function loadTenantBundle (db: D1Database, tenant_id: string): Prom
 
   const bundle = await getBundle(db, binding.bundle_hash)
   if (!bundle) throw new Error(`bundle not found: ${binding.bundle_hash}`)
+  const computedHash = bundleHash(bundle)
+  if (computedHash !== binding.bundle_hash) {
+    throw new Error(`bundle hash verification failed: expected ${binding.bundle_hash} got ${computedHash}`)
+  }
 
   return {
     bundle,

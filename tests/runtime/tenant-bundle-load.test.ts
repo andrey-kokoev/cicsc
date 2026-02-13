@@ -10,6 +10,8 @@ function makeFakeDb () {
   const bindings = new Map<string, { bundle_hash: string; active_version: number }>()
 
   return {
+    bundles,
+    bindings,
     db: {
       async exec (_sql: string) {
         return { ok: true }
@@ -91,5 +93,49 @@ describe("tenant bundle loading", () => {
     await assert.rejects(async () => {
       await loadTenantBundle(fake.db as any, "missing")
     }, /tenant not bound/)
+  })
+
+  it("fails when stored bundle content does not match bound hash", async () => {
+    const fake = makeFakeDb()
+    const bundleA: any = {
+      core_ir: {
+        version: 0,
+        types: {
+          Ticket: {
+            id_type: "string",
+            states: ["new"],
+            initial_state: "new",
+            attrs: {},
+            commands: { c: { input: {}, guard: { expr: { lit: { bool: true } } }, emits: [] } },
+            reducer: {},
+          },
+        },
+      },
+    }
+    const bundleB: any = {
+      core_ir: {
+        version: 0,
+        types: {
+          Ticket: {
+            id_type: "string",
+            states: ["open"],
+            initial_state: "open",
+            attrs: {},
+            commands: { c: { input: {}, guard: { expr: { lit: { bool: true } } }, emits: [] } },
+            reducer: {},
+          },
+        },
+      },
+    }
+
+    const putA = await putBundle(fake.db as any, bundleA)
+    await bindTenant(fake.db as any, { tenant_id: "t1", bundle_hash: putA.bundle_hash, active_version: 0 })
+
+    const putB = await putBundle(fake.db as any, bundleB)
+    fake.bundles.set(putA.bundle_hash, fake.bundles.get(putB.bundle_hash)!)
+
+    await assert.rejects(async () => {
+      await loadTenantBundle(fake.db as any, "t1")
+    }, /bundle hash verification failed/)
   })
 })

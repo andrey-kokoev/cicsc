@@ -79,7 +79,7 @@ Operational multi-tenant lifecycle for versioned bundles.
 ### TODOs
 - [x] P5.4.1 Implement bundle registry API/storage contract (publish, resolve, pin).
 - [x] P5.4.2 Implement tenant -> bundle/version binding with immutable audit trail.
-- [ ] P5.4.3 Implement bundle signature/hash verification on install.
+- [x] P5.4.3 Implement bundle signature/hash verification on install.
 - [ ] P5.4.4 Add lifecycle tests for publish/bind/upgrade/rollback.
 - [ ] P5.4.5 Add policy controls for who may bind or migrate tenant bundles.
 
