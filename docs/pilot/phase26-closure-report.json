@@ -1,0 +1,15 @@
+{
+  "version": "cicsc/phase26-closure-report-v1",
+  "timestamp_unix": 1775341500,
+  "inputs": {
+    "exit_checklist": "docs/pilot/phase26-exit-checklist.json",
+    "doc_consistency": "docs/pilot/phase26-doc-consistency.json",
+    "phase27_gate": "docs/pilot/phase27-gate.json"
+  },
+  "phase27_gate_blocked": false,
+  "status": "pass",
+  "notes": [
+    "PHASE26 and ROADMAP truth remain synchronized.",
+    "Phase 27 gate is unblocked only after AQ-series closure."
+  ]
+}

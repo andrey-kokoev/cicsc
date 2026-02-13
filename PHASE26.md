@@ -36,7 +36,7 @@ Start Phase 26 from explicit scope, owners, and reproducible baseline truth.
 - [x] P26.1.3 Add Phase 26 status register with owner/date discipline.
 
 ### Acceptance
-- [ ] Phase 26 starts from objective scope and reproducible baseline truth.
+- [x] Phase 26 starts from objective scope and reproducible baseline truth.
 
 ---
 
@@ -51,7 +51,7 @@ Close stability-consolidation validation with explicit evidence contract and fin
 - [x] P26.2.3 Publish stability-consolidation closure report with findings disposition.
 
 ### Acceptance
-- [ ] Stability-consolidation validation remains evidence-backed with explicit findings governance.
+- [x] Stability-consolidation validation remains evidence-backed with explicit findings governance.
 
 ---
 
@@ -66,7 +66,7 @@ Harden continuity-assurance checks for expanded deployments.
 - [x] P26.3.3 Publish continuity-assurance closure report with residual policy.
 
 ### Acceptance
-- [ ] Continuity-assurance hardening remains explicit, test-backed, and governed.
+- [x] Continuity-assurance hardening remains explicit, test-backed, and governed.
 
 ---
 
@@ -79,17 +79,17 @@ Close Phase 26 with objective checklist and enforce entry gate for Phase 27.
 - [x] P26.4.1 Define objective Phase 26 exit checklist mapped to artifacts.
 - [x] P26.4.2 Add PHASE26↔ROADMAP drift consistency gate.
 - [x] P26.4.3 Add Phase 27 block gate from Phase 26 checklist.
-- [ ] P26.4.4 Publish Phase 26 closure report and mark exit criteria.
+- [x] P26.4.4 Publish Phase 26 closure report and mark exit criteria.
 
 ### Acceptance
-- [ ] Phase 27 remains blocked unless Phase 26 checklist is fully pass.
+- [x] Phase 27 remains blocked unless Phase 26 checklist is fully pass.
 
 ---
 
 ## Exit Criteria (Phase 26)
 
-- [ ] Scope, baseline, and status governance remain explicit and reproducible.
-- [ ] Stability-consolidation validation is evidence-backed and invariant-preserving.
-- [ ] Continuity-assurance hardening is verifiable with executable harnesses.
-- [ ] Governance checks enforce code/doc/artifact consistency.
-- [ ] Phase 27 remains blocked without full checklist pass.
+- [x] Scope, baseline, and status governance remain explicit and reproducible.
+- [x] Stability-consolidation validation is evidence-backed and invariant-preserving.
+- [x] Continuity-assurance hardening is verifiable with executable harnesses.
+- [x] Governance checks enforce code/doc/artifact consistency.
+- [x] Phase 27 remains blocked without full checklist pass.
