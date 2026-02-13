@@ -1,0 +1,9 @@
+{
+  "version": "cicsc/phase8-fairness-checks-v1",
+  "timestamp_unix": 1770948420,
+  "overall": "pass",
+  "checks": {
+    "fairness_starvation":{"status":"pass","log":"docs/pilot/phase8-fairness-checks.fairness_starvation.log"},
+    "execute_batch":{"status":"pass","log":"docs/pilot/phase8-fairness-checks.execute_batch.log"}
+  }
+}
