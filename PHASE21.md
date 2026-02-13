@@ -63,7 +63,7 @@ Harden operational continuity checks for expanded deployments.
 ### TODOs
 - [x] P21.3.1 Freeze operational-continuity hardening matrix and policy.
 - [x] P21.3.2 Add operational-continuity verification harnesses.
-- [ ] P21.3.3 Publish operational-continuity closure report with residual policy.
+- [x] P21.3.3 Publish operational-continuity closure report with residual policy.
 
 ### Acceptance
 - [ ] Operational continuity hardening remains explicit, test-backed, and governed.
