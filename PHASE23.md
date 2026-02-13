@@ -76,7 +76,7 @@ Harden runtime-assurance checks for expanded deployments.
 Close Phase 23 with objective checklist and enforce entry gate for Phase 24.
 
 ### TODOs
-- [ ] P23.4.1 Define objective Phase 23 exit checklist mapped to artifacts.
+- [x] P23.4.1 Define objective Phase 23 exit checklist mapped to artifacts.
 - [ ] P23.4.2 Add PHASE23↔ROADMAP drift consistency gate.
 - [ ] P23.4.3 Add Phase 24 block gate from Phase 23 checklist.
 - [ ] P23.4.4 Publish Phase 23 closure report and mark exit criteria.
