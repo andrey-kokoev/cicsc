@@ -1,0 +1,17 @@
+{
+  "version": "cicsc/phase32-obj3-usability-envelope-v1",
+  "timestamp_unix": 1771010444,
+  "overall": "pass",
+  "objective": "OBJ3",
+  "envelope": "expanded_usability",
+  "metrics": {
+    "task_success_rate": 1.0000,
+    "error_rate_bounded": 0.0000,
+    "recovery_workflow_evidence": true
+  },
+  "checks": {
+    "dsl_usability":{"status":"pass","log":"docs/pilot/phase32-obj3-usability-envelope.dsl_usability.log"},
+    "migration_usability":{"status":"pass","log":"docs/pilot/phase32-obj3-usability-envelope.migration_usability.log"},
+    "recovery_evidence":{"status":"pass","log":"docs/pilot/phase32-obj3-usability-envelope.recovery_evidence.log"}
+  }
+}

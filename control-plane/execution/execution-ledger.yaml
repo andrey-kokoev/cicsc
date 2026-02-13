@@ -1654,7 +1654,7 @@ phases:
       status: done
     - id: AW1.3
       title: Implement OBJ3 usability-envelope artifacts and required checks
-      status: open
+      status: done
     - id: AW1.4
       title: Implement OBJ4 migration-envelope artifacts and required checks
       status: open
