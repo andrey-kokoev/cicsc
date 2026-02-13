@@ -27,7 +27,7 @@ Turn conformance from best-effort testing into hard CI entry criteria.
 - [x] P5.1.2 Promote sqlite execution-vs-oracle matrix to required CI gate.
 - [x] P5.1.3 Add differential coverage for join/group/having/subquery operators in supported scope (having deferred until Query AST support).
 - [x] P5.1.4 Gate merges on conformance coverage report threshold and no untracked regressions.
-- [ ] P5.1.5 Add deterministic replay artifact retention policy for CI failures.
+- [x] P5.1.5 Add deterministic replay artifact retention policy for CI failures.
 
 ### Acceptance
 - [ ] CI fails on any conformance regression in required matrix.

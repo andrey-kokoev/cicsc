@@ -186,7 +186,7 @@
 - [x] U1.2 Promote sqlite execution-vs-oracle matrix to required CI gate
 - [x] U1.3 Add differential coverage for join/group/having/subquery operators in supported scope (having deferred until Query AST support)
 - [x] U1.4 Gate merges on conformance coverage threshold and no untracked regressions
-- [ ] U1.5 Add deterministic replay artifact retention policy for CI failures
+- [x] U1.5 Add deterministic replay artifact retention policy for CI failures
 
 ### U2. Migration Cutover and Rollback Protocol
 

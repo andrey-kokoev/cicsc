@@ -57,11 +57,58 @@ export type HarnessConfig = {
   artifactDir?: string
   /** Whether to capture artifacts on failure */
   captureArtifacts?: boolean
+  /** Maximum number of retained artifacts in artifactDir */
+  maxArtifacts?: number
+  /** Maximum artifact age in days before pruning */
+  maxArtifactAgeDays?: number
 }
 
 const defaultConfig: HarnessConfig = {
   artifactDir: process.env["CICSC_CONFORMANCE_ARTIFACT_DIR"] || "./test-artifacts/conformance",
   captureArtifacts: process.env["CICSC_CAPTURE_ARTIFACTS"] !== "false",
+  maxArtifacts: parseInt(process.env["CICSC_CONFORMANCE_MAX_ARTIFACTS"] || "200", 10),
+  maxArtifactAgeDays: parseInt(process.env["CICSC_CONFORMANCE_MAX_ARTIFACT_AGE_DAYS"] || "14", 10),
+}
+
+function applyArtifactRetention (config: HarnessConfig = defaultConfig): void {
+  if (!config.artifactDir) return
+  if (!fs.existsSync(config.artifactDir)) return
+
+  const maxArtifacts = Math.max(1, config.maxArtifacts ?? 200)
+  const maxAgeDays = Math.max(1, config.maxArtifactAgeDays ?? 14)
+  const cutoffMs = Date.now() - maxAgeDays * 24 * 60 * 60 * 1000
+
+  const files = fs
+    .readdirSync(config.artifactDir)
+    .filter((name) => name.startsWith("replay-failure-seed-") && name.endsWith(".json"))
+    .map((name) => {
+      const fullPath = path.join(config.artifactDir!, name)
+      const stat = fs.statSync(fullPath)
+      return { name, fullPath, mtimeMs: stat.mtimeMs }
+    })
+    .sort((a, b) => b.mtimeMs - a.mtimeMs)
+
+  for (const f of files) {
+    if (f.mtimeMs < cutoffMs) {
+      fs.unlinkSync(f.fullPath)
+    }
+  }
+
+  const kept = fs
+    .readdirSync(config.artifactDir)
+    .filter((name) => name.startsWith("replay-failure-seed-") && name.endsWith(".json"))
+    .map((name) => {
+      const fullPath = path.join(config.artifactDir!, name)
+      const stat = fs.statSync(fullPath)
+      return { fullPath, mtimeMs: stat.mtimeMs }
+    })
+    .sort((a, b) => b.mtimeMs - a.mtimeMs)
+
+  if (kept.length > maxArtifacts) {
+    for (const f of kept.slice(maxArtifacts)) {
+      fs.unlinkSync(f.fullPath)
+    }
+  }
 }
 
 /** Write replay artifact to disk for deterministic reproduction (P4.2.3) */
@@ -75,6 +122,7 @@ function writeFailureArtifact (
 
   // Ensure artifact directory exists
   fs.mkdirSync(config.artifactDir, { recursive: true })
+  applyArtifactRetention(config)
 
   // Generate unique filename based on seed and timestamp
   const timestamp = new Date().toISOString().replace(/[:.]/g, "-")
