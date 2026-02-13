@@ -1,0 +1,23 @@
+{
+  "version": "cicsc/phase25-baseline-continuity-v1",
+  "timestamp_unix": 1774730400,
+  "overall": "pass",
+  "checks": {
+    "phase24_exit_checklist": {
+      "basis": "docs/pilot/phase24-exit-checklist.json",
+      "status": "pass"
+    },
+    "phase25_gate_open": {
+      "basis": "docs/pilot/phase25-gate.json",
+      "status": "pass"
+    },
+    "assurance_maturity_continuity": {
+      "basis": "docs/pilot/phase24-assurance-maturity-closure-report.json",
+      "status": "pass"
+    },
+    "continuity_proof_continuity": {
+      "basis": "docs/pilot/phase24-continuity-proof-closure-report.json",
+      "status": "pass"
+    }
+  }
+}
