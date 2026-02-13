@@ -87,18 +87,18 @@ Validate expanded surface under real workflow pressure and enforce objective exi
 - [x] P9.4.2 Run scripted workloads with invariants + parity + migration gates enabled.
 - [x] P9.4.3 Capture drift/missing-primitive/performance findings with severity labels.
 - [x] P9.4.4 Convert findings into forced-next roadmap tasks (no speculative backlog inflation).
-- [ ] P9.4.5 Define and enforce objective Phase 9 exit checklist + Phase 10 block gate.
+- [x] P9.4.5 Define and enforce objective Phase 9 exit checklist + Phase 10 block gate.
 
 ### Acceptance
-- [ ] Deployment evidence confirms semantic fit of expanded surface.
-- [ ] Phase transition remains artifact-truth-governed, not narrative.
+- [x] Deployment evidence confirms semantic fit of expanded surface.
+- [x] Phase transition remains artifact-truth-governed, not narrative.
 
 ---
 
 ## Exit Criteria (Phase 9)
 
-- [ ] Deferred SQL capability items are either closed with conformance evidence or explicitly deferred.
-- [ ] SQLite/Postgres parity is maintained for the declared expanded feature envelope.
-- [ ] Migration and operational guarantees remain deterministic and auditable after expansion.
-- [ ] Deployment findings are converted into forced-next roadmap tasks with ownership.
-- [ ] Governance checks continuously enforce code/doc/artifact consistency.
+- [x] Deferred SQL capability items are either closed with conformance evidence or explicitly deferred.
+- [x] SQLite/Postgres parity is maintained for the declared expanded feature envelope.
+- [x] Migration and operational guarantees remain deterministic and auditable after expansion.
+- [x] Deployment findings are converted into forced-next roadmap tasks with ownership.
+- [x] Governance checks continuously enforce code/doc/artifact consistency.

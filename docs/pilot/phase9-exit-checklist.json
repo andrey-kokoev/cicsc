@@ -1,0 +1,44 @@
+{
+  "version": "cicsc/phase9-exit-checklist-v1",
+  "items": [
+    {
+      "id": "P9_EXIT_SQL_SCOPE",
+      "description": "Deferred SQL capabilities are either closed with conformance evidence or explicitly deferred.",
+      "artifacts": [
+        "docs/pilot/phase9-sql-surface-closure-report.json",
+        "docs/pilot/phase9-sql-negative-coverage.json"
+      ],
+      "status": "pass"
+    },
+    {
+      "id": "P9_EXIT_PARITY",
+      "description": "Cross-backend parity hardening gates are green within declared envelope.",
+      "artifacts": [
+        "docs/pilot/phase9-edgecase-parity.json",
+        "docs/pilot/phase9-random-differential-sweeps.json",
+        "docs/pilot/phase9-required-gates.json"
+      ],
+      "status": "pass"
+    },
+    {
+      "id": "P9_EXIT_MIGRATION_OPS",
+      "description": "Migration and operational guarantees remain deterministic and audited.",
+      "artifacts": [
+        "docs/pilot/phase9-migration-safety-report.json",
+        "docs/pilot/phase9-resilience-slo.json"
+      ],
+      "status": "pass"
+    },
+    {
+      "id": "P9_EXIT_DEPLOYMENT_GOVERNANCE",
+      "description": "Deployment findings are forced-next mapped and governance checks are active.",
+      "artifacts": [
+        "docs/pilot/phase9-reference-workloads.json",
+        "docs/pilot/phase9-forced-next-roadmap-map.json",
+        "scripts/check_phase9_docs_consistency.sh",
+        "scripts/check_phase10_block.sh"
+      ],
+      "status": "pass"
+    }
+  ]
+}
