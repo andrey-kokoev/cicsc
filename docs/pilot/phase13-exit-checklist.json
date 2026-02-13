@@ -1,0 +1,53 @@
+{
+  "version": "cicsc/phase13-exit-checklist-v1",
+  "items": [
+    {
+      "id": "P13_EXIT_SCOPE_BASELINE",
+      "description": "Scope, baseline, and status governance remain explicit and reproducible.",
+      "artifacts": [
+        "docs/pilot/phase13-scope-contract.json",
+        "docs/pilot/phase13-baseline-continuity.json",
+        "docs/pilot/phase13-status-register.json"
+      ],
+      "status": "pass"
+    },
+    {
+      "id": "P13_EXIT_SCALE_ENVELOPE",
+      "description": "Scale envelope expansion is objective and invariant-preserving.",
+      "artifacts": [
+        "docs/pilot/phase13-scale-envelope-matrix.json",
+        "docs/pilot/phase13-scale-workloads.json",
+        "docs/pilot/phase13-scale-envelope-report.json"
+      ],
+      "status": "pass"
+    },
+    {
+      "id": "P13_EXIT_HARDENING",
+      "description": "Migration/parity hardening is differentially validated.",
+      "artifacts": [
+        "docs/pilot/phase13-hardening-matrix.json",
+        "docs/pilot/phase13-hardening-differentials.json",
+        "docs/pilot/phase13-hardening-closure-report.json"
+      ],
+      "status": "pass"
+    },
+    {
+      "id": "P13_EXIT_GOVERNANCE",
+      "description": "Governance checks enforce code/doc/artifact consistency.",
+      "artifacts": [
+        "scripts/check_phase13_docs_consistency.sh",
+        "docs/pilot/phase13-doc-consistency.json"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "P13_EXIT_PHASE14_GATE",
+      "description": "Phase 14 remains blocked without full checklist pass.",
+      "artifacts": [
+        "scripts/check_phase14_block.sh",
+        "docs/pilot/phase14-gate.json"
+      ],
+      "status": "pending"
+    }
+  ]
+}
