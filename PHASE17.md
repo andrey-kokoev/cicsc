@@ -62,7 +62,7 @@ discipline.
 Strengthen trust and operational hardening for scaled deployments.
 
 ### TODOs
-- [ ] P17.3.1 Freeze trust/operations hardening matrix and policy.
+- [x] P17.3.1 Freeze trust/operations hardening matrix and policy.
 - [ ] P17.3.2 Add trust/operations verification harnesses.
 - [ ] P17.3.3 Publish trust hardening closure report with residual policy.
 

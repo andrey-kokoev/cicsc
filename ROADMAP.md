@@ -606,7 +606,7 @@ Phase 9 forced-next mapping:
 
 ### AH3. Trust and Operations Hardening
 
-- [ ] AH3.1 Freeze trust/operations hardening matrix and policy
+- [x] AH3.1 Freeze trust/operations hardening matrix and policy
 - [ ] AH3.2 Add trust/operations verification harnesses
 - [ ] AH3.3 Publish trust hardening closure report with residual policy
 
