@@ -1,0 +1,30 @@
+{
+  "version": "cicsc/phase27-scope-contract-v1",
+  "timestamp_unix": 1775939100,
+  "phase": "phase27",
+  "tracks": [
+    {
+      "id": "P27-DEPLOY-INTEGRITY",
+      "goal": "Close deployment-integrity validation evidence without weakening semantic guarantees.",
+      "owner": "phase27-validation-owner",
+      "target_date": "2027-09-18"
+    },
+    {
+      "id": "P27-EVOLUTION-CONTINUITY",
+      "goal": "Strengthen evolution-continuity checks for expanded deployment surfaces.",
+      "owner": "phase27-ops-owner",
+      "target_date": "2027-09-25"
+    },
+    {
+      "id": "P27-GOVERNANCE-CLOSURE",
+      "goal": "Close Phase 27 with objective checklist and Phase 28 gate discipline.",
+      "owner": "phase27-governance-owner",
+      "target_date": "2027-10-02"
+    }
+  ],
+  "guardrails": [
+    "No weakening of category-model obligations",
+    "No weakening of conformance, migration, or deployment safety gates",
+    "One-checkbox-one-commit for Phase 27"
+  ]
+}

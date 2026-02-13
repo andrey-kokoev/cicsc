@@ -864,7 +864,7 @@ Phase 9 forced-next mapping:
 
 ### AR1. Scope Freeze and Baseline Continuity
 
-- [ ] AR1.1 Freeze Phase 27 scope and owner contract
+- [x] AR1.1 Freeze Phase 27 scope and owner contract
 - [ ] AR1.2 Publish Phase 27 baseline continuity snapshot
 - [ ] AR1.3 Add Phase 27 status register with owner/date discipline
 
