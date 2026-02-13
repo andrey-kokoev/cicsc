@@ -689,7 +689,7 @@ Phase 9 forced-next mapping:
 
 - [x] AK3.1 Freeze scale-transition hardening matrix and policy
 - [x] AK3.2 Add scale-transition verification harnesses
-- [ ] AK3.3 Publish scale-transition closure report with residual policy
+- [x] AK3.3 Publish scale-transition closure report with residual policy
 
 ### AK4. Governance Closure and Phase 21 Gate
 
