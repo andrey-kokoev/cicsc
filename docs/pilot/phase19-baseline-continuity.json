@@ -1,0 +1,23 @@
+{
+  "version": "cicsc/phase19-baseline-continuity-v1",
+  "timestamp_unix": 1770990308,
+  "overall": "pass",
+  "checks": {
+    "phase18_exit_checklist": {
+      "basis": "docs/pilot/phase18-exit-checklist.json",
+      "status": "pass"
+    },
+    "phase19_gate_open": {
+      "basis": "docs/pilot/phase19-gate.json",
+      "status": "pass"
+    },
+    "expansion_proof_continuity": {
+      "basis": "docs/pilot/phase18-expansion-proof-closure-report.json",
+      "status": "pass"
+    },
+    "production_continuity_continuity": {
+      "basis": "docs/pilot/phase18-production-continuity-closure-report.json",
+      "status": "pass"
+    }
+  }
+}

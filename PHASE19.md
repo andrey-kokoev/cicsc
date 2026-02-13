@@ -32,7 +32,7 @@ Start Phase 19 from explicit scope, owners, and reproducible baseline truth.
 
 ### TODOs
 - [x] P19.1.1 Freeze Phase 19 scope and owner contract.
-- [ ] P19.1.2 Publish Phase 19 baseline continuity snapshot.
+- [x] P19.1.2 Publish Phase 19 baseline continuity snapshot.
 - [ ] P19.1.3 Add Phase 19 status register with owner/date discipline.
 
 ### Acceptance
