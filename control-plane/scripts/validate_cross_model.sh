@@ -116,10 +116,22 @@ def main() -> int:
                     errors.append(f"execution-ledger: duplicate checkbox item number in {mid}: {cid}")
                 seen_cnums.add(cnum)
 
+    seen_gate_ids = set()
+    seen_gate_scripts = set()
     for g in gate.get("gates", []):
-        for script in g.get("required_scripts", []):
+        gid = g.get("id")
+        if gid in seen_gate_ids:
+            errors.append(f"gate-model: duplicate gate id {gid}")
+        seen_gate_ids.add(gid)
+        req = g.get("required_scripts", [])
+        if not req:
+            errors.append(f"gate-model: gate {gid} has no required_scripts")
+        for script in req:
             if isinstance(script, str) and not path_exists(script):
                 errors.append(f"gate-model: missing required script {script}")
+            if script in seen_gate_scripts:
+                errors.append(f"gate-model: duplicate script in execution order {script}")
+            seen_gate_scripts.add(script)
 
     if errors:
         print("cross-model validation failed", file=sys.stderr)

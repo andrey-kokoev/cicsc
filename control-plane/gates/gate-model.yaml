@@ -1,17 +1,25 @@
 version: cicsc/gate-model-v1
 gates:
-  - id: GATE_CANONICAL_EXECUTION
+  - id: GATE_ROADMAP_INTEGRITY
     scope: global
     required_scripts:
-      - scripts/check_canonical_execution_model.sh
+      - scripts/check_roadmap_integrity.sh
+  - id: GATE_PHASE_VIEWS_SYNC
+    scope: global
+    required_scripts:
+      - scripts/check_phase_views_sync.sh
+  - id: GATE_CHECKBOX_COMMIT_EVIDENCE
+    scope: global
+    required_scripts:
+      - scripts/check_checkbox_commit_evidence.sh
   - id: GATE_WORKFLOW_SINGLE_SOURCE
     scope: global
     required_scripts:
       - scripts/check_workflow_single_source.sh
-  - id: GATE_CATEGORY_MODEL_CONFORMANCE
+  - id: GATE_CONTROL_PLANE_SYNC
     scope: global
     required_scripts:
-      - scripts/check_category_model_conformance.sh
+      - scripts/check_control_plane_sync.sh
   - id: GATE_ROADMAP_STRUCTURE_SYNC
     scope: global
     required_scripts:
@@ -20,3 +28,19 @@ gates:
     scope: global
     required_scripts:
       - scripts/check_execution_structure_roundtrip.sh
+  - id: GATE_STATUS_SOURCE_MODE
+    scope: global
+    required_scripts:
+      - scripts/check_status_source_mode.sh
+  - id: GATE_GENERATED_ARTIFACT_POLICY
+    scope: global
+    required_scripts:
+      - scripts/check_generated_artifacts_policy.sh
+  - id: GATE_CATEGORY_MODEL_CONFORMANCE
+    scope: global
+    required_scripts:
+      - scripts/check_category_model_conformance.sh
+  - id: GATE_GATE_MODEL_ROUNDTRIP
+    scope: global
+    required_scripts:
+      - scripts/check_gate_model_roundtrip.sh

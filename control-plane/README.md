@@ -59,6 +59,8 @@ Sync gate:
   - validates that `ROADMAP.md` phase headers match control-plane execution structure for non-planned phases.
 - `scripts/check_execution_structure_roundtrip.sh`
   - validates roadmap↔execution-ledger phase/milestone/checkbox structure round-trip for non-planned phases.
+- `scripts/check_gate_model_roundtrip.sh`
+  - validates canonical gate wrapper delegation and gate-order generation parity.
 - `scripts/check_status_source_mode.sh`
   - enforces bootstrap status source mode (`roadmap_md_canonical`) until explicit cutover.
 
@@ -89,3 +91,4 @@ Generated views:
 - `control-plane/views/journey-vector.generated.md`
 - `control-plane/views/roadmap-structure.generated.md`
 - `control-plane/views/phase-index.generated.json`
+- `control-plane/views/gate-order.generated.json`

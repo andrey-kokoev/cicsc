@@ -8,7 +8,7 @@ cd "${ROOT_DIR}"
 ./control-plane/scripts/generate_views.sh > /dev/null
 
 shopt -s nullglob
-files=(control-plane/views/*.generated.md)
+files=(control-plane/views/*.generated.*)
 if [[ ${#files[@]} -eq 0 ]]; then
   echo "control-plane sync check failed: no generated view files found" >&2
   exit 1

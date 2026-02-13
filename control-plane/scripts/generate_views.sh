@@ -100,6 +100,23 @@ views.mkdir(parents=True, exist_ok=True)
 (views / 'journey-vector.generated.md').write_text(journey, encoding='utf-8')
 (views / 'roadmap-structure.generated.md').write_text(structure, encoding='utf-8')
 
+gate_steps = []
+for g in gate.get('gates', []):
+    gid = g.get('id')
+    for script in g.get('required_scripts', []):
+        gate_steps.append({'gate_id': gid, 'script': script})
+
+gate_order = {
+    "_generated": True,
+    "_source": "control-plane/gates/gate-model.yaml",
+    "_generator": "control-plane/scripts/generate_views.sh",
+    "version": "cicsc/gate-order-v1",
+    "steps": gate_steps,
+}
+(views / 'gate-order.generated.json').write_text(
+    json.dumps(gate_order, indent=2) + "\n", encoding='utf-8'
+)
+
 phase_index = {
     "_generated": True,
     "_source": "control-plane/execution/execution-ledger.yaml",
