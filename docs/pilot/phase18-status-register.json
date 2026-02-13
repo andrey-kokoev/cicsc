@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase18-status-register-v1",
+  "timestamp_unix": 1771094400,
+  "items": [
+    {
+      "id": "P18-EXPANSION-PROOF",
+      "status": "in_progress",
+      "owner": "phase18-validation-owner",
+      "target_date": "2027-02-20",
+      "basis": "AI2"
+    },
+    {
+      "id": "P18-PRODUCTION-CONTINUITY",
+      "status": "pending",
+      "owner": "phase18-ops-owner",
+      "target_date": "2027-02-27",
+      "basis": "AI3"
+    },
+    {
+      "id": "P18-GOVERNANCE-CLOSURE",
+      "status": "pending",
+      "owner": "phase18-governance-owner",
+      "target_date": "2027-03-06",
+      "basis": "AI4"
+    }
+  ]
+}

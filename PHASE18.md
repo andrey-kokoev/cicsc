@@ -33,10 +33,10 @@ Start Phase 18 from explicit scope, owners, and reproducible baseline truth.
 ### TODOs
 - [x] P18.1.1 Freeze Phase 18 scope and owner contract.
 - [x] P18.1.2 Publish Phase 18 baseline continuity snapshot.
-- [ ] P18.1.3 Add Phase 18 status register with owner/date discipline.
+- [x] P18.1.3 Add Phase 18 status register with owner/date discipline.
 
 ### Acceptance
-- [ ] Phase 18 starts from objective scope and reproducible baseline truth.
+- [x] Phase 18 starts from objective scope and reproducible baseline truth.
 
 ---
 
