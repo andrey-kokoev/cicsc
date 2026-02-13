@@ -8,6 +8,11 @@ In this repository, these three documents/functions are treated as a strict stac
 2. `docs/genesis/constructively-invariant-control-system-compiler.md`
 3. `control-plane/README.md` (with `control-plane/*` models)
 
+Where:
+- `CIS` = Constructively Invariant Systems
+- `CICSC` = Constructively Invariant Control System Compiler
+- `EGoCI` = Executable Governance of Constructive Invariance
+
 ## What They Really Are
 
 ### 1) CIS (`on-constructively-invariant-systems.md`)
@@ -30,7 +35,7 @@ Defines CICSC as a concrete instantiation of CIS:
 
 In project terms: CICSC is "what is right" semantically for this system.
 
-### 3) EGoCI (`control-plane/README.md` + `control-plane/*`)
+### 3) EGoCI: Executable Governance of Constructive Invariance (`control-plane/README.md` + `control-plane/*`)
 Role: **execution-governance layer**.
 
 Implements executable governance over CICSC evolution:
