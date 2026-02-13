@@ -1,0 +1,66 @@
+{
+  "version": "cicsc/phase30-objective-verdict-report-v1",
+  "timestamp_unix": 1771003756,
+  "inputs": {
+    "assertions": "docs/pilot/phase30-objective-verdict-assertions.json",
+    "closure_run": "docs/pilot/phase30-objective-closure-run.json",
+    "objective_model": "control-plane/objectives/objective-model.yaml"
+  },
+  "closure_run_overall": "pass",
+  "objectives": [
+    {
+      "objective_id": "OBJ1",
+      "title": "Invariants Hold Under Concurrency",
+      "verdict": "met",
+      "assertion": "Declared concurrency adversarial suite must report pass with no unresolved critical invariant violations.",
+      "evidence": [
+        "docs/pilot/phase7-concurrency-adversarial.json"
+      ],
+      "failure_localization": []
+    },
+    {
+      "objective_id": "OBJ2",
+      "title": "IR and Runtime Semantics Align",
+      "verdict": "met",
+      "assertion": "Parity continuity and canonical gate checks must show no unresolved semantic drift for declared scope.",
+      "evidence": [
+        "docs/pilot/phase10-parity-continuity.json",
+        "docs/pilot/category-model-conformance.json"
+      ],
+      "failure_localization": []
+    },
+    {
+      "objective_id": "OBJ3",
+      "title": "Spec DSL Is Usable by Non-Programmers",
+      "verdict": "met",
+      "assertion": "Usability evidence for non-programmer workflows must be present with pass status on declared task suite.",
+      "evidence": [
+        "docs/pilot/phase11-dsl-usability-evidence.json"
+      ],
+      "failure_localization": []
+    },
+    {
+      "objective_id": "OBJ4",
+      "title": "Migrations Are Executable and Replay-Verified",
+      "verdict": "met",
+      "assertion": "Migration protocol evidence must show safe preflight/cutover/rollback coverage and replay verification pass.",
+      "evidence": [
+        "docs/pilot/phase7-migration-protocol-check.json",
+        "docs/pilot/phase10-migration-continuity.json"
+      ],
+      "failure_localization": []
+    },
+    {
+      "objective_id": "OBJ5",
+      "title": "Backends Are Oracle-Equivalent on Declared Scope",
+      "verdict": "met",
+      "assertion": "Parity envelope differential evidence must pass for declared operator scope across sqlite and postgres.",
+      "evidence": [
+        "docs/pilot/phase12-parity-envelope-differentials.json"
+      ],
+      "failure_localization": []
+    }
+  ],
+  "overall_verdict": "met",
+  "completion_claim_allowed": true
+}
