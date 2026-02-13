@@ -18,7 +18,7 @@ function baseType () {
 }
 
 describe("phase9 sql feature gates", () => {
-  it("rejects HAVING op via explicit feature gate diagnostic", () => {
+  it("accepts HAVING op when phase9.sql.having is enabled", () => {
     const bundle: any = {
       core_ir: {
         version: 0,
@@ -29,7 +29,15 @@ describe("phase9 sql feature gates", () => {
             on_type: "Ticket",
             query: {
               source: { snap: { type: "Ticket" } },
-              pipeline: [{ having: { lit: { bool: true } } }],
+              pipeline: [
+                {
+                  group_by: {
+                    keys: [{ name: "state", expr: { var: { row: { field: "state" } } } }],
+                    aggs: { cnt: { count: {} } },
+                  },
+                },
+                { having: { gt: [{ var: { row: { field: "cnt" } } }, { lit: { int: 0 } }] } },
+              ],
             },
           },
         },
@@ -37,9 +45,7 @@ describe("phase9 sql feature gates", () => {
     }
 
     const v = validateBundleV0(bundle)
-    assert.equal(v.ok, false)
-    if (v.ok) return
-    assert.ok(v.errors.some((e) => e.message.includes("phase9.sql.having")))
+    assert.equal(v.ok, true)
   })
 
   it("rejects EXISTS expr via explicit feature gate diagnostic", () => {
@@ -74,12 +80,7 @@ describe("phase9 sql feature gates", () => {
     assert.ok(v.errors.some((e) => e.message.includes("phase9.sql.exists")))
   })
 
-  it("sqlite lowerer rejects gated HAVING/EXISTS even if bypassing validator", () => {
-    assert.throws(
-      () => lowerQueryToSql({ source: { snap: { type: "Ticket" } }, pipeline: [{ having: { lit: { bool: true } } }] } as any, { version: 0, tenant_id: "t" }),
-      /phase9\.sql\.having/
-    )
-
+  it("sqlite lowerer rejects gated EXISTS even if bypassing validator", () => {
     assert.throws(
       () => lowerQueryToSql({ source: { snap: { type: "Ticket" } }, pipeline: [{ filter: { exists: { query: { source: { snap: { type: "Ticket" } }, pipeline: [] } } } }] } as any, { version: 0, tenant_id: "t" }),
       /phase9\.sql\.exists/

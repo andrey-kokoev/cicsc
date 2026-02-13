@@ -11,6 +11,7 @@ export type TypecheckError = {
   | "UNKNOWN_SHADOW"
   | "ILLEGAL_ROW_FIELD"
   | "ILLEGAL_EXPR"
+  | "FEATURE_GATED"
   | "ILLEGAL_INTRINSIC"
   | "ILLEGAL_REDUCER_WRITE"
   | "SHADOW_TYPE_MISMATCH"
@@ -25,6 +26,8 @@ export type TypecheckResult =
 const CORE_ROW_FIELDS = new Set(["entity_id", "state", "updated_ts", "attrs_json"])
 const KNOWN_INTRINSICS = new Set(["has_role", "role_of", "auth_ok", "allowed", "constraint", "len", "str", "int", "float"])
 const NON_DETERMINISTIC_INTRINSICS = new Set(["now", "random", "rand", "uuid"])
+const PHASE9_SQL_HAVING_ENABLED = true
+const PHASE9_SQL_EXISTS_ENABLED = false
 
 export function typecheckCoreIrV0 (ir: CoreIrV0): TypecheckResult {
   const errors: TypecheckError[] = []
@@ -273,34 +276,55 @@ function walkQuery (
     ctx.errors.push({ code: "ILLEGAL_EXPR", path: `${path}.pipeline`, message: "pipeline must be array" })
     return
   }
+  let currentRowFields = new Set(ctx.allowedRowFields)
+  let seenGroupBy = false
   for (let i = 0; i < pipeline.length; i++) {
     const op: any = pipeline[i]
     const tag = soleKey(op)
     const body = op[tag]
-    if (tag === "filter") walkExpr(body, `${path}.pipeline[${i}].filter`, ctx)
+    if (tag === "filter") walkExpr(body, `${path}.pipeline[${i}].filter`, { ...ctx, allowedRowFields: currentRowFields })
     else if (tag === "project") {
       const fields = body?.fields ?? []
       if (!Array.isArray(fields)) {
         ctx.errors.push({ code: "ILLEGAL_EXPR", path: `${path}.pipeline[${i}].project.fields`, message: "fields must be array" })
       } else {
         for (let j = 0; j < fields.length; j++) {
-          walkExpr(fields[j]?.expr, `${path}.pipeline[${i}].project.fields[${j}].expr`, ctx)
+          walkExpr(fields[j]?.expr, `${path}.pipeline[${i}].project.fields[${j}].expr`, { ...ctx, allowedRowFields: currentRowFields })
         }
+        currentRowFields = new Set(fields.map((f: any) => String(f?.name ?? "")).filter((n: string) => n.length > 0))
       }
     } else if (tag === "group_by") {
       const keys = body?.keys ?? []
       const aggs = body?.aggs ?? {}
-      for (let j = 0; j < (keys.length ?? 0); j++) walkExpr(keys[j]?.expr, `${path}.pipeline[${i}].group_by.keys[${j}].expr`, ctx)
-      for (const [name, agg] of Object.entries(aggs)) walkAgg(agg, `${path}.pipeline[${i}].group_by.aggs.${name}`, ctx)
+      for (let j = 0; j < (keys.length ?? 0); j++) walkExpr(keys[j]?.expr, `${path}.pipeline[${i}].group_by.keys[${j}].expr`, { ...ctx, allowedRowFields: currentRowFields })
+      for (const [name, agg] of Object.entries(aggs)) walkAgg(agg, `${path}.pipeline[${i}].group_by.aggs.${name}`, { ...ctx, allowedRowFields: currentRowFields })
+      const groupedFields = new Set<string>()
+      for (const k of keys) {
+        const name = String((k as any)?.name ?? "")
+        if (name) groupedFields.add(name)
+      }
+      for (const name of Object.keys(aggs)) groupedFields.add(name)
+      currentRowFields = groupedFields
+      seenGroupBy = true
     } else if (tag === "order_by") {
       const ks = body ?? []
-      for (let j = 0; j < (ks.length ?? 0); j++) walkExpr(ks[j]?.expr, `${path}.pipeline[${i}].order_by[${j}].expr`, ctx)
+      for (let j = 0; j < (ks.length ?? 0); j++) walkExpr(ks[j]?.expr, `${path}.pipeline[${i}].order_by[${j}].expr`, { ...ctx, allowedRowFields: currentRowFields })
     } else if (tag === "having") {
-      ctx.errors.push({
-        code: "FEATURE_GATED",
-        path: `${path}.pipeline[${i}]`,
-        message: "query op 'having' is disabled by feature gate 'phase9.sql.having'",
-      })
+      if (!PHASE9_SQL_HAVING_ENABLED) {
+        ctx.errors.push({
+          code: "FEATURE_GATED",
+          path: `${path}.pipeline[${i}]`,
+          message: "query op 'having' is disabled by feature gate 'phase9.sql.having'",
+        })
+      } else if (!seenGroupBy) {
+        ctx.errors.push({
+          code: "ILLEGAL_EXPR",
+          path: `${path}.pipeline[${i}]`,
+          message: "query op 'having' requires a preceding group_by",
+        })
+      } else {
+        walkExpr(body, `${path}.pipeline[${i}].having`, { ...ctx, allowedRowFields: currentRowFields })
+      }
     } else if (tag === "limit" || tag === "offset") {
       // ok
     } else {
@@ -529,11 +553,13 @@ function walkExpr (expr: any, path: string, ctx: WalkCtx) {
     }
 
     case "exists":
-      ctx.errors.push({
-        code: "FEATURE_GATED",
-        path,
-        message: "expr 'exists' is disabled by feature gate 'phase9.sql.exists'",
-      })
+      if (!PHASE9_SQL_EXISTS_ENABLED) {
+        ctx.errors.push({
+          code: "FEATURE_GATED",
+          path,
+          message: "expr 'exists' is disabled by feature gate 'phase9.sql.exists'",
+        })
+      }
       return
 
     default:

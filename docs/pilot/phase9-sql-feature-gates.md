@@ -7,5 +7,6 @@ Phase 9 introduces explicit gates for deferred SQL candidates:
 - `phase9.sql.having`
 - `phase9.sql.exists`
 
-Both are currently disabled and must fail fast at compile/lowering time until
-operator-specific oracle differential coverage is added.
+Current status:
+- `phase9.sql.having`: enabled, but only with mandatory execution-vs-oracle differential coverage.
+- `phase9.sql.exists`: disabled; must fail fast at compile/lowering time.

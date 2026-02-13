@@ -20,7 +20,7 @@ export function interpretQuery (q: QueryV0, ctx: QueryContext): { rows: Record<s
   let rows = materializeSource(q.source, ctx)
 
   for (const op of q.pipeline) {
-    const tag = soleKey(op)
+const tag = soleKey(op)
     const body: any = (op as any)[tag]
 
     switch (tag) {
@@ -40,6 +40,10 @@ export function interpretQuery (q: QueryV0, ctx: QueryContext): { rows: Record<s
         rows = groupBy(rows, body.keys, body.aggs, ctx)
         break
 
+      case "having":
+        rows = rows.filter((r) => toBool(evalInRow(body as ExprV0, r, ctx)))
+        break
+
       case "order_by":
         rows = stableSort(rows, body, (expr: ExprV0, row: Record<string, Value>) => evalInRow(expr, row, ctx))
         break
@@ -51,6 +55,9 @@ export function interpretQuery (q: QueryV0, ctx: QueryContext): { rows: Record<s
       case "offset":
         rows = rows.slice(Math.max(0, body as number))
         break
+
+      default:
+        throw new Error(`interpretQuery: unsupported op '${tag}'`)
     }
   }
 

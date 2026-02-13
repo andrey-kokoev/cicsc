@@ -3,9 +3,9 @@
   "timestamp_unix": 1770955200,
   "gates": {
     "phase9.sql.having": {
-      "enabled": false,
-      "mode": "compile_time_reject",
-      "notes": "Candidate is explicitly gated until differential coverage closes Z1.3."
+      "enabled": true,
+      "mode": "enabled_with_differential_gate",
+      "notes": "Enabled in Phase 9 with required sqlite/postgres execution-vs-oracle differential coverage."
     },
     "phase9.sql.exists": {
       "enabled": false,

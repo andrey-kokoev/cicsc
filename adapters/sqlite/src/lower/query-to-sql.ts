@@ -2,6 +2,9 @@
 
 import type { AggExprV0, ExprV0, OpV0, QueryV0, SourceV0 } from "../../../../core/ir/types"
 
+const PHASE9_SQL_HAVING_ENABLED = true
+const PHASE9_SQL_EXISTS_ENABLED = false
+
 export type SqlPlan = {
   sql: string
   binds: any[]
@@ -30,6 +33,7 @@ export function lowerQueryToSql (q: QueryV0, ctx: LoweringCtx): SqlPlan {
 
   // pipeline lowering: fold into WHERE / SELECT / GROUP BY / ORDER / LIMIT/OFFSET
   let where: string[] = []
+  let having: string[] = []
   let select: string[] | null = null
   let groupBy: string[] | null = null
   let orderBy: string[] | null = null
@@ -114,7 +118,18 @@ export function lowerQueryToSql (q: QueryV0, ctx: LoweringCtx): SqlPlan {
         break
 
       case "having":
-        throw new Error("query op 'having' is disabled by feature gate 'phase9.sql.having'")
+        if (!PHASE9_SQL_HAVING_ENABLED) {
+          throw new Error("query op 'having' is disabled by feature gate 'phase9.sql.having'")
+        }
+        if (!groupBy) {
+          throw new Error("query op 'having' requires a preceding group_by")
+        }
+        {
+          const h = lowerExprToSqlValue(body as ExprV0, ctx, "group")
+          binds.push(...h.binds)
+          having.push(`(${h.sql})`)
+        }
+        break
 
       default:
         throw new Error(`lowerQueryToSql: unsupported op '${tag}'`)
@@ -132,6 +147,7 @@ export function lowerQueryToSql (q: QueryV0, ctx: LoweringCtx): SqlPlan {
     `FROM ${from.sql}\n` +
     (where.length ? `WHERE ${where.map((w) => `(${w})`).join(" AND ")}\n` : "") +
     (groupBy ? `GROUP BY ${groupBy.join(", ")}\n` : "") +
+    (having.length ? `HAVING ${having.map((h) => `(${h})`).join(" AND ")}\n` : "") +
     (orderBy ? `ORDER BY ${orderBy.join(", ")}\n` : "") +
     (limit != null ? `LIMIT ${limit}\n` : "") +
     (offset != null ? `OFFSET ${offset}\n` : "")
@@ -349,7 +365,10 @@ function lowerExpr (expr: ExprV0, ctx: LoweringCtx, rowAlias: string, binds: any
       return lowerCallSql(body.fn as string, body.args as ExprV0[], ctx, rowAlias, binds)
 
     case "exists":
-      throw new Error("expr 'exists' is disabled by feature gate 'phase9.sql.exists'")
+      if (!PHASE9_SQL_EXISTS_ENABLED) {
+        throw new Error("expr 'exists' is disabled by feature gate 'phase9.sql.exists'")
+      }
+      throw new Error("expr 'exists' lowering is not implemented")
 
     default:
       throw new Error(`lowerExpr: unsupported expr tag ${tag}`)
@@ -405,6 +424,9 @@ function lowerVar (v: any, ctx: LoweringCtx, rowAlias: string): string {
   // For snapshots: prefer column if present; otherwise json_extract(attrs_json,'$.field').
   if (tag === "row") {
     const f = String(body.field)
+
+    // Grouped row context exposes aliases directly (state, agg names).
+    if (rowAlias === "group") return `${escapeIdent(f)}`
 
     // core columns
     if (f === "entity_id" || f === "state" || f === "updated_ts") return `${rowAlias}.${escapeIdent(f)}`
