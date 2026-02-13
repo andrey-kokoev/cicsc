@@ -1,0 +1,30 @@
+{
+  "version": "cicsc/phase20-scope-contract-v1",
+  "timestamp_unix": 1771705500,
+  "phase": "phase20",
+  "tracks": [
+    {
+      "id": "P20-MULTI-ENV-ASSURANCE",
+      "goal": "Close multi-environment assurance validation evidence without weakening semantic guarantees.",
+      "owner": "phase20-validation-owner",
+      "target_date": "2027-04-24"
+    },
+    {
+      "id": "P20-SCALE-TRANSITION",
+      "goal": "Harden scale-transition verification surfaces for expanded deployments.",
+      "owner": "phase20-ops-owner",
+      "target_date": "2027-05-01"
+    },
+    {
+      "id": "P20-GOVERNANCE-CLOSURE",
+      "goal": "Close Phase 20 with objective checklist and Phase 21 gate discipline.",
+      "owner": "phase20-governance-owner",
+      "target_date": "2027-05-08"
+    }
+  ],
+  "guardrails": [
+    "No weakening of category-model obligations",
+    "No weakening of conformance, migration, or deployment safety gates",
+    "One-checkbox-one-commit for Phase 20"
+  ]
+}
