@@ -44,7 +44,7 @@ Make migration safety operational (not only theorem/test level).
 - [x] P5.2.1 Define executable migration preflight checklist (`SafeMigration` + runtime preconditions).
 - [x] P5.2.2 Implement migration dry-run with replay verification report artifact.
 - [x] P5.2.3 Implement cutover workflow with explicit pause/switch/resume boundaries.
-- [ ] P5.2.4 Implement rollback workflow for reversible subset with explicit failure handling.
+- [x] P5.2.4 Implement rollback workflow for reversible subset with explicit failure handling.
 - [ ] P5.2.5 Add operator runbook and CLI commands for preflight/cutover/rollback.
 
 ### Acceptance

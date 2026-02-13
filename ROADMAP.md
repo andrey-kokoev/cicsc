@@ -193,7 +193,7 @@
 - [x] U2.1 Define executable migration preflight checklist (`SafeMigration` + runtime preconditions)
 - [x] U2.2 Implement migration dry-run with replay verification report artifact
 - [x] U2.3 Implement cutover workflow with explicit pause/switch/resume boundaries
-- [ ] U2.4 Implement rollback workflow for reversible subset with explicit failure handling
+- [x] U2.4 Implement rollback workflow for reversible subset with explicit failure handling
 - [ ] U2.5 Add operator runbook and CLI commands for preflight/cutover/rollback
 
 ### U3. Spec DSL Ergonomics and Compiler Guarantees
