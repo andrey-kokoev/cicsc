@@ -32,11 +32,11 @@ Strengthen backend parity from test-scope confidence to production-like workload
 - [x] P8.1.2 Add large-snapshot and high-cardinality differential suites (sqlite/postgres/oracle).
 - [x] P8.1.3 Add deterministic parity checks for null/collation/numeric edge-case datasets.
 - [x] P8.1.4 Publish production-equivalence report with explicit exclusions and risk labels.
-- [ ] P8.1.5 Convert unresolved production-equivalence risks into explicit roadmap items.
+- [x] P8.1.5 Convert unresolved production-equivalence risks into explicit roadmap items.
 
 ### Acceptance
-- [ ] Production-equivalence scope is executable and green for declared workload envelope.
-- [ ] Residual equivalence risks are explicit and governance-tracked.
+- [x] Production-equivalence scope is executable and green for declared workload envelope.
+- [x] Residual equivalence risks are explicit and governance-tracked.
 
 ---
 

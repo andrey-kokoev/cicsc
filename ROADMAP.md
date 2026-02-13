@@ -329,7 +329,13 @@ Phase 7 parity delta mapping:
 - [x] Y1.2 Add large-snapshot/high-cardinality sqlite/postgres/oracle differential suites
 - [x] Y1.3 Add deterministic parity checks for null/collation/numeric edge-case datasets
 - [x] Y1.4 Publish production-equivalence report with exclusions and risk labels
-- [ ] Y1.5 Convert unresolved production-equivalence risks into explicit roadmap items
+- [x] Y1.5 Convert unresolved production-equivalence risks into explicit roadmap items
+
+Phase 8 production-equivalence risk mapping:
+- `PRISK-COLLATION-001` -> `Y1.3`
+- `PRISK-NUMERIC-001` -> `Y1.3`
+- `PEXCL-HAVING-001` -> `Y1.5`
+- `PEXCL-EXISTS-001` -> `Y1.5`
 
 ### Y2. Multi-Tenant Operational Resilience
 
