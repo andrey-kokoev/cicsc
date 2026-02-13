@@ -369,7 +369,7 @@ Phase 8 production-equivalence risk mapping:
 - [x] Z1.2 Implement selected deferred query lowering candidates (`HAVING`, `EXISTS`) behind explicit gates
 - [x] Z1.3 Add SQL execution-vs-oracle differential suites for each newly enabled construct
 - [x] Z1.4 Add negative typecheck coverage for unsupported forms to enforce compile-time rejection
-- [ ] Z1.5 Publish SQL-surface closure report with residual exclusions and risk labels
+- [x] Z1.5 Publish SQL-surface closure report with residual exclusions and risk labels
 
 ### Z2. Cross-Backend Parity Hardening (SQLite + Postgres)
 

@@ -33,11 +33,11 @@ Close highest-value deferred SQL surface gaps using fail-fast typing and oracle 
 - [x] P9.1.2 Implement selected deferred query lowering candidates (e.g., `HAVING`, `EXISTS`) behind explicit gates.
 - [x] P9.1.3 Add SQL execution-vs-oracle differential suites for each newly enabled construct.
 - [x] P9.1.4 Add negative typecheck coverage for unsupported forms to enforce compile-time rejection.
-- [ ] P9.1.5 Publish SQL-surface closure report with residual exclusions and risk labels.
+- [x] P9.1.5 Publish SQL-surface closure report with residual exclusions and risk labels.
 
 ### Acceptance
-- [ ] Every newly enabled SQL construct has executable oracle differential coverage.
-- [ ] Unsupported constructs fail fast at compile time with path-qualified diagnostics.
+- [x] Every newly enabled SQL construct has executable oracle differential coverage.
+- [x] Unsupported constructs fail fast at compile time with path-qualified diagnostics.
 
 ---
 
