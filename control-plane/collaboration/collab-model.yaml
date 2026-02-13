@@ -105,6 +105,26 @@ handoff_protocol:
   required_commit_body_tokens: ['Checkbox:', 'Invariant:', 'Proof/Test:', 'Docs:']
   required_gate_scripts:
     - scripts/check_canonical_execution_model.sh
+message_transition_policy:
+  initial_statuses: [queued, sent]
+  terminal_statuses: [rejected, rescinded, closed]
+  allowed_transitions:
+    - from: queued
+      to: sent
+    - from: queued
+      to: rescinded
+    - from: sent
+      to: acknowledged
+    - from: sent
+      to: rescinded
+    - from: acknowledged
+      to: fulfilled
+    - from: acknowledged
+      to: rejected
+    - from: fulfilled
+      to: ingested
+    - from: ingested
+      to: closed
 assignments:
   - id: ASSIGN_PHASE33_AX12_KIMI
     agent_ref: AGENT_KIMI
@@ -138,11 +158,13 @@ messages:
     from_worktree: /home/andrey/src/cicsc
     to_worktree: /home/andrey/src/kimi
     branch: phase33.ax1.2
+    previous_status: queued
     status: sent
     payload_refs:
       - control-plane/collaboration/collab-model.yaml
       - docs/genesis/worktree-mediated-constructive-collaboration.md
     evidence_refs: []
+    evidence_bindings: []
     notes: Dispatch AX1.2 obligations and required gate contract.
   - id: MSG_PHASE33_AX22_DISPATCH
     kind_ref: MSGK_ASSIGNMENT_DISPATCH
@@ -152,9 +174,11 @@ messages:
     from_worktree: /home/andrey/src/cicsc
     to_worktree: /home/andrey/src/antigravity
     branch: phase33.ax2.2
+    previous_status: queued
     status: sent
     payload_refs:
       - control-plane/collaboration/collab-model.yaml
       - docs/genesis/worktree-mediated-constructive-collaboration.md
     evidence_refs: []
+    evidence_bindings: []
     notes: Dispatch AX2.2 obligations and formalization admissibility criteria.

@@ -16,12 +16,14 @@
           "from_worktree": "/home/andrey/src/cicsc",
           "to_worktree": "/home/andrey/src/kimi",
           "branch": "phase33.ax1.2",
+          "previous_status": "queued",
           "status": "sent",
           "payload_refs": [
             "control-plane/collaboration/collab-model.yaml",
             "docs/genesis/worktree-mediated-constructive-collaboration.md"
           ],
           "evidence_refs": [],
+          "evidence_bindings": [],
           "notes": "Dispatch AX1.2 obligations and required gate contract."
         },
         {
@@ -33,12 +35,14 @@
           "from_worktree": "/home/andrey/src/cicsc",
           "to_worktree": "/home/andrey/src/antigravity",
           "branch": "phase33.ax2.2",
+          "previous_status": "queued",
           "status": "sent",
           "payload_refs": [
             "control-plane/collaboration/collab-model.yaml",
             "docs/genesis/worktree-mediated-constructive-collaboration.md"
           ],
           "evidence_refs": [],
+          "evidence_bindings": [],
           "notes": "Dispatch AX2.2 obligations and formalization admissibility criteria."
         }
       ]
@@ -54,12 +58,14 @@
           "from_worktree": "/home/andrey/src/cicsc",
           "to_worktree": "/home/andrey/src/kimi",
           "branch": "phase33.ax1.2",
+          "previous_status": "queued",
           "status": "sent",
           "payload_refs": [
             "control-plane/collaboration/collab-model.yaml",
             "docs/genesis/worktree-mediated-constructive-collaboration.md"
           ],
           "evidence_refs": [],
+          "evidence_bindings": [],
           "notes": "Dispatch AX1.2 obligations and required gate contract."
         }
       ],
@@ -76,12 +82,14 @@
           "from_worktree": "/home/andrey/src/cicsc",
           "to_worktree": "/home/andrey/src/antigravity",
           "branch": "phase33.ax2.2",
+          "previous_status": "queued",
           "status": "sent",
           "payload_refs": [
             "control-plane/collaboration/collab-model.yaml",
             "docs/genesis/worktree-mediated-constructive-collaboration.md"
           ],
           "evidence_refs": [],
+          "evidence_bindings": [],
           "notes": "Dispatch AX2.2 obligations and formalization admissibility criteria."
         }
       ],

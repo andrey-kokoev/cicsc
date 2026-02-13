@@ -247,13 +247,31 @@ def main() -> int:
             or ref.startswith("lean/")
         )
 
+    transition_policy = collab.get("message_transition_policy", {})
+    initial_statuses = set(transition_policy.get("initial_statuses", []))
+    terminal_statuses = set(transition_policy.get("terminal_statuses", []))
+    allowed_transitions = {
+        (t.get("from"), t.get("to"))
+        for t in transition_policy.get("allowed_transitions", [])
+    }
+    policy_statuses = initial_statuses | terminal_statuses | {to for _, to in allowed_transitions} | {
+        frm for frm, _ in allowed_transitions
+    }
+
+    messages = collab.get("messages", [])
+    message_map = {}
     seen_message_ids = set()
-    for msg in collab.get("messages", []):
+    for msg in messages:
         mid = msg.get("id")
         if mid in seen_message_ids:
             errors.append(f"collab-model: duplicate message id {mid}")
         seen_message_ids.add(mid)
+        message_map[mid] = msg
 
+    commit_re = re.compile(r"^[0-9a-f]{7,40}$")
+    digest_re = re.compile(r"^sha256:[0-9a-f]{64}$")
+    for msg in messages:
+        mid = msg.get("id")
         kind_ref = msg.get("kind_ref")
         assignment_ref = msg.get("assignment_ref")
         from_agent_ref = msg.get("from_agent_ref")
@@ -261,6 +279,9 @@ def main() -> int:
         from_worktree = msg.get("from_worktree")
         to_worktree = msg.get("to_worktree")
         branch = msg.get("branch")
+        previous_status = msg.get("previous_status")
+        status = msg.get("status")
+        supersedes = msg.get("supersedes_message_ref")
 
         if kind_ref not in message_kind_ids:
             errors.append(f"collab-model: message {mid} unknown kind_ref {kind_ref}")
@@ -299,12 +320,65 @@ def main() -> int:
         if branch_re and isinstance(branch, str) and not branch_re.match(branch):
             errors.append(f"collab-model: message {mid} branch {branch} violates handoff branch_pattern")
 
+        if status not in policy_statuses:
+            errors.append(f"collab-model: message {mid} status {status} not covered by message_transition_policy")
+        if previous_status is None:
+            if status not in initial_statuses:
+                errors.append(
+                    f"collab-model: message {mid} missing previous_status and status {status} is not initial"
+                )
+        else:
+            if (previous_status, status) not in allowed_transitions:
+                errors.append(
+                    f"collab-model: message {mid} illegal transition {previous_status} -> {status}"
+                )
+            if previous_status in terminal_statuses:
+                errors.append(
+                    f"collab-model: message {mid} previous_status {previous_status} is terminal"
+                )
+
         for ref in msg.get("payload_refs", []):
             if isinstance(ref, str) and maybe_path_ref(ref) and not path_exists(ref):
                 errors.append(f"collab-model: message {mid} missing payload ref {ref}")
         for ref in msg.get("evidence_refs", []):
             if isinstance(ref, str) and maybe_path_ref(ref) and not path_exists(ref):
                 errors.append(f"collab-model: message {mid} missing evidence ref {ref}")
+        for ev in msg.get("evidence_bindings", []):
+            ref = ev.get("ref")
+            commit = ev.get("commit")
+            digest = ev.get("digest")
+            if isinstance(ref, str) and maybe_path_ref(ref) and not path_exists(ref):
+                errors.append(f"collab-model: message {mid} missing evidence binding ref {ref}")
+            if not isinstance(commit, str) or not commit_re.match(commit):
+                errors.append(f"collab-model: message {mid} invalid evidence commit {commit}")
+            if not isinstance(digest, str) or not digest_re.match(digest):
+                errors.append(f"collab-model: message {mid} invalid evidence digest {digest}")
+
+        if status == "rescinded":
+            if not msg.get("rescinded_reason"):
+                errors.append(f"collab-model: message {mid} rescinded but missing rescinded_reason")
+            if msg.get("evidence_bindings"):
+                errors.append(f"collab-model: message {mid} rescinded but has evidence_bindings")
+            if previous_status not in {"queued", "sent"}:
+                errors.append(
+                    f"collab-model: message {mid} rescinded from unsupported previous_status {previous_status}"
+                )
+
+        if supersedes:
+            if supersedes == mid:
+                errors.append(f"collab-model: message {mid} supersedes itself")
+            elif supersedes not in message_map:
+                errors.append(f"collab-model: message {mid} unknown supersedes_message_ref {supersedes}")
+            else:
+                old = message_map[supersedes]
+                if old.get("assignment_ref") != assignment_ref:
+                    errors.append(
+                        f"collab-model: message {mid} supersedes {supersedes} with different assignment_ref"
+                    )
+                if old.get("to_agent_ref") != to_agent_ref:
+                    errors.append(
+                        f"collab-model: message {mid} supersedes {supersedes} with different to_agent_ref"
+                    )
 
     seen_gate_ids = set()
     seen_gate_scripts = set()
