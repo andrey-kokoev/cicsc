@@ -58,7 +58,7 @@ Ensure parity, negative coverage, and migration/post-cutover checks remain conti
 Keep phase transitions objective, artifact-truth-backed, and automation-enforced.
 
 ### TODOs
-- [ ] P10.3.1 Define objective Phase 10 exit checklist mapped to artifacts.
+- [x] P10.3.1 Define objective Phase 10 exit checklist mapped to artifacts.
 - [ ] P10.3.2 Add PHASE10↔ROADMAP status-drift consistency gate.
 - [ ] P10.3.3 Add Phase 11 block gate based on Phase 10 checklist.
 - [ ] P10.3.4 Publish Phase 10 closure report and mark exit criteria.
