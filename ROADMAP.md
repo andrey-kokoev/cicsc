@@ -615,4 +615,4 @@ Phase 9 forced-next mapping:
 - [x] AH4.1 Define objective Phase 17 exit checklist mapped to artifacts
 - [x] AH4.2 Add PHASE17↔ROADMAP drift consistency gate
 - [x] AH4.3 Add Phase 18 block gate from Phase 17 checklist
-- [ ] AH4.4 Publish Phase 17 closure report and mark exit criteria
+- [x] AH4.4 Publish Phase 17 closure report and mark exit criteria
