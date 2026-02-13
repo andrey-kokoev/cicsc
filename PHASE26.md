@@ -31,7 +31,7 @@ Reach a state where:
 Start Phase 26 from explicit scope, owners, and reproducible baseline truth.
 
 ### TODOs
-- [ ] P26.1.1 Freeze Phase 26 scope and owner contract.
+- [x] P26.1.1 Freeze Phase 26 scope and owner contract.
 - [ ] P26.1.2 Publish Phase 26 baseline continuity snapshot.
 - [ ] P26.1.3 Add Phase 26 status register with owner/date discipline.
 

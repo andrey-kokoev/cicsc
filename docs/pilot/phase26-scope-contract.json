@@ -1,0 +1,30 @@
+{
+  "version": "cicsc/phase26-scope-contract-v1",
+  "timestamp_unix": 1775334300,
+  "phase": "phase26",
+  "tracks": [
+    {
+      "id": "P26-STABILITY-CONSOLIDATION",
+      "goal": "Close stability-consolidation validation evidence without weakening semantic guarantees.",
+      "owner": "phase26-validation-owner",
+      "target_date": "2027-08-28"
+    },
+    {
+      "id": "P26-CONTINUITY-ASSURANCE",
+      "goal": "Strengthen continuity-assurance checks for expanded deployment surfaces.",
+      "owner": "phase26-ops-owner",
+      "target_date": "2027-09-04"
+    },
+    {
+      "id": "P26-GOVERNANCE-CLOSURE",
+      "goal": "Close Phase 26 with objective checklist and Phase 27 gate discipline.",
+      "owner": "phase26-governance-owner",
+      "target_date": "2027-09-11"
+    }
+  ],
+  "guardrails": [
+    "No weakening of category-model obligations",
+    "No weakening of conformance, migration, or deployment safety gates",
+    "One-checkbox-one-commit for Phase 26"
+  ]
+}
