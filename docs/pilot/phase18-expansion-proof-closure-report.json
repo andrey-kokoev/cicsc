@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase18-expansion-proof-closure-report-v1",
+  "timestamp_unix": 1771096200,
+  "inputs": {
+    "expansion_proof_matrix": "docs/pilot/phase18-expansion-proof-matrix.json",
+    "required_gates": "docs/pilot/phase18-expansion-proof-required-gates.json"
+  },
+  "findings": [
+    {
+      "id": "P18PROOF-EXTERNAL-001",
+      "severity": "medium",
+      "status": "deferred",
+      "owner": "phase18-validation-owner",
+      "target_date": "2027-03-20",
+      "summary": "Additional expansion-proof sampling remains scheduled for the next field window with no present invariant regressions."
+    },
+    {
+      "id": "P18PROOF-CONTINUITY-001",
+      "severity": "low",
+      "status": "closed",
+      "owner": "phase18-ops-owner",
+      "summary": "Expansion-proof continuity remained aligned with declared conformance and governance gates."
+    }
+  ],
+  "unresolved_criticals": [],
+  "status": "pass"
+}

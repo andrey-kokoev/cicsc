@@ -629,7 +629,7 @@ Phase 9 forced-next mapping:
 
 - [x] AI2.1 Freeze expansion-proof matrix and evidence contract
 - [x] AI2.2 Run expansion-proof required gates
-- [ ] AI2.3 Publish expansion-proof closure report with findings disposition
+- [x] AI2.3 Publish expansion-proof closure report with findings disposition
 
 ### AI3. Production-Grade Continuity Hardening
 
