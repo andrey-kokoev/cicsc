@@ -80,17 +80,17 @@ Close Phase 16 with objective checklist and enforce entry gate for Phase 17.
 - [x] P16.4.1 Define objective Phase 16 exit checklist mapped to artifacts.
 - [x] P16.4.2 Add PHASE16↔ROADMAP drift consistency gate.
 - [x] P16.4.3 Add Phase 17 block gate from Phase 16 checklist.
-- [ ] P16.4.4 Publish Phase 16 closure report and mark exit criteria.
+- [x] P16.4.4 Publish Phase 16 closure report and mark exit criteria.
 
 ### Acceptance
-- [ ] Phase 17 remains blocked unless Phase 16 checklist is fully pass.
+- [x] Phase 17 remains blocked unless Phase 16 checklist is fully pass.
 
 ---
 
 ## Exit Criteria (Phase 16)
 
-- [ ] Scope, baseline, and status governance remain explicit and reproducible.
-- [ ] External-validation closure is evidence-backed and invariant-preserving.
-- [ ] Expansion-readiness status is verifiable with executable harnesses.
-- [ ] Governance checks enforce code/doc/artifact consistency.
-- [ ] Phase 17 remains blocked without full checklist pass.
+- [x] Scope, baseline, and status governance remain explicit and reproducible.
+- [x] External-validation closure is evidence-backed and invariant-preserving.
+- [x] Expansion-readiness status is verifiable with executable harnesses.
+- [x] Governance checks enforce code/doc/artifact consistency.
+- [x] Phase 17 remains blocked without full checklist pass.
