@@ -932,7 +932,7 @@ Phase 9 forced-next mapping:
 
 - [x] AT3.1 Freeze governance-continuity hardening matrix and policy
 - [x] AT3.2 Add governance-continuity verification harnesses
-- [ ] AT3.3 Publish governance-continuity closure report with residual policy
+- [x] AT3.3 Publish governance-continuity closure report with residual policy
 
 ### AT4. Governance Closure and Phase 30 Gate
 
