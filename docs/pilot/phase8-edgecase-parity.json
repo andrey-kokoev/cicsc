@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase8-edgecase-parity-v1",
+  "timestamp_unix": 1770948144,
+  "overall": "pass",
+  "checks": {
+    "edgecase_dataset_contract":{"status":"pass","log":"docs/pilot/phase8-edgecase-parity.edgecase_dataset_contract.log"},
+    "backend_semantics_policy":{"status":"pass","log":"docs/pilot/phase8-edgecase-parity.backend_semantics_policy.log"},
+    "cross_backend_differential":{"status":"pass","log":"docs/pilot/phase8-edgecase-parity.cross_backend_differential.log"}
+  }
+}
