@@ -46,7 +46,7 @@ Start Phase 28 from explicit scope, owners, and reproducible baseline truth.
 Close assurance-scaling validation with explicit evidence contract and findings governance.
 
 ### TODOs
-- [ ] P28.2.1 Freeze assurance-scaling matrix and evidence contract.
+- [x] P28.2.1 Freeze assurance-scaling matrix and evidence contract.
 - [ ] P28.2.2 Run assurance-scaling required gates.
 - [ ] P28.2.3 Publish assurance-scaling closure report with findings disposition.
 

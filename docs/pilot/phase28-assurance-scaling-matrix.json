@@ -1,0 +1,45 @@
+{
+  "version": "cicsc/phase28-assurance-scaling-matrix-v1",
+  "timestamp_unix": 1776546600,
+  "tracks": [
+    {
+      "id": "assurance_scaling_semantic_continuity",
+      "scope": "semantic_continuity",
+      "required_evidence": [
+        "docs/pilot/phase27-deployment-integrity-closure-report.json",
+        "docs/pilot/phase26-stability-consolidation-closure-report.json",
+        "docs/pilot/phase28-assurance-scaling-closure-report.json"
+      ]
+    },
+    {
+      "id": "assurance_scaling_backend_parity",
+      "scope": "backend_parity",
+      "required_evidence": [
+        "docs/pilot/phase27-evolution-continuity-closure-report.json",
+        "docs/pilot/phase26-continuity-assurance-closure-report.json",
+        "docs/pilot/phase28-assurance-scaling-closure-report.json"
+      ]
+    },
+    {
+      "id": "assurance_scaling_operational_readiness",
+      "scope": "operations",
+      "required_evidence": [
+        "docs/pilot/phase27-evolution-continuity-harnesses.json",
+        "docs/pilot/phase26-continuity-assurance-harnesses.json",
+        "docs/pilot/phase28-operational-continuity-harnesses.json"
+      ]
+    }
+  ],
+  "evidence_contract": {
+    "required_gates": [
+      "phase27_doc_consistency",
+      "phase27_deployment_integrity_required_gates",
+      "phase28_baseline_continuity"
+    ],
+    "must_capture": [
+      "assurance_scaling_findings",
+      "disposition_status",
+      "residual_policy"
+    ]
+  }
+}
