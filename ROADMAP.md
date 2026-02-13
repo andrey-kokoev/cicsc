@@ -384,7 +384,7 @@ Phase 8 production-equivalence risk mapping:
 - [x] Z3.1 Extend migration protocol contract for newly supported SQL/query constructs
 - [x] Z3.2 Add migration drill suites covering upgraded features (preflight/dry-run/cutover/rollback)
 - [x] Z3.3 Add post-cutover execution-vs-oracle differential checks on migrated streams
-- [ ] Z3.4 Add updated SLO/error-budget gates for verify/migrate/command paths under expanded load
+- [x] Z3.4 Add updated SLO/error-budget gates for verify/migrate/command paths under expanded load
 - [ ] Z3.5 Publish migration safety and operations report with unresolved criticals disposition
 
 ### Z4. Deployment Validation and Governance Gate for Phase 10
