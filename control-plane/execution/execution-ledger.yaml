@@ -1666,7 +1666,7 @@ phases:
     checkboxes:
     - id: AW2.1
       title: Add Phase 32 expanded-scope required-gates script and report contract
-      status: open
+      status: done
     - id: AW2.2
       title: Publish Phase 32 expanded-scope closure report with objective verdict deltas
       status: open
