@@ -11,6 +11,9 @@ Staged run artifact (latest):
 Incident register:
 - `docs/pilot/phase5-ticketing-incidents.json`
 
+Roadmap mapping (no hidden backlog):
+- `docs/pilot/phase5-findings-roadmap-map.md`
+
 This selection is fixed for Phase 5 closure work so that:
 - conformance and migration evidence target one stable workload,
 - usability and drift feedback are measured against one operational context,

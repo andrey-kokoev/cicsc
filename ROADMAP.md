@@ -225,7 +225,7 @@
 - [x] U6.1 Select one reference vertical and freeze evaluation criteria
 - [x] U6.2 Run staged workload with invariants, conformance, and migration checks enabled
 - [x] U6.3 Capture drift/perf/missing-primitive incidents with severity labels
-- [ ] U6.4 Convert findings into roadmap checkboxes (no hidden backlog)
+- [x] U6.4 Convert findings into roadmap checkboxes (no hidden backlog)
 - [ ] U6.5 Publish phase report with forced-next priorities only
 
 ### U7. Governance Gate for Phase 6
@@ -235,3 +235,9 @@
 - [ ] U7.3 Require migration runbook and cutover/rollback drill evidence
 - [ ] U7.4 Require Spec DSL usability evidence from reference vertical
 - [ ] U7.5 Add CI/doc checks rejecting unchecked claims in phase/status docs
+
+## V. Field-Derived Backlog (Ticketing Phase 5)
+
+- [ ] V1 Resolve `INC-PG-HARNESS-001`: add/install postgres test harness dependency (`pg-mem`) and make postgres gate executable in default developer bootstrap.
+- [ ] V2 Resolve `INC-ORDER-COLLATION-001`: add explicit NULL ordering/collation controls in lowering/typecheck policy (remove backend-default ambiguity).
+- [ ] V3 Resolve `INC-PERF-BASELINE-001`: add staged-run latency/throughput instrumentation and artifact SLO thresholds.
