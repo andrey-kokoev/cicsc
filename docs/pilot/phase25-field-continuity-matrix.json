@@ -1,0 +1,29 @@
+{
+  "version": "cicsc/phase25-field-continuity-matrix-v1",
+  "timestamp_unix": 1774734000,
+  "items": [
+    {
+      "id": "field_continuity_signal_auditability",
+      "class": "reliability",
+      "status": "in_scope",
+      "evidence_target": "phase25_field_continuity_harnesses"
+    },
+    {
+      "id": "field_continuity_recovery_discipline",
+      "class": "operations",
+      "status": "in_scope",
+      "evidence_target": "phase25_field_continuity_closure"
+    },
+    {
+      "id": "field_continuity_rollforward_control",
+      "class": "governance",
+      "status": "in_scope",
+      "evidence_target": "phase25_doc_consistency_and_gate_checks"
+    }
+  ],
+  "policy": {
+    "must_have_executable_evidence": true,
+    "deferred_requires_owner_date": true,
+    "no_invariant_regressions_allowed": true
+  }
+}

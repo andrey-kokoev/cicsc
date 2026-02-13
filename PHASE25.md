@@ -61,7 +61,7 @@ Close verification-consolidation validation with explicit evidence contract and 
 Harden field-continuity checks for expanded deployments.
 
 ### TODOs
-- [ ] P25.3.1 Freeze field-continuity hardening matrix and policy.
+- [x] P25.3.1 Freeze field-continuity hardening matrix and policy.
 - [ ] P25.3.2 Add field-continuity verification harnesses.
 - [ ] P25.3.3 Publish field-continuity closure report with residual policy.
 
