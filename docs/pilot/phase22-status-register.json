@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase22-status-register-v1",
+  "timestamp_unix": 1772916900,
+  "items": [
+    {
+      "id": "P22-RESILIENCE-EXPANSION",
+      "status": "in_progress",
+      "owner": "phase22-validation-owner",
+      "target_date": "2027-06-05",
+      "basis": "AM2"
+    },
+    {
+      "id": "P22-CONTROL-INTEGRITY",
+      "status": "pending",
+      "owner": "phase22-ops-owner",
+      "target_date": "2027-06-12",
+      "basis": "AM3"
+    },
+    {
+      "id": "P22-GOVERNANCE-CLOSURE",
+      "status": "pending",
+      "owner": "phase22-governance-owner",
+      "target_date": "2027-06-19",
+      "basis": "AM4"
+    }
+  ]
+}
