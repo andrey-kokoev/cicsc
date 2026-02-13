@@ -1,0 +1,61 @@
+{
+  "version": "cicsc/phase10-continuity-report-v1",
+  "timestamp_unix": 1771041600,
+  "inputs": {
+    "forced_next_status": "docs/pilot/phase10-forced-next-status.json",
+    "parity_continuity": "docs/pilot/phase10-parity-continuity.json",
+    "migration_continuity": "docs/pilot/phase10-migration-continuity.json",
+    "operational_slo_continuity": "docs/pilot/phase10-operational-slo-continuity.json"
+  },
+  "critical_policy": {
+    "rule": "no_unresolved_criticals",
+    "allowed_open_status": [
+      "deferred"
+    ],
+    "deferred_requirements": [
+      "owner",
+      "target_date"
+    ],
+    "deferred_date_format": "YYYY-MM-DD"
+  },
+  "continuity_checks": [
+    {
+      "id": "phase10-parity-continuity",
+      "status": "pass"
+    },
+    {
+      "id": "phase10-migration-continuity",
+      "status": "pass"
+    },
+    {
+      "id": "phase10-operational-slo-continuity",
+      "status": "pass"
+    }
+  ],
+  "finding_disposition": [
+    {
+      "id": "P10-PARITY-HAVING-HARNESS",
+      "severity": "low",
+      "status": "deferred",
+      "owner": "phase10-parity-owner",
+      "target_date": "2026-04-01",
+      "reason": "Harness continuity is closed for Phase 10; full replacement is deferred to parity track."
+    },
+    {
+      "id": "P10-SQL-EXISTS-LOWERING",
+      "severity": "medium",
+      "status": "deferred",
+      "owner": "phase10-sql-owner",
+      "target_date": "2026-04-01",
+      "reason": "EXISTS remains compile-time rejected pending declared prerequisites."
+    },
+    {
+      "id": "P10-OPS-GATE-CONTINUITY",
+      "severity": "low",
+      "status": "closed",
+      "owner": "phase10-ops-owner"
+    }
+  ],
+  "unresolved_criticals": [],
+  "overall": "pass"
+}
