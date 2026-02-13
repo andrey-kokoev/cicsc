@@ -1,4 +1,4 @@
-# Genesis Stack: CIS -> CICSC -> EGoCI
+# Genesis Stack: CIS -> CICSC -> CIECP
 
 This directory captures the conceptual top of the project.
 
@@ -11,7 +11,7 @@ In this repository, these three documents/functions are treated as a strict stac
 Where:
 - `CIS` = Constructively Invariant Systems
 - `CICSC` = Constructively Invariant Control System Compiler
-- `EGoCI` = Executable Governance of Constructive Invariance
+- `CIECP` = Constructive-Invariance Evolution Control Plane
 
 ## What They Really Are
 
@@ -35,7 +35,7 @@ Defines CICSC as a concrete instantiation of CIS:
 
 In project terms: CICSC is "what is right" semantically for this system.
 
-### 3) EGoCI: Executable Governance of Constructive Invariance (`control-plane/README.md` + `control-plane/*`)
+### 3) CIECP: Constructive-Invariance Evolution Control Plane (`control-plane/README.md` + `control-plane/*`)
 Role: **execution-governance layer**.
 
 Implements executable governance over CICSC evolution:
@@ -44,23 +44,23 @@ Implements executable governance over CICSC evolution:
 - canonical execution ledger,
 - gate model and machine checks.
 
-In project terms: EGoCI is "how change is allowed while preserving what is right."
+In project terms: CIECP is "how change is allowed while preserving what is right."
 
 ## Relationship Contract
 
 Composition is one-way and vertical:
 
-- `CIS -> CICSC -> EGoCI`
+- `CIS -> CICSC -> CIECP`
 
 Meaning:
 - CIS constrains the semantics CICSC must realize.
-- CICSC constrains the invariants EGoCI must protect during change.
-- EGoCI must never redefine CIS/CICSC semantics; it only operationalizes and enforces them.
+- CICSC constrains the invariants CIECP must protect during change.
+- CIECP must never redefine CIS/CICSC semantics; it only operationalizes and enforces them.
 
 ## Repo-Level Practical Rule
 
 When there is tension:
 
 1. Preserve CIS/CICSC semantic invariants first.
-2. Adjust EGoCI process artifacts (ledger/gates/views) second.
+2. Adjust CIECP process artifacts (ledger/gates/views) second.
 3. Never accept process convenience that weakens semantic correctness.
