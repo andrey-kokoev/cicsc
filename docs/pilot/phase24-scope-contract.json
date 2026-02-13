@@ -1,0 +1,30 @@
+{
+  "version": "cicsc/phase24-scope-contract-v1",
+  "timestamp_unix": 1774124700,
+  "phase": "phase24",
+  "tracks": [
+    {
+      "id": "P24-ASSURANCE-MATURITY",
+      "goal": "Close assurance-maturity validation evidence without weakening semantic guarantees.",
+      "owner": "phase24-validation-owner",
+      "target_date": "2027-07-17"
+    },
+    {
+      "id": "P24-CONTINUITY-PROOF",
+      "goal": "Strengthen continuity-proof checks for expanded deployment surfaces.",
+      "owner": "phase24-ops-owner",
+      "target_date": "2027-07-24"
+    },
+    {
+      "id": "P24-GOVERNANCE-CLOSURE",
+      "goal": "Close Phase 24 with objective checklist and Phase 25 gate discipline.",
+      "owner": "phase24-governance-owner",
+      "target_date": "2027-07-31"
+    }
+  ],
+  "guardrails": [
+    "No weakening of category-model obligations",
+    "No weakening of conformance, migration, or deployment safety gates",
+    "One-checkbox-one-commit for Phase 24"
+  ]
+}

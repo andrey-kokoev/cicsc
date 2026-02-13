@@ -31,7 +31,7 @@ Reach a state where:
 Start Phase 24 from explicit scope, owners, and reproducible baseline truth.
 
 ### TODOs
-- [ ] P24.1.1 Freeze Phase 24 scope and owner contract.
+- [x] P24.1.1 Freeze Phase 24 scope and owner contract.
 - [ ] P24.1.2 Publish Phase 24 baseline continuity snapshot.
 - [ ] P24.1.3 Add Phase 24 status register with owner/date discipline.
 
