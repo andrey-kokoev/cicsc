@@ -31,7 +31,7 @@ Reach a state where:
 Start Phase 28 from explicit scope, owners, and reproducible baseline truth.
 
 ### TODOs
-- [ ] P28.1.1 Freeze Phase 28 scope and owner contract.
+- [x] P28.1.1 Freeze Phase 28 scope and owner contract.
 - [ ] P28.1.2 Publish Phase 28 baseline continuity snapshot.
 - [ ] P28.1.3 Add Phase 28 status register with owner/date discipline.
 
