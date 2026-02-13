@@ -19,6 +19,8 @@ def main() -> int:
     ledger = yaml.safe_load(source.read_text(encoding="utf-8"))
     rows = []
     for phase in ledger.get("phases", []):
+        if phase.get("status") == "planned":
+            continue
         phase_id = phase.get("id")
         phase_no = phase.get("number")
         for milestone in phase.get("milestones", []):

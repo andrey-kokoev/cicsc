@@ -8,7 +8,7 @@
 
 - Objectives: 5
 - Capabilities: 5
-- Phases in execution model: 27
+- Phases in execution model: 31
 - Gate contracts: 12
 - Status source mode: execution_ledger_yaml_canonical
 
@@ -41,6 +41,10 @@
 - Phase 29 (AT): Assurance Expansion and Governance Continuity Discipline [complete]
 - Phase 30 (AU): Objective Closure Milestone [complete]
 - Phase 31 (AV): Era 2 Expansion Targeting [complete]
+- Phase 32 (AW): Expanded-Scope Objective Execution [planned]
+- Phase 33 (AX): Formal Coupling and Semantic Strengthening [planned]
+- Phase 34 (AY): Field Generalization and Multi-Context Validation [planned]
+- Phase 35 (AZ): Final Completion and Transition Closure [planned]
 
 ## Canonical Rule
 

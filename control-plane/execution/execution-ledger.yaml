@@ -1638,3 +1638,134 @@ phases:
     - id: AV1.4
       title: Define expanded-scope gate and closure reporting contract
       status: done
+- id: AW
+  number: 32
+  title: Expanded-Scope Objective Execution
+  status: planned
+  milestones:
+  - id: AW1
+    title: Objective Envelope Expansion Implementation
+    checkboxes:
+    - id: AW1.1
+      title: Implement OBJ1 expanded concurrency envelope artifacts and required checks
+      status: open
+    - id: AW1.2
+      title: Implement OBJ2 drift-budget governance artifacts and required checks
+      status: open
+    - id: AW1.3
+      title: Implement OBJ3 usability-envelope artifacts and required checks
+      status: open
+    - id: AW1.4
+      title: Implement OBJ4 migration-envelope artifacts and required checks
+      status: open
+    - id: AW1.5
+      title: Implement OBJ5 expanded parity-envelope artifacts and required checks
+      status: open
+  - id: AW2
+    title: Expanded-Scope Execution Gate
+    checkboxes:
+    - id: AW2.1
+      title: Add Phase 32 expanded-scope required-gates script and report contract
+      status: open
+    - id: AW2.2
+      title: Publish Phase 32 expanded-scope closure report with objective verdict deltas
+      status: open
+    - id: AW2.3
+      title: Define objective Phase 32 exit checklist mapped to artifacts
+      status: open
+    - id: AW2.4
+      title: Add Phase 33 block gate from Phase 32 checklist
+      status: open
+- id: AX
+  number: 33
+  title: Formal Coupling and Semantic Strengthening
+  status: planned
+  milestones:
+  - id: AX1
+    title: Proof-Evidence Coupling Realization
+    checkboxes:
+    - id: AX1.1
+      title: Bind expanded claim classes to explicit proof-obligation index
+      status: open
+    - id: AX1.2
+      title: Add executable checks rejecting claims without required proof-evidence coupling
+      status: open
+    - id: AX1.3
+      title: Publish coupling conformance report with residual gaps register
+      status: open
+  - id: AX2
+    title: Lean and Semantic Closure Tightening
+    checkboxes:
+    - id: AX2.1
+      title: Define Lean/kernel catch-up targets required by expanded objective claims
+      status: open
+    - id: AX2.2
+      title: Add formalization progress gate tied to expanded-scope claim admissibility
+      status: open
+    - id: AX2.3
+      title: Publish Phase 33 closure report and updated admissible-claims policy
+      status: open
+    - id: AX2.4
+      title: Add Phase 34 block gate from Phase 33 checklist
+      status: open
+- id: AY
+  number: 34
+  title: Field Generalization and Multi-Context Validation
+  status: planned
+  milestones:
+  - id: AY1
+    title: Multi-Context Validation Expansion
+    checkboxes:
+    - id: AY1.1
+      title: Freeze Phase 34 context matrix and expanded acceptance contract
+      status: open
+    - id: AY1.2
+      title: Execute multi-context workloads under expanded objective envelopes
+      status: open
+    - id: AY1.3
+      title: Publish incident and drift localization report with forced-next mapping policy
+      status: open
+  - id: AY2
+    title: Generalization Closure Gate
+    checkboxes:
+    - id: AY2.1
+      title: Add Phase 34 required-gates script/report for expanded multi-context envelope
+      status: open
+    - id: AY2.2
+      title: Publish Phase 34 closure report with unresolved critical disposition
+      status: open
+    - id: AY2.3
+      title: Define objective Phase 34 exit checklist mapped to artifacts
+      status: open
+    - id: AY2.4
+      title: Add Phase 35 block gate from Phase 34 checklist
+      status: open
+- id: AZ
+  number: 35
+  title: Final Completion and Transition Closure
+  status: planned
+  milestones:
+  - id: AZ1
+    title: Final Objective Closure Re-Evaluation
+    checkboxes:
+    - id: AZ1.1
+      title: Execute final objective verdict run over expanded-scope envelopes
+      status: open
+    - id: AZ1.2
+      title: Publish final forced-next disposition (must be empty for completion claim)
+      status: open
+    - id: AZ1.3
+      title: Publish project completion verdict report with objective-by-objective status
+      status: open
+  - id: AZ2
+    title: Transition and Stewardship Contract
+    checkboxes:
+    - id: AZ2.1
+      title: Freeze post-completion stewardship model for CICSC and CIECP artifacts
+      status: open
+    - id: AZ2.2
+      title: Publish completion release/transition note with declared scope and limits
+      status: open
+    - id: AZ2.3
+      title: Mark final completion gate pass and archive execution-era closure index
+      status: open
