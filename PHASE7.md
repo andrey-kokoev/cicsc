@@ -49,7 +49,7 @@ Tighten the declared concurrency contract with stronger tests and explicit bound
 
 ### TODOs
 - [x] P7.2.1 Define Phase 7 concurrency contract delta over Phase 6 baseline.
-- [ ] P7.2.2 Add adversarial multi-tenant and cross-stream causality replay suites.
+- [x] P7.2.2 Add adversarial multi-tenant and cross-stream causality replay suites.
 - [ ] P7.2.3 Add backend-level isolation differential checks (sqlite vs postgres) for declared invariants.
 - [ ] P7.2.4 Add conflict-handling matrix expansion with deterministic outcome coverage.
 - [ ] P7.2.5 Publish updated isolation note with strengthened guarantees and preserved exclusions.
