@@ -21,6 +21,10 @@
       "script": "scripts/check_workflow_single_source.sh"
     },
     {
+      "gate_id": "GATE_COLLABORATION_MODEL",
+      "script": "scripts/check_collaboration_model.sh"
+    },
+    {
       "gate_id": "GATE_CONTROL_PLANE_SYNC",
       "script": "scripts/check_control_plane_sync.sh"
     },

@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cicsc/collab-model.schema.json",
+  "title": "Collaboration Model",
+  "type": "object",
+  "required": [
+    "version",
+    "agents",
+    "claim_kinds",
+    "evidence_kinds",
+    "obligation_profiles",
+    "execution_bindings",
+    "handoff_protocol"
+  ],
+  "properties": {
+    "version": { "type": "string" },
+    "agents": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "worktree"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^AGENT_[A-Z0-9_]+$" },
+          "kind": { "type": "string", "enum": ["human", "automation"] },
+          "worktree": { "type": "string" },
+          "branch_prefixes": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "claim_kinds": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "required_obligation_profile_refs"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^CLAIM_[A-Z0-9_]+$" },
+          "title": { "type": "string" },
+          "required_obligation_profile_refs": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "pattern": "^OBLIG_[A-Z0-9_]+$" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "evidence_kinds": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "artifact_type"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^EVID_[A-Z0-9_]+$" },
+          "title": { "type": "string" },
+          "artifact_type": { "type": "string", "enum": ["theorem", "test_log", "artifact", "script"] }
+        },
+        "additionalProperties": false
+      }
+    },
+    "obligation_profiles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "claim_kind_refs", "required_evidence", "required_scripts"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^OBLIG_[A-Z0-9_]+$" },
+          "claim_kind_refs": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "pattern": "^CLAIM_[A-Z0-9_]+$" }
+          },
+          "required_evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["evidence_kind_ref", "min_count"],
+              "properties": {
+                "evidence_kind_ref": { "type": "string", "pattern": "^EVID_[A-Z0-9_]+$" },
+                "min_count": { "type": "integer", "minimum": 1 }
+              },
+              "additionalProperties": false
+            }
+          },
+          "required_scripts": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "execution_bindings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["objective_ref", "capability_ref", "claim_kind_refs", "ledger_checkbox_refs"],
+        "properties": {
+          "objective_ref": { "type": "string", "pattern": "^OBJ[0-9]+$" },
+          "capability_ref": { "type": "string", "pattern": "^CAP[0-9]+$" },
+          "claim_kind_refs": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "pattern": "^CLAIM_[A-Z0-9_]+$" }
+          },
+          "ledger_checkbox_refs": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "pattern": "^[A-Z]{1,2}[0-9]+\\.[0-9]+$" }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "handoff_protocol": {
+      "type": "object",
+      "required": [
+        "branch_pattern",
+        "commit_subject_pattern",
+        "required_commit_body_tokens",
+        "required_gate_scripts"
+      ],
+      "properties": {
+        "branch_pattern": { "type": "string" },
+        "commit_subject_pattern": { "type": "string" },
+        "required_commit_body_tokens": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        },
+        "required_gate_scripts": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

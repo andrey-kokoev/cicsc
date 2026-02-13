@@ -20,6 +20,11 @@ Provide a single coherent model stack for:
   - Observable capability atoms and acceptance signals.
   - No execution status.
 
+- `collaboration/collab-model.yaml`
+  - Typed agent collaboration contract (claims, obligations, evidence, handoff protocol).
+  - Binds collaboration claims to objective/capability/ledger scope.
+  - No execution status.
+
 - `execution/execution-ledger.yaml`
   - Canonical phase/milestone/checkbox status model.
 
@@ -46,6 +51,7 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `control-plane/scripts/validate_capability_model.sh`
 - `control-plane/scripts/validate_execution_ledger_model.sh`
 - `control-plane/scripts/validate_gate_model.sh`
+- `control-plane/scripts/validate_collab_model.sh`
 - `control-plane/scripts/validate_cross_model.sh`
 - `control-plane/scripts/validate_all.sh`
 - `control-plane/scripts/generate_views.sh`

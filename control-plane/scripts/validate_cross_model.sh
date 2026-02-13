@@ -31,10 +31,12 @@ def main() -> int:
 
     objective = load_yaml("control-plane/objectives/objective-model.yaml")
     capability = load_yaml("control-plane/capabilities/capability-model.yaml")
+    collab = load_yaml("control-plane/collaboration/collab-model.yaml")
     execution = load_yaml("control-plane/execution/execution-ledger.yaml")
     gate = load_yaml("control-plane/gates/gate-model.yaml")
 
     objective_ids = {o.get("id") for o in objective.get("objectives", [])}
+    capability_ids = {c.get("id") for c in capability.get("capabilities", [])}
     for cap in capability.get("capabilities", []):
         for ref in cap.get("objective_refs", []):
             if ref not in objective_ids:
@@ -51,6 +53,38 @@ def main() -> int:
             ref = check.get("ref")
             if isinstance(ref, str) and not path_exists(ref):
                 errors.append(f"capability-model: missing referenced artifact {ref}")
+
+    claim_kind_ids = {c.get("id") for c in collab.get("claim_kinds", [])}
+    evidence_kind_ids = {e.get("id") for e in collab.get("evidence_kinds", [])}
+    obligation_ids = {o.get("id") for o in collab.get("obligation_profiles", [])}
+
+    for ck in collab.get("claim_kinds", []):
+        for ref in ck.get("required_obligation_profile_refs", []):
+            if ref not in obligation_ids:
+                errors.append(f"collab-model: claim kind {ck.get('id')} unknown obligation ref {ref}")
+
+    for op in collab.get("obligation_profiles", []):
+        for ref in op.get("claim_kind_refs", []):
+            if ref not in claim_kind_ids:
+                errors.append(f"collab-model: obligation {op.get('id')} unknown claim kind ref {ref}")
+        for req_ev in op.get("required_evidence", []):
+            ref = req_ev.get("evidence_kind_ref")
+            if ref not in evidence_kind_ids:
+                errors.append(f"collab-model: obligation {op.get('id')} unknown evidence kind ref {ref}")
+        for script in op.get("required_scripts", []):
+            if isinstance(script, str) and not path_exists(script):
+                errors.append(f"collab-model: obligation {op.get('id')} missing required script {script}")
+
+    for eb in collab.get("execution_bindings", []):
+        oref = eb.get("objective_ref")
+        cref = eb.get("capability_ref")
+        if oref not in objective_ids:
+            errors.append(f"collab-model: execution binding unknown objective ref {oref}")
+        if cref not in capability_ids:
+            errors.append(f"collab-model: execution binding unknown capability ref {cref}")
+        for ref in eb.get("claim_kind_refs", []):
+            if ref not in claim_kind_ids:
+                errors.append(f"collab-model: execution binding unknown claim kind ref {ref}")
 
     seen_phase_ids = set()
     seen_phase_numbers = set()
@@ -128,6 +162,16 @@ def main() -> int:
             errors.append(f"execution-ledger: phase {pid} marked complete but has open checkboxes")
         if pstatus == "planned" and phase_done > 0:
             errors.append(f"execution-ledger: phase {pid} marked planned but has done checkboxes")
+
+    for eb in collab.get("execution_bindings", []):
+        for cbref in eb.get("ledger_checkbox_refs", []):
+            if cbref not in seen_checkbox_ids:
+                errors.append(f"collab-model: execution binding unknown ledger checkbox ref {cbref}")
+
+    handoff = collab.get("handoff_protocol", {})
+    for script in handoff.get("required_gate_scripts", []):
+        if isinstance(script, str) and not path_exists(script):
+            errors.append(f"collab-model: handoff protocol missing gate script {script}")
 
     seen_gate_ids = set()
     seen_gate_scripts = set()

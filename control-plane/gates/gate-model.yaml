@@ -16,6 +16,10 @@ gates:
     scope: global
     required_scripts:
       - scripts/check_workflow_single_source.sh
+  - id: GATE_COLLABORATION_MODEL
+    scope: global
+    required_scripts:
+      - scripts/check_collaboration_model.sh
   - id: GATE_CONTROL_PLANE_SYNC
     scope: global
     required_scripts:

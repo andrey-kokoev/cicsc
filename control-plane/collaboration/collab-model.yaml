@@ -1,0 +1,107 @@
+version: cicsc/collab-model-v1
+agents:
+  - id: AGENT_MAIN
+    kind: automation
+    worktree: /home/andrey/src/cicsc
+    branch_prefixes: [phase]
+  - id: AGENT_KIMI
+    kind: automation
+    worktree: /home/andrey/src/kimi
+    branch_prefixes: [phase]
+  - id: AGENT_ANTIGRAVITY
+    kind: automation
+    worktree: /home/andrey/src/antigravity
+    branch_prefixes: [phase]
+claim_kinds:
+  - id: CLAIM_SEMANTIC_INVARIANT
+    title: Semantic invariant is constructively preserved.
+    required_obligation_profile_refs: [OBLIG_KERNEL_PROOF_BRIDGE]
+  - id: CLAIM_CONFORMANCE_EQUIVALENCE
+    title: Backend execution matches oracle semantics on declared scope.
+    required_obligation_profile_refs: [OBLIG_ORACLE_SQL_DIFFERENTIAL]
+  - id: CLAIM_MIGRATION_CONTINUITY
+    title: Migration preserves replay continuity and invariants.
+    required_obligation_profile_refs: [OBLIG_MIGRATION_REPLAY_SAFETY]
+  - id: CLAIM_EXECUTION_GOVERNANCE
+    title: Execution workflow remains canonical and gate-complete.
+    required_obligation_profile_refs: [OBLIG_CANONICAL_GOVERNANCE]
+evidence_kinds:
+  - id: EVID_THEOREM
+    title: Lean theorem reference proving kernel property.
+    artifact_type: theorem
+  - id: EVID_DIFFERENTIAL_LOG
+    title: Differential test log (oracle vs backend).
+    artifact_type: test_log
+  - id: EVID_GATE_REPORT
+    title: Gate report artifact proving canonical checks.
+    artifact_type: artifact
+  - id: EVID_SCRIPT
+    title: Executable checker or harness script.
+    artifact_type: script
+obligation_profiles:
+  - id: OBLIG_KERNEL_PROOF_BRIDGE
+    claim_kind_refs: [CLAIM_SEMANTIC_INVARIANT]
+    required_evidence:
+      - evidence_kind_ref: EVID_THEOREM
+        min_count: 1
+      - evidence_kind_ref: EVID_GATE_REPORT
+        min_count: 1
+    required_scripts:
+      - scripts/check_canonical_execution_model.sh
+  - id: OBLIG_ORACLE_SQL_DIFFERENTIAL
+    claim_kind_refs: [CLAIM_CONFORMANCE_EQUIVALENCE]
+    required_evidence:
+      - evidence_kind_ref: EVID_DIFFERENTIAL_LOG
+        min_count: 1
+      - evidence_kind_ref: EVID_SCRIPT
+        min_count: 1
+    required_scripts:
+      - scripts/run_cross_backend_gate.sh
+      - scripts/check_conformance_gate.sh
+  - id: OBLIG_MIGRATION_REPLAY_SAFETY
+    claim_kind_refs: [CLAIM_MIGRATION_CONTINUITY]
+    required_evidence:
+      - evidence_kind_ref: EVID_DIFFERENTIAL_LOG
+        min_count: 1
+      - evidence_kind_ref: EVID_GATE_REPORT
+        min_count: 1
+    required_scripts:
+      - scripts/check_phase7_required_gates.sh
+      - scripts/check_phase10_migration_continuity.sh
+  - id: OBLIG_CANONICAL_GOVERNANCE
+    claim_kind_refs: [CLAIM_EXECUTION_GOVERNANCE]
+    required_evidence:
+      - evidence_kind_ref: EVID_GATE_REPORT
+        min_count: 1
+      - evidence_kind_ref: EVID_SCRIPT
+        min_count: 1
+    required_scripts:
+      - scripts/check_canonical_execution_model.sh
+      - scripts/check_workflow_single_source.sh
+execution_bindings:
+  - objective_ref: OBJ1
+    capability_ref: CAP1
+    claim_kind_refs: [CLAIM_SEMANTIC_INVARIANT]
+    ledger_checkbox_refs: [AW1.1, AX2.1]
+  - objective_ref: OBJ2
+    capability_ref: CAP2
+    claim_kind_refs: [CLAIM_CONFORMANCE_EQUIVALENCE, CLAIM_EXECUTION_GOVERNANCE]
+    ledger_checkbox_refs: [AW1.2, AX1.1]
+  - objective_ref: OBJ3
+    capability_ref: CAP3
+    claim_kind_refs: [CLAIM_EXECUTION_GOVERNANCE]
+    ledger_checkbox_refs: [AW1.3]
+  - objective_ref: OBJ4
+    capability_ref: CAP4
+    claim_kind_refs: [CLAIM_MIGRATION_CONTINUITY]
+    ledger_checkbox_refs: [AW1.4]
+  - objective_ref: OBJ5
+    capability_ref: CAP5
+    claim_kind_refs: [CLAIM_CONFORMANCE_EQUIVALENCE]
+    ledger_checkbox_refs: [AW1.5]
+handoff_protocol:
+  branch_pattern: '^phase[0-9]+\.[a-z]{2}[0-9]+\.[0-9]+$'
+  commit_subject_pattern: '^phase[0-9]+ [a-z]{2}[0-9]+\.[0-9]+: .+$'
+  required_commit_body_tokens: ['Checkbox:', 'Invariant:', 'Proof/Test:', 'Docs:']
+  required_gate_scripts:
+    - scripts/check_canonical_execution_model.sh
