@@ -210,4 +210,70 @@ describe("conformance: postgres execution vs oracle", () => {
       await pg.close()
     }
   })
+
+  it("exec lowered grouped query with offset equals oracle rows", async () => {
+    const pg = await openPgMemory()
+    try {
+      await installPostgresSchemaV0(pg.pool)
+
+      await upsertSnapshot(pg.pool, { tenant_id: "t", entity_type: "Ticket", entity_id: "a", state: "new", attrs: {}, updated_ts: 1 })
+      await upsertSnapshot(pg.pool, { tenant_id: "t", entity_type: "Ticket", entity_id: "b", state: "new", attrs: {}, updated_ts: 1 })
+      await upsertSnapshot(pg.pool, { tenant_id: "t", entity_type: "Ticket", entity_id: "c", state: "triage", attrs: {}, updated_ts: 1 })
+      await upsertSnapshot(pg.pool, { tenant_id: "t", entity_type: "Ticket", entity_id: "d", state: "triage", attrs: {}, updated_ts: 1 })
+      await upsertSnapshot(pg.pool, { tenant_id: "t", entity_type: "Ticket", entity_id: "e", state: "triage", attrs: {}, updated_ts: 1 })
+
+      const q: any = {
+        source: { snap: { type: "Ticket" } },
+        pipeline: [
+          {
+            group_by: {
+              keys: [{ name: "state", expr: { var: { row: { field: "state" } } } }],
+              aggs: [{ name: "count", expr: { count: { var: { row: { field: "entity_id" } } } } }],
+            },
+          },
+          { order_by: [{ expr: { var: { row: { field: "state" } } }, dir: "asc" }] },
+          { offset: 1 },
+        ],
+      }
+
+      const plan = lowerQueryToSql(q, { version: 0, tenant_id: "t" })
+      const sqlRows = await runLoweredQueryPlan(pg.pool, { tenant_id: "t", query: q, plan })
+
+      const ctx: any = {
+        now: 1,
+        actor: "u",
+        snap: () => [
+          { entity_id: "a", state: "new" },
+          { entity_id: "b", state: "new" },
+          { entity_id: "c", state: "triage" },
+          { entity_id: "d", state: "triage" },
+          { entity_id: "e", state: "triage" },
+        ],
+        sla_status: () => [],
+        baseEnv: {
+          now: 1,
+          actor: "u",
+          state: "",
+          input: {},
+          attrs: {},
+          arg: {},
+          intrinsics: {
+            has_role: () => false,
+            role_of: () => "agent",
+            auth_ok: () => true,
+            constraint: () => true,
+            len: () => 0,
+            str: (v: any) => (v === null ? null : String(v)),
+            int: (v: any) => (typeof v === "number" ? Math.trunc(v) : null),
+            float: (v: any) => (typeof v === "number" ? v : null),
+          },
+        },
+      }
+
+      const oracle = interpretQuery(q, ctx)
+      assert.deepEqual(canonRows(sqlRows), canonRows(oracle.rows))
+    } finally {
+      await pg.close()
+    }
+  })
 })

@@ -39,6 +39,18 @@
       ]
     },
     {
+      "id": "postgres-exec-scope-matrix",
+      "backend": "postgres",
+      "required": false,
+      "ci_profile": "postgres",
+      "test_files": [
+        "tests/conformance/postgres-exec-matrix.test.ts"
+      ],
+      "requires": [
+        "postgres_harness"
+      ]
+    },
+    {
       "id": "postgres-exec-core",
       "backend": "postgres",
       "required": false,

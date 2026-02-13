@@ -1,0 +1,42 @@
+{
+  "version": "cicsc/postgres-exec-matrix-v1",
+  "description": "Postgres execution-vs-oracle differential cases for in-scope operators.",
+  "test_file": "tests/conformance/postgres-exec-vs-oracle.test.ts",
+  "cases": [
+    {
+      "id": "pg-snap-project-filter-order-limit",
+      "operators": [
+        "source:snap",
+        "op:filter",
+        "op:project",
+        "op:order_by",
+        "op:limit"
+      ]
+    },
+    {
+      "id": "pg-bool-query-constraint",
+      "operators": [
+        "source:snap",
+        "op:filter"
+      ]
+    },
+    {
+      "id": "pg-join-filter-project-order",
+      "operators": [
+        "source:join",
+        "op:filter",
+        "op:project",
+        "op:order_by"
+      ]
+    },
+    {
+      "id": "pg-group-order-offset",
+      "operators": [
+        "source:snap",
+        "op:group_by",
+        "op:order_by",
+        "op:offset"
+      ]
+    }
+  ]
+}

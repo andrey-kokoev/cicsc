@@ -215,7 +215,7 @@
 ### U5. Postgres Adapter Semantic Parity
 
 - [x] U5.1 Define Postgres supported-scope contract mirroring sqlite scope model
-- [ ] U5.2 Add postgres execution-vs-oracle differential matrix for in-scope operators
+- [x] U5.2 Add postgres execution-vs-oracle differential matrix for in-scope operators
 - [ ] U5.3 Add postgres constraint/reducer conformance checks where lowering exists
 - [ ] U5.4 Align NULL/ordering/collation semantics policy and document deltas
 - [ ] U5.5 Add cross-backend consistency gate (sqlite vs postgres vs oracle)
