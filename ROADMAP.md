@@ -751,3 +751,30 @@ Phase 9 forced-next mapping:
 - [x] AM4.2 Add PHASE22↔ROADMAP drift consistency gate
 - [x] AM4.3 Add Phase 23 block gate from Phase 22 checklist
 - [x] AM4.4 Publish Phase 22 closure report and mark exit criteria
+
+## AN. Phase 23: Integrity Scaling and Runtime Assurance Discipline
+
+### AN1. Scope Freeze and Baseline Continuity
+
+- [ ] AN1.1 Freeze Phase 23 scope and owner contract
+- [ ] AN1.2 Publish Phase 23 baseline continuity snapshot
+- [ ] AN1.3 Add Phase 23 status register with owner/date discipline
+
+### AN2. Integrity-Scaling Validation Closure
+
+- [ ] AN2.1 Freeze integrity-scaling matrix and evidence contract
+- [ ] AN2.2 Run integrity-scaling required gates
+- [ ] AN2.3 Publish integrity-scaling closure report with findings disposition
+
+### AN3. Runtime-Assurance Hardening
+
+- [ ] AN3.1 Freeze runtime-assurance hardening matrix and policy
+- [ ] AN3.2 Add runtime-assurance verification harnesses
+- [ ] AN3.3 Publish runtime-assurance closure report with residual policy
+
+### AN4. Governance Closure and Phase 24 Gate
+
+- [ ] AN4.1 Define objective Phase 23 exit checklist mapped to artifacts
+- [ ] AN4.2 Add PHASE23↔ROADMAP drift consistency gate
+- [ ] AN4.3 Add Phase 24 block gate from Phase 23 checklist
+- [ ] AN4.4 Publish Phase 23 closure report and mark exit criteria
