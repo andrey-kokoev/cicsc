@@ -46,7 +46,7 @@ Start Phase 19 from explicit scope, owners, and reproducible baseline truth.
 Close deployment-assurance validation with explicit evidence contract and findings governance.
 
 ### TODOs
-- [ ] P19.2.1 Freeze deployment-assurance matrix and evidence contract.
+- [x] P19.2.1 Freeze deployment-assurance matrix and evidence contract.
 - [ ] P19.2.2 Run deployment-assurance required gates.
 - [ ] P19.2.3 Publish deployment-assurance closure report with findings disposition.
 
