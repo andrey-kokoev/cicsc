@@ -42,7 +42,7 @@ Start Phase 11 with objective scope, ownership, and a stable gate baseline.
 Promote DSL usability objective from partial to pass using objective task evidence.
 
 ### TODOs
-- [ ] P11.2.1 Define non-programmer task suite and success rubric.
+- [x] P11.2.1 Define non-programmer task suite and success rubric.
 - [ ] P11.2.2 Add reproducible usability harness and evidence artifact.
 - [ ] P11.2.3 Publish DSL usability closure report with residuals policy.
 

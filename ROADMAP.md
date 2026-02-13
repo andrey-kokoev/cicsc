@@ -433,7 +433,7 @@ Phase 9 forced-next mapping:
 
 ### AB2. DSL Usability Closure
 
-- [ ] AB2.1 Define non-programmer task suite and success rubric
+- [x] AB2.1 Define non-programmer task suite and success rubric
 - [ ] AB2.2 Add reproducible usability harness and evidence artifact
 - [ ] AB2.3 Publish DSL usability closure report with residuals policy
 
