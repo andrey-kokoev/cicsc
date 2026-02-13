@@ -5,25 +5,32 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUT_PATH="${1:-${ROOT_DIR}/docs/pilot/phase15-gate.json}"
 cd "${ROOT_DIR}"
 
-node - "${OUT_PATH}" <<'NODE'
+STATUS_TMP="$(mktemp)"
+trap 'rm -f "${STATUS_TMP}"' EXIT
+./control-plane/scripts/export_execution_status.py control-plane/execution/execution-ledger.yaml > "${STATUS_TMP}"
+
+node - "${OUT_PATH}" "${STATUS_TMP}" <<'NODE'
 const fs = require('node:fs')
 const path = require('node:path')
 
 const outPath = process.argv[2]
+const executionStatusFile = process.argv[3]
+const phaseNo = 15
 const checklistPath = 'docs/pilot/phase14-exit-checklist.json'
-const roadmapPath = 'ROADMAP.md'
+const executionStatusPath = 'control-plane/views/execution-status.generated.json'
 
 const checklist = JSON.parse(fs.readFileSync(path.resolve(checklistPath), 'utf8'))
-const roadmap = fs.readFileSync(path.resolve(roadmapPath), 'utf8')
+const executionStatus = JSON.parse(fs.readFileSync(path.resolve(executionStatusFile), 'utf8'))
 
+const rows = (executionStatus.rows ?? []).filter((r) => Number(r.phase_number) === phaseNo)
 const checklistPass = (checklist.items ?? []).every((i) => i.status === 'pass')
-const aeMatches = [...roadmap.matchAll(/^- \[(x| )\] AE(\d)\.(\d)\s+/gm)]
-const allAeChecked = aeMatches.length > 0 && aeMatches.every((m) => m[1] === 'x')
+const allChecked = rows.length > 0 && rows.every((r) => r.status === 'done')
 
-const blocked = !(checklistPass && allAeChecked)
+const code = rows[0]?.checkbox_id?.match(/^([A-Z]{1,2})\d+\.\d+$/)?.[1]?.toLowerCase() ?? 'phase'
+const blocked = !(checklistPass && allChecked)
 const reasons = []
 if (!checklistPass) reasons.push('phase14_exit_checklist_not_pass')
-if (!allAeChecked) reasons.push('roadmap_ae_series_incomplete')
+if (!allChecked) reasons.push(`roadmap_${code}_series_incomplete`)
 
 const report = {
   version: 'cicsc/phase15-gate-v1',
@@ -31,12 +38,13 @@ const report = {
   blocked,
   basis: {
     checklist: checklistPath,
-    roadmap: roadmapPath,
+    execution_status: executionStatusPath,
   },
   reasons,
 }
 
-fs.writeFileSync(outPath, `${JSON.stringify(report, null, 2)}\n`, 'utf8')
-console.log(`phase15 gate report written: ${outPath}`)
+fs.writeFileSync(outPath, `${JSON.stringify(report, null, 2)}
+`, 'utf8')
+console.log(`phase${phaseNo} gate report written: ${outPath}`)
 process.exit(blocked ? 1 : 0)
 NODE

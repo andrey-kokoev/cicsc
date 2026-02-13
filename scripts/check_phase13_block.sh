@@ -5,28 +5,46 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 OUT_PATH="${1:-${ROOT_DIR}/docs/pilot/phase13-gate.json}"
 cd "${ROOT_DIR}"
 
-node - "${OUT_PATH}" <<'NODE'
+STATUS_TMP="$(mktemp)"
+trap 'rm -f "${STATUS_TMP}"' EXIT
+./control-plane/scripts/export_execution_status.py control-plane/execution/execution-ledger.yaml > "${STATUS_TMP}"
+
+node - "${OUT_PATH}" "${STATUS_TMP}" <<'NODE'
 const fs = require('node:fs')
 const path = require('node:path')
 
 const outPath = process.argv[2]
+const executionStatusFile = process.argv[3]
+const phaseNo = 13
 const checklistPath = 'docs/pilot/phase12-exit-checklist.json'
+const executionStatusPath = 'control-plane/views/execution-status.generated.json'
+
 const checklist = JSON.parse(fs.readFileSync(path.resolve(checklistPath), 'utf8'))
-const allPass = (checklist.items ?? []).every((i) => i.status === 'pass')
-const blocked = !allPass
-const reasons = blocked
-  ? (checklist.items ?? []).filter((i) => i.status !== 'pass').map((i) => i.id)
-  : []
+const executionStatus = JSON.parse(fs.readFileSync(path.resolve(executionStatusFile), 'utf8'))
+
+const rows = (executionStatus.rows ?? []).filter((r) => Number(r.phase_number) === phaseNo)
+const checklistPass = (checklist.items ?? []).every((i) => i.status === 'pass')
+const allChecked = rows.length > 0 && rows.every((r) => r.status === 'done')
+
+const code = rows[0]?.checkbox_id?.match(/^([A-Z]{1,2})\d+\.\d+$/)?.[1]?.toLowerCase() ?? 'phase'
+const blocked = !(checklistPass && allChecked)
+const reasons = []
+if (!checklistPass) reasons.push('phase12_exit_checklist_not_pass')
+if (!allChecked) reasons.push(`roadmap_${code}_series_incomplete`)
 
 const report = {
   version: 'cicsc/phase13-gate-v1',
   timestamp_unix: Math.floor(Date.now() / 1000),
   blocked,
-  basis: checklistPath,
+  basis: {
+    checklist: checklistPath,
+    execution_status: executionStatusPath,
+  },
   reasons,
 }
 
-fs.writeFileSync(outPath, `${JSON.stringify(report, null, 2)}\n`, 'utf8')
-console.log(`phase13 gate report written: ${outPath}`)
+fs.writeFileSync(outPath, `${JSON.stringify(report, null, 2)}
+`, 'utf8')
+console.log(`phase${phaseNo} gate report written: ${outPath}`)
 process.exit(blocked ? 1 : 0)
 NODE

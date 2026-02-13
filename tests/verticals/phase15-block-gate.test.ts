@@ -10,9 +10,11 @@ describe("phase15 block gate", () => {
     const checklist = JSON.parse(fs.readFileSync(checklistPath, "utf8"))
     const checklistPass = (checklist.items ?? []).every((i: any) => i.status === "pass")
 
-    const roadmap = fs.readFileSync(path.resolve(process.cwd(), "ROADMAP.md"), "utf8")
-    const aeMatches = [...roadmap.matchAll(/^- \[(x| )\] AE(\d)\.(\d)\s+/gm)]
-    const allAeChecked = aeMatches.length > 0 && aeMatches.every((m) => m[1] === "x")
+    const executionStatus = JSON.parse(
+      fs.readFileSync(path.resolve(process.cwd(), "control-plane/views/execution-status.generated.json"), "utf8")
+    )
+    const rows = (executionStatus.rows ?? []).filter((r: any) => Number(r.phase_number) === 15)
+    const allAeChecked = rows.length > 0 && rows.every((r: any) => r.status === "done")
     const expectedBlocked = !(checklistPass && allAeChecked)
 
     const run = spawnSync("./scripts/check_phase15_block.sh", {
