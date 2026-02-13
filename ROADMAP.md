@@ -656,7 +656,7 @@ Phase 9 forced-next mapping:
 
 - [x] AJ2.1 Freeze deployment-assurance matrix and evidence contract
 - [x] AJ2.2 Run deployment-assurance required gates
-- [ ] AJ2.3 Publish deployment-assurance closure report with findings disposition
+- [x] AJ2.3 Publish deployment-assurance closure report with findings disposition
 
 ### AJ3. Runtime Reliability Hardening
 

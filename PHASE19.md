@@ -48,10 +48,10 @@ Close deployment-assurance validation with explicit evidence contract and findin
 ### TODOs
 - [x] P19.2.1 Freeze deployment-assurance matrix and evidence contract.
 - [x] P19.2.2 Run deployment-assurance required gates.
-- [ ] P19.2.3 Publish deployment-assurance closure report with findings disposition.
+- [x] P19.2.3 Publish deployment-assurance closure report with findings disposition.
 
 ### Acceptance
-- [ ] Deployment-assurance validation remains evidence-backed with explicit findings governance.
+- [x] Deployment-assurance validation remains evidence-backed with explicit findings governance.
 
 ---
 
