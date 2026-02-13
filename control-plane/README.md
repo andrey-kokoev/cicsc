@@ -22,6 +22,7 @@ Provide a single coherent model stack for:
 
 - `collaboration/collab-model.yaml`
   - Typed agent collaboration contract (claims, obligations, evidence, handoff protocol).
+  - Includes executable task assignments (`assignments`) binding agent/worktree/branch to ledger checkbox scope.
   - Binds collaboration claims to objective/capability/ledger scope.
   - No execution status.
 

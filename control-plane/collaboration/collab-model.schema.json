@@ -10,7 +10,8 @@
     "evidence_kinds",
     "obligation_profiles",
     "execution_bindings",
-    "handoff_protocol"
+    "handoff_protocol",
+    "assignments"
   ],
   "properties": {
     "version": { "type": "string" },
@@ -145,6 +146,35 @@
         }
       },
       "additionalProperties": false
+    },
+    "assignments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "agent_ref",
+          "checkbox_ref",
+          "claim_kind_ref",
+          "worktree",
+          "branch",
+          "status"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^ASSIGN_[A-Z0-9_]+$" },
+          "agent_ref": { "type": "string", "pattern": "^AGENT_[A-Z0-9_]+$" },
+          "checkbox_ref": { "type": "string", "pattern": "^[A-Z]{1,2}[0-9]+\\.[0-9]+$" },
+          "claim_kind_ref": { "type": "string", "pattern": "^CLAIM_[A-Z0-9_]+$" },
+          "worktree": { "type": "string" },
+          "branch": { "type": "string" },
+          "status": {
+            "type": "string",
+            "enum": ["assigned", "in_progress", "submitted", "ingested", "done", "blocked"]
+          },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
     }
   },
   "additionalProperties": false

@@ -86,6 +86,23 @@ def main() -> int:
             if ref not in claim_kind_ids:
                 errors.append(f"collab-model: execution binding unknown claim kind ref {ref}")
 
+    handoff = collab.get("handoff_protocol", {})
+    branch_pattern = handoff.get("branch_pattern")
+    branch_re = None
+    if isinstance(branch_pattern, str):
+        try:
+            branch_re = re.compile(branch_pattern)
+        except re.error as exc:
+            errors.append(f"collab-model: invalid handoff branch_pattern regex: {exc}")
+
+    agent_map = {}
+    for agent in collab.get("agents", []):
+        aid = agent.get("id")
+        if aid in agent_map:
+            errors.append(f"collab-model: duplicate agent id {aid}")
+        else:
+            agent_map[aid] = agent
+
     seen_phase_ids = set()
     seen_phase_numbers = set()
     last_phase_number = -1
@@ -168,10 +185,56 @@ def main() -> int:
             if cbref not in seen_checkbox_ids:
                 errors.append(f"collab-model: execution binding unknown ledger checkbox ref {cbref}")
 
-    handoff = collab.get("handoff_protocol", {})
     for script in handoff.get("required_gate_scripts", []):
         if isinstance(script, str) and not path_exists(script):
             errors.append(f"collab-model: handoff protocol missing gate script {script}")
+
+    checkbox_status = {}
+    for ph in execution.get("phases", []):
+        for ms in ph.get("milestones", []):
+            for cb in ms.get("checkboxes", []):
+                checkbox_status[cb.get("id")] = cb.get("status")
+
+    active_assignment_statuses = {"assigned", "in_progress", "submitted"}
+    active_by_checkbox = {}
+    for a in collab.get("assignments", []):
+        aid = a.get("id")
+        agent_ref = a.get("agent_ref")
+        checkbox_ref = a.get("checkbox_ref")
+        claim_kind_ref = a.get("claim_kind_ref")
+        worktree = a.get("worktree")
+        branch = a.get("branch")
+        astatus = a.get("status")
+
+        if agent_ref not in agent_map:
+            errors.append(f"collab-model: assignment {aid} unknown agent_ref {agent_ref}")
+        else:
+            expected_worktree = agent_map[agent_ref].get("worktree")
+            if expected_worktree != worktree:
+                errors.append(
+                    f"collab-model: assignment {aid} worktree mismatch (got {worktree}, expected {expected_worktree})"
+                )
+
+        if checkbox_ref not in checkbox_status:
+            errors.append(f"collab-model: assignment {aid} unknown checkbox_ref {checkbox_ref}")
+        if claim_kind_ref not in claim_kind_ids:
+            errors.append(f"collab-model: assignment {aid} unknown claim_kind_ref {claim_kind_ref}")
+        if branch_re and isinstance(branch, str) and not branch_re.match(branch):
+            errors.append(f"collab-model: assignment {aid} branch {branch} violates handoff branch_pattern")
+
+        cb_status = checkbox_status.get(checkbox_ref)
+        if cb_status == "done" and astatus in active_assignment_statuses:
+            errors.append(
+                f"collab-model: assignment {aid} active but checkbox {checkbox_ref} is already done"
+            )
+        if astatus in active_assignment_statuses:
+            prev = active_by_checkbox.get(checkbox_ref)
+            if prev:
+                errors.append(
+                    f"collab-model: multiple active assignments for checkbox {checkbox_ref}: {prev}, {aid}"
+                )
+            else:
+                active_by_checkbox[checkbox_ref] = aid
 
     seen_gate_ids = set()
     seen_gate_scripts = set()

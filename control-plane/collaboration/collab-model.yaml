@@ -105,3 +105,20 @@ handoff_protocol:
   required_commit_body_tokens: ['Checkbox:', 'Invariant:', 'Proof/Test:', 'Docs:']
   required_gate_scripts:
     - scripts/check_canonical_execution_model.sh
+assignments:
+  - id: ASSIGN_PHASE33_AX12_KIMI
+    agent_ref: AGENT_KIMI
+    checkbox_ref: AX1.2
+    claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
+    worktree: /home/andrey/src/kimi
+    branch: phase33.ax1.2
+    status: assigned
+    notes: Implement executable coupling checks and ensure canonical gate coverage.
+  - id: ASSIGN_PHASE33_AX22_ANTIGRAVITY
+    agent_ref: AGENT_ANTIGRAVITY
+    checkbox_ref: AX2.2
+    claim_kind_ref: CLAIM_SEMANTIC_INVARIANT
+    worktree: /home/andrey/src/antigravity
+    branch: phase33.ax2.2
+    status: assigned
+    notes: Implement formalization progress admissibility gate and artifact.
