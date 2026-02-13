@@ -574,7 +574,7 @@ Phase 9 forced-next mapping:
 ### AG2. External Validation and Evidence Expansion
 
 - [x] AG2.1 Freeze external-validation matrix and evidence contract
-- [ ] AG2.2 Run external-validation required gates
+- [x] AG2.2 Run external-validation required gates
 - [ ] AG2.3 Publish external-validation closure report with findings disposition
 
 ### AG3. Deployment and Operations Expansion Hardening

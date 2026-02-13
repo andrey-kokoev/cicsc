@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase16-external-validation-required-gates-v1",
+  "timestamp_unix": 1770957885,
+  "overall": "pass",
+  "checks": {
+    "phase15_doc_consistency_status":{"status":"pass","log":"docs/pilot/phase16-external-validation-required-gates.phase15_doc_consistency_status.log"},
+    "phase15_objective_required_gates_status":{"status":"pass","log":"docs/pilot/phase16-external-validation-required-gates.phase15_objective_required_gates_status.log"},
+    "phase16_baseline_continuity_status":{"status":"pass","log":"docs/pilot/phase16-external-validation-required-gates.phase16_baseline_continuity_status.log"}
+  }
+}
