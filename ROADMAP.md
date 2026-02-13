@@ -735,7 +735,7 @@ Phase 9 forced-next mapping:
 
 ### AM2. Resilience-Expansion Validation Closure
 
-- [ ] AM2.1 Freeze resilience-expansion matrix and evidence contract
+- [x] AM2.1 Freeze resilience-expansion matrix and evidence contract
 - [ ] AM2.2 Run resilience-expansion required gates
 - [ ] AM2.3 Publish resilience-expansion closure report with findings disposition
 

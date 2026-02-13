@@ -1,0 +1,45 @@
+{
+  "version": "cicsc/phase22-resilience-expansion-matrix-v1",
+  "timestamp_unix": 1772917800,
+  "tracks": [
+    {
+      "id": "resilience_semantic_continuity",
+      "scope": "semantic_continuity",
+      "required_evidence": [
+        "docs/pilot/phase21-cross-environment-stability-closure-report.json",
+        "docs/pilot/phase20-multi-environment-assurance-closure-report.json",
+        "docs/pilot/phase22-resilience-expansion-closure-report.json"
+      ]
+    },
+    {
+      "id": "resilience_backend_parity",
+      "scope": "backend_parity",
+      "required_evidence": [
+        "docs/pilot/phase21-operational-continuity-closure-report.json",
+        "docs/pilot/phase20-scale-transition-closure-report.json",
+        "docs/pilot/phase22-resilience-expansion-closure-report.json"
+      ]
+    },
+    {
+      "id": "resilience_operational_readiness",
+      "scope": "operations",
+      "required_evidence": [
+        "docs/pilot/phase21-operational-continuity-harnesses.json",
+        "docs/pilot/phase20-scale-transition-harnesses.json",
+        "docs/pilot/phase22-control-surface-integrity-harnesses.json"
+      ]
+    }
+  ],
+  "evidence_contract": {
+    "required_gates": [
+      "phase21_doc_consistency",
+      "phase21_cross_environment_stability_required_gates",
+      "phase22_baseline_continuity"
+    ],
+    "must_capture": [
+      "resilience_findings",
+      "disposition_status",
+      "residual_policy"
+    ]
+  }
+}

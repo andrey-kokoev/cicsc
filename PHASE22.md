@@ -46,7 +46,7 @@ Start Phase 22 from explicit scope, owners, and reproducible baseline truth.
 Close resilience-expansion validation with explicit evidence contract and findings governance.
 
 ### TODOs
-- [ ] P22.2.1 Freeze resilience-expansion matrix and evidence contract.
+- [x] P22.2.1 Freeze resilience-expansion matrix and evidence contract.
 - [ ] P22.2.2 Run resilience-expansion required gates.
 - [ ] P22.2.3 Publish resilience-expansion closure report with findings disposition.
 
