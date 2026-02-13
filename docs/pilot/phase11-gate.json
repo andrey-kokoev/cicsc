@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase11-gate-v1",
+  "timestamp_unix": 1770951967,
+  "blocked": true,
+  "basis": "docs/pilot/phase10-exit-checklist.json",
+  "reasons": [
+    "P10_EXIT_GOVERNANCE_DRIFT",
+    "P10_EXIT_PHASE11_BLOCK"
+  ]
+}
