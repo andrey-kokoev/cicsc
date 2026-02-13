@@ -47,7 +47,7 @@ Begin Phase 13 from explicit scope and reproducible baseline status.
 Expand operational scale envelope with objective gate-backed evidence.
 
 ### TODOs
-- [ ] P13.2.1 Freeze scale envelope matrix and workload contract.
+- [x] P13.2.1 Freeze scale envelope matrix and workload contract.
 - [ ] P13.2.2 Run scale workload suites with required gates.
 - [ ] P13.2.3 Publish scale envelope report with findings disposition.
 

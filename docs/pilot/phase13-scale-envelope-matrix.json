@@ -1,0 +1,23 @@
+{
+  "version": "cicsc/phase13-scale-envelope-matrix-v1",
+  "timestamp_unix": 1771060800,
+  "envelope": [
+    { "id": "ticketing", "tenant_count": 20, "concurrency_level": 50, "workload": "mixed_commands_verify" },
+    { "id": "crm", "tenant_count": 16, "concurrency_level": 40, "workload": "pipeline_updates_migrations" },
+    { "id": "kanban", "tenant_count": 14, "concurrency_level": 35, "workload": "board_transitions_constraints" },
+    { "id": "case_management", "tenant_count": 10, "concurrency_level": 30, "workload": "queue_sla_assignments" }
+  ],
+  "workload_contract": {
+    "required_gates": [
+      "parity_envelope_differentials",
+      "deployment_expansion_report",
+      "category_model_conformance"
+    ],
+    "must_capture": [
+      "invariant_status",
+      "parity_status",
+      "migration_status",
+      "ops_status"
+    ]
+  }
+}
