@@ -113,7 +113,7 @@ Bring Postgres to oracle-conformant status for declared supported subset.
 Prove semantic fitness under real operational workload.
 
 ### TODOs
-- [ ] P5.6.1 Select one reference vertical and freeze its evaluation criteria.
+- [x] P5.6.1 Select one reference vertical and freeze its evaluation criteria.
 - [ ] P5.6.2 Run staged workload with invariants, conformance, and migration checks enabled.
 - [ ] P5.6.3 Collect drift/perf/missing-primitive incidents with severity labels.
 - [ ] P5.6.4 Convert findings into roadmap checkboxes (no hidden backlog).
