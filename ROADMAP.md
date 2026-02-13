@@ -594,7 +594,7 @@ Phase 9 forced-next mapping:
 
 ### AH1. Scope Freeze and Baseline Continuity
 
-- [ ] AH1.1 Freeze Phase 17 scope and owner contract
+- [x] AH1.1 Freeze Phase 17 scope and owner contract
 - [ ] AH1.2 Publish Phase 17 baseline continuity snapshot
 - [ ] AH1.3 Add Phase 17 status register with owner/date discipline
 

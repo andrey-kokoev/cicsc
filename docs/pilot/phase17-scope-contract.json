@@ -1,0 +1,30 @@
+{
+  "version": "cicsc/phase17-scope-contract-v1",
+  "timestamp_unix": 1771086600,
+  "phase": "phase17",
+  "tracks": [
+    {
+      "id": "P17-FIELD-VALIDATION-SCALE",
+      "goal": "Scale field-program validation evidence without weakening semantic guarantees.",
+      "owner": "phase17-validation-owner",
+      "target_date": "2027-01-09"
+    },
+    {
+      "id": "P17-TRUST-OPS-HARDENING",
+      "goal": "Strengthen trust and operations hardening for scaled deployments.",
+      "owner": "phase17-ops-owner",
+      "target_date": "2027-01-16"
+    },
+    {
+      "id": "P17-GOVERNANCE-CLOSURE",
+      "goal": "Close Phase 17 with objective checklist and Phase 18 gate discipline.",
+      "owner": "phase17-governance-owner",
+      "target_date": "2027-01-23"
+    }
+  ],
+  "guardrails": [
+    "No weakening of category-model obligations",
+    "No weakening of conformance, migration, or deployment safety gates",
+    "One-checkbox-one-commit for Phase 17"
+  ]
+}
