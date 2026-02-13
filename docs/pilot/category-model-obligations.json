@@ -1,0 +1,61 @@
+{
+  "version": "cicsc/category-model-obligations-v1",
+  "model_doc": "docs/foundations/category-model.md",
+  "obligations": [
+    {
+      "id": "CM1_OBJECT_FAMILIES_DEFINED",
+      "section": "1. Objects",
+      "checks": [
+        { "type": "file", "path": "docs/foundations/category-model.md" },
+        { "type": "grep", "path": "docs/foundations/category-model.md", "pattern": "Specᵥ" },
+        { "type": "grep", "path": "docs/foundations/category-model.md", "pattern": "IRᵥ" },
+        { "type": "grep", "path": "docs/foundations/category-model.md", "pattern": "Historyᵥ" },
+        { "type": "grep", "path": "docs/foundations/category-model.md", "pattern": "Stateᵥ" }
+      ]
+    },
+    {
+      "id": "CM2_MORPHISM_TOTALITY_POLICY",
+      "section": "2. Morphisms",
+      "checks": [
+        { "type": "grep", "path": "docs/foundations/category-model.md", "pattern": "total" },
+        { "type": "grep", "path": "docs/foundations/category-model.md", "pattern": "deterministic" },
+        { "type": "grep", "path": "docs/foundations/category-model.md", "pattern": "executable" },
+        { "type": "grep", "path": "docs/spec/formal-migration-correctness.md", "pattern": "Totality:" }
+      ]
+    },
+    {
+      "id": "CM4_NATURALITY_EVIDENCE",
+      "section": "4. Commutativity",
+      "checks": [
+        { "type": "grep", "path": "lean/Cicsc/Evolution/Naturality.lean", "pattern": "theorem replay_commutes" },
+        { "type": "grep", "path": "lean/Cicsc/Examples/Ticketing.lean", "pattern": "ticket_v0_v1_commutes_all_histories" }
+      ]
+    },
+    {
+      "id": "CM6_CONSTRUCTIVE_INVARIANCE_EVIDENCE",
+      "section": "6. Constructive Invariance",
+      "checks": [
+        { "type": "json_field", "path": "docs/pilot/phase11-deferred-disposition-report.json", "field": "status", "equals": "pass" },
+        { "type": "json_field", "path": "docs/pilot/phase11-deferred-disposition-report.json", "field": "unresolved_criticals", "equals": [] }
+      ]
+    },
+    {
+      "id": "CM7_BACKEND_CONFORMANCE_EVIDENCE",
+      "section": "7. Backend Conformance",
+      "checks": [
+        { "type": "json_field", "path": "docs/pilot/phase12-parity-envelope-differentials.json", "field": "overall", "equals": "pass" },
+        { "type": "json_field", "path": "docs/pilot/phase12-parity-envelope-closure-report.json", "field": "status", "equals": "pass" },
+        { "type": "grep", "path": "docs/foundations/category-model.md", "pattern": "differential testing" }
+      ]
+    },
+    {
+      "id": "CM10_CHANGE_CONTROL",
+      "section": "10. Change Control",
+      "checks": [
+        { "type": "grep", "path": "AGENTS.md", "pattern": "Canonical Execution Model" },
+        { "type": "grep", "path": "ROADMAP_WORKING_AGREEMENT.md", "pattern": "canonical" },
+        { "type": "file", "path": "scripts/check_canonical_execution_model.sh" }
+      ]
+    }
+  ]
+}

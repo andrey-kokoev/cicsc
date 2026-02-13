@@ -39,5 +39,7 @@ For a checkbox marked done in `ROADMAP.md`:
   - validates status parity between `ROADMAP.md` and `PHASE*.md` views.
 - `scripts/check_checkbox_commit_evidence.sh`
   - validates that checked checkboxes have corresponding commit evidence.
+- `scripts/check_category_model_conformance.sh`
+  - validates `docs/foundations/category-model.md` obligations against theorem/doc/artifact evidence.
 - `scripts/check_canonical_execution_model.sh`
   - runs all canonical ledger checks.

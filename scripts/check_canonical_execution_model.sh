@@ -7,5 +7,6 @@ cd "${ROOT_DIR}"
 ./scripts/check_roadmap_integrity.sh
 ./scripts/check_phase_views_sync.sh
 ./scripts/check_checkbox_commit_evidence.sh
+./scripts/check_category_model_conformance.sh
 
 echo "canonical execution model checks passed"
