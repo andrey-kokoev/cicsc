@@ -62,7 +62,7 @@ Harden scale-transition checks for expanded deployments.
 
 ### TODOs
 - [x] P20.3.1 Freeze scale-transition hardening matrix and policy.
-- [ ] P20.3.2 Add scale-transition verification harnesses.
+- [x] P20.3.2 Add scale-transition verification harnesses.
 - [ ] P20.3.3 Publish scale-transition closure report with residual policy.
 
 ### Acceptance
