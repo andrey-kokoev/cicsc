@@ -61,7 +61,7 @@ Close assurance-maturity validation with explicit evidence contract and findings
 Harden continuity-proof checks for expanded deployments.
 
 ### TODOs
-- [ ] P24.3.1 Freeze continuity-proof hardening matrix and policy.
+- [x] P24.3.1 Freeze continuity-proof hardening matrix and policy.
 - [ ] P24.3.2 Add continuity-proof verification harnesses.
 - [ ] P24.3.3 Publish continuity-proof closure report with residual policy.
 
