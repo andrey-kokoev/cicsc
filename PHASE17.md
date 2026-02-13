@@ -64,10 +64,10 @@ Strengthen trust and operational hardening for scaled deployments.
 ### TODOs
 - [x] P17.3.1 Freeze trust/operations hardening matrix and policy.
 - [x] P17.3.2 Add trust/operations verification harnesses.
-- [ ] P17.3.3 Publish trust hardening closure report with residual policy.
+- [x] P17.3.3 Publish trust hardening closure report with residual policy.
 
 ### Acceptance
-- [ ] Trust and operations status remains explicit, test-backed, and governed.
+- [x] Trust and operations status remains explicit, test-backed, and governed.
 
 ---
 

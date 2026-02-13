@@ -1,0 +1,23 @@
+{
+  "version": "cicsc/phase17-trust-hardening-closure-report-v1",
+  "timestamp_unix": 1771090800,
+  "inputs": {
+    "trust_ops_hardening_matrix": "docs/pilot/phase17-trust-ops-hardening-matrix.json",
+    "trust_ops_harnesses": "docs/pilot/phase17-trust-ops-harnesses.json"
+  },
+  "residual_policy": {
+    "allowed_open_status": ["deferred"],
+    "deferred_requires": ["owner", "target_date"]
+  },
+  "residuals": [
+    {
+      "id": "P17TRUST-OPS-001",
+      "status": "deferred",
+      "owner": "phase17-ops-owner",
+      "target_date": "2027-02-06",
+      "reason": "Operational trust-signal tuning is tracked post-closure and does not alter semantic guarantees."
+    }
+  ],
+  "unresolved_criticals": [],
+  "status": "pass"
+}
