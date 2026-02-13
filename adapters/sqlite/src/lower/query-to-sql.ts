@@ -112,6 +112,12 @@ export function lowerQueryToSql (q: QueryV0, ctx: LoweringCtx): SqlPlan {
       case "offset":
         offset = clampInt(body as number, 0, 1_000_000)
         break
+
+      case "having":
+        throw new Error("query op 'having' is disabled by feature gate 'phase9.sql.having'")
+
+      default:
+        throw new Error(`lowerQueryToSql: unsupported op '${tag}'`)
     }
   }
 
@@ -341,6 +347,9 @@ function lowerExpr (expr: ExprV0, ctx: LoweringCtx, rowAlias: string, binds: any
       // v0 SQL lowering only supports len/str/int/float as local, and forbids policy/constraint calls.
       // Those must be handled as snapshot-vm constraints or pushed up (guard path).
       return lowerCallSql(body.fn as string, body.args as ExprV0[], ctx, rowAlias, binds)
+
+    case "exists":
+      throw new Error("expr 'exists' is disabled by feature gate 'phase9.sql.exists'")
 
     default:
       throw new Error(`lowerExpr: unsupported expr tag ${tag}`)

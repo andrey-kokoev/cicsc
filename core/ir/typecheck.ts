@@ -295,6 +295,12 @@ function walkQuery (
     } else if (tag === "order_by") {
       const ks = body ?? []
       for (let j = 0; j < (ks.length ?? 0); j++) walkExpr(ks[j]?.expr, `${path}.pipeline[${i}].order_by[${j}].expr`, ctx)
+    } else if (tag === "having") {
+      ctx.errors.push({
+        code: "FEATURE_GATED",
+        path: `${path}.pipeline[${i}]`,
+        message: "query op 'having' is disabled by feature gate 'phase9.sql.having'",
+      })
     } else if (tag === "limit" || tag === "offset") {
       // ok
     } else {
@@ -521,6 +527,14 @@ function walkExpr (expr: any, path: string, ctx: WalkCtx) {
 
       return
     }
+
+    case "exists":
+      ctx.errors.push({
+        code: "FEATURE_GATED",
+        path,
+        message: "expr 'exists' is disabled by feature gate 'phase9.sql.exists'",
+      })
+      return
 
     default:
       ctx.errors.push({ code: "ILLEGAL_EXPR", path, message: `unknown expr tag '${tag}'` })

@@ -212,6 +212,10 @@ export function validateExpr (errors: ValidationError[], path: string, expr: any
       else body.args.forEach((e: any, i: number) => validateExpr(errors, `${path}.call.args[${i}]`, e))
       break
 
+    case "exists":
+      if (!isObject(body) || !isObject(body.query)) errors.push({ path, message: "exists requires {query}" })
+      break
+
     default:
       errors.push({ path, message: `unknown expr tag: ${tag}` })
   }

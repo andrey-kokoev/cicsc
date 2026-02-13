@@ -1,0 +1,16 @@
+{
+  "version": "cicsc/phase9-sql-feature-gates-v1",
+  "timestamp_unix": 1770955200,
+  "gates": {
+    "phase9.sql.having": {
+      "enabled": false,
+      "mode": "compile_time_reject",
+      "notes": "Candidate is explicitly gated until differential coverage closes Z1.3."
+    },
+    "phase9.sql.exists": {
+      "enabled": false,
+      "mode": "compile_time_reject",
+      "notes": "Candidate is explicitly gated until differential coverage closes Z1.3."
+    }
+  }
+}
