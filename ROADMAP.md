@@ -508,3 +508,30 @@ Phase 9 forced-next mapping:
 - [x] AD4.2 Add PHASE13↔ROADMAP drift consistency gate
 - [x] AD4.3 Add Phase 14 block gate from Phase 13 checklist
 - [x] AD4.4 Publish Phase 13 closure report and mark exit criteria
+
+## AE. Phase 14: Generalization and Adoption Readiness
+
+### AE1. Scope Freeze and Baseline Continuity
+
+- [ ] AE1.1 Freeze Phase 14 scope and owner contract
+- [ ] AE1.2 Publish Phase 14 baseline continuity snapshot
+- [ ] AE1.3 Add Phase 14 status register with owner/date discipline
+
+### AE2. Generalization Envelope Expansion
+
+- [ ] AE2.1 Freeze generalization envelope matrix and workload contract
+- [ ] AE2.2 Run generalization workload suites with required gates
+- [ ] AE2.3 Publish generalization envelope report with findings disposition
+
+### AE3. Adoption and Operator-Readiness Hardening
+
+- [ ] AE3.1 Freeze operator-readiness matrix (runbooks, SLO, diagnostics)
+- [ ] AE3.2 Add readiness verification harnesses
+- [ ] AE3.3 Publish readiness closure report with residual policy
+
+### AE4. Governance Closure and Phase 15 Gate
+
+- [ ] AE4.1 Define objective Phase 14 exit checklist mapped to artifacts
+- [ ] AE4.2 Add PHASE14↔ROADMAP drift consistency gate
+- [ ] AE4.3 Add Phase 15 block gate from Phase 14 checklist
+- [ ] AE4.4 Publish Phase 14 closure report and mark exit criteria
