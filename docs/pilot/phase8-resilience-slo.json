@@ -1,0 +1,20 @@
+{
+  "version": "cicsc/phase8-resilience-slo-v1",
+  "timestamp_unix": 1770948504,
+  "overall": "pass",
+  "slo_targets": {
+    "verify_path_success_rate": ">= 99.5%",
+    "migrate_path_success_rate": ">= 99%",
+    "command_path_success_rate": ">= 99.5%"
+  },
+  "error_budget": {
+    "verify_path_failures_per_window": 0,
+    "migrate_path_failures_per_window": 0,
+    "command_path_failures_per_window": 0
+  },
+  "checks": {
+    "verify_path":{"status":"pass","log":"docs/pilot/phase8-resilience-slo.verify_path.log"},
+    "migrate_path":{"status":"pass","log":"docs/pilot/phase8-resilience-slo.migrate_path.log"},
+    "command_path":{"status":"pass","log":"docs/pilot/phase8-resilience-slo.command_path.log"}
+  }
+}
