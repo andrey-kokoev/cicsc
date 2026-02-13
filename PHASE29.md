@@ -46,7 +46,7 @@ Start Phase 29 from explicit scope, owners, and reproducible baseline truth.
 Close assurance-expansion validation with explicit evidence contract and findings governance.
 
 ### TODOs
-- [ ] P29.2.1 Freeze assurance-expansion matrix and evidence contract.
+- [x] P29.2.1 Freeze assurance-expansion matrix and evidence contract.
 - [ ] P29.2.2 Run assurance-expansion required gates.
 - [ ] P29.2.3 Publish assurance-expansion closure report with findings disposition.
 
