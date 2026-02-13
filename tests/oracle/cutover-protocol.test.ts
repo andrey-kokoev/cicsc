@@ -109,6 +109,10 @@ describe("cutover protocol", () => {
     assert.equal(activeVersion, 1)
     assert.equal(written.length, 1)
     assert.equal(written[0]![0]!.event_type, "ticket_opened")
+    assert.ok(report.boundaries.paused_at > 0)
+    assert.ok((report.boundaries.verified_at ?? 0) >= report.boundaries.paused_at)
+    assert.ok((report.boundaries.switched_at ?? 0) >= (report.boundaries.verified_at ?? 0))
+    assert.ok(report.boundaries.resumed_at >= (report.boundaries.switched_at ?? 0))
     assert.deepEqual(order, ["pause", "load", "write", "activate", "resume"])
   })
 
@@ -135,6 +139,8 @@ describe("cutover protocol", () => {
     })
 
     assert.equal(report.ok, false)
+    assert.ok(report.boundaries.paused_at > 0)
+    assert.ok(report.boundaries.resumed_at >= report.boundaries.paused_at)
     assert.deepEqual(order, ["pause", "load", "resume"])
   })
 })
