@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase11-deferred-differentials-v1",
+  "timestamp_unix": 1770953295,
+  "overall": "pass",
+  "checks": {
+    "having_exec_vs_oracle":{"status":"pass","log":"docs/pilot/phase11-deferred-differentials.having_exec_vs_oracle.log"},
+    "having_postgres_harness":{"status":"pass","log":"docs/pilot/phase11-deferred-differentials.having_postgres_harness.log"},
+    "exists_feature_gate_negative":{"status":"pass","log":"docs/pilot/phase11-deferred-differentials.exists_feature_gate_negative.log"}
+  }
+}
