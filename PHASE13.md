@@ -48,7 +48,7 @@ Expand operational scale envelope with objective gate-backed evidence.
 
 ### TODOs
 - [x] P13.2.1 Freeze scale envelope matrix and workload contract.
-- [ ] P13.2.2 Run scale workload suites with required gates.
+- [x] P13.2.2 Run scale workload suites with required gates.
 - [ ] P13.2.3 Publish scale envelope report with findings disposition.
 
 ### Acceptance

@@ -493,7 +493,7 @@ Phase 9 forced-next mapping:
 ### AD2. Operational Scale Envelope Expansion
 
 - [x] AD2.1 Freeze scale envelope matrix and workload contract
-- [ ] AD2.2 Run scale workload suites with required gates
+- [x] AD2.2 Run scale workload suites with required gates
 - [ ] AD2.3 Publish scale envelope report with findings disposition
 
 ### AD3. Migration and Parity Hardening at Scale

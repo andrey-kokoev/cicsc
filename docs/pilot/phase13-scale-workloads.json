@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase13-scale-workloads-v1",
+  "timestamp_unix": 1770955755,
+  "overall": "pass",
+  "checks": {
+    "multi_domain_workloads":{"status":"pass","log":"docs/pilot/phase13-scale-workloads.multi_domain_workloads.log"},
+    "parity_envelope_differentials":{"status":"pass","log":"docs/pilot/phase13-scale-workloads.parity_envelope_differentials.log"},
+    "category_model_conformance":{"status":"pass","log":"docs/pilot/phase13-scale-workloads.category_model_conformance.log"}
+  }
+}
