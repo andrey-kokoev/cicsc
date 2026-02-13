@@ -823,7 +823,7 @@ Phase 9 forced-next mapping:
 ### AP3. Field-Continuity Hardening
 
 - [x] AP3.1 Freeze field-continuity hardening matrix and policy
-- [ ] AP3.2 Add field-continuity verification harnesses
+- [x] AP3.2 Add field-continuity verification harnesses
 - [ ] AP3.3 Publish field-continuity closure report with residual policy
 
 ### AP4. Governance Closure and Phase 26 Gate
