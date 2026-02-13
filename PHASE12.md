@@ -58,7 +58,7 @@ Increase parity confidence on widened declared SQL/backend envelope.
 
 ### TODOs
 - [x] P12.3.1 Freeze parity envelope extension matrix.
-- [ ] P12.3.2 Add differential harnesses for newly included envelope items.
+- [x] P12.3.2 Add differential harnesses for newly included envelope items.
 - [ ] P12.3.3 Publish parity envelope closure report with residual policy.
 
 ### Acceptance
