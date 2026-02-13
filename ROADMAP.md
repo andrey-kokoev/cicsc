@@ -360,3 +360,37 @@ Phase 8 production-equivalence risk mapping:
 - [x] Y4.3 Require unresolved criticals register empty or explicitly deferred with owner/date
 - [x] Y4.4 Add CI/doc checks rejecting Phase 8 status drift
 - [x] Y4.5 Block Phase 9 unless all checklist items are pass
+
+## Z. Phase 9: Capability Expansion Under Guarded Equivalence
+
+### Z1. SQL Capability Expansion With Conformance
+
+- [ ] Z1.1 Freeze Phase 9 SQL scope matrix (supported/deferred operators and query forms)
+- [ ] Z1.2 Implement selected deferred query lowering candidates (`HAVING`, `EXISTS`) behind explicit gates
+- [ ] Z1.3 Add SQL execution-vs-oracle differential suites for each newly enabled construct
+- [ ] Z1.4 Add negative typecheck coverage for unsupported forms to enforce compile-time rejection
+- [ ] Z1.5 Publish SQL-surface closure report with residual exclusions and risk labels
+
+### Z2. Cross-Backend Parity Hardening (SQLite + Postgres)
+
+- [ ] Z2.1 Freeze backend parity contract for Phase 9 (semantic classes + scale envelope)
+- [ ] Z2.2 Add deterministic cross-backend edge-case suites (null/collation/numeric/time behavior)
+- [ ] Z2.3 Add seeded random differential sweeps for SQLite/Postgres/oracle over expanded operators
+- [ ] Z2.4 Add parity triage artifact with regression class labeling and owner assignment
+- [ ] Z2.5 Publish backend parity report and required-gates policy update
+
+### Z3. Migration + Operational Reliability on Expanded Surface
+
+- [ ] Z3.1 Extend migration protocol contract for newly supported SQL/query constructs
+- [ ] Z3.2 Add migration drill suites covering upgraded features (preflight/dry-run/cutover/rollback)
+- [ ] Z3.3 Add post-cutover execution-vs-oracle differential checks on migrated streams
+- [ ] Z3.4 Add updated SLO/error-budget gates for verify/migrate/command paths under expanded load
+- [ ] Z3.5 Publish migration safety and operations report with unresolved criticals disposition
+
+### Z4. Deployment Validation and Governance Gate for Phase 10
+
+- [ ] Z4.1 Select and freeze Phase 9 reference deployment set (at least two verticals)
+- [ ] Z4.2 Run scripted workloads with invariants + parity + migration gates enabled
+- [ ] Z4.3 Capture drift/missing-primitive/performance findings with severity labels
+- [ ] Z4.4 Convert findings into forced-next roadmap tasks (no speculative backlog inflation)
+- [ ] Z4.5 Define and enforce objective Phase 9 exit checklist + Phase 10 block gate
