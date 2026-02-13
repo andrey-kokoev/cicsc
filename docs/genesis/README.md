@@ -55,6 +55,7 @@ Defines typed collaboration contracts for multi-worktree execution:
 - worktree-bound handoff semantics,
 - obligation/evidence typing,
 - branch-as-transport and canonical-ingestion discipline.
+- typed message transport with generated worktree inbox/outbox projection.
 
 In project terms: WMCC is "how multiple executors coordinate admissible change."
 

@@ -100,9 +100,31 @@ WMCC is operationalized through control-plane collaboration artifacts:
 - `control-plane/collaboration/collab-model.schema.json`
 - `control-plane/scripts/validate_collab_model.sh`
 - `scripts/check_collaboration_model.sh`
+- `control-plane/views/worktree-mailboxes.generated.json`
 
 Cross-model checks bind collaboration contracts to objectives, capabilities, and
 execution-ledger checkbox scope.
+
+### Typed message transport and mailbox projection
+
+Current WMCC implementation includes explicit typed message transport:
+
+- `message_kinds`: protocol-level message categories.
+- `messages`: concrete routed packets bound to assignments.
+
+Messages are validated against:
+- assignment references,
+- agent/worktree ownership consistency,
+- branch naming constraints,
+- payload/evidence path existence (where path-like).
+
+Operationally, collaboration flow is projected as generated inbox/outbox views
+per worktree in `worktree-mailboxes.generated.json`.
+
+Message lifecycle states currently supported:
+
+- `queued`, `sent`, `acknowledged`, `fulfilled`,
+- `rejected`, `ingested`, `closed`.
 
 ## 8. Failure modes
 
