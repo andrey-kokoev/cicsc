@@ -770,7 +770,7 @@ Phase 9 forced-next mapping:
 
 - [x] AN3.1 Freeze runtime-assurance hardening matrix and policy
 - [x] AN3.2 Add runtime-assurance verification harnesses
-- [ ] AN3.3 Publish runtime-assurance closure report with residual policy
+- [x] AN3.3 Publish runtime-assurance closure report with residual policy
 
 ### AN4. Governance Closure and Phase 24 Gate
 
