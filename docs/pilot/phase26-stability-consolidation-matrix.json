@@ -1,0 +1,45 @@
+{
+  "version": "cicsc/phase26-stability-consolidation-matrix-v1",
+  "timestamp_unix": 1775337000,
+  "tracks": [
+    {
+      "id": "stability_semantic_continuity",
+      "scope": "semantic_continuity",
+      "required_evidence": [
+        "docs/pilot/phase25-verification-consolidation-closure-report.json",
+        "docs/pilot/phase24-assurance-maturity-closure-report.json",
+        "docs/pilot/phase26-stability-consolidation-closure-report.json"
+      ]
+    },
+    {
+      "id": "stability_backend_parity",
+      "scope": "backend_parity",
+      "required_evidence": [
+        "docs/pilot/phase25-field-continuity-closure-report.json",
+        "docs/pilot/phase24-continuity-proof-closure-report.json",
+        "docs/pilot/phase26-stability-consolidation-closure-report.json"
+      ]
+    },
+    {
+      "id": "stability_operational_readiness",
+      "scope": "operations",
+      "required_evidence": [
+        "docs/pilot/phase25-field-continuity-harnesses.json",
+        "docs/pilot/phase24-continuity-proof-harnesses.json",
+        "docs/pilot/phase26-continuity-assurance-harnesses.json"
+      ]
+    }
+  ],
+  "evidence_contract": {
+    "required_gates": [
+      "phase25_doc_consistency",
+      "phase25_verification_consolidation_required_gates",
+      "phase26_baseline_continuity"
+    ],
+    "must_capture": [
+      "stability_findings",
+      "disposition_status",
+      "residual_policy"
+    ]
+  }
+}
