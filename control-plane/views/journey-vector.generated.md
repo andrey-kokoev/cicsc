@@ -10,6 +10,7 @@
 - Capabilities: 5
 - Phases in execution model: 2
 - Gate contracts: 12
+- Status source mode: execution_ledger_yaml_canonical
 
 ## Current Sequence
 

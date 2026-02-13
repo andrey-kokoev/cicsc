@@ -24,6 +24,7 @@ cap_count = len(cap.get('capabilities', []))
 gate_count = len(gate.get('gates', []))
 rows = status.get('rows', [])
 status_by_checkbox = {r['checkbox_id']: r['status'] for r in rows}
+mode = exe.get('status_source_mode')
 
 phase_status_counts = {}
 for p in phases:
@@ -84,6 +85,7 @@ journey = "\n".join([
     f"- Capabilities: {cap_count}",
     f"- Phases in execution model: {len(phases)}",
     f"- Gate contracts: {gate_count}",
+    f"- Status source mode: {mode}",
     "",
     "## Current Sequence",
     "",

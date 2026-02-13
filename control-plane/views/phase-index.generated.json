@@ -16,15 +16,18 @@
           "checkboxes": [
             {
               "id": "AT1.1",
-              "title": "Freeze Phase 29 scope and owner contract"
+              "title": "Freeze Phase 29 scope and owner contract",
+              "status": "done"
             },
             {
               "id": "AT1.2",
-              "title": "Publish Phase 29 baseline continuity snapshot"
+              "title": "Publish Phase 29 baseline continuity snapshot",
+              "status": "done"
             },
             {
               "id": "AT1.3",
-              "title": "Add Phase 29 status register with owner/date discipline"
+              "title": "Add Phase 29 status register with owner/date discipline",
+              "status": "done"
             }
           ]
         },
@@ -34,15 +37,18 @@
           "checkboxes": [
             {
               "id": "AT2.1",
-              "title": "Freeze assurance-expansion matrix and evidence contract"
+              "title": "Freeze assurance-expansion matrix and evidence contract",
+              "status": "done"
             },
             {
               "id": "AT2.2",
-              "title": "Run assurance-expansion required gates"
+              "title": "Run assurance-expansion required gates",
+              "status": "done"
             },
             {
               "id": "AT2.3",
-              "title": "Publish assurance-expansion closure report with findings disposition"
+              "title": "Publish assurance-expansion closure report with findings disposition",
+              "status": "done"
             }
           ]
         },
@@ -52,15 +58,18 @@
           "checkboxes": [
             {
               "id": "AT3.1",
-              "title": "Freeze governance-continuity hardening matrix and policy"
+              "title": "Freeze governance-continuity hardening matrix and policy",
+              "status": "done"
             },
             {
               "id": "AT3.2",
-              "title": "Add governance-continuity verification harnesses"
+              "title": "Add governance-continuity verification harnesses",
+              "status": "done"
             },
             {
               "id": "AT3.3",
-              "title": "Publish governance-continuity closure report with residual policy"
+              "title": "Publish governance-continuity closure report with residual policy",
+              "status": "done"
             }
           ]
         },
@@ -70,19 +79,23 @@
           "checkboxes": [
             {
               "id": "AT4.1",
-              "title": "Define objective Phase 29 exit checklist mapped to artifacts"
+              "title": "Define objective Phase 29 exit checklist mapped to artifacts",
+              "status": "done"
             },
             {
               "id": "AT4.2",
-              "title": "Add PHASE29\u2194ROADMAP drift consistency gate"
+              "title": "Add PHASE29\u2194ROADMAP drift consistency gate",
+              "status": "done"
             },
             {
               "id": "AT4.3",
-              "title": "Add Phase 30 block gate from Phase 29 checklist"
+              "title": "Add Phase 30 block gate from Phase 29 checklist",
+              "status": "done"
             },
             {
               "id": "AT4.4",
-              "title": "Publish Phase 29 closure report and mark exit criteria"
+              "title": "Publish Phase 29 closure report and mark exit criteria",
+              "status": "done"
             }
           ]
         }
@@ -100,15 +113,18 @@
           "checkboxes": [
             {
               "id": "AU1.1",
-              "title": "Freeze final DSL surface (constructs, exclusions, feature gates)"
+              "title": "Freeze final DSL surface (constructs, exclusions, feature gates)",
+              "status": "open"
             },
             {
               "id": "AU1.2",
-              "title": "Add authoritative grammar and examples corpus for non-programmer operators"
+              "title": "Add authoritative grammar and examples corpus for non-programmer operators",
+              "status": "open"
             },
             {
               "id": "AU1.3",
-              "title": "Lock compiler error taxonomy for authoring failures"
+              "title": "Lock compiler error taxonomy for authoring failures",
+              "status": "open"
             }
           ]
         },
@@ -118,15 +134,18 @@
           "checkboxes": [
             {
               "id": "AU2.1",
-              "title": "Add DSL-to-IR coverage matrix with required negative cases"
+              "title": "Add DSL-to-IR coverage matrix with required negative cases",
+              "status": "open"
             },
             {
               "id": "AU2.2",
-              "title": "Add conformance tests ensuring DSL compile output matches canonical IR intent"
+              "title": "Add conformance tests ensuring DSL compile output matches canonical IR intent",
+              "status": "open"
             },
             {
               "id": "AU2.3",
-              "title": "Publish DSL soundness closure report with unresolved-gap policy"
+              "title": "Publish DSL soundness closure report with unresolved-gap policy",
+              "status": "open"
             }
           ]
         },
@@ -136,15 +155,18 @@
           "checkboxes": [
             {
               "id": "AU3.1",
-              "title": "Add authoring lint profile for ambiguity and unsupported constructs"
+              "title": "Add authoring lint profile for ambiguity and unsupported constructs",
+              "status": "open"
             },
             {
               "id": "AU3.2",
-              "title": "Add task-oriented workflow templates"
+              "title": "Add task-oriented workflow templates",
+              "status": "open"
             },
             {
               "id": "AU3.3",
-              "title": "Publish ergonomics evidence report with measured operator success criteria"
+              "title": "Publish ergonomics evidence report with measured operator success criteria",
+              "status": "open"
             }
           ]
         },
@@ -154,19 +176,23 @@
           "checkboxes": [
             {
               "id": "AU4.1",
-              "title": "Define objective Phase 30 exit checklist mapped to artifacts"
+              "title": "Define objective Phase 30 exit checklist mapped to artifacts",
+              "status": "open"
             },
             {
               "id": "AU4.2",
-              "title": "Add PHASE30\u2194ROADMAP drift consistency gate"
+              "title": "Add PHASE30\u2194ROADMAP drift consistency gate",
+              "status": "open"
             },
             {
               "id": "AU4.3",
-              "title": "Add Phase 31 block gate from Phase 30 checklist"
+              "title": "Add Phase 31 block gate from Phase 30 checklist",
+              "status": "open"
             },
             {
               "id": "AU4.4",
-              "title": "Publish Phase 30 closure report and mark exit criteria"
+              "title": "Publish Phase 30 closure report and mark exit criteria",
+              "status": "open"
             }
           ]
         }

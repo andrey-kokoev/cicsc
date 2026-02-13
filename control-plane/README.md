@@ -30,10 +30,11 @@ Provide a single coherent model stack for:
 
 ## Current Canonical Rule
 
-Until explicit migration is completed:
-- `ROADMAP.md` is canonical status truth.
-- `PHASE*.md` are derived status views.
-- `control-plane/*` models are authoritative for structure and intent, not runtime status.
+Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
+- `control-plane/execution/execution-ledger.yaml` is canonical status truth for modeled phase scope.
+- `ROADMAP.md` remains required and is validated as a synchronized execution view.
+- `PHASE*.md` remain derived status views.
+- `control-plane/*` models are authoritative for structure, status (modeled scope), and gating intent.
 
 ## Derivation Flow (Target)
 

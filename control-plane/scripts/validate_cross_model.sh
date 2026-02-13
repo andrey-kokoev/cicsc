@@ -77,6 +77,8 @@ def main() -> int:
         milestones = ph.get("milestones", [])
         last_mnum = -1
         seen_mids = set()
+        phase_done = 0
+        phase_open = 0
 
         for ms in milestones:
             mid = ms.get("id")
@@ -115,6 +117,17 @@ def main() -> int:
                 if cnum in seen_cnums:
                     errors.append(f"execution-ledger: duplicate checkbox item number in {mid}: {cid}")
                 seen_cnums.add(cnum)
+                cstatus = cb.get("status")
+                if cstatus == "done":
+                    phase_done += 1
+                elif cstatus == "open":
+                    phase_open += 1
+
+        pstatus = ph.get("status")
+        if pstatus == "complete" and phase_open > 0:
+            errors.append(f"execution-ledger: phase {pid} marked complete but has open checkboxes")
+        if pstatus == "planned" and phase_done > 0:
+            errors.append(f"execution-ledger: phase {pid} marked planned but has done checkboxes")
 
     seen_gate_ids = set()
     seen_gate_scripts = set()
