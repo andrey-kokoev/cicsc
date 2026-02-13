@@ -318,5 +318,5 @@ Phase 7 parity delta mapping:
 - [x] X4.1 Define objective Phase 7 exit checklist mapped to artifacts
 - [x] X4.2 Require green required gates (parity + concurrency + migration protocol)
 - [x] X4.3 Require unresolved criticals register empty or explicitly deferred with owner/date
-- [ ] X4.4 Add CI/doc checks rejecting Phase 7 status drift
+- [x] X4.4 Add CI/doc checks rejecting Phase 7 status drift
 - [ ] X4.5 Block Phase 8 unless all checklist items are pass
