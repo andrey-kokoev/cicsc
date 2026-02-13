@@ -63,7 +63,7 @@ Harden field-continuity checks for expanded deployments.
 ### TODOs
 - [x] P25.3.1 Freeze field-continuity hardening matrix and policy.
 - [x] P25.3.2 Add field-continuity verification harnesses.
-- [ ] P25.3.3 Publish field-continuity closure report with residual policy.
+- [x] P25.3.3 Publish field-continuity closure report with residual policy.
 
 ### Acceptance
 - [ ] Field-continuity hardening remains explicit, test-backed, and governed.
