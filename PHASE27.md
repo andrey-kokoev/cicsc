@@ -36,7 +36,7 @@ Start Phase 27 from explicit scope, owners, and reproducible baseline truth.
 - [x] P27.1.3 Add Phase 27 status register with owner/date discipline.
 
 ### Acceptance
-- [ ] Phase 27 starts from objective scope and reproducible baseline truth.
+- [x] Phase 27 starts from objective scope and reproducible baseline truth.
 
 ---
 
@@ -51,7 +51,7 @@ Close deployment-integrity validation with explicit evidence contract and findin
 - [x] P27.2.3 Publish deployment-integrity closure report with findings disposition.
 
 ### Acceptance
-- [ ] Deployment-integrity validation remains evidence-backed with explicit findings governance.
+- [x] Deployment-integrity validation remains evidence-backed with explicit findings governance.
 
 ---
 
@@ -66,7 +66,7 @@ Harden evolution-continuity checks for expanded deployments.
 - [x] P27.3.3 Publish evolution-continuity closure report with residual policy.
 
 ### Acceptance
-- [ ] Evolution-continuity hardening remains explicit, test-backed, and governed.
+- [x] Evolution-continuity hardening remains explicit, test-backed, and governed.
 
 ---
 
@@ -79,17 +79,17 @@ Close Phase 27 with objective checklist and enforce entry gate for Phase 28.
 - [x] P27.4.1 Define objective Phase 27 exit checklist mapped to artifacts.
 - [x] P27.4.2 Add PHASE27↔ROADMAP drift consistency gate.
 - [x] P27.4.3 Add Phase 28 block gate from Phase 27 checklist.
-- [ ] P27.4.4 Publish Phase 27 closure report and mark exit criteria.
+- [x] P27.4.4 Publish Phase 27 closure report and mark exit criteria.
 
 ### Acceptance
-- [ ] Phase 28 remains blocked unless Phase 27 checklist is fully pass.
+- [x] Phase 28 remains blocked unless Phase 27 checklist is fully pass.
 
 ---
 
 ## Exit Criteria (Phase 27)
 
-- [ ] Scope, baseline, and status governance remain explicit and reproducible.
-- [ ] Deployment-integrity validation is evidence-backed and invariant-preserving.
-- [ ] Evolution-continuity hardening is verifiable with executable harnesses.
-- [ ] Governance checks enforce code/doc/artifact consistency.
-- [ ] Phase 28 remains blocked without full checklist pass.
+- [x] Scope, baseline, and status governance remain explicit and reproducible.
+- [x] Deployment-integrity validation is evidence-backed and invariant-preserving.
+- [x] Evolution-continuity hardening is verifiable with executable harnesses.
+- [x] Governance checks enforce code/doc/artifact consistency.
+- [x] Phase 28 remains blocked without full checklist pass.
