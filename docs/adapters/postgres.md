@@ -9,6 +9,8 @@ This document describes an implementation approach for a CICSC Postgres adapter.
 This document is informative. The normative interface is defined in `/docs/spec/adapter-interface.md`.
 The declared supported subset contract is tracked in `/tests/conformance/postgres-supported-scope.json`
 and mirrored against `/tests/conformance/sqlite-supported-scope.json`.
+Constraint conformance matrix is tracked in `/tests/conformance/postgres-constraint-matrix.json`;
+reducer conformance is deferred until reducer SQL lowering exists.
 
 ---
 

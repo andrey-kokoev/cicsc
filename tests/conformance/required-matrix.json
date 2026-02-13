@@ -63,6 +63,16 @@
       ]
     },
     {
+      "id": "postgres-constraint-core",
+      "backend": "postgres",
+      "required": false,
+      "ci_profile": "postgres",
+      "test_files": [
+        "tests/conformance/postgres-constraint-matrix.test.ts",
+        "tests/conformance/postgres-constraint-shape.test.ts"
+      ]
+    },
+    {
       "id": "cross-backend-differential",
       "backend": "multi",
       "required": false,

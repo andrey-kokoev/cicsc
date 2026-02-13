@@ -1,0 +1,23 @@
+{
+  "version": "cicsc/postgres-constraint-matrix-v1",
+  "description": "Postgres constraint conformance cases for currently lowered constraint kinds.",
+  "constraint_kinds": [
+    "bool_query"
+  ],
+  "cases": [
+    {
+      "id": "pg-bool-query-rows-count-threshold",
+      "test_file": "tests/conformance/postgres-exec-vs-oracle.test.ts",
+      "constraint_kind": "bool_query"
+    },
+    {
+      "id": "pg-bool-query-lowering-shape",
+      "test_file": "tests/conformance/postgres-constraint-shape.test.ts",
+      "constraint_kind": "bool_query"
+    }
+  ],
+  "reducer_lowering": {
+    "status": "not_implemented",
+    "conformance": "deferred_until_lowering_exists"
+  }
+}
