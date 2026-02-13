@@ -63,7 +63,7 @@ Ship a user intent DSL that compiles to Core IR without leaking backend semantic
 - [x] P5.3.2 Add compiler diagnostics with path-qualified errors for all rejected constructs.
 - [x] P5.3.3 Add negative compiler tests for invariant-weakening patterns.
 - [x] P5.3.4 Add roundtrip fixtures (spec -> ir -> validated semantics artifacts).
-- [ ] P5.3.5 Add documentation and examples for non-programmer-authored workflows.
+- [x] P5.3.5 Add documentation and examples for non-programmer-authored workflows.
 
 ### Acceptance
 - [ ] Spec author can express at least one full ticketing/CRM workflow without IR-shaped authoring.

@@ -151,6 +151,9 @@ CICSC_DB_PATH=./cicsc.dev.sqlite node runtime/dev/harness.mjs
 - `AGENTS.md`  
   Contributor and agent guidelines.
 
+- `docs/spec/non-programmer-workflows.md`
+  Workflow-authoring guide for non-programmer operators.
+
 These documents constrain implementation choices.
 
 ---
