@@ -851,7 +851,7 @@ Phase 9 forced-next mapping:
 
 - [x] AQ3.1 Freeze continuity-assurance hardening matrix and policy
 - [x] AQ3.2 Add continuity-assurance verification harnesses
-- [ ] AQ3.3 Publish continuity-assurance closure report with residual policy
+- [x] AQ3.3 Publish continuity-assurance closure report with residual policy
 
 ### AQ4. Governance Closure and Phase 27 Gate
 
