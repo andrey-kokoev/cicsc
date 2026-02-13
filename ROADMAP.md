@@ -375,7 +375,7 @@ Phase 8 production-equivalence risk mapping:
 
 - [x] Z2.1 Freeze backend parity contract for Phase 9 (semantic classes + scale envelope)
 - [x] Z2.2 Add deterministic cross-backend edge-case suites (null/collation/numeric/time behavior)
-- [ ] Z2.3 Add seeded random differential sweeps for SQLite/Postgres/oracle over expanded operators
+- [x] Z2.3 Add seeded random differential sweeps for SQLite/Postgres/oracle over expanded operators
 - [ ] Z2.4 Add parity triage artifact with regression class labeling and owner assignment
 - [ ] Z2.5 Publish backend parity report and required-gates policy update
 
