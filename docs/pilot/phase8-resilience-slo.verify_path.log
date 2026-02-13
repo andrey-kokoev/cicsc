@@ -1,25 +1,25 @@
-(node:772908) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:783558) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:772908) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/replay-and-constraints.test.ts is not specified and it doesn't parse as CommonJS.
+(node:783558) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/replay-and-constraints.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ oracle: replay + constraints
-  ✔ replays events into snapshot and enforces snapshot constraint (3.959372ms)
-  ✔ fails snapshot constraint when missing title (0.489793ms)
-✔ oracle: replay + constraints (5.51961ms)
-(node:772910) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+  ✔ replays events into snapshot and enforces snapshot constraint (2.651486ms)
+  ✔ fails snapshot constraint when missing title (0.27913ms)
+✔ oracle: replay + constraints (3.739209ms)
+(node:783559) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:772910) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/verify-streaming.test.ts is not specified and it doesn't parse as CommonJS.
+(node:783559) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/verify-streaming.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ streaming verifier
-  ✔ matches non-stream verification outcome (11.773542ms)
-  ✔ enforces max entity bound (0.426449ms)
-✔ streaming verifier (13.105194ms)
+  ✔ matches non-stream verification outcome (7.523491ms)
+  ✔ enforces max entity bound (0.417393ms)
+✔ streaming verifier (8.857977ms)
 ℹ tests 4
 ℹ suites 2
 ℹ pass 4
@@ -27,4 +27,4 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 173.407755
+ℹ duration_ms 157.833671

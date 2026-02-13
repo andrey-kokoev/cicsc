@@ -83,7 +83,7 @@ Prevent semantic drift while expanding toward broader deployment.
 
 ### TODOs
 - [x] P8.4.1 Define objective Phase 8 exit checklist mapped to artifacts.
-- [ ] P8.4.2 Require green required gates (production-equivalence + resilience + ergonomics safety).
+- [x] P8.4.2 Require green required gates (production-equivalence + resilience + ergonomics safety).
 - [ ] P8.4.3 Require unresolved criticals register empty or explicitly deferred with owner/date.
 - [ ] P8.4.4 Add CI/doc checks rejecting Phase 8 status drift.
 - [ ] P8.4.5 Block Phase 9 unless all checklist items are pass.

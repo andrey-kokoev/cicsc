@@ -11,7 +11,7 @@
         "docs/pilot/phase8-production-equivalence-report.json",
         "docs/pilot/phase8-production-risks-roadmap-map.md"
       ],
-      "status": "pending"
+      "status": "pass"
     },
     {
       "id": "P8_EXIT_RESILIENCE",
@@ -23,7 +23,7 @@
         "docs/pilot/phase8-resilience-slo.json",
         "docs/pilot/phase8-resilience-report.json"
       ],
-      "status": "pending"
+      "status": "pass"
     },
     {
       "id": "P8_EXIT_ERGONOMICS",
@@ -35,7 +35,7 @@
         "docs/pilot/phase8-spec-migration-usability-benchmark.json",
         "docs/pilot/phase8-ergonomics-report.json"
       ],
-      "status": "pending"
+      "status": "pass"
     },
     {
       "id": "P8_EXIT_GOVERNANCE",

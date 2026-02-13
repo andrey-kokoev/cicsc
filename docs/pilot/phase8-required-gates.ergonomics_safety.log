@@ -1,0 +1,49 @@
+(node:783668) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:783668) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/spec/phase8-dsl-ergonomics-negative.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ phase8 DSL ergonomics negative coverage
+  ✔ rejects duplicate state names with path-qualified diagnostic (1.262571ms)
+  ✔ rejects duplicate emitted events in one command (0.195149ms)
+✔ phase8 DSL ergonomics negative coverage (2.906998ms)
+(node:783674) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:783674) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/spec/phase8-ergonomics-report.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ phase8 ergonomics report
+  ✔ confirms ergonomics improvements preserve invariant safety (1.166261ms)
+✔ phase8 ergonomics report (1.79083ms)
+(node:783675) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:783675) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/spec/phase8-migration-authoring-assistant.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ phase8 migration authoring assistant report
+  ✔ records green coverage/safety/rollback readiness checks (0.617778ms)
+✔ phase8 migration authoring assistant report (1.381599ms)
+(node:783681) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:783681) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/spec/phase8-spec-migration-usability-benchmark.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ phase8 spec/migration usability benchmark
+  ✔ publishes multi-vertical benchmark artifact with pass status (29.939358ms)
+✔ phase8 spec/migration usability benchmark (30.631585ms)
+ℹ tests 5
+ℹ suites 4
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 170.211294

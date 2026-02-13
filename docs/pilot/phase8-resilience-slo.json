@@ -1,6 +1,6 @@
 {
   "version": "cicsc/phase8-resilience-slo-v1",
-  "timestamp_unix": 1770948504,
+  "timestamp_unix": 1770949068,
   "overall": "pass",
   "slo_targets": {
     "verify_path_success_rate": ">= 99.5%",

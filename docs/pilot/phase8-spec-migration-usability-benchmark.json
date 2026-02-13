@@ -1,6 +1,6 @@
 {
   "version": "cicsc/phase8-spec-migration-usability-benchmark-v1",
-  "timestamp_unix": 1770948950,
+  "timestamp_unix": 1770949068,
   "benchmark_axis": [
     "spec_surface_size",
     "command_reducer_density",

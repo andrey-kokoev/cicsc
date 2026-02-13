@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase8-required-gates-v1",
+  "timestamp_unix": 1770949068,
+  "overall": "pass",
+  "checks": {
+    "equivalence":{"status":"pass","log":"docs/pilot/phase8-required-gates.equivalence.log"},
+    "resilience":{"status":"pass","log":"docs/pilot/phase8-required-gates.resilience.log"},
+    "ergonomics_safety":{"status":"pass","log":"docs/pilot/phase8-required-gates.ergonomics_safety.log"}
+  }
+}
