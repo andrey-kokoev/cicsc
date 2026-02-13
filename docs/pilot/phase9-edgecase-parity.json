@@ -1,0 +1,9 @@
+{
+  "version": "cicsc/phase9-edgecase-parity-v1",
+  "timestamp_unix": 1770950425,
+  "overall": "pass",
+  "checks": {
+    "baseline_edgecases":{"status":"pass","log":"docs/pilot/phase9-edgecase-parity.baseline_edgecases.log"},
+    "having_edgecases":{"status":"pass","log":"docs/pilot/phase9-edgecase-parity.having_edgecases.log"}
+  }
+}
