@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase27-status-register-v1",
+  "timestamp_unix": 1775940900,
+  "items": [
+    {
+      "id": "P27-DEPLOY-INTEGRITY",
+      "status": "in_progress",
+      "owner": "phase27-validation-owner",
+      "target_date": "2027-09-18",
+      "basis": "AR2"
+    },
+    {
+      "id": "P27-EVOLUTION-CONTINUITY",
+      "status": "pending",
+      "owner": "phase27-ops-owner",
+      "target_date": "2027-09-25",
+      "basis": "AR3"
+    },
+    {
+      "id": "P27-GOVERNANCE-CLOSURE",
+      "status": "pending",
+      "owner": "phase27-governance-owner",
+      "target_date": "2027-10-02",
+      "basis": "AR4"
+    }
+  ]
+}
