@@ -351,7 +351,7 @@ Phase 8 production-equivalence risk mapping:
 - [x] Y3.2 Add DSL ergonomics improvements with negative typecheck coverage
 - [x] Y3.3 Add migration authoring assistant checks (coverage/safety/rollback readiness)
 - [x] Y3.4 Add multi-vertical spec/migration usability benchmark artifact
-- [ ] Y3.5 Publish ergonomics report with invariant-safety confirmation
+- [x] Y3.5 Publish ergonomics report with invariant-safety confirmation
 
 ### Y4. Governance Gate for Phase 9
 

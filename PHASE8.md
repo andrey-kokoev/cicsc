@@ -68,11 +68,11 @@ Improve authoring UX while preserving hard invariants and compile-time rejection
 - [x] P8.3.2 Add targeted DSL ergonomics improvements with negative typecheck coverage.
 - [x] P8.3.3 Add migration authoring assistant checks (coverage, state-map safety, rollback readiness).
 - [x] P8.3.4 Add spec/migration usability benchmark artifact across reference verticals.
-- [ ] P8.3.5 Publish ergonomics report with invariant-safety confirmation.
+- [x] P8.3.5 Publish ergonomics report with invariant-safety confirmation.
 
 ### Acceptance
-- [ ] Authoring friction is measurably reduced without semantic weakening.
-- [ ] Every ergonomics change is covered by conformance + negative-check suites.
+- [x] Authoring friction is measurably reduced without semantic weakening.
+- [x] Every ergonomics change is covered by conformance + negative-check suites.
 
 ---
 
