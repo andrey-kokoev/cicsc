@@ -33,10 +33,10 @@ Start Phase 17 from explicit scope, owners, and reproducible baseline truth.
 ### TODOs
 - [x] P17.1.1 Freeze Phase 17 scope and owner contract.
 - [x] P17.1.2 Publish Phase 17 baseline continuity snapshot.
-- [ ] P17.1.3 Add Phase 17 status register with owner/date discipline.
+- [x] P17.1.3 Add Phase 17 status register with owner/date discipline.
 
 ### Acceptance
-- [ ] Phase 17 starts from objective scope and reproducible baseline truth.
+- [x] Phase 17 starts from objective scope and reproducible baseline truth.
 
 ---
 
