@@ -101,6 +101,8 @@ Protocol rule:
 Message I/O command surface:
 - read inbox (actionable only):
   - `./control-plane/scripts/collab_inbox.sh --worktree "$PWD" --refresh --actionable-only`
+- main-side dispatch wrapper:
+  - `./control-plane/scripts/collab_dispatch.sh --assignment-ref ASSIGN_... --payload-ref control-plane/collaboration/collab-model.yaml`
 - single-step worker loop helper (claim + fulfillment guidance):
   - `./control-plane/scripts/collab_run_once.sh --worktree "$PWD"`
 - acknowledge next actionable message:

@@ -71,6 +71,7 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `control-plane/scripts/generate_views.sh`
 - `control-plane/scripts/collab_inbox.sh`
 - `control-plane/scripts/collab_append_event.sh`
+- `control-plane/scripts/collab_dispatch.sh`
 - `control-plane/scripts/collab_claim_next.sh`
 - `control-plane/scripts/collab_fulfill.sh`
 - `control-plane/scripts/collab_close_ingested.sh`
