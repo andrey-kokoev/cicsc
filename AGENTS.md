@@ -58,6 +58,16 @@ Do not treat prose files as canonical status ledgers or gate inputs.
 
 ## Working Style
 
+### -1. First Actions In Any Worktree (Mandatory)
+Before doing any implementation work:
+
+1. Run `./control-plane/scripts/generate_views.sh`
+2. Read inbox from `control-plane/views/worktree-mailboxes.generated.json` for
+   the current worktree path
+3. Process only actionable messages (`current_status` in `queued`, `sent`)
+
+If no actionable inbox messages exist, do not invent local task authority.
+
 ### 0. Canonical Execution Model (Mandatory)
 Execution status truth is single-source:
 - `control-plane/execution/execution-ledger.yaml` is the only canonical status ledger.
