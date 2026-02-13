@@ -639,7 +639,7 @@ Phase 9 forced-next mapping:
 
 ### AI4. Governance Closure and Phase 19 Gate
 
-- [ ] AI4.1 Define objective Phase 18 exit checklist mapped to artifacts
+- [x] AI4.1 Define objective Phase 18 exit checklist mapped to artifacts
 - [ ] AI4.2 Add PHASE18↔ROADMAP drift consistency gate
 - [ ] AI4.3 Add Phase 19 block gate from Phase 18 checklist
 - [ ] AI4.4 Publish Phase 18 closure report and mark exit criteria

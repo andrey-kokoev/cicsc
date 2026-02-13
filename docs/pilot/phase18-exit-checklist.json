@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase18-exit-checklist-v1",
+  "timestamp_unix": 1771098900,
+  "items": [
+    {
+      "id": "scope_baseline_status",
+      "artifact": "docs/pilot/phase18-status-register.json",
+      "status": "pass"
+    },
+    {
+      "id": "expansion_proof_status",
+      "artifact": "docs/pilot/phase18-expansion-proof-closure-report.json",
+      "status": "pass"
+    },
+    {
+      "id": "production_continuity_status",
+      "artifact": "docs/pilot/phase18-production-continuity-closure-report.json",
+      "status": "pass"
+    },
+    {
+      "id": "phase18_gate_state",
+      "artifact": "docs/pilot/phase18-gate.json",
+      "status": "pass"
+    }
+  ],
+  "overall": "pass"
+}
