@@ -79,17 +79,17 @@ Close Phase 14 with objective checklist and enforce entry gate for Phase 15.
 - [x] P14.4.1 Define objective Phase 14 exit checklist mapped to artifacts.
 - [x] P14.4.2 Add PHASE14↔ROADMAP drift consistency gate.
 - [x] P14.4.3 Add Phase 15 block gate from Phase 14 checklist.
-- [ ] P14.4.4 Publish Phase 14 closure report and mark exit criteria.
+- [x] P14.4.4 Publish Phase 14 closure report and mark exit criteria.
 
 ### Acceptance
-- [ ] Phase 15 remains blocked unless Phase 14 checklist is fully pass.
+- [x] Phase 15 remains blocked unless Phase 14 checklist is fully pass.
 
 ---
 
 ## Exit Criteria (Phase 14)
 
-- [ ] Scope, baseline, and status governance remain explicit and reproducible.
-- [ ] Generalization envelope expansion is objective and invariant-preserving.
-- [ ] Adoption/operator readiness is verifiable and differentially validated.
-- [ ] Governance checks enforce code/doc/artifact consistency.
-- [ ] Phase 15 remains blocked without full checklist pass.
+- [x] Scope, baseline, and status governance remain explicit and reproducible.
+- [x] Generalization envelope expansion is objective and invariant-preserving.
+- [x] Adoption/operator readiness is verifiable and differentially validated.
+- [x] Governance checks enforce code/doc/artifact consistency.
+- [x] Phase 15 remains blocked without full checklist pass.
