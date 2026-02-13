@@ -99,7 +99,7 @@ Bring Postgres to oracle-conformant status for declared supported subset.
 - [x] P5.5.2 Add postgres execution-vs-oracle differential matrix for in-scope operators.
 - [x] P5.5.3 Add postgres constraint/reducer conformance checks where lowering exists.
 - [x] P5.5.4 Align NULL/ordering/collation semantics policy and document deltas.
-- [ ] P5.5.5 Add cross-backend consistency gate (sqlite vs postgres vs oracle).
+- [x] P5.5.5 Add cross-backend consistency gate (sqlite vs postgres vs oracle).
 
 ### Acceptance
 - [ ] Postgres passes required differential conformance suite for declared scope.
