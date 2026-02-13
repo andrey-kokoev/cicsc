@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase26-exit-checklist-v1",
+  "timestamp_unix": 1775340600,
+  "items": [
+    {
+      "id": "scope_baseline_status",
+      "artifact": "docs/pilot/phase26-status-register.json",
+      "status": "pass"
+    },
+    {
+      "id": "stability_consolidation_status",
+      "artifact": "docs/pilot/phase26-stability-consolidation-closure-report.json",
+      "status": "pass"
+    },
+    {
+      "id": "continuity_assurance_status",
+      "artifact": "docs/pilot/phase26-continuity-assurance-closure-report.json",
+      "status": "pass"
+    },
+    {
+      "id": "phase26_gate_state",
+      "artifact": "docs/pilot/phase26-gate.json",
+      "status": "pass"
+    }
+  ],
+  "overall": "pass"
+}
