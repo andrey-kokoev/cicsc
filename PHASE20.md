@@ -36,7 +36,7 @@ Start Phase 20 from explicit scope, owners, and reproducible baseline truth.
 - [x] P20.1.3 Add Phase 20 status register with owner/date discipline.
 
 ### Acceptance
-- [ ] Phase 20 starts from objective scope and reproducible baseline truth.
+- [x] Phase 20 starts from objective scope and reproducible baseline truth.
 
 ---
 
@@ -51,7 +51,7 @@ Close multi-environment assurance validation with explicit evidence contract and
 - [x] P20.2.3 Publish multi-environment assurance closure report with findings disposition.
 
 ### Acceptance
-- [ ] Multi-environment assurance validation remains evidence-backed with explicit findings governance.
+- [x] Multi-environment assurance validation remains evidence-backed with explicit findings governance.
 
 ---
 
@@ -66,7 +66,7 @@ Harden scale-transition checks for expanded deployments.
 - [x] P20.3.3 Publish scale-transition closure report with residual policy.
 
 ### Acceptance
-- [ ] Scale-transition hardening remains explicit, test-backed, and governed.
+- [x] Scale-transition hardening remains explicit, test-backed, and governed.
 
 ---
 
@@ -79,17 +79,17 @@ Close Phase 20 with objective checklist and enforce entry gate for Phase 21.
 - [x] P20.4.1 Define objective Phase 20 exit checklist mapped to artifacts.
 - [x] P20.4.2 Add PHASE20↔ROADMAP drift consistency gate.
 - [x] P20.4.3 Add Phase 21 block gate from Phase 20 checklist.
-- [ ] P20.4.4 Publish Phase 20 closure report and mark exit criteria.
+- [x] P20.4.4 Publish Phase 20 closure report and mark exit criteria.
 
 ### Acceptance
-- [ ] Phase 21 remains blocked unless Phase 20 checklist is fully pass.
+- [x] Phase 21 remains blocked unless Phase 20 checklist is fully pass.
 
 ---
 
 ## Exit Criteria (Phase 20)
 
-- [ ] Scope, baseline, and status governance remain explicit and reproducible.
-- [ ] Multi-environment assurance validation is evidence-backed and invariant-preserving.
-- [ ] Scale-transition hardening is verifiable with executable harnesses.
-- [ ] Governance checks enforce code/doc/artifact consistency.
-- [ ] Phase 21 remains blocked without full checklist pass.
+- [x] Scope, baseline, and status governance remain explicit and reproducible.
+- [x] Multi-environment assurance validation is evidence-backed and invariant-preserving.
+- [x] Scale-transition hardening is verifiable with executable harnesses.
+- [x] Governance checks enforce code/doc/artifact consistency.
+- [x] Phase 21 remains blocked without full checklist pass.
