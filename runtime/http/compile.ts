@@ -6,6 +6,22 @@ import { compileSpecV0ToCoreIr } from "../../spec/compile-to-ir"
 import { typecheckSpecV0 } from "../../spec/typecheck"
 import { typecheckCoreIrV0 } from "../../core/ir/typecheck"
 
+export type CompileDiagnostic = {
+  layer: "spec" | "ir"
+  path: string
+  message: string
+}
+
+export class CompileDiagnosticsError extends Error {
+  diagnostics: CompileDiagnostic[]
+
+  constructor (message: string, diagnostics: CompileDiagnostic[]) {
+    super(message)
+    this.name = "CompileDiagnosticsError"
+    this.diagnostics = diagnostics
+  }
+}
+
 /**
  * Compile Spec (YAML string or JSON object) -> validated CoreIrBundleV0
  *
@@ -19,7 +35,14 @@ export function compileSpecToBundleV0 (input: string | unknown): CoreIrBundleV0 
   const stc = typecheckSpecV0(spec)
   if (!stc.ok) {
     const first = stc.errors[0]!
-    throw new Error(`spec typecheck failed at ${first.path}: ${first.message}`)
+    throw new CompileDiagnosticsError(
+      `spec typecheck failed at ${first.path}: ${first.message}`,
+      stc.errors.map((e) => ({
+        layer: "spec",
+        path: e.path,
+        message: e.message,
+      }))
+    )
   }
 
   const ir = compileSpecV0ToCoreIr(spec)
@@ -27,7 +50,14 @@ export function compileSpecToBundleV0 (input: string | unknown): CoreIrBundleV0 
   const tc = typecheckCoreIrV0(ir)
   if (!tc.ok) {
     const first = tc.errors[0]!
-    throw new Error(`typecheck failed at ${first.path}: ${first.message}`)
+    throw new CompileDiagnosticsError(
+      `typecheck failed at ${first.path}: ${first.message}`,
+      tc.errors.map((e) => ({
+        layer: "ir",
+        path: e.path,
+        message: e.message,
+      }))
+    )
   }
 
   return { core_ir: ir } as CoreIrBundleV0

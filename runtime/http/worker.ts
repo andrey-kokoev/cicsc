@@ -12,7 +12,7 @@ import { verifyHistoryAgainstIr } from "../../core/runtime/verify"
 import { activateVersion } from "../db/activate-version"
 import { getBundle, putBundle } from "../db/bundle-registry"
 import { bindTenant } from "../db/tenant-binding"
-import { compileSpecToBundleV0, readSpecBody } from "./compile"
+import { CompileDiagnosticsError, compileSpecToBundleV0, readSpecBody } from "./compile"
 import { loadTenantBundle } from "./tenant-bundle"
 import { TenantTokenBucketLimiter } from "./rate-limit"
 import { applyRowLevelSecurity } from "../view/rls"
@@ -316,13 +316,20 @@ export default {
 
       return jsonErr(404, "not found")
     } catch (e: any) {
+      if (e instanceof CompileDiagnosticsError) {
+        return jsonErr(400, e.message, e.diagnostics)
+      }
       return jsonErr(500, e?.message ?? "error")
     }
   },
 }
 
-function jsonErr (status: number, message: string) {
-  return new Response(JSON.stringify({ ok: false, error: message }), {
+function jsonErr (status: number, message: string, diagnostics?: any[]) {
+  const body: any = { ok: false, error: message }
+  if (Array.isArray(diagnostics) && diagnostics.length) {
+    body.diagnostics = diagnostics
+  }
+  return new Response(JSON.stringify(body), {
     status,
     headers: { "content-type": "application/json" },
   })
