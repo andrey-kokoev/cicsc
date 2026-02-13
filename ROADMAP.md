@@ -560,5 +560,5 @@ Phase 9 forced-next mapping:
 
 - [x] AF4.1 Define objective Phase 15 exit checklist mapped to artifacts
 - [x] AF4.2 Add PHASE15↔ROADMAP drift consistency gate
-- [ ] AF4.3 Add Phase 16 block gate from Phase 15 checklist
+- [x] AF4.3 Add Phase 16 block gate from Phase 15 checklist
 - [ ] AF4.4 Publish Phase 15 closure report and mark exit criteria
