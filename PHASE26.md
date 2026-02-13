@@ -77,7 +77,7 @@ Close Phase 26 with objective checklist and enforce entry gate for Phase 27.
 
 ### TODOs
 - [x] P26.4.1 Define objective Phase 26 exit checklist mapped to artifacts.
-- [ ] P26.4.2 Add PHASE26↔ROADMAP drift consistency gate.
+- [x] P26.4.2 Add PHASE26↔ROADMAP drift consistency gate.
 - [ ] P26.4.3 Add Phase 27 block gate from Phase 26 checklist.
 - [ ] P26.4.4 Publish Phase 26 closure report and mark exit criteria.
 

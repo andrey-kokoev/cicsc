@@ -856,6 +856,6 @@ Phase 9 forced-next mapping:
 ### AQ4. Governance Closure and Phase 27 Gate
 
 - [x] AQ4.1 Define objective Phase 26 exit checklist mapped to artifacts
-- [ ] AQ4.2 Add PHASE26↔ROADMAP drift consistency gate
+- [x] AQ4.2 Add PHASE26↔ROADMAP drift consistency gate
 - [ ] AQ4.3 Add Phase 27 block gate from Phase 26 checklist
 - [ ] AQ4.4 Publish Phase 26 closure report and mark exit criteria
