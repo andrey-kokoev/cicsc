@@ -78,7 +78,7 @@ Close Phase 20 with objective checklist and enforce entry gate for Phase 21.
 ### TODOs
 - [x] P20.4.1 Define objective Phase 20 exit checklist mapped to artifacts.
 - [x] P20.4.2 Add PHASE20↔ROADMAP drift consistency gate.
-- [ ] P20.4.3 Add Phase 21 block gate from Phase 20 checklist.
+- [x] P20.4.3 Add Phase 21 block gate from Phase 20 checklist.
 - [ ] P20.4.4 Publish Phase 20 closure report and mark exit criteria.
 
 ### Acceptance
