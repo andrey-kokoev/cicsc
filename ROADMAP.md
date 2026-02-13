@@ -246,7 +246,7 @@
 
 ### W1. Multi-Vertical Field Expansion
 
-- [ ] W1.1 Select second reference vertical and freeze evaluation criteria artifact
+- [x] W1.1 Select second reference vertical and freeze evaluation criteria artifact
 - [ ] W1.2 Run staged workload for second vertical with invariant/conformance/migration gates
 - [ ] W1.3 Add comparative incident register (ticketing vs second vertical) with severity/recurrence tags
 - [ ] W1.4 Convert comparative findings into explicit roadmap checkboxes (no hidden backlog)

@@ -1,0 +1,19 @@
+{
+  "version": "cicsc/phase6-reference-vertical-v1",
+  "vertical": "crm",
+  "objective": "Establish second-vertical deploy-operate-evolve baseline under the same gates used for ticketing.",
+  "acceptance_criteria": [
+    "spec_compile_succeeds_with_path_qualified_diagnostics",
+    "sqlite_required_conformance_gate_green",
+    "postgres_required_conformance_gate_green",
+    "migration_preflight_and_dry_run_artifacts_generated",
+    "cutover_and_rollback_drill_completed_without_invariant_breach",
+    "comparative_incident_register_captures_cross_vertical_deltas"
+  ],
+  "artifacts": {
+    "spec_v1": "verticals/crm/spec.v1.json",
+    "migration": "verticals/crm/migration.v0_to_v1.json",
+    "dataset": "verticals/crm/demo-dataset.json",
+    "phase_report": "docs/pilot/phase6-field-baseline-report.md"
+  }
+}
