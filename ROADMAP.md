@@ -553,7 +553,7 @@ Phase 9 forced-next mapping:
 ### AF3. Deferred-Surface and Deployment Discipline Hardening
 
 - [x] AF3.1 Freeze deferred-surface closure matrix and policy
-- [ ] AF3.2 Add deployment-discipline verification harnesses
+- [x] AF3.2 Add deployment-discipline verification harnesses
 - [ ] AF3.3 Publish deferred-surface closure report with residual policy
 
 ### AF4. Governance Closure and Phase 16 Gate
