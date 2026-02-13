@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase11-status-register-v1",
+  "timestamp_unix": 1771049100,
+  "items": [
+    {
+      "id": "P11-DSL-USABILITY-CLOSURE",
+      "status": "pending",
+      "owner": "phase11-dsl-owner",
+      "target_date": "2026-04-30",
+      "basis": "AB2"
+    },
+    {
+      "id": "P11-SQL-PARITY-DEFERRED-CLOSURE",
+      "status": "pending",
+      "owner": "phase11-parity-owner",
+      "target_date": "2026-05-07",
+      "basis": "AB3"
+    },
+    {
+      "id": "P11-DEPLOYMENT-EXPANSION",
+      "status": "pending",
+      "owner": "phase11-ops-owner",
+      "target_date": "2026-05-15",
+      "basis": "AB4"
+    }
+  ]
+}

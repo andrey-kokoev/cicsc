@@ -429,7 +429,7 @@ Phase 9 forced-next mapping:
 
 - [x] AB1.1 Freeze Phase 11 scope and objective ownership contract
 - [x] AB1.2 Publish Phase 11 baseline gate snapshot (parity/migration/ops/governance)
-- [ ] AB1.3 Add Phase 11 status register with owner/date accountability
+- [x] AB1.3 Add Phase 11 status register with owner/date accountability
 
 ### AB2. DSL Usability Closure
 

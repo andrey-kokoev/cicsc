@@ -29,10 +29,10 @@ Start Phase 11 with objective scope, ownership, and a stable gate baseline.
 ### TODOs
 - [x] P11.1.1 Freeze Phase 11 scope and objective ownership contract.
 - [x] P11.1.2 Publish Phase 11 baseline gate snapshot (parity/migration/ops/governance).
-- [ ] P11.1.3 Add Phase 11 status register with owner/date accountability.
+- [x] P11.1.3 Add Phase 11 status register with owner/date accountability.
 
 ### Acceptance
-- [ ] Phase 11 execution starts from explicit scope and reproducible baseline evidence.
+- [x] Phase 11 execution starts from explicit scope and reproducible baseline evidence.
 
 ---
 
