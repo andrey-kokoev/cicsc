@@ -158,7 +158,8 @@ semantic control.
 ## Appendix: Message-Passing Sequence Diagram
 
 See:
-- `docs/genesis/worktree-collab-sequence.mmd`
+- `docs/genesis/worktree-collab-sequence.md`
+- `docs/genesis/worktree-collab-sequence.mmd` (raw source)
 
 This Mermaid sequence diagram captures the normative mailbox-driven WMCC flow:
 dispatch, acknowledge, fulfill with evidence, ingest, close, and rescind path.
