@@ -200,7 +200,7 @@
 
 - [x] U3.1 Freeze v1 Spec DSL grammar and desugaring contract
 - [x] U3.2 Add compiler diagnostics with path-qualified errors for all rejected constructs
-- [ ] U3.3 Add negative compiler tests for invariant-weakening patterns
+- [x] U3.3 Add negative compiler tests for invariant-weakening patterns
 - [ ] U3.4 Add roundtrip fixtures (`spec -> ir -> validated semantics artifacts`)
 - [ ] U3.5 Add documentation and examples for non-programmer-authored workflows
 
