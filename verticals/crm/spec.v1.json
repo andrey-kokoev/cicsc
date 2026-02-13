@@ -100,7 +100,7 @@
         "pipeline": [
           {
             "group_by": {
-              "keys": [{ "name": "owner_id", "expr": { "var": { "row": { "field": "owner_id" } } } }],
+              "keys": [{ "name": "owner_id", "expr": { "get": { "expr": { "var": { "row": { "field": "attrs_json" } } }, "path": "owner_id" } } }],
               "aggs": {
                 "rows_count": { "count": {} },
                 "conversions": { "sum": { "expr": { "var": { "row": { "field": "conversion_i" } } } } }

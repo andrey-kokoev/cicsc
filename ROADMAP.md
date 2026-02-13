@@ -247,7 +247,7 @@
 ### W1. Multi-Vertical Field Expansion
 
 - [x] W1.1 Select second reference vertical and freeze evaluation criteria artifact
-- [ ] W1.2 Run staged workload for second vertical with invariant/conformance/migration gates
+- [x] W1.2 Run staged workload for second vertical with invariant/conformance/migration gates
 - [ ] W1.3 Add comparative incident register (ticketing vs second vertical) with severity/recurrence tags
 - [ ] W1.4 Convert comparative findings into explicit roadmap checkboxes (no hidden backlog)
 - [ ] W1.5 Publish Phase 6 field baseline report with forced-next priorities only
