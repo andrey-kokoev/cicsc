@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cicsc/execution-ledger.schema.json",
+  "title": "Execution Ledger Model",
+  "type": "object",
+  "required": ["version", "status_source_mode", "phases"],
+  "properties": {
+    "version": { "type": "string" },
+    "status_source_mode": {
+      "type": "string",
+      "enum": ["roadmap_md_canonical", "execution_ledger_yaml_canonical"]
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "phases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "number", "title", "status"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Z]{1,2}$" },
+          "number": { "type": "integer", "minimum": 1 },
+          "title": { "type": "string" },
+          "status": { "type": "string", "enum": ["planned", "active", "complete"] }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

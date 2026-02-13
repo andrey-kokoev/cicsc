@@ -1,0 +1,13 @@
+version: cicsc/execution-ledger-model-v1
+status_source_mode: roadmap_md_canonical
+notes:
+  - ROADMAP.md remains the canonical status source during bootstrap.
+phases:
+  - id: AT
+    number: 29
+    title: Assurance Expansion and Governance Continuity Discipline
+    status: complete
+  - id: AU
+    number: 30
+    title: Spec DSL Completion and Authoring Safety
+    status: planned

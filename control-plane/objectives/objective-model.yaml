@@ -1,0 +1,36 @@
+version: cicsc/objective-model-v1
+source:
+  genesis_dir: docs/genesis
+objectives:
+  - id: OBJ1
+    title: Invariants Hold Under Concurrency
+    description: Runtime behavior preserves declared invariants under concurrent execution.
+    success_signals:
+      - type: artifact
+        ref: docs/spec/isolation-guarantees.md
+      - type: artifact
+        ref: docs/pilot/phase7-concurrency-adversarial.json
+  - id: OBJ2
+    title: IR and Runtime Semantics Align
+    description: Core IR, runtime behavior, and conformance tests remain semantically aligned.
+    success_signals:
+      - type: artifact
+        ref: docs/pilot/phase10-parity-continuity.json
+  - id: OBJ3
+    title: Spec DSL Is Usable by Non-Programmers
+    description: The authoring surface is ergonomic and operationally safe for non-programmer users.
+    success_signals:
+      - type: artifact
+        ref: docs/spec/non-programmer-workflows.md
+  - id: OBJ4
+    title: Migrations Are Executable and Replay-Verified
+    description: Migration execution is total on declared scope and replay safety is validated.
+    success_signals:
+      - type: artifact
+        ref: docs/pilot/phase7-migration-protocol-check.json
+  - id: OBJ5
+    title: Backends Are Oracle-Equivalent on Declared Scope
+    description: SQLite/D1 and Postgres match oracle semantics for supported features.
+    success_signals:
+      - type: artifact
+        ref: docs/pilot/phase12-parity-envelope-differentials.json

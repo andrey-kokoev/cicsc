@@ -1,0 +1,14 @@
+version: cicsc/gate-model-v1
+gates:
+  - id: GATE_CANONICAL_EXECUTION
+    scope: global
+    required_scripts:
+      - scripts/check_canonical_execution_model.sh
+  - id: GATE_WORKFLOW_SINGLE_SOURCE
+    scope: global
+    required_scripts:
+      - scripts/check_workflow_single_source.sh
+  - id: GATE_CATEGORY_MODEL_CONFORMANCE
+    scope: global
+    required_scripts:
+      - scripts/check_category_model_conformance.sh
