@@ -192,7 +192,8 @@
           "claim_kind_ref",
           "worktree",
           "branch",
-          "status"
+          "status",
+          "outcome"
         ],
         "properties": {
           "id": { "type": "string", "pattern": "^ASSIGN_[A-Z0-9_]+$" },
@@ -204,6 +205,10 @@
           "status": {
             "type": "string",
             "enum": ["assigned", "in_progress", "submitted", "ingested", "done", "blocked"]
+          },
+          "outcome": {
+            "type": "string",
+            "enum": ["pending", "fulfilled_by_assignee", "fulfilled_by_main", "blocked"]
           },
           "notes": { "type": "string" }
         },

@@ -133,6 +133,7 @@ assignments:
     worktree: /home/andrey/src/kimi
     branch: phase33.ax1.2
     status: done
+    outcome: fulfilled_by_assignee
     notes: Implement executable coupling checks and ensure canonical gate coverage.
   - id: ASSIGN_PHASE33_AX22_ANTIGRAVITY
     agent_ref: AGENT_ANTIGRAVITY
@@ -141,6 +142,7 @@ assignments:
     worktree: /home/andrey/src/antigravity
     branch: phase33.ax2.2
     status: done
+    outcome: fulfilled_by_assignee
     notes: Implement formalization progress admissibility gate and artifact.
   - id: ASSIGN_PHASE33_AX13_KIMI
     agent_ref: AGENT_KIMI
@@ -149,6 +151,7 @@ assignments:
     worktree: /home/andrey/src/kimi
     branch: phase33.ax1.3
     status: assigned
+    outcome: pending
     notes: Publish coupling conformance report with residual gaps register.
   - id: ASSIGN_PHASE33_AX24_ANTIGRAVITY
     agent_ref: AGENT_ANTIGRAVITY
@@ -157,6 +160,7 @@ assignments:
     worktree: /home/andrey/src/antigravity
     branch: phase33.ax2.4
     status: done
+    outcome: fulfilled_by_main
     notes: Dispatch superseded and completed in main worktree; Phase 34 block gate
       added from Phase 33 checklist.
 message_kinds:

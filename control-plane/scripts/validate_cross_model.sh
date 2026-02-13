@@ -260,6 +260,7 @@ def main() -> int:
 
     messages = collab.get("messages", [])
     message_map = {}
+    messages_by_assignment = {}
     seen_message_ids = set()
     for msg in messages:
         mid = msg.get("id")
@@ -267,6 +268,9 @@ def main() -> int:
             errors.append(f"collab-model: duplicate message id {mid}")
         seen_message_ids.add(mid)
         message_map[mid] = msg
+        aref = msg.get("assignment_ref")
+        if isinstance(aref, str):
+            messages_by_assignment.setdefault(aref, []).append(mid)
 
     commit_re = re.compile(r"^[0-9a-f]{7,40}$")
     digest_re = re.compile(r"^sha256:[0-9a-f]{64}$")
@@ -359,6 +363,8 @@ def main() -> int:
 
     events = collab.get("message_events", [])
     events_by_message = {}
+    terminal_status_by_message = {}
+    saw_fulfilled_by_message = {}
     seen_event_ids = set()
     for ev in events:
         eid = ev.get("id")
@@ -379,6 +385,7 @@ def main() -> int:
 
         seen_seq = set()
         expected_prev = None
+        saw_fulfilled = False
         for idx, ev in enumerate(m_events):
             eid = ev.get("id")
             from_status = ev.get("from_status")
@@ -435,6 +442,51 @@ def main() -> int:
                     errors.append(
                         f"collab-model: message event {eid} rescinded from unsupported from_status {from_status}"
                     )
+            if to_status == "fulfilled":
+                saw_fulfilled = True
+
+        terminal_status_by_message[mid] = expected_prev
+        saw_fulfilled_by_message[mid] = saw_fulfilled
+
+    for aid, assignment in assignment_map.items():
+        astatus = assignment.get("status")
+        outcome = assignment.get("outcome")
+        mids = messages_by_assignment.get(aid, [])
+
+        if not mids:
+            errors.append(f"collab-model: assignment {aid} has no bound message")
+            continue
+
+        terminals = {terminal_status_by_message.get(mid) for mid in mids if mid in terminal_status_by_message}
+        has_closed = "closed" in terminals
+        has_rescinded = "rescinded" in terminals
+        has_fulfilled = any(saw_fulfilled_by_message.get(mid, False) for mid in mids)
+
+        if astatus in active_assignment_statuses and outcome != "pending":
+            errors.append(
+                f"collab-model: assignment {aid} active status {astatus} requires outcome pending (got {outcome})"
+            )
+        if astatus == "blocked" and outcome != "blocked":
+            errors.append(
+                f"collab-model: assignment {aid} blocked status requires outcome blocked (got {outcome})"
+            )
+        if astatus in {"done", "ingested"} and outcome == "pending":
+            errors.append(
+                f"collab-model: assignment {aid} terminal-ish status {astatus} cannot have pending outcome"
+            )
+        if astatus == "done":
+            if outcome == "fulfilled_by_assignee":
+                if not (has_closed and has_fulfilled):
+                    errors.append(
+                        f"collab-model: assignment {aid} fulfilled_by_assignee requires closed terminal and fulfilled event"
+                    )
+            elif outcome == "fulfilled_by_main":
+                if not has_rescinded:
+                    errors.append(
+                        f"collab-model: assignment {aid} fulfilled_by_main requires rescinded terminal message"
+                    )
+            elif outcome != "blocked":
+                errors.append(f"collab-model: assignment {aid} done has unsupported outcome {outcome}")
 
     seen_gate_ids = set()
     seen_gate_scripts = set()
