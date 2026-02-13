@@ -207,7 +207,7 @@
 ### U4. Bundle Registry and Tenant Binding
 
 - [x] U4.1 Implement bundle registry API/storage contract (publish, resolve, pin)
-- [ ] U4.2 Implement tenant-to-bundle/version binding with immutable audit trail
+- [x] U4.2 Implement tenant-to-bundle/version binding with immutable audit trail
 - [ ] U4.3 Implement bundle signature/hash verification on install
 - [ ] U4.4 Add lifecycle tests for publish/bind/upgrade/rollback
 - [ ] U4.5 Add policy controls for who may bind or migrate tenant bundles

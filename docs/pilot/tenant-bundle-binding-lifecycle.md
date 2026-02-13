@@ -10,6 +10,14 @@ A tenant binding is:
 - `active_version`
 - `updated_ts`
 
+Audit trail (append-only):
+
+- `audit_id` (monotonic)
+- `tenant_id`
+- `prev_bundle_hash`, `prev_active_version` (nullable for first bind)
+- `next_bundle_hash`, `next_active_version`
+- `changed_ts`
+
 ## Operations
 
 ### Bind
@@ -23,10 +31,15 @@ A tenant binding is:
 - Input: same shape with new `(bundle_hash, active_version)`.
 - Semantics: atomic update after verification gate passes.
 - Idempotency: repeated rebind to same target is no-op.
+- Audit: every bind/rebind appends one immutable audit row.
 
 ### Read Binding
 
 - Returns current active tuple for tenant.
+
+### Read Audit
+
+- Returns ordered append-only history for tenant binding transitions.
 
 ## Guard Conditions
 
