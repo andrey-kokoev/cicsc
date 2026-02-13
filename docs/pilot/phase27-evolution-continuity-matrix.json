@@ -1,0 +1,29 @@
+{
+  "version": "cicsc/phase27-evolution-continuity-matrix-v1",
+  "timestamp_unix": 1775943600,
+  "items": [
+    {
+      "id": "evolution_continuity_signal_auditability",
+      "class": "reliability",
+      "status": "in_scope",
+      "evidence_target": "phase27_evolution_continuity_harnesses"
+    },
+    {
+      "id": "evolution_continuity_recovery_discipline",
+      "class": "operations",
+      "status": "in_scope",
+      "evidence_target": "phase27_evolution_continuity_closure"
+    },
+    {
+      "id": "evolution_continuity_rollforward_control",
+      "class": "governance",
+      "status": "in_scope",
+      "evidence_target": "phase27_doc_consistency_and_gate_checks"
+    }
+  ],
+  "policy": {
+    "must_have_executable_evidence": true,
+    "deferred_requires_owner_date": true,
+    "no_invariant_regressions_allowed": true
+  }
+}

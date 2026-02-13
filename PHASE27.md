@@ -61,7 +61,7 @@ Close deployment-integrity validation with explicit evidence contract and findin
 Harden evolution-continuity checks for expanded deployments.
 
 ### TODOs
-- [ ] P27.3.1 Freeze evolution-continuity hardening matrix and policy.
+- [x] P27.3.1 Freeze evolution-continuity hardening matrix and policy.
 - [ ] P27.3.2 Add evolution-continuity verification harnesses.
 - [ ] P27.3.3 Publish evolution-continuity closure report with residual policy.
 
