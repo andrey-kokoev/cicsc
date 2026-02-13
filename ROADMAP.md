@@ -729,7 +729,7 @@ Phase 9 forced-next mapping:
 
 ### AM1. Scope Freeze and Baseline Continuity
 
-- [ ] AM1.1 Freeze Phase 22 scope and owner contract
+- [x] AM1.1 Freeze Phase 22 scope and owner contract
 - [ ] AM1.2 Publish Phase 22 baseline continuity snapshot
 - [ ] AM1.3 Add Phase 22 status register with owner/date discipline
 
