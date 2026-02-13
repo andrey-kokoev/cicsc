@@ -481,3 +481,30 @@ Phase 9 forced-next mapping:
 - [x] AC4.2 Add PHASE12↔ROADMAP drift consistency gate
 - [x] AC4.3 Add Phase 13 block gate from Phase 12 checklist
 - [x] AC4.4 Publish Phase 12 closure report and mark exit criteria
+
+## AD. Phase 13: Operational Scale Closure Under Categorical Guarantees
+
+### AD1. Scope Freeze and Baseline Continuity
+
+- [ ] AD1.1 Freeze Phase 13 scope and owner contract
+- [ ] AD1.2 Publish Phase 13 baseline continuity snapshot
+- [ ] AD1.3 Add Phase 13 status register with owner/date discipline
+
+### AD2. Operational Scale Envelope Expansion
+
+- [ ] AD2.1 Freeze scale envelope matrix and workload contract
+- [ ] AD2.2 Run scale workload suites with required gates
+- [ ] AD2.3 Publish scale envelope report with findings disposition
+
+### AD3. Migration and Parity Hardening at Scale
+
+- [ ] AD3.1 Freeze migration+parity hardening matrix
+- [ ] AD3.2 Add differential harnesses for scale hardening matrix
+- [ ] AD3.3 Publish hardening closure report with residual policy
+
+### AD4. Governance Closure and Phase 14 Gate
+
+- [ ] AD4.1 Define objective Phase 13 exit checklist mapped to artifacts
+- [ ] AD4.2 Add PHASE13↔ROADMAP drift consistency gate
+- [ ] AD4.3 Add Phase 14 block gate from Phase 13 checklist
+- [ ] AD4.4 Publish Phase 13 closure report and mark exit criteria
