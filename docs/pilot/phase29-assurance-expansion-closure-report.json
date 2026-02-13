@@ -1,0 +1,14 @@
+{
+  "version": "cicsc/phase29-assurance-expansion-closure-report-v1",
+  "timestamp_unix": 1770995985,
+  "inputs": {
+    "assurance_expansion_matrix": "docs/pilot/phase29-assurance-expansion-matrix.json",
+    "required_gates": "docs/pilot/phase29-assurance-expansion-required-gates.json"
+  },
+  "findings": [],
+  "policy": {
+    "requires_followup_owner_date": true,
+    "no_unresolved_criticals": true
+  },
+  "status": "pass"
+}
