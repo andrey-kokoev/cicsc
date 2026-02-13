@@ -1,0 +1,30 @@
+{
+  "version": "cicsc/phase29-scope-contract-v1",
+  "timestamp_unix": 1770995849,
+  "phase": 29,
+  "title": "Assurance Expansion and Governance Continuity Discipline",
+  "owner": "phase29-owner",
+  "milestones": [
+    {
+      "id": "AT1",
+      "name": "Scope Freeze and Baseline Continuity",
+      "goal": "Start Phase 29 from explicit scope, owners, and reproducible baseline truth."
+    },
+    {
+      "id": "AT2",
+      "name": "Assurance-Expansion Validation Closure",
+      "goal": "Close assurance-expansion validation with explicit evidence contract and findings governance."
+    },
+    {
+      "id": "AT3",
+      "name": "Governance-Continuity Hardening",
+      "goal": "Harden governance-continuity checks for expanded deployments."
+    },
+    {
+      "id": "AT4",
+      "name": "Governance Closure and Phase 30 Gate",
+      "goal": "Close Phase 29 with objective checklist and enforce entry gate for Phase 30."
+    }
+  ],
+  "status": "pass"
+}

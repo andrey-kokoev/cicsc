@@ -918,7 +918,7 @@ Phase 9 forced-next mapping:
 
 ### AT1. Scope Freeze and Baseline Continuity
 
-- [ ] AT1.1 Freeze Phase 29 scope and owner contract
+- [x] AT1.1 Freeze Phase 29 scope and owner contract
 - [ ] AT1.2 Publish Phase 29 baseline continuity snapshot
 - [ ] AT1.3 Add Phase 29 status register with owner/date discipline
 
