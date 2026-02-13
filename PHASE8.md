@@ -31,7 +31,7 @@ Strengthen backend parity from test-scope confidence to production-like workload
 - [x] P8.1.1 Freeze production-equivalence scope matrix (data size, query classes, collation/locale envelopes).
 - [x] P8.1.2 Add large-snapshot and high-cardinality differential suites (sqlite/postgres/oracle).
 - [x] P8.1.3 Add deterministic parity checks for null/collation/numeric edge-case datasets.
-- [ ] P8.1.4 Publish production-equivalence report with explicit exclusions and risk labels.
+- [x] P8.1.4 Publish production-equivalence report with explicit exclusions and risk labels.
 - [ ] P8.1.5 Convert unresolved production-equivalence risks into explicit roadmap items.
 
 ### Acceptance

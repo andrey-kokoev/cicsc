@@ -1,0 +1,39 @@
+{
+  "version": "cicsc/phase8-production-equivalence-report-v1",
+  "inputs": {
+    "scope": "docs/pilot/phase8-prod-equivalence-scope.json",
+    "large_cardinality": "docs/pilot/phase8-large-cardinality-differential.json",
+    "edgecase_parity": "docs/pilot/phase8-edgecase-parity.json"
+  },
+  "overall": "pass",
+  "exclusions": [
+    {
+      "id": "PEXCL-HAVING-001",
+      "scope": "query_operator",
+      "operator": "op:having",
+      "risk": "medium",
+      "note": "Still outside production-equivalence proved surface."
+    },
+    {
+      "id": "PEXCL-EXISTS-001",
+      "scope": "expr_operator",
+      "operator": "expr:exists",
+      "risk": "medium",
+      "note": "Still deferred until subquery parity path is widened."
+    }
+  ],
+  "risk_labels": [
+    {
+      "id": "PRISK-COLLATION-001",
+      "severity": "high",
+      "status": "open",
+      "note": "Locale-sensitive ordering still policy-scoped."
+    },
+    {
+      "id": "PRISK-NUMERIC-001",
+      "severity": "medium",
+      "status": "open",
+      "note": "Numeric affinity differences remain bounded by oracle-normalized comparison."
+    }
+  ]
+}
