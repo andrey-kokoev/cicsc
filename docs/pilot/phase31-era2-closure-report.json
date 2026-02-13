@@ -1,0 +1,17 @@
+{
+  "version": "cicsc/phase31-era2-closure-report-v1",
+  "timestamp_unix": 1771011600,
+  "phase": 31,
+  "status": "pass",
+  "inputs": {
+    "era2_completion_target": "docs/pilot/phase31-era2-completion-target.json",
+    "objective_extension_contract": "docs/pilot/phase31-objective-extension-contract.json",
+    "proof_evidence_coupling_plan": "docs/pilot/phase31-proof-evidence-coupling-plan.json",
+    "expanded_scope_gate": "docs/pilot/phase31-expanded-scope-gate.json"
+  },
+  "notes": [
+    "Phase 31 closes as a contract-definition phase for Era 2.",
+    "Execution may proceed to expanded-scope implementation only through subsequent execution-ledger checkboxes.",
+    "No objective weakening is admitted by this closure."
+  ]
+}

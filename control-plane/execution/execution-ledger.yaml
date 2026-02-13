@@ -1621,7 +1621,7 @@ phases:
 - id: AV
   number: 31
   title: Era 2 Expansion Targeting
-  status: active
+  status: complete
   milestones:
   - id: AV1
     title: Next-Era Completion Target Definition
@@ -1637,4 +1637,4 @@ phases:
       status: done
     - id: AV1.4
       title: Define expanded-scope gate and closure reporting contract
-      status: open
+      status: done

@@ -1,0 +1,20 @@
+{
+  "version": "cicsc/phase31-expanded-scope-gate-v1",
+  "timestamp_unix": 1771009596,
+  "overall": "pass",
+  "checks": [
+    {
+      "artifact": "docs/pilot/phase31-era2-completion-target.json",
+      "status": "pass"
+    },
+    {
+      "artifact": "docs/pilot/phase31-objective-extension-contract.json",
+      "status": "pass"
+    },
+    {
+      "artifact": "docs/pilot/phase31-proof-evidence-coupling-plan.json",
+      "status": "pass"
+    }
+  ],
+  "policy": "phase31_closure_requires_target_extension_and_coupling_contracts"
+}

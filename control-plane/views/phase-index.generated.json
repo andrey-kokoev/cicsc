@@ -2729,7 +2729,7 @@
       "id": "AV",
       "number": 31,
       "title": "Era 2 Expansion Targeting",
-      "status": "active",
+      "status": "complete",
       "milestones": [
         {
           "id": "AV1",
@@ -2743,17 +2743,17 @@
             {
               "id": "AV1.2",
               "title": "Define objective extension contract for expanded semantic scope",
-              "status": "open"
+              "status": "done"
             },
             {
               "id": "AV1.3",
               "title": "Define proof-evidence coupling plan for expanded claims",
-              "status": "open"
+              "status": "done"
             },
             {
               "id": "AV1.4",
               "title": "Define expanded-scope gate and closure reporting contract",
-              "status": "open"
+              "status": "done"
             }
           ]
         }

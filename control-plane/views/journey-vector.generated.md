@@ -40,7 +40,7 @@
 - Phase 28 (AS): Assurance Scaling and Operational Continuity Discipline [complete]
 - Phase 29 (AT): Assurance Expansion and Governance Continuity Discipline [complete]
 - Phase 30 (AU): Objective Closure Milestone [complete]
-- Phase 31 (AV): Era 2 Expansion Targeting [active]
+- Phase 31 (AV): Era 2 Expansion Targeting [complete]
 
 ## Canonical Rule
 
