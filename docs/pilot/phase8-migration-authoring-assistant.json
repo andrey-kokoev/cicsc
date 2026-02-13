@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase8-migration-authoring-assistant-v1",
+  "timestamp_unix": 1770948762,
+  "overall": "pass",
+  "checks": {
+    "migration_totality":{"status":"pass","log":"docs/pilot/phase8-migration-authoring-assistant.migration_totality.log"},
+    "migration_spec_shape":{"status":"pass","log":"docs/pilot/phase8-migration-authoring-assistant.migration_spec_shape.log"},
+    "rollback_readiness":{"status":"pass","log":"docs/pilot/phase8-migration-authoring-assistant.rollback_readiness.log"}
+  }
+}

@@ -349,7 +349,7 @@ Phase 8 production-equivalence risk mapping:
 
 - [x] Y3.1 Freeze spec authoring pain-point taxonomy from field evidence
 - [x] Y3.2 Add DSL ergonomics improvements with negative typecheck coverage
-- [ ] Y3.3 Add migration authoring assistant checks (coverage/safety/rollback readiness)
+- [x] Y3.3 Add migration authoring assistant checks (coverage/safety/rollback readiness)
 - [ ] Y3.4 Add multi-vertical spec/migration usability benchmark artifact
 - [ ] Y3.5 Publish ergonomics report with invariant-safety confirmation
 
