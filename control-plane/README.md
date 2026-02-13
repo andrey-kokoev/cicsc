@@ -100,3 +100,4 @@ Generated views:
 - `control-plane/views/phase-index.generated.json`
 - `control-plane/views/gate-order.generated.json`
 - `control-plane/views/execution-status.generated.json`
+- `control-plane/views/assignments.generated.json`

@@ -14,6 +14,7 @@ import yaml
 root = Path('.')
 obj = yaml.safe_load((root / 'control-plane/objectives/objective-model.yaml').read_text(encoding='utf-8'))
 cap = yaml.safe_load((root / 'control-plane/capabilities/capability-model.yaml').read_text(encoding='utf-8'))
+collab = yaml.safe_load((root / 'control-plane/collaboration/collab-model.yaml').read_text(encoding='utf-8'))
 exe = yaml.safe_load((root / 'control-plane/execution/execution-ledger.yaml').read_text(encoding='utf-8'))
 gate = yaml.safe_load((root / 'control-plane/gates/gate-model.yaml').read_text(encoding='utf-8'))
 status = json.loads((root / 'control-plane/views/execution-status.generated.json').read_text(encoding='utf-8'))
@@ -156,6 +157,18 @@ phase_index = {
 }
 (views / 'phase-index.generated.json').write_text(
     json.dumps(phase_index, indent=2) + "\n", encoding='utf-8'
+)
+
+assignments = collab.get('assignments', [])
+assignments_view = {
+    "_generated": True,
+    "_source": "control-plane/collaboration/collab-model.yaml",
+    "_generator": "control-plane/scripts/generate_views.sh",
+    "version": "cicsc/assignments-v1",
+    "rows": assignments,
+}
+(views / 'assignments.generated.json').write_text(
+    json.dumps(assignments_view, indent=2) + "\n", encoding='utf-8'
 )
 
 print('generated control-plane views')
