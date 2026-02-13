@@ -101,12 +101,16 @@ Protocol rule:
 Message I/O command surface:
 - read inbox (actionable only):
   - `./control-plane/scripts/collab_inbox.sh --worktree "$PWD" --refresh --actionable-only`
+- single-step worker loop helper (claim + fulfillment guidance):
+  - `./control-plane/scripts/collab_run_once.sh --worktree "$PWD"`
 - acknowledge next actionable message:
   - `./control-plane/scripts/collab_claim_next.sh --worktree "$PWD"`
 - fulfill message with typed evidence (digest auto-computed):
   - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --script scripts/check_x.sh --gate-report docs/pilot/report.json`
 - main-side ingest+close wrapper:
   - `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`
+- stale mailbox watcher (warn/fail thresholds):
+  - `./control-plane/scripts/collab_stale_watch.sh --warn-hours 24 --fail-hours 72`
 
 ### 1. Preserve invariants before adding features
 Never add functionality that weakens:

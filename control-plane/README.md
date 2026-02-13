@@ -74,6 +74,8 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `control-plane/scripts/collab_claim_next.sh`
 - `control-plane/scripts/collab_fulfill.sh`
 - `control-plane/scripts/collab_close_ingested.sh`
+- `control-plane/scripts/collab_run_once.sh`
+- `control-plane/scripts/collab_stale_watch.sh`
 
 Sync gate:
 - `scripts/check_control_plane_sync.sh`
