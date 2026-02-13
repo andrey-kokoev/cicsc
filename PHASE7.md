@@ -88,16 +88,16 @@ Ensure next-phase expansion only starts from objective semantic closure.
 - [x] P7.4.2 Require green required gates (parity + concurrency + migration protocol).
 - [x] P7.4.3 Require unresolved criticals register to be empty or explicitly deferred with owner/date.
 - [x] P7.4.4 Add CI/doc checks rejecting Phase 7 status drift.
-- [ ] P7.4.5 Block Phase 8 unless all checklist items are pass.
+- [x] P7.4.5 Block Phase 8 unless all checklist items are pass.
 
 ### Acceptance
-- [ ] Phase transition is governed by artifact truth, not narrative status.
+- [x] Phase transition is governed by artifact truth, not narrative status.
 
 ---
 
 ## Exit Criteria (Phase 7)
 
-- [ ] Cross-backend semantic parity is measurable, enforced, and green for in-scope surface.
-- [ ] Concurrency/isolation guarantees are strengthened and reproducibly validated.
-- [ ] Migration protocol is hardened with deterministic recovery evidence.
-- [ ] Governance checks continuously enforce artifact-status consistency.
+- [x] Cross-backend semantic parity is measurable, enforced, and green for in-scope surface.
+- [x] Concurrency/isolation guarantees are strengthened and reproducibly validated.
+- [x] Migration protocol is hardened with deterministic recovery evidence.
+- [x] Governance checks continuously enforce artifact-status consistency.

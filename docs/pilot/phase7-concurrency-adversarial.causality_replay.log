@@ -1,24 +1,24 @@
-(node:759737) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:762935) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:759737) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/concurrency/causality-replay.test.ts is not specified and it doesn't parse as CommonJS.
+(node:762935) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/concurrency/causality-replay.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ P4.3.1: isCausal connected to replay behavior
-  ✔ rejects histories where events are out of sequence order (0.823355ms)
-  ✔ accepts histories where events respect sequence order (0.208834ms)
-  ✔ allows interleaved events from different streams (0.192085ms)
-✔ P4.3.1: isCausal connected to replay behavior (2.823613ms)
+  ✔ rejects histories where events are out of sequence order (1.428077ms)
+  ✔ accepts histories where events respect sequence order (0.149417ms)
+  ✔ allows interleaved events from different streams (0.149189ms)
+✔ P4.3.1: isCausal connected to replay behavior (2.486023ms)
 ▶ P4.3.4: Deterministic replay under causally-equivalent permutations
-  ✔ produces same state for histories with different interleaving (0.295483ms)
-  ✔ detects concurrent events and verifies commutativity (0.261199ms)
-✔ P4.3.4: Deterministic replay under causally-equivalent permutations (0.719662ms)
+  ✔ produces same state for histories with different interleaving (0.286028ms)
+  ✔ detects concurrent events and verifies commutativity (0.203053ms)
+✔ P4.3.4: Deterministic replay under causally-equivalent permutations (0.624631ms)
 ▶ happensBefore partial order properties (matches Lean theorems)
-  ✔ is irreflexive (no event happens before itself) (0.129814ms)
-  ✔ is transitive (0.130776ms)
-  ✔ is asymmetric (0.117208ms)
-✔ happensBefore partial order properties (matches Lean theorems) (0.560743ms)
+  ✔ is irreflexive (no event happens before itself) (0.138115ms)
+  ✔ is transitive (0.123268ms)
+  ✔ is asymmetric (0.099463ms)
+✔ happensBefore partial order properties (matches Lean theorems) (0.55707ms)
 ℹ tests 8
 ℹ suites 3
 ℹ pass 8
@@ -26,4 +26,4 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 128.261783
+ℹ duration_ms 140.717831
