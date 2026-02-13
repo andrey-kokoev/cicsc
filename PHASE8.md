@@ -82,7 +82,7 @@ Improve authoring UX while preserving hard invariants and compile-time rejection
 Prevent semantic drift while expanding toward broader deployment.
 
 ### TODOs
-- [ ] P8.4.1 Define objective Phase 8 exit checklist mapped to artifacts.
+- [x] P8.4.1 Define objective Phase 8 exit checklist mapped to artifacts.
 - [ ] P8.4.2 Require green required gates (production-equivalence + resilience + ergonomics safety).
 - [ ] P8.4.3 Require unresolved criticals register empty or explicitly deferred with owner/date.
 - [ ] P8.4.4 Add CI/doc checks rejecting Phase 8 status drift.

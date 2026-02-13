@@ -355,7 +355,7 @@ Phase 8 production-equivalence risk mapping:
 
 ### Y4. Governance Gate for Phase 9
 
-- [ ] Y4.1 Define objective Phase 8 exit checklist mapped to artifacts
+- [x] Y4.1 Define objective Phase 8 exit checklist mapped to artifacts
 - [ ] Y4.2 Require green required gates (equivalence + resilience + ergonomics safety)
 - [ ] Y4.3 Require unresolved criticals register empty or explicitly deferred with owner/date
 - [ ] Y4.4 Add CI/doc checks rejecting Phase 8 status drift
