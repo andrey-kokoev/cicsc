@@ -186,7 +186,7 @@
             },
             {
               "id": "U6.4",
-              "title": "Convert findings into roadmap checkboxes (no hidden backlog)",
+              "title": "Convert findings into execution-ledger checkboxes (no hidden backlog)",
               "status": "done"
             },
             {
@@ -256,7 +256,7 @@
             },
             {
               "id": "W1.4",
-              "title": "Convert comparative findings into explicit roadmap checkboxes (no hidden backlog)",
+              "title": "Convert comparative findings into explicit execution-ledger checkboxes (no hidden backlog)",
               "status": "done"
             },
             {
@@ -393,7 +393,7 @@
             },
             {
               "id": "X1.5",
-              "title": "Convert unresolved parity deltas into explicit roadmap items",
+              "title": "Convert unresolved parity deltas into explicit execution-ledger items",
               "status": "done"
             }
           ]
@@ -525,7 +525,7 @@
             },
             {
               "id": "Y1.5",
-              "title": "Convert unresolved production-equivalence risks into explicit roadmap items",
+              "title": "Convert unresolved production-equivalence risks into explicit execution-ledger items",
               "status": "done"
             }
           ]
@@ -745,7 +745,7 @@
             },
             {
               "id": "Z4.4",
-              "title": "Convert findings into forced-next roadmap tasks (no speculative backlog inflation)",
+              "title": "Convert findings into forced-next execution-ledger tasks (no speculative backlog inflation)",
               "status": "done"
             },
             {
@@ -826,7 +826,7 @@
             },
             {
               "id": "AA3.2",
-              "title": "Add PHASE10\u2194ROADMAP status-drift consistency gate",
+              "title": "Add PHASE10\u2194Execution Ledger status-drift consistency gate",
               "status": "done"
             },
             {
@@ -1020,7 +1020,7 @@
             },
             {
               "id": "AC4.2",
-              "title": "Add PHASE12\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE12\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -1117,7 +1117,7 @@
             },
             {
               "id": "AD4.2",
-              "title": "Add PHASE13\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE13\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -1214,7 +1214,7 @@
             },
             {
               "id": "AE4.2",
-              "title": "Add PHASE14\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE14\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -1311,7 +1311,7 @@
             },
             {
               "id": "AF4.2",
-              "title": "Add PHASE15\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE15\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -1408,7 +1408,7 @@
             },
             {
               "id": "AG4.2",
-              "title": "Add PHASE16\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE16\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -1505,7 +1505,7 @@
             },
             {
               "id": "AH4.2",
-              "title": "Add PHASE17\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE17\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -1602,7 +1602,7 @@
             },
             {
               "id": "AI4.2",
-              "title": "Add PHASE18\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE18\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -1699,7 +1699,7 @@
             },
             {
               "id": "AJ4.2",
-              "title": "Add PHASE19\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE19\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -1796,7 +1796,7 @@
             },
             {
               "id": "AK4.2",
-              "title": "Add PHASE20\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE20\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -1893,7 +1893,7 @@
             },
             {
               "id": "AL4.2",
-              "title": "Add PHASE21\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE21\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -1990,7 +1990,7 @@
             },
             {
               "id": "AM4.2",
-              "title": "Add PHASE22\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE22\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -2087,7 +2087,7 @@
             },
             {
               "id": "AN4.2",
-              "title": "Add PHASE23\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE23\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -2184,7 +2184,7 @@
             },
             {
               "id": "AO4.2",
-              "title": "Add PHASE24\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE24\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -2281,7 +2281,7 @@
             },
             {
               "id": "AP4.2",
-              "title": "Add PHASE25\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE25\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -2378,7 +2378,7 @@
             },
             {
               "id": "AQ4.2",
-              "title": "Add PHASE26\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE26\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -2475,7 +2475,7 @@
             },
             {
               "id": "AR4.2",
-              "title": "Add PHASE27\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE27\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -2572,7 +2572,7 @@
             },
             {
               "id": "AS4.2",
-              "title": "Add PHASE28\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE28\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {
@@ -2669,7 +2669,7 @@
             },
             {
               "id": "AT4.2",
-              "title": "Add PHASE29\u2194ROADMAP drift consistency gate",
+              "title": "Add PHASE29\u2194Execution Ledger drift consistency gate",
               "status": "done"
             },
             {

@@ -24,7 +24,7 @@
     },
     {
       "id": "P10_EXIT_GOVERNANCE_DRIFT",
-      "description": "PHASE10 and ROADMAP status must remain drift-free under automation.",
+      "description": "PHASE10 and execution-ledger status must remain drift-free under automation.",
       "artifacts": [
         "scripts/check_phase10_docs_consistency.sh",
         "docs/pilot/phase10-doc-consistency.json"

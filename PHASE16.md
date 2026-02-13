@@ -78,7 +78,7 @@ Close Phase 16 with objective checklist and enforce entry gate for Phase 17.
 
 ### TODOs
 - [x] P16.4.1 Define objective Phase 16 exit checklist mapped to artifacts.
-- [x] P16.4.2 Add PHASE16↔ROADMAP drift consistency gate.
+- [x] P16.4.2 Add PHASE16↔Execution Ledger drift consistency gate.
 - [x] P16.4.3 Add Phase 17 block gate from Phase 16 checklist.
 - [x] P16.4.4 Publish Phase 16 closure report and mark exit criteria.
 

@@ -9,7 +9,7 @@
   "phase23_gate_blocked": false,
   "status": "pass",
   "notes": [
-    "PHASE22 and ROADMAP truth remain synchronized.",
+    "PHASE22 and execution-ledger truth remain synchronized.",
     "Phase 23 gate is unblocked only after AM-series closure."
   ]
 }

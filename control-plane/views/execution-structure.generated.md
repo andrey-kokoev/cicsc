@@ -53,7 +53,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 - U6.1 Select one reference vertical and freeze evaluation criteria
 - U6.2 Run staged workload with invariants, conformance, and migration checks enabled
 - U6.3 Capture drift/perf/missing-primitive incidents with severity labels
-- U6.4 Convert findings into roadmap checkboxes (no hidden backlog)
+- U6.4 Convert findings into execution-ledger checkboxes (no hidden backlog)
 - U6.5 Publish phase report with forced-next priorities only
 
 ### U7. Governance Gate for Phase 6
@@ -71,7 +71,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 - W1.1 Select second reference vertical and freeze evaluation criteria artifact
 - W1.2 Run staged workload for second vertical with invariant/conformance/migration gates
 - W1.3 Add comparative incident register (ticketing vs second vertical) with severity/recurrence tags
-- W1.4 Convert comparative findings into explicit roadmap checkboxes (no hidden backlog)
+- W1.4 Convert comparative findings into explicit execution-ledger checkboxes (no hidden backlog)
 - W1.5 Publish Phase 6 field baseline report with forced-next priorities only
 
 ### W2. Concurrency Contract Hardening
@@ -106,7 +106,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 - X1.2 Add full in-scope sqlite/postgres/oracle differential suites
 - X1.3 Enforce fail-fast rejection for out-of-scope operators
 - X1.4 Publish backend parity report with explicit exclusions
-- X1.5 Convert unresolved parity deltas into explicit roadmap items
+- X1.5 Convert unresolved parity deltas into explicit execution-ledger items
 
 ### X2. Concurrency and Isolation Strengthening
 
@@ -140,7 +140,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 - Y1.2 Add large-snapshot/high-cardinality sqlite/postgres/oracle differential suites
 - Y1.3 Add deterministic parity checks for null/collation/numeric edge-case datasets
 - Y1.4 Publish production-equivalence report with exclusions and risk labels
-- Y1.5 Convert unresolved production-equivalence risks into explicit roadmap items
+- Y1.5 Convert unresolved production-equivalence risks into explicit execution-ledger items
 
 ### Y2. Multi-Tenant Operational Resilience
 
@@ -197,7 +197,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 - Z4.1 Select and freeze Phase 9 reference deployment set (at least two verticals)
 - Z4.2 Run scripted workloads with invariants + parity + migration gates enabled
 - Z4.3 Capture drift/missing-primitive/performance findings with severity labels
-- Z4.4 Convert findings into forced-next roadmap tasks (no speculative backlog inflation)
+- Z4.4 Convert findings into forced-next execution-ledger tasks (no speculative backlog inflation)
 - Z4.5 Define and enforce objective Phase 9 exit checklist + Phase 10 block gate
 
 ## AA. Phase 10: Forced-Next Closure and Production Parity Continuity
@@ -219,7 +219,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AA3. Governance Gate for Phase 11
 
 - AA3.1 Define objective Phase 10 exit checklist mapped to artifacts
-- AA3.2 Add PHASE10↔ROADMAP status-drift consistency gate
+- AA3.2 Add PHASE10↔Execution Ledger status-drift consistency gate
 - AA3.3 Add Phase 11 block gate based on Phase 10 checklist
 - AA3.4 Publish Phase 10 closure report and mark exit criteria
 
@@ -273,7 +273,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AC4. Governance Closure and Phase 13 Gate
 
 - AC4.1 Define objective Phase 12 exit checklist mapped to artifacts
-- AC4.2 Add PHASE12↔ROADMAP drift consistency gate
+- AC4.2 Add PHASE12↔Execution Ledger drift consistency gate
 - AC4.3 Add Phase 13 block gate from Phase 12 checklist
 - AC4.4 Publish Phase 12 closure report and mark exit criteria
 
@@ -300,7 +300,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AD4. Governance Closure and Phase 14 Gate
 
 - AD4.1 Define objective Phase 13 exit checklist mapped to artifacts
-- AD4.2 Add PHASE13↔ROADMAP drift consistency gate
+- AD4.2 Add PHASE13↔Execution Ledger drift consistency gate
 - AD4.3 Add Phase 14 block gate from Phase 13 checklist
 - AD4.4 Publish Phase 13 closure report and mark exit criteria
 
@@ -327,7 +327,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AE4. Governance Closure and Phase 15 Gate
 
 - AE4.1 Define objective Phase 14 exit checklist mapped to artifacts
-- AE4.2 Add PHASE14↔ROADMAP drift consistency gate
+- AE4.2 Add PHASE14↔Execution Ledger drift consistency gate
 - AE4.3 Add Phase 15 block gate from Phase 14 checklist
 - AE4.4 Publish Phase 14 closure report and mark exit criteria
 
@@ -354,7 +354,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AF4. Governance Closure and Phase 16 Gate
 
 - AF4.1 Define objective Phase 15 exit checklist mapped to artifacts
-- AF4.2 Add PHASE15↔ROADMAP drift consistency gate
+- AF4.2 Add PHASE15↔Execution Ledger drift consistency gate
 - AF4.3 Add Phase 16 block gate from Phase 15 checklist
 - AF4.4 Publish Phase 15 closure report and mark exit criteria
 
@@ -381,7 +381,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AG4. Governance Closure and Phase 17 Gate
 
 - AG4.1 Define objective Phase 16 exit checklist mapped to artifacts
-- AG4.2 Add PHASE16↔ROADMAP drift consistency gate
+- AG4.2 Add PHASE16↔Execution Ledger drift consistency gate
 - AG4.3 Add Phase 17 block gate from Phase 16 checklist
 - AG4.4 Publish Phase 16 closure report and mark exit criteria
 
@@ -408,7 +408,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AH4. Governance Closure and Phase 18 Gate
 
 - AH4.1 Define objective Phase 17 exit checklist mapped to artifacts
-- AH4.2 Add PHASE17↔ROADMAP drift consistency gate
+- AH4.2 Add PHASE17↔Execution Ledger drift consistency gate
 - AH4.3 Add Phase 18 block gate from Phase 17 checklist
 - AH4.4 Publish Phase 17 closure report and mark exit criteria
 
@@ -435,7 +435,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AI4. Governance Closure and Phase 19 Gate
 
 - AI4.1 Define objective Phase 18 exit checklist mapped to artifacts
-- AI4.2 Add PHASE18↔ROADMAP drift consistency gate
+- AI4.2 Add PHASE18↔Execution Ledger drift consistency gate
 - AI4.3 Add Phase 19 block gate from Phase 18 checklist
 - AI4.4 Publish Phase 18 closure report and mark exit criteria
 
@@ -462,7 +462,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AJ4. Governance Closure and Phase 20 Gate
 
 - AJ4.1 Define objective Phase 19 exit checklist mapped to artifacts
-- AJ4.2 Add PHASE19↔ROADMAP drift consistency gate
+- AJ4.2 Add PHASE19↔Execution Ledger drift consistency gate
 - AJ4.3 Add Phase 20 block gate from Phase 19 checklist
 - AJ4.4 Publish Phase 19 closure report and mark exit criteria
 
@@ -489,7 +489,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AK4. Governance Closure and Phase 21 Gate
 
 - AK4.1 Define objective Phase 20 exit checklist mapped to artifacts
-- AK4.2 Add PHASE20↔ROADMAP drift consistency gate
+- AK4.2 Add PHASE20↔Execution Ledger drift consistency gate
 - AK4.3 Add Phase 21 block gate from Phase 20 checklist
 - AK4.4 Publish Phase 20 closure report and mark exit criteria
 
@@ -516,7 +516,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AL4. Governance Closure and Phase 22 Gate
 
 - AL4.1 Define objective Phase 21 exit checklist mapped to artifacts
-- AL4.2 Add PHASE21↔ROADMAP drift consistency gate
+- AL4.2 Add PHASE21↔Execution Ledger drift consistency gate
 - AL4.3 Add Phase 22 block gate from Phase 21 checklist
 - AL4.4 Publish Phase 21 closure report and mark exit criteria
 
@@ -543,7 +543,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AM4. Governance Closure and Phase 23 Gate
 
 - AM4.1 Define objective Phase 22 exit checklist mapped to artifacts
-- AM4.2 Add PHASE22↔ROADMAP drift consistency gate
+- AM4.2 Add PHASE22↔Execution Ledger drift consistency gate
 - AM4.3 Add Phase 23 block gate from Phase 22 checklist
 - AM4.4 Publish Phase 22 closure report and mark exit criteria
 
@@ -570,7 +570,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AN4. Governance Closure and Phase 24 Gate
 
 - AN4.1 Define objective Phase 23 exit checklist mapped to artifacts
-- AN4.2 Add PHASE23↔ROADMAP drift consistency gate
+- AN4.2 Add PHASE23↔Execution Ledger drift consistency gate
 - AN4.3 Add Phase 24 block gate from Phase 23 checklist
 - AN4.4 Publish Phase 23 closure report and mark exit criteria
 
@@ -597,7 +597,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AO4. Governance Closure and Phase 25 Gate
 
 - AO4.1 Define objective Phase 24 exit checklist mapped to artifacts
-- AO4.2 Add PHASE24↔ROADMAP drift consistency gate
+- AO4.2 Add PHASE24↔Execution Ledger drift consistency gate
 - AO4.3 Add Phase 25 block gate from Phase 24 checklist
 - AO4.4 Publish Phase 24 closure report and mark exit criteria
 
@@ -624,7 +624,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AP4. Governance Closure and Phase 26 Gate
 
 - AP4.1 Define objective Phase 25 exit checklist mapped to artifacts
-- AP4.2 Add PHASE25↔ROADMAP drift consistency gate
+- AP4.2 Add PHASE25↔Execution Ledger drift consistency gate
 - AP4.3 Add Phase 26 block gate from Phase 25 checklist
 - AP4.4 Publish Phase 25 closure report and mark exit criteria
 
@@ -651,7 +651,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AQ4. Governance Closure and Phase 27 Gate
 
 - AQ4.1 Define objective Phase 26 exit checklist mapped to artifacts
-- AQ4.2 Add PHASE26↔ROADMAP drift consistency gate
+- AQ4.2 Add PHASE26↔Execution Ledger drift consistency gate
 - AQ4.3 Add Phase 27 block gate from Phase 26 checklist
 - AQ4.4 Publish Phase 26 closure report and mark exit criteria
 
@@ -678,7 +678,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AR4. Governance Closure and Phase 28 Gate
 
 - AR4.1 Define objective Phase 27 exit checklist mapped to artifacts
-- AR4.2 Add PHASE27↔ROADMAP drift consistency gate
+- AR4.2 Add PHASE27↔Execution Ledger drift consistency gate
 - AR4.3 Add Phase 28 block gate from Phase 27 checklist
 - AR4.4 Publish Phase 27 closure report and mark exit criteria
 
@@ -705,7 +705,7 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AS4. Governance Closure and Phase 29 Gate
 
 - AS4.1 Define objective Phase 28 exit checklist mapped to artifacts
-- AS4.2 Add PHASE28↔ROADMAP drift consistency gate
+- AS4.2 Add PHASE28↔Execution Ledger drift consistency gate
 - AS4.3 Add Phase 29 block gate from Phase 28 checklist
 - AS4.4 Publish Phase 28 closure report and mark exit criteria
 
@@ -732,6 +732,6 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 ### AT4. Governance Closure and Phase 30 Gate
 
 - AT4.1 Define objective Phase 29 exit checklist mapped to artifacts
-- AT4.2 Add PHASE29↔ROADMAP drift consistency gate
+- AT4.2 Add PHASE29↔Execution Ledger drift consistency gate
 - AT4.3 Add Phase 30 block gate from Phase 29 checklist
 - AT4.4 Publish Phase 29 closure report and mark exit criteria

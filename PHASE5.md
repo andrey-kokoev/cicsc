@@ -120,12 +120,12 @@ Prove semantic fitness under real operational workload.
 - [x] P5.6.1 Select one reference vertical and freeze its evaluation criteria.
 - [x] P5.6.2 Run staged workload with invariants, conformance, and migration checks enabled.
 - [x] P5.6.3 Collect drift/perf/missing-primitive incidents with severity labels.
-- [x] P5.6.4 Convert findings into roadmap checkboxes (no hidden backlog).
+- [x] P5.6.4 Convert findings into execution-ledger checkboxes (no hidden backlog).
 - [x] P5.6.5 Publish phase report with forced-next priorities only.
 
 ### Acceptance
 - [x] At least one vertical run demonstrates deploy/operate/evolve loop with no invariant breaches.
-- [x] Remaining gaps are explicitly captured as sequenced roadmap items.
+- [x] Remaining gaps are explicitly captured as sequenced execution-ledger items.
 
 ---
 

@@ -77,7 +77,7 @@ Close Phase 24 with objective checklist and enforce entry gate for Phase 25.
 
 ### TODOs
 - [x] P24.4.1 Define objective Phase 24 exit checklist mapped to artifacts.
-- [x] P24.4.2 Add PHASE24↔ROADMAP drift consistency gate.
+- [x] P24.4.2 Add PHASE24↔Execution Ledger drift consistency gate.
 - [x] P24.4.3 Add Phase 25 block gate from Phase 24 checklist.
 - [x] P24.4.4 Publish Phase 24 closure report and mark exit criteria.
 

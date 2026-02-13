@@ -1,16 +1,16 @@
 # ROADMAP_WORKING_AGREEMENT.md
 
-This document defines how the CICSC roadmap is to be executed.
+This document defines how the CICSC execution plan is to be executed.
 It is process documentation for contributors and agents, not product documentation.
 
 ---
 
 ## 1. The Roadmap Is the Plan
 
-The checklist in **`# CICSC Completion TODO (Comprehensive)`** is the canonical roadmap.
+The checklist in **`# CICSC Completion TODO (Comprehensive)`** is the canonical execution ledger.
 
 - Every checkbox corresponds to a concrete deliverable.
-- No work exists outside the roadmap.
+- No work exists outside the execution ledger.
 - New work enters the system only by adding new checkboxes.
 - `control-plane/execution/execution-ledger.yaml` is the only canonical status ledger.
 - `PHASE*.md` files are derived views; they may aid readability but do not own truth.
@@ -51,7 +51,7 @@ Within a section:
 
 Rules:
 
-- Do not partially implement multiple roadmap items at once.
+- Do not partially implement multiple execution-ledger items at once.
 - Pick one checkbox and complete it end-to-end.
 - Avoid touching unrelated sections in the same change.
 
@@ -61,7 +61,7 @@ This prevents semantic drift and half-finished invariants.
 
 ## 5. Invariant-First Rule
 
-If a roadmap item introduces or modifies semantics:
+If an execution-ledger item introduces or modifies semantics:
 
 - First update the IR typechecker or Spec compiler restrictions.
 - Then implement runtime or lowering behavior.
@@ -109,7 +109,7 @@ If a vertical requires special behavior, that behavior belongs in:
 
 When implementation reveals missing primitives:
 
-- Add new roadmap items.
+- Add new execution-ledger items.
 - Add new IR primitives if needed.
 - Update typechecker rules accordingly.
 
@@ -119,7 +119,7 @@ Do not “patch around” missing abstractions in runtime.
 
 ## 9. Review Checklist (Before Checking a Box)
 
-Before marking any roadmap item complete, verify:
+Before marking any execution-ledger item complete, verify:
 
 - [ ] Tests exist and pass
 - [ ] Typechecker updated (if relevant)
@@ -131,7 +131,7 @@ Before marking any roadmap item complete, verify:
 
 ## 10. Exit Criteria
 
-A section of the roadmap is “complete” only when:
+A section of the execution ledger is “complete” only when:
 
 - All checkboxes in that section are checked
 - No TODOs remain hidden in code comments
@@ -154,7 +154,7 @@ This process explicitly rejects:
 
 ## 12. North Star
 
-The roadmap is complete when:
+The execution ledger is complete when:
 
 > A user can describe a socio-technical system in Spec,
 > compile it, deploy it, evolve it safely,

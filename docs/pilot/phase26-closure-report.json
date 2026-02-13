@@ -9,7 +9,7 @@
   "phase27_gate_blocked": false,
   "status": "pass",
   "notes": [
-    "PHASE26 and ROADMAP truth remain synchronized.",
+    "PHASE26 and execution-ledger truth remain synchronized.",
     "Phase 27 gate is unblocked only after AQ-series closure."
   ]
 }

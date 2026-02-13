@@ -9,7 +9,7 @@ Status: historical phase plan; remaining open items were closed or superseded by
 executed Phase 5-8 governance/evidence artifacts.
 
 Phase 4 turns current semantic scaffolding into production-grade, theorem-backed guarantees.
-Focus: close objective gaps, not just roadmap checkboxes.
+Focus: close objective gaps, not just execution-ledger checkboxes.
 
 ---
 
@@ -116,7 +116,7 @@ Validate semantics under real workflow pressure.
 - [x] P4.6.1 Pick one vertical (ticketing/CRM/kanban) as Phase 4 reference deployment. (Superseded by multi-vertical Phase 5/6/8 evidence.)
 - [x] P4.6.2 Run scripted workload with invariants + conformance checks enabled. (Closed by staged run artifacts in later phases.)
 - [x] P4.6.3 Capture drift/missing-primitive/performance findings. (Closed by comparative incident artifacts in later phases.)
-- [x] P4.6.4 Convert findings into concrete roadmap tasks with severity labels. (Closed by roadmap risk mapping artifacts.)
+- [x] P4.6.4 Convert findings into concrete execution-ledger tasks with severity labels. (Closed by roadmap risk mapping artifacts.)
 - [x] P4.6.5 Publish post-run report with “forced-next” items only. (Closed by phase reports and exit checklists.)
 
 ### Acceptance

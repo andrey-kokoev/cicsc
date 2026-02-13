@@ -116,7 +116,7 @@ phases:
       title: Capture drift/perf/missing-primitive incidents with severity labels
       status: done
     - id: U6.4
-      title: Convert findings into roadmap checkboxes (no hidden backlog)
+      title: Convert findings into execution-ledger checkboxes (no hidden backlog)
       status: done
     - id: U6.5
       title: Publish phase report with forced-next priorities only
@@ -160,7 +160,7 @@ phases:
         severity/recurrence tags
       status: done
     - id: W1.4
-      title: Convert comparative findings into explicit roadmap checkboxes (no hidden
+      title: Convert comparative findings into explicit execution-ledger checkboxes (no hidden
         backlog)
       status: done
     - id: W1.5
@@ -245,7 +245,7 @@ phases:
       title: Publish backend parity report with explicit exclusions
       status: done
     - id: X1.5
-      title: Convert unresolved parity deltas into explicit roadmap items
+      title: Convert unresolved parity deltas into explicit execution-ledger items
       status: done
   - id: X2
     title: Concurrency and Isolation Strengthening
@@ -327,7 +327,7 @@ phases:
       title: Publish production-equivalence report with exclusions and risk labels
       status: done
     - id: Y1.5
-      title: Convert unresolved production-equivalence risks into explicit roadmap
+      title: Convert unresolved production-equivalence risks into explicit execution-ledger
         items
       status: done
   - id: Y2
@@ -469,7 +469,7 @@ phases:
       title: Capture drift/missing-primitive/performance findings with severity labels
       status: done
     - id: Z4.4
-      title: Convert findings into forced-next roadmap tasks (no speculative backlog
+      title: Convert findings into forced-next execution-ledger tasks (no speculative backlog
         inflation)
       status: done
     - id: Z4.5
@@ -519,7 +519,7 @@ phases:
       title: Define objective Phase 10 exit checklist mapped to artifacts
       status: done
     - id: AA3.2
-      title: "Add PHASE10\u2194ROADMAP status-drift consistency gate"
+      title: "Add PHASE10\u2194Execution Ledger status-drift consistency gate"
       status: done
     - id: AA3.3
       title: Add Phase 11 block gate based on Phase 10 checklist
@@ -631,7 +631,7 @@ phases:
       title: Define objective Phase 12 exit checklist mapped to artifacts
       status: done
     - id: AC4.2
-      title: "Add PHASE12\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE12\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AC4.3
       title: Add Phase 13 block gate from Phase 12 checklist
@@ -687,7 +687,7 @@ phases:
       title: Define objective Phase 13 exit checklist mapped to artifacts
       status: done
     - id: AD4.2
-      title: "Add PHASE13\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE13\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AD4.3
       title: Add Phase 14 block gate from Phase 13 checklist
@@ -743,7 +743,7 @@ phases:
       title: Define objective Phase 14 exit checklist mapped to artifacts
       status: done
     - id: AE4.2
-      title: "Add PHASE14\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE14\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AE4.3
       title: Add Phase 15 block gate from Phase 14 checklist
@@ -799,7 +799,7 @@ phases:
       title: Define objective Phase 15 exit checklist mapped to artifacts
       status: done
     - id: AF4.2
-      title: "Add PHASE15\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE15\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AF4.3
       title: Add Phase 16 block gate from Phase 15 checklist
@@ -855,7 +855,7 @@ phases:
       title: Define objective Phase 16 exit checklist mapped to artifacts
       status: done
     - id: AG4.2
-      title: "Add PHASE16\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE16\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AG4.3
       title: Add Phase 17 block gate from Phase 16 checklist
@@ -911,7 +911,7 @@ phases:
       title: Define objective Phase 17 exit checklist mapped to artifacts
       status: done
     - id: AH4.2
-      title: "Add PHASE17\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE17\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AH4.3
       title: Add Phase 18 block gate from Phase 17 checklist
@@ -967,7 +967,7 @@ phases:
       title: Define objective Phase 18 exit checklist mapped to artifacts
       status: done
     - id: AI4.2
-      title: "Add PHASE18\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE18\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AI4.3
       title: Add Phase 19 block gate from Phase 18 checklist
@@ -1023,7 +1023,7 @@ phases:
       title: Define objective Phase 19 exit checklist mapped to artifacts
       status: done
     - id: AJ4.2
-      title: "Add PHASE19\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE19\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AJ4.3
       title: Add Phase 20 block gate from Phase 19 checklist
@@ -1079,7 +1079,7 @@ phases:
       title: Define objective Phase 20 exit checklist mapped to artifacts
       status: done
     - id: AK4.2
-      title: "Add PHASE20\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE20\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AK4.3
       title: Add Phase 21 block gate from Phase 20 checklist
@@ -1135,7 +1135,7 @@ phases:
       title: Define objective Phase 21 exit checklist mapped to artifacts
       status: done
     - id: AL4.2
-      title: "Add PHASE21\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE21\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AL4.3
       title: Add Phase 22 block gate from Phase 21 checklist
@@ -1191,7 +1191,7 @@ phases:
       title: Define objective Phase 22 exit checklist mapped to artifacts
       status: done
     - id: AM4.2
-      title: "Add PHASE22\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE22\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AM4.3
       title: Add Phase 23 block gate from Phase 22 checklist
@@ -1247,7 +1247,7 @@ phases:
       title: Define objective Phase 23 exit checklist mapped to artifacts
       status: done
     - id: AN4.2
-      title: "Add PHASE23\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE23\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AN4.3
       title: Add Phase 24 block gate from Phase 23 checklist
@@ -1303,7 +1303,7 @@ phases:
       title: Define objective Phase 24 exit checklist mapped to artifacts
       status: done
     - id: AO4.2
-      title: "Add PHASE24\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE24\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AO4.3
       title: Add Phase 25 block gate from Phase 24 checklist
@@ -1359,7 +1359,7 @@ phases:
       title: Define objective Phase 25 exit checklist mapped to artifacts
       status: done
     - id: AP4.2
-      title: "Add PHASE25\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE25\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AP4.3
       title: Add Phase 26 block gate from Phase 25 checklist
@@ -1415,7 +1415,7 @@ phases:
       title: Define objective Phase 26 exit checklist mapped to artifacts
       status: done
     - id: AQ4.2
-      title: "Add PHASE26\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE26\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AQ4.3
       title: Add Phase 27 block gate from Phase 26 checklist
@@ -1471,7 +1471,7 @@ phases:
       title: Define objective Phase 27 exit checklist mapped to artifacts
       status: done
     - id: AR4.2
-      title: "Add PHASE27\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE27\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AR4.3
       title: Add Phase 28 block gate from Phase 27 checklist
@@ -1527,7 +1527,7 @@ phases:
       title: Define objective Phase 28 exit checklist mapped to artifacts
       status: done
     - id: AS4.2
-      title: "Add PHASE28\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE28\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AS4.3
       title: Add Phase 29 block gate from Phase 28 checklist
@@ -1583,7 +1583,7 @@ phases:
       title: Define objective Phase 29 exit checklist mapped to artifacts
       status: done
     - id: AT4.2
-      title: "Add PHASE29\u2194ROADMAP drift consistency gate"
+      title: "Add PHASE29\u2194Execution Ledger drift consistency gate"
       status: done
     - id: AT4.3
       title: Add Phase 30 block gate from Phase 29 checklist

@@ -6,7 +6,7 @@ This phase executes post-v1.5 hardening before new research axes.
 ## 0. Phase Rules
 
 - [x] 0.1 Add execution contract for one-checkbox/one-commit discipline.
-- [x] 0.2 Add per-checkbox Definition of Done aligned with AGENTS and roadmap agreement.
+- [x] 0.2 Add per-checkbox Definition of Done aligned with AGENTS and execution ledger agreement.
 
 ### Execution Contract
 
@@ -77,7 +77,7 @@ Current 1.3 signal:
 - [x] 4.1 Stand up reproducible pilot environment.
 - [x] 4.2 Execute scripted command/view/verify workload with invariant checks.
 - [x] 4.3 Classify findings into semantic bug/typechecker gap/lowering gap/ops gap.
-- [x] 4.4 Convert validated findings into roadmap checkboxes.
+- [x] 4.4 Convert validated findings into execution-ledger checkboxes.
 - [x] 4.5 Publish pilot findings report.
 
 ## 5. Productization Minimum (forced by pilot only)

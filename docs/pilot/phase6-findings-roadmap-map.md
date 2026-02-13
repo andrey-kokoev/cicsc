@@ -3,7 +3,7 @@
 Incident source:
 - `docs/pilot/phase6-comparative-incidents.json`
 
-Mapped roadmap section:
+Mapped execution-ledger section:
 - `control-plane/execution/execution-ledger.yaml` -> `## W. Phase 6: Field-Driven Concurrency Expansion`
 
 ## Mapping

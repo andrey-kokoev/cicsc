@@ -9,7 +9,7 @@
   "phase28_gate_blocked": false,
   "status": "pass",
   "notes": [
-    "PHASE27 and ROADMAP truth remain synchronized.",
+    "PHASE27 and execution-ledger truth remain synchronized.",
     "Phase 28 gate is unblocked only after AR-series closure."
   ]
 }

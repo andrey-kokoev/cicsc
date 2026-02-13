@@ -8,4 +8,4 @@ Status:
 
 - branch is retained for historical context
 - no active development should target this branch
-- semantic work continues on `main` with roadmap-tracked changes
+- semantic work continues on `main` with execution-ledger-tracked changes

@@ -26,7 +26,7 @@ Validate CICSC invariants under real operator usage before opening new research 
 
 - No invariant-violating writes accepted in pilot window.
 - Replay verification remains stable and deterministic.
-- All observed gaps are captured as roadmap checkboxes, not hotfix drift.
+- All observed gaps are captured as execution-ledger checkboxes, not hotfix drift.
 - Zero bundle-specific hacks introduced.
 
 ## Exit Criteria for Pilot Scope

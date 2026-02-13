@@ -9,7 +9,7 @@
   "phase21_gate_blocked": false,
   "status": "pass",
   "notes": [
-    "PHASE20 and ROADMAP truth remain synchronized.",
+    "PHASE20 and execution-ledger truth remain synchronized.",
     "Phase 21 gate is unblocked only after AK-series closure."
   ]
 }

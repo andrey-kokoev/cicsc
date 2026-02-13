@@ -34,7 +34,7 @@ Triage sequence:
 2. Freeze affected tenant writes for `critical`/`high`.
 3. Capture logs/artifacts from gates and migration drill.
 4. Decide rollback or hotfix path.
-5. File explicit roadmap item for unresolved root cause.
+5. File explicit execution-ledger item for unresolved root cause.
 
 ## Required Artifacts
 

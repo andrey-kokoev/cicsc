@@ -10,7 +10,7 @@
   "phase15_gate_blocked": false,
   "notes": [
     "Phase 14 checklist is complete and artifact-backed.",
-    "PHASE14 and ROADMAP truth remain synchronized.",
+    "PHASE14 and execution-ledger truth remain synchronized.",
     "Phase 15 gate is unblocked only after AE series closure."
   ]
 }

@@ -29,4 +29,4 @@ Spec usability evidence:
 This selection is fixed for Phase 5 closure work so that:
 - conformance and migration evidence target one stable workload,
 - usability and drift feedback are measured against one operational context,
-- roadmap follow-ups are generated from a single field pressure source.
+- execution-ledger follow-ups are generated from a single field pressure source.

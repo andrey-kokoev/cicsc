@@ -9,7 +9,7 @@
   "phase30_gate_blocked": false,
   "status": "pass",
   "notes": [
-    "PHASE29 and ROADMAP truth remain synchronized.",
+    "PHASE29 and execution-ledger truth remain synchronized.",
     "Phase 30 gate opens only after full AT-series closure and checklist pass."
   ]
 }

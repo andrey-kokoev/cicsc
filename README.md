@@ -7,7 +7,7 @@ The repository contains:
 - a Core IR with enforced semantics,
 - backend lowering (SQLite/D1),
 - a transactional runtime,
-- and an execution-ledger roadmap toward constructive migrations.
+- and an execution-ledger execution ledger toward constructive migrations.
 
 ---
 

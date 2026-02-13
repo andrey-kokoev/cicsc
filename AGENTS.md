@@ -2,7 +2,7 @@
 
 This file defines how an execution agent should work on the CICSC repository.
 It is not user-facing documentation. It is operational guidance for contributors
-and autonomous agents executing the roadmap.
+and autonomous agents executing the execution plan.
 
 ---
 

@@ -22,7 +22,7 @@ Reach a state where:
 - deferred SQL capability gaps are either implemented with differential coverage or explicitly retained as blocked,
 - SQLite and Postgres behavior remain equivalent to oracle semantics on the declared supported surface,
 - migrations on expanded features remain replay-verified and operationally deterministic,
-- deployment evidence drives roadmap forcing functions,
+- deployment evidence drives execution-ledger forcing functions,
 - phase progression remains artifact-gated.
 
 ---
@@ -90,7 +90,7 @@ Validate expanded surface under real workflow pressure and enforce objective exi
 - [x] P9.4.1 Select and freeze Phase 9 reference deployment set (at least two verticals).
 - [x] P9.4.2 Run scripted workloads with invariants + parity + migration gates enabled.
 - [x] P9.4.3 Capture drift/missing-primitive/performance findings with severity labels.
-- [x] P9.4.4 Convert findings into forced-next roadmap tasks (no speculative backlog inflation).
+- [x] P9.4.4 Convert findings into forced-next execution-ledger tasks (no speculative backlog inflation).
 - [x] P9.4.5 Define and enforce objective Phase 9 exit checklist + Phase 10 block gate.
 
 ### Acceptance
@@ -104,5 +104,5 @@ Validate expanded surface under real workflow pressure and enforce objective exi
 - [x] Deferred SQL capability items are either closed with conformance evidence or explicitly deferred.
 - [x] SQLite/Postgres parity is maintained for the declared expanded feature envelope.
 - [x] Migration and operational guarantees remain deterministic and auditable after expansion.
-- [x] Deployment findings are converted into forced-next roadmap tasks with ownership.
+- [x] Deployment findings are converted into forced-next execution-ledger tasks with ownership.
 - [x] Governance checks continuously enforce code/doc/artifact consistency.

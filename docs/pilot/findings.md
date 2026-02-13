@@ -37,6 +37,6 @@ Pilot hardening resolved bootstrap/CI determinism and surfaced remaining executi
 
 ## Forced Next Actions
 
-- Complete roadmap section `T` before phase exit.
+- Complete execution-ledger section `T` before phase exit.
 - Keep `./scripts/phase3_baseline.sh` as required pre-merge gate for Phase 3 work.
 - Keep `tests/conformance/sqlite-exec-vs-oracle-smoke.test.ts` as required SQL execution parity gate.
