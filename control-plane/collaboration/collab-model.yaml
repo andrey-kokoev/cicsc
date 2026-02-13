@@ -140,7 +140,7 @@ assignments:
     claim_kind_ref: CLAIM_SEMANTIC_INVARIANT
     worktree: /home/andrey/src/antigravity
     branch: phase33.ax2.2
-    status: submitted
+    status: done
     notes: Implement formalization progress admissibility gate and artifact.
 message_kinds:
   - id: MSGK_ASSIGNMENT_DISPATCH
@@ -247,3 +247,51 @@ message_events:
     commit: 3a17615
     evidence_bindings: []
     notes: AX1.2 message closed after ingestion and checkbox closure.
+  - id: MSGEV_PHASE33_AX22_ACK
+    message_ref: MSG_PHASE33_AX22_DISPATCH
+    from_status: sent
+    to_status: acknowledged
+    actor_agent_ref: AGENT_ANTIGRAVITY
+    at_seq: 2
+    commit: 7c7d5b3
+    evidence_bindings: []
+    notes: Antigravity acknowledged dispatch and accepted execution.
+  - id: MSGEV_PHASE33_AX22_FULFILLED
+    message_ref: MSG_PHASE33_AX22_DISPATCH
+    from_status: acknowledged
+    to_status: fulfilled
+    actor_agent_ref: AGENT_ANTIGRAVITY
+    at_seq: 3
+    commit: 7c7d5b3
+    evidence_bindings:
+      - ref: scripts/phase33_ax22_formalization_gate.sh
+        commit: 7c7d5b3
+        digest: sha256:9365a20a866aa1da76ac2ebd85ae3b19952954ad485219e74c22c87779d9ebfa
+      - ref: docs/pilot/phase33-ax22-formalization-gate-report.json
+        commit: 7c7d5b3
+        digest: sha256:e4c6c98002d43258eecce996132edd7e70b9c608c148ece0bdf269246509c6b6
+    notes: Antigravity completed AX2.2 outputs with required artifact/script evidence.
+  - id: MSGEV_PHASE33_AX22_INGESTED
+    message_ref: MSG_PHASE33_AX22_DISPATCH
+    from_status: fulfilled
+    to_status: ingested
+    actor_agent_ref: AGENT_MAIN
+    at_seq: 4
+    commit: 01ea9a8
+    evidence_bindings:
+      - ref: scripts/phase33_ax22_formalization_gate.sh
+        commit: 01ea9a8
+        digest: sha256:9365a20a866aa1da76ac2ebd85ae3b19952954ad485219e74c22c87779d9ebfa
+      - ref: docs/pilot/phase33-ax22-formalization-gate-report.json
+        commit: 01ea9a8
+        digest: sha256:e4c6c98002d43258eecce996132edd7e70b9c608c148ece0bdf269246509c6b6
+    notes: Main ingested Antigravity AX2.2 commit via cherry-pick.
+  - id: MSGEV_PHASE33_AX22_CLOSED
+    message_ref: MSG_PHASE33_AX22_DISPATCH
+    from_status: ingested
+    to_status: closed
+    actor_agent_ref: AGENT_MAIN
+    at_seq: 5
+    commit: 01ea9a8
+    evidence_bindings: []
+    notes: AX2.2 message closed after ingestion and checkbox closure.

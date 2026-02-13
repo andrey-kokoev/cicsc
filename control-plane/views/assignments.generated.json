@@ -21,7 +21,7 @@
       "claim_kind_ref": "CLAIM_SEMANTIC_INVARIANT",
       "worktree": "/home/andrey/src/antigravity",
       "branch": "phase33.ax2.2",
-      "status": "assigned",
+      "status": "done",
       "notes": "Implement formalization progress admissibility gate and artifact."
     }
   ]

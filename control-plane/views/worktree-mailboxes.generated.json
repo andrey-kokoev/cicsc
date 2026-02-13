@@ -44,8 +44,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch AX2.2 obligations and formalization admissibility criteria.",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "closed",
+          "event_count": 5
         }
       ]
     },
@@ -93,8 +93,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch AX2.2 obligations and formalization admissibility criteria.",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "closed",
+          "event_count": 5
         }
       ],
       "outbox": []
