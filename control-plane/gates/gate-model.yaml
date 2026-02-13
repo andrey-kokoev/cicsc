@@ -12,3 +12,11 @@ gates:
     scope: global
     required_scripts:
       - scripts/check_category_model_conformance.sh
+  - id: GATE_ROADMAP_STRUCTURE_SYNC
+    scope: global
+    required_scripts:
+      - scripts/check_roadmap_structure_sync.sh
+  - id: GATE_EXECUTION_STRUCTURE_ROUNDTRIP
+    scope: global
+    required_scripts:
+      - scripts/check_execution_structure_roundtrip.sh

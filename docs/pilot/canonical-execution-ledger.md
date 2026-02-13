@@ -47,6 +47,8 @@ For a checkbox marked done in `ROADMAP.md`:
   - validates control-plane models and generated views remain synchronized.
 - `scripts/check_roadmap_structure_sync.sh`
   - validates roadmap phase-header structure against control-plane execution model.
+- `scripts/check_execution_structure_roundtrip.sh`
+  - validates roadmap↔execution-ledger structure parity for non-planned phases.
 - `scripts/check_status_source_mode.sh`
   - enforces bootstrap status-source mode while roadmap remains canonical.
 - `scripts/check_generated_artifacts_policy.sh`

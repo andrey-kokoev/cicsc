@@ -6,6 +6,7 @@ cd "${ROOT_DIR}"
 
 python3 - <<'PY'
 from pathlib import Path
+import json
 import yaml
 
 root = Path('.')
@@ -98,6 +99,17 @@ views.mkdir(parents=True, exist_ok=True)
 (views / 'phase-level-roadmap.generated.md').write_text(phase_level, encoding='utf-8')
 (views / 'journey-vector.generated.md').write_text(journey, encoding='utf-8')
 (views / 'roadmap-structure.generated.md').write_text(structure, encoding='utf-8')
+
+phase_index = {
+    "_generated": True,
+    "_source": "control-plane/execution/execution-ledger.yaml",
+    "_generator": "control-plane/scripts/generate_views.sh",
+    "version": "cicsc/phase-index-v1",
+    "phases": phases,
+}
+(views / 'phase-index.generated.json').write_text(
+    json.dumps(phase_index, indent=2) + "\n", encoding='utf-8'
+)
 
 print('generated control-plane views')
 PY
