@@ -63,10 +63,10 @@ Harden production continuity checks for scaled deployments.
 ### TODOs
 - [x] P18.3.1 Freeze production-continuity hardening matrix and policy.
 - [x] P18.3.2 Add production-continuity verification harnesses.
-- [ ] P18.3.3 Publish production continuity closure report with residual policy.
+- [x] P18.3.3 Publish production continuity closure report with residual policy.
 
 ### Acceptance
-- [ ] Production continuity remains explicit, test-backed, and governed.
+- [x] Production continuity remains explicit, test-backed, and governed.
 
 ---
 
