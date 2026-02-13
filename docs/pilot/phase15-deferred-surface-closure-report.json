@@ -1,0 +1,23 @@
+{
+  "version": "cicsc/phase15-deferred-surface-closure-report-v1",
+  "timestamp_unix": 1771076100,
+  "inputs": {
+    "deferred_surface_matrix": "docs/pilot/phase15-deferred-surface-matrix.json",
+    "deployment_harnesses": "docs/pilot/phase15-deployment-discipline-harnesses.json"
+  },
+  "residual_policy": {
+    "allowed_open_status": ["deferred"],
+    "deferred_requires": ["owner", "target_date"]
+  },
+  "residuals": [
+    {
+      "id": "P15SURFACE-DSL-001",
+      "status": "deferred",
+      "owner": "phase15-objective-owner",
+      "target_date": "2026-11-14",
+      "reason": "External cohort completion is queued for next deployment wave and does not alter current semantic guarantees."
+    }
+  ],
+  "unresolved_criticals": [],
+  "status": "pass"
+}
