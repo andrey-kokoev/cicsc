@@ -830,5 +830,5 @@ Phase 9 forced-next mapping:
 
 - [x] AP4.1 Define objective Phase 25 exit checklist mapped to artifacts
 - [x] AP4.2 Add PHASE25↔ROADMAP drift consistency gate
-- [ ] AP4.3 Add Phase 26 block gate from Phase 25 checklist
+- [x] AP4.3 Add Phase 26 block gate from Phase 25 checklist
 - [ ] AP4.4 Publish Phase 25 closure report and mark exit criteria
