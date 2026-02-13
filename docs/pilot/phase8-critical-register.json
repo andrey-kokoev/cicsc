@@ -1,0 +1,24 @@
+{
+  "version": "cicsc/phase8-critical-register-v1",
+  "timestamp_unix": 1770951000,
+  "open_critical_items": [],
+  "deferred_items": [
+    {
+      "id": "PEXCL-HAVING-001",
+      "severity": "medium",
+      "status": "deferred",
+      "owner": "phase9-sql-subset-owner",
+      "target_date": "2026-03-15",
+      "reason": "HAVING lowering remains explicitly excluded from proven production-equivalence surface."
+    },
+    {
+      "id": "PEXCL-EXISTS-001",
+      "severity": "medium",
+      "status": "deferred",
+      "owner": "phase9-sql-subset-owner",
+      "target_date": "2026-03-15",
+      "reason": "EXISTS lowering remains explicitly excluded from proven production-equivalence surface."
+    }
+  ],
+  "status": "pass"
+}
