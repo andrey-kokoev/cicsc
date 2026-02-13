@@ -520,7 +520,7 @@ Phase 9 forced-next mapping:
 ### AE2. Generalization Envelope Expansion
 
 - [x] AE2.1 Freeze generalization envelope matrix and workload contract
-- [ ] AE2.2 Run generalization workload suites with required gates
+- [x] AE2.2 Run generalization workload suites with required gates
 - [ ] AE2.3 Publish generalization envelope report with findings disposition
 
 ### AE3. Adoption and Operator-Readiness Hardening
