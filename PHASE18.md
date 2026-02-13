@@ -78,7 +78,7 @@ Close Phase 18 with objective checklist and enforce entry gate for Phase 19.
 ### TODOs
 - [x] P18.4.1 Define objective Phase 18 exit checklist mapped to artifacts.
 - [x] P18.4.2 Add PHASE18↔ROADMAP drift consistency gate.
-- [ ] P18.4.3 Add Phase 19 block gate from Phase 18 checklist.
+- [x] P18.4.3 Add Phase 19 block gate from Phase 18 checklist.
 - [ ] P18.4.4 Publish Phase 18 closure report and mark exit criteria.
 
 ### Acceptance
