@@ -50,11 +50,11 @@ Ensure invariant-preserving behavior remains stable under realistic tenant concu
 - [x] P8.2.2 Add multi-tenant chaos drills (partial outage, delayed verification, replay backpressure).
 - [x] P8.2.3 Add tenant-level fairness and starvation checks for command execution.
 - [x] P8.2.4 Add continuous SLO/error-budget gate for verify/migrate/command paths.
-- [ ] P8.2.5 Publish resilience report with failed scenarios closed or explicitly deferred.
+- [x] P8.2.5 Publish resilience report with failed scenarios closed or explicitly deferred.
 
 ### Acceptance
-- [ ] Operational resilience claims are artifact-backed and reproducible.
-- [ ] Unmet resilience scenarios are explicitly scoped and blocked from proven surface.
+- [x] Operational resilience claims are artifact-backed and reproducible.
+- [x] Unmet resilience scenarios are explicitly scoped and blocked from proven surface.
 
 ---
 

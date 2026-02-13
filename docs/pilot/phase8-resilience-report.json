@@ -1,0 +1,24 @@
+{
+  "version": "cicsc/phase8-resilience-report-v1",
+  "inputs": {
+    "contract": "docs/pilot/phase8-operational-resilience-contract.json",
+    "chaos_drills": "docs/pilot/phase8-chaos-drills.json",
+    "fairness_checks": "docs/pilot/phase8-fairness-checks.json",
+    "slo_gate": "docs/pilot/phase8-resilience-slo.json"
+  },
+  "incident_disposition": [
+    {
+      "id": "RESIL-CHAOS-001",
+      "severity": "medium",
+      "status": "closed",
+      "resolution": "chaos drill suites pass for outage/verify-delay/backpressure scenarios"
+    },
+    {
+      "id": "RESIL-FAIRNESS-001",
+      "severity": "medium",
+      "status": "closed",
+      "resolution": "fairness/starvation checks pass under declared scheduling model"
+    }
+  ],
+  "unresolved_criticals": []
+}
