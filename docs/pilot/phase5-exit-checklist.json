@@ -1,0 +1,36 @@
+{
+  "version": "cicsc/phase5-exit-checklist-v1",
+  "items": [
+    {
+      "id": "E1",
+      "criterion": "sqlite_required_conformance_green",
+      "artifact": "tests/conformance/required-matrix.json",
+      "status": "pass"
+    },
+    {
+      "id": "E2",
+      "criterion": "postgres_required_conformance_green",
+      "artifact": "scripts/run_cross_backend_gate.sh",
+      "status": "blocked"
+    },
+    {
+      "id": "E3",
+      "criterion": "migration_runbook_and_drill_evidence_present",
+      "artifact": "docs/spec/migration-operations-runbook.md",
+      "status": "pass"
+    },
+    {
+      "id": "E4",
+      "criterion": "reference_vertical_usability_evidence_present",
+      "artifact": "docs/pilot/phase5-ticketing-field-report.json",
+      "status": "pass"
+    },
+    {
+      "id": "E5",
+      "criterion": "incident_to_roadmap_traceability_complete",
+      "artifact": "docs/pilot/phase5-findings-roadmap-map.md",
+      "status": "pass"
+    }
+  ],
+  "phase6_ready": false
+}

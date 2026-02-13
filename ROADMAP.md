@@ -230,7 +230,7 @@
 
 ### U7. Governance Gate for Phase 6
 
-- [ ] U7.1 Define objective Phase 5 exit checklist mapped to artifacts
+- [x] U7.1 Define objective Phase 5 exit checklist mapped to artifacts
 - [ ] U7.2 Require green required conformance gates for sqlite + postgres scoped matrices
 - [ ] U7.3 Require migration runbook and cutover/rollback drill evidence
 - [ ] U7.4 Require Spec DSL usability evidence from reference vertical

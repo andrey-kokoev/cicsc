@@ -17,6 +17,9 @@ Roadmap mapping (no hidden backlog):
 Phase report:
 - `docs/pilot/phase5-ticketing-field-report.json`
 
+Exit checklist:
+- `docs/pilot/phase5-exit-checklist.json`
+
 This selection is fixed for Phase 5 closure work so that:
 - conformance and migration evidence target one stable workload,
 - usability and drift feedback are measured against one operational context,
