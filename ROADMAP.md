@@ -472,7 +472,7 @@ Phase 9 forced-next mapping:
 
 ### AC4. Governance Closure and Phase 13 Gate
 
-- [ ] AC4.1 Define objective Phase 12 exit checklist mapped to artifacts
+- [x] AC4.1 Define objective Phase 12 exit checklist mapped to artifacts
 - [ ] AC4.2 Add PHASE12↔ROADMAP drift consistency gate
 - [ ] AC4.3 Add Phase 13 block gate from Phase 12 checklist
 - [ ] AC4.4 Publish Phase 12 closure report and mark exit criteria
