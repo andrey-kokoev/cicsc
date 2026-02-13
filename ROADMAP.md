@@ -839,7 +839,7 @@ Phase 9 forced-next mapping:
 
 - [x] AQ1.1 Freeze Phase 26 scope and owner contract
 - [x] AQ1.2 Publish Phase 26 baseline continuity snapshot
-- [ ] AQ1.3 Add Phase 26 status register with owner/date discipline
+- [x] AQ1.3 Add Phase 26 status register with owner/date discipline
 
 ### AQ2. Stability-Consolidation Validation Closure
 
