@@ -31,7 +31,7 @@ Reach a state where:
 Start Phase 25 from explicit scope, owners, and reproducible baseline truth.
 
 ### TODOs
-- [ ] P25.1.1 Freeze Phase 25 scope and owner contract.
+- [x] P25.1.1 Freeze Phase 25 scope and owner contract.
 - [ ] P25.1.2 Publish Phase 25 baseline continuity snapshot.
 - [ ] P25.1.3 Add Phase 25 status register with owner/date discipline.
 
