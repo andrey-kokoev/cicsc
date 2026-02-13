@@ -75,17 +75,17 @@ Broaden deployment evidence while preserving invariant and governance discipline
 - [x] P11.4.1 Freeze expanded deployment set and workload contract.
 - [x] P11.4.2 Run expanded workload suite with parity/migration/ops gates.
 - [x] P11.4.3 Capture drift/performance/missing-primitive findings with severity labels.
-- [ ] P11.4.4 Add objective Phase 11 exit checklist and Phase 12 block gate.
+- [x] P11.4.4 Add objective Phase 11 exit checklist and Phase 12 block gate.
 
 ### Acceptance
-- [ ] Phase 12 entry remains blocked unless Phase 11 checklist is fully pass.
+- [x] Phase 12 entry remains blocked unless Phase 11 checklist is fully pass.
 
 ---
 
 ## Exit Criteria (Phase 11)
 
-- [ ] Scope, baseline, and status governance are explicit and reproducible.
-- [ ] DSL usability objective is closed or explicitly deferred with owner/date.
-- [ ] Deferred SQL/parity items are objectively dispositioned.
-- [ ] Expanded deployment evidence is captured under invariant-preserving gates.
-- [ ] Phase 12 remains blocked without full checklist pass.
+- [x] Scope, baseline, and status governance are explicit and reproducible.
+- [x] DSL usability objective is closed or explicitly deferred with owner/date.
+- [x] Deferred SQL/parity items are objectively dispositioned.
+- [x] Expanded deployment evidence is captured under invariant-preserving gates.
+- [x] Phase 12 remains blocked without full checklist pass.
