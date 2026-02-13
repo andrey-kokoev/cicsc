@@ -25,6 +25,23 @@ Lean proof baseline:
 - Lean Kernel v1.5 is the coherency-complete baseline for kernel semantics.
 - New semantics work must preserve the canonical evaluator/typing/WF bridges established in v1.5.
 
+## Normative Conceptual Sources
+
+Execution guidance in this file is operational. Conceptual semantic intent is
+normatively defined by `docs/genesis/*`.
+
+Primary references:
+- `docs/genesis/README.md`
+- `docs/genesis/on-constructively-invariant-systems.md`
+- `docs/genesis/constructively-invariant-control-system-compiler.md`
+- `docs/genesis/constructive-invariance-evolution-control-plane.md`
+- `docs/genesis/worktree-mediated-constructive-collaboration.md`
+- `docs/genesis/constructive-accretion-method.md`
+
+Precedence rule:
+- if there is tension between execution convenience and genesis semantics,
+  preserve genesis semantics and adjust process artifacts.
+
 ---
 
 ## Working Style
