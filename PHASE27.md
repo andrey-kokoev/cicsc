@@ -76,7 +76,7 @@ Harden evolution-continuity checks for expanded deployments.
 Close Phase 27 with objective checklist and enforce entry gate for Phase 28.
 
 ### TODOs
-- [ ] P27.4.1 Define objective Phase 27 exit checklist mapped to artifacts.
+- [x] P27.4.1 Define objective Phase 27 exit checklist mapped to artifacts.
 - [ ] P27.4.2 Add PHASE27↔ROADMAP drift consistency gate.
 - [ ] P27.4.3 Add Phase 28 block gate from Phase 27 checklist.
 - [ ] P27.4.4 Publish Phase 27 closure report and mark exit criteria.

@@ -882,7 +882,7 @@ Phase 9 forced-next mapping:
 
 ### AR4. Governance Closure and Phase 28 Gate
 
-- [ ] AR4.1 Define objective Phase 27 exit checklist mapped to artifacts
+- [x] AR4.1 Define objective Phase 27 exit checklist mapped to artifacts
 - [ ] AR4.2 Add PHASE27↔ROADMAP drift consistency gate
 - [ ] AR4.3 Add Phase 28 block gate from Phase 27 checklist
 - [ ] AR4.4 Publish Phase 27 closure report and mark exit criteria

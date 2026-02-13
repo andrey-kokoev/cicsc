@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase27-exit-checklist-v1",
+  "timestamp_unix": 1775945400,
+  "items": [
+    {
+      "id": "scope_baseline_status",
+      "artifact": "docs/pilot/phase27-status-register.json",
+      "status": "pass"
+    },
+    {
+      "id": "deployment_integrity_status",
+      "artifact": "docs/pilot/phase27-deployment-integrity-closure-report.json",
+      "status": "pass"
+    },
+    {
+      "id": "evolution_continuity_status",
+      "artifact": "docs/pilot/phase27-evolution-continuity-closure-report.json",
+      "status": "pass"
+    },
+    {
+      "id": "phase27_gate_state",
+      "artifact": "docs/pilot/phase27-gate.json",
+      "status": "pass"
+    }
+  ],
+  "overall": "pass"
+}
