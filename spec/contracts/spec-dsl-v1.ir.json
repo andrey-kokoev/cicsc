@@ -1,6 +1,114 @@
 {
   "version": 0,
-  "types": {},
+  "types": {
+    "Ticket": {
+      "id_type": "string",
+      "states": [
+        "new",
+        "triage",
+        "done"
+      ],
+      "initial_state": "new",
+      "attrs": {
+        "title": {
+          "type": "string"
+        },
+        "lane": {
+          "type": "string",
+          "default": "todo"
+        }
+      },
+      "shadows": {},
+      "commands": {
+        "open": {
+          "input": {},
+          "guard": {
+            "expr": {
+              "and": [
+                {
+                  "and": [
+                    {
+                      "call": {
+                        "fn": "has_role",
+                        "args": [
+                          {
+                            "var": {
+                              "actor": true
+                            }
+                          },
+                          {
+                            "lit": {
+                              "string": "agent"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                },
+                {
+                  "call": {
+                    "fn": "auth_ok",
+                    "args": [
+                      {
+                        "var": {
+                          "actor": true
+                        }
+                      },
+                      {
+                        "lit": {
+                          "string": "can_open"
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          "emits": [
+            {
+              "event_type": "ticket_opened",
+              "payload": {
+                "title": {
+                  "var": {
+                    "input": {
+                      "field": "title"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "reducer": {
+        "ticket_opened": [
+          {
+            "set_state": {
+              "expr": {
+                "lit": {
+                  "string": "triage"
+                }
+              }
+            }
+          },
+          {
+            "set_attr": {
+              "name": "title",
+              "expr": {
+                "var": {
+                  "e_payload": {
+                    "path": "title"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
   "policies": {
     "can_open": {
       "params": [],
@@ -44,7 +152,9 @@
         }
       },
       "state_map": {
-        "triage": "new"
+        "new": "new",
+        "triage": "new",
+        "done": "done"
       }
     }
   }

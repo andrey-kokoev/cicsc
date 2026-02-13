@@ -1,11 +1,11 @@
 {
   "version": 0,
-  "types": {
+  "entities": {
     "Ticket": {
-      "id_type": "string",
+      "id": "string",
       "states": ["new", "triage", "done"],
-      "initial_state": "new",
-      "attrs": {
+      "initial": "new",
+      "attributes": {
         "title": { "type": "string" },
         "lane": { "type": "string", "default": "todo" }
       },
@@ -14,13 +14,13 @@
           "input": {
             "title": { "type": "string" }
           },
-          "when": { "state_is": ["new"], "all": [{ "role_is": "agent" }] },
+          "when": { "state_is": "new", "all": [{ "role_is": "agent" }] },
           "auth": {
             "policy": "can_open"
           },
-          "emits": [
+          "emit": [
             {
-              "event_type": "ticket_opened",
+              "type": "ticket_opened",
               "payload": {
                 "title": { "var": { "input": { "field": "title" } } }
               }
@@ -28,10 +28,10 @@
           ]
         }
       },
-      "reducer": {
+      "reducers": {
         "ticket_opened": [
           { "set_state": "triage" },
-          { "set_attr": { "name": "title", "expr": { "var": { "e_payload": { "path": "title" } } } } }
+          { "set_attr": { "field": "title", "value": { "var": { "e_payload": { "path": "title" } } } } }
         ]
       }
     }
@@ -59,7 +59,7 @@
       "event_transforms": {
         "ticket_opened": { "emit_as": "ticket_created" }
       },
-      "state_map": { "triage": "new" }
+      "state_map": { "new": "new", "triage": "new", "done": "done" }
     }
   }
 }

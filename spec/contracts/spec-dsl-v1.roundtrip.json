@@ -1,0 +1,8 @@
+{
+  "version": "cicsc/spec-roundtrip-v1",
+  "bundle_valid": true,
+  "types_count": 1,
+  "views_count": 1,
+  "migrations_count": 1,
+  "verify_ok": true
+}
