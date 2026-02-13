@@ -51,11 +51,11 @@ Treat backend parity as a required gate for the expanded SQL and runtime surface
 - [x] P9.2.2 Add deterministic cross-backend edge-case suites (null/collation/numeric/time behavior).
 - [x] P9.2.3 Add seeded random differential sweeps for SQLite/Postgres/oracle over expanded operators.
 - [x] P9.2.4 Add parity triage artifact with regression class labeling and owner assignment.
-- [ ] P9.2.5 Publish backend parity report and required-gates policy update.
+- [x] P9.2.5 Publish backend parity report and required-gates policy update.
 
 ### Acceptance
-- [ ] Expanded backend surface remains parity-verified under declared envelope.
-- [ ] Any non-equivalence is either fixed or explicitly deferred with owner/date.
+- [x] Expanded backend surface remains parity-verified under declared envelope.
+- [x] Any non-equivalence is either fixed or explicitly deferred with owner/date.
 
 ---
 

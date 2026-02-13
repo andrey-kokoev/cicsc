@@ -1,0 +1,17 @@
+import { describe, it } from "node:test"
+import assert from "node:assert/strict"
+import fs from "node:fs"
+import path from "node:path"
+
+describe("phase9 required gates", () => {
+  it("requires green parity hardening suites", () => {
+    const p = path.resolve(process.cwd(), "docs/pilot/phase9-required-gates.json")
+    const report = JSON.parse(fs.readFileSync(p, "utf8"))
+
+    assert.equal(report.version, "cicsc/phase9-required-gates-v1")
+    assert.equal(report.overall, "pass")
+    assert.equal(report.checks.edgecase_parity.status, "pass")
+    assert.equal(report.checks.random_differential_sweeps.status, "pass")
+    assert.equal(report.checks.sql_negative_coverage.status, "pass")
+  })
+})

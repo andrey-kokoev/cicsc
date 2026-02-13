@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase9-required-gates-v1",
+  "timestamp_unix": 1770950760,
+  "overall": "pass",
+  "checks": {
+    "edgecase_parity":{"status":"pass","log":"docs/pilot/phase9-required-gates.edgecase_parity.log"},
+    "random_differential_sweeps":{"status":"pass","log":"docs/pilot/phase9-required-gates.random_differential_sweeps.log"},
+    "sql_negative_coverage":{"status":"pass","log":"docs/pilot/phase9-required-gates.sql_negative_coverage.log"}
+  }
+}
