@@ -61,7 +61,7 @@ Close multi-environment assurance validation with explicit evidence contract and
 Harden scale-transition checks for expanded deployments.
 
 ### TODOs
-- [ ] P20.3.1 Freeze scale-transition hardening matrix and policy.
+- [x] P20.3.1 Freeze scale-transition hardening matrix and policy.
 - [ ] P20.3.2 Add scale-transition verification harnesses.
 - [ ] P20.3.3 Publish scale-transition closure report with residual policy.
 
