@@ -31,7 +31,7 @@ Lean proof baseline:
 
 ### 0. Canonical Execution Model (Mandatory)
 Execution status truth is single-source:
-- `ROADMAP.md` is the only canonical status ledger.
+- `control-plane/execution/execution-ledger.yaml` is the only canonical status ledger.
 - `PHASE*.md` files are derived views; they are not authoritative for status.
 - Planning/navigation docs (for example `PHASE_LEVEL_ROADMAP.md`, `JOURNEY_VECTOR.md`)
   must not contain execution status checkboxes.
@@ -44,8 +44,8 @@ Before marking a checkbox complete, run:
 - `./scripts/check_canonical_execution_model.sh`
 
 This gate enforces:
-- roadmap structural integrity,
-- phase-view sync with roadmap,
+- execution-ledger structural integrity,
+- phase-view sync with execution-ledger,
 - commit-evidence presence for checked checkboxes.
 
 ### 1. Preserve invariants before adding features

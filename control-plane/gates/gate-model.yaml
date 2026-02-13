@@ -1,17 +1,17 @@
 version: cicsc/gate-model-v1
 gates:
-  - id: GATE_ROADMAP_INTEGRITY
+  - id: GATE_EXECUTION_LEDGER_INTEGRITY
     scope: global
     required_scripts:
-      - scripts/check_roadmap_integrity.sh
-  - id: GATE_PHASE_VIEWS_SYNC
+      - scripts/check_execution_ledger_integrity.sh
+  - id: GATE_PHASE_VIEWS_SYNC_LEDGER
     scope: global
     required_scripts:
-      - scripts/check_phase_views_sync.sh
-  - id: GATE_CHECKBOX_COMMIT_EVIDENCE
+      - scripts/check_phase_views_sync_ledger.sh
+  - id: GATE_CHECKBOX_COMMIT_EVIDENCE_LEDGER
     scope: global
     required_scripts:
-      - scripts/check_checkbox_commit_evidence.sh
+      - scripts/check_checkbox_commit_evidence_ledger.sh
   - id: GATE_WORKFLOW_SINGLE_SOURCE
     scope: global
     required_scripts:
@@ -20,22 +20,26 @@ gates:
     scope: global
     required_scripts:
       - scripts/check_control_plane_sync.sh
-  - id: GATE_ROADMAP_STRUCTURE_SYNC
+  - id: GATE_EXECUTION_STRUCTURE_SYNC
     scope: global
     required_scripts:
-      - scripts/check_roadmap_structure_sync.sh
-  - id: GATE_EXECUTION_STRUCTURE_ROUNDTRIP
+      - scripts/check_execution_structure_sync.sh
+  - id: GATE_EXECUTION_STRUCTURE_ROUNDTRIP_LEDGER
     scope: global
     required_scripts:
-      - scripts/check_execution_structure_roundtrip.sh
+      - scripts/check_execution_structure_roundtrip_ledger.sh
   - id: GATE_STATUS_SOURCE_MODE
     scope: global
     required_scripts:
       - scripts/check_status_source_mode.sh
-  - id: GATE_STATUS_PROJECTION_SYNC
+  - id: GATE_STATUS_PROJECTION_SYNC_LEDGER
     scope: global
     required_scripts:
       - scripts/check_status_projection_sync.sh
+  - id: GATE_ROADMAP_COMPAT_ALIAS_SYNC
+    scope: global
+    required_scripts:
+      - scripts/check_roadmap_compat_alias_sync.sh
   - id: GATE_GENERATED_ARTIFACT_POLICY
     scope: global
     required_scripts:

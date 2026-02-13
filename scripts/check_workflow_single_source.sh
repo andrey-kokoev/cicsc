@@ -27,7 +27,7 @@ for (const rel of forbiddenCheckboxFiles) {
 const phaseLevel = path.resolve('PHASE_LEVEL_ROADMAP.md')
 if (fs.existsSync(phaseLevel)) {
   const txt = fs.readFileSync(phaseLevel, 'utf8')
-  if (!txt.includes('Canonical status truth remains `ROADMAP.md` only.')) {
+  if (!txt.includes('Canonical status truth remains `control-plane/execution/execution-ledger.yaml` only.')) {
     errors.push('PHASE_LEVEL_ROADMAP.md: missing canonical truth disclaimer')
   }
 }

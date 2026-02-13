@@ -9,7 +9,7 @@
 - Objectives: 5
 - Capabilities: 5
 - Phases in execution model: 25
-- Gate contracts: 12
+- Gate contracts: 13
 - Status source mode: execution_ledger_yaml_canonical
 
 ## Current Sequence
@@ -42,5 +42,5 @@
 
 ## Canonical Rule
 
-- `ROADMAP.md` is canonical status truth during bootstrap.
+- `control-plane/execution/execution-ledger.yaml` is canonical status truth.
 - This file is generated for transparency/navigation only.

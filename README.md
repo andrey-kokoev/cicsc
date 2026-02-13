@@ -7,7 +7,7 @@ The repository contains:
 - a Core IR with enforced semantics,
 - backend lowering (SQLite/D1),
 - a transactional runtime,
-- and a roadmap toward constructive migrations.
+- and an execution-ledger roadmap toward constructive migrations.
 
 ---
 
@@ -86,7 +86,7 @@ These properties are enforced by design and tests.
 - Index generation from views/constraints
 - Per-type snapshot tables
 
-These items are tracked in the roadmap.
+These items are tracked in the execution ledger.
 
 ---
 
@@ -172,13 +172,13 @@ These documents constrain implementation choices.
 
 ## Roadmap
 
-The canonical roadmap is defined in:
+The canonical execution plan/status ledger is:
 
-```
-# CICSC Completion TODO (Comprehensive)
-```
+- `control-plane/execution/execution-ledger.yaml`
 
-This checklist defines the execution plan.
+Compatibility alias (generated):
+
+- `ROADMAP.md`
 
 ---
 

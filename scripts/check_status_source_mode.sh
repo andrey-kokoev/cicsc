@@ -19,5 +19,10 @@ if mode not in allowed:
     print(f'- allowed: {sorted(allowed)}')
     raise SystemExit(1)
 
+if mode != 'execution_ledger_yaml_canonical':
+    print('status source mode check failed')
+    print(f'- expected execution_ledger_yaml_canonical, got {mode}')
+    raise SystemExit(1)
+
 print(f'status source mode check passed ({mode})')
 PY

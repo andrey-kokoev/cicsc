@@ -21,8 +21,7 @@ Provide a single coherent model stack for:
   - No execution status.
 
 - `execution/execution-ledger.yaml`
-  - Canonical phase/milestone/checkbox status model (future source of truth).
-  - During bootstrap, `ROADMAP.md` remains canonical status truth.
+  - Canonical phase/milestone/checkbox status model.
 
 - `gates/gate-model.yaml`
   - Required validation/gating contracts for milestones/phases.
@@ -32,7 +31,7 @@ Provide a single coherent model stack for:
 
 Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `control-plane/execution/execution-ledger.yaml` is canonical status truth for roadmap phase scope.
-- `ROADMAP.md` remains required and is validated as a synchronized execution view.
+- `ROADMAP.md` is generated compatibility alias and is validated as synchronized execution view.
 - `PHASE*.md` remain derived status views.
 - `control-plane/*` models are authoritative for structure, status (modeled scope), and gating intent.
 
@@ -40,7 +39,7 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 
 1. Validate schemas and model cross-references.
 2. Generate views into `control-plane/views/`.
-3. Generate/verify canonical markdown artifacts (`ROADMAP.md`, phase views).
+3. Generate/verify derived markdown artifacts (`ROADMAP.md` compatibility alias, phase views).
 4. Run canonical execution gates.
 
 ## Validation Entry Points
@@ -53,21 +52,23 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `control-plane/scripts/validate_all.sh`
 - `control-plane/scripts/generate_views.sh`
 - `control-plane/scripts/sync_execution_ledger_from_roadmap.py`
-  - imports canonical roadmap phase/milestone/checkbox structure+status into execution-ledger.
+  - one-time/transition sync utility from roadmap markdown to execution-ledger model.
 
 Sync gate:
 - `scripts/check_control_plane_sync.sh`
   - validates models, regenerates control-plane views, and fails on generated-view drift.
-- `scripts/check_roadmap_structure_sync.sh`
-  - validates that `ROADMAP.md` phase headers match control-plane execution structure for non-planned phases.
-- `scripts/check_execution_structure_roundtrip.sh`
-  - validates roadmap↔execution-ledger phase/milestone/checkbox structure round-trip for non-planned phases.
+- `scripts/check_execution_structure_sync.sh`
+  - validates generated execution structure/index views against execution-ledger.
+- `scripts/check_execution_structure_roundtrip_ledger.sh`
+  - validates execution status projection parity against execution-ledger non-planned scope.
 - `scripts/check_gate_model_roundtrip.sh`
   - validates canonical gate wrapper delegation and gate-order generation parity.
 - `scripts/check_status_source_mode.sh`
-  - enforces bootstrap status source mode (`roadmap_md_canonical`) until explicit cutover.
+  - validates allowed status source mode values.
 - `scripts/check_status_projection_sync.sh`
-  - validates roadmap status projection coverage for execution-ledger non-planned checkbox scope.
+  - validates execution status projection coverage for execution-ledger non-planned checkbox scope.
+- `scripts/check_roadmap_compat_alias_sync.sh`
+  - validates generated roadmap compatibility alias stays in sync.
 
 ## Status-Data Discipline
 
@@ -95,6 +96,8 @@ Generated views:
 - `control-plane/views/phase-level-roadmap.generated.md`
 - `control-plane/views/journey-vector.generated.md`
 - `control-plane/views/roadmap-structure.generated.md`
+- `control-plane/views/execution-structure.generated.md`
 - `control-plane/views/phase-index.generated.json`
 - `control-plane/views/gate-order.generated.json`
+- `control-plane/views/execution-status.generated.json`
 - `control-plane/views/roadmap-status.generated.json`

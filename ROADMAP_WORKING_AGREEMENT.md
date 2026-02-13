@@ -12,7 +12,7 @@ The checklist in **`# CICSC Completion TODO (Comprehensive)`** is the canonical 
 - Every checkbox corresponds to a concrete deliverable.
 - No work exists outside the roadmap.
 - New work enters the system only by adding new checkboxes.
-- `ROADMAP.md` is the only canonical status ledger.
+- `control-plane/execution/execution-ledger.yaml` is the only canonical status ledger.
 - `PHASE*.md` files are derived views; they may aid readability but do not own truth.
 - Planning/navigation docs (`PHASE_LEVEL_ROADMAP.md`, `JOURNEY_VECTOR.md`, etc.)
   are non-status artifacts and must not carry execution checkboxes.
@@ -171,7 +171,7 @@ Commit subjects are policy-validated.
 Accepted subject forms:
 - `phase<phase> <milestone>[.<item>]: <summary>`
   - checkbox example: `phase12 ac3.2: add parity envelope differential harnesses`
-  - phase-bootstrap example: `phase12 ac0: bootstrap phase12 plan and roadmap section`
+  - phase-bootstrap example: `phase12 ac0: bootstrap phase12 plan and execution-ledger section`
 - `<type>[/scope]: <summary>` where type is one of:
   - `docs`, `chore`, `ci`, `test`, `refactor`, `governance`, `release`
 
