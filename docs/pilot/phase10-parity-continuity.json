@@ -1,0 +1,9 @@
+{
+  "version": "cicsc/phase10-parity-continuity-v1",
+  "timestamp_unix": 1770951609,
+  "overall": "pass",
+  "checks": {
+    "phase9_required_gates":{"status":"pass","log":"docs/pilot/phase10-parity-continuity.phase9_required_gates.log"},
+    "phase10_postgres_having_harness":{"status":"pass","log":"docs/pilot/phase10-parity-continuity.phase10_postgres_having_harness.log"}
+  }
+}
