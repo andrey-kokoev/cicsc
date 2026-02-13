@@ -1,0 +1,55 @@
+{
+  "version": "cicsc/backend-scope-v1",
+  "backend": "sqlite",
+  "query": {
+    "supported": [
+      "source:snap",
+      "source:join",
+      "op:filter",
+      "op:project",
+      "op:order_by",
+      "op:limit",
+      "op:offset",
+      "op:group_by"
+    ],
+    "deferred": [
+      "op:having",
+      "op:distinct",
+      "op:setOp"
+    ]
+  },
+  "expr": {
+    "supported": [
+      "expr:eq",
+      "expr:neq",
+      "expr:lt",
+      "expr:lte",
+      "expr:gt",
+      "expr:gte",
+      "expr:and",
+      "expr:or",
+      "expr:not",
+      "expr:add",
+      "expr:sub",
+      "expr:mul",
+      "expr:div",
+      "expr:lit",
+      "expr:var:row",
+      "expr:var:state",
+      "expr:var:input",
+      "expr:get",
+      "expr:has",
+      "expr:coalesce",
+      "expr:if",
+      "expr:in",
+      "expr:count",
+      "expr:sum",
+      "expr:avg",
+      "expr:min",
+      "expr:max"
+    ],
+    "deferred": [
+      "expr:exists"
+    ]
+  }
+}

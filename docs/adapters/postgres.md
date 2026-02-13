@@ -7,6 +7,8 @@
 This document describes an implementation approach for a CICSC Postgres adapter.
 
 This document is informative. The normative interface is defined in `/docs/spec/adapter-interface.md`.
+The declared supported subset contract is tracked in `/tests/conformance/postgres-supported-scope.json`
+and mirrored against `/tests/conformance/sqlite-supported-scope.json`.
 
 ---
 
