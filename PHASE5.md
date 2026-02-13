@@ -25,7 +25,7 @@ Turn conformance from best-effort testing into hard CI entry criteria.
 ### TODOs
 - [x] P5.1.1 Define required conformance suite matrix (sqlite + postgres where supported).
 - [x] P5.1.2 Promote sqlite execution-vs-oracle matrix to required CI gate.
-- [ ] P5.1.3 Add differential coverage for join/group/having/subquery operators in supported scope.
+- [x] P5.1.3 Add differential coverage for join/group/having/subquery operators in supported scope (having deferred until Query AST support).
 - [ ] P5.1.4 Gate merges on conformance coverage report threshold and no untracked regressions.
 - [ ] P5.1.5 Add deterministic replay artifact retention policy for CI failures.
 

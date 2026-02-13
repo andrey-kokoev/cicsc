@@ -127,14 +127,14 @@ export function generateCoverageReport (): CoverageReport {
   // This is the source of truth for what Phase 4 conformance covers
   const queryOperators: OperatorCoverage[] = [
     { operator: "source:snap", category: "query", status: "covered", testFiles: ["sqlite-exec-vs-oracle.test.ts", "sqlite-random-vs-oracle.test.ts"], notes: "Primary source type" },
-    { operator: "source:join", category: "query", status: "partial", testFiles: ["sqlite-exec-vs-oracle.test.ts"], notes: "Basic joins covered; complex multi-joins deferred" },
+    { operator: "source:join", category: "query", status: "covered", testFiles: ["sqlite-exec-vs-oracle-smoke.test.ts", "sqlite-exec-vs-oracle.test.ts"], notes: "Single-key equi-join covered; complex multi-joins deferred" },
     { operator: "op:filter", category: "query", status: "covered", testFiles: ["sqlite-random-vs-oracle.test.ts", "sqlite-exec-vs-oracle.test.ts"], notes: "WHERE clause equivalence" },
     { operator: "op:project", category: "query", status: "covered", testFiles: ["sqlite-random-vs-oracle.test.ts", "sqlite-exec-vs-oracle.test.ts"], notes: "SELECT field mapping" },
     { operator: "op:order_by", category: "query", status: "covered", testFiles: ["sqlite-random-vs-oracle.test.ts"], notes: "ORDER BY with direction" },
     { operator: "op:limit", category: "query", status: "covered", testFiles: ["sqlite-random-vs-oracle.test.ts"], notes: "LIMIT clause" },
     { operator: "op:offset", category: "query", status: "covered", testFiles: ["sqlite-random-vs-oracle.test.ts"], notes: "OFFSET clause" },
     { operator: "op:group_by", category: "query", status: "partial", testFiles: ["sqlite-exec-vs-oracle.test.ts"], notes: "Basic grouping; complex aggregates deferred" },
-    { operator: "op:having", category: "query", status: "partial", testFiles: ["sqlite-exec-vs-oracle.test.ts"], notes: "Post-aggregation filter" },
+    { operator: "op:having", category: "query", status: "deferred", testFiles: [], notes: "Not represented in current QueryV0 AST; deferred until operator is introduced" },
     { operator: "op:distinct", category: "query", status: "uncovered", testFiles: [], notes: "SELECT DISTINCT not yet in conformance suite" },
     { operator: "op:setOp", category: "query", status: "uncovered", testFiles: [], notes: "UNION/INTERSECT/EXCEPT not yet in conformance suite" },
   ]

@@ -102,8 +102,14 @@ function materializeSource (src: SourceV0, ctx: QueryContext): Record<string, Va
 
 function namespaceRow (a: Record<string, Value>, an: string, b: Record<string, Value>, bn: string): Record<string, Value> {
   const out: Record<string, Value> = {}
-  for (const [k, v] of Object.entries(a)) out[`${an}.${k}`] = v
-  for (const [k, v] of Object.entries(b)) out[`${bn}.${k}`] = v
+  for (const [k, v] of Object.entries(a)) {
+    out[`${an}.${k}`] = v
+    if (!(k in out)) out[k] = v
+  }
+  for (const [k, v] of Object.entries(b)) {
+    out[`${bn}.${k}`] = v
+    if (!(k in out)) out[k] = v
+  }
   return out
 }
 

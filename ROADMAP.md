@@ -184,7 +184,7 @@
 
 - [x] U1.1 Define required conformance suite matrix (sqlite + postgres where supported)
 - [x] U1.2 Promote sqlite execution-vs-oracle matrix to required CI gate
-- [ ] U1.3 Add differential coverage for join/group/having/subquery operators in supported scope
+- [x] U1.3 Add differential coverage for join/group/having/subquery operators in supported scope (having deferred until Query AST support)
 - [ ] U1.4 Gate merges on conformance coverage threshold and no untracked regressions
 - [ ] U1.5 Add deterministic replay artifact retention policy for CI failures
 

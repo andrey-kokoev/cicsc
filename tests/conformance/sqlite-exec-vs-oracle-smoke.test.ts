@@ -6,7 +6,7 @@ import assert from "node:assert/strict"
 import { interpretQuery } from "../../core/query/interpret"
 import { lowerQueryToSql } from "../../adapters/sqlite/src/lower/query-to-sql"
 import { lowerBoolQueryConstraintToSql } from "../../adapters/sqlite/src/lower/constraint-to-sql"
-import { installSqliteSchemaV0, openSqliteMemory, runLoweredQueryPlan, runPlanAll, upsertSnapshot } from "../harness/sqlite-memory"
+import { installSqliteSchemaV0, openSqliteMemory, runLoweredQueryPlan, runPlanAll, upsertSlaStatus, upsertSnapshot } from "../harness/sqlite-memory"
 
 function canonRows (rows: any[]): any[] {
   const norm = rows.map((r) => stableNormalize(r))
@@ -70,6 +70,7 @@ describe("conformance: sqlite execution vs oracle (smoke)", () => {
       }
 
       const plan = lowerBoolQueryConstraintToSql({ constraint, version: 0, tenant_id: "t", args: { limit: 2 } })
+      assert.match(plan.sql, /\bFROM\s*\(/i) // bool_query is lowered through a subquery shape
       const row = runPlanAll(db, plan.sql, plan.binds)[0]
       assert.ok(row)
       const okSql = row.ok === 1 || row.ok === true
@@ -82,6 +83,52 @@ describe("conformance: sqlite execution vs oracle (smoke)", () => {
       const okOracle = qOut.rows_count <= 2
 
       assert.equal(okSql, okOracle)
+    } finally {
+      db.close()
+    }
+  })
+
+  it("exec lowered join query equals oracle rows", () => {
+    const db = openSqliteMemory()
+    try {
+      installSqliteSchemaV0(db)
+      upsertSnapshot(db, { tenant_id: "t", entity_type: "Ticket", entity_id: "a", state: "new", attrs: {}, updated_ts: 1 })
+      upsertSnapshot(db, { tenant_id: "t", entity_type: "Ticket", entity_id: "b", state: "new", attrs: {}, updated_ts: 1 })
+      upsertSlaStatus(db, { tenant_id: "t", name: "response", entity_type: "Ticket", entity_id: "a", breached: 0, updated_ts: 1 })
+      upsertSlaStatus(db, { tenant_id: "t", name: "response", entity_type: "Ticket", entity_id: "b", breached: 1, updated_ts: 1 })
+
+      const q: any = {
+        source: {
+          join: {
+            left: { snap: { type: "Ticket" } },
+            right: { sla_status: { name: "response", on_type: "Ticket" } },
+            on: { left_field: "entity_id", right_field: "entity_id" },
+          },
+        },
+        pipeline: [
+          { filter: { eq: [{ var: { row: { field: "breached" } } }, { lit: { int: 0 } }] } },
+          { project: { fields: [{ name: "id", expr: { var: { row: { field: "entity_id" } } } }] } },
+          { order_by: [{ expr: { var: { row: { field: "id" } } }, dir: "asc" }] },
+        ],
+      }
+
+      const plan = lowerQueryToSql(q, { version: 0, tenant_id: "t" })
+      const sqlRows = runLoweredQueryPlan(db, { tenant_id: "t", query: q, plan })
+      const sqlProjected = sqlRows.map((r: any) => ({ id: r.id }))
+
+      const oracle = interpretQuery(q, {
+        ...oracleCtx([]),
+        snap: () => [
+          { entity_id: "a", state: "new" },
+          { entity_id: "b", state: "new" },
+        ],
+        sla_status: () => [
+          { entity_id: "a", breached: 0 },
+          { entity_id: "b", breached: 1 },
+        ],
+      } as any)
+
+      assert.deepEqual(canonRows(sqlProjected), canonRows(oracle.rows))
     } finally {
       db.close()
     }

@@ -38,6 +38,7 @@ export function lowerQueryToSql (q: QueryV0, ctx: LoweringCtx): SqlPlan {
 
   // for GROUP BY we must retain projected keys and agg aliases
   let aggSelect: string[] | null = null
+  let projectedAliases: Set<string> = new Set()
 
   for (const op of q.pipeline) {
     const tag = soleKey(op)
@@ -53,6 +54,7 @@ export function lowerQueryToSql (q: QueryV0, ctx: LoweringCtx): SqlPlan {
 
       case "project": {
         const fields = body.fields as { name: string; expr: ExprV0 }[]
+        projectedAliases = new Set(fields.map((f) => f.name))
         select = fields.map((f) => {
           const { sql, binds: b } = lowerExprToSqlValue(f.expr, ctx, "row")
           binds.push(...b)
@@ -81,6 +83,10 @@ export function lowerQueryToSql (q: QueryV0, ctx: LoweringCtx): SqlPlan {
         select = [...keySelect, ...aggParts]
         groupBy = keySelect.map((s) => s.split(" AS ")[0]!.trim()) // expressions, not aliases
         aggSelect = [...keyCols, ...Object.keys(aggs).map((n) => escapeIdent(n))]
+        projectedAliases = new Set([
+          ...keys.map((k) => k.name),
+          ...Object.keys(aggs),
+        ])
 
         break
       }
@@ -88,10 +94,13 @@ export function lowerQueryToSql (q: QueryV0, ctx: LoweringCtx): SqlPlan {
       case "order_by": {
         const keys = body as { expr: ExprV0; dir: "asc" | "desc" }[]
         orderBy = keys.map((k) => {
-          // If we grouped, order keys often refer to projected aliases (row.field).
-          const { sql, binds: b } = lowerExprToSqlValue(k.expr, ctx, "row")
-          binds.push(...b)
-          return `${sql} ${k.dir.toUpperCase()}`
+          const rowField = asRowFieldRef(k.expr)
+          if (rowField && projectedAliases.has(rowField)) {
+            return `${escapeIdent(rowField)} ${k.dir.toUpperCase()}`
+          }
+          const lowered = lowerExprToSqlValue(k.expr, ctx, "row")
+          binds.push(...lowered.binds)
+          return `${lowered.sql} ${k.dir.toUpperCase()}`
         })
         break
       }
@@ -427,6 +436,15 @@ function lowerLit (lit: any, binds: any[]): string {
     default:
       return "NULL"
   }
+}
+
+function asRowFieldRef (expr: ExprV0): string | null {
+  const tag = soleKey(expr)
+  if (tag !== "var") return null
+  const body: any = (expr as any)[tag]
+  const vtag = soleKey(body)
+  if (vtag !== "row") return null
+  return String(body.row?.field ?? body.field ?? "")
 }
 
 function soleKey (o: object): string {
