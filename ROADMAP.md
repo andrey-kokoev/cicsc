@@ -422,3 +422,30 @@ Phase 9 forced-next mapping:
 - [x] AA3.2 Add PHASE10↔ROADMAP status-drift consistency gate
 - [x] AA3.3 Add Phase 11 block gate based on Phase 10 checklist
 - [x] AA3.4 Publish Phase 10 closure report and mark exit criteria
+
+## AB. Phase 11: Envelope Expansion Under Equivalence Discipline
+
+### AB1. Scope Freeze and Governance Baseline
+
+- [ ] AB1.1 Freeze Phase 11 scope and objective ownership contract
+- [ ] AB1.2 Publish Phase 11 baseline gate snapshot (parity/migration/ops/governance)
+- [ ] AB1.3 Add Phase 11 status register with owner/date accountability
+
+### AB2. DSL Usability Closure
+
+- [ ] AB2.1 Define non-programmer task suite and success rubric
+- [ ] AB2.2 Add reproducible usability harness and evidence artifact
+- [ ] AB2.3 Publish DSL usability closure report with residuals policy
+
+### AB3. SQL/Parity Deferred Closure
+
+- [ ] AB3.1 Freeze deferred SQL/parity item ledger and closure plan
+- [ ] AB3.2 Add differential harnesses for selected deferred constructs
+- [ ] AB3.3 Publish deferred-item disposition report (closed vs deferred with owner/date)
+
+### AB4. Deployment Expansion and Phase 12 Gate
+
+- [ ] AB4.1 Freeze expanded deployment set and workload contract
+- [ ] AB4.2 Run expanded workload suite with parity/migration/ops gates
+- [ ] AB4.3 Capture drift/performance/missing-primitive findings with severity labels
+- [ ] AB4.4 Add objective Phase 11 exit checklist and Phase 12 block gate
