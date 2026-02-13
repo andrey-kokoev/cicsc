@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase14-gate-v1",
+  "timestamp_unix": 1770956038,
+  "blocked": true,
+  "basis": "docs/pilot/phase13-exit-checklist.json",
+  "reasons": [
+    "P13_EXIT_GOVERNANCE",
+    "P13_EXIT_PHASE14_GATE"
+  ]
+}

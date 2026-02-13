@@ -79,7 +79,7 @@ Close Phase 13 with objective checklist and enforce entry gate for Phase 14.
 ### TODOs
 - [x] P13.4.1 Define objective Phase 13 exit checklist mapped to artifacts.
 - [x] P13.4.2 Add PHASE13↔ROADMAP drift consistency gate.
-- [ ] P13.4.3 Add Phase 14 block gate from Phase 13 checklist.
+- [x] P13.4.3 Add Phase 14 block gate from Phase 13 checklist.
 - [ ] P13.4.4 Publish Phase 13 closure report and mark exit criteria.
 
 ### Acceptance
