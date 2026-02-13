@@ -36,7 +36,7 @@ Start Phase 22 from explicit scope, owners, and reproducible baseline truth.
 - [x] P22.1.3 Add Phase 22 status register with owner/date discipline.
 
 ### Acceptance
-- [ ] Phase 22 starts from objective scope and reproducible baseline truth.
+- [x] Phase 22 starts from objective scope and reproducible baseline truth.
 
 ---
 
@@ -51,7 +51,7 @@ Close resilience-expansion validation with explicit evidence contract and findin
 - [x] P22.2.3 Publish resilience-expansion closure report with findings disposition.
 
 ### Acceptance
-- [ ] Resilience-expansion validation remains evidence-backed with explicit findings governance.
+- [x] Resilience-expansion validation remains evidence-backed with explicit findings governance.
 
 ---
 
@@ -66,7 +66,7 @@ Harden control-surface integrity checks for expanded deployments.
 - [x] P22.3.3 Publish control-surface integrity closure report with residual policy.
 
 ### Acceptance
-- [ ] Control-surface integrity hardening remains explicit, test-backed, and governed.
+- [x] Control-surface integrity hardening remains explicit, test-backed, and governed.
 
 ---
 
@@ -79,17 +79,17 @@ Close Phase 22 with objective checklist and enforce entry gate for Phase 23.
 - [x] P22.4.1 Define objective Phase 22 exit checklist mapped to artifacts.
 - [x] P22.4.2 Add PHASE22↔ROADMAP drift consistency gate.
 - [x] P22.4.3 Add Phase 23 block gate from Phase 22 checklist.
-- [ ] P22.4.4 Publish Phase 22 closure report and mark exit criteria.
+- [x] P22.4.4 Publish Phase 22 closure report and mark exit criteria.
 
 ### Acceptance
-- [ ] Phase 23 remains blocked unless Phase 22 checklist is fully pass.
+- [x] Phase 23 remains blocked unless Phase 22 checklist is fully pass.
 
 ---
 
 ## Exit Criteria (Phase 22)
 
-- [ ] Scope, baseline, and status governance remain explicit and reproducible.
-- [ ] Resilience-expansion validation is evidence-backed and invariant-preserving.
-- [ ] Control-surface integrity hardening is verifiable with executable harnesses.
-- [ ] Governance checks enforce code/doc/artifact consistency.
-- [ ] Phase 23 remains blocked without full checklist pass.
+- [x] Scope, baseline, and status governance remain explicit and reproducible.
+- [x] Resilience-expansion validation is evidence-backed and invariant-preserving.
+- [x] Control-surface integrity hardening is verifiable with executable harnesses.
+- [x] Governance checks enforce code/doc/artifact consistency.
+- [x] Phase 23 remains blocked without full checklist pass.
