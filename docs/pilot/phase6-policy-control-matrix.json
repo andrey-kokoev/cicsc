@@ -1,0 +1,42 @@
+{
+  "version": "cicsc/phase6-policy-control-matrix-v1",
+  "actions": [
+    {
+      "name": "publish_bundle",
+      "allowed_roles": [
+        "platform_admin",
+        "release_manager"
+      ]
+    },
+    {
+      "name": "bind_tenant_bundle",
+      "allowed_roles": [
+        "platform_admin",
+        "tenant_operator"
+      ]
+    },
+    {
+      "name": "run_migration",
+      "allowed_roles": [
+        "platform_admin",
+        "migration_operator"
+      ]
+    },
+    {
+      "name": "verify_tenant",
+      "allowed_roles": [
+        "platform_admin",
+        "tenant_operator",
+        "auditor"
+      ]
+    },
+    {
+      "name": "run_gates",
+      "allowed_roles": [
+        "platform_admin",
+        "release_manager",
+        "auditor"
+      ]
+    }
+  ]
+}
