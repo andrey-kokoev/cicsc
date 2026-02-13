@@ -2248,6 +2248,36 @@
       "phase_number": 29,
       "checkbox_id": "AT4.4",
       "status": "done"
+    },
+    {
+      "phase_id": "AU",
+      "phase_number": 30,
+      "checkbox_id": "AU1.1",
+      "status": "open"
+    },
+    {
+      "phase_id": "AU",
+      "phase_number": 30,
+      "checkbox_id": "AU1.2",
+      "status": "open"
+    },
+    {
+      "phase_id": "AU",
+      "phase_number": 30,
+      "checkbox_id": "AU1.3",
+      "status": "open"
+    },
+    {
+      "phase_id": "AU",
+      "phase_number": 30,
+      "checkbox_id": "AU1.4",
+      "status": "open"
+    },
+    {
+      "phase_id": "AU",
+      "phase_number": 30,
+      "checkbox_id": "AU1.5",
+      "status": "open"
     }
   ]
 }

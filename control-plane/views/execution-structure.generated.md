@@ -735,3 +735,13 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 - AT4.2 Add PHASE29↔Execution Ledger drift consistency gate
 - AT4.3 Add Phase 30 block gate from Phase 29 checklist
 - AT4.4 Publish Phase 29 closure report and mark exit criteria
+
+## AU. Phase 30: Objective Closure Milestone
+
+### AU1. Single Knowable Objective-Closure Gate
+
+- AU1.1 Freeze end-to-end objective-closure scenario contract and scope
+- AU1.2 Bind OBJ1-OBJ5 to measurable met/not_met verdict assertions with required artifact evidence
+- AU1.3 Execute adversarial end-to-end run (Spec -> IR -> sqlite/postgres -> migration -> replay verification)
+- AU1.4 Publish objective verdict report (met/not_met per objective) with failure localization
+- AU1.5 If any objective is not_met, derive forced-next execution-ledger checkboxes only and block completion claim

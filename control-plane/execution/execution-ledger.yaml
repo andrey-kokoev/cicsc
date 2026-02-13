@@ -1591,3 +1591,30 @@ phases:
     - id: AT4.4
       title: Publish Phase 29 closure report and mark exit criteria
       status: done
+- id: AU
+  number: 30
+  title: Objective Closure Milestone
+  status: active
+  milestones:
+  - id: AU1
+    title: Single Knowable Objective-Closure Gate
+    checkboxes:
+    - id: AU1.1
+      title: Freeze end-to-end objective-closure scenario contract and scope
+      status: open
+    - id: AU1.2
+      title: Bind OBJ1-OBJ5 to measurable met/not_met verdict assertions with required
+        artifact evidence
+      status: open
+    - id: AU1.3
+      title: Execute adversarial end-to-end run (Spec -> IR -> sqlite/postgres -> migration
+        -> replay verification)
+      status: open
+    - id: AU1.4
+      title: Publish objective verdict report (met/not_met per objective) with failure
+        localization
+      status: open
+    - id: AU1.5
+      title: If any objective is not_met, derive forced-next execution-ledger checkboxes
+        only and block completion claim
+      status: open

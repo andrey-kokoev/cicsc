@@ -35,6 +35,7 @@ Canonical status truth is `control-plane/execution/execution-ledger.yaml`.
 | AR | 27 | Deployment Integrity and Evolution Continuity Discipline | complete |
 | AS | 28 | Assurance Scaling and Operational Continuity Discipline | complete |
 | AT | 29 | Assurance Expansion and Governance Continuity Discipline | complete |
+| AU | 30 | Objective Closure Milestone | active |
 
 ## Notes
 
@@ -70,3 +71,4 @@ Canonical status truth is `control-plane/execution/execution-ledger.yaml`.
 | AR | 13 | 0 |
 | AS | 13 | 0 |
 | AT | 13 | 0 |
+| AU | 0 | 5 |
