@@ -1,0 +1,26 @@
+{
+  "version": "cicsc/phase10-doc-consistency-v1",
+  "timestamp_unix": 1770951929,
+  "status": "pass",
+  "basis": {
+    "phase10": "PHASE10.md",
+    "roadmap": "ROADMAP.md",
+    "checklist": "docs/pilot/phase10-exit-checklist.json"
+  },
+  "checked_ids": [
+    "AA1.1",
+    "AA1.2",
+    "AA1.3",
+    "AA1.4",
+    "AA2.1",
+    "AA2.2",
+    "AA2.3",
+    "AA2.4",
+    "AA3.1",
+    "AA3.2",
+    "AA3.3",
+    "AA3.4"
+  ],
+  "has_unchecked": true,
+  "mismatches": []
+}
