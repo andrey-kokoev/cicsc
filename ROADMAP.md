@@ -339,7 +339,7 @@ Phase 8 production-equivalence risk mapping:
 
 ### Y2. Multi-Tenant Operational Resilience
 
-- [ ] Y2.1 Define Phase 8 operational resilience contract
+- [x] Y2.1 Define Phase 8 operational resilience contract
 - [ ] Y2.2 Add multi-tenant chaos drills (outage/verify delay/replay backpressure)
 - [ ] Y2.3 Add tenant fairness and starvation checks for command execution
 - [ ] Y2.4 Add continuous SLO/error-budget gate for verify/migrate/command paths

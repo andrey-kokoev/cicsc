@@ -1,0 +1,22 @@
+{
+  "version": "cicsc/phase8-operational-resilience-contract-v1",
+  "guarantees": [
+    "tenant isolation during normal operation and rollback flows",
+    "rollback isolation: failed tenant rollback must not impact unrelated tenants",
+    "bounded recovery windows for verify/migrate command paths"
+  ],
+  "recovery_windows": {
+    "verify": "<= 10m",
+    "migration_protocol": "<= 30m",
+    "rollback": "<= 15m"
+  },
+  "required_artifacts": [
+    "docs/pilot/phase8-chaos-drills.json",
+    "docs/pilot/phase8-fairness-checks.json",
+    "docs/pilot/phase8-resilience-slo.json"
+  ],
+  "preserved_exclusions": [
+    "no distributed transactions across tenants",
+    "no global fairness guarantee beyond declared queue model"
+  ]
+}

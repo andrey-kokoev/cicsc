@@ -46,7 +46,7 @@ Strengthen backend parity from test-scope confidence to production-like workload
 Ensure invariant-preserving behavior remains stable under realistic tenant concurrency and operational failures.
 
 ### TODOs
-- [ ] P8.2.1 Define Phase 8 operational resilience contract (tenant isolation, rollback isolation, recovery windows).
+- [x] P8.2.1 Define Phase 8 operational resilience contract (tenant isolation, rollback isolation, recovery windows).
 - [ ] P8.2.2 Add multi-tenant chaos drills (partial outage, delayed verification, replay backpressure).
 - [ ] P8.2.3 Add tenant-level fairness and starvation checks for command execution.
 - [ ] P8.2.4 Add continuous SLO/error-budget gate for verify/migrate/command paths.
