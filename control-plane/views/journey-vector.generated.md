@@ -39,7 +39,7 @@
 - Phase 27 (AR): Deployment Integrity and Evolution Continuity Discipline [complete]
 - Phase 28 (AS): Assurance Scaling and Operational Continuity Discipline [complete]
 - Phase 29 (AT): Assurance Expansion and Governance Continuity Discipline [complete]
-- Phase 30 (AU): Objective Closure Milestone [active]
+- Phase 30 (AU): Objective Closure Milestone [complete]
 
 ## Canonical Rule
 
