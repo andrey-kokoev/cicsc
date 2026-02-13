@@ -17,11 +17,38 @@ export function typecheckSpecV0 (spec: SpecV0): SpecTypecheckResult {
       errors.push({ path: `entities.${entityName}.states`, message: "states must be non-empty array" })
     } else if (!e.states.includes(e.initial)) {
       errors.push({ path: `entities.${entityName}.initial`, message: "initial must be one of states" })
+    } else {
+      const seen = new Set<string>()
+      for (const st of e.states) {
+        const s = String(st)
+        if (seen.has(s)) {
+          errors.push({
+            path: `entities.${entityName}.states`,
+            message: `duplicate state '${s}'`,
+          })
+        } else {
+          seen.add(s)
+        }
+      }
     }
 
     for (const [cmdName, c] of Object.entries(e.commands ?? {})) {
       if (!Array.isArray((c as any).emit) || (c as any).emit.length === 0) {
         errors.push({ path: `entities.${entityName}.commands.${cmdName}.emit`, message: "emit must be non-empty array" })
+      } else {
+        const seenEvents = new Set<string>()
+        for (const emit of ((c as any).emit ?? []) as any[]) {
+          const eventType = String((emit as any).type ?? "")
+          if (!eventType) continue
+          if (seenEvents.has(eventType)) {
+            errors.push({
+              path: `entities.${entityName}.commands.${cmdName}.emit`,
+              message: `duplicate emitted event '${eventType}'`,
+            })
+          } else {
+            seenEvents.add(eventType)
+          }
+        }
       }
     }
 
