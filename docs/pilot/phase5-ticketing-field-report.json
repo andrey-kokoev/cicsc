@@ -1,0 +1,35 @@
+{
+  "version": "cicsc/phase5-field-report-v1",
+  "vertical": "ticketing",
+  "inputs": {
+    "criteria": "verticals/ticketing/evaluation-criteria.phase5.json",
+    "staged_run": "docs/pilot/phase5-ticketing-staged-run.json",
+    "incidents": "docs/pilot/phase5-ticketing-incidents.json"
+  },
+  "status": {
+    "overall": "blocked",
+    "blocking_incidents": [
+      "INC-PG-HARNESS-001"
+    ]
+  },
+  "forced_next_priorities": [
+    {
+      "roadmap_id": "V1",
+      "incident_id": "INC-PG-HARNESS-001",
+      "priority": "P0",
+      "reason": "Cross-backend gate cannot execute without postgres harness dependency."
+    },
+    {
+      "roadmap_id": "V2",
+      "incident_id": "INC-ORDER-COLLATION-001",
+      "priority": "P1",
+      "reason": "Backend semantic deltas must move from documentation to executable controls."
+    },
+    {
+      "roadmap_id": "V3",
+      "incident_id": "INC-PERF-BASELINE-001",
+      "priority": "P1",
+      "reason": "Field run lacks measured latency/throughput SLO evidence."
+    }
+  ]
+}

@@ -117,7 +117,7 @@ Prove semantic fitness under real operational workload.
 - [x] P5.6.2 Run staged workload with invariants, conformance, and migration checks enabled.
 - [x] P5.6.3 Collect drift/perf/missing-primitive incidents with severity labels.
 - [x] P5.6.4 Convert findings into roadmap checkboxes (no hidden backlog).
-- [ ] P5.6.5 Publish phase report with forced-next priorities only.
+- [x] P5.6.5 Publish phase report with forced-next priorities only.
 
 ### Acceptance
 - [ ] At least one vertical run demonstrates deploy/operate/evolve loop with no invariant breaches.

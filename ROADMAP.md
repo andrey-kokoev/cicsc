@@ -226,7 +226,7 @@
 - [x] U6.2 Run staged workload with invariants, conformance, and migration checks enabled
 - [x] U6.3 Capture drift/perf/missing-primitive incidents with severity labels
 - [x] U6.4 Convert findings into roadmap checkboxes (no hidden backlog)
-- [ ] U6.5 Publish phase report with forced-next priorities only
+- [x] U6.5 Publish phase report with forced-next priorities only
 
 ### U7. Governance Gate for Phase 6
 

@@ -14,6 +14,9 @@ Incident register:
 Roadmap mapping (no hidden backlog):
 - `docs/pilot/phase5-findings-roadmap-map.md`
 
+Phase report:
+- `docs/pilot/phase5-ticketing-field-report.json`
+
 This selection is fixed for Phase 5 closure work so that:
 - conformance and migration evidence target one stable workload,
 - usability and drift feedback are measured against one operational context,
