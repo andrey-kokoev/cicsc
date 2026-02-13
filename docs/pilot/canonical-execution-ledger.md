@@ -53,6 +53,8 @@ For a checkbox marked done in `ROADMAP.md`:
   - validates canonical gate wrapper delegation and gate-order parity to gate-model.
 - `scripts/check_status_source_mode.sh`
   - enforces bootstrap status-source mode while roadmap remains canonical.
+- `scripts/check_status_projection_sync.sh`
+  - validates roadmap status projection coverage/parity for non-planned ledger checkbox scope.
 - `scripts/check_generated_artifacts_policy.sh`
   - validates generated-artifact markers for `*.generated.*` files.
 - `scripts/check_category_model_conformance.sh`

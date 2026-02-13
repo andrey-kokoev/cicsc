@@ -63,6 +63,8 @@ Sync gate:
   - validates canonical gate wrapper delegation and gate-order generation parity.
 - `scripts/check_status_source_mode.sh`
   - enforces bootstrap status source mode (`roadmap_md_canonical`) until explicit cutover.
+- `scripts/check_status_projection_sync.sh`
+  - validates roadmap status projection coverage for execution-ledger non-planned checkbox scope.
 
 ## Status-Data Discipline
 
@@ -92,3 +94,4 @@ Generated views:
 - `control-plane/views/roadmap-structure.generated.md`
 - `control-plane/views/phase-index.generated.json`
 - `control-plane/views/gate-order.generated.json`
+- `control-plane/views/roadmap-status.generated.json`

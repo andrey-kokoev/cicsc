@@ -37,6 +37,10 @@
       "script": "scripts/check_status_source_mode.sh"
     },
     {
+      "gate_id": "GATE_STATUS_PROJECTION_SYNC",
+      "script": "scripts/check_status_projection_sync.sh"
+    },
+    {
       "gate_id": "GATE_GENERATED_ARTIFACT_POLICY",
       "script": "scripts/check_generated_artifacts_policy.sh"
     },

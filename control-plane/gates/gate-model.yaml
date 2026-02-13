@@ -32,6 +32,10 @@ gates:
     scope: global
     required_scripts:
       - scripts/check_status_source_mode.sh
+  - id: GATE_STATUS_PROJECTION_SYNC
+    scope: global
+    required_scripts:
+      - scripts/check_status_projection_sync.sh
   - id: GATE_GENERATED_ARTIFACT_POLICY
     scope: global
     required_scripts:

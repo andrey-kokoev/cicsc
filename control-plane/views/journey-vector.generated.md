@@ -9,7 +9,7 @@
 - Objectives: 5
 - Capabilities: 5
 - Phases in execution model: 2
-- Gate contracts: 11
+- Gate contracts: 12
 
 ## Current Sequence
 
