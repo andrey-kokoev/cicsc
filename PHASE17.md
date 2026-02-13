@@ -77,7 +77,7 @@ Strengthen trust and operational hardening for scaled deployments.
 Close Phase 17 with objective checklist and enforce entry gate for Phase 18.
 
 ### TODOs
-- [ ] P17.4.1 Define objective Phase 17 exit checklist mapped to artifacts.
+- [x] P17.4.1 Define objective Phase 17 exit checklist mapped to artifacts.
 - [ ] P17.4.2 Add PHASE17↔ROADMAP drift consistency gate.
 - [ ] P17.4.3 Add Phase 18 block gate from Phase 17 checklist.
 - [ ] P17.4.4 Publish Phase 17 closure report and mark exit criteria.

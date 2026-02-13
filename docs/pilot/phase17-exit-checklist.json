@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase17-exit-checklist-v1",
+  "timestamp_unix": 1771091700,
+  "items": [
+    {
+      "id": "scope_baseline_status",
+      "artifact": "docs/pilot/phase17-status-register.json",
+      "status": "pass"
+    },
+    {
+      "id": "field_program_status",
+      "artifact": "docs/pilot/phase17-field-program-closure-report.json",
+      "status": "pass"
+    },
+    {
+      "id": "trust_hardening_status",
+      "artifact": "docs/pilot/phase17-trust-hardening-closure-report.json",
+      "status": "pass"
+    },
+    {
+      "id": "phase17_gate_state",
+      "artifact": "docs/pilot/phase17-gate.json",
+      "status": "pass"
+    }
+  ],
+  "overall": "pass"
+}
