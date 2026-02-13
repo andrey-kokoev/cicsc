@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase20-status-register-v1",
+  "timestamp_unix": 1771707300,
+  "items": [
+    {
+      "id": "P20-MULTI-ENV-ASSURANCE",
+      "status": "in_progress",
+      "owner": "phase20-validation-owner",
+      "target_date": "2027-04-24",
+      "basis": "AK2"
+    },
+    {
+      "id": "P20-SCALE-TRANSITION",
+      "status": "pending",
+      "owner": "phase20-ops-owner",
+      "target_date": "2027-05-01",
+      "basis": "AK3"
+    },
+    {
+      "id": "P20-GOVERNANCE-CLOSURE",
+      "status": "pending",
+      "owner": "phase20-governance-owner",
+      "target_date": "2027-05-08",
+      "basis": "AK4"
+    }
+  ]
+}

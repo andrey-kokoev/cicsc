@@ -33,7 +33,7 @@ Start Phase 20 from explicit scope, owners, and reproducible baseline truth.
 ### TODOs
 - [x] P20.1.1 Freeze Phase 20 scope and owner contract.
 - [x] P20.1.2 Publish Phase 20 baseline continuity snapshot.
-- [ ] P20.1.3 Add Phase 20 status register with owner/date discipline.
+- [x] P20.1.3 Add Phase 20 status register with owner/date discipline.
 
 ### Acceptance
 - [ ] Phase 20 starts from objective scope and reproducible baseline truth.

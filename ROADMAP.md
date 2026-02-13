@@ -677,7 +677,7 @@ Phase 9 forced-next mapping:
 
 - [x] AK1.1 Freeze Phase 20 scope and owner contract
 - [x] AK1.2 Publish Phase 20 baseline continuity snapshot
-- [ ] AK1.3 Add Phase 20 status register with owner/date discipline
+- [x] AK1.3 Add Phase 20 status register with owner/date discipline
 
 ### AK2. Multi-Environment Assurance Validation Closure
 
