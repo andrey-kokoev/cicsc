@@ -859,3 +859,30 @@ Phase 9 forced-next mapping:
 - [x] AQ4.2 Add PHASE26↔ROADMAP drift consistency gate
 - [x] AQ4.3 Add Phase 27 block gate from Phase 26 checklist
 - [x] AQ4.4 Publish Phase 26 closure report and mark exit criteria
+
+## AR. Phase 27: Deployment Integrity and Evolution Continuity Discipline
+
+### AR1. Scope Freeze and Baseline Continuity
+
+- [ ] AR1.1 Freeze Phase 27 scope and owner contract
+- [ ] AR1.2 Publish Phase 27 baseline continuity snapshot
+- [ ] AR1.3 Add Phase 27 status register with owner/date discipline
+
+### AR2. Deployment-Integrity Validation Closure
+
+- [ ] AR2.1 Freeze deployment-integrity matrix and evidence contract
+- [ ] AR2.2 Run deployment-integrity required gates
+- [ ] AR2.3 Publish deployment-integrity closure report with findings disposition
+
+### AR3. Evolution-Continuity Hardening
+
+- [ ] AR3.1 Freeze evolution-continuity hardening matrix and policy
+- [ ] AR3.2 Add evolution-continuity verification harnesses
+- [ ] AR3.3 Publish evolution-continuity closure report with residual policy
+
+### AR4. Governance Closure and Phase 28 Gate
+
+- [ ] AR4.1 Define objective Phase 27 exit checklist mapped to artifacts
+- [ ] AR4.2 Add PHASE27↔ROADMAP drift consistency gate
+- [ ] AR4.3 Add Phase 28 block gate from Phase 27 checklist
+- [ ] AR4.4 Publish Phase 27 closure report and mark exit criteria
