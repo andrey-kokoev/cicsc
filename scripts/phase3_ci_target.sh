@@ -9,4 +9,5 @@ cd "${ROOT_DIR}"
 ./scripts/run_conformance_required.sh default
 ./scripts/check_conformance_gate.sh
 ./scripts/node_test.sh tests/core/view-row-policy-typecheck.test.ts
+./scripts/check_phase5_docs_consistency.sh
 ./scripts/check_v4_refs.sh

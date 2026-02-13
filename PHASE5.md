@@ -135,7 +135,7 @@ Prevent phase transition without verified closure.
 - [x] P5.7.2 Require green required conformance gates for sqlite + postgres scoped matrices.
 - [x] P5.7.3 Require migration runbook and cutover/rollback drill evidence.
 - [x] P5.7.4 Require Spec DSL usability evidence from reference vertical.
-- [ ] P5.7.5 Add CI/doc checks rejecting unchecked claims in phase/status docs.
+- [x] P5.7.5 Add CI/doc checks rejecting unchecked claims in phase/status docs.
 
 ### Acceptance
 - [ ] Phase 6 cannot start unless all exit criteria artifacts are present and passing.

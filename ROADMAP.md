@@ -234,7 +234,7 @@
 - [x] U7.2 Require green required conformance gates for sqlite + postgres scoped matrices
 - [x] U7.3 Require migration runbook and cutover/rollback drill evidence
 - [x] U7.4 Require Spec DSL usability evidence from reference vertical
-- [ ] U7.5 Add CI/doc checks rejecting unchecked claims in phase/status docs
+- [x] U7.5 Add CI/doc checks rejecting unchecked claims in phase/status docs
 
 ## V. Field-Derived Backlog (Ticketing Phase 5)
 
