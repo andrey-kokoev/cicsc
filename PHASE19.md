@@ -61,7 +61,7 @@ Close deployment-assurance validation with explicit evidence contract and findin
 Harden runtime reliability checks for scaled deployments.
 
 ### TODOs
-- [ ] P19.3.1 Freeze runtime-reliability hardening matrix and policy.
+- [x] P19.3.1 Freeze runtime-reliability hardening matrix and policy.
 - [ ] P19.3.2 Add runtime-reliability verification harnesses.
 - [ ] P19.3.3 Publish runtime reliability closure report with residual policy.
 

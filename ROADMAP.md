@@ -660,7 +660,7 @@ Phase 9 forced-next mapping:
 
 ### AJ3. Runtime Reliability Hardening
 
-- [ ] AJ3.1 Freeze runtime-reliability hardening matrix and policy
+- [x] AJ3.1 Freeze runtime-reliability hardening matrix and policy
 - [ ] AJ3.2 Add runtime-reliability verification harnesses
 - [ ] AJ3.3 Publish runtime reliability closure report with residual policy
 
