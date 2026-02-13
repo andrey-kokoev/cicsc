@@ -486,7 +486,7 @@ Phase 9 forced-next mapping:
 
 ### AD1. Scope Freeze and Baseline Continuity
 
-- [ ] AD1.1 Freeze Phase 13 scope and owner contract
+- [x] AD1.1 Freeze Phase 13 scope and owner contract
 - [ ] AD1.2 Publish Phase 13 baseline continuity snapshot
 - [ ] AD1.3 Add Phase 13 status register with owner/date discipline
 
