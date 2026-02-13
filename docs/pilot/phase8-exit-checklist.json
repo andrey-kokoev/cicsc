@@ -45,7 +45,7 @@
         "scripts/check_phase8_required_gates.sh",
         "scripts/check_phase9_block.sh"
       ],
-      "status": "pending"
+      "status": "pass"
     }
   ]
 }

@@ -359,4 +359,4 @@ Phase 8 production-equivalence risk mapping:
 - [x] Y4.2 Require green required gates (equivalence + resilience + ergonomics safety)
 - [x] Y4.3 Require unresolved criticals register empty or explicitly deferred with owner/date
 - [x] Y4.4 Add CI/doc checks rejecting Phase 8 status drift
-- [ ] Y4.5 Block Phase 9 unless all checklist items are pass
+- [x] Y4.5 Block Phase 9 unless all checklist items are pass

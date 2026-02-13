@@ -86,16 +86,16 @@ Prevent semantic drift while expanding toward broader deployment.
 - [x] P8.4.2 Require green required gates (production-equivalence + resilience + ergonomics safety).
 - [x] P8.4.3 Require unresolved criticals register empty or explicitly deferred with owner/date.
 - [x] P8.4.4 Add CI/doc checks rejecting Phase 8 status drift.
-- [ ] P8.4.5 Block Phase 9 unless all checklist items are pass.
+- [x] P8.4.5 Block Phase 9 unless all checklist items are pass.
 
 ### Acceptance
-- [ ] Phase transition is governed by artifact truth, not narrative status.
+- [x] Phase transition is governed by artifact truth, not narrative status.
 
 ---
 
 ## Exit Criteria (Phase 8)
 
-- [ ] Production-equivalence claims are validated for declared scale envelope.
-- [ ] Multi-tenant resilience guarantees are proven via drills and gate artifacts.
-- [ ] Spec/migration ergonomics improvements preserve compile-time and runtime invariants.
-- [ ] Governance checks continuously enforce artifact-status consistency.
+- [x] Production-equivalence claims are validated for declared scale envelope.
+- [x] Multi-tenant resilience guarantees are proven via drills and gate artifacts.
+- [x] Spec/migration ergonomics improvements preserve compile-time and runtime invariants.
+- [x] Governance checks continuously enforce artifact-status consistency.
