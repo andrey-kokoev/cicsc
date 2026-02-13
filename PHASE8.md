@@ -64,7 +64,7 @@ Ensure invariant-preserving behavior remains stable under realistic tenant concu
 Improve authoring UX while preserving hard invariants and compile-time rejection discipline.
 
 ### TODOs
-- [ ] P8.3.1 Freeze spec authoring pain-point taxonomy from field evidence.
+- [x] P8.3.1 Freeze spec authoring pain-point taxonomy from field evidence.
 - [ ] P8.3.2 Add targeted DSL ergonomics improvements with negative typecheck coverage.
 - [ ] P8.3.3 Add migration authoring assistant checks (coverage, state-map safety, rollback readiness).
 - [ ] P8.3.4 Add spec/migration usability benchmark artifact across reference verticals.

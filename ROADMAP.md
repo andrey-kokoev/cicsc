@@ -347,7 +347,7 @@ Phase 8 production-equivalence risk mapping:
 
 ### Y3. Spec and Migration Ergonomics at Scale
 
-- [ ] Y3.1 Freeze spec authoring pain-point taxonomy from field evidence
+- [x] Y3.1 Freeze spec authoring pain-point taxonomy from field evidence
 - [ ] Y3.2 Add DSL ergonomics improvements with negative typecheck coverage
 - [ ] Y3.3 Add migration authoring assistant checks (coverage/safety/rollback readiness)
 - [ ] Y3.4 Add multi-vertical spec/migration usability benchmark artifact
