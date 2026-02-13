@@ -1,0 +1,32 @@
+{
+  "version": "cicsc/phase7-migration-verify-slo-v1",
+  "slo_targets": {
+    "migration_protocol_check_success_rate": {
+      "target": ">= 99%",
+      "window": "rolling_30_runs"
+    },
+    "post_cutover_differential_success_rate": {
+      "target": ">= 99%",
+      "window": "rolling_30_runs"
+    },
+    "verify_gate_success_rate": {
+      "target": ">= 99.5%",
+      "window": "rolling_30_runs"
+    }
+  },
+  "error_budget": {
+    "migration_protocol_failures_per_30_runs": 0,
+    "post_cutover_differential_failures_per_30_runs": 0,
+    "verify_gate_failures_per_30_runs": 0
+  },
+  "current_observation": {
+    "migration_protocol_check": "pass",
+    "post_cutover_differential": "pass",
+    "required_gates": "pass"
+  },
+  "evidence_inputs": [
+    "docs/pilot/phase7-migration-protocol-check.json",
+    "docs/pilot/phase7-post-cutover-differential.json",
+    "docs/pilot/phase6-required-gates.json"
+  ]
+}
