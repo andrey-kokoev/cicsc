@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase18-expansion-proof-required-gates-v1",
+  "timestamp_unix": 1770989827,
+  "overall": "pass",
+  "checks": {
+    "phase17_doc_consistency_status":{"status":"pass","log":"docs/pilot/phase18-expansion-proof-required-gates.phase17_doc_consistency_status.log"},
+    "phase17_field_program_required_gates_status":{"status":"pass","log":"docs/pilot/phase18-expansion-proof-required-gates.phase17_field_program_required_gates_status.log"},
+    "phase18_baseline_continuity_status":{"status":"pass","log":"docs/pilot/phase18-expansion-proof-required-gates.phase18_baseline_continuity_status.log"}
+  }
+}

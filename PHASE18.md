@@ -47,7 +47,7 @@ Close expansion-proof validation with explicit evidence contract and findings go
 
 ### TODOs
 - [x] P18.2.1 Freeze expansion-proof matrix and evidence contract.
-- [ ] P18.2.2 Run expansion-proof required gates.
+- [x] P18.2.2 Run expansion-proof required gates.
 - [ ] P18.2.3 Publish expansion-proof closure report with findings disposition.
 
 ### Acceptance
