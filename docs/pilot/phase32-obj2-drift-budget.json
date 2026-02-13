@@ -1,0 +1,16 @@
+{
+  "version": "cicsc/phase32-obj2-drift-budget-v1",
+  "timestamp_unix": 1771010429,
+  "overall": "pass",
+  "objective": "OBJ2",
+  "drift_budget": {
+    "max_failures": 0,
+    "actual_failures": 0,
+    "within_budget": true
+  },
+  "checks": {
+    "parity_continuity":{"status":"pass","log":"docs/pilot/phase32-obj2-drift-budget.parity_continuity.log"},
+    "category_model_conformance":{"status":"pass","log":"docs/pilot/phase32-obj2-drift-budget.category_model_conformance.log"},
+    "canonical_execution_model":{"status":"pass","log":"docs/pilot/phase32-obj2-drift-budget.canonical_execution_model.log"}
+  }
+}
