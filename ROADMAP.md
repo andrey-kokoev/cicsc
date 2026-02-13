@@ -903,7 +903,7 @@ Phase 9 forced-next mapping:
 
 ### AS3. Operational-Continuity Hardening
 
-- [ ] AS3.1 Freeze operational-continuity hardening matrix and policy
+- [x] AS3.1 Freeze operational-continuity hardening matrix and policy
 - [ ] AS3.2 Add operational-continuity verification harnesses
 - [ ] AS3.3 Publish operational-continuity closure report with residual policy
 
