@@ -791,7 +791,7 @@ Phase 9 forced-next mapping:
 
 - [x] AO2.1 Freeze assurance-maturity matrix and evidence contract
 - [x] AO2.2 Run assurance-maturity required gates
-- [ ] AO2.3 Publish assurance-maturity closure report with findings disposition
+- [x] AO2.3 Publish assurance-maturity closure report with findings disposition
 
 ### AO3. Continuity-Proof Hardening
 

@@ -48,7 +48,7 @@ Close assurance-maturity validation with explicit evidence contract and findings
 ### TODOs
 - [x] P24.2.1 Freeze assurance-maturity matrix and evidence contract.
 - [x] P24.2.2 Run assurance-maturity required gates.
-- [ ] P24.2.3 Publish assurance-maturity closure report with findings disposition.
+- [x] P24.2.3 Publish assurance-maturity closure report with findings disposition.
 
 ### Acceptance
 - [ ] Assurance-maturity validation remains evidence-backed with explicit findings governance.
