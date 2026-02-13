@@ -59,10 +59,10 @@ Address deferred SQL/parity items with explicit closure or governed deferral.
 ### TODOs
 - [x] P11.3.1 Freeze deferred SQL/parity item ledger and closure plan.
 - [x] P11.3.2 Add differential harnesses for selected deferred constructs.
-- [ ] P11.3.3 Publish deferred-item disposition report (closed vs deferred with owner/date).
+- [x] P11.3.3 Publish deferred-item disposition report (closed vs deferred with owner/date).
 
 ### Acceptance
-- [ ] Deferred SQL/parity items are no longer implicit risk.
+- [x] Deferred SQL/parity items are no longer implicit risk.
 
 ---
 
