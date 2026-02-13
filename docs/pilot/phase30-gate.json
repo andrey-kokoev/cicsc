@@ -1,0 +1,12 @@
+{
+  "version": "cicsc/phase30-gate-v1",
+  "timestamp_unix": 1770996142,
+  "blocked": true,
+  "basis": {
+    "checklist": "docs/pilot/phase29-exit-checklist.json",
+    "roadmap": "ROADMAP.md"
+  },
+  "reasons": [
+    "roadmap_at_series_incomplete"
+  ]
+}
