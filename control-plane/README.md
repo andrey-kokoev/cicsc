@@ -32,6 +32,7 @@ projections used for executable validation and gating.
   - Typed agent collaboration contract (claims, obligations, evidence, handoff protocol).
   - Includes executable task assignments (`assignments`) binding agent/worktree/branch to ledger checkbox scope.
   - Includes immutable message envelopes with append-only `message_events`, transition policy, rescind/supersede semantics, and evidence bindings (`commit` + `digest`).
+  - Includes `worktree_governance` semantics (single owner per worktree, owner-dispatch authority, and worktree creation authority list).
   - Binds collaboration claims to objective/capability/ledger scope.
   - No execution status.
   - Canonical worktree processing entry point is mailbox projection:

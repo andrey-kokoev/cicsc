@@ -99,12 +99,31 @@ def main() -> int:
             errors.append(f"collab-model: invalid handoff branch_pattern regex: {exc}")
 
     agent_map = {}
+    worktree_owner_map = {}
     for agent in collab.get("agents", []):
         aid = agent.get("id")
+        wt = agent.get("worktree")
         if aid in agent_map:
             errors.append(f"collab-model: duplicate agent id {aid}")
         else:
             agent_map[aid] = agent
+        if wt in worktree_owner_map and worktree_owner_map[wt] != aid:
+            errors.append(
+                f"collab-model: worktree {wt} has multiple owners ({worktree_owner_map[wt]}, {aid}) under single-owner semantics"
+            )
+        else:
+            worktree_owner_map[wt] = aid
+
+    worktree_gov = collab.get("worktree_governance", {})
+    ownership_mode = worktree_gov.get("ownership_mode")
+    assignment_dispatch_kind_ref = worktree_gov.get("assignment_dispatch_kind_ref")
+    enforce_owner_dispatch = bool(worktree_gov.get("enforce_owner_dispatch"))
+    creation_authorities = worktree_gov.get("worktree_creation_authority_agent_refs", [])
+    if ownership_mode != "single_owner":
+        errors.append(f"collab-model: unsupported ownership_mode {ownership_mode}")
+    for aid in creation_authorities:
+        if aid not in agent_map:
+            errors.append(f"collab-model: unknown worktree creation authority agent {aid}")
 
     seen_phase_ids = set()
     seen_phase_numbers = set()
@@ -302,6 +321,15 @@ def main() -> int:
                 errors.append(
                     f"collab-model: message {mid} from_worktree mismatch (got {from_worktree}, expected {expected})"
                 )
+        if (
+            enforce_owner_dispatch
+            and kind_ref == assignment_dispatch_kind_ref
+            and from_worktree in worktree_owner_map
+            and worktree_owner_map[from_worktree] != from_agent_ref
+        ):
+            errors.append(
+                f"collab-model: message {mid} dispatch authority mismatch; {from_agent_ref} is not owner of {from_worktree}"
+            )
 
         if to_agent_ref not in agent_map:
             errors.append(f"collab-model: message {mid} unknown to_agent_ref {to_agent_ref}")
