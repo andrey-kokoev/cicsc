@@ -23,7 +23,7 @@
   },
   "alignment_policy": {
     "order_by": "always_generate_explicit_order_by_for_deterministic_queries",
-    "nulls": "normalize_oracle_vs_sql_expectations_using_declared_backend_defaults",
+    "nulls": "lowering_emits_explicit_nulls_first_last_clauses",
     "collation": "treat_string_order_as_backend_specific_unless_explicitly_modeled"
   },
   "known_deltas": [

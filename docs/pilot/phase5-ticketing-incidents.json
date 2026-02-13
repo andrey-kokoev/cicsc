@@ -15,8 +15,8 @@
       "id": "INC-ORDER-COLLATION-001",
       "category": "drift_risk",
       "severity": "medium",
-      "status": "open",
-      "summary": "Backend default NULL/collation behavior differs and requires explicit policy-driven handling in cross-backend assertions.",
+      "status": "resolved",
+      "summary": "Lowering now emits explicit NULL ordering clauses; collation behavior remains explicitly policy-scoped in conformance contract.",
       "evidence": "tests/conformance/backend-semantics-policy.json"
     },
     {

@@ -96,11 +96,11 @@ export function lowerQueryToSql (q: QueryV0, ctx: LoweringCtx): SqlPlan {
         orderBy = keys.map((k) => {
           const rowField = asRowFieldRef(k.expr)
           if (rowField && projectedAliases.has(rowField)) {
-            return `${escapeIdent(rowField)} ${k.dir.toUpperCase()}`
+            return `${escapeIdent(rowField)} ${k.dir.toUpperCase()} NULLS ${k.dir === "asc" ? "FIRST" : "LAST"}`
           }
           const lowered = lowerExprToSqlValue(k.expr, ctx, "row")
           binds.push(...lowered.binds)
-          return `${lowered.sql} ${k.dir.toUpperCase()}`
+          return `${lowered.sql} ${k.dir.toUpperCase()} NULLS ${k.dir === "asc" ? "FIRST" : "LAST"}`
         })
         break
       }

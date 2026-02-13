@@ -25,6 +25,7 @@ describe("conformance: sqlite lowering vs oracle (shape)", () => {
     assert.ok(plan.sql.includes("FROM"))
     assert.ok(plan.sql.includes("snapshots_v0"))
     assert.ok(plan.sql.includes("ORDER BY"))
+    assert.match(plan.sql, /NULLS\s+LAST/i)
 
     // oracle sanity
     const ctx: any = {
