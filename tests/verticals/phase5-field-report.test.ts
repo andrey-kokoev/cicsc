@@ -13,7 +13,7 @@ describe("phase5 field report", () => {
     assert.ok(Array.isArray(report.forced_next_priorities))
     assert.deepEqual(
       report.forced_next_priorities.map((x: any) => x.roadmap_id),
-      ["V2", "V3"]
+      ["V2"]
     )
   })
 })

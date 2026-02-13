@@ -23,8 +23,8 @@
       "id": "INC-PERF-BASELINE-001",
       "category": "perf_visibility",
       "severity": "medium",
-      "status": "open",
-      "summary": "Staged run records pass/fail only; no latency/throughput SLO instrumentation is yet captured for command/query paths.",
+      "status": "resolved",
+      "summary": "Staged run now captures per-check durations, thresholds, and aggregate checks-per-minute metrics.",
       "evidence": "docs/pilot/phase5-ticketing-staged-run.json"
     }
   ]

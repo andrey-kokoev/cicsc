@@ -1,14 +1,14 @@
 conformance matrix check passed (9 suites).
-(node:695465) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:700996) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:695465) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-exec-matrix.test.ts is not specified and it doesn't parse as CommonJS.
+(node:700996) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-exec-matrix.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ postgres execution matrix contract
-  ✔ tracks supported query operators from postgres scope contract (1.145211ms)
-✔ postgres execution matrix contract (1.779706ms)
+  ✔ tracks supported query operators from postgres scope contract (1.318579ms)
+✔ postgres execution matrix contract (2.127161ms)
 ℹ tests 1
 ℹ suites 1
 ℹ pass 1
@@ -16,20 +16,20 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 115.919908
-(node:695482) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+ℹ duration_ms 119.840784
+(node:701013) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:695482) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-exec-vs-oracle.test.ts is not specified and it doesn't parse as CommonJS.
+(node:701013) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-exec-vs-oracle.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ conformance: postgres execution vs oracle
-  ✔ exec lowered view query equals oracle rows (project/filter/order/limit) (114.815549ms)
-  ✔ exec lowered bool_query constraint equals oracle truth (21.960017ms)
-  ✔ exec lowered join query equals oracle rows (19.078574ms)
-  ✔ exec lowered grouped query with offset equals oracle rows (14.688496ms)
-✔ conformance: postgres execution vs oracle (171.421866ms)
+  ✔ exec lowered view query equals oracle rows (project/filter/order/limit) (111.021832ms)
+  ✔ exec lowered bool_query constraint equals oracle truth (21.248302ms)
+  ✔ exec lowered join query equals oracle rows (20.245613ms)
+  ✔ exec lowered grouped query with offset equals oracle rows (15.140692ms)
+✔ conformance: postgres execution vs oracle (168.679808ms)
 ℹ tests 4
 ℹ suites 1
 ℹ pass 4
@@ -37,17 +37,17 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 304.153881
-(node:695512) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+ℹ duration_ms 310.182811
+(node:701031) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:695512) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-constraint-matrix.test.ts is not specified and it doesn't parse as CommonJS.
+(node:701031) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-constraint-matrix.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ postgres constraint matrix contract
-  ✔ declares lowered constraint kinds and deferred reducer conformance explicitly (0.943212ms)
-✔ postgres constraint matrix contract (1.52697ms)
+  ✔ declares lowered constraint kinds and deferred reducer conformance explicitly (1.062642ms)
+✔ postgres constraint matrix contract (1.73903ms)
 ℹ tests 1
 ℹ suites 1
 ℹ pass 1
@@ -55,17 +55,17 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 110.322608
-(node:695529) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+ℹ duration_ms 115.150522
+(node:701048) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:695529) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-constraint-shape.test.ts is not specified and it doesn't parse as CommonJS.
+(node:701048) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-constraint-shape.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ postgres constraint lowering shape
-  ✔ lowers bool_query to postgres parameterized SQL shape (1.44111ms)
-✔ postgres constraint lowering shape (2.114869ms)
+  ✔ lowers bool_query to postgres parameterized SQL shape (1.444741ms)
+✔ postgres constraint lowering shape (2.06061ms)
 ℹ tests 1
 ℹ suites 1
 ℹ pass 1
@@ -73,17 +73,17 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 120.596086
-(node:695546) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+ℹ duration_ms 135.99666
+(node:701065) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:695546) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/cross-backend-differential.test.ts is not specified and it doesn't parse as CommonJS.
+(node:701065) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/cross-backend-differential.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ cross-backend differential conformance
-  ✔ matches SQLite and Postgres execution against oracle semantics (111.216581ms)
-✔ cross-backend differential conformance (111.900106ms)
+  ✔ matches SQLite and Postgres execution against oracle semantics (118.616319ms)
+✔ cross-backend differential conformance (119.31066ms)
 ℹ tests 1
 ℹ suites 1
 ℹ pass 1
@@ -91,17 +91,17 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 252.775591
-(node:695563) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+ℹ duration_ms 254.40756
+(node:701082) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:695563) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/backend-semantics-policy.test.ts is not specified and it doesn't parse as CommonJS.
+(node:701082) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/backend-semantics-policy.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ backend semantics policy contract
-  ✔ declares sqlite/postgres/oracle null-ordering and collation policy deltas (0.620191ms)
-✔ backend semantics policy contract (1.229217ms)
+  ✔ declares sqlite/postgres/oracle null-ordering and collation policy deltas (0.792062ms)
+✔ backend semantics policy contract (1.681399ms)
 ℹ tests 1
 ℹ suites 1
 ℹ pass 1
@@ -109,4 +109,4 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 114.864154
+ℹ duration_ms 115.215292

@@ -240,4 +240,4 @@
 
 - [x] V1 Resolve `INC-PG-HARNESS-001`: add/install postgres test harness dependency (`pg-mem`) and make postgres gate executable in default developer bootstrap.
 - [ ] V2 Resolve `INC-ORDER-COLLATION-001`: add explicit NULL ordering/collation controls in lowering/typecheck policy (remove backend-default ambiguity).
-- [ ] V3 Resolve `INC-PERF-BASELINE-001`: add staged-run latency/throughput instrumentation and artifact SLO thresholds.
+- [x] V3 Resolve `INC-PERF-BASELINE-001`: add staged-run latency/throughput instrumentation and artifact SLO thresholds.

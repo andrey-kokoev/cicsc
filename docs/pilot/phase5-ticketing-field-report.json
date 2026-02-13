@@ -16,12 +16,6 @@
       "incident_id": "INC-ORDER-COLLATION-001",
       "priority": "P0",
       "reason": "Backend semantic deltas must move from documentation to executable controls."
-    },
-    {
-      "roadmap_id": "V3",
-      "incident_id": "INC-PERF-BASELINE-001",
-      "priority": "P1",
-      "reason": "Field run lacks measured latency/throughput SLO evidence."
     }
   ]
 }
