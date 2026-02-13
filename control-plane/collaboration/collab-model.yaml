@@ -156,8 +156,9 @@ assignments:
     claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
     worktree: /home/andrey/src/antigravity
     branch: phase33.ax2.4
-    status: assigned
-    notes: Add Phase 34 block gate from the Phase 33 checklist.
+    status: done
+    notes: Dispatch superseded and completed in main worktree; Phase 34 block gate
+      added from Phase 33 checklist.
 message_kinds:
   - id: MSGK_ASSIGNMENT_DISPATCH
     title: Assignment dispatch from canonical worktree.
@@ -359,3 +360,19 @@ message_events:
     commit: 8eb62a1
     evidence_bindings: []
     notes: Initial dispatch event for AX2.4 assignment.
+  - id: MSGEV_PHASE33_AX24_RESCINDED
+    message_ref: MSG_PHASE33_AX24_DISPATCH
+    from_status: sent
+    to_status: rescinded
+    actor_agent_ref: AGENT_MAIN
+    at_seq: 2
+    commit: 5d445b7
+    rescinded_reason: execution_taken_over_in_main_worktree
+    evidence_bindings:
+      - ref: scripts/check_phase34_block.sh
+        commit: 5d445b7
+        digest: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+      - ref: docs/pilot/phase34-gate.json
+        commit: 5d445b7
+        digest: sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+    notes: AX2.4 dispatch rescinded after direct implementation in canonical worktree.

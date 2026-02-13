@@ -1707,7 +1707,7 @@ phases:
       status: done
     - id: AX2.4
       title: Add Phase 34 block gate from Phase 33 checklist
-      status: open
+      status: done
 - id: AY
   number: 34
   title: Field Generalization and Multi-Context Validation

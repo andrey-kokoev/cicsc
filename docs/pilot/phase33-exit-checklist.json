@@ -1,0 +1,33 @@
+{
+  "version": "cicsc/phase33-exit-checklist-v1",
+  "timestamp_unix": 1771029600,
+  "phase": 33,
+  "items": [
+    {
+      "id": "phase33_proof_evidence_coupling_closure",
+      "description": "Proof-obligation index and coupling conformance report are published.",
+      "status": "fail",
+      "artifacts": [
+        "docs/pilot/phase33-proof-obligation-index.json",
+        "docs/pilot/phase33-proof-evidence-coupling.json"
+      ]
+    },
+    {
+      "id": "phase33_formalization_admissibility",
+      "description": "Formalization gate report and admissible-claims policy are published.",
+      "status": "pass",
+      "artifacts": [
+        "docs/pilot/phase33-ax22-formalization-gate-report.json",
+        "docs/pilot/phase33-admissible-claims-policy.json"
+      ]
+    },
+    {
+      "id": "phase33_closure_report",
+      "description": "Phase 33 closure report is published.",
+      "status": "pass",
+      "artifacts": [
+        "docs/pilot/phase33-closure-report.json"
+      ]
+    }
+  ]
+}

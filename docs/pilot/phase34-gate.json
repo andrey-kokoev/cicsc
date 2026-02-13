@@ -1,0 +1,13 @@
+{
+  "version": "cicsc/phase34-gate-v1",
+  "timestamp_unix": 1771019227,
+  "blocked": true,
+  "basis": {
+    "checklist": "docs/pilot/phase33-exit-checklist.json",
+    "execution_status": "control-plane/views/execution-status.generated.json"
+  },
+  "reasons": [
+    "phase33_exit_checklist_not_pass",
+    "phase_ax_series_incomplete"
+  ]
+}

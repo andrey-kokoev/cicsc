@@ -84,8 +84,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch AX2.4 block-gate implementation from finalized Phase 33 checklist state.",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "rescinded",
+          "event_count": 2
         }
       ]
     },
@@ -173,8 +173,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch AX2.4 block-gate implementation from finalized Phase 33 checklist state.",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "rescinded",
+          "event_count": 2
         }
       ],
       "outbox": []
