@@ -57,7 +57,7 @@ Promote DSL usability objective from partial to pass using objective task eviden
 Address deferred SQL/parity items with explicit closure or governed deferral.
 
 ### TODOs
-- [ ] P11.3.1 Freeze deferred SQL/parity item ledger and closure plan.
+- [x] P11.3.1 Freeze deferred SQL/parity item ledger and closure plan.
 - [ ] P11.3.2 Add differential harnesses for selected deferred constructs.
 - [ ] P11.3.3 Publish deferred-item disposition report (closed vs deferred with owner/date).
 

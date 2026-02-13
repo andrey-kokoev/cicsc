@@ -439,7 +439,7 @@ Phase 9 forced-next mapping:
 
 ### AB3. SQL/Parity Deferred Closure
 
-- [ ] AB3.1 Freeze deferred SQL/parity item ledger and closure plan
+- [x] AB3.1 Freeze deferred SQL/parity item ledger and closure plan
 - [ ] AB3.2 Add differential harnesses for selected deferred constructs
 - [ ] AB3.3 Publish deferred-item disposition report (closed vs deferred with owner/date)
 
