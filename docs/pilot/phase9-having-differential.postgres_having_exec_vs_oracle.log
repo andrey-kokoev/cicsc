@@ -1,13 +1,13 @@
-(node:28357) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:4693) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("./tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:28357) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/phase9-having-exec-vs-oracle.test.ts is not specified and it doesn't parse as CommonJS.
+(node:4693) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/phase9-having-exec-vs-oracle.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ phase9 having differential
-  ﹣ postgres execution with HAVING matches oracle (pg-mem planner limitation; tracked in Z2) (0.446939ms) # SKIP
-✔ phase9 having differential (1.040321ms)
+  ﹣ postgres execution with HAVING matches oracle (pg-mem planner limitation; tracked in Z2) (0.489626ms) # SKIP
+✔ phase9 having differential (1.097641ms)
 ℹ tests 1
 ℹ suites 1
 ℹ pass 0
@@ -15,4 +15,4 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 1
 ℹ todo 0
-ℹ duration_ms 130.147854
+ℹ duration_ms 132.444065

@@ -1,15 +1,15 @@
-(node:818213) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:4763) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:818213) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/adversarial/migration-fault-injection.test.ts is not specified and it doesn't parse as CommonJS.
+(node:4763) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/adversarial/migration-fault-injection.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ migration fault injection
-  ✔ rejects partial event transforms at spec typecheck (1.030078ms)
-  ✔ fails migration verification when target bundle schema is invalid (0.94429ms)
-  ✔ fails when migrated history violates target replay constraints (2.020543ms)
-✔ migration fault injection (4.922589ms)
+  ✔ rejects partial event transforms at spec typecheck (0.767808ms)
+  ✔ fails migration verification when target bundle schema is invalid (0.73151ms)
+  ✔ fails when migrated history violates target replay constraints (1.705661ms)
+✔ migration fault injection (4.006275ms)
 ℹ tests 3
 ℹ suites 1
 ℹ pass 3
@@ -17,4 +17,4 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 171.298549
+ℹ duration_ms 140.593987

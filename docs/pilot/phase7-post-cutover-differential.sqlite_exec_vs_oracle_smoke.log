@@ -1,15 +1,15 @@
-(node:818392) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:4627) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:818392) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/sqlite-exec-vs-oracle-smoke.test.ts is not specified and it doesn't parse as CommonJS.
+(node:4627) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/sqlite-exec-vs-oracle-smoke.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ conformance: sqlite execution vs oracle (smoke)
-  ✔ exec lowered bool_query constraint equals oracle truth (8.633243ms)
-  ✔ exec lowered join query equals oracle rows (1.959949ms)
-  ✔ exec lowered query group_by rows equals oracle rows (6.553984ms)
-✔ conformance: sqlite execution vs oracle (smoke) (18.050808ms)
+  ✔ exec lowered bool_query constraint equals oracle truth (7.817691ms)
+  ✔ exec lowered join query equals oracle rows (1.680062ms)
+  ✔ exec lowered query group_by rows equals oracle rows (5.788218ms)
+✔ conformance: sqlite execution vs oracle (smoke) (16.126608ms)
 ℹ tests 3
 ℹ suites 1
 ℹ pass 3
@@ -17,4 +17,4 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 169.154269
+ℹ duration_ms 132.098292
