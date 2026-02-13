@@ -52,11 +52,11 @@ Tighten the declared concurrency contract with stronger tests and explicit bound
 - [x] P7.2.2 Add adversarial multi-tenant and cross-stream causality replay suites.
 - [x] P7.2.3 Add backend-level isolation differential checks (sqlite vs postgres) for declared invariants.
 - [x] P7.2.4 Add conflict-handling matrix expansion with deterministic outcome coverage.
-- [ ] P7.2.5 Publish updated isolation note with strengthened guarantees and preserved exclusions.
+- [x] P7.2.5 Publish updated isolation note with strengthened guarantees and preserved exclusions.
 
 ### Acceptance
-- [ ] Strengthened concurrency claims are artifact-backed and reproducible.
-- [ ] Unsupported behaviors remain explicit and enforced at compile/runtime gates.
+- [x] Strengthened concurrency claims are artifact-backed and reproducible.
+- [x] Unsupported behaviors remain explicit and enforced at compile/runtime gates.
 
 ---
 

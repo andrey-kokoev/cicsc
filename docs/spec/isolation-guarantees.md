@@ -1,12 +1,14 @@
-# CICSC Isolation and Concurrency Guarantees (Phase 6 Scoped)
+# CICSC Isolation and Concurrency Guarantees (Phase 7 Scoped)
 
 This document states the current, evidence-backed isolation/concurrency surface
-for Phase 6 and its explicit exclusion boundary.
+for Phase 7 and its explicit exclusion boundary.
 
 ## Normative Contract Artifact
 
 - `docs/pilot/phase6-concurrency-contract.json`
 - `docs/spec/concurrency-model-contract.md`
+- `docs/pilot/phase7-concurrency-contract-delta.json`
+- `docs/spec/concurrency-model-contract-phase7.md`
 
 The supported model is `stream_serializable_with_scoped_cross_stream_behavior`.
 Stream identity is `(tenantId, entityType, entityId)`.
@@ -26,6 +28,9 @@ Key theorems currently available:
 
 - `docs/pilot/phase6-concurrency-conformance.json`
 - `docs/pilot/phase6-migration-concurrency-drill.json`
+- `docs/pilot/phase7-concurrency-adversarial.json`
+- `docs/pilot/phase7-isolation-differential.json`
+- `docs/pilot/phase7-conflict-matrix-expanded.json`
 - `tests/concurrency/transaction-model.test.ts`
 - `tests/concurrency/causality-replay.test.ts`
 - `tests/oracle/replay-determinism-multistream.test.ts`
@@ -39,6 +44,12 @@ Key theorems currently available:
 - Cross-stream interleaving is allowed and does not imply a global total order.
 - Pause/migrate/resume protocol rejects writes while paused and resumes on the
   migrated version.
+- Adversarial multi-tenant replay suites are required evidence for current
+  causality/isolation claims.
+- Backend isolation differential checks are required evidence for declared
+  stream-level invariants.
+- Conflict outcome coverage includes explicit retry and boundary cases
+  (cross-stream, cross-tenant, idempotency policy paths).
 
 ## Explicit Scoped Exclusions
 
