@@ -64,7 +64,7 @@ Expose stable operational interfaces only for already-proven semantics.
 
 ### TODOs
 - [x] P6.3.1 Freeze CLI command contract for compile/install/migrate/verify/gates.
-- [ ] P6.3.2 Add SDK contract tests for bundle lifecycle and tenant binding policies.
+- [x] P6.3.2 Add SDK contract tests for bundle lifecycle and tenant binding policies.
 - [ ] P6.3.3 Add operator playbook for multi-tenant rollout, rollback, and incident triage.
 - [ ] P6.3.4 Add policy control matrix (who can publish/bind/migrate) with executable checks.
 - [ ] P6.3.5 Add “proven vs experimental” feature gating in docs and API surfaces.
