@@ -500,7 +500,7 @@ Phase 9 forced-next mapping:
 
 - [x] AD3.1 Freeze migration+parity hardening matrix
 - [x] AD3.2 Add differential harnesses for scale hardening matrix
-- [ ] AD3.3 Publish hardening closure report with residual policy
+- [x] AD3.3 Publish hardening closure report with residual policy
 
 ### AD4. Governance Closure and Phase 14 Gate
 
