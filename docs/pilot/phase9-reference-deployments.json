@@ -1,0 +1,17 @@
+{
+  "version": "cicsc/phase9-reference-deployments-v1",
+  "timestamp_unix": 1770963000,
+  "deployments": [
+    {
+      "vertical": "ticketing",
+      "spec": "verticals/ticketing/spec.v1.json",
+      "migration": "verticals/ticketing/migration.v0_to_v1.json"
+    },
+    {
+      "vertical": "crm",
+      "spec": "verticals/crm/spec.v1.json",
+      "migration": "verticals/crm/migration.v0_to_v1.json"
+    }
+  ],
+  "status": "pass"
+}

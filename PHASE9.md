@@ -83,7 +83,7 @@ Ensure new capability surface does not compromise migration determinism, rollbac
 Validate expanded surface under real workflow pressure and enforce objective exit control.
 
 ### TODOs
-- [ ] P9.4.1 Select and freeze Phase 9 reference deployment set (at least two verticals).
+- [x] P9.4.1 Select and freeze Phase 9 reference deployment set (at least two verticals).
 - [ ] P9.4.2 Run scripted workloads with invariants + parity + migration gates enabled.
 - [ ] P9.4.3 Capture drift/missing-primitive/performance findings with severity labels.
 - [ ] P9.4.4 Convert findings into forced-next roadmap tasks (no speculative backlog inflation).
