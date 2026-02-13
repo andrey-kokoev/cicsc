@@ -71,6 +71,13 @@ canonical gate execution on ingestion.
 Work branches are disposable after ingestion. Semantic continuity is retained
 in the canonical convergence branch and execution ledger.
 
+**Guarantee 4 — Governed Dispatch Authority**  
+Dispatch authority is constrained by worktree governance:
+- one owner per worktree,
+- assignment-dispatch messages must be emitted by the owner of the source
+  worktree,
+- worktree creation authority is explicitly declared.
+
 ## 5. First-principles grounding
 
 - **State machine discipline**: collaboration is modeled as valid/invalid
@@ -115,6 +122,7 @@ Current WMCC implementation includes explicit typed message transport:
 Messages are validated against:
 - assignment references,
 - agent/worktree ownership consistency,
+- owner-dispatch authority for assignment dispatch kinds,
 - branch naming constraints,
 - payload/evidence path existence (where path-like).
 
@@ -131,7 +139,18 @@ Normative operator loop:
 Message lifecycle states currently supported:
 
 - `queued`, `sent`, `acknowledged`, `fulfilled`,
-- `rejected`, `ingested`, `closed`.
+- `rejected`, `rescinded`, `ingested`, `closed`.
+
+Assignment closure semantics include explicit outcomes:
+- `pending`
+- `fulfilled_by_assignee`
+- `fulfilled_by_main`
+- `blocked`
+
+`fulfilled` is not only a lifecycle marker. It is discharge-bearing:
+- fulfilled events must carry typed evidence bindings (`evidence_kind_ref`),
+- assignment claim kind determines required obligation profile(s),
+- obligation evidence minima are checked during cross-model validation.
 
 ## 8. Failure modes
 
@@ -147,6 +166,8 @@ Each failure mode weakens constructive collaboration guarantees.
 - WMCC governs collaboration semantics inside the declared repository process.
 - It does not replace CICSC semantic proofs.
 - It does not guarantee correctness of obligations that are underspecified.
+- Current protocol checks type/structure and obligation evidence minima;
+  it does not yet cryptographically verify artifact digests against bytes.
 
 ## 10. Summary
 
