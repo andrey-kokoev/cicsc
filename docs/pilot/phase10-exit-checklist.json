@@ -29,7 +29,7 @@
         "scripts/check_phase10_docs_consistency.sh",
         "docs/pilot/phase10-doc-consistency.json"
       ],
-      "status": "pending"
+      "status": "pass"
     },
     {
       "id": "P10_EXIT_PHASE11_BLOCK",
@@ -38,7 +38,7 @@
         "scripts/check_phase11_block.sh",
         "docs/pilot/phase11-gate.json"
       ],
-      "status": "pending"
+      "status": "pass"
     }
   ]
 }

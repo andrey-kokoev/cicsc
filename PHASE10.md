@@ -61,16 +61,16 @@ Keep phase transitions objective, artifact-truth-backed, and automation-enforced
 - [x] P10.3.1 Define objective Phase 10 exit checklist mapped to artifacts.
 - [x] P10.3.2 Add PHASE10↔ROADMAP status-drift consistency gate.
 - [x] P10.3.3 Add Phase 11 block gate based on Phase 10 checklist.
-- [ ] P10.3.4 Publish Phase 10 closure report and mark exit criteria.
+- [x] P10.3.4 Publish Phase 10 closure report and mark exit criteria.
 
 ### Acceptance
-- [ ] Phase transition remains artifact-governed and continuously enforced.
+- [x] Phase transition remains artifact-governed and continuously enforced.
 
 ---
 
 ## Exit Criteria (Phase 10)
 
-- [ ] Forced-next closure status is explicit and owner-accountable.
-- [ ] Parity/migration/ops continuity gates are green and reproducible.
-- [ ] Governance checks enforce code/doc/artifact consistency.
-- [ ] Phase 11 remains blocked without full checklist pass.
+- [x] Forced-next closure status is explicit and owner-accountable.
+- [x] Parity/migration/ops continuity gates are green and reproducible.
+- [x] Governance checks enforce code/doc/artifact consistency.
+- [x] Phase 11 remains blocked without full checklist pass.

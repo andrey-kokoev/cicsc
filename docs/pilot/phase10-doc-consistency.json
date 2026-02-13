@@ -1,6 +1,6 @@
 {
   "version": "cicsc/phase10-doc-consistency-v1",
-  "timestamp_unix": 1770951929,
+  "timestamp_unix": 1770952029,
   "status": "pass",
   "basis": {
     "phase10": "PHASE10.md",
@@ -21,6 +21,6 @@
     "AA3.3",
     "AA3.4"
   ],
-  "has_unchecked": true,
+  "has_unchecked": false,
   "mismatches": []
 }

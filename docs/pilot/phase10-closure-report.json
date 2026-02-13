@@ -1,0 +1,36 @@
+{
+  "version": "cicsc/phase10-closure-report-v1",
+  "timestamp_unix": 1771045200,
+  "inputs": {
+    "forced_next_status": "docs/pilot/phase10-forced-next-status.json",
+    "continuity_report": "docs/pilot/phase10-continuity-report.json",
+    "exit_checklist": "docs/pilot/phase10-exit-checklist.json",
+    "doc_consistency": "docs/pilot/phase10-doc-consistency.json",
+    "phase11_gate": "docs/pilot/phase11-gate.json"
+  },
+  "status": "pass",
+  "summary": {
+    "forced_next_owner_accountability": "pass",
+    "continuity_reproducibility": "pass",
+    "governance_consistency": "pass",
+    "phase11_gate_state": "open_when_checklist_pass"
+  },
+  "exit_criteria": [
+    {
+      "id": "P10_EXIT_FORCED_NEXT_ACCOUNTABILITY",
+      "status": "pass"
+    },
+    {
+      "id": "P10_EXIT_CONTINUITY_GREEN",
+      "status": "pass"
+    },
+    {
+      "id": "P10_EXIT_GOVERNANCE_ENFORCED",
+      "status": "pass"
+    },
+    {
+      "id": "P10_EXIT_PHASE11_GATED_BY_CHECKLIST",
+      "status": "pass"
+    }
+  ]
+}
