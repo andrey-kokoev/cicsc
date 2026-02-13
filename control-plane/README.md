@@ -36,7 +36,7 @@ projections used for executable validation and gating.
   - No execution status.
   - Canonical worktree processing entry point is mailbox projection:
     `control-plane/views/worktree-mailboxes.generated.json`.
-  - `WORKTREE_ASSIGNMENT.md` files are optional helper text and non-normative.
+  - `WORKTREE_ASSIGNMENT.md` files are disallowed for protocol execution.
 
 - `execution/execution-ledger.yaml`
   - Canonical phase/milestone/checkbox status model.

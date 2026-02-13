@@ -125,9 +125,8 @@ Normative operator loop:
 - each worktree starts from mailbox projection, not ad hoc local task notes,
 - messages are consumed from inbox while actionable states exist,
 - lifecycle progress is represented only via append-only `message_events`.
-
-`WORKTREE_ASSIGNMENT.md` can exist as a local convenience memo but is not part
-of WMCC protocol truth.
+- `WORKTREE_ASSIGNMENT.md` is outside WMCC protocol and must not be used as
+  task authority.
 
 Message lifecycle states currently supported:
 

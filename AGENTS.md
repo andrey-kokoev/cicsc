@@ -85,8 +85,8 @@ Worktree agents must use mailbox-driven execution:
 - append immutable `message_events` for lifecycle transitions and evidence
 
 Protocol rule:
-- `WORKTREE_ASSIGNMENT.md` is optional convenience text only
-- it is not canonical input and must not be required by automation
+- `WORKTREE_ASSIGNMENT.md` is not allowed as an execution protocol artifact
+- mailbox messages are the only admissible worktree task input
 
 ### 1. Preserve invariants before adding features
 Never add functionality that weakens:
