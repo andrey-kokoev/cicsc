@@ -1,0 +1,12 @@
+{
+  "version": "cicsc/phase32-obj4-migration-envelope-v1",
+  "timestamp_unix": 1771010731,
+  "overall": "pass",
+  "objective": "OBJ4",
+  "envelope": "expanded_migration_continuity",
+  "checks": {
+    "migration_protocol":{"status":"pass","log":"docs/pilot/phase32-obj4-migration-envelope.migration_protocol.log"},
+    "migration_continuity":{"status":"pass","log":"docs/pilot/phase32-obj4-migration-envelope.migration_continuity.log"},
+    "migration_drills":{"status":"pass","log":"docs/pilot/phase32-obj4-migration-envelope.migration_drills.log"}
+  }
+}
