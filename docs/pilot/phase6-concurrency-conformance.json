@@ -1,0 +1,13 @@
+{
+  "version": "cicsc/phase6-concurrency-conformance-v1",
+  "timestamp_unix": 1770945363,
+  "overall": "pass",
+  "checks": {
+    "causality_replay":{"status":"pass","duration_ms":171,"threshold_ms":8000,"log":"docs/pilot/phase6-concurrency-conformance.causality_replay.log"},
+    "transaction_model":{"status":"pass","duration_ms":159,"threshold_ms":10000,"log":"docs/pilot/phase6-concurrency-conformance.transaction_model.log"},
+    "replay_multistream":{"status":"pass","duration_ms":157,"threshold_ms":6000,"log":"docs/pilot/phase6-concurrency-conformance.replay_multistream.log"}
+  },
+  "metrics": {
+    "total_duration_ms": 487
+  }
+}
