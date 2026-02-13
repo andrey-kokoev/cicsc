@@ -1,0 +1,14 @@
+{
+  "version": "cicsc/phase29-status-register-v1",
+  "timestamp_unix": 1770995899,
+  "phase": 29,
+  "owner": "phase29-owner",
+  "review_cadence": "weekly",
+  "status": "active",
+  "milestones": [
+    { "id": "AT1", "owner": "phase29-owner", "target": "2026-03-01", "status": "in_progress" },
+    { "id": "AT2", "owner": "phase29-owner", "target": "2026-03-08", "status": "pending" },
+    { "id": "AT3", "owner": "phase29-owner", "target": "2026-03-15", "status": "pending" },
+    { "id": "AT4", "owner": "phase29-owner", "target": "2026-03-22", "status": "pending" }
+  ]
+}

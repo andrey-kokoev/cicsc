@@ -920,7 +920,7 @@ Phase 9 forced-next mapping:
 
 - [x] AT1.1 Freeze Phase 29 scope and owner contract
 - [x] AT1.2 Publish Phase 29 baseline continuity snapshot
-- [ ] AT1.3 Add Phase 29 status register with owner/date discipline
+- [x] AT1.3 Add Phase 29 status register with owner/date discipline
 
 ### AT2. Assurance-Expansion Validation Closure
 
