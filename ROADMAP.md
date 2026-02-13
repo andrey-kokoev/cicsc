@@ -758,7 +758,7 @@ Phase 9 forced-next mapping:
 
 - [x] AN1.1 Freeze Phase 23 scope and owner contract
 - [x] AN1.2 Publish Phase 23 baseline continuity snapshot
-- [ ] AN1.3 Add Phase 23 status register with owner/date discipline
+- [x] AN1.3 Add Phase 23 status register with owner/date discipline
 
 ### AN2. Integrity-Scaling Validation Closure
 

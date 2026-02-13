@@ -33,7 +33,7 @@ Start Phase 23 from explicit scope, owners, and reproducible baseline truth.
 ### TODOs
 - [x] P23.1.1 Freeze Phase 23 scope and owner contract.
 - [x] P23.1.2 Publish Phase 23 baseline continuity snapshot.
-- [ ] P23.1.3 Add Phase 23 status register with owner/date discipline.
+- [x] P23.1.3 Add Phase 23 status register with owner/date discipline.
 
 ### Acceptance
 - [ ] Phase 23 starts from objective scope and reproducible baseline truth.
