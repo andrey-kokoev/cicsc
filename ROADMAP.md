@@ -668,5 +668,5 @@ Phase 9 forced-next mapping:
 
 - [x] AJ4.1 Define objective Phase 19 exit checklist mapped to artifacts
 - [x] AJ4.2 Add PHASE19↔ROADMAP drift consistency gate
-- [ ] AJ4.3 Add Phase 20 block gate from Phase 19 checklist
+- [x] AJ4.3 Add Phase 20 block gate from Phase 19 checklist
 - [ ] AJ4.4 Publish Phase 19 closure report and mark exit criteria
