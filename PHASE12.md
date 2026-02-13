@@ -43,7 +43,7 @@ Expand deployment evidence to additional domains under existing gate discipline.
 
 ### TODOs
 - [x] P12.2.1 Freeze expanded domain matrix and workload contract.
-- [ ] P12.2.2 Run expanded multi-domain workload suites with required gates.
+- [x] P12.2.2 Run expanded multi-domain workload suites with required gates.
 - [ ] P12.2.3 Publish deployment expansion report with findings disposition.
 
 ### Acceptance
