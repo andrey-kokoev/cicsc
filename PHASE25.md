@@ -48,7 +48,7 @@ Close verification-consolidation validation with explicit evidence contract and 
 ### TODOs
 - [x] P25.2.1 Freeze verification-consolidation matrix and evidence contract.
 - [x] P25.2.2 Run verification-consolidation required gates.
-- [ ] P25.2.3 Publish verification-consolidation closure report with findings disposition.
+- [x] P25.2.3 Publish verification-consolidation closure report with findings disposition.
 
 ### Acceptance
 - [ ] Verification-consolidation validation remains evidence-backed with explicit findings governance.

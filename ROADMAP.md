@@ -818,7 +818,7 @@ Phase 9 forced-next mapping:
 
 - [x] AP2.1 Freeze verification-consolidation matrix and evidence contract
 - [x] AP2.2 Run verification-consolidation required gates
-- [ ] AP2.3 Publish verification-consolidation closure report with findings disposition
+- [x] AP2.3 Publish verification-consolidation closure report with findings disposition
 
 ### AP3. Field-Continuity Hardening
 
