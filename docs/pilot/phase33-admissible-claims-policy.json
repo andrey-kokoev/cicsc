@@ -1,0 +1,55 @@
+{
+  "version": "cicsc/phase33-admissible-claims-policy-v1",
+  "timestamp_unix": 1771028400,
+  "phase": 33,
+  "checkbox": "AX2.3",
+  "inputs": {
+    "proof_obligation_index": "docs/pilot/phase33-proof-obligation-index.json",
+    "proof_evidence_coupling": "docs/pilot/phase33-proof-evidence-coupling.json",
+    "formalization_gate": "docs/pilot/phase33-ax22-formalization-gate-report.json",
+    "baseline_objective_verdict": "docs/pilot/phase30-objective-verdict-report.json"
+  },
+  "admissibility_policy": {
+    "default_for_expanded_scope_claims": "blocked",
+    "production_claim_surface": "phase30_declared_scope_only",
+    "rules": [
+      "A claim class must have an index entry in phase33-proof-obligation-index.json.",
+      "A claim class must have proof-evidence coupling status pass in phase33-proof-evidence-coupling.json.",
+      "A claim class is admissible only when its formalization gate status is admissible.",
+      "If formalization status is blocked, claim class remains non-admissible for production claims."
+    ]
+  },
+  "expanded_claim_classes": [
+    {
+      "claim_class": "CC_EXPANDED_CONCURRENCY",
+      "formalization_gate_status": "blocked",
+      "admissibility": "blocked",
+      "reason": "Missing soundness_of_conflict_matrix in Replay.lean."
+    },
+    {
+      "claim_class": "CC_DRIFT_BUDGET_GOVERNANCE",
+      "formalization_gate_status": "blocked",
+      "admissibility": "blocked",
+      "reason": "Missing WFGovernance in Commands.lean."
+    },
+    {
+      "claim_class": "CC_USABILITY_RECOVERY",
+      "formalization_gate_status": "blocked",
+      "admissibility": "blocked",
+      "reason": "Missing spec_to_ir_well_typed in Typecheck.lean."
+    },
+    {
+      "claim_class": "CC_MULTI_TENANT_MIGRATION",
+      "formalization_gate_status": "blocked",
+      "admissibility": "blocked",
+      "reason": "Missing replay_commutes for joins in Migration.lean."
+    },
+    {
+      "claim_class": "CC_EXPANDED_PARITY",
+      "formalization_gate_status": "blocked",
+      "admissibility": "blocked",
+      "reason": "Missing HavingSemantics and ExistsSemantics in Syntax.lean."
+    }
+  ],
+  "status": "active"
+}
