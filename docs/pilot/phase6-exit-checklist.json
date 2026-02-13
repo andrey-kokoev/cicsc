@@ -37,6 +37,7 @@
       "id": "P6_EXIT_GOVERNANCE_CI",
       "description": "Phase6 CI/doc consistency checks are present and green.",
       "artifacts": [
+        "scripts/check_phase6_docs_consistency.sh",
         "scripts/check_phase6_artifact_gates.sh"
       ],
       "status": "pending"
