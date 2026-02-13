@@ -886,3 +886,30 @@ Phase 9 forced-next mapping:
 - [x] AR4.2 Add PHASE27↔ROADMAP drift consistency gate
 - [x] AR4.3 Add Phase 28 block gate from Phase 27 checklist
 - [x] AR4.4 Publish Phase 27 closure report and mark exit criteria
+
+## AS. Phase 28: Assurance Scaling and Operational Continuity Discipline
+
+### AS1. Scope Freeze and Baseline Continuity
+
+- [ ] AS1.1 Freeze Phase 28 scope and owner contract
+- [ ] AS1.2 Publish Phase 28 baseline continuity snapshot
+- [ ] AS1.3 Add Phase 28 status register with owner/date discipline
+
+### AS2. Assurance-Scaling Validation Closure
+
+- [ ] AS2.1 Freeze assurance-scaling matrix and evidence contract
+- [ ] AS2.2 Run assurance-scaling required gates
+- [ ] AS2.3 Publish assurance-scaling closure report with findings disposition
+
+### AS3. Operational-Continuity Hardening
+
+- [ ] AS3.1 Freeze operational-continuity hardening matrix and policy
+- [ ] AS3.2 Add operational-continuity verification harnesses
+- [ ] AS3.3 Publish operational-continuity closure report with residual policy
+
+### AS4. Governance Closure and Phase 29 Gate
+
+- [ ] AS4.1 Define objective Phase 28 exit checklist mapped to artifacts
+- [ ] AS4.2 Add PHASE28↔ROADMAP drift consistency gate
+- [ ] AS4.3 Add Phase 29 block gate from Phase 28 checklist
+- [ ] AS4.4 Publish Phase 28 closure report and mark exit criteria
