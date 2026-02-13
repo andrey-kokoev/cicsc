@@ -1,0 +1,30 @@
+{
+  "version": "cicsc/phase23-scope-contract-v1",
+  "timestamp_unix": 1773519900,
+  "phase": "phase23",
+  "tracks": [
+    {
+      "id": "P23-INTEGRITY-SCALING",
+      "goal": "Close integrity-scaling validation evidence without weakening semantic guarantees.",
+      "owner": "phase23-validation-owner",
+      "target_date": "2027-06-26"
+    },
+    {
+      "id": "P23-RUNTIME-ASSURANCE",
+      "goal": "Strengthen runtime-assurance checks for expanded deployment surfaces.",
+      "owner": "phase23-ops-owner",
+      "target_date": "2027-07-03"
+    },
+    {
+      "id": "P23-GOVERNANCE-CLOSURE",
+      "goal": "Close Phase 23 with objective checklist and Phase 24 gate discipline.",
+      "owner": "phase23-governance-owner",
+      "target_date": "2027-07-10"
+    }
+  ],
+  "guardrails": [
+    "No weakening of category-model obligations",
+    "No weakening of conformance, migration, or deployment safety gates",
+    "One-checkbox-one-commit for Phase 23"
+  ]
+}

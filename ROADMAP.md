@@ -756,7 +756,7 @@ Phase 9 forced-next mapping:
 
 ### AN1. Scope Freeze and Baseline Continuity
 
-- [ ] AN1.1 Freeze Phase 23 scope and owner contract
+- [x] AN1.1 Freeze Phase 23 scope and owner contract
 - [ ] AN1.2 Publish Phase 23 baseline continuity snapshot
 - [ ] AN1.3 Add Phase 23 status register with owner/date discipline
 
