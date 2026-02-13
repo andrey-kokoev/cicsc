@@ -754,3 +754,20 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 - AV1.2 Define objective extension contract for expanded semantic scope
 - AV1.3 Define proof-evidence coupling plan for expanded claims
 - AV1.4 Define expanded-scope gate and closure reporting contract
+
+## AW. Phase 32: Expanded-Scope Objective Execution
+
+### AW1. Objective Envelope Expansion Implementation
+
+- AW1.1 Implement OBJ1 expanded concurrency envelope artifacts and required checks
+- AW1.2 Implement OBJ2 drift-budget governance artifacts and required checks
+- AW1.3 Implement OBJ3 usability-envelope artifacts and required checks
+- AW1.4 Implement OBJ4 migration-envelope artifacts and required checks
+- AW1.5 Implement OBJ5 expanded parity-envelope artifacts and required checks
+
+### AW2. Expanded-Scope Execution Gate
+
+- AW2.1 Add Phase 32 expanded-scope required-gates script and report contract
+- AW2.2 Publish Phase 32 expanded-scope closure report with objective verdict deltas
+- AW2.3 Define objective Phase 32 exit checklist mapped to artifacts
+- AW2.4 Add Phase 33 block gate from Phase 32 checklist
