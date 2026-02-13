@@ -241,3 +241,37 @@
 - [x] V1 Resolve `INC-PG-HARNESS-001`: add/install postgres test harness dependency (`pg-mem`) and make postgres gate executable in default developer bootstrap.
 - [x] V2 Resolve `INC-ORDER-COLLATION-001`: add explicit NULL ordering/collation controls in lowering/typecheck policy (remove backend-default ambiguity).
 - [x] V3 Resolve `INC-PERF-BASELINE-001`: add staged-run latency/throughput instrumentation and artifact SLO thresholds.
+
+## W. Phase 6: Field-Driven Concurrency Expansion
+
+### W1. Multi-Vertical Field Expansion
+
+- [ ] W1.1 Select second reference vertical and freeze evaluation criteria artifact
+- [ ] W1.2 Run staged workload for second vertical with invariant/conformance/migration gates
+- [ ] W1.3 Add comparative incident register (ticketing vs second vertical) with severity/recurrence tags
+- [ ] W1.4 Convert comparative findings into explicit roadmap checkboxes (no hidden backlog)
+- [ ] W1.5 Publish Phase 6 field baseline report with forced-next priorities only
+
+### W2. Concurrency Contract Hardening
+
+- [ ] W2.1 Define explicit supported concurrency model contract (stream + cross-stream boundaries)
+- [ ] W2.2 Add causality/partial-order replay conformance suite for declared model
+- [ ] W2.3 Add deterministic conflict outcome matrix (abort/retry/merge) with proofs/tests per case
+- [ ] W2.4 Add migration-under-concurrency drill under concurrent load
+- [ ] W2.5 Publish updated isolation/concurrency normative note with scoped exclusions
+
+### W3. Proven-Surface Productization
+
+- [ ] W3.1 Freeze CLI command contract for compile/install/migrate/verify/gates
+- [ ] W3.2 Add SDK contract tests for bundle lifecycle and tenant binding policies
+- [ ] W3.3 Add operator playbook for multi-tenant rollout/rollback/incident triage
+- [ ] W3.4 Add policy control matrix with executable checks
+- [ ] W3.5 Add proven-vs-experimental feature gating across docs/API surfaces
+
+### W4. Governance Gate for Phase 7
+
+- [ ] W4.1 Define objective Phase 6 exit checklist mapped to artifacts
+- [ ] W4.2 Require green dual-backend conformance + concurrency suites
+- [ ] W4.3 Require multi-vertical field report with unresolved criticals closed or explicitly deferred
+- [ ] W4.4 Add CI/doc checks rejecting phase/status drift for Phase 6 artifacts
+- [ ] W4.5 Block Phase 7 unless all checklist items are pass
