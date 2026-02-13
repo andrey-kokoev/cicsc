@@ -48,7 +48,7 @@ Close cross-environment stability validation with explicit evidence contract and
 ### TODOs
 - [x] P21.2.1 Freeze cross-environment stability matrix and evidence contract.
 - [x] P21.2.2 Run cross-environment stability required gates.
-- [ ] P21.2.3 Publish cross-environment stability closure report with findings disposition.
+- [x] P21.2.3 Publish cross-environment stability closure report with findings disposition.
 
 ### Acceptance
 - [ ] Cross-environment stability validation remains evidence-backed with explicit findings governance.
