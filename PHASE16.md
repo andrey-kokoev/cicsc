@@ -77,7 +77,7 @@ Harden deployment/operations readiness for expansion without invariant regressio
 Close Phase 16 with objective checklist and enforce entry gate for Phase 17.
 
 ### TODOs
-- [ ] P16.4.1 Define objective Phase 16 exit checklist mapped to artifacts.
+- [x] P16.4.1 Define objective Phase 16 exit checklist mapped to artifacts.
 - [ ] P16.4.2 Add PHASE16↔ROADMAP drift consistency gate.
 - [ ] P16.4.3 Add Phase 17 block gate from Phase 16 checklist.
 - [ ] P16.4.4 Publish Phase 16 closure report and mark exit criteria.

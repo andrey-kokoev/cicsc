@@ -585,7 +585,7 @@ Phase 9 forced-next mapping:
 
 ### AG4. Governance Closure and Phase 17 Gate
 
-- [ ] AG4.1 Define objective Phase 16 exit checklist mapped to artifacts
+- [x] AG4.1 Define objective Phase 16 exit checklist mapped to artifacts
 - [ ] AG4.2 Add PHASE16↔ROADMAP drift consistency gate
 - [ ] AG4.3 Add Phase 17 block gate from Phase 16 checklist
 - [ ] AG4.4 Publish Phase 16 closure report and mark exit criteria
