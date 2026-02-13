@@ -65,7 +65,7 @@ Treat backend parity as a required gate for the expanded SQL and runtime surface
 Ensure new capability surface does not compromise migration determinism, rollback safety, or tenant isolation.
 
 ### TODOs
-- [ ] P9.3.1 Extend migration protocol contract for newly supported SQL/query constructs.
+- [x] P9.3.1 Extend migration protocol contract for newly supported SQL/query constructs.
 - [ ] P9.3.2 Add migration drill suites covering upgraded features (preflight/dry-run/cutover/rollback).
 - [ ] P9.3.3 Add post-cutover execution-vs-oracle differential checks on migrated streams.
 - [ ] P9.3.4 Add updated SLO/error-budget gates for verify/migrate/command paths under expanded load.

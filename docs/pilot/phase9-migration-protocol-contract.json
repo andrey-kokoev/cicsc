@@ -1,0 +1,20 @@
+{
+  "version": "cicsc/phase9-migration-protocol-contract-v1",
+  "timestamp_unix": 1770961200,
+  "basis": "docs/pilot/phase7-migration-protocol-contract.json",
+  "extended_for_phase9": {
+    "sql_surface": ["having_enabled", "exists_deferred"],
+    "required_preflight_checks": [
+      "migration_totality",
+      "state_map_safety",
+      "rollback_readiness",
+      "phase9_sql_feature_gate_consistency"
+    ],
+    "required_cutover_checks": [
+      "post_cutover_replay_verify",
+      "post_cutover_sql_vs_oracle",
+      "error_budget_within_limits"
+    ]
+  },
+  "status": "pass"
+}
