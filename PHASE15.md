@@ -47,7 +47,7 @@ Start Phase 15 from explicit scope, owners, and reproducible baseline truth.
 Consolidate objective scorecard evidence and enforce pass/fail closure rules.
 
 ### TODOs
-- [ ] P15.2.1 Freeze objective scorecard matrix and evidence contract.
+- [x] P15.2.1 Freeze objective scorecard matrix and evidence contract.
 - [ ] P15.2.2 Run objective scorecard required gates.
 - [ ] P15.2.3 Publish objective closure report with findings disposition.
 
