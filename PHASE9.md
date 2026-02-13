@@ -86,7 +86,7 @@ Validate expanded surface under real workflow pressure and enforce objective exi
 - [x] P9.4.1 Select and freeze Phase 9 reference deployment set (at least two verticals).
 - [x] P9.4.2 Run scripted workloads with invariants + parity + migration gates enabled.
 - [x] P9.4.3 Capture drift/missing-primitive/performance findings with severity labels.
-- [ ] P9.4.4 Convert findings into forced-next roadmap tasks (no speculative backlog inflation).
+- [x] P9.4.4 Convert findings into forced-next roadmap tasks (no speculative backlog inflation).
 - [ ] P9.4.5 Define and enforce objective Phase 9 exit checklist + Phase 10 block gate.
 
 ### Acceptance
