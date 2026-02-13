@@ -62,7 +62,7 @@ Consolidate objective scorecard evidence and enforce pass/fail closure rules.
 Close or explicitly re-gate deferred surface while hardening deployment checks.
 
 ### TODOs
-- [ ] P15.3.1 Freeze deferred-surface closure matrix and policy.
+- [x] P15.3.1 Freeze deferred-surface closure matrix and policy.
 - [ ] P15.3.2 Add deployment-discipline verification harnesses.
 - [ ] P15.3.3 Publish deferred-surface closure report with residual policy.
 
