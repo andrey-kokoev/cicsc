@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase13-scale-envelope-report-v1",
+  "timestamp_unix": 1771061100,
+  "inputs": {
+    "scale_matrix": "docs/pilot/phase13-scale-envelope-matrix.json",
+    "scale_workloads": "docs/pilot/phase13-scale-workloads.json"
+  },
+  "findings": [
+    {
+      "id": "P13FIND-SCALE-LATENCY-001",
+      "severity": "medium",
+      "status": "deferred",
+      "owner": "phase13-ops-owner",
+      "target_date": "2026-07-24",
+      "summary": "Peak latency tail widened for migration-heavy CRM scenario under high concurrency."
+    },
+    {
+      "id": "P13FIND-SCALE-CONFORMANCE-001",
+      "severity": "low",
+      "status": "closed",
+      "owner": "phase13-parity-owner",
+      "summary": "Scale suite remained conformance-green across required gates."
+    }
+  ],
+  "unresolved_criticals": [],
+  "status": "pass"
+}
