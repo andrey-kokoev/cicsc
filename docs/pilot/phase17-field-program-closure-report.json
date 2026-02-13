@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase17-field-program-closure-report-v1",
+  "timestamp_unix": 1771089000,
+  "inputs": {
+    "field_program_matrix": "docs/pilot/phase17-field-program-matrix.json",
+    "required_gates": "docs/pilot/phase17-field-program-required-gates.json"
+  },
+  "findings": [
+    {
+      "id": "P17FIELD-COHORT-001",
+      "severity": "medium",
+      "status": "deferred",
+      "owner": "phase17-validation-owner",
+      "target_date": "2027-02-06",
+      "summary": "Additional external cohort coverage is queued for the next field window without current invariant regressions."
+    },
+    {
+      "id": "P17FIELD-PARITY-001",
+      "severity": "low",
+      "status": "closed",
+      "owner": "phase17-ops-owner",
+      "summary": "Field-program parity evidence remains aligned with declared conformance envelope."
+    }
+  ],
+  "unresolved_criticals": [],
+  "status": "pass"
+}
