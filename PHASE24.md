@@ -62,7 +62,7 @@ Harden continuity-proof checks for expanded deployments.
 
 ### TODOs
 - [x] P24.3.1 Freeze continuity-proof hardening matrix and policy.
-- [ ] P24.3.2 Add continuity-proof verification harnesses.
+- [x] P24.3.2 Add continuity-proof verification harnesses.
 - [ ] P24.3.3 Publish continuity-proof closure report with residual policy.
 
 ### Acceptance
