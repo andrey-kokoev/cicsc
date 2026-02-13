@@ -302,7 +302,7 @@ Phase 7 parity delta mapping:
 - [x] X2.1 Define Phase 7 concurrency contract delta over Phase 6 baseline
 - [x] X2.2 Add adversarial multi-tenant + cross-stream replay suites
 - [x] X2.3 Add backend isolation differential checks for declared invariants
-- [ ] X2.4 Expand deterministic conflict outcome matrix coverage
+- [x] X2.4 Expand deterministic conflict outcome matrix coverage
 - [ ] X2.5 Publish updated isolation note with strengthened guarantees + exclusions
 
 ### X3. Migration and Operational Contract Hardening
