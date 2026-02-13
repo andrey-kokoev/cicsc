@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/conformance-coverage-baseline-v1",
+  "minimumCoveragePercent": 85,
+  "allowedGapOperators": [
+    "op:having",
+    "op:distinct",
+    "op:setOp",
+    "expr:exists"
+  ]
+}
