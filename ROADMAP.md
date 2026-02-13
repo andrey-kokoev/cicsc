@@ -285,7 +285,7 @@ Comparative incident mapping:
 
 ### X1. Cross-Backend Semantic Parity
 
-- [ ] X1.1 Freeze Phase 7 parity scope matrix (operators/null/collation/numeric behavior)
+- [x] X1.1 Freeze Phase 7 parity scope matrix (operators/null/collation/numeric behavior)
 - [ ] X1.2 Add full in-scope sqlite/postgres/oracle differential suites
 - [ ] X1.3 Enforce fail-fast rejection for out-of-scope operators
 - [ ] X1.4 Publish backend parity report with explicit exclusions

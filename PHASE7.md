@@ -30,7 +30,7 @@ Shrink semantic deltas between oracle, sqlite, and postgres for the proven query
 surface.
 
 ### TODOs
-- [ ] P7.1.1 Freeze a Phase 7 parity scope matrix (operators, null ordering, collation, numeric behavior).
+- [x] P7.1.1 Freeze a Phase 7 parity scope matrix (operators, null ordering, collation, numeric behavior).
 - [ ] P7.1.2 Add differential suites for every in-scope operator across sqlite/postgres/oracle.
 - [ ] P7.1.3 Add explicit fail-fast checks for out-of-scope operators in lowering/typecheck.
 - [ ] P7.1.4 Publish backend parity report with per-operator pass/fail and exclusions.

@@ -1,0 +1,82 @@
+{
+  "version": "cicsc/phase7-parity-scope-matrix-v1",
+  "frozen_from": [
+    "tests/conformance/sqlite-supported-scope.json",
+    "tests/conformance/postgres-supported-scope.json",
+    "tests/conformance/backend-semantics-policy.json"
+  ],
+  "query_operators": {
+    "in_scope": [
+      "source:snap",
+      "source:join",
+      "op:filter",
+      "op:project",
+      "op:order_by",
+      "op:limit",
+      "op:offset",
+      "op:group_by"
+    ],
+    "out_of_scope": [
+      "op:having",
+      "op:distinct",
+      "op:setOp"
+    ]
+  },
+  "expression_operators": {
+    "in_scope": [
+      "expr:eq",
+      "expr:neq",
+      "expr:lt",
+      "expr:lte",
+      "expr:gt",
+      "expr:gte",
+      "expr:and",
+      "expr:or",
+      "expr:not",
+      "expr:add",
+      "expr:sub",
+      "expr:mul",
+      "expr:div",
+      "expr:lit",
+      "expr:var:row",
+      "expr:var:state",
+      "expr:var:input",
+      "expr:get",
+      "expr:has",
+      "expr:coalesce",
+      "expr:if",
+      "expr:in",
+      "expr:count",
+      "expr:sum",
+      "expr:avg",
+      "expr:min",
+      "expr:max"
+    ],
+    "out_of_scope": [
+      "expr:exists"
+    ]
+  },
+  "semantics_axes": {
+    "null_ordering": {
+      "policy": "explicit_NULLS_FIRST_LAST_required_for_deterministic_parity",
+      "known_backend_defaults": {
+        "sqlite": "nulls_first_on_asc",
+        "postgres": "nulls_last_on_asc"
+      }
+    },
+    "collation": {
+      "policy": "backend_specific_unless_explicitly_modeled",
+      "known_backend_defaults": {
+        "sqlite": "binary",
+        "postgres": "locale_dependent"
+      }
+    },
+    "numeric": {
+      "policy": "oracle_normalized_comparison",
+      "known_backend_defaults": {
+        "sqlite": "dynamic_affinity",
+        "postgres": "strict_numeric_types"
+      }
+    }
+  }
+}
