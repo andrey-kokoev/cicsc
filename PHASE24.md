@@ -46,7 +46,7 @@ Start Phase 24 from explicit scope, owners, and reproducible baseline truth.
 Close assurance-maturity validation with explicit evidence contract and findings governance.
 
 ### TODOs
-- [ ] P24.2.1 Freeze assurance-maturity matrix and evidence contract.
+- [x] P24.2.1 Freeze assurance-maturity matrix and evidence contract.
 - [ ] P24.2.2 Run assurance-maturity required gates.
 - [ ] P24.2.3 Publish assurance-maturity closure report with findings disposition.
 
