@@ -460,7 +460,7 @@ Phase 9 forced-next mapping:
 
 ### AC2. Multi-Domain Deployment Expansion
 
-- [ ] AC2.1 Freeze expanded domain matrix and workload contract
+- [x] AC2.1 Freeze expanded domain matrix and workload contract
 - [ ] AC2.2 Run expanded multi-domain workload suites with required gates
 - [ ] AC2.3 Publish deployment expansion report with findings disposition
 
