@@ -532,6 +532,6 @@ Phase 9 forced-next mapping:
 ### AE4. Governance Closure and Phase 15 Gate
 
 - [x] AE4.1 Define objective Phase 14 exit checklist mapped to artifacts
-- [ ] AE4.2 Add PHASE14↔ROADMAP drift consistency gate
+- [x] AE4.2 Add PHASE14↔ROADMAP drift consistency gate
 - [ ] AE4.3 Add Phase 15 block gate from Phase 14 checklist
 - [ ] AE4.4 Publish Phase 14 closure report and mark exit criteria
