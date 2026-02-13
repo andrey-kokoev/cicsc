@@ -776,5 +776,5 @@ Phase 9 forced-next mapping:
 
 - [x] AN4.1 Define objective Phase 23 exit checklist mapped to artifacts
 - [x] AN4.2 Add PHASE23↔ROADMAP drift consistency gate
-- [ ] AN4.3 Add Phase 24 block gate from Phase 23 checklist
+- [x] AN4.3 Add Phase 24 block gate from Phase 23 checklist
 - [ ] AN4.4 Publish Phase 23 closure report and mark exit criteria
