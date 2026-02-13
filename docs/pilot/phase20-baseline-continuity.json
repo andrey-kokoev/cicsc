@@ -1,0 +1,23 @@
+{
+  "version": "cicsc/phase20-baseline-continuity-v1",
+  "timestamp_unix": 1771706400,
+  "overall": "pass",
+  "checks": {
+    "phase19_exit_checklist": {
+      "basis": "docs/pilot/phase19-exit-checklist.json",
+      "status": "pass"
+    },
+    "phase20_gate_open": {
+      "basis": "docs/pilot/phase20-gate.json",
+      "status": "pass"
+    },
+    "deployment_assurance_continuity": {
+      "basis": "docs/pilot/phase19-deployment-assurance-closure-report.json",
+      "status": "pass"
+    },
+    "runtime_reliability_continuity": {
+      "basis": "docs/pilot/phase19-runtime-reliability-closure-report.json",
+      "status": "pass"
+    }
+  }
+}
