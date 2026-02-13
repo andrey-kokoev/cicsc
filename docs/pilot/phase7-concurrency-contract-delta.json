@@ -1,0 +1,21 @@
+{
+  "version": "cicsc/phase7-concurrency-contract-delta-v1",
+  "baseline_contract": "docs/pilot/phase6-concurrency-contract.json",
+  "delta": {
+    "strengthened_guarantees": [
+      "adversarial multi-tenant replay suites are required gate inputs",
+      "backend isolation differential checks are required gate inputs",
+      "conflict outcome matrix must include explicit retry path coverage"
+    ],
+    "preserved_exclusions": [
+      "no distributed transaction guarantee",
+      "no global total order across distinct streams",
+      "no cross-tenant causality claim"
+    ],
+    "new_required_artifacts": [
+      "docs/pilot/phase7-concurrency-adversarial.json",
+      "docs/pilot/phase7-isolation-differential.json",
+      "docs/pilot/phase7-conflict-matrix-expanded.json"
+    ]
+  }
+}
