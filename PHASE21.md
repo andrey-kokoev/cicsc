@@ -77,7 +77,7 @@ Close Phase 21 with objective checklist and enforce entry gate for Phase 22.
 
 ### TODOs
 - [x] P21.4.1 Define objective Phase 21 exit checklist mapped to artifacts.
-- [ ] P21.4.2 Add PHASE21↔ROADMAP drift consistency gate.
+- [x] P21.4.2 Add PHASE21↔ROADMAP drift consistency gate.
 - [ ] P21.4.3 Add Phase 22 block gate from Phase 21 checklist.
 - [ ] P21.4.4 Publish Phase 21 closure report and mark exit criteria.
 
