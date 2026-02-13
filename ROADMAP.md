@@ -445,7 +445,7 @@ Phase 9 forced-next mapping:
 
 ### AB4. Deployment Expansion and Phase 12 Gate
 
-- [ ] AB4.1 Freeze expanded deployment set and workload contract
+- [x] AB4.1 Freeze expanded deployment set and workload contract
 - [ ] AB4.2 Run expanded workload suite with parity/migration/ops gates
 - [ ] AB4.3 Capture drift/performance/missing-primitive findings with severity labels
 - [ ] AB4.4 Add objective Phase 11 exit checklist and Phase 12 block gate
