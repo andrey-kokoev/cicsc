@@ -1,0 +1,51 @@
+{
+  "version": "cicsc/phase7-exit-checklist-v1",
+  "items": [
+    {
+      "id": "P7_EXIT_PARITY",
+      "description": "Parity scope, differential suites, fail-fast checks, and parity report are complete.",
+      "artifacts": [
+        "docs/pilot/phase7-parity-scope-matrix.json",
+        "docs/pilot/phase7-parity-differential.json",
+        "docs/pilot/phase7-failfast-scope.json",
+        "docs/pilot/phase7-backend-parity-report.json",
+        "docs/pilot/phase7-parity-deltas.json"
+      ],
+      "status": "pass"
+    },
+    {
+      "id": "P7_EXIT_CONCURRENCY",
+      "description": "Phase 7 concurrency strengthening artifacts are complete.",
+      "artifacts": [
+        "docs/pilot/phase7-concurrency-contract-delta.json",
+        "docs/pilot/phase7-concurrency-adversarial.json",
+        "docs/pilot/phase7-isolation-differential.json",
+        "docs/pilot/phase7-conflict-matrix-expanded.json",
+        "docs/spec/isolation-guarantees.md"
+      ],
+      "status": "pass"
+    },
+    {
+      "id": "P7_EXIT_MIGRATION",
+      "description": "Migration protocol hardening artifacts are complete.",
+      "artifacts": [
+        "docs/pilot/phase7-migration-protocol-contract.json",
+        "docs/pilot/phase7-migration-protocol-check.json",
+        "docs/pilot/phase7-tenant-batch-migration-drill.json",
+        "docs/pilot/phase7-post-cutover-differential.json",
+        "docs/pilot/phase7-migration-safety-report.json"
+      ],
+      "status": "pass"
+    },
+    {
+      "id": "P7_EXIT_GOVERNANCE",
+      "description": "Phase7 governance gates and drift checks are present and green.",
+      "artifacts": [
+        "scripts/check_phase7_docs_consistency.sh",
+        "scripts/check_phase7_required_gates.sh",
+        "scripts/check_phase8_block.sh"
+      ],
+      "status": "pending"
+    }
+  ]
+}
