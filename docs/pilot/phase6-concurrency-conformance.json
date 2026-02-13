@@ -1,13 +1,13 @@
 {
   "version": "cicsc/phase6-concurrency-conformance-v1",
-  "timestamp_unix": 1770946004,
+  "timestamp_unix": 1770946196,
   "overall": "pass",
   "checks": {
-    "causality_replay":{"status":"pass","duration_ms":154,"threshold_ms":8000,"log":"docs/pilot/phase6-concurrency-conformance.causality_replay.log"},
-    "transaction_model":{"status":"pass","duration_ms":153,"threshold_ms":10000,"log":"docs/pilot/phase6-concurrency-conformance.transaction_model.log"},
-    "replay_multistream":{"status":"pass","duration_ms":148,"threshold_ms":6000,"log":"docs/pilot/phase6-concurrency-conformance.replay_multistream.log"}
+    "causality_replay":{"status":"pass","duration_ms":170,"threshold_ms":8000,"log":"docs/pilot/phase6-concurrency-conformance.causality_replay.log"},
+    "transaction_model":{"status":"pass","duration_ms":157,"threshold_ms":10000,"log":"docs/pilot/phase6-concurrency-conformance.transaction_model.log"},
+    "replay_multistream":{"status":"pass","duration_ms":160,"threshold_ms":6000,"log":"docs/pilot/phase6-concurrency-conformance.replay_multistream.log"}
   },
   "metrics": {
-    "total_duration_ms": 455
+    "total_duration_ms": 487
   }
 }

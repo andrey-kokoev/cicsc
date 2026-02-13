@@ -5,3 +5,7 @@ Checklist artifact:
 
 This checklist is objective and artifact-mapped. Phase 7 remains blocked until
 all items are `pass`.
+
+Gate evaluator:
+- `scripts/check_phase7_block.sh`
+- output artifact: `docs/pilot/phase7-gate.json`

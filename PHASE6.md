@@ -85,16 +85,16 @@ Prevent expansion without semantic closure.
 - [x] P6.4.2 Require green dual-backend conformance + concurrency suites.
 - [x] P6.4.3 Require multi-vertical field report with unresolved criticals closed or explicitly deferred.
 - [x] P6.4.4 Add CI/doc checks rejecting phase/status drift for Phase 6 artifacts.
-- [ ] P6.4.5 Mark Phase 7 blocked unless all checklist items are pass.
+- [x] P6.4.5 Mark Phase 7 blocked unless all checklist items are pass.
 
 ### Acceptance
-- [ ] Phase transition is gated by objective artifacts, not subjective status claims.
+- [x] Phase transition is gated by objective artifacts, not subjective status claims.
 
 ---
 
 ## Exit Criteria (Phase 6)
 
-- [ ] Two-vertical field validation is complete and reproducible.
-- [ ] Concurrency model is explicit, tested, and normatively documented.
-- [ ] Productized surfaces are limited to proven semantics.
-- [ ] Governance checks enforce artifact-truth alignment continuously.
+- [x] Two-vertical field validation is complete and reproducible.
+- [x] Concurrency model is explicit, tested, and normatively documented.
+- [x] Productized surfaces are limited to proven semantics.
+- [x] Governance checks enforce artifact-truth alignment continuously.
