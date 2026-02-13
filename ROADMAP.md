@@ -562,3 +562,30 @@ Phase 9 forced-next mapping:
 - [x] AF4.2 Add PHASE15↔ROADMAP drift consistency gate
 - [x] AF4.3 Add Phase 16 block gate from Phase 15 checklist
 - [x] AF4.4 Publish Phase 15 closure report and mark exit criteria
+
+## AG. Phase 16: External Validation and Expansion Readiness
+
+### AG1. Scope Freeze and Baseline Continuity
+
+- [ ] AG1.1 Freeze Phase 16 scope and owner contract
+- [ ] AG1.2 Publish Phase 16 baseline continuity snapshot
+- [ ] AG1.3 Add Phase 16 status register with owner/date discipline
+
+### AG2. External Validation and Evidence Expansion
+
+- [ ] AG2.1 Freeze external-validation matrix and evidence contract
+- [ ] AG2.2 Run external-validation required gates
+- [ ] AG2.3 Publish external-validation closure report with findings disposition
+
+### AG3. Deployment and Operations Expansion Hardening
+
+- [ ] AG3.1 Freeze deployment-expansion hardening matrix and policy
+- [ ] AG3.2 Add expansion-readiness verification harnesses
+- [ ] AG3.3 Publish expansion hardening closure report with residual policy
+
+### AG4. Governance Closure and Phase 17 Gate
+
+- [ ] AG4.1 Define objective Phase 16 exit checklist mapped to artifacts
+- [ ] AG4.2 Add PHASE16↔ROADMAP drift consistency gate
+- [ ] AG4.3 Add Phase 17 block gate from Phase 16 checklist
+- [ ] AG4.4 Publish Phase 16 closure report and mark exit criteria
