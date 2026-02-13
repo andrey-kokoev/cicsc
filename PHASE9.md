@@ -47,7 +47,7 @@ Close highest-value deferred SQL surface gaps using fail-fast typing and oracle 
 Treat backend parity as a required gate for the expanded SQL and runtime surface.
 
 ### TODOs
-- [ ] P9.2.1 Freeze backend parity contract for Phase 9 (semantic classes + scale envelope).
+- [x] P9.2.1 Freeze backend parity contract for Phase 9 (semantic classes + scale envelope).
 - [ ] P9.2.2 Add deterministic cross-backend edge-case suites (null/collation/numeric/time behavior).
 - [ ] P9.2.3 Add seeded random differential sweeps for SQLite/Postgres/oracle over expanded operators.
 - [ ] P9.2.4 Add parity triage artifact with regression class labeling and owner assignment.
