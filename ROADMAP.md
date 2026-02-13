@@ -449,3 +449,30 @@ Phase 9 forced-next mapping:
 - [x] AB4.2 Run expanded workload suite with parity/migration/ops gates
 - [x] AB4.3 Capture drift/performance/missing-primitive findings with severity labels
 - [x] AB4.4 Add objective Phase 11 exit checklist and Phase 12 block gate
+
+## AC. Phase 12: Broad Deployment Generalization Under Kernel Discipline
+
+### AC1. Scope Freeze and Baseline Continuity
+
+- [ ] AC1.1 Freeze Phase 12 scope and owner contract
+- [ ] AC1.2 Publish Phase 12 baseline continuity snapshot
+- [ ] AC1.3 Add Phase 12 status register with owner/date discipline
+
+### AC2. Multi-Domain Deployment Expansion
+
+- [ ] AC2.1 Freeze expanded domain matrix and workload contract
+- [ ] AC2.2 Run expanded multi-domain workload suites with required gates
+- [ ] AC2.3 Publish deployment expansion report with findings disposition
+
+### AC3. Backend Parity Envelope Widening
+
+- [ ] AC3.1 Freeze parity envelope extension matrix
+- [ ] AC3.2 Add differential harnesses for newly included envelope items
+- [ ] AC3.3 Publish parity envelope closure report with residual policy
+
+### AC4. Governance Closure and Phase 13 Gate
+
+- [ ] AC4.1 Define objective Phase 12 exit checklist mapped to artifacts
+- [ ] AC4.2 Add PHASE12↔ROADMAP drift consistency gate
+- [ ] AC4.3 Add Phase 13 block gate from Phase 12 checklist
+- [ ] AC4.4 Publish Phase 12 closure report and mark exit criteria
