@@ -46,7 +46,7 @@ Start Phase 23 from explicit scope, owners, and reproducible baseline truth.
 Close integrity-scaling validation with explicit evidence contract and findings governance.
 
 ### TODOs
-- [ ] P23.2.1 Freeze integrity-scaling matrix and evidence contract.
+- [x] P23.2.1 Freeze integrity-scaling matrix and evidence contract.
 - [ ] P23.2.2 Run integrity-scaling required gates.
 - [ ] P23.2.3 Publish integrity-scaling closure report with findings disposition.
 

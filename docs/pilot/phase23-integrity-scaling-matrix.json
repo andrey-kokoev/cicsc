@@ -1,0 +1,45 @@
+{
+  "version": "cicsc/phase23-integrity-scaling-matrix-v1",
+  "timestamp_unix": 1773522600,
+  "tracks": [
+    {
+      "id": "integrity_semantic_continuity",
+      "scope": "semantic_continuity",
+      "required_evidence": [
+        "docs/pilot/phase22-resilience-expansion-closure-report.json",
+        "docs/pilot/phase21-cross-environment-stability-closure-report.json",
+        "docs/pilot/phase23-integrity-scaling-closure-report.json"
+      ]
+    },
+    {
+      "id": "integrity_backend_parity",
+      "scope": "backend_parity",
+      "required_evidence": [
+        "docs/pilot/phase22-control-surface-integrity-closure-report.json",
+        "docs/pilot/phase21-operational-continuity-closure-report.json",
+        "docs/pilot/phase23-integrity-scaling-closure-report.json"
+      ]
+    },
+    {
+      "id": "integrity_operational_readiness",
+      "scope": "operations",
+      "required_evidence": [
+        "docs/pilot/phase22-control-surface-integrity-harnesses.json",
+        "docs/pilot/phase21-operational-continuity-harnesses.json",
+        "docs/pilot/phase23-runtime-assurance-harnesses.json"
+      ]
+    }
+  ],
+  "evidence_contract": {
+    "required_gates": [
+      "phase22_doc_consistency",
+      "phase22_resilience_expansion_required_gates",
+      "phase23_baseline_continuity"
+    ],
+    "must_capture": [
+      "integrity_findings",
+      "disposition_status",
+      "residual_policy"
+    ]
+  }
+}
