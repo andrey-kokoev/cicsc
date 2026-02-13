@@ -1672,7 +1672,7 @@ phases:
       status: done
     - id: AW2.3
       title: Define objective Phase 32 exit checklist mapped to artifacts
-      status: open
+      status: done
     - id: AW2.4
       title: Add Phase 33 block gate from Phase 32 checklist
       status: open
