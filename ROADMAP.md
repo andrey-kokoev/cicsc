@@ -622,7 +622,7 @@ Phase 9 forced-next mapping:
 ### AI1. Scope Freeze and Baseline Continuity
 
 - [x] AI1.1 Freeze Phase 18 scope and owner contract
-- [ ] AI1.2 Publish Phase 18 baseline continuity snapshot
+- [x] AI1.2 Publish Phase 18 baseline continuity snapshot
 - [ ] AI1.3 Add Phase 18 status register with owner/date discipline
 
 ### AI2. Expansion-Proof Validation Closure

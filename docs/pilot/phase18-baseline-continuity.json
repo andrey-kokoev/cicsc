@@ -1,0 +1,23 @@
+{
+  "version": "cicsc/phase18-baseline-continuity-v1",
+  "timestamp_unix": 1770989711,
+  "overall": "pass",
+  "checks": {
+    "phase17_exit_checklist": {
+      "basis": "docs/pilot/phase17-exit-checklist.json",
+      "status": "pass"
+    },
+    "phase18_gate_open": {
+      "basis": "docs/pilot/phase18-gate.json",
+      "status": "pass"
+    },
+    "field_program_continuity": {
+      "basis": "docs/pilot/phase17-field-program-closure-report.json",
+      "status": "pass"
+    },
+    "trust_hardening_continuity": {
+      "basis": "docs/pilot/phase17-trust-hardening-closure-report.json",
+      "status": "pass"
+    }
+  }
+}
