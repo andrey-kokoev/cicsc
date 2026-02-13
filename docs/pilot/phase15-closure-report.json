@@ -1,0 +1,16 @@
+{
+  "version": "cicsc/phase15-closure-report-v1",
+  "timestamp_unix": 1771077900,
+  "inputs": {
+    "exit_checklist": "docs/pilot/phase15-exit-checklist.json",
+    "doc_consistency": "docs/pilot/phase15-doc-consistency.json",
+    "phase16_gate": "docs/pilot/phase16-gate.json"
+  },
+  "status": "pass",
+  "phase16_gate_blocked": false,
+  "notes": [
+    "Phase 15 checklist is complete and artifact-backed.",
+    "PHASE15 and ROADMAP truth remain synchronized.",
+    "Phase 16 gate is unblocked only after AF-series closure."
+  ]
+}

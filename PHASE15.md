@@ -80,17 +80,17 @@ Close Phase 15 with objective checklist and enforce entry gate for Phase 16.
 - [x] P15.4.1 Define objective Phase 15 exit checklist mapped to artifacts.
 - [x] P15.4.2 Add PHASE15↔ROADMAP drift consistency gate.
 - [x] P15.4.3 Add Phase 16 block gate from Phase 15 checklist.
-- [ ] P15.4.4 Publish Phase 15 closure report and mark exit criteria.
+- [x] P15.4.4 Publish Phase 15 closure report and mark exit criteria.
 
 ### Acceptance
-- [ ] Phase 16 remains blocked unless Phase 15 checklist is fully pass.
+- [x] Phase 16 remains blocked unless Phase 15 checklist is fully pass.
 
 ---
 
 ## Exit Criteria (Phase 15)
 
-- [ ] Scope, baseline, and status governance remain explicit and reproducible.
-- [ ] Objective scorecard closure is evidence-backed and invariant-preserving.
-- [ ] Deferred-surface status and deployment discipline are verifiable.
-- [ ] Governance checks enforce code/doc/artifact consistency.
-- [ ] Phase 16 remains blocked without full checklist pass.
+- [x] Scope, baseline, and status governance remain explicit and reproducible.
+- [x] Objective scorecard closure is evidence-backed and invariant-preserving.
+- [x] Deferred-surface status and deployment discipline are verifiable.
+- [x] Governance checks enforce code/doc/artifact consistency.
+- [x] Phase 16 remains blocked without full checklist pass.
