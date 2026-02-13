@@ -17,6 +17,7 @@ worktree_governance:
   assignment_dispatch_kind_ref: MSGK_ASSIGNMENT_DISPATCH
   enforce_owner_dispatch: true
   worktree_creation_authority_agent_refs: [AGENT_MAIN]
+worktree_delegations: []
 claim_kinds:
   - id: CLAIM_SEMANTIC_INVARIANT
     title: Semantic invariant is constructively preserved.

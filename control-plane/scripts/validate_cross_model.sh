@@ -125,6 +125,46 @@ def main() -> int:
         if aid not in agent_map:
             errors.append(f"collab-model: unknown worktree creation authority agent {aid}")
 
+    delegations = collab.get("worktree_delegations", [])
+    active_delegation_by_worktree = {}
+    for d in delegations:
+        did = d.get("id")
+        wt = d.get("worktree")
+        owner_ref = d.get("owner_agent_ref")
+        delegated_to = d.get("delegated_to_agent_ref")
+        dstatus = d.get("status")
+        dcommit = d.get("commit")
+
+        if owner_ref not in agent_map:
+            errors.append(f"collab-model: delegation {did} unknown owner_agent_ref {owner_ref}")
+            continue
+        if delegated_to not in agent_map:
+            errors.append(f"collab-model: delegation {did} unknown delegated_to_agent_ref {delegated_to}")
+            continue
+        if owner_ref == delegated_to:
+            errors.append(f"collab-model: delegation {did} owner and delegated_to must differ")
+        if wt not in worktree_owner_map:
+            errors.append(f"collab-model: delegation {did} unknown worktree {wt}")
+        else:
+            baseline_owner = worktree_owner_map[wt]
+            if baseline_owner != owner_ref:
+                errors.append(
+                    f"collab-model: delegation {did} owner_agent_ref {owner_ref} does not match baseline owner {baseline_owner}"
+                )
+        if not isinstance(dcommit, str) or not re.fullmatch(r"[0-9a-f]{7,40}", dcommit):
+            errors.append(f"collab-model: delegation {did} invalid commit {dcommit}")
+        if dstatus == "active":
+            if wt in active_delegation_by_worktree:
+                errors.append(
+                    f"collab-model: multiple active delegations for worktree {wt}: {active_delegation_by_worktree[wt].get('id')}, {did}"
+                )
+            else:
+                active_delegation_by_worktree[wt] = d
+
+    effective_owner_by_worktree = dict(worktree_owner_map)
+    for wt, d in active_delegation_by_worktree.items():
+        effective_owner_by_worktree[wt] = d.get("delegated_to_agent_ref")
+
     seen_phase_ids = set()
     seen_phase_numbers = set()
     last_phase_number = -1
@@ -324,11 +364,11 @@ def main() -> int:
         if (
             enforce_owner_dispatch
             and kind_ref == assignment_dispatch_kind_ref
-            and from_worktree in worktree_owner_map
-            and worktree_owner_map[from_worktree] != from_agent_ref
+            and from_worktree in effective_owner_by_worktree
+            and effective_owner_by_worktree[from_worktree] != from_agent_ref
         ):
             errors.append(
-                f"collab-model: message {mid} dispatch authority mismatch; {from_agent_ref} is not owner of {from_worktree}"
+                f"collab-model: message {mid} dispatch authority mismatch; {from_agent_ref} is not effective owner of {from_worktree}"
             )
 
         if to_agent_ref not in agent_map:

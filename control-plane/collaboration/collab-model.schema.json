@@ -7,6 +7,7 @@
     "version",
     "agents",
     "worktree_governance",
+    "worktree_delegations",
     "claim_kinds",
     "evidence_kinds",
     "obligation_profiles",
@@ -57,6 +58,30 @@
         }
       },
       "additionalProperties": false
+    },
+    "worktree_delegations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "worktree",
+          "owner_agent_ref",
+          "delegated_to_agent_ref",
+          "status",
+          "commit"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^DELEG_[A-Z0-9_]+$" },
+          "worktree": { "type": "string" },
+          "owner_agent_ref": { "type": "string", "pattern": "^AGENT_[A-Z0-9_]+$" },
+          "delegated_to_agent_ref": { "type": "string", "pattern": "^AGENT_[A-Z0-9_]+$" },
+          "status": { "type": "string", "enum": ["active", "revoked"] },
+          "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
     },
     "claim_kinds": {
       "type": "array",
