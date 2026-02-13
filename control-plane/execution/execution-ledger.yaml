@@ -1648,7 +1648,7 @@ phases:
     checkboxes:
     - id: AW1.1
       title: Implement OBJ1 expanded concurrency envelope artifacts and required checks
-      status: open
+      status: done
     - id: AW1.2
       title: Implement OBJ2 drift-budget governance artifacts and required checks
       status: open
