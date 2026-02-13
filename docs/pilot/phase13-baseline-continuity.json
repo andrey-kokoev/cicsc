@@ -1,0 +1,23 @@
+{
+  "version": "cicsc/phase13-baseline-continuity-v1",
+  "timestamp_unix": 1770955650,
+  "overall": "pass",
+  "checks": {
+    "phase12_exit_checklist": {
+      "basis": "docs/pilot/phase12-exit-checklist.json",
+      "status": "pass"
+    },
+    "phase13_gate_open": {
+      "basis": "docs/pilot/phase13-gate.json",
+      "status": "pass"
+    },
+    "parity_envelope_continuity": {
+      "basis": "docs/pilot/phase12-parity-envelope-differentials.json",
+      "status": "pass"
+    },
+    "deployment_expansion_continuity": {
+      "basis": "docs/pilot/phase12-deployment-expansion-report.json",
+      "status": "pass"
+    }
+  }
+}
