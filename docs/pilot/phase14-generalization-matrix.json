@@ -1,0 +1,24 @@
+{
+  "version": "cicsc/phase14-generalization-matrix-v1",
+  "timestamp_unix": 1771064100,
+  "envelope": [
+    { "id": "ticketing", "tenant_count": 30, "concurrency_level": 70, "workload": "high_volume_ticket_flow" },
+    { "id": "crm", "tenant_count": 24, "concurrency_level": 60, "workload": "pipeline_and_migration_mix" },
+    { "id": "kanban", "tenant_count": 20, "concurrency_level": 55, "workload": "board_transition_and_policy" },
+    { "id": "case_management", "tenant_count": 15, "concurrency_level": 45, "workload": "queue_and_sla_constraints" },
+    { "id": "service_ops", "tenant_count": 12, "concurrency_level": 40, "workload": "incident_triage_lifecycle" }
+  ],
+  "workload_contract": {
+    "required_gates": [
+      "category_model_conformance",
+      "parity_envelope_differentials",
+      "hardening_closure_report"
+    ],
+    "must_capture": [
+      "invariant_status",
+      "parity_status",
+      "migration_status",
+      "ops_status"
+    ]
+  }
+}

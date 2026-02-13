@@ -46,7 +46,7 @@ Begin Phase 14 from explicit scope and reproducible baseline status.
 Expand adoption/generalization envelope under strict conformance gates.
 
 ### TODOs
-- [ ] P14.2.1 Freeze generalization envelope matrix and workload contract.
+- [x] P14.2.1 Freeze generalization envelope matrix and workload contract.
 - [ ] P14.2.2 Run generalization workload suites with required gates.
 - [ ] P14.2.3 Publish generalization envelope report with findings disposition.
 
