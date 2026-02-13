@@ -768,7 +768,7 @@ Phase 9 forced-next mapping:
 
 ### AN3. Runtime-Assurance Hardening
 
-- [ ] AN3.1 Freeze runtime-assurance hardening matrix and policy
+- [x] AN3.1 Freeze runtime-assurance hardening matrix and policy
 - [ ] AN3.2 Add runtime-assurance verification harnesses
 - [ ] AN3.3 Publish runtime-assurance closure report with residual policy
 
