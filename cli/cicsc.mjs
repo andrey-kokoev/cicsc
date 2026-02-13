@@ -57,6 +57,12 @@ async function main () {
       process.exit(body.ok ? 0 : 1)
     }
 
+    if (cmd === "gates") {
+      const suite = String(args.suite ?? "required")
+      runGateSuite(suite)
+      process.exit(0)
+    }
+
     if (cmd === "migration-preflight") {
       const payload = await readMigrationPayload(args)
       const { preflightMigration } = await import("../core/runtime/migration-preflight.ts")
@@ -221,6 +227,7 @@ Usage:
   node cli/cicsc.mjs compile --spec <path> [--server <url>] [--token <auth-token>]
   node cli/cicsc.mjs install --spec <path> --tenant <tenant_id> [--server <url>] [--token <auth-token>]
   node cli/cicsc.mjs verify --tenant <tenant_id> [--type <entity_type> --entity <entity_id>] [--server <url>] [--token <auth-token>]
+  node cli/cicsc.mjs gates [--suite <required|cross-backend|phase6-concurrency|phase6-migration>]
   node cli/cicsc.mjs migration-preflight --from <bundle.json> --to <bundle.json> --events <events.json> --migration <id> [--actor <id> --now <ts>]
   node cli/cicsc.mjs migration-dry-run --from <bundle.json> --to <bundle.json> --events <events.json> --migration <id> [--artifact <report.json> --actor <id> --now <ts>]
   node cli/cicsc.mjs migration-rollback --to <bundle.json> --events <events.json> --migration <id> [--out-events <events.json>]
@@ -236,6 +243,27 @@ function maybeRerunWithTsLoader () {
     stdio: "inherit",
   })
   process.exit(rerun.status ?? 1)
+}
+
+function runGateSuite (suite) {
+  const suiteMap = {
+    required: ["./scripts/run_conformance_required.sh", "default"],
+    "cross-backend": ["./scripts/run_cross_backend_gate.sh"],
+    "phase6-concurrency": ["./scripts/phase6_concurrency_conformance.sh"],
+    "phase6-migration": ["./scripts/phase6_migration_concurrency_drill.sh"],
+  }
+  const cmd = suiteMap[suite]
+  if (!cmd) {
+    throw new Error(`unknown gate suite: ${suite}`)
+  }
+  const run = spawnSync(cmd[0], cmd.slice(1), {
+    cwd: resolve(__dirname, ".."),
+    stdio: "inherit",
+    shell: false,
+  })
+  if (run.status !== 0) {
+    process.exit(run.status ?? 1)
+  }
 }
 
 void main()
