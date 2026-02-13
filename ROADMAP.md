@@ -832,3 +832,30 @@ Phase 9 forced-next mapping:
 - [x] AP4.2 Add PHASE25↔ROADMAP drift consistency gate
 - [x] AP4.3 Add Phase 26 block gate from Phase 25 checklist
 - [x] AP4.4 Publish Phase 25 closure report and mark exit criteria
+
+## AQ. Phase 26: Stability Consolidation and Continuity Assurance Discipline
+
+### AQ1. Scope Freeze and Baseline Continuity
+
+- [ ] AQ1.1 Freeze Phase 26 scope and owner contract
+- [ ] AQ1.2 Publish Phase 26 baseline continuity snapshot
+- [ ] AQ1.3 Add Phase 26 status register with owner/date discipline
+
+### AQ2. Stability-Consolidation Validation Closure
+
+- [ ] AQ2.1 Freeze stability-consolidation matrix and evidence contract
+- [ ] AQ2.2 Run stability-consolidation required gates
+- [ ] AQ2.3 Publish stability-consolidation closure report with findings disposition
+
+### AQ3. Continuity-Assurance Hardening
+
+- [ ] AQ3.1 Freeze continuity-assurance hardening matrix and policy
+- [ ] AQ3.2 Add continuity-assurance verification harnesses
+- [ ] AQ3.3 Publish continuity-assurance closure report with residual policy
+
+### AQ4. Governance Closure and Phase 27 Gate
+
+- [ ] AQ4.1 Define objective Phase 26 exit checklist mapped to artifacts
+- [ ] AQ4.2 Add PHASE26↔ROADMAP drift consistency gate
+- [ ] AQ4.3 Add Phase 27 block gate from Phase 26 checklist
+- [ ] AQ4.4 Publish Phase 26 closure report and mark exit criteria
