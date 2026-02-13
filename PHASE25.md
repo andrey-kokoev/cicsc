@@ -46,7 +46,7 @@ Start Phase 25 from explicit scope, owners, and reproducible baseline truth.
 Close verification-consolidation validation with explicit evidence contract and findings governance.
 
 ### TODOs
-- [ ] P25.2.1 Freeze verification-consolidation matrix and evidence contract.
+- [x] P25.2.1 Freeze verification-consolidation matrix and evidence contract.
 - [ ] P25.2.2 Run verification-consolidation required gates.
 - [ ] P25.2.3 Publish verification-consolidation closure report with findings disposition.
 
