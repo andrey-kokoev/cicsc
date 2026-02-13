@@ -589,3 +589,30 @@ Phase 9 forced-next mapping:
 - [x] AG4.2 Add PHASE16↔ROADMAP drift consistency gate
 - [x] AG4.3 Add Phase 17 block gate from Phase 16 checklist
 - [x] AG4.4 Publish Phase 16 closure report and mark exit criteria
+
+## AH. Phase 17: Field Program Scaling and Trust Hardening
+
+### AH1. Scope Freeze and Baseline Continuity
+
+- [ ] AH1.1 Freeze Phase 17 scope and owner contract
+- [ ] AH1.2 Publish Phase 17 baseline continuity snapshot
+- [ ] AH1.3 Add Phase 17 status register with owner/date discipline
+
+### AH2. Field-Program Validation Expansion
+
+- [ ] AH2.1 Freeze field-program validation matrix and evidence contract
+- [ ] AH2.2 Run field-program required gates
+- [ ] AH2.3 Publish field-program closure report with findings disposition
+
+### AH3. Trust and Operations Hardening
+
+- [ ] AH3.1 Freeze trust/operations hardening matrix and policy
+- [ ] AH3.2 Add trust/operations verification harnesses
+- [ ] AH3.3 Publish trust hardening closure report with residual policy
+
+### AH4. Governance Closure and Phase 18 Gate
+
+- [ ] AH4.1 Define objective Phase 17 exit checklist mapped to artifacts
+- [ ] AH4.2 Add PHASE17↔ROADMAP drift consistency gate
+- [ ] AH4.3 Add Phase 18 block gate from Phase 17 checklist
+- [ ] AH4.4 Publish Phase 17 closure report and mark exit criteria
