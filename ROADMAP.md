@@ -937,6 +937,6 @@ Phase 9 forced-next mapping:
 ### AT4. Governance Closure and Phase 30 Gate
 
 - [x] AT4.1 Define objective Phase 29 exit checklist mapped to artifacts
-- [ ] AT4.2 Add PHASE29↔ROADMAP drift consistency gate
+- [x] AT4.2 Add PHASE29↔ROADMAP drift consistency gate
 - [ ] AT4.3 Add Phase 30 block gate from Phase 29 checklist
 - [ ] AT4.4 Publish Phase 29 closure report and mark exit criteria
