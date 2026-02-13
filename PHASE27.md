@@ -32,7 +32,7 @@ Start Phase 27 from explicit scope, owners, and reproducible baseline truth.
 
 ### TODOs
 - [x] P27.1.1 Freeze Phase 27 scope and owner contract.
-- [ ] P27.1.2 Publish Phase 27 baseline continuity snapshot.
+- [x] P27.1.2 Publish Phase 27 baseline continuity snapshot.
 - [ ] P27.1.3 Add Phase 27 status register with owner/date discipline.
 
 ### Acceptance
