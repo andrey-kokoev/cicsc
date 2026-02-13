@@ -899,7 +899,7 @@ Phase 9 forced-next mapping:
 
 - [x] AS2.1 Freeze assurance-scaling matrix and evidence contract
 - [x] AS2.2 Run assurance-scaling required gates
-- [ ] AS2.3 Publish assurance-scaling closure report with findings disposition
+- [x] AS2.3 Publish assurance-scaling closure report with findings disposition
 
 ### AS3. Operational-Continuity Hardening
 

@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase28-assurance-scaling-closure-report-v1",
+  "timestamp_unix": 1775945400,
+  "inputs": {
+    "assurance_scaling_matrix": "docs/pilot/phase28-assurance-scaling-matrix.json",
+    "required_gates": "docs/pilot/phase28-assurance-scaling-required-gates.json"
+  },
+  "findings": [
+    {
+      "id": "P28ASSURE-ENV-001",
+      "severity": "medium",
+      "status": "deferred",
+      "owner": "phase28-validation-owner",
+      "target_date": "2027-11-06",
+      "summary": "Additional assurance-scaling regression sampling remains scheduled for next validation window with no current invariant regressions."
+    },
+    {
+      "id": "P28ASSURE-CONTINUITY-001",
+      "severity": "low",
+      "status": "closed",
+      "owner": "phase28-ops-owner",
+      "summary": "Assurance-scaling continuity remained aligned with declared conformance and governance gates."
+    }
+  ],
+  "unresolved_criticals": [],
+  "status": "pass"
+}
