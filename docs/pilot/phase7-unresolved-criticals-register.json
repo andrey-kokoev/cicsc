@@ -1,0 +1,22 @@
+{
+  "version": "cicsc/phase7-unresolved-criticals-register-v1",
+  "entries": [
+    {
+      "id": "PDELTA-COLLATION-001",
+      "severity": "high",
+      "status": "deferred",
+      "owner": "platform-semantics",
+      "target_date": "2026-03-15",
+      "notes": "Deferred to X2.5 follow-up expansion with explicit collation modeling."
+    },
+    {
+      "id": "PDELTA-HAVING-001",
+      "severity": "medium",
+      "status": "open",
+      "owner": "query-runtime",
+      "target_date": "2026-04-01",
+      "notes": "Scoped out until having operator expansion path is implemented."
+    }
+  ],
+  "unresolved_critical_ids": []
+}

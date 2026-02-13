@@ -86,7 +86,7 @@ Ensure next-phase expansion only starts from objective semantic closure.
 ### TODOs
 - [x] P7.4.1 Define objective Phase 7 exit checklist mapped to artifacts.
 - [x] P7.4.2 Require green required gates (parity + concurrency + migration protocol).
-- [ ] P7.4.3 Require unresolved criticals register to be empty or explicitly deferred with owner/date.
+- [x] P7.4.3 Require unresolved criticals register to be empty or explicitly deferred with owner/date.
 - [ ] P7.4.4 Add CI/doc checks rejecting Phase 7 status drift.
 - [ ] P7.4.5 Block Phase 8 unless all checklist items are pass.
 
