@@ -47,7 +47,7 @@ Close stability-consolidation validation with explicit evidence contract and fin
 
 ### TODOs
 - [x] P26.2.1 Freeze stability-consolidation matrix and evidence contract.
-- [ ] P26.2.2 Run stability-consolidation required gates.
+- [x] P26.2.2 Run stability-consolidation required gates.
 - [ ] P26.2.3 Publish stability-consolidation closure report with findings disposition.
 
 ### Acceptance

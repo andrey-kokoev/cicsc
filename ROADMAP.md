@@ -844,7 +844,7 @@ Phase 9 forced-next mapping:
 ### AQ2. Stability-Consolidation Validation Closure
 
 - [x] AQ2.1 Freeze stability-consolidation matrix and evidence contract
-- [ ] AQ2.2 Run stability-consolidation required gates
+- [x] AQ2.2 Run stability-consolidation required gates
 - [ ] AQ2.3 Publish stability-consolidation closure report with findings disposition
 
 ### AQ3. Continuity-Assurance Hardening
