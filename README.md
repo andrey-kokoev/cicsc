@@ -163,6 +163,9 @@ CICSC_DB_PATH=./cicsc.dev.sqlite node runtime/dev/harness.mjs
 - `docs/spec/non-programmer-workflows.md`
   Workflow-authoring guide for non-programmer operators.
 
+- `JOURNEY_VECTOR.md`
+  Canonical objective-to-status-to-evidence navigation document.
+
 These documents constrain implementation choices.
 
 ---
