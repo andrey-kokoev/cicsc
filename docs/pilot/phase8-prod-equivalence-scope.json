@@ -1,0 +1,41 @@
+{
+  "version": "cicsc/phase8-prod-equivalence-scope-v1",
+  "workload_envelope": {
+    "snapshot_rows_per_type": {
+      "small": 1000,
+      "medium": 10000,
+      "large": 100000
+    },
+    "query_classes": [
+      "filter_project_order_limit",
+      "join_filter_project",
+      "group_by_aggregates",
+      "bool_query_constraints"
+    ]
+  },
+  "data_diversity": {
+    "null_profiles": [
+      "sparse_nulls",
+      "dense_nulls"
+    ],
+    "collation_profiles": [
+      "ascii_only",
+      "mixed_locale_strings"
+    ],
+    "numeric_profiles": [
+      "integers",
+      "decimals",
+      "large_magnitude"
+    ]
+  },
+  "in_scope_backends": [
+    "sqlite",
+    "postgres",
+    "oracle_interpreter"
+  ],
+  "references": [
+    "docs/pilot/phase7-parity-scope-matrix.json",
+    "tests/conformance/sqlite-supported-scope.json",
+    "tests/conformance/postgres-supported-scope.json"
+  ]
+}
