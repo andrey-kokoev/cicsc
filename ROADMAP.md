@@ -697,3 +697,30 @@ Phase 9 forced-next mapping:
 - [x] AK4.2 Add PHASE20↔ROADMAP drift consistency gate
 - [x] AK4.3 Add Phase 21 block gate from Phase 20 checklist
 - [x] AK4.4 Publish Phase 20 closure report and mark exit criteria
+
+## AL. Phase 21: Cross-Environment Stability and Operational Continuity Discipline
+
+### AL1. Scope Freeze and Baseline Continuity
+
+- [ ] AL1.1 Freeze Phase 21 scope and owner contract
+- [ ] AL1.2 Publish Phase 21 baseline continuity snapshot
+- [ ] AL1.3 Add Phase 21 status register with owner/date discipline
+
+### AL2. Cross-Environment Stability Validation Closure
+
+- [ ] AL2.1 Freeze cross-environment stability matrix and evidence contract
+- [ ] AL2.2 Run cross-environment stability required gates
+- [ ] AL2.3 Publish cross-environment stability closure report with findings disposition
+
+### AL3. Operational Continuity Hardening
+
+- [ ] AL3.1 Freeze operational-continuity hardening matrix and policy
+- [ ] AL3.2 Add operational-continuity verification harnesses
+- [ ] AL3.3 Publish operational-continuity closure report with residual policy
+
+### AL4. Governance Closure and Phase 22 Gate
+
+- [ ] AL4.1 Define objective Phase 21 exit checklist mapped to artifacts
+- [ ] AL4.2 Add PHASE21↔ROADMAP drift consistency gate
+- [ ] AL4.3 Add Phase 22 block gate from Phase 21 checklist
+- [ ] AL4.4 Publish Phase 21 closure report and mark exit criteria
