@@ -320,3 +320,37 @@ Phase 7 parity delta mapping:
 - [x] X4.3 Require unresolved criticals register empty or explicitly deferred with owner/date
 - [x] X4.4 Add CI/doc checks rejecting Phase 7 status drift
 - [x] X4.5 Block Phase 8 unless all checklist items are pass
+
+## Y. Phase 8: Production Equivalence and Scale Hardening
+
+### Y1. Production-Equivalence Backend Hardening
+
+- [ ] Y1.1 Freeze production-equivalence scope matrix (workload envelope + data diversity)
+- [ ] Y1.2 Add large-snapshot/high-cardinality sqlite/postgres/oracle differential suites
+- [ ] Y1.3 Add deterministic parity checks for null/collation/numeric edge-case datasets
+- [ ] Y1.4 Publish production-equivalence report with exclusions and risk labels
+- [ ] Y1.5 Convert unresolved production-equivalence risks into explicit roadmap items
+
+### Y2. Multi-Tenant Operational Resilience
+
+- [ ] Y2.1 Define Phase 8 operational resilience contract
+- [ ] Y2.2 Add multi-tenant chaos drills (outage/verify delay/replay backpressure)
+- [ ] Y2.3 Add tenant fairness and starvation checks for command execution
+- [ ] Y2.4 Add continuous SLO/error-budget gate for verify/migrate/command paths
+- [ ] Y2.5 Publish resilience report with failed scenarios closed or explicitly deferred
+
+### Y3. Spec and Migration Ergonomics at Scale
+
+- [ ] Y3.1 Freeze spec authoring pain-point taxonomy from field evidence
+- [ ] Y3.2 Add DSL ergonomics improvements with negative typecheck coverage
+- [ ] Y3.3 Add migration authoring assistant checks (coverage/safety/rollback readiness)
+- [ ] Y3.4 Add multi-vertical spec/migration usability benchmark artifact
+- [ ] Y3.5 Publish ergonomics report with invariant-safety confirmation
+
+### Y4. Governance Gate for Phase 9
+
+- [ ] Y4.1 Define objective Phase 8 exit checklist mapped to artifacts
+- [ ] Y4.2 Require green required gates (equivalence + resilience + ergonomics safety)
+- [ ] Y4.3 Require unresolved criticals register empty or explicitly deferred with owner/date
+- [ ] Y4.4 Add CI/doc checks rejecting Phase 8 status drift
+- [ ] Y4.5 Block Phase 9 unless all checklist items are pass
