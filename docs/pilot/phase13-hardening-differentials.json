@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase13-hardening-differentials-v1",
+  "timestamp_unix": 1770955877,
+  "overall": "pass",
+  "checks": {
+    "post_cutover_diff":{"status":"pass","log":"docs/pilot/phase13-hardening-differentials.post_cutover_diff.log"},
+    "parity_envelope_diff":{"status":"pass","log":"docs/pilot/phase13-hardening-differentials.parity_envelope_diff.log"},
+    "category_model_guard":{"status":"pass","log":"docs/pilot/phase13-hardening-differentials.category_model_guard.log"}
+  }
+}

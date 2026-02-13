@@ -63,7 +63,7 @@ Strengthen migration/parity conformance for scale envelope operations.
 
 ### TODOs
 - [x] P13.3.1 Freeze migration+parity hardening matrix.
-- [ ] P13.3.2 Add differential harnesses for scale hardening matrix.
+- [x] P13.3.2 Add differential harnesses for scale hardening matrix.
 - [ ] P13.3.3 Publish hardening closure report with residual policy.
 
 ### Acceptance
