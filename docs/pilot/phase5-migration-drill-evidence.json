@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase5-migration-drill-evidence-v1",
+  "runbook": "docs/spec/migration-operations-runbook.md",
+  "drill_artifacts": [
+    "docs/pilot/phase5-ticketing-staged-run.migration_protocol.log",
+    "tests/oracle/cutover-protocol.test.ts",
+    "tests/oracle/rollback-workflow.test.ts"
+  ],
+  "status": "pass"
+}

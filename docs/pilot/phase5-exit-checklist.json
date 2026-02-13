@@ -16,7 +16,7 @@
     {
       "id": "E3",
       "criterion": "migration_runbook_and_drill_evidence_present",
-      "artifact": "docs/spec/migration-operations-runbook.md",
+      "artifact": "docs/pilot/phase5-migration-drill-evidence.json",
       "status": "pass"
     },
     {
