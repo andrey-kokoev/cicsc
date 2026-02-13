@@ -535,3 +535,30 @@ Phase 9 forced-next mapping:
 - [x] AE4.2 Add PHASE14↔ROADMAP drift consistency gate
 - [x] AE4.3 Add Phase 15 block gate from Phase 14 checklist
 - [x] AE4.4 Publish Phase 14 closure report and mark exit criteria
+
+## AF. Phase 15: Objective Closure and Deployment Discipline
+
+### AF1. Scope Freeze and Baseline Continuity
+
+- [ ] AF1.1 Freeze Phase 15 scope and owner contract
+- [ ] AF1.2 Publish Phase 15 baseline continuity snapshot
+- [ ] AF1.3 Add Phase 15 status register with owner/date discipline
+
+### AF2. Objective Scorecard Expansion and Closure
+
+- [ ] AF2.1 Freeze objective scorecard matrix and evidence contract
+- [ ] AF2.2 Run objective scorecard required gates
+- [ ] AF2.3 Publish objective closure report with findings disposition
+
+### AF3. Deferred-Surface and Deployment Discipline Hardening
+
+- [ ] AF3.1 Freeze deferred-surface closure matrix and policy
+- [ ] AF3.2 Add deployment-discipline verification harnesses
+- [ ] AF3.3 Publish deferred-surface closure report with residual policy
+
+### AF4. Governance Closure and Phase 16 Gate
+
+- [ ] AF4.1 Define objective Phase 15 exit checklist mapped to artifacts
+- [ ] AF4.2 Add PHASE15↔ROADMAP drift consistency gate
+- [ ] AF4.3 Add Phase 16 block gate from Phase 15 checklist
+- [ ] AF4.4 Publish Phase 15 closure report and mark exit criteria
