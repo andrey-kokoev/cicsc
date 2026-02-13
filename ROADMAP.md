@@ -785,7 +785,7 @@ Phase 9 forced-next mapping:
 
 - [x] AO1.1 Freeze Phase 24 scope and owner contract
 - [x] AO1.2 Publish Phase 24 baseline continuity snapshot
-- [ ] AO1.3 Add Phase 24 status register with owner/date discipline
+- [x] AO1.3 Add Phase 24 status register with owner/date discipline
 
 ### AO2. Assurance-Maturity Validation Closure
 
