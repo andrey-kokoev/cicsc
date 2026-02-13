@@ -45,7 +45,7 @@ Make migration safety operational (not only theorem/test level).
 - [x] P5.2.2 Implement migration dry-run with replay verification report artifact.
 - [x] P5.2.3 Implement cutover workflow with explicit pause/switch/resume boundaries.
 - [x] P5.2.4 Implement rollback workflow for reversible subset with explicit failure handling.
-- [ ] P5.2.5 Add operator runbook and CLI commands for preflight/cutover/rollback.
+- [x] P5.2.5 Add operator runbook and CLI commands for preflight/cutover/rollback.
 
 ### Acceptance
 - [ ] Migration command surfaces deterministic pass/fail outcomes with structured reports.

@@ -125,6 +125,9 @@ Use the lightweight CLI wrapper:
 node cli/cicsc.mjs compile --spec ./spec.json --server http://localhost
 node cli/cicsc.mjs install --spec ./spec.json --tenant t1 --server http://localhost
 node cli/cicsc.mjs verify --tenant t1 --server http://localhost
+node cli/cicsc.mjs migration-preflight --from ./bundle.v0.json --to ./bundle.v1.json --events ./events.v0.json --migration v0_to_v1
+node cli/cicsc.mjs migration-dry-run --from ./bundle.v0.json --to ./bundle.v1.json --events ./events.v0.json --migration v0_to_v1 --artifact ./artifacts/migration-dry-run.json
+node cli/cicsc.mjs migration-rollback --to ./bundle.v1.json --events ./events.v1.json --migration v0_to_v1 --out-events ./events.v0.rolledback.json
 ```
 
 ## Local Dev Harness
