@@ -32,7 +32,7 @@ Start Phase 22 from explicit scope, owners, and reproducible baseline truth.
 
 ### TODOs
 - [x] P22.1.1 Freeze Phase 22 scope and owner contract.
-- [ ] P22.1.2 Publish Phase 22 baseline continuity snapshot.
+- [x] P22.1.2 Publish Phase 22 baseline continuity snapshot.
 - [ ] P22.1.3 Add Phase 22 status register with owner/date discipline.
 
 ### Acceptance
