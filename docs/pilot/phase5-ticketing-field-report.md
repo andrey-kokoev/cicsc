@@ -5,13 +5,12 @@ Report artifact:
 
 ## Result
 
-- Overall: `blocked`
-- Blocking incident: `INC-PG-HARNESS-001`
+- Overall: `in_progress`
+- Blocking incidents: none (remaining priorities are non-blocking closure work)
 
 ## Forced-Next Priorities (Only)
 
-1. `V1` (`P0`): resolve postgres harness dependency and make cross-backend gate executable.
-2. `V2` (`P1`): convert NULL/collation policy deltas into executable backend controls.
-3. `V3` (`P1`): add latency/throughput instrumentation and SLO thresholds to staged runs.
+1. `V2` (`P0`): convert NULL/collation policy deltas into executable backend controls.
+2. `V3` (`P1`): add latency/throughput instrumentation and SLO thresholds to staged runs.
 
 No additional discretionary backlog items are included in this report.

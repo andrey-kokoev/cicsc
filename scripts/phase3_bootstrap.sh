@@ -24,6 +24,7 @@ if [[ "$MODE" == "check" ]]; then
   check_dep typescript "${ROOT_DIR}/adapters/sqlite" || { echo "missing typescript in adapters/sqlite; run ./scripts/phase3_bootstrap.sh install"; ok=1; }
   check_dep typescript "${ROOT_DIR}/adapters/postgres" || { echo "missing typescript in adapters/postgres; run ./scripts/phase3_bootstrap.sh install"; ok=1; }
   check_dep pg "${ROOT_DIR}/adapters/postgres" || { echo "missing pg in adapters/postgres; run ./scripts/phase3_bootstrap.sh install"; ok=1; }
+  check_dep pg-mem "${ROOT_DIR}/tests/harness-deps" || { echo "missing pg-mem in tests/harness-deps; run ./scripts/phase3_bootstrap.sh install"; ok=1; }
   check_dep better-sqlite3 "${ROOT_DIR}/tests/harness-deps" || { echo "missing better-sqlite3 in tests/harness-deps; run ./scripts/phase3_bootstrap.sh install"; ok=1; }
 
   if [[ "$ok" -ne 0 ]]; then

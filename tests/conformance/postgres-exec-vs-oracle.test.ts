@@ -228,7 +228,9 @@ describe("conformance: postgres execution vs oracle", () => {
           {
             group_by: {
               keys: [{ name: "state", expr: { var: { row: { field: "state" } } } }],
-              aggs: [{ name: "count", expr: { count: { var: { row: { field: "entity_id" } } } } }],
+              aggs: {
+                count: { count: { var: { row: { field: "entity_id" } } } },
+              },
             },
           },
           { order_by: [{ expr: { var: { row: { field: "state" } } }, dir: "asc" }] },

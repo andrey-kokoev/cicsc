@@ -11,7 +11,7 @@
       "id": "E2",
       "criterion": "postgres_required_conformance_green",
       "artifact": "scripts/run_cross_backend_gate.sh",
-      "status": "blocked"
+      "status": "pass"
     },
     {
       "id": "E3",

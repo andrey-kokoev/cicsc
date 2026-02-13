@@ -7,8 +7,8 @@
       "id": "INC-PG-HARNESS-001",
       "category": "missing_primitive",
       "severity": "high",
-      "status": "open",
-      "summary": "Postgres conformance gate cannot execute in current environment because pg-memory driver dependency is missing.",
+      "status": "resolved",
+      "summary": "Postgres conformance gate executes after pg-mem dependency + harness/lowering alignment fixes.",
       "evidence": "docs/pilot/phase5-ticketing-staged-run.conformance_postgres.log"
     },
     {

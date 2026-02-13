@@ -1,5 +1,7 @@
 import type { SqlPlan } from "../../adapters/postgres/src/lower/query-to-sql"
 import type { QueryV0, SourceV0 } from "../../core/ir/types"
+import { createRequire } from "node:module"
+import path from "node:path"
 
 type PoolLike = {
   query: (sql: string, binds?: any[]) => Promise<{ rows: any[] }>
@@ -8,8 +10,8 @@ type PoolLike = {
 
 export async function openPgMemory (): Promise<{ pool: PoolLike; close: () => Promise<void> }> {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { newDb } = require("pg-mem")
+    const harnessRequire = createRequire(path.resolve(process.cwd(), "tests/harness-deps/package.json"))
+    const { newDb } = harnessRequire("pg-mem")
     const db = newDb()
     const { Pool } = db.adapters.createPg()
     const pool: PoolLike = new Pool()

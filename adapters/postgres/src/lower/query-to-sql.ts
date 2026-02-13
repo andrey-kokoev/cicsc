@@ -18,6 +18,12 @@ function toPostgresPlan (plan: SqlPlan): SqlPlan {
   // Dialect differences
   sql = sql.replace(/strftime\('%s','now'\)/g, "EXTRACT(EPOCH FROM NOW())::bigint")
   sql = sql.replace(/\battrs_json\b/g, "attrs")
+  // SQLite lowering emits numeric-boolean CASE wrappers in WHERE clauses.
+  // Postgres expects boolean WHERE predicates.
+  sql = sql.replace(/WHERE\s+\(CASE WHEN \(\(([\s\S]*?)\)\) THEN 1 ELSE 0 END\)/g, "WHERE (($1))")
+  // SQLite bool literals are emitted as 0/1; normalize simple boolean equality in Postgres.
+  sql = sql.replace(/=\s*0\b/g, "= FALSE")
+  sql = sql.replace(/=\s*1\b/g, "= TRUE")
 
   return { sql, binds: plan.binds }
 }

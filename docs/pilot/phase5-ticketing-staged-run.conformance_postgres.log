@@ -1,14 +1,14 @@
 conformance matrix check passed (9 suites).
-(node:677810) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:695465) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:677810) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-exec-matrix.test.ts is not specified and it doesn't parse as CommonJS.
+(node:695465) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-exec-matrix.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ postgres execution matrix contract
-  ✔ tracks supported query operators from postgres scope contract (1.235809ms)
-✔ postgres execution matrix contract (1.990649ms)
+  ✔ tracks supported query operators from postgres scope contract (1.145211ms)
+✔ postgres execution matrix contract (1.779706ms)
 ℹ tests 1
 ℹ suites 1
 ℹ pass 1
@@ -16,79 +16,97 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 119.264815
-(node:677827) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+ℹ duration_ms 115.919908
+(node:695482) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:677827) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-exec-vs-oracle.test.ts is not specified and it doesn't parse as CommonJS.
+(node:695482) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-exec-vs-oracle.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ conformance: postgres execution vs oracle
-  ✖ exec lowered view query equals oracle rows (project/filter/order/limit) (0.71837ms)
-  ✖ exec lowered bool_query constraint equals oracle truth (0.175144ms)
-  ✖ exec lowered join query equals oracle rows (0.159839ms)
-  ✖ exec lowered grouped query with offset equals oracle rows (0.144876ms)
-✖ conformance: postgres execution vs oracle (1.905034ms)
+  ✔ exec lowered view query equals oracle rows (project/filter/order/limit) (114.815549ms)
+  ✔ exec lowered bool_query constraint equals oracle truth (21.960017ms)
+  ✔ exec lowered join query equals oracle rows (19.078574ms)
+  ✔ exec lowered grouped query with offset equals oracle rows (14.688496ms)
+✔ conformance: postgres execution vs oracle (171.421866ms)
 ℹ tests 4
 ℹ suites 1
-ℹ pass 0
-ℹ fail 4
+ℹ pass 4
+ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 140.258296
-
-✖ failing tests:
-
-test at tests/conformance/postgres-exec-vs-oracle.test.ts:24:3
-✖ exec lowered view query equals oracle rows (project/filter/order/limit) (0.71837ms)
-  Error: postgres harness needs a local postgres driver. Add devDependency: pg-mem, then re-run tests.
-      at openPgMemory (file:///home/andrey/src/cicsc/tests/harness/pg-memory.ts:23:11)
-      at TestContext.<anonymous> (file:///home/andrey/src/cicsc/tests/conformance/postgres-exec-vs-oracle.test.ts:25:22)
-      at Test.runInAsyncScope (node:async_hooks:214:14)
-      at Test.run (node:internal/test_runner/test:1106:25)
-      at Test.start (node:internal/test_runner/test:1003:17)
-      at node:internal/test_runner/test:1516:71
-      at node:internal/per_context/primordials:464:82
-      at new Promise (<anonymous>)
-      at new SafePromise (node:internal/per_context/primordials:433:3)
-      at node:internal/per_context/primordials:464:9
-
-test at tests/conformance/postgres-exec-vs-oracle.test.ts:91:3
-✖ exec lowered bool_query constraint equals oracle truth (0.175144ms)
-  Error: postgres harness needs a local postgres driver. Add devDependency: pg-mem, then re-run tests.
-      at openPgMemory (file:///home/andrey/src/cicsc/tests/harness/pg-memory.ts:23:11)
-      at TestContext.<anonymous> (file:///home/andrey/src/cicsc/tests/conformance/postgres-exec-vs-oracle.test.ts:92:22)
-      at Test.runInAsyncScope (node:async_hooks:214:14)
-      at Test.run (node:internal/test_runner/test:1106:25)
-      at Suite.processPendingSubtests (node:internal/test_runner/test:788:18)
-      at Test.postRun (node:internal/test_runner/test:1235:19)
-      at Test.run (node:internal/test_runner/test:1163:12)
-      at async Promise.all (index 0)
-      at async Suite.run (node:internal/test_runner/test:1518:7)
-      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
-
-test at tests/conformance/postgres-exec-vs-oracle.test.ts:153:3
-✖ exec lowered join query equals oracle rows (0.159839ms)
-  Error: postgres harness needs a local postgres driver. Add devDependency: pg-mem, then re-run tests.
-      at openPgMemory (file:///home/andrey/src/cicsc/tests/harness/pg-memory.ts:23:11)
-      at TestContext.<anonymous> (file:///home/andrey/src/cicsc/tests/conformance/postgres-exec-vs-oracle.test.ts:154:22)
-      at Test.runInAsyncScope (node:async_hooks:214:14)
-      at Test.run (node:internal/test_runner/test:1106:25)
-      at Suite.processPendingSubtests (node:internal/test_runner/test:788:18)
-      at Test.postRun (node:internal/test_runner/test:1235:19)
-      at Test.run (node:internal/test_runner/test:1163:12)
-      at async Suite.processPendingSubtests (node:internal/test_runner/test:788:7)
-
-test at tests/conformance/postgres-exec-vs-oracle.test.ts:214:3
-✖ exec lowered grouped query with offset equals oracle rows (0.144876ms)
-  Error: postgres harness needs a local postgres driver. Add devDependency: pg-mem, then re-run tests.
-      at openPgMemory (file:///home/andrey/src/cicsc/tests/harness/pg-memory.ts:23:11)
-      at TestContext.<anonymous> (file:///home/andrey/src/cicsc/tests/conformance/postgres-exec-vs-oracle.test.ts:215:22)
-      at Test.runInAsyncScope (node:async_hooks:214:14)
-      at Test.run (node:internal/test_runner/test:1106:25)
-      at Suite.processPendingSubtests (node:internal/test_runner/test:788:18)
-      at Test.postRun (node:internal/test_runner/test:1235:19)
-      at Test.run (node:internal/test_runner/test:1163:12)
-      at async Suite.processPendingSubtests (node:internal/test_runner/test:788:7)
+ℹ duration_ms 304.153881
+(node:695512) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:695512) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-constraint-matrix.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ postgres constraint matrix contract
+  ✔ declares lowered constraint kinds and deferred reducer conformance explicitly (0.943212ms)
+✔ postgres constraint matrix contract (1.52697ms)
+ℹ tests 1
+ℹ suites 1
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 110.322608
+(node:695529) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:695529) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/postgres-constraint-shape.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ postgres constraint lowering shape
+  ✔ lowers bool_query to postgres parameterized SQL shape (1.44111ms)
+✔ postgres constraint lowering shape (2.114869ms)
+ℹ tests 1
+ℹ suites 1
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 120.596086
+(node:695546) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:695546) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/cross-backend-differential.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ cross-backend differential conformance
+  ✔ matches SQLite and Postgres execution against oracle semantics (111.216581ms)
+✔ cross-backend differential conformance (111.900106ms)
+ℹ tests 1
+ℹ suites 1
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 252.775591
+(node:695563) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:695563) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/conformance/backend-semantics-policy.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ backend semantics policy contract
+  ✔ declares sqlite/postgres/oracle null-ordering and collation policy deltas (0.620191ms)
+✔ backend semantics policy contract (1.229217ms)
+ℹ tests 1
+ℹ suites 1
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 114.864154

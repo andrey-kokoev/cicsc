@@ -141,10 +141,10 @@ function lowerSource (src: SourceV0, ctx: LoweringCtx): { sql: string } {
     case "snap": {
       const t = body.type as string
       const table = `snapshots_v${ctx.version}`
-      // expose as columns: entity_id, state, attrs_json, updated_ts, plus shadows
+      // expose stream row columns and any materialized shadow columns
       return {
         sql:
-          `(SELECT entity_id, state, attrs_json, updated_ts, *\n` +
+          `(SELECT *\n` +
           ` FROM ${table}\n` +
           ` WHERE tenant_id=? AND entity_type=?) AS row`,
       }
@@ -154,7 +154,7 @@ function lowerSource (src: SourceV0, ctx: LoweringCtx): { sql: string } {
       // sla_status not versioned; filter by tenant and name + on_type
       return {
         sql:
-          `(SELECT entity_id, breached, deadline_ts, start_ts, stop_ts, updated_ts, *\n` +
+          `(SELECT *\n` +
           ` FROM sla_status\n` +
           ` WHERE tenant_id=? AND name=? AND entity_type=?) AS row`,
       }
@@ -166,11 +166,21 @@ function lowerSource (src: SourceV0, ctx: LoweringCtx): { sql: string } {
       const right = lowerSource(body.right, ctx)
       const lf = String(body.on.left_field)
       const rf = String(body.on.right_field)
+      const rightTag = soleKey(body.right)
+      const leftTag = soleKey(body.left)
+
+      // Keep unqualified keys left-biased to match oracle namespaceRow behavior.
+      // For snap × sla_status we explicitly project right columns excluding entity_id
+      // to avoid duplicate unqualified entity_id ambiguity in strict SQL backends.
+      const joinSelect =
+        leftTag === "snap" && rightTag === "sla_status"
+          ? `left_.*, right_.breached, right_.deadline_ts, right_.start_ts, right_.stop_ts, right_.updated_ts, right_.entity_id AS "right.entity_id"`
+          : `left_.*, right_.*`
 
       return {
         sql:
           `(\n` +
-          `  SELECT left_.*, right_.*\n` +
+          `  SELECT ${joinSelect}\n` +
           `  FROM ${left.sql.replace(" AS row", " AS left_")}\n` +
           `  JOIN ${right.sql.replace(" AS row", " AS right_")}\n` +
           `    ON left_.${escapeIdent(lf)} = right_.${escapeIdent(rf)}\n` +

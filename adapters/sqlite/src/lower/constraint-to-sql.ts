@@ -56,7 +56,8 @@ export function lowerBoolQueryConstraintToSql (params: {
   // We derive binds by scanning the source. For now, handle the common case:
   const sourceBinds = inferSourceBinds(constraint.query.source, tenant_id)
 
-  return { sql, binds: [...sourceBinds, ...qPlan.binds, ...assertBinds2] }
+  // Placeholder order in final SQL is assert first, then source/query placeholders.
+  return { sql, binds: [...assertBinds2, ...sourceBinds, ...qPlan.binds] }
 }
 
 function lowerAssertExpr (expr: ExprV0, binds: any[]): string {
