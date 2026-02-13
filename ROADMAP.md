@@ -616,3 +616,30 @@ Phase 9 forced-next mapping:
 - [x] AH4.2 Add PHASE17↔ROADMAP drift consistency gate
 - [x] AH4.3 Add Phase 18 block gate from Phase 17 checklist
 - [x] AH4.4 Publish Phase 17 closure report and mark exit criteria
+
+## AI. Phase 18: Expansion Proof and Production-Grade Continuity
+
+### AI1. Scope Freeze and Baseline Continuity
+
+- [ ] AI1.1 Freeze Phase 18 scope and owner contract
+- [ ] AI1.2 Publish Phase 18 baseline continuity snapshot
+- [ ] AI1.3 Add Phase 18 status register with owner/date discipline
+
+### AI2. Expansion-Proof Validation Closure
+
+- [ ] AI2.1 Freeze expansion-proof matrix and evidence contract
+- [ ] AI2.2 Run expansion-proof required gates
+- [ ] AI2.3 Publish expansion-proof closure report with findings disposition
+
+### AI3. Production-Grade Continuity Hardening
+
+- [ ] AI3.1 Freeze production-continuity hardening matrix and policy
+- [ ] AI3.2 Add production-continuity verification harnesses
+- [ ] AI3.3 Publish production continuity closure report with residual policy
+
+### AI4. Governance Closure and Phase 19 Gate
+
+- [ ] AI4.1 Define objective Phase 18 exit checklist mapped to artifacts
+- [ ] AI4.2 Add PHASE18↔ROADMAP drift consistency gate
+- [ ] AI4.3 Add Phase 19 block gate from Phase 18 checklist
+- [ ] AI4.4 Publish Phase 18 closure report and mark exit criteria
