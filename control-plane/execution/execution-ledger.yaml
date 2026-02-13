@@ -1634,7 +1634,7 @@ phases:
       status: done
     - id: AV1.3
       title: Define proof-evidence coupling plan for expanded claims
-      status: open
+      status: done
     - id: AV1.4
       title: Define expanded-scope gate and closure reporting contract
       status: open
