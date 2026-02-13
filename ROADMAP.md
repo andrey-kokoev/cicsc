@@ -804,4 +804,4 @@ Phase 9 forced-next mapping:
 - [x] AO4.1 Define objective Phase 24 exit checklist mapped to artifacts
 - [x] AO4.2 Add PHASE24↔ROADMAP drift consistency gate
 - [x] AO4.3 Add Phase 25 block gate from Phase 24 checklist
-- [ ] AO4.4 Publish Phase 24 closure report and mark exit criteria
+- [x] AO4.4 Publish Phase 24 closure report and mark exit criteria

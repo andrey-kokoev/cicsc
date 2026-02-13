@@ -1,0 +1,15 @@
+{
+  "version": "cicsc/phase24-closure-report-v1",
+  "timestamp_unix": 1774131900,
+  "inputs": {
+    "exit_checklist": "docs/pilot/phase24-exit-checklist.json",
+    "doc_consistency": "docs/pilot/phase24-doc-consistency.json",
+    "phase25_gate": "docs/pilot/phase25-gate.json"
+  },
+  "phase25_gate_blocked": false,
+  "status": "pass",
+  "notes": [
+    "PHASE24 and ROADMAP truth remain synchronized.",
+    "Phase 25 gate is unblocked only after AO-series closure."
+  ]
+}

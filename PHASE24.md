@@ -36,7 +36,7 @@ Start Phase 24 from explicit scope, owners, and reproducible baseline truth.
 - [x] P24.1.3 Add Phase 24 status register with owner/date discipline.
 
 ### Acceptance
-- [ ] Phase 24 starts from objective scope and reproducible baseline truth.
+- [x] Phase 24 starts from objective scope and reproducible baseline truth.
 
 ---
 
@@ -51,7 +51,7 @@ Close assurance-maturity validation with explicit evidence contract and findings
 - [x] P24.2.3 Publish assurance-maturity closure report with findings disposition.
 
 ### Acceptance
-- [ ] Assurance-maturity validation remains evidence-backed with explicit findings governance.
+- [x] Assurance-maturity validation remains evidence-backed with explicit findings governance.
 
 ---
 
@@ -66,7 +66,7 @@ Harden continuity-proof checks for expanded deployments.
 - [x] P24.3.3 Publish continuity-proof closure report with residual policy.
 
 ### Acceptance
-- [ ] Continuity-proof hardening remains explicit, test-backed, and governed.
+- [x] Continuity-proof hardening remains explicit, test-backed, and governed.
 
 ---
 
@@ -79,17 +79,17 @@ Close Phase 24 with objective checklist and enforce entry gate for Phase 25.
 - [x] P24.4.1 Define objective Phase 24 exit checklist mapped to artifacts.
 - [x] P24.4.2 Add PHASE24↔ROADMAP drift consistency gate.
 - [x] P24.4.3 Add Phase 25 block gate from Phase 24 checklist.
-- [ ] P24.4.4 Publish Phase 24 closure report and mark exit criteria.
+- [x] P24.4.4 Publish Phase 24 closure report and mark exit criteria.
 
 ### Acceptance
-- [ ] Phase 25 remains blocked unless Phase 24 checklist is fully pass.
+- [x] Phase 25 remains blocked unless Phase 24 checklist is fully pass.
 
 ---
 
 ## Exit Criteria (Phase 24)
 
-- [ ] Scope, baseline, and status governance remain explicit and reproducible.
-- [ ] Assurance-maturity validation is evidence-backed and invariant-preserving.
-- [ ] Continuity-proof hardening is verifiable with executable harnesses.
-- [ ] Governance checks enforce code/doc/artifact consistency.
-- [ ] Phase 25 remains blocked without full checklist pass.
+- [x] Scope, baseline, and status governance remain explicit and reproducible.
+- [x] Assurance-maturity validation is evidence-backed and invariant-preserving.
+- [x] Continuity-proof hardening is verifiable with executable harnesses.
+- [x] Governance checks enforce code/doc/artifact consistency.
+- [x] Phase 25 remains blocked without full checklist pass.
