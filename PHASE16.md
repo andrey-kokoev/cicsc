@@ -49,10 +49,10 @@ coverage.
 ### TODOs
 - [x] P16.2.1 Freeze external-validation matrix and evidence contract.
 - [x] P16.2.2 Run external-validation required gates.
-- [ ] P16.2.3 Publish external-validation closure report with findings disposition.
+- [x] P16.2.3 Publish external-validation closure report with findings disposition.
 
 ### Acceptance
-- [ ] External validation remains evidence-backed with explicit findings governance.
+- [x] External validation remains evidence-backed with explicit findings governance.
 
 ---
 

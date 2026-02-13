@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase16-external-validation-closure-report-v1",
+  "timestamp_unix": 1771082100,
+  "inputs": {
+    "external_validation_matrix": "docs/pilot/phase16-external-validation-matrix.json",
+    "required_gates": "docs/pilot/phase16-external-validation-required-gates.json"
+  },
+  "findings": [
+    {
+      "id": "P16EXT-COHORT-001",
+      "severity": "medium",
+      "status": "deferred",
+      "owner": "phase16-validation-owner",
+      "target_date": "2026-12-26",
+      "summary": "External DSL cohort replication is queued for the next operational window with no current invariant regressions."
+    },
+    {
+      "id": "P16EXT-PARITY-001",
+      "severity": "low",
+      "status": "closed",
+      "owner": "phase16-ops-owner",
+      "summary": "External parity evidence remains consistent with internal declared envelope gates."
+    }
+  ],
+  "unresolved_criticals": [],
+  "status": "pass"
+}
