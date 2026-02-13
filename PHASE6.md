@@ -48,7 +48,7 @@ Raise concurrency guarantees from implementation behavior to formalized contract
 - [x] P6.2.1 Define explicit supported concurrency model contract (stream-level + cross-stream boundaries).
 - [x] P6.2.2 Add causality/partial-order replay conformance suite for declared model.
 - [x] P6.2.3 Add deterministic conflict outcome matrix (abort/retry/merge) with proofs/tests per case.
-- [ ] P6.2.4 Add migration-under-concurrency drill covering pause/migrate/resume under concurrent load.
+- [x] P6.2.4 Add migration-under-concurrency drill covering pause/migrate/resume under concurrent load.
 - [ ] P6.2.5 Publish updated isolation/concurrency normative note with scoped exclusions.
 
 ### Acceptance

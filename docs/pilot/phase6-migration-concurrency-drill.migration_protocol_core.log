@@ -1,0 +1,55 @@
+(node:718227) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:718227) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/cutover-protocol.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ cutover protocol
+  ✔ runs pause->verify/migrate->activate->resume flow (5.048864ms)
+  ✔ resumes tenant even when verification fails (0.481165ms)
+✔ cutover protocol (6.80447ms)
+(node:718228) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:718228) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/migration-dry-run.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ migration dry-run artifacts
+  ✔ produces a passing dry-run artifact and writes it to sink (2.630835ms)
+  ✔ produces a failing dry-run artifact when preflight fails (0.480021ms)
+✔ migration dry-run artifacts (4.04075ms)
+(node:718233) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:718233) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/migration-preflight.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ migration preflight checklist
+  ✔ passes all checks for valid migration/bundles/history (2.716259ms)
+  ✔ fails preflight when history integrity has seq gaps (0.58073ms)
+  ✔ fails preflight when migration version is not forward (0.423098ms)
+✔ migration preflight checklist (4.528411ms)
+(node:718235) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+--import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:718235) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/oracle/rollback-workflow.test.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /home/andrey/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+▶ rollback workflow (reversible subset)
+  ✔ rolls back history when migration is reversible (1.580541ms)
+  ✔ fails rollback when migration has drops (0.426203ms)
+  ✔ fails rollback when migration has payload_map (0.238014ms)
+  ✔ fails rollback when event mapping is non-injective (0.228147ms)
+✔ rollback workflow (reversible subset) (3.935103ms)
+ℹ tests 11
+ℹ suites 4
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 206.525459

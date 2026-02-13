@@ -262,7 +262,7 @@ Comparative incident mapping:
 - [x] W2.1 Define explicit supported concurrency model contract (stream + cross-stream boundaries)
 - [x] W2.2 Add causality/partial-order replay conformance suite for declared model
 - [x] W2.3 Add deterministic conflict outcome matrix (abort/retry/merge) with proofs/tests per case
-- [ ] W2.4 Add migration-under-concurrency drill under concurrent load
+- [x] W2.4 Add migration-under-concurrency drill under concurrent load
 - [ ] W2.5 Publish updated isolation/concurrency normative note with scoped exclusions
 
 ### W3. Proven-Surface Productization

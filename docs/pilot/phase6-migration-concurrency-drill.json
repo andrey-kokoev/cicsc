@@ -1,0 +1,9 @@
+{
+  "version": "cicsc/phase6-migration-concurrency-drill-v1",
+  "timestamp_unix": 1770945465,
+  "overall": "pass",
+  "checks": {
+    "migration_pause_resume":{"status":"pass","duration_ms":153,"threshold_ms":5000,"log":"docs/pilot/phase6-migration-concurrency-drill.migration_pause_resume.log"},
+    "migration_protocol_core":{"status":"pass","duration_ms":234,"threshold_ms":9000,"log":"docs/pilot/phase6-migration-concurrency-drill.migration_protocol_core.log"}
+  }
+}
