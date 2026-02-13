@@ -1601,7 +1601,7 @@ phases:
     checkboxes:
     - id: AU1.1
       title: Freeze end-to-end objective-closure scenario contract and scope
-      status: open
+      status: done
     - id: AU1.2
       title: Bind OBJ1-OBJ5 to measurable met/not_met verdict assertions with required
         artifact evidence
