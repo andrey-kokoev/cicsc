@@ -68,7 +68,7 @@ Move migration/cutover from workflow confidence to protocol-level hard guarantee
 ### TODOs
 - [x] P7.3.1 Freeze migration protocol contract (preflight/dry-run/cutover/rollback) as executable policy.
 - [x] P7.3.2 Add tenant-batch migration drills with injected faults and deterministic recovery assertions.
-- [ ] P7.3.3 Add SQL execution-vs-oracle differential checks for migrated histories (post-cutover).
+- [x] P7.3.3 Add SQL execution-vs-oracle differential checks for migrated histories (post-cutover).
 - [ ] P7.3.4 Add operator SLO/error-budget artifact for migration and verify operations.
 - [ ] P7.3.5 Publish migration safety report with unresolved criticals closed or explicitly deferred.
 
