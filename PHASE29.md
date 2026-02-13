@@ -32,7 +32,7 @@ Start Phase 29 from explicit scope, owners, and reproducible baseline truth.
 
 ### TODOs
 - [x] P29.1.1 Freeze Phase 29 scope and owner contract.
-- [ ] P29.1.2 Publish Phase 29 baseline continuity snapshot.
+- [x] P29.1.2 Publish Phase 29 baseline continuity snapshot.
 - [ ] P29.1.3 Add Phase 29 status register with owner/date discipline.
 
 ### Acceptance
