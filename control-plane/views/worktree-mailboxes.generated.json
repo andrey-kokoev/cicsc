@@ -16,15 +16,16 @@
           "from_worktree": "/home/andrey/src/cicsc",
           "to_worktree": "/home/andrey/src/kimi",
           "branch": "phase33.ax1.2",
-          "previous_status": "queued",
-          "status": "sent",
+          "initial_status": "sent",
           "payload_refs": [
             "control-plane/collaboration/collab-model.yaml",
             "docs/genesis/worktree-mediated-constructive-collaboration.md"
           ],
           "evidence_refs": [],
           "evidence_bindings": [],
-          "notes": "Dispatch AX1.2 obligations and required gate contract."
+          "notes": "Dispatch AX1.2 obligations and required gate contract.",
+          "current_status": "sent",
+          "event_count": 1
         },
         {
           "id": "MSG_PHASE33_AX22_DISPATCH",
@@ -35,15 +36,16 @@
           "from_worktree": "/home/andrey/src/cicsc",
           "to_worktree": "/home/andrey/src/antigravity",
           "branch": "phase33.ax2.2",
-          "previous_status": "queued",
-          "status": "sent",
+          "initial_status": "sent",
           "payload_refs": [
             "control-plane/collaboration/collab-model.yaml",
             "docs/genesis/worktree-mediated-constructive-collaboration.md"
           ],
           "evidence_refs": [],
           "evidence_bindings": [],
-          "notes": "Dispatch AX2.2 obligations and formalization admissibility criteria."
+          "notes": "Dispatch AX2.2 obligations and formalization admissibility criteria.",
+          "current_status": "sent",
+          "event_count": 1
         }
       ]
     },
@@ -58,15 +60,16 @@
           "from_worktree": "/home/andrey/src/cicsc",
           "to_worktree": "/home/andrey/src/kimi",
           "branch": "phase33.ax1.2",
-          "previous_status": "queued",
-          "status": "sent",
+          "initial_status": "sent",
           "payload_refs": [
             "control-plane/collaboration/collab-model.yaml",
             "docs/genesis/worktree-mediated-constructive-collaboration.md"
           ],
           "evidence_refs": [],
           "evidence_bindings": [],
-          "notes": "Dispatch AX1.2 obligations and required gate contract."
+          "notes": "Dispatch AX1.2 obligations and required gate contract.",
+          "current_status": "sent",
+          "event_count": 1
         }
       ],
       "outbox": []
@@ -82,15 +85,16 @@
           "from_worktree": "/home/andrey/src/cicsc",
           "to_worktree": "/home/andrey/src/antigravity",
           "branch": "phase33.ax2.2",
-          "previous_status": "queued",
-          "status": "sent",
+          "initial_status": "sent",
           "payload_refs": [
             "control-plane/collaboration/collab-model.yaml",
             "docs/genesis/worktree-mediated-constructive-collaboration.md"
           ],
           "evidence_refs": [],
           "evidence_bindings": [],
-          "notes": "Dispatch AX2.2 obligations and formalization admissibility criteria."
+          "notes": "Dispatch AX2.2 obligations and formalization admissibility criteria.",
+          "current_status": "sent",
+          "event_count": 1
         }
       ],
       "outbox": []

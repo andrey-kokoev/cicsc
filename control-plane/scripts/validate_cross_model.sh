@@ -279,8 +279,7 @@ def main() -> int:
         from_worktree = msg.get("from_worktree")
         to_worktree = msg.get("to_worktree")
         branch = msg.get("branch")
-        previous_status = msg.get("previous_status")
-        status = msg.get("status")
+        initial_status = msg.get("initial_status")
         supersedes = msg.get("supersedes_message_ref")
 
         if kind_ref not in message_kind_ids:
@@ -320,22 +319,10 @@ def main() -> int:
         if branch_re and isinstance(branch, str) and not branch_re.match(branch):
             errors.append(f"collab-model: message {mid} branch {branch} violates handoff branch_pattern")
 
-        if status not in policy_statuses:
-            errors.append(f"collab-model: message {mid} status {status} not covered by message_transition_policy")
-        if previous_status is None:
-            if status not in initial_statuses:
-                errors.append(
-                    f"collab-model: message {mid} missing previous_status and status {status} is not initial"
-                )
-        else:
-            if (previous_status, status) not in allowed_transitions:
-                errors.append(
-                    f"collab-model: message {mid} illegal transition {previous_status} -> {status}"
-                )
-            if previous_status in terminal_statuses:
-                errors.append(
-                    f"collab-model: message {mid} previous_status {previous_status} is terminal"
-                )
+        if initial_status not in initial_statuses:
+            errors.append(
+                f"collab-model: message {mid} initial_status {initial_status} must be in initial_statuses"
+            )
 
         for ref in msg.get("payload_refs", []):
             if isinstance(ref, str) and maybe_path_ref(ref) and not path_exists(ref):
@@ -354,16 +341,6 @@ def main() -> int:
             if not isinstance(digest, str) or not digest_re.match(digest):
                 errors.append(f"collab-model: message {mid} invalid evidence digest {digest}")
 
-        if status == "rescinded":
-            if not msg.get("rescinded_reason"):
-                errors.append(f"collab-model: message {mid} rescinded but missing rescinded_reason")
-            if msg.get("evidence_bindings"):
-                errors.append(f"collab-model: message {mid} rescinded but has evidence_bindings")
-            if previous_status not in {"queued", "sent"}:
-                errors.append(
-                    f"collab-model: message {mid} rescinded from unsupported previous_status {previous_status}"
-                )
-
         if supersedes:
             if supersedes == mid:
                 errors.append(f"collab-model: message {mid} supersedes itself")
@@ -378,6 +355,85 @@ def main() -> int:
                 if old.get("to_agent_ref") != to_agent_ref:
                     errors.append(
                         f"collab-model: message {mid} supersedes {supersedes} with different to_agent_ref"
+                    )
+
+    events = collab.get("message_events", [])
+    events_by_message = {}
+    seen_event_ids = set()
+    for ev in events:
+        eid = ev.get("id")
+        if eid in seen_event_ids:
+            errors.append(f"collab-model: duplicate message event id {eid}")
+        seen_event_ids.add(eid)
+        mref = ev.get("message_ref")
+        if mref not in message_map:
+            errors.append(f"collab-model: message event {eid} unknown message_ref {mref}")
+            continue
+        events_by_message.setdefault(mref, []).append(ev)
+
+    for mid, msg in message_map.items():
+        m_events = sorted(events_by_message.get(mid, []), key=lambda e: e.get("at_seq", 0))
+        if not m_events:
+            errors.append(f"collab-model: message {mid} has no message_events")
+            continue
+
+        seen_seq = set()
+        expected_prev = None
+        for idx, ev in enumerate(m_events):
+            eid = ev.get("id")
+            from_status = ev.get("from_status")
+            to_status = ev.get("to_status")
+            actor = ev.get("actor_agent_ref")
+            at_seq = ev.get("at_seq")
+            commit = ev.get("commit")
+
+            if at_seq in seen_seq:
+                errors.append(f"collab-model: message {mid} duplicate event at_seq {at_seq}")
+            seen_seq.add(at_seq)
+
+            if actor not in agent_map:
+                errors.append(f"collab-model: message event {eid} unknown actor_agent_ref {actor}")
+            if not isinstance(commit, str) or not commit_re.match(commit):
+                errors.append(f"collab-model: message event {eid} invalid commit {commit}")
+
+            for bind in ev.get("evidence_bindings", []):
+                ref = bind.get("ref")
+                bcommit = bind.get("commit")
+                digest = bind.get("digest")
+                if isinstance(ref, str) and maybe_path_ref(ref) and not path_exists(ref):
+                    errors.append(f"collab-model: message event {eid} missing evidence binding ref {ref}")
+                if not isinstance(bcommit, str) or not commit_re.match(bcommit):
+                    errors.append(f"collab-model: message event {eid} invalid evidence commit {bcommit}")
+                if not isinstance(digest, str) or not digest_re.match(digest):
+                    errors.append(f"collab-model: message event {eid} invalid evidence digest {digest}")
+
+            if idx == 0:
+                if from_status is not None:
+                    errors.append(f"collab-model: first event for message {mid} must have from_status null")
+                if to_status != msg.get("initial_status"):
+                    errors.append(
+                        f"collab-model: first event for message {mid} to_status {to_status} must equal initial_status {msg.get('initial_status')}"
+                    )
+                expected_prev = to_status
+            else:
+                if from_status != expected_prev:
+                    errors.append(
+                        f"collab-model: message event {eid} from_status {from_status} does not match previous to_status {expected_prev}"
+                    )
+                if (from_status, to_status) not in allowed_transitions:
+                    errors.append(
+                        f"collab-model: message event {eid} illegal transition {from_status} -> {to_status}"
+                    )
+                if from_status in terminal_statuses:
+                    errors.append(f"collab-model: message event {eid} transition from terminal status {from_status}")
+                expected_prev = to_status
+
+            if to_status == "rescinded":
+                if not ev.get("rescinded_reason"):
+                    errors.append(f"collab-model: message event {eid} rescinded but missing rescinded_reason")
+                if from_status not in {"queued", "sent"}:
+                    errors.append(
+                        f"collab-model: message event {eid} rescinded from unsupported from_status {from_status}"
                     )
 
     seen_gate_ids = set()

@@ -31,7 +31,7 @@ projections used for executable validation and gating.
 - `collaboration/collab-model.yaml`
   - Typed agent collaboration contract (claims, obligations, evidence, handoff protocol).
   - Includes executable task assignments (`assignments`) binding agent/worktree/branch to ledger checkbox scope.
-  - Includes typed message transport with transition policy, rescind/supersede semantics, and evidence bindings (`commit` + `digest`).
+  - Includes immutable message envelopes with append-only `message_events`, transition policy, rescind/supersede semantics, and evidence bindings (`commit` + `digest`).
   - Binds collaboration claims to objective/capability/ledger scope.
   - No execution status.
 

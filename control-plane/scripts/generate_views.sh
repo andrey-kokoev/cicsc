@@ -172,20 +172,37 @@ assignments_view = {
 )
 
 messages = collab.get('messages', [])
+events = collab.get('message_events', [])
+events_by_message = {}
+for ev in events:
+    mref = ev.get('message_ref')
+    events_by_message.setdefault(mref, []).append(ev)
+
+def project_message(msg):
+    proj = dict(msg)
+    m_events = sorted(events_by_message.get(msg.get('id'), []), key=lambda e: e.get('at_seq', 0))
+    current_status = msg.get('initial_status')
+    if m_events:
+        current_status = m_events[-1].get('to_status', current_status)
+    proj['current_status'] = current_status
+    proj['event_count'] = len(m_events)
+    return proj
+
 worktree_mailboxes = {}
 for a in collab.get('agents', []):
     wt = a.get('worktree')
     if wt:
         worktree_mailboxes[wt] = {'inbox': [], 'outbox': []}
 for msg in messages:
+    msg_proj = project_message(msg)
     from_wt = msg.get('from_worktree')
     to_wt = msg.get('to_worktree')
     if from_wt not in worktree_mailboxes:
         worktree_mailboxes[from_wt] = {'inbox': [], 'outbox': []}
     if to_wt not in worktree_mailboxes:
         worktree_mailboxes[to_wt] = {'inbox': [], 'outbox': []}
-    worktree_mailboxes[from_wt]['outbox'].append(msg)
-    worktree_mailboxes[to_wt]['inbox'].append(msg)
+    worktree_mailboxes[from_wt]['outbox'].append(msg_proj)
+    worktree_mailboxes[to_wt]['inbox'].append(msg_proj)
 
 mailboxes_view = {
     "_generated": True,

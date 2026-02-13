@@ -14,7 +14,8 @@
     "message_transition_policy",
     "assignments",
     "message_kinds",
-    "messages"
+    "messages",
+    "message_events"
   ],
   "properties": {
     "version": { "type": "string" },
@@ -235,9 +236,10 @@
           "from_worktree",
           "to_worktree",
           "branch",
-          "status",
+          "initial_status",
           "payload_refs",
-          "evidence_refs"
+          "evidence_refs",
+          "evidence_bindings"
         ],
         "properties": {
           "id": { "type": "string", "pattern": "^MSG_[A-Z0-9_]+$" },
@@ -248,8 +250,7 @@
           "from_worktree": { "type": "string" },
           "to_worktree": { "type": "string" },
           "branch": { "type": "string" },
-          "previous_status": { "type": ["string", "null"] },
-          "status": {
+          "initial_status": {
             "type": "string",
             "enum": ["queued", "sent", "acknowledged", "fulfilled", "rejected", "rescinded", "ingested", "closed"]
           },
@@ -276,6 +277,52 @@
             }
           },
           "supersedes_message_ref": { "type": "string", "pattern": "^MSG_[A-Z0-9_]+$" },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "message_events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "message_ref",
+          "from_status",
+          "to_status",
+          "actor_agent_ref",
+          "at_seq",
+          "commit",
+          "evidence_bindings"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^MSGEV_[A-Z0-9_]+$" },
+          "message_ref": { "type": "string", "pattern": "^MSG_[A-Z0-9_]+$" },
+          "from_status": {
+            "type": ["string", "null"],
+            "enum": [null, "queued", "sent", "acknowledged", "fulfilled", "rejected", "rescinded", "ingested", "closed"]
+          },
+          "to_status": {
+            "type": "string",
+            "enum": ["queued", "sent", "acknowledged", "fulfilled", "rejected", "rescinded", "ingested", "closed"]
+          },
+          "actor_agent_ref": { "type": "string", "pattern": "^AGENT_[A-Z0-9_]+$" },
+          "at_seq": { "type": "integer", "minimum": 1 },
+          "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+          "evidence_bindings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["ref", "commit", "digest"],
+              "properties": {
+                "ref": { "type": "string" },
+                "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
+                "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+              },
+              "additionalProperties": false
+            }
+          },
           "rescinded_reason": { "type": "string" },
           "notes": { "type": "string" }
         },
