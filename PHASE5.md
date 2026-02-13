@@ -77,7 +77,7 @@ Ship a user intent DSL that compiles to Core IR without leaking backend semantic
 Operational multi-tenant lifecycle for versioned bundles.
 
 ### TODOs
-- [ ] P5.4.1 Implement bundle registry API/storage contract (publish, resolve, pin).
+- [x] P5.4.1 Implement bundle registry API/storage contract (publish, resolve, pin).
 - [ ] P5.4.2 Implement tenant -> bundle/version binding with immutable audit trail.
 - [ ] P5.4.3 Implement bundle signature/hash verification on install.
 - [ ] P5.4.4 Add lifecycle tests for publish/bind/upgrade/rollback.
