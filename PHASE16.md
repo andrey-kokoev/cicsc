@@ -47,7 +47,7 @@ Expand objective evidence from internal envelope to explicit external-validation
 coverage.
 
 ### TODOs
-- [ ] P16.2.1 Freeze external-validation matrix and evidence contract.
+- [x] P16.2.1 Freeze external-validation matrix and evidence contract.
 - [ ] P16.2.2 Run external-validation required gates.
 - [ ] P16.2.3 Publish external-validation closure report with findings disposition.
 
