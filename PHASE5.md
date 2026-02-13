@@ -132,7 +132,7 @@ Prevent phase transition without verified closure.
 
 ### TODOs
 - [x] P5.7.1 Define objective Phase 5 exit checklist mapped to artifacts.
-- [ ] P5.7.2 Require green required conformance gates for sqlite + postgres scoped matrices.
+- [x] P5.7.2 Require green required conformance gates for sqlite + postgres scoped matrices.
 - [ ] P5.7.3 Require migration runbook and cutover/rollback drill evidence.
 - [ ] P5.7.4 Require Spec DSL usability evidence from reference vertical.
 - [ ] P5.7.5 Add CI/doc checks rejecting unchecked claims in phase/status docs.
