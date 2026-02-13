@@ -1605,7 +1605,7 @@ phases:
     - id: AU1.2
       title: Bind OBJ1-OBJ5 to measurable met/not_met verdict assertions with required
         artifact evidence
-      status: open
+      status: done
     - id: AU1.3
       title: Execute adversarial end-to-end run (Spec -> IR -> sqlite/postgres -> migration
         -> replay verification)
