@@ -37,8 +37,8 @@ Canonical status truth is `control-plane/execution/execution-ledger.yaml`.
 | AT | 29 | Assurance Expansion and Governance Continuity Discipline | complete |
 | AU | 30 | Objective Closure Milestone | complete |
 | AV | 31 | Era 2 Expansion Targeting | complete |
-| AW | 32 | Expanded-Scope Objective Execution | active |
-| AX | 33 | Formal Coupling and Semantic Strengthening | planned |
+| AW | 32 | Expanded-Scope Objective Execution | complete |
+| AX | 33 | Formal Coupling and Semantic Strengthening | active |
 | AY | 34 | Field Generalization and Multi-Context Validation | planned |
 | AZ | 35 | Final Completion and Transition Closure | planned |
 
@@ -79,6 +79,6 @@ Canonical status truth is `control-plane/execution/execution-ledger.yaml`.
 | AU | 5 | 0 |
 | AV | 4 | 0 |
 | AW | 9 | 0 |
-| AX | 0 | 0 |
+| AX | 0 | 7 |
 | AY | 0 | 0 |
 | AZ | 0 | 0 |

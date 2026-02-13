@@ -1,12 +1,12 @@
 {
   "version": "cicsc/phase32-exit-checklist-v1",
-  "timestamp_unix": 1771011900,
+  "timestamp_unix": 1771011653,
   "phase": 32,
   "items": [
     {
       "id": "phase32_obj_envelopes",
       "description": "OBJ1-OBJ5 expanded envelope artifacts exist and pass.",
-      "status": "fail",
+      "status": "pass",
       "artifacts": [
         "docs/pilot/phase32-obj1-concurrency-envelope.json",
         "docs/pilot/phase32-obj2-drift-budget.json",
@@ -18,7 +18,7 @@
     {
       "id": "phase32_required_gates",
       "description": "Expanded-scope required-gates contract report is pass.",
-      "status": "fail",
+      "status": "pass",
       "artifacts": [
         "docs/pilot/phase32-expanded-scope-required-gates.json"
       ]

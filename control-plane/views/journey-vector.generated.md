@@ -41,8 +41,8 @@
 - Phase 29 (AT): Assurance Expansion and Governance Continuity Discipline [complete]
 - Phase 30 (AU): Objective Closure Milestone [complete]
 - Phase 31 (AV): Era 2 Expansion Targeting [complete]
-- Phase 32 (AW): Expanded-Scope Objective Execution [active]
-- Phase 33 (AX): Formal Coupling and Semantic Strengthening [planned]
+- Phase 32 (AW): Expanded-Scope Objective Execution [complete]
+- Phase 33 (AX): Formal Coupling and Semantic Strengthening [active]
 - Phase 34 (AY): Field Generalization and Multi-Context Validation [planned]
 - Phase 35 (AZ): Final Completion and Transition Closure [planned]
 

@@ -2763,7 +2763,7 @@
       "id": "AW",
       "number": 32,
       "title": "Expanded-Scope Objective Execution",
-      "status": "active",
+      "status": "complete",
       "milestones": [
         {
           "id": "AW1",
@@ -2828,7 +2828,7 @@
       "id": "AX",
       "number": 33,
       "title": "Formal Coupling and Semantic Strengthening",
-      "status": "planned",
+      "status": "active",
       "milestones": [
         {
           "id": "AX1",

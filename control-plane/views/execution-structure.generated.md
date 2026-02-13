@@ -771,3 +771,18 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 - AW2.2 Publish Phase 32 expanded-scope closure report with objective verdict deltas
 - AW2.3 Define objective Phase 32 exit checklist mapped to artifacts
 - AW2.4 Add Phase 33 block gate from Phase 32 checklist
+
+## AX. Phase 33: Formal Coupling and Semantic Strengthening
+
+### AX1. Proof-Evidence Coupling Realization
+
+- AX1.1 Bind expanded claim classes to explicit proof-obligation index
+- AX1.2 Add executable checks rejecting claims without required proof-evidence coupling
+- AX1.3 Publish coupling conformance report with residual gaps register
+
+### AX2. Lean and Semantic Closure Tightening
+
+- AX2.1 Define Lean/kernel catch-up targets required by expanded objective claims
+- AX2.2 Add formalization progress gate tied to expanded-scope claim admissibility
+- AX2.3 Publish Phase 33 closure report and updated admissible-claims policy
+- AX2.4 Add Phase 34 block gate from Phase 33 checklist

@@ -1,12 +1,10 @@
 {
   "version": "cicsc/phase33-gate-v1",
-  "timestamp_unix": 1771011606,
-  "blocked": true,
+  "timestamp_unix": 1771011653,
+  "blocked": false,
   "basis": {
     "checklist": "docs/pilot/phase32-exit-checklist.json",
     "execution_status": "control-plane/views/execution-status.generated.json"
   },
-  "reasons": [
-    "phase32_exit_checklist_not_pass"
-  ]
+  "reasons": []
 }
