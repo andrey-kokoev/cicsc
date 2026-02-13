@@ -1,8 +1,8 @@
 # Status Source Migration Plan
 
 Current mode:
-- `control-plane/execution/execution-ledger.yaml` is canonical status truth for modeled phase scope.
-- `ROADMAP.md` is maintained as synchronized execution view for the same modeled scope.
+- `control-plane/execution/execution-ledger.yaml` is canonical status truth for roadmap phase scope.
+- `ROADMAP.md` is maintained as synchronized execution view for the same roadmap scope.
 
 Target mode:
 - `control-plane/execution/execution-ledger.yaml` becomes canonical status source.

@@ -10,8 +10,31 @@ Canonical status truth remains `ROADMAP.md` until ledger-source migration is app
 
 | Phase ID | Number | Title | Status |
 |---|---:|---|---|
+| U | 5 | Deployment-Grade Semantic Closure | complete |
+| W | 6 | Field-Driven Concurrency Expansion | complete |
+| X | 7 | Semantic Equivalence Hardening | complete |
+| Y | 8 | Production Equivalence and Scale Hardening | complete |
+| Z | 9 | Capability Expansion Under Guarded Equivalence | complete |
+| AA | 10 | Forced-Next Closure and Production Parity Continuity | complete |
+| AB | 11 | Envelope Expansion Under Equivalence Discipline | complete |
+| AC | 12 | Broad Deployment Generalization Under Kernel Discipline | complete |
+| AD | 13 | Operational Scale Closure Under Categorical Guarantees | complete |
+| AE | 14 | Generalization and Adoption Readiness | complete |
+| AF | 15 | Objective Closure and Deployment Discipline | complete |
+| AG | 16 | External Validation and Expansion Readiness | complete |
+| AH | 17 | Field Program Scaling and Trust Hardening | complete |
+| AI | 18 | Expansion Proof and Production-Grade Continuity | complete |
+| AJ | 19 | Generalized Deployment Assurance and Transition Readiness | complete |
+| AK | 20 | Multi-Environment Assurance and Scale Transition Discipline | complete |
+| AL | 21 | Cross-Environment Stability and Operational Continuity Discipline | complete |
+| AM | 22 | Resilience Expansion and Control-Surface Integrity Discipline | complete |
+| AN | 23 | Integrity Scaling and Runtime Assurance Discipline | complete |
+| AO | 24 | Assurance Maturity and Continuity Proof Discipline | complete |
+| AP | 25 | Verification Consolidation and Field Continuity Discipline | complete |
+| AQ | 26 | Stability Consolidation and Continuity Assurance Discipline | complete |
+| AR | 27 | Deployment Integrity and Evolution Continuity Discipline | complete |
+| AS | 28 | Assurance Scaling and Operational Continuity Discipline | complete |
 | AT | 29 | Assurance Expansion and Governance Continuity Discipline | complete |
-| AU | 30 | Spec DSL Completion and Authoring Safety | planned |
 
 ## Notes
 
@@ -22,5 +45,28 @@ Canonical status truth remains `ROADMAP.md` until ledger-source migration is app
 
 | Phase ID | Done | Open |
 |---|---:|---:|
+| U | 35 | 0 |
+| W | 20 | 0 |
+| X | 20 | 0 |
+| Y | 20 | 0 |
+| Z | 20 | 0 |
+| AA | 12 | 0 |
+| AB | 13 | 0 |
+| AC | 13 | 0 |
+| AD | 13 | 0 |
+| AE | 13 | 0 |
+| AF | 13 | 0 |
+| AG | 13 | 0 |
+| AH | 13 | 0 |
+| AI | 13 | 0 |
+| AJ | 13 | 0 |
+| AK | 13 | 0 |
+| AL | 13 | 0 |
+| AM | 13 | 0 |
+| AN | 13 | 0 |
+| AO | 13 | 0 |
+| AP | 13 | 0 |
+| AQ | 13 | 0 |
+| AR | 13 | 0 |
+| AS | 13 | 0 |
 | AT | 13 | 0 |
-| AU | 0 | 0 |

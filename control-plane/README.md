@@ -31,7 +31,7 @@ Provide a single coherent model stack for:
 ## Current Canonical Rule
 
 Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
-- `control-plane/execution/execution-ledger.yaml` is canonical status truth for modeled phase scope.
+- `control-plane/execution/execution-ledger.yaml` is canonical status truth for roadmap phase scope.
 - `ROADMAP.md` remains required and is validated as a synchronized execution view.
 - `PHASE*.md` remain derived status views.
 - `control-plane/*` models are authoritative for structure, status (modeled scope), and gating intent.
@@ -52,6 +52,8 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `control-plane/scripts/validate_cross_model.sh`
 - `control-plane/scripts/validate_all.sh`
 - `control-plane/scripts/generate_views.sh`
+- `control-plane/scripts/sync_execution_ledger_from_roadmap.py`
+  - imports canonical roadmap phase/milestone/checkbox structure+status into execution-ledger.
 
 Sync gate:
 - `scripts/check_control_plane_sync.sh`
