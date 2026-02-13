@@ -29,6 +29,23 @@ Lean proof baseline:
 
 ## Working Style
 
+### 0. Canonical Execution Model (Mandatory)
+Execution status truth is single-source:
+- `ROADMAP.md` is the only canonical status ledger.
+- `PHASE*.md` files are derived views; they are not authoritative for status.
+
+Work unit policy:
+- one checkbox = one commit,
+- commit message must include the checkbox ID token (for example: `phase12 ac3.2`).
+
+Before marking a checkbox complete, run:
+- `./scripts/check_canonical_execution_model.sh`
+
+This gate enforces:
+- roadmap structural integrity,
+- phase-view sync with roadmap,
+- commit-evidence presence for checked checkboxes.
+
 ### 1. Preserve invariants before adding features
 Never add functionality that weakens:
 - transactional semantics
