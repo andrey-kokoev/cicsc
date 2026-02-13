@@ -724,3 +724,30 @@ Phase 9 forced-next mapping:
 - [x] AL4.2 Add PHASE21↔ROADMAP drift consistency gate
 - [x] AL4.3 Add Phase 22 block gate from Phase 21 checklist
 - [x] AL4.4 Publish Phase 21 closure report and mark exit criteria
+
+## AM. Phase 22: Resilience Expansion and Control-Surface Integrity Discipline
+
+### AM1. Scope Freeze and Baseline Continuity
+
+- [ ] AM1.1 Freeze Phase 22 scope and owner contract
+- [ ] AM1.2 Publish Phase 22 baseline continuity snapshot
+- [ ] AM1.3 Add Phase 22 status register with owner/date discipline
+
+### AM2. Resilience-Expansion Validation Closure
+
+- [ ] AM2.1 Freeze resilience-expansion matrix and evidence contract
+- [ ] AM2.2 Run resilience-expansion required gates
+- [ ] AM2.3 Publish resilience-expansion closure report with findings disposition
+
+### AM3. Control-Surface Integrity Hardening
+
+- [ ] AM3.1 Freeze control-surface integrity hardening matrix and policy
+- [ ] AM3.2 Add control-surface integrity verification harnesses
+- [ ] AM3.3 Publish control-surface integrity closure report with residual policy
+
+### AM4. Governance Closure and Phase 23 Gate
+
+- [ ] AM4.1 Define objective Phase 22 exit checklist mapped to artifacts
+- [ ] AM4.2 Add PHASE22↔ROADMAP drift consistency gate
+- [ ] AM4.3 Add Phase 23 block gate from Phase 22 checklist
+- [ ] AM4.4 Publish Phase 22 closure report and mark exit criteria
