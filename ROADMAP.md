@@ -694,6 +694,6 @@ Phase 9 forced-next mapping:
 ### AK4. Governance Closure and Phase 21 Gate
 
 - [x] AK4.1 Define objective Phase 20 exit checklist mapped to artifacts
-- [ ] AK4.2 Add PHASE20↔ROADMAP drift consistency gate
+- [x] AK4.2 Add PHASE20↔ROADMAP drift consistency gate
 - [ ] AK4.3 Add Phase 21 block gate from Phase 20 checklist
 - [ ] AK4.4 Publish Phase 20 closure report and mark exit criteria
