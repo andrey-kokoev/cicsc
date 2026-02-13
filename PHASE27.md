@@ -46,7 +46,7 @@ Start Phase 27 from explicit scope, owners, and reproducible baseline truth.
 Close deployment-integrity validation with explicit evidence contract and findings governance.
 
 ### TODOs
-- [ ] P27.2.1 Freeze deployment-integrity matrix and evidence contract.
+- [x] P27.2.1 Freeze deployment-integrity matrix and evidence contract.
 - [ ] P27.2.2 Run deployment-integrity required gates.
 - [ ] P27.2.3 Publish deployment-integrity closure report with findings disposition.
 

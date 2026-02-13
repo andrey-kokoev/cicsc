@@ -1,0 +1,45 @@
+{
+  "version": "cicsc/phase27-deployment-integrity-matrix-v1",
+  "timestamp_unix": 1775941800,
+  "tracks": [
+    {
+      "id": "deployment_semantic_continuity",
+      "scope": "semantic_continuity",
+      "required_evidence": [
+        "docs/pilot/phase26-stability-consolidation-closure-report.json",
+        "docs/pilot/phase25-verification-consolidation-closure-report.json",
+        "docs/pilot/phase27-deployment-integrity-closure-report.json"
+      ]
+    },
+    {
+      "id": "deployment_backend_parity",
+      "scope": "backend_parity",
+      "required_evidence": [
+        "docs/pilot/phase26-continuity-assurance-closure-report.json",
+        "docs/pilot/phase25-field-continuity-closure-report.json",
+        "docs/pilot/phase27-deployment-integrity-closure-report.json"
+      ]
+    },
+    {
+      "id": "deployment_operational_readiness",
+      "scope": "operations",
+      "required_evidence": [
+        "docs/pilot/phase26-continuity-assurance-harnesses.json",
+        "docs/pilot/phase25-field-continuity-harnesses.json",
+        "docs/pilot/phase27-evolution-continuity-harnesses.json"
+      ]
+    }
+  ],
+  "evidence_contract": {
+    "required_gates": [
+      "phase26_doc_consistency",
+      "phase26_stability_consolidation_required_gates",
+      "phase27_baseline_continuity"
+    ],
+    "must_capture": [
+      "deployment_findings",
+      "disposition_status",
+      "residual_policy"
+    ]
+  }
+}

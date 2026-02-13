@@ -870,7 +870,7 @@ Phase 9 forced-next mapping:
 
 ### AR2. Deployment-Integrity Validation Closure
 
-- [ ] AR2.1 Freeze deployment-integrity matrix and evidence contract
+- [x] AR2.1 Freeze deployment-integrity matrix and evidence contract
 - [ ] AR2.2 Run deployment-integrity required gates
 - [ ] AR2.3 Publish deployment-integrity closure report with findings disposition
 
