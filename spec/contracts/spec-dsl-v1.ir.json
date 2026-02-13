@@ -1,0 +1,51 @@
+{
+  "version": 0,
+  "types": {},
+  "policies": {
+    "can_open": {
+      "params": [],
+      "expr": {
+        "call": {
+          "fn": "has_role",
+          "args": [
+            {
+              "lit": {
+                "string": "agent"
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "views": {
+    "tickets_by_lane": {
+      "kind": "lanes",
+      "on_type": "Ticket",
+      "query": {
+        "source": {
+          "snap": {
+            "type": "Ticket"
+          }
+        },
+        "pipeline": []
+      }
+    }
+  },
+  "migrations": {
+    "v0_to_v1": {
+      "from_version": 0,
+      "to_version": 1,
+      "on_type": "Ticket",
+      "event_transforms": {
+        "ticket_opened": {
+          "emit_as": "ticket_created",
+          "drop": false
+        }
+      },
+      "state_map": {
+        "triage": "new"
+      }
+    }
+  }
+}

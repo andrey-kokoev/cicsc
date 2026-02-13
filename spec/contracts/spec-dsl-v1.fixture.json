@@ -1,0 +1,65 @@
+{
+  "version": 0,
+  "types": {
+    "Ticket": {
+      "id_type": "string",
+      "states": ["new", "triage", "done"],
+      "initial_state": "new",
+      "attrs": {
+        "title": { "type": "string" },
+        "lane": { "type": "string", "default": "todo" }
+      },
+      "commands": {
+        "open": {
+          "input": {
+            "title": { "type": "string" }
+          },
+          "when": { "state_is": ["new"], "all": [{ "role_is": "agent" }] },
+          "auth": {
+            "policy": "can_open"
+          },
+          "emits": [
+            {
+              "event_type": "ticket_opened",
+              "payload": {
+                "title": { "var": { "input": { "field": "title" } } }
+              }
+            }
+          ]
+        }
+      },
+      "reducer": {
+        "ticket_opened": [
+          { "set_state": "triage" },
+          { "set_attr": { "name": "title", "expr": { "var": { "e_payload": { "path": "title" } } } } }
+        ]
+      }
+    }
+  },
+  "views": {
+    "tickets_by_lane": {
+      "kind": "lanes",
+      "on": "Ticket",
+      "lanes": ["todo", "doing", "done"],
+      "order_by": [{ "field": "updated_ts", "dir": "desc" }],
+      "limit": 100
+    }
+  },
+  "policies": {
+    "can_open": {
+      "params": [],
+      "allow": { "call": { "fn": "has_role", "args": [{ "lit": { "string": "agent" } }] } }
+    }
+  },
+  "migrations": {
+    "v0_to_v1": {
+      "from": 0,
+      "to": 1,
+      "entity": "Ticket",
+      "event_transforms": {
+        "ticket_opened": { "emit_as": "ticket_created" }
+      },
+      "state_map": { "triage": "new" }
+    }
+  }
+}

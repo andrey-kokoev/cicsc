@@ -59,7 +59,7 @@ Make migration safety operational (not only theorem/test level).
 Ship a user intent DSL that compiles to Core IR without leaking backend semantics.
 
 ### TODOs
-- [ ] P5.3.1 Freeze v1 Spec DSL grammar and desugaring contract.
+- [x] P5.3.1 Freeze v1 Spec DSL grammar and desugaring contract.
 - [ ] P5.3.2 Add compiler diagnostics with path-qualified errors for all rejected constructs.
 - [ ] P5.3.3 Add negative compiler tests for invariant-weakening patterns.
 - [ ] P5.3.4 Add roundtrip fixtures (spec -> ir -> validated semantics artifacts).

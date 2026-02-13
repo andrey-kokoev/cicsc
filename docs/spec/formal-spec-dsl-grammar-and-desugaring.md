@@ -1,5 +1,16 @@
 # Spec DSL Grammar and Desugaring Rules (v0)
 
+## Frozen v1 Contract Artifact
+
+Phase 5 freezes a canonical compiler contract artifact:
+
+- Fixture: `spec/contracts/spec-dsl-v1.fixture.json`
+- Expected IR: `spec/contracts/spec-dsl-v1.ir.json`
+- Gate test: `tests/spec/spec-dsl-v1-freeze.test.ts`
+
+Any intentional DSL grammar/desugaring change must update these artifacts in the
+same change that updates compiler logic.
+
 ## Grammar (shape-level)
 
 ```
