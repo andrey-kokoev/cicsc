@@ -1,6 +1,6 @@
-# CICSC Phase 4 Truth Audit (v1)
+# CICSC Truth Audit (v1, Phase 6 Closure)
 
-Date: 2026-02-12
+Date: 2026-02-13
 Scope: Evidence-backed status for current `main`.
 
 This is a status index, not a new semantics source. It tracks:
@@ -53,10 +53,17 @@ Status: `Proved + Tested` (subset-scoped where stated in theorem premises).
 
 Status: `Proved + Scoped`.
 
+## Governance Status
+
+- `PHASE6.md`: all checkboxes complete.
+- `ROADMAP.md`: `W1..W4` complete.
+- Phase transition is artifact-gated:
+  - `docs/pilot/phase6-exit-checklist.json`
+  - `docs/pilot/phase7-gate.json`
+  - `scripts/check_phase7_block.sh`
+
 ## Deferred Items
 
 - Full, unrestricted SQL conformance theorem (beyond current v4 executable subset).
-- Production isolation guarantees documentation aligned 1:1 with backend behavior.
-- Migration operator runbook and formal cutover/rollback operational contract.
-- Phase 4 deployment vertical validation (`P4.6`).
-
+- Stronger cross-backend isolation equivalence proofs beyond current scoped contract.
+- Phase 7 objectives (to be tracked in `PHASE7.md`) are intentionally not included in this v1 truth audit.

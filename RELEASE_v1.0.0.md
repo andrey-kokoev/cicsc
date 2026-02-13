@@ -23,3 +23,13 @@ Post-v1.0.0 Lean kernel coherency closure completed:
 - Replay WF preservation theorems shifted to `WFTypeSpec` assumptions
 - Declarative `HasType` restored with algorithmic soundness bridge
 - Versioning and naming clarified (Lean-kernel milestone vs IR schema version)
+
+## Lean v4 + Phase 6 Status Addendum
+
+Current repository status after v1.0.0:
+- Lean kernel milestones through `LEAN_KERNEL_V4.md` are completed (scoped where documented).
+- Phase 6 governance closure is complete (`PHASE6.md` all checked, `ROADMAP.md` W-series all checked).
+- Phase transition gating is artifact-driven via:
+  - `docs/pilot/phase6-exit-checklist.json`
+  - `docs/pilot/phase7-gate.json`
+  - `scripts/check_phase7_block.sh`

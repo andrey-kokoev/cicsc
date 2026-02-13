@@ -280,3 +280,37 @@ Comparative incident mapping:
 - [x] W4.3 Require multi-vertical field report with unresolved criticals closed or explicitly deferred
 - [x] W4.4 Add CI/doc checks rejecting phase/status drift for Phase 6 artifacts
 - [x] W4.5 Block Phase 7 unless all checklist items are pass
+
+## X. Phase 7: Semantic Equivalence Hardening
+
+### X1. Cross-Backend Semantic Parity
+
+- [ ] X1.1 Freeze Phase 7 parity scope matrix (operators/null/collation/numeric behavior)
+- [ ] X1.2 Add full in-scope sqlite/postgres/oracle differential suites
+- [ ] X1.3 Enforce fail-fast rejection for out-of-scope operators
+- [ ] X1.4 Publish backend parity report with explicit exclusions
+- [ ] X1.5 Convert unresolved parity deltas into explicit roadmap items
+
+### X2. Concurrency and Isolation Strengthening
+
+- [ ] X2.1 Define Phase 7 concurrency contract delta over Phase 6 baseline
+- [ ] X2.2 Add adversarial multi-tenant + cross-stream replay suites
+- [ ] X2.3 Add backend isolation differential checks for declared invariants
+- [ ] X2.4 Expand deterministic conflict outcome matrix coverage
+- [ ] X2.5 Publish updated isolation note with strengthened guarantees + exclusions
+
+### X3. Migration and Operational Contract Hardening
+
+- [ ] X3.1 Freeze executable migration protocol contract
+- [ ] X3.2 Add tenant-batch fault-injected migration drills with deterministic recovery checks
+- [ ] X3.3 Add post-cutover SQL execution-vs-oracle differential checks
+- [ ] X3.4 Add migration/verify SLO and error-budget artifact
+- [ ] X3.5 Publish migration safety report with critical disposition closure
+
+### X4. Governance Gate for Phase 8
+
+- [ ] X4.1 Define objective Phase 7 exit checklist mapped to artifacts
+- [ ] X4.2 Require green required gates (parity + concurrency + migration protocol)
+- [ ] X4.3 Require unresolved criticals register empty or explicitly deferred with owner/date
+- [ ] X4.4 Add CI/doc checks rejecting Phase 7 status drift
+- [ ] X4.5 Block Phase 8 unless all checklist items are pass
