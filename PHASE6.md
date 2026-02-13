@@ -29,7 +29,7 @@ Expand from one reference vertical to a comparative field baseline.
 ### TODOs
 - [x] P6.1.1 Select second reference vertical and freeze evaluation criteria artifact.
 - [x] P6.1.2 Run staged workload for second vertical with the same invariant/conformance/migration gates.
-- [ ] P6.1.3 Add comparative incident register (ticketing vs second vertical) with severity and recurrence tags.
+- [x] P6.1.3 Add comparative incident register (ticketing vs second vertical) with severity and recurrence tags.
 - [ ] P6.1.4 Convert comparative findings into explicit roadmap checkboxes (no hidden backlog).
 - [ ] P6.1.5 Publish Phase 6 field baseline report with forced-next priorities only.
 
