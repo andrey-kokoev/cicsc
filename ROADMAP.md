@@ -399,3 +399,26 @@ Phase 9 forced-next mapping:
 - `P9FIND-PARITY-HAVING-PG-001` -> `P10-PARITY-HAVING-HARNESS`
 - `P9FIND-SQL-EXISTS-001` -> `P10-SQL-EXISTS-LOWERING`
 - `P9FIND-OPS-GATE-001` -> `P10-OPS-GATE-CONTINUITY`
+
+## AA. Phase 10: Forced-Next Closure and Production Parity Continuity
+
+### AA1. Forced-Next SQL and Parity Closure
+
+- [ ] AA1.1 Freeze forced-next execution scope and ownership contract
+- [ ] AA1.2 Add Postgres HAVING harness continuity artifact and validation test
+- [ ] AA1.3 Publish EXISTS lowering decision contract (enablement or explicit deferred policy)
+- [ ] AA1.4 Add forced-next execution status register with owner/date discipline
+
+### AA2. Production Parity Continuity Gates
+
+- [ ] AA2.1 Add unified Phase 10 parity continuity gate script/report
+- [ ] AA2.2 Add unified Phase 10 migration continuity gate script/report
+- [ ] AA2.3 Add unified Phase 10 operational SLO continuity gate script/report
+- [ ] AA2.4 Publish Phase 10 continuity report with unresolved criticals policy
+
+### AA3. Governance Gate for Phase 11
+
+- [ ] AA3.1 Define objective Phase 10 exit checklist mapped to artifacts
+- [ ] AA3.2 Add PHASE10↔ROADMAP status-drift consistency gate
+- [ ] AA3.3 Add Phase 11 block gate based on Phase 10 checklist
+- [ ] AA3.4 Publish Phase 10 closure report and mark exit criteria
