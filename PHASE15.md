@@ -32,7 +32,7 @@ Reach a state where:
 Start Phase 15 from explicit scope, owners, and reproducible baseline truth.
 
 ### TODOs
-- [ ] P15.1.1 Freeze Phase 15 scope and owner contract.
+- [x] P15.1.1 Freeze Phase 15 scope and owner contract.
 - [ ] P15.1.2 Publish Phase 15 baseline continuity snapshot.
 - [ ] P15.1.3 Add Phase 15 status register with owner/date discipline.
 

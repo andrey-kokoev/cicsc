@@ -540,7 +540,7 @@ Phase 9 forced-next mapping:
 
 ### AF1. Scope Freeze and Baseline Continuity
 
-- [ ] AF1.1 Freeze Phase 15 scope and owner contract
+- [x] AF1.1 Freeze Phase 15 scope and owner contract
 - [ ] AF1.2 Publish Phase 15 baseline continuity snapshot
 - [ ] AF1.3 Add Phase 15 status register with owner/date discipline
 
