@@ -1,0 +1,9 @@
+{
+  "version": "cicsc/phase6-required-gates-v1",
+  "timestamp_unix": 1770945838,
+  "overall": "pass",
+  "checks": {
+    "dual_backend_conformance":{"status":"pass","log":"docs/pilot/phase6-required-gates.dual_backend_conformance.log"},
+    "concurrency_suite":{"status":"pass","log":"docs/pilot/phase6-required-gates.concurrency_suite.log"}
+  }
+}

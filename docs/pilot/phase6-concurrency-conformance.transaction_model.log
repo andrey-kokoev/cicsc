@@ -1,25 +1,25 @@
-(node:716317) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
+(node:727050) ExperimentalWarning: `--experimental-loader` may be removed in the future; instead use `register()`:
 --import 'data:text/javascript,import { register } from "node:module"; import { pathToFileURL } from "node:url"; register("/home/andrey/src/cicsc/tests/harness/ts-extension-loader.mjs", pathToFileURL("./"));'
 (Use `node --trace-warnings ...` to show where the warning was created)
-(node:716317) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/concurrency/transaction-model.test.ts is not specified and it doesn't parse as CommonJS.
+(node:727050) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///home/andrey/src/cicsc/tests/concurrency/transaction-model.test.ts is not specified and it doesn't parse as CommonJS.
 Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
 To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 (Use `node --trace-warnings ...` to show where the warning was created)
 ▶ P4.3.2: Transaction model tests for atomicity across multiple streams
-  ✔ commits all events atomically for multi-stream transaction (1.274329ms)
-  ✔ aborts entire transaction if any guard fails (simulated) (1.172299ms)
-  ✔ maintains stream isolation - one stream's seq doesn't affect another (0.152045ms)
-✔ P4.3.2: Transaction model tests for atomicity across multiple streams (3.602716ms)
+  ✔ commits all events atomically for multi-stream transaction (1.625213ms)
+  ✔ aborts entire transaction if any guard fails (simulated) (0.360778ms)
+  ✔ maintains stream isolation - one stream's seq doesn't affect another (0.192098ms)
+✔ P4.3.2: Transaction model tests for atomicity across multiple streams (3.02331ms)
 ▶ P4.3.3: Write-write conflict tests and expected abort outcomes
-  ✔ detects write-write conflict on same stream (0.325684ms)
-  ✔ allows concurrent transactions on different streams (0.179276ms)
-  ✔ aborts transaction with explicit conflict reason (0.119589ms)
-  ✔ enforces abort-or-serialize property for conflicting streams (0.145697ms)
-✔ P4.3.3: Write-write conflict tests and expected abort outcomes (0.9695ms)
+  ✔ detects write-write conflict on same stream (0.332446ms)
+  ✔ allows concurrent transactions on different streams (0.230469ms)
+  ✔ aborts transaction with explicit conflict reason (0.133162ms)
+  ✔ enforces abort-or-serialize property for conflicting streams (0.169466ms)
+✔ P4.3.3: Write-write conflict tests and expected abort outcomes (1.103385ms)
 ▶ Transaction ACID properties
-  ✔ Atomicity: all events commit or none do (0.166718ms)
-  ✔ Consistency: history maintains causal order after transactions (0.141278ms)
-✔ Transaction ACID properties (0.452292ms)
+  ✔ Atomicity: all events commit or none do (0.191357ms)
+  ✔ Consistency: history maintains causal order after transactions (0.140771ms)
+✔ Transaction ACID properties (0.501288ms)
 ℹ tests 9
 ℹ suites 3
 ℹ pass 9
@@ -27,4 +27,4 @@ To eliminate this warning, add "type": "module" to /home/andrey/package.json.
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 130.342159
+ℹ duration_ms 142.596062

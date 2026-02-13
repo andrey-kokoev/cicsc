@@ -82,7 +82,7 @@ Prevent expansion without semantic closure.
 
 ### TODOs
 - [x] P6.4.1 Define objective Phase 6 exit checklist mapped to artifacts.
-- [ ] P6.4.2 Require green dual-backend conformance + concurrency suites.
+- [x] P6.4.2 Require green dual-backend conformance + concurrency suites.
 - [ ] P6.4.3 Require multi-vertical field report with unresolved criticals closed or explicitly deferred.
 - [ ] P6.4.4 Add CI/doc checks rejecting phase/status drift for Phase 6 artifacts.
 - [ ] P6.4.5 Mark Phase 7 blocked unless all checklist items are pass.
