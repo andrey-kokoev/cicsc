@@ -269,7 +269,7 @@ Comparative incident mapping:
 
 - [x] W3.1 Freeze CLI command contract for compile/install/migrate/verify/gates
 - [x] W3.2 Add SDK contract tests for bundle lifecycle and tenant binding policies
-- [ ] W3.3 Add operator playbook for multi-tenant rollout/rollback/incident triage
+- [x] W3.3 Add operator playbook for multi-tenant rollout/rollback/incident triage
 - [ ] W3.4 Add policy control matrix with executable checks
 - [ ] W3.5 Add proven-vs-experimental feature gating across docs/API surfaces
 
