@@ -709,7 +709,7 @@ Phase 9 forced-next mapping:
 ### AL2. Cross-Environment Stability Validation Closure
 
 - [x] AL2.1 Freeze cross-environment stability matrix and evidence contract
-- [ ] AL2.2 Run cross-environment stability required gates
+- [x] AL2.2 Run cross-environment stability required gates
 - [ ] AL2.3 Publish cross-environment stability closure report with findings disposition
 
 ### AL3. Operational Continuity Hardening
