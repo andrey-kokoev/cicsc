@@ -23,6 +23,26 @@
       "branch": "phase33.ax2.2",
       "status": "done",
       "notes": "Implement formalization progress admissibility gate and artifact."
+    },
+    {
+      "id": "ASSIGN_PHASE33_AX13_KIMI",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AX1.3",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/kimi",
+      "branch": "phase33.ax1.3",
+      "status": "assigned",
+      "notes": "Publish coupling conformance report with residual gaps register."
+    },
+    {
+      "id": "ASSIGN_PHASE33_AX24_ANTIGRAVITY",
+      "agent_ref": "AGENT_ANTIGRAVITY",
+      "checkbox_ref": "AX2.4",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/antigravity",
+      "branch": "phase33.ax2.4",
+      "status": "assigned",
+      "notes": "Add Phase 34 block gate from the Phase 33 checklist."
     }
   ]
 }

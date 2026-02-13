@@ -142,6 +142,22 @@ assignments:
     branch: phase33.ax2.2
     status: done
     notes: Implement formalization progress admissibility gate and artifact.
+  - id: ASSIGN_PHASE33_AX13_KIMI
+    agent_ref: AGENT_KIMI
+    checkbox_ref: AX1.3
+    claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
+    worktree: /home/andrey/src/kimi
+    branch: phase33.ax1.3
+    status: assigned
+    notes: Publish coupling conformance report with residual gaps register.
+  - id: ASSIGN_PHASE33_AX24_ANTIGRAVITY
+    agent_ref: AGENT_ANTIGRAVITY
+    checkbox_ref: AX2.4
+    claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
+    worktree: /home/andrey/src/antigravity
+    branch: phase33.ax2.4
+    status: assigned
+    notes: Add Phase 34 block gate from the Phase 33 checklist.
 message_kinds:
   - id: MSGK_ASSIGNMENT_DISPATCH
     title: Assignment dispatch from canonical worktree.
@@ -180,6 +196,36 @@ messages:
     evidence_refs: []
     evidence_bindings: []
     notes: Dispatch AX2.2 obligations and formalization admissibility criteria.
+  - id: MSG_PHASE33_AX13_DISPATCH
+    kind_ref: MSGK_ASSIGNMENT_DISPATCH
+    assignment_ref: ASSIGN_PHASE33_AX13_KIMI
+    from_agent_ref: AGENT_MAIN
+    to_agent_ref: AGENT_KIMI
+    from_worktree: /home/andrey/src/cicsc
+    to_worktree: /home/andrey/src/kimi
+    branch: phase33.ax1.3
+    initial_status: sent
+    payload_refs:
+      - control-plane/collaboration/collab-model.yaml
+      - docs/pilot/phase33-proof-evidence-coupling.json
+    evidence_refs: []
+    evidence_bindings: []
+    notes: Dispatch AX1.3 report publication obligations and residual-gap closure.
+  - id: MSG_PHASE33_AX24_DISPATCH
+    kind_ref: MSGK_ASSIGNMENT_DISPATCH
+    assignment_ref: ASSIGN_PHASE33_AX24_ANTIGRAVITY
+    from_agent_ref: AGENT_MAIN
+    to_agent_ref: AGENT_ANTIGRAVITY
+    from_worktree: /home/andrey/src/cicsc
+    to_worktree: /home/andrey/src/antigravity
+    branch: phase33.ax2.4
+    initial_status: sent
+    payload_refs:
+      - control-plane/collaboration/collab-model.yaml
+      - docs/pilot/phase33-ax22-formalization-gate-report.json
+    evidence_refs: []
+    evidence_bindings: []
+    notes: Dispatch AX2.4 block-gate implementation from finalized Phase 33 checklist state.
 message_events:
   - id: MSGEV_PHASE33_AX12_DISPATCH_SENT
     message_ref: MSG_PHASE33_AX12_DISPATCH
@@ -295,3 +341,21 @@ message_events:
     commit: 01ea9a8
     evidence_bindings: []
     notes: AX2.2 message closed after ingestion and checkbox closure.
+  - id: MSGEV_PHASE33_AX13_DISPATCH_SENT
+    message_ref: MSG_PHASE33_AX13_DISPATCH
+    from_status: null
+    to_status: sent
+    actor_agent_ref: AGENT_MAIN
+    at_seq: 1
+    commit: 8eb62a1
+    evidence_bindings: []
+    notes: Initial dispatch event for AX1.3 assignment.
+  - id: MSGEV_PHASE33_AX24_DISPATCH_SENT
+    message_ref: MSG_PHASE33_AX24_DISPATCH
+    from_status: null
+    to_status: sent
+    actor_agent_ref: AGENT_MAIN
+    at_seq: 1
+    commit: 8eb62a1
+    evidence_bindings: []
+    notes: Initial dispatch event for AX2.4 assignment.
