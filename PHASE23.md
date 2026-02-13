@@ -62,7 +62,7 @@ Harden runtime-assurance checks for expanded deployments.
 
 ### TODOs
 - [x] P23.3.1 Freeze runtime-assurance hardening matrix and policy.
-- [ ] P23.3.2 Add runtime-assurance verification harnesses.
+- [x] P23.3.2 Add runtime-assurance verification harnesses.
 - [ ] P23.3.3 Publish runtime-assurance closure report with residual policy.
 
 ### Acceptance
