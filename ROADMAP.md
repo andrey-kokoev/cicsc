@@ -456,7 +456,7 @@ Phase 9 forced-next mapping:
 
 - [x] AC1.1 Freeze Phase 12 scope and owner contract
 - [x] AC1.2 Publish Phase 12 baseline continuity snapshot
-- [ ] AC1.3 Add Phase 12 status register with owner/date discipline
+- [x] AC1.3 Add Phase 12 status register with owner/date discipline
 
 ### AC2. Multi-Domain Deployment Expansion
 

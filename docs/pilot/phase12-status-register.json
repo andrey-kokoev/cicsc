@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase12-status-register-v1",
+  "timestamp_unix": 1771054500,
+  "items": [
+    {
+      "id": "P12-DEPLOYMENT-GENERALIZATION",
+      "status": "in_progress",
+      "owner": "phase12-ops-owner",
+      "target_date": "2026-06-10",
+      "basis": "AC2"
+    },
+    {
+      "id": "P12-PARITY-ENVELOPE-WIDENING",
+      "status": "pending",
+      "owner": "phase12-parity-owner",
+      "target_date": "2026-06-17",
+      "basis": "AC3"
+    },
+    {
+      "id": "P12-GOVERNANCE-CLOSURE",
+      "status": "pending",
+      "owner": "phase12-governance-owner",
+      "target_date": "2026-06-24",
+      "basis": "AC4"
+    }
+  ]
+}
