@@ -1594,7 +1594,7 @@ phases:
 - id: AU
   number: 30
   title: Objective Closure Milestone
-  status: active
+  status: complete
   milestones:
   - id: AU1
     title: Single Knowable Objective-Closure Gate
@@ -1617,4 +1617,4 @@ phases:
     - id: AU1.5
       title: If any objective is not_met, derive forced-next execution-ledger checkboxes
         only and block completion claim
-      status: open
+      status: done

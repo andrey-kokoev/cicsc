@@ -1,0 +1,13 @@
+{
+  "version": "cicsc/phase30-forced-next-disposition-v1",
+  "timestamp_unix": 1771003797,
+  "inputs": {
+    "objective_verdict_report": "docs/pilot/phase30-objective-verdict-report.json",
+    "execution_ledger": "control-plane/execution/execution-ledger.yaml"
+  },
+  "overall_verdict": "met",
+  "forced_next_required": false,
+  "completion_claim_blocked": false,
+  "derived_forced_next_checkboxes": [],
+  "policy": "allow_completion_no_forced_next_required"
+}

@@ -2690,7 +2690,7 @@
       "id": "AU",
       "number": 30,
       "title": "Objective Closure Milestone",
-      "status": "active",
+      "status": "complete",
       "milestones": [
         {
           "id": "AU1",
@@ -2714,12 +2714,12 @@
             {
               "id": "AU1.4",
               "title": "Publish objective verdict report (met/not_met per objective) with failure localization",
-              "status": "open"
+              "status": "done"
             },
             {
               "id": "AU1.5",
               "title": "If any objective is not_met, derive forced-next execution-ledger checkboxes only and block completion claim",
-              "status": "open"
+              "status": "done"
             }
           ]
         }
