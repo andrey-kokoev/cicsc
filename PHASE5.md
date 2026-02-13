@@ -30,8 +30,8 @@ Turn conformance from best-effort testing into hard CI entry criteria.
 - [x] P5.1.5 Add deterministic replay artifact retention policy for CI failures.
 
 ### Acceptance
-- [ ] CI fails on any conformance regression in required matrix.
-- [ ] Every newly lowered operator has SQL-vs-oracle differential coverage.
+- [x] CI fails on any conformance regression in required matrix.
+- [x] Every newly lowered operator has SQL-vs-oracle differential coverage.
 
 ---
 
@@ -48,8 +48,8 @@ Make migration safety operational (not only theorem/test level).
 - [x] P5.2.5 Add operator runbook and CLI commands for preflight/cutover/rollback.
 
 ### Acceptance
-- [ ] Migration command surfaces deterministic pass/fail outcomes with structured reports.
-- [ ] Reversible migrations can be rolled back under documented preconditions.
+- [x] Migration command surfaces deterministic pass/fail outcomes with structured reports.
+- [x] Reversible migrations can be rolled back under documented preconditions.
 
 ---
 
@@ -66,8 +66,8 @@ Ship a user intent DSL that compiles to Core IR without leaking backend semantic
 - [x] P5.3.5 Add documentation and examples for non-programmer-authored workflows.
 
 ### Acceptance
-- [ ] Spec author can express at least one full ticketing/CRM workflow without IR-shaped authoring.
-- [ ] All DSL sugar compiles into fully typechecked Core IR with no semantic drift.
+- [x] Spec author can express at least one full ticketing/CRM workflow without IR-shaped authoring.
+- [x] All DSL sugar compiles into fully typechecked Core IR with no semantic drift.
 
 ---
 
@@ -84,8 +84,8 @@ Operational multi-tenant lifecycle for versioned bundles.
 - [x] P5.4.5 Add policy controls for who may bind or migrate tenant bundles.
 
 ### Acceptance
-- [ ] Tenant binding is deterministic, auditable, and reproducible from bundle hashes.
-- [ ] No runtime behavior depends on implicit or mutable bundle selection.
+- [x] Tenant binding is deterministic, auditable, and reproducible from bundle hashes.
+- [x] No runtime behavior depends on implicit or mutable bundle selection.
 
 ---
 
@@ -102,8 +102,8 @@ Bring Postgres to oracle-conformant status for declared supported subset.
 - [x] P5.5.5 Add cross-backend consistency gate (sqlite vs postgres vs oracle).
 
 ### Acceptance
-- [ ] Postgres passes required differential conformance suite for declared scope.
-- [ ] Any unsupported constructs are rejected at compile/typecheck time with explicit diagnostics.
+- [x] Postgres passes required differential conformance suite for declared scope.
+- [x] Any unsupported constructs are rejected at compile/typecheck time with explicit diagnostics.
 
 ---
 
@@ -120,8 +120,8 @@ Prove semantic fitness under real operational workload.
 - [x] P5.6.5 Publish phase report with forced-next priorities only.
 
 ### Acceptance
-- [ ] At least one vertical run demonstrates deploy/operate/evolve loop with no invariant breaches.
-- [ ] Remaining gaps are explicitly captured as sequenced roadmap items.
+- [x] At least one vertical run demonstrates deploy/operate/evolve loop with no invariant breaches.
+- [x] Remaining gaps are explicitly captured as sequenced roadmap items.
 
 ---
 
@@ -138,15 +138,15 @@ Prevent phase transition without verified closure.
 - [x] P5.7.5 Add CI/doc checks rejecting unchecked claims in phase/status docs.
 
 ### Acceptance
-- [ ] Phase 6 cannot start unless all exit criteria artifacts are present and passing.
+- [x] Phase 6 cannot start unless all exit criteria artifacts are present and passing.
 
 ---
 
 ## Exit Criteria (Phase 5)
 
-- [ ] Conformance gates are mandatory and broad enough to catch known regression classes.
-- [ ] Migration operations are executable, reversible (where declared), and auditable.
-- [ ] Spec DSL is ergonomically usable and compiles into invariant-safe Core IR.
-- [ ] Bundle registry + tenant binding are operational and deterministic.
-- [ ] Postgres parity is validated for declared scope.
-- [ ] At least one real deployment cycle validates the system end-to-end.
+- [x] Conformance gates are mandatory and broad enough to catch known regression classes.
+- [x] Migration operations are executable, reversible (where declared), and auditable.
+- [x] Spec DSL is ergonomically usable and compiles into invariant-safe Core IR.
+- [x] Bundle registry + tenant binding are operational and deterministic.
+- [x] Postgres parity is validated for declared scope.
+- [x] At least one real deployment cycle validates the system end-to-end.
