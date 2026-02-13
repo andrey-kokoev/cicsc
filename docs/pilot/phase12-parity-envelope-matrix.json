@@ -1,0 +1,28 @@
+{
+  "version": "cicsc/phase12-parity-envelope-matrix-v1",
+  "timestamp_unix": 1771055700,
+  "envelope_items": [
+    {
+      "id": "having_postgres_harness_continuity",
+      "class": "sql_having",
+      "status": "in_scope",
+      "evidence_target": "differential_harness"
+    },
+    {
+      "id": "exists_feature_gate_enforcement",
+      "class": "sql_exists",
+      "status": "in_scope",
+      "evidence_target": "negative_typecheck_and_gate"
+    },
+    {
+      "id": "cross_backend_random_sweeps",
+      "class": "cross_backend_parity",
+      "status": "in_scope",
+      "evidence_target": "seeded_differential"
+    }
+  ],
+  "policy": {
+    "must_have_differential_evidence": true,
+    "unsupported_surface_requires_compile_time_reject": true
+  }
+}

@@ -466,7 +466,7 @@ Phase 9 forced-next mapping:
 
 ### AC3. Backend Parity Envelope Widening
 
-- [ ] AC3.1 Freeze parity envelope extension matrix
+- [x] AC3.1 Freeze parity envelope extension matrix
 - [ ] AC3.2 Add differential harnesses for newly included envelope items
 - [ ] AC3.3 Publish parity envelope closure report with residual policy
 
