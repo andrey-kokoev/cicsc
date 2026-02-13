@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase25-exit-checklist-v1",
+  "timestamp_unix": 1774735800,
+  "items": [
+    {
+      "id": "scope_baseline_status",
+      "artifact": "docs/pilot/phase25-status-register.json",
+      "status": "pass"
+    },
+    {
+      "id": "verification_consolidation_status",
+      "artifact": "docs/pilot/phase25-verification-consolidation-closure-report.json",
+      "status": "pass"
+    },
+    {
+      "id": "field_continuity_status",
+      "artifact": "docs/pilot/phase25-field-continuity-closure-report.json",
+      "status": "pass"
+    },
+    {
+      "id": "phase25_gate_state",
+      "artifact": "docs/pilot/phase25-gate.json",
+      "status": "pass"
+    }
+  ],
+  "overall": "pass"
+}

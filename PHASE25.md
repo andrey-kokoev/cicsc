@@ -76,7 +76,7 @@ Harden field-continuity checks for expanded deployments.
 Close Phase 25 with objective checklist and enforce entry gate for Phase 26.
 
 ### TODOs
-- [ ] P25.4.1 Define objective Phase 25 exit checklist mapped to artifacts.
+- [x] P25.4.1 Define objective Phase 25 exit checklist mapped to artifacts.
 - [ ] P25.4.2 Add PHASE25↔ROADMAP drift consistency gate.
 - [ ] P25.4.3 Add Phase 26 block gate from Phase 25 checklist.
 - [ ] P25.4.4 Publish Phase 25 closure report and mark exit criteria.
