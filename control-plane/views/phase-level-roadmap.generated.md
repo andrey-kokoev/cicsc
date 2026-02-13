@@ -78,7 +78,7 @@ Canonical status truth is `control-plane/execution/execution-ledger.yaml`.
 | AT | 13 | 0 |
 | AU | 5 | 0 |
 | AV | 4 | 0 |
-| AW | 7 | 2 |
+| AW | 8 | 1 |
 | AX | 0 | 0 |
 | AY | 0 | 0 |
 | AZ | 0 | 0 |

@@ -1660,7 +1660,7 @@ phases:
       status: done
     - id: AW1.5
       title: Implement OBJ5 expanded parity-envelope artifacts and required checks
-      status: open
+      status: done
   - id: AW2
     title: Expanded-Scope Execution Gate
     checkboxes:
