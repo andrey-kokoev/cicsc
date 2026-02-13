@@ -43,6 +43,8 @@ For a checkbox marked done in `ROADMAP.md`:
   - validates that checked checkboxes have corresponding commit evidence.
 - `scripts/check_workflow_single_source.sh`
   - validates that non-canonical planning/navigation docs do not carry status checkboxes.
+- `scripts/check_generated_artifacts_policy.sh`
+  - validates generated-artifact markers for `*.generated.*` files.
 - `scripts/check_category_model_conformance.sh`
   - validates `docs/foundations/category-model.md` obligations against theorem/doc/artifact evidence.
 - `scripts/check_canonical_execution_model.sh`

@@ -54,3 +54,20 @@ Until explicit migration is completed:
 
 - Status checkboxes belong only to canonical execution ledger artifacts.
 - Planning/navigation docs must remain non-status.
+
+## Generated Artifact Convention
+
+Generated files must be explicitly marked:
+
+- filename suffix: `*.generated.*`
+- text formats (`.md`, `.yaml`, `.mmd`, `.sh`, ...): include header markers:
+  - `AUTO-GENERATED FILE. DO NOT EDIT.`
+  - `Source: <path>`
+  - `Generator: <path>`
+- json formats: include metadata fields:
+  - `\"_generated\": true`
+  - `\"_source\": \"<path>\"`
+  - `\"_generator\": \"<path>\"`
+
+Policy enforcement:
+- `scripts/check_generated_artifacts_policy.sh`

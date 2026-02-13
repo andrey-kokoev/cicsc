@@ -1,0 +1,2 @@
+# Mark generated artifacts for review/diff tooling.
+*.generated.* linguist-generated=true
