@@ -1,0 +1,31 @@
+{
+  "version": "cicsc/phase5-incident-register-v1",
+  "vertical": "ticketing",
+  "generated_from": "docs/pilot/phase5-ticketing-staged-run.json",
+  "incidents": [
+    {
+      "id": "INC-PG-HARNESS-001",
+      "category": "missing_primitive",
+      "severity": "high",
+      "status": "open",
+      "summary": "Postgres conformance gate cannot execute in current environment because pg-memory driver dependency is missing.",
+      "evidence": "docs/pilot/phase5-ticketing-staged-run.conformance_postgres.log"
+    },
+    {
+      "id": "INC-ORDER-COLLATION-001",
+      "category": "drift_risk",
+      "severity": "medium",
+      "status": "open",
+      "summary": "Backend default NULL/collation behavior differs and requires explicit policy-driven handling in cross-backend assertions.",
+      "evidence": "tests/conformance/backend-semantics-policy.json"
+    },
+    {
+      "id": "INC-PERF-BASELINE-001",
+      "category": "perf_visibility",
+      "severity": "medium",
+      "status": "open",
+      "summary": "Staged run records pass/fail only; no latency/throughput SLO instrumentation is yet captured for command/query paths.",
+      "evidence": "docs/pilot/phase5-ticketing-staged-run.json"
+    }
+  ]
+}
