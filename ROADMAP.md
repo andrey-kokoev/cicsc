@@ -925,7 +925,7 @@ Phase 9 forced-next mapping:
 ### AT2. Assurance-Expansion Validation Closure
 
 - [x] AT2.1 Freeze assurance-expansion matrix and evidence contract
-- [ ] AT2.2 Run assurance-expansion required gates
+- [x] AT2.2 Run assurance-expansion required gates
 - [ ] AT2.3 Publish assurance-expansion closure report with findings disposition
 
 ### AT3. Governance-Continuity Hardening
