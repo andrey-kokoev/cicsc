@@ -1,19 +1,22 @@
-# Genesis Stack: CIS -> CICSC -> CIECP -> WMCC
+# Genesis Stack: CIS -> CICSC -> CIECP -> WMCC (+ CAM)
 
 This directory captures the conceptual top of the project.
 
-In this repository, these four documents/functions are treated as a strict stack:
+In this repository, these four documents/functions are treated as a strict stack,
+plus one progression method:
 
 1. `docs/genesis/on-constructively-invariant-systems.md`
 2. `docs/genesis/constructively-invariant-control-system-compiler.md`
 3. `docs/genesis/constructive-invariance-evolution-control-plane.md` + `control-plane/README.md` (with `control-plane/*` models)
 4. `docs/genesis/worktree-mediated-constructive-collaboration.md` + `control-plane/collaboration/*`
+5. `docs/genesis/constructive-accretion-method.md`
 
 Where:
 - `CIS` = Constructively Invariant Systems
 - `CICSC` = Constructively Invariant Control System Compiler
 - `CIECP` = Constructive-Invariance Evolution Control Plane
 - `WMCC` = Worktree-Mediated Constructive Collaboration
+- `CAM` = Constructive Accretion Method
 
 ## What They Really Are
 
@@ -70,6 +73,7 @@ Meaning:
 - CICSC constrains the invariants CIECP must protect during change.
 - CIECP must never redefine CIS/CICSC semantics; it only operationalizes and enforces them.
 - WMCC must never redefine CIECP policy semantics; it only constrains collaboration execution paths.
+- CAM is orthogonal to the stack: it constrains the sequencing discipline used to grow all layers.
 
 ## Repo-Level Practical Rule
 
