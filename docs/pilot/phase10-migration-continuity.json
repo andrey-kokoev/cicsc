@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase10-migration-continuity-v1",
+  "timestamp_unix": 1770951670,
+  "overall": "pass",
+  "checks": {
+    "phase9_migration_drills":{"status":"pass","log":"docs/pilot/phase10-migration-continuity.phase9_migration_drills.log"},
+    "phase9_post_cutover_diff":{"status":"pass","log":"docs/pilot/phase10-migration-continuity.phase9_post_cutover_diff.log"},
+    "phase9_migration_safety_report":{"status":"pass","log":"docs/pilot/phase10-migration-continuity.phase9_migration_safety_report.log"}
+  }
+}
