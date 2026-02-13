@@ -47,7 +47,7 @@ Close deployment-integrity validation with explicit evidence contract and findin
 
 ### TODOs
 - [x] P27.2.1 Freeze deployment-integrity matrix and evidence contract.
-- [ ] P27.2.2 Run deployment-integrity required gates.
+- [x] P27.2.2 Run deployment-integrity required gates.
 - [ ] P27.2.3 Publish deployment-integrity closure report with findings disposition.
 
 ### Acceptance
