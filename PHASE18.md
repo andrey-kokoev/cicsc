@@ -46,7 +46,7 @@ Start Phase 18 from explicit scope, owners, and reproducible baseline truth.
 Close expansion-proof validation with explicit evidence contract and findings governance.
 
 ### TODOs
-- [ ] P18.2.1 Freeze expansion-proof matrix and evidence contract.
+- [x] P18.2.1 Freeze expansion-proof matrix and evidence contract.
 - [ ] P18.2.2 Run expansion-proof required gates.
 - [ ] P18.2.3 Publish expansion-proof closure report with findings disposition.
 

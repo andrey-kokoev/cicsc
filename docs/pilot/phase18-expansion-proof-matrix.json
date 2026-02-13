@@ -1,0 +1,45 @@
+{
+  "version": "cicsc/phase18-expansion-proof-matrix-v1",
+  "timestamp_unix": 1771095300,
+  "tracks": [
+    {
+      "id": "expansion_proof_semantics",
+      "scope": "semantic_continuity",
+      "required_evidence": [
+        "docs/pilot/phase17-field-program-closure-report.json",
+        "docs/pilot/phase16-external-validation-closure-report.json",
+        "docs/pilot/phase18-expansion-proof-closure-report.json"
+      ]
+    },
+    {
+      "id": "expansion_proof_parity",
+      "scope": "backend_parity",
+      "required_evidence": [
+        "docs/pilot/phase17-trust-hardening-closure-report.json",
+        "docs/pilot/phase16-expansion-hardening-closure-report.json",
+        "docs/pilot/phase18-expansion-proof-closure-report.json"
+      ]
+    },
+    {
+      "id": "expansion_proof_ops",
+      "scope": "operations",
+      "required_evidence": [
+        "docs/pilot/phase17-trust-ops-harnesses.json",
+        "docs/pilot/phase16-expansion-harnesses.json",
+        "docs/pilot/phase18-production-continuity-harnesses.json"
+      ]
+    }
+  ],
+  "evidence_contract": {
+    "required_gates": [
+      "phase17_doc_consistency",
+      "phase17_field_program_required_gates",
+      "phase18_baseline_continuity"
+    ],
+    "must_capture": [
+      "proof_findings",
+      "disposition_status",
+      "residual_policy"
+    ]
+  }
+}
