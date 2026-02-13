@@ -76,7 +76,7 @@ Harden governance-continuity checks for expanded deployments.
 Close Phase 29 with objective checklist and enforce entry gate for Phase 30.
 
 ### TODOs
-- [ ] P29.4.1 Define objective Phase 29 exit checklist mapped to artifacts.
+- [x] P29.4.1 Define objective Phase 29 exit checklist mapped to artifacts.
 - [ ] P29.4.2 Add PHASE29↔ROADMAP drift consistency gate.
 - [ ] P29.4.3 Add Phase 30 block gate from Phase 29 checklist.
 - [ ] P29.4.4 Publish Phase 29 closure report and mark exit criteria.
