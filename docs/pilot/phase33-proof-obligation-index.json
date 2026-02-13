@@ -1,58 +1,143 @@
 {
   "version": "cicsc/phase33-proof-obligation-index-v1",
-  "timestamp_unix": 1771012200,
+  "timestamp_unix": 1771014000,
   "phase": 33,
   "checkbox": "AX1.1",
   "status": "defined",
-  "claim_classes": [
-    {
-      "id": "semantic_coherence",
-      "obligation_id": "OBL-SC-001",
-      "obligation": "Maintain declared CICSC semantic invariants and category-model conformance under expanded scope.",
-      "evidence_refs": [
-        "docs/pilot/category-model-conformance.json",
-        "docs/pilot/phase32-expanded-scope-required-gates.json"
-      ],
-      "formal_refs": [
-        "docs/genesis/constructive-invariance-evolution-control-plane.md",
-        "docs/foundations/category-model.md"
-      ]
+  "proof_obligation_index": {
+    "policy": "expanded_claim_class_requires_explicit_proof_obligation_and_evidence_binding",
+    "claim_classes": [
+      {
+        "class_id": "CC_EXPANDED_CONCURRENCY",
+        "claim_class": "Expanded Concurrency Envelope",
+        "source_objective": "OBJ1",
+        "proof_obligation": {
+          "type": "formal_or_semiformal",
+          "description": "Concurrency adversarial model and isolation differential properties must be formally stated with executable conformance validation",
+          "required_artifacts": [
+            "docs/pilot/phase32-obj1-concurrency-envelope.json"
+          ],
+          "required_checks": [
+            "phase7_concurrency_adversarial",
+            "phase6_concurrency_conformance",
+            "phase7_isolation_differential"
+          ]
+        },
+        "evidence_binding": {
+          "artifact": "docs/pilot/phase32-obj1-concurrency-envelope.json",
+          "status_field": "overall",
+          "pass_value": "pass"
+        }
+      },
+      {
+        "class_id": "CC_DRIFT_BUDGET_GOVERNANCE",
+        "claim_class": "Drift-Budget Governance",
+        "source_objective": "OBJ2",
+        "proof_obligation": {
+          "type": "governance_semiformal",
+          "description": "Semantic drift must be bounded by declared budget with canonical execution model enforcement",
+          "required_artifacts": [
+            "docs/pilot/phase32-obj2-drift-budget.json",
+            "docs/pilot/category-model-conformance.json"
+          ],
+          "required_checks": [
+            "canonical_execution_model",
+            "category_model_conformance",
+            "parity_continuity"
+          ]
+        },
+        "evidence_binding": {
+          "artifact": "docs/pilot/phase32-obj2-drift-budget.json",
+          "status_field": "overall",
+          "pass_value": "pass"
+        }
+      },
+      {
+        "class_id": "CC_USABILITY_RECOVERY",
+        "claim_class": "Usability Recovery Envelope",
+        "source_objective": "OBJ3",
+        "proof_obligation": {
+          "type": "empirical_semiformal",
+          "description": "Non-programmer operator workflows must demonstrate bounded error recovery with explicit evidence",
+          "required_artifacts": [
+            "docs/pilot/phase32-obj3-usability-envelope.json",
+            "docs/pilot/phase32-obj3-usability-envelope.recovery_evidence.json"
+          ],
+          "required_checks": [
+            "dsl_usability",
+            "migration_usability",
+            "recovery_evidence"
+          ]
+        },
+        "evidence_binding": {
+          "artifact": "docs/pilot/phase32-obj3-usability-envelope.json",
+          "status_field": "overall",
+          "pass_value": "pass"
+        }
+      },
+      {
+        "class_id": "CC_MULTI_TENANT_MIGRATION",
+        "claim_class": "Multi-Tenant Migration Continuity",
+        "source_objective": "OBJ4",
+        "proof_obligation": {
+          "type": "operational_semiformal",
+          "description": "Migration protocol must maintain totality and replay verification across rolling cutover scenarios",
+          "required_artifacts": [
+            "docs/pilot/phase32-obj4-migration-envelope.json",
+            "docs/pilot/phase7-migration-protocol-check.json"
+          ],
+          "required_checks": [
+            "migration_protocol",
+            "migration_continuity",
+            "migration_drills"
+          ]
+        },
+        "evidence_binding": {
+          "artifact": "docs/pilot/phase32-obj4-migration-envelope.json",
+          "status_field": "overall",
+          "pass_value": "pass"
+        }
+      },
+      {
+        "class_id": "CC_EXPANDED_PARITY",
+        "claim_class": "Expanded Parity Envelope",
+        "source_objective": "OBJ5",
+        "proof_obligation": {
+          "type": "formal_or_semiformal",
+          "description": "Backend parity must be established for declared envelope classes with explicit exclusions",
+          "required_artifacts": [
+            "docs/pilot/phase32-obj5-parity-envelope.json",
+            "docs/pilot/phase12-parity-envelope-differentials.json"
+          ],
+          "required_checks": [
+            "parity_envelope_differentials",
+            "sqlite_exec_vs_oracle",
+            "postgres_exec_vs_oracle"
+          ]
+        },
+        "evidence_binding": {
+          "artifact": "docs/pilot/phase32-obj5-parity-envelope.json",
+          "status_field": "overall",
+          "pass_value": "pass"
+        }
+      }
+    ],
+    "obligation_index_map": {
+      "formal_or_semiformal": ["CC_EXPANDED_CONCURRENCY", "CC_EXPANDED_PARITY"],
+      "governance_semiformal": ["CC_DRIFT_BUDGET_GOVERNANCE"],
+      "empirical_semiformal": ["CC_USABILITY_RECOVERY"],
+      "operational_semiformal": ["CC_MULTI_TENANT_MIGRATION"]
     },
-    {
-      "id": "backend_parity",
-      "obligation_id": "OBL-BP-001",
-      "obligation": "Preserve oracle-equivalence on declared parity envelope with explicit exclusions.",
-      "evidence_refs": [
-        "docs/pilot/phase32-obj5-parity-envelope.json",
-        "docs/pilot/phase12-parity-envelope-differentials.json"
-      ],
-      "formal_refs": [
-        "docs/spec/conformance-methodology.md"
-      ]
-    },
-    {
-      "id": "migration_safety",
-      "obligation_id": "OBL-MS-001",
-      "obligation": "Preserve migration totality and replay-verified continuity on declared envelope.",
-      "evidence_refs": [
-        "docs/pilot/phase32-obj4-migration-envelope.json",
-        "docs/pilot/phase10-migration-continuity.json"
-      ],
-      "formal_refs": [
-        "docs/spec/formal-migration-correctness.md"
-      ]
-    },
-    {
-      "id": "usability_safety",
-      "obligation_id": "OBL-US-001",
-      "obligation": "Preserve non-programmer usability envelope without weakening invariant guarantees.",
-      "evidence_refs": [
-        "docs/pilot/phase32-obj3-usability-envelope.json",
-        "docs/pilot/phase11-dsl-usability-evidence.json"
-      ],
-      "formal_refs": [
-        "docs/spec/non-programmer-workflows.md"
-      ]
+    "verification": {
+      "executable_check": "scripts/check_phase33_proof_obligation_index.sh",
+      "policy": "claims_without_index_entry_are_rejected",
+      "policy_check": "AX1.2"
     }
+  },
+  "notes": [
+    "Each expanded claim class from Phase 32 is bound to explicit proof obligation and evidence artifact.",
+    "Proof obligations are typed: formal_or_semiformal, governance_semiformal, empirical_semiformal, operational_semiformal.",
+    "Evidence binding specifies the artifact, status field, and pass value for automated verification.",
+    "AX1.2 will add executable checks rejecting claims without required proof-evidence coupling."
   ]
 }
