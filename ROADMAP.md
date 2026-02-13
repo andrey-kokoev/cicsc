@@ -877,7 +877,7 @@ Phase 9 forced-next mapping:
 ### AR3. Evolution-Continuity Hardening
 
 - [x] AR3.1 Freeze evolution-continuity hardening matrix and policy
-- [ ] AR3.2 Add evolution-continuity verification harnesses
+- [x] AR3.2 Add evolution-continuity verification harnesses
 - [ ] AR3.3 Publish evolution-continuity closure report with residual policy
 
 ### AR4. Governance Closure and Phase 28 Gate

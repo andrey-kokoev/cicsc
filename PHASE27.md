@@ -62,7 +62,7 @@ Harden evolution-continuity checks for expanded deployments.
 
 ### TODOs
 - [x] P27.3.1 Freeze evolution-continuity hardening matrix and policy.
-- [ ] P27.3.2 Add evolution-continuity verification harnesses.
+- [x] P27.3.2 Add evolution-continuity verification harnesses.
 - [ ] P27.3.3 Publish evolution-continuity closure report with residual policy.
 
 ### Acceptance
