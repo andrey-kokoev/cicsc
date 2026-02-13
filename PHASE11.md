@@ -73,7 +73,7 @@ Broaden deployment evidence while preserving invariant and governance discipline
 
 ### TODOs
 - [x] P11.4.1 Freeze expanded deployment set and workload contract.
-- [ ] P11.4.2 Run expanded workload suite with parity/migration/ops gates.
+- [x] P11.4.2 Run expanded workload suite with parity/migration/ops gates.
 - [ ] P11.4.3 Capture drift/performance/missing-primitive findings with severity labels.
 - [ ] P11.4.4 Add objective Phase 11 exit checklist and Phase 12 block gate.
 

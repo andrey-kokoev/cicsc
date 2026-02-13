@@ -1,0 +1,11 @@
+{
+  "version": "cicsc/phase11-expanded-workloads-v1",
+  "timestamp_unix": 1770953387,
+  "overall": "pass",
+  "checks": {
+    "reference_workloads":{"status":"pass","log":"docs/pilot/phase11-expanded-workloads.reference_workloads.log"},
+    "parity_continuity":{"status":"pass","log":"docs/pilot/phase11-expanded-workloads.parity_continuity.log"},
+    "migration_continuity":{"status":"pass","log":"docs/pilot/phase11-expanded-workloads.migration_continuity.log"},
+    "operational_slo_continuity":{"status":"pass","log":"docs/pilot/phase11-expanded-workloads.operational_slo_continuity.log"}
+  }
+}
