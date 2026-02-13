@@ -1,0 +1,33 @@
+{
+  "version": "cicsc/phase6-multi-vertical-field-report-v1",
+  "verticals": [
+    "ticketing",
+    "crm"
+  ],
+  "inputs": {
+    "comparative_incidents": "docs/pilot/phase6-comparative-incidents.json",
+    "field_baseline": "docs/pilot/phase6-field-baseline-report.json",
+    "required_gates": "docs/pilot/phase6-required-gates.json"
+  },
+  "incident_disposition": [
+    {
+      "id": "CINC-CONFORMANCE-001",
+      "severity": "high",
+      "status": "closed",
+      "resolution": "W4.2 dual-backend + concurrency required gates are green"
+    },
+    {
+      "id": "CINC-SPEC-USABILITY-001",
+      "severity": "medium",
+      "status": "deferred",
+      "resolution": "Tracked by W3.5 proven-vs-experimental feature-gate boundary"
+    },
+    {
+      "id": "CINC-MIGRATION-001",
+      "severity": "medium",
+      "status": "closed",
+      "resolution": "Closed by W2.4 migration-under-concurrency drill artifact"
+    }
+  ],
+  "unresolved_criticals": []
+}

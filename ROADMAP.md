@@ -277,6 +277,6 @@ Comparative incident mapping:
 
 - [x] W4.1 Define objective Phase 6 exit checklist mapped to artifacts
 - [x] W4.2 Require green dual-backend conformance + concurrency suites
-- [ ] W4.3 Require multi-vertical field report with unresolved criticals closed or explicitly deferred
+- [x] W4.3 Require multi-vertical field report with unresolved criticals closed or explicitly deferred
 - [ ] W4.4 Add CI/doc checks rejecting phase/status drift for Phase 6 artifacts
 - [ ] W4.5 Block Phase 7 unless all checklist items are pass
