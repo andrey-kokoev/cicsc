@@ -1,69 +1,80 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/usr/bin/env python3
+import sys
+from pathlib import Path
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-cd "${ROOT_DIR}"
+import yaml
 
-node <<'NODE'
-const fs = require('node:fs')
-const path = require('node:path')
+ROOT = Path(__file__).resolve().parents[2]
 
-const errors = []
 
-const read = (p) => fs.readFileSync(path.resolve(p), 'utf8')
-const exists = (p) => fs.existsSync(path.resolve(p))
+def load_yaml(rel: str):
+    p = ROOT / rel
+    if not p.exists():
+        raise FileNotFoundError(rel)
+    return yaml.safe_load(p.read_text(encoding="utf-8"))
 
-const objective = read('control-plane/objectives/objective-model.yaml')
-const capability = read('control-plane/capabilities/capability-model.yaml')
-const execution = read('control-plane/execution/execution-ledger.yaml')
-const gate = read('control-plane/gates/gate-model.yaml')
 
-const objectiveIds = new Set([...objective.matchAll(/^\s*-\s+id:\s+(OBJ\d+)\s*$/gm)].map((m) => m[1]))
-if (objectiveIds.size === 0) errors.push('objective-model: no OBJ ids found')
+def path_exists(rel: str) -> bool:
+    return (ROOT / rel).exists()
 
-for (const m of capability.matchAll(/objective_refs:\s*\[([^\]]*)\]/g)) {
-  const refs = m[1].split(',').map((s) => s.trim()).filter(Boolean)
-  for (const ref of refs) {
-    if (!objectiveIds.has(ref)) errors.push(`capability-model: unknown objective ref ${ref}`)
-  }
-}
 
-for (const m of objective.matchAll(/\n\s*ref:\s*([^\n]+)\n/g)) {
-  const ref = m[1].trim()
-  if (!exists(ref)) errors.push(`objective-model: missing referenced artifact ${ref}`)
-}
-for (const m of capability.matchAll(/\n\s*ref:\s*([^\n]+)\n/g)) {
-  const ref = m[1].trim()
-  if (!exists(ref)) errors.push(`capability-model: missing referenced artifact ${ref}`)
-}
+def main() -> int:
+    errors = []
 
-const phaseMatches = [...execution.matchAll(/^\s*-\s+id:\s+([A-Z]{1,2})\s*\n\s*number:\s*(\d+)\s*\n\s*title:\s*([^\n]+)\n\s*status:\s*(\w+)\s*$/gm)]
-if (phaseMatches.length === 0) errors.push('execution-ledger: no phases found')
+    objective = load_yaml("control-plane/objectives/objective-model.yaml")
+    capability = load_yaml("control-plane/capabilities/capability-model.yaml")
+    execution = load_yaml("control-plane/execution/execution-ledger.yaml")
+    gate = load_yaml("control-plane/gates/gate-model.yaml")
 
-const seenIds = new Set()
-const seenNumbers = new Set()
-let last = -1
-for (const m of phaseMatches) {
-  const id = m[1]
-  const number = Number(m[2])
-  if (seenIds.has(id)) errors.push(`execution-ledger: duplicate phase id ${id}`)
-  if (seenNumbers.has(number)) errors.push(`execution-ledger: duplicate phase number ${number}`)
-  if (number <= last) errors.push(`execution-ledger: phase numbers not strictly increasing at ${id}`)
-  seenIds.add(id)
-  seenNumbers.add(number)
-  last = number
-}
+    objective_ids = {o.get("id") for o in objective.get("objectives", [])}
+    for cap in capability.get("capabilities", []):
+      for ref in cap.get("objective_refs", []):
+        if ref not in objective_ids:
+          errors.append(f"capability-model: unknown objective ref {ref}")
 
-for (const m of gate.matchAll(/^\s*-\s+(scripts\/[^\s]+)\s*$/gm)) {
-  const ref = m[1]
-  if (!exists(ref)) errors.push(`gate-model: missing required script ${ref}`)
-}
+    for o in objective.get("objectives", []):
+      for signal in o.get("success_signals", []):
+        ref = signal.get("ref")
+        if isinstance(ref, str) and not path_exists(ref):
+          errors.append(f"objective-model: missing referenced artifact {ref}")
 
-if (errors.length) {
-  console.error('cross-model validation failed')
-  for (const e of errors) console.error(`- ${e}`)
-  process.exit(1)
-}
+    for cap in capability.get("capabilities", []):
+      for check in cap.get("observable_checks", []):
+        ref = check.get("ref")
+        if isinstance(ref, str) and not path_exists(ref):
+          errors.append(f"capability-model: missing referenced artifact {ref}")
 
-console.log('cross-model validation passed')
-NODE
+    seen_ids = set()
+    seen_numbers = set()
+    last = -1
+    for ph in execution.get("phases", []):
+      pid = ph.get("id")
+      num = ph.get("number")
+      if pid in seen_ids:
+        errors.append(f"execution-ledger: duplicate phase id {pid}")
+      if num in seen_numbers:
+        errors.append(f"execution-ledger: duplicate phase number {num}")
+      if isinstance(num, int):
+        if num <= last:
+          errors.append(f"execution-ledger: phase numbers not strictly increasing at {pid}")
+        last = num
+      seen_ids.add(pid)
+      seen_numbers.add(num)
+
+    for g in gate.get("gates", []):
+      for script in g.get("required_scripts", []):
+        if isinstance(script, str) and not path_exists(script):
+          errors.append(f"gate-model: missing required script {script}")
+
+    if errors:
+      print("cross-model validation failed", file=sys.stderr)
+      for e in errors:
+        print(f"- {e}", file=sys.stderr)
+      return 1
+
+    print("cross-model validation passed")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

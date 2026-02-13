@@ -55,6 +55,10 @@ Until explicit migration is completed:
 Sync gate:
 - `scripts/check_control_plane_sync.sh`
   - validates models, regenerates control-plane views, and fails on generated-view drift.
+- `scripts/check_roadmap_structure_sync.sh`
+  - validates that `ROADMAP.md` phase headers match control-plane execution structure for non-planned phases.
+- `scripts/check_status_source_mode.sh`
+  - enforces bootstrap status source mode (`roadmap_md_canonical`) until explicit cutover.
 
 ## Status-Data Discipline
 
@@ -81,3 +85,4 @@ Policy enforcement:
 Generated views:
 - `control-plane/views/phase-level-roadmap.generated.md`
 - `control-plane/views/journey-vector.generated.md`
+- `control-plane/views/roadmap-structure.generated.md`

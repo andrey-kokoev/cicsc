@@ -45,6 +45,10 @@ For a checkbox marked done in `ROADMAP.md`:
   - validates that non-canonical planning/navigation docs do not carry status checkboxes.
 - `scripts/check_control_plane_sync.sh`
   - validates control-plane models and generated views remain synchronized.
+- `scripts/check_roadmap_structure_sync.sh`
+  - validates roadmap phase-header structure against control-plane execution model.
+- `scripts/check_status_source_mode.sh`
+  - enforces bootstrap status-source mode while roadmap remains canonical.
 - `scripts/check_generated_artifacts_policy.sh`
   - validates generated-artifact markers for `*.generated.*` files.
 - `scripts/check_category_model_conformance.sh`
