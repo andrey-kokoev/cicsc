@@ -547,7 +547,7 @@ Phase 9 forced-next mapping:
 ### AF2. Objective Scorecard Expansion and Closure
 
 - [x] AF2.1 Freeze objective scorecard matrix and evidence contract
-- [ ] AF2.2 Run objective scorecard required gates
+- [x] AF2.2 Run objective scorecard required gates
 - [ ] AF2.3 Publish objective closure report with findings disposition
 
 ### AF3. Deferred-Surface and Deployment Discipline Hardening

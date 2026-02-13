@@ -48,7 +48,7 @@ Consolidate objective scorecard evidence and enforce pass/fail closure rules.
 
 ### TODOs
 - [x] P15.2.1 Freeze objective scorecard matrix and evidence contract.
-- [ ] P15.2.2 Run objective scorecard required gates.
+- [x] P15.2.2 Run objective scorecard required gates.
 - [ ] P15.2.3 Publish objective closure report with findings disposition.
 
 ### Acceptance
