@@ -42,6 +42,18 @@ Precedence rule:
 - if there is tension between execution convenience and genesis semantics,
   preserve genesis semantics and adjust process artifacts.
 
+## Prose-to-Mechanism Boundary
+
+`docs/genesis/*` is human-language semantic intent.
+It is intentionally prose-first and not treated as machine-enforced status data.
+
+Execution agents must use this boundary:
+- ingest conceptual intent from `docs/genesis/*`,
+- translate that intent into structured control-plane artifacts (`control-plane/*`),
+- enforce behavior through scripts/gates over structured artifacts only.
+
+Do not treat prose files as canonical status ledgers or gate inputs.
+
 ---
 
 ## Working Style

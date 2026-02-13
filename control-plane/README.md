@@ -10,6 +10,14 @@ Provide a single coherent model stack for:
 - execution sequencing and status (when/how),
 - closure gates (how completion is validated).
 
+## Boundary to Genesis
+
+`docs/genesis/*` is the conceptual prose domain.
+`control-plane/*` is the mechanized contract domain.
+
+Control-plane models are not replacements for genesis prose; they are structured
+projections used for executable validation and gating.
+
 ## Model Ownership
 
 - `objectives/objective-model.yaml`

@@ -2,6 +2,10 @@
 
 This directory captures the conceptual top of the project.
 
+Genesis documents are intentionally prose artifacts.
+They define semantic intent for humans (and model-ingesting agents), then that
+intent is projected into machine-checkable control-plane models.
+
 In this repository, these four documents/functions are treated as a strict stack,
 plus one progression method:
 
