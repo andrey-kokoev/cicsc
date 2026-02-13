@@ -1,0 +1,23 @@
+{
+  "version": "cicsc/phase21-baseline-continuity-v1",
+  "timestamp_unix": 1772311200,
+  "overall": "pass",
+  "checks": {
+    "phase20_exit_checklist": {
+      "basis": "docs/pilot/phase20-exit-checklist.json",
+      "status": "pass"
+    },
+    "phase21_gate_open": {
+      "basis": "docs/pilot/phase21-gate.json",
+      "status": "pass"
+    },
+    "multi_environment_assurance_continuity": {
+      "basis": "docs/pilot/phase20-multi-environment-assurance-closure-report.json",
+      "status": "pass"
+    },
+    "scale_transition_continuity": {
+      "basis": "docs/pilot/phase20-scale-transition-closure-report.json",
+      "status": "pass"
+    }
+  }
+}

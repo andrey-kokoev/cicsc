@@ -32,7 +32,7 @@ Start Phase 21 from explicit scope, owners, and reproducible baseline truth.
 
 ### TODOs
 - [x] P21.1.1 Freeze Phase 21 scope and owner contract.
-- [ ] P21.1.2 Publish Phase 21 baseline continuity snapshot.
+- [x] P21.1.2 Publish Phase 21 baseline continuity snapshot.
 - [ ] P21.1.3 Add Phase 21 status register with owner/date discipline.
 
 ### Acceptance
