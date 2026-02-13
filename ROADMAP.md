@@ -568,7 +568,7 @@ Phase 9 forced-next mapping:
 ### AG1. Scope Freeze and Baseline Continuity
 
 - [x] AG1.1 Freeze Phase 16 scope and owner contract
-- [ ] AG1.2 Publish Phase 16 baseline continuity snapshot
+- [x] AG1.2 Publish Phase 16 baseline continuity snapshot
 - [ ] AG1.3 Add Phase 16 status register with owner/date discipline
 
 ### AG2. External Validation and Evidence Expansion

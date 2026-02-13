@@ -32,7 +32,7 @@ Start Phase 16 from explicit scope, owners, and reproducible baseline truth.
 
 ### TODOs
 - [x] P16.1.1 Freeze Phase 16 scope and owner contract.
-- [ ] P16.1.2 Publish Phase 16 baseline continuity snapshot.
+- [x] P16.1.2 Publish Phase 16 baseline continuity snapshot.
 - [ ] P16.1.3 Add Phase 16 status register with owner/date discipline.
 
 ### Acceptance
