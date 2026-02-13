@@ -66,7 +66,7 @@ Tighten the declared concurrency contract with stronger tests and explicit bound
 Move migration/cutover from workflow confidence to protocol-level hard guarantees.
 
 ### TODOs
-- [ ] P7.3.1 Freeze migration protocol contract (preflight/dry-run/cutover/rollback) as executable policy.
+- [x] P7.3.1 Freeze migration protocol contract (preflight/dry-run/cutover/rollback) as executable policy.
 - [ ] P7.3.2 Add tenant-batch migration drills with injected faults and deterministic recovery assertions.
 - [ ] P7.3.3 Add SQL execution-vs-oracle differential checks for migrated histories (post-cutover).
 - [ ] P7.3.4 Add operator SLO/error-budget artifact for migration and verify operations.

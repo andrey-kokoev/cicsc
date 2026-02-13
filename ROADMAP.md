@@ -307,7 +307,7 @@ Phase 7 parity delta mapping:
 
 ### X3. Migration and Operational Contract Hardening
 
-- [ ] X3.1 Freeze executable migration protocol contract
+- [x] X3.1 Freeze executable migration protocol contract
 - [ ] X3.2 Add tenant-batch fault-injected migration drills with deterministic recovery checks
 - [ ] X3.3 Add post-cutover SQL execution-vs-oracle differential checks
 - [ ] X3.4 Add migration/verify SLO and error-budget artifact
