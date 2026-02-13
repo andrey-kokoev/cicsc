@@ -12,30 +12,100 @@ import re
 
 root = Path('.')
 roadmap = (root / 'ROADMAP.md').read_text(encoding='utf-8').splitlines()
-expected_md = (root / 'control-plane/views/roadmap-structure.generated.md').read_text(encoding='utf-8').splitlines()
+expected = (root / 'control-plane/views/roadmap-structure.generated.md').read_text(encoding='utf-8').splitlines()
 
-roadmap_phase_re = re.compile(r"^## ([A-Z]{1,2})\. Phase (\d+):\s+(.+)$")
-expected_row_re = re.compile(r"^\| ([A-Z]{1,2}) \| (\d+) \| (.+) \| (\w+) \|$")
+phase_re = re.compile(r"^## ([A-Z]{1,2})\. Phase (\d+):\s+(.+)$")
+milestone_re = re.compile(r"^### ([A-Z]{1,2}\d+)\.\s+(.+)$")
+checkbox_re = re.compile(r"^- \[(x| )\] ([A-Z]{1,2}\d+\.\d+)\s+(.+)$")
 
-roadmap_map = {}
-for line in roadmap:
-    m = roadmap_phase_re.match(line)
-    if m:
-        roadmap_map[(m.group(1), int(m.group(2)))] = m.group(3).strip()
+exp_phase_re = re.compile(r"^## ([A-Z]{1,2})\. Phase (\d+):\s+(.+)$")
+exp_milestone_re = re.compile(r"^### ([A-Z]{1,2}\d+)\.\s+(.+)$")
+exp_checkbox_re = re.compile(r"^- ([A-Z]{1,2}\d+\.\d+)\s+(.+)$")
 
+
+def parse_expected(lines):
+    phases = {}
+    order = []
+    curp = None
+    curm = None
+    for line in lines:
+        m = exp_phase_re.match(line)
+        if m:
+            key = (m.group(1), int(m.group(2)))
+            phases[key] = {"title": m.group(3).strip(), "milestones": [], "milestone_map": {}}
+            order.append(key)
+            curp = key
+            curm = None
+            continue
+        m = exp_milestone_re.match(line)
+        if m and curp:
+            mid = m.group(1)
+            mt = m.group(2).strip()
+            phases[curp]["milestones"].append(mid)
+            phases[curp]["milestone_map"][mid] = {"title": mt, "checkboxes": []}
+            curm = mid
+            continue
+        m = exp_checkbox_re.match(line)
+        if m and curp and curm:
+            phases[curp]["milestone_map"][curm]["checkboxes"].append((m.group(1), m.group(2).strip()))
+    return order, phases
+
+
+def parse_roadmap(lines, expected_phase_keys):
+    phases = {}
+    curp = None
+    curm = None
+    for line in lines:
+        m = phase_re.match(line)
+        if m:
+            key = (m.group(1), int(m.group(2)))
+            curp = key if key in expected_phase_keys else None
+            curm = None
+            if curp:
+                phases[curp] = {"title": m.group(3).strip(), "milestones": [], "milestone_map": {}}
+            continue
+        if not curp:
+            continue
+        m = milestone_re.match(line)
+        if m:
+            mid = m.group(1)
+            mt = m.group(2).strip()
+            phases[curp]["milestones"].append(mid)
+            phases[curp]["milestone_map"][mid] = {"title": mt, "checkboxes": []}
+            curm = mid
+            continue
+        m = checkbox_re.match(line)
+        if m and curm:
+            phases[curp]["milestone_map"][curm]["checkboxes"].append((m.group(2), m.group(3).strip()))
+    return phases
+
+
+order, exp = parse_expected(expected)
+actual = parse_roadmap(roadmap, set(order))
 errors = []
-for line in expected_md:
-    m = expected_row_re.match(line)
-    if not m:
+
+for key in order:
+    if key not in actual:
+        errors.append(f"missing phase header in ROADMAP.md: {key[0]} Phase {key[1]}")
         continue
-    pid, num, title, _status = m.group(1), int(m.group(2)), m.group(3).strip(), m.group(4)
-    if (pid, num) not in roadmap_map:
-        errors.append(f"missing phase header in ROADMAP.md: {pid} Phase {num}")
-        continue
-    if roadmap_map[(pid, num)] != title:
+    if actual[key]["title"] != exp[key]["title"]:
+        errors.append(f"phase title mismatch for {key[0]} Phase {key[1]}: roadmap='{actual[key]['title']}' expected='{exp[key]['title']}'")
+
+    if actual[key]["milestones"] != exp[key]["milestones"]:
         errors.append(
-            f"phase title mismatch for {pid} Phase {num}: roadmap='{roadmap_map[(pid, num)]}' expected='{title}'"
+            f"milestone order/id mismatch for {key[0]} Phase {key[1]}: roadmap={actual[key]['milestones']} expected={exp[key]['milestones']}"
         )
+        continue
+
+    for mid in exp[key]["milestones"]:
+        if actual[key]["milestone_map"][mid]["title"] != exp[key]["milestone_map"][mid]["title"]:
+            errors.append(
+                f"milestone title mismatch for {mid}: roadmap='{actual[key]['milestone_map'][mid]['title']}' expected='{exp[key]['milestone_map'][mid]['title']}'"
+            )
+        if actual[key]["milestone_map"][mid]["checkboxes"] != exp[key]["milestone_map"][mid]["checkboxes"]:
+            errors.append(
+                f"checkbox structure mismatch for {mid}: roadmap={actual[key]['milestone_map'][mid]['checkboxes']} expected={exp[key]['milestone_map'][mid]['checkboxes']}"
+            )
 
 if errors:
     print('roadmap structure sync check failed')

@@ -68,20 +68,30 @@ journey = "\n".join([
     "",
 ])
 
-structure = "\n".join([
+structure_lines = [
     "# AUTO-GENERATED FILE. DO NOT EDIT.",
     "# Source: control-plane/execution/execution-ledger.yaml",
     "# Generator: control-plane/scripts/generate_views.sh",
     "",
     "# Roadmap Structure (Generated)",
     "",
-    "This file captures phase headers expected to exist in `ROADMAP.md` for non-planned phases.",
+    "This file captures expected phase/milestone/checkbox structure in `ROADMAP.md` for non-planned phases.",
     "",
-    "| Phase ID | Number | Title | Status |",
-    "|---|---:|---|---|",
-    *[f"| {p['id']} | {p['number']} | {p['title']} | {p['status']} |" for p in phases if p.get('status') != 'planned'],
-    "",
-])
+]
+
+for p in phases:
+    if p.get('status') == 'planned':
+        continue
+    structure_lines.append(f"## {p['id']}. Phase {p['number']}: {p['title']}")
+    structure_lines.append("")
+    for m in p.get('milestones', []):
+        structure_lines.append(f"### {m['id']}. {m['title']}")
+        structure_lines.append("")
+        for cb in m.get('checkboxes', []):
+            structure_lines.append(f"- {cb['id']} {cb['title']}")
+        structure_lines.append("")
+
+structure = "\n".join(structure_lines)
 
 views = root / 'control-plane' / 'views'
 views.mkdir(parents=True, exist_ok=True)

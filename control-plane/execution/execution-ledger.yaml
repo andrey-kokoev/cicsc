@@ -7,7 +7,86 @@ phases:
     number: 29
     title: Assurance Expansion and Governance Continuity Discipline
     status: complete
+    milestones:
+      - id: AT1
+        title: Scope Freeze and Baseline Continuity
+        checkboxes:
+          - id: AT1.1
+            title: Freeze Phase 29 scope and owner contract
+          - id: AT1.2
+            title: Publish Phase 29 baseline continuity snapshot
+          - id: AT1.3
+            title: Add Phase 29 status register with owner/date discipline
+      - id: AT2
+        title: Assurance-Expansion Validation Closure
+        checkboxes:
+          - id: AT2.1
+            title: Freeze assurance-expansion matrix and evidence contract
+          - id: AT2.2
+            title: Run assurance-expansion required gates
+          - id: AT2.3
+            title: Publish assurance-expansion closure report with findings disposition
+      - id: AT3
+        title: Governance-Continuity Hardening
+        checkboxes:
+          - id: AT3.1
+            title: Freeze governance-continuity hardening matrix and policy
+          - id: AT3.2
+            title: Add governance-continuity verification harnesses
+          - id: AT3.3
+            title: Publish governance-continuity closure report with residual policy
+      - id: AT4
+        title: Governance Closure and Phase 30 Gate
+        checkboxes:
+          - id: AT4.1
+            title: Define objective Phase 29 exit checklist mapped to artifacts
+          - id: AT4.2
+            title: Add PHASE29↔ROADMAP drift consistency gate
+          - id: AT4.3
+            title: Add Phase 30 block gate from Phase 29 checklist
+          - id: AT4.4
+            title: Publish Phase 29 closure report and mark exit criteria
+
   - id: AU
     number: 30
     title: Spec DSL Completion and Authoring Safety
     status: planned
+    milestones:
+      - id: AU1
+        title: DSL Capability Freeze
+        checkboxes:
+          - id: AU1.1
+            title: Freeze final DSL surface (constructs, exclusions, feature gates)
+          - id: AU1.2
+            title: Add authoritative grammar and examples corpus for non-programmer operators
+          - id: AU1.3
+            title: Lock compiler error taxonomy for authoring failures
+      - id: AU2
+        title: Compiler Soundness for DSL Layer
+        checkboxes:
+          - id: AU2.1
+            title: Add DSL-to-IR coverage matrix with required negative cases
+          - id: AU2.2
+            title: Add conformance tests ensuring DSL compile output matches canonical IR intent
+          - id: AU2.3
+            title: Publish DSL soundness closure report with unresolved-gap policy
+      - id: AU3
+        title: Operator Ergonomics and Safety
+        checkboxes:
+          - id: AU3.1
+            title: Add authoring lint profile for ambiguity and unsupported constructs
+          - id: AU3.2
+            title: Add task-oriented workflow templates
+          - id: AU3.3
+            title: Publish ergonomics evidence report with measured operator success criteria
+      - id: AU4
+        title: Governance Closure and Phase 31 Gate
+        checkboxes:
+          - id: AU4.1
+            title: Define objective Phase 30 exit checklist mapped to artifacts
+          - id: AU4.2
+            title: Add PHASE30↔ROADMAP drift consistency gate
+          - id: AU4.3
+            title: Add Phase 31 block gate from Phase 30 checklist
+          - id: AU4.4
+            title: Publish Phase 30 closure report and mark exit criteria
