@@ -63,10 +63,10 @@ Strengthen operator and adoption readiness as first-class governable artifacts.
 ### TODOs
 - [x] P14.3.1 Freeze operator-readiness matrix (runbooks, SLO, diagnostics).
 - [x] P14.3.2 Add readiness verification harnesses.
-- [ ] P14.3.3 Publish readiness closure report with residual policy.
+- [x] P14.3.3 Publish readiness closure report with residual policy.
 
 ### Acceptance
-- [ ] Operator readiness remains explicit, test-backed, and governed.
+- [x] Operator readiness remains explicit, test-backed, and governed.
 
 ---
 

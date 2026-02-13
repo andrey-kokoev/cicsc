@@ -527,7 +527,7 @@ Phase 9 forced-next mapping:
 
 - [x] AE3.1 Freeze operator-readiness matrix (runbooks, SLO, diagnostics)
 - [x] AE3.2 Add readiness verification harnesses
-- [ ] AE3.3 Publish readiness closure report with residual policy
+- [x] AE3.3 Publish readiness closure report with residual policy
 
 ### AE4. Governance Closure and Phase 15 Gate
 
