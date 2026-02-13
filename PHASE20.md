@@ -47,7 +47,7 @@ Close multi-environment assurance validation with explicit evidence contract and
 
 ### TODOs
 - [x] P20.2.1 Freeze multi-environment assurance matrix and evidence contract.
-- [ ] P20.2.2 Run multi-environment assurance required gates.
+- [x] P20.2.2 Run multi-environment assurance required gates.
 - [ ] P20.2.3 Publish multi-environment assurance closure report with findings disposition.
 
 ### Acceptance
