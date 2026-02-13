@@ -27,7 +27,7 @@ Reach a state where:
 Begin Phase 12 from explicit scope/ownership and reproducible green baseline.
 
 ### TODOs
-- [ ] P12.1.1 Freeze Phase 12 scope and owner contract.
+- [x] P12.1.1 Freeze Phase 12 scope and owner contract.
 - [ ] P12.1.2 Publish Phase 12 baseline continuity snapshot.
 - [ ] P12.1.3 Add Phase 12 status register with owner/date discipline.
 

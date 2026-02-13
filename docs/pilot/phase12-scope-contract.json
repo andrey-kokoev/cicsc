@@ -1,0 +1,30 @@
+{
+  "version": "cicsc/phase12-scope-contract-v1",
+  "timestamp_unix": 1771054200,
+  "phase": "phase12",
+  "tracks": [
+    {
+      "id": "P12-DEPLOYMENT-GENERALIZATION",
+      "goal": "Broaden deployment evidence across additional domains without invariant regressions.",
+      "owner": "phase12-ops-owner",
+      "target_date": "2026-06-10"
+    },
+    {
+      "id": "P12-PARITY-ENVELOPE-WIDENING",
+      "goal": "Widen declared parity envelope under differential conformance discipline.",
+      "owner": "phase12-parity-owner",
+      "target_date": "2026-06-17"
+    },
+    {
+      "id": "P12-GOVERNANCE-CLOSURE",
+      "goal": "Close Phase 12 with objective checklist and enforce Phase 13 gate.",
+      "owner": "phase12-governance-owner",
+      "target_date": "2026-06-24"
+    }
+  ],
+  "guardrails": [
+    "No weakening of compile-time rejection for unsupported surface",
+    "No bundle-specific runtime logic",
+    "One-checkbox-one-commit for Phase 12 checkboxes"
+  ]
+}
