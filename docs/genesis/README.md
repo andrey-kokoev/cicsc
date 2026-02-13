@@ -14,6 +14,7 @@ plus one progression method:
 3. `docs/genesis/constructive-invariance-evolution-control-plane.md` + `control-plane/README.md` (with `control-plane/*` models)
 4. `docs/genesis/worktree-mediated-constructive-collaboration.md` + `control-plane/collaboration/*`
 5. `docs/genesis/constructive-accretion-method.md`
+6. `docs/genesis/on-agent-ergonomics.md`
 
 Where:
 - `CIS` = Constructively Invariant Systems
@@ -21,6 +22,7 @@ Where:
 - `CIECP` = Constructive-Invariance Evolution Control Plane
 - `WMCC` = Worktree-Mediated Constructive Collaboration
 - `CAM` = Constructive Accretion Method
+- `AE` = Agent Ergonomics
 
 ## What They Really Are
 
@@ -78,6 +80,7 @@ Meaning:
 - CIECP must never redefine CIS/CICSC semantics; it only operationalizes and enforces them.
 - WMCC must never redefine CIECP policy semantics; it only constrains collaboration execution paths.
 - CAM is orthogonal to the stack: it constrains the sequencing discipline used to grow all layers.
+- AE is orthogonal to the stack: it constrains how executable collaboration is made low-friction without changing semantics.
 
 ## Repo-Level Practical Rule
 
