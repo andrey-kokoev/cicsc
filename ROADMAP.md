@@ -498,7 +498,7 @@ Phase 9 forced-next mapping:
 
 ### AD3. Migration and Parity Hardening at Scale
 
-- [ ] AD3.1 Freeze migration+parity hardening matrix
+- [x] AD3.1 Freeze migration+parity hardening matrix
 - [ ] AD3.2 Add differential harnesses for scale hardening matrix
 - [ ] AD3.3 Publish hardening closure report with residual policy
 
