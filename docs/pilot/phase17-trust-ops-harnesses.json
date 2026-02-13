@@ -1,0 +1,11 @@
+{
+  "version": "cicsc/phase17-trust-ops-harnesses-v1",
+  "timestamp_unix": 1770989165,
+  "overall": "pass",
+  "checks": {
+    "phase17_baseline_status":{"status":"pass","log":"docs/pilot/phase17-trust-ops-harnesses.phase17_baseline_status.log"},
+    "field_program_closure_status":{"status":"pass","log":"docs/pilot/phase17-trust-ops-harnesses.field_program_closure_status.log"},
+    "phase17_gate_status":{"status":"pass","log":"docs/pilot/phase17-trust-ops-harnesses.phase17_gate_status.log"},
+    "runbook_operator_contract":{"status":"pass","log":"docs/pilot/phase17-trust-ops-harnesses.runbook_operator_contract.log"}
+  }
+}
