@@ -1,0 +1,45 @@
+{
+  "version": "cicsc/phase20-multi-environment-assurance-matrix-v1",
+  "timestamp_unix": 1771708200,
+  "tracks": [
+    {
+      "id": "multi_env_semantic_continuity",
+      "scope": "semantic_continuity",
+      "required_evidence": [
+        "docs/pilot/phase19-deployment-assurance-closure-report.json",
+        "docs/pilot/phase18-expansion-proof-closure-report.json",
+        "docs/pilot/phase20-multi-environment-assurance-closure-report.json"
+      ]
+    },
+    {
+      "id": "multi_env_backend_parity",
+      "scope": "backend_parity",
+      "required_evidence": [
+        "docs/pilot/phase19-runtime-reliability-closure-report.json",
+        "docs/pilot/phase18-production-continuity-closure-report.json",
+        "docs/pilot/phase20-multi-environment-assurance-closure-report.json"
+      ]
+    },
+    {
+      "id": "multi_env_operational_readiness",
+      "scope": "operations",
+      "required_evidence": [
+        "docs/pilot/phase19-runtime-reliability-harnesses.json",
+        "docs/pilot/phase18-production-continuity-harnesses.json",
+        "docs/pilot/phase20-scale-transition-harnesses.json"
+      ]
+    }
+  ],
+  "evidence_contract": {
+    "required_gates": [
+      "phase19_doc_consistency",
+      "phase19_deployment_assurance_required_gates",
+      "phase20_baseline_continuity"
+    ],
+    "must_capture": [
+      "assurance_findings",
+      "disposition_status",
+      "residual_policy"
+    ]
+  }
+}

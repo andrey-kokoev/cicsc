@@ -681,7 +681,7 @@ Phase 9 forced-next mapping:
 
 ### AK2. Multi-Environment Assurance Validation Closure
 
-- [ ] AK2.1 Freeze multi-environment assurance matrix and evidence contract
+- [x] AK2.1 Freeze multi-environment assurance matrix and evidence contract
 - [ ] AK2.2 Run multi-environment assurance required gates
 - [ ] AK2.3 Publish multi-environment assurance closure report with findings disposition
 
