@@ -1,0 +1,29 @@
+{
+  "version": "cicsc/phase16-expansion-hardening-matrix-v1",
+  "timestamp_unix": 1771083000,
+  "items": [
+    {
+      "id": "multi_tenant_expansion_readiness",
+      "class": "ops",
+      "status": "in_scope",
+      "evidence_target": "phase16_expansion_harnesses"
+    },
+    {
+      "id": "deployment_governance_expansion",
+      "class": "governance",
+      "status": "in_scope",
+      "evidence_target": "phase16_doc_consistency_and_gate_checks"
+    },
+    {
+      "id": "external_validation_rollforward",
+      "class": "validation",
+      "status": "in_scope",
+      "evidence_target": "phase16_external_validation_closure"
+    }
+  ],
+  "policy": {
+    "must_have_executable_evidence": true,
+    "deferred_requires_owner_date": true,
+    "no_invariant_regressions_allowed": true
+  }
+}
