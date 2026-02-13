@@ -49,11 +49,11 @@ Raise concurrency guarantees from implementation behavior to formalized contract
 - [x] P6.2.2 Add causality/partial-order replay conformance suite for declared model.
 - [x] P6.2.3 Add deterministic conflict outcome matrix (abort/retry/merge) with proofs/tests per case.
 - [x] P6.2.4 Add migration-under-concurrency drill covering pause/migrate/resume under concurrent load.
-- [ ] P6.2.5 Publish updated isolation/concurrency normative note with scoped exclusions.
+- [x] P6.2.5 Publish updated isolation/concurrency normative note with scoped exclusions.
 
 ### Acceptance
-- [ ] Concurrency claims are artifact-backed and test/proof linked.
-- [ ] Unsupported concurrent behaviors are rejected or explicitly documented as out of scope.
+- [x] Concurrency claims are artifact-backed and test/proof linked.
+- [x] Unsupported concurrent behaviors are rejected or explicitly documented as out of scope.
 
 ---
 

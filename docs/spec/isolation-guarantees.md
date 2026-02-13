@@ -1,41 +1,48 @@
-# CICSC Isolation Guarantees (Scoped)
+# CICSC Isolation and Concurrency Guarantees (Phase 6 Scoped)
 
-This document states the current, evidence-backed isolation surface.
+This document states the current, evidence-backed isolation/concurrency surface
+for Phase 6 and its explicit exclusion boundary.
+
+## Normative Contract Artifact
+
+- `docs/pilot/phase6-concurrency-contract.json`
+- `docs/spec/concurrency-model-contract.md`
+
+The supported model is `stream_serializable_with_scoped_cross_stream_behavior`.
+Stream identity is `(tenantId, entityType, entityId)`.
 
 ## Formal Artifacts
 
-Lean file:
 - `lean/Cicsc/Core/Semantics/Isolation.lean`
+- `lean/Cicsc/Core/Semantics/CausalityReplay.lean`
 
 Key theorems currently available:
 - `snapshot_no_dirty_reads`
 - `writeWrite_conflict_abort_or_serialize`
-
-These theorems are the authoritative formal basis for current claims.
+- `replay_stream_preserves_happensBefore_order`
+- `replay_deterministic_on_causallyEquivalent_streams`
 
 ## Executable Evidence
 
-Test suites:
+- `docs/pilot/phase6-concurrency-conformance.json`
+- `docs/pilot/phase6-migration-concurrency-drill.json`
 - `tests/concurrency/transaction-model.test.ts`
 - `tests/concurrency/causality-replay.test.ts`
+- `tests/oracle/replay-determinism-multistream.test.ts`
+- `tests/oracle/migration-concurrency-drill.test.ts`
 
-Current tested scenarios include:
-- per-stream sequence isolation behavior,
-- write-write conflict abort behavior in the test executor model,
-- causal ordering/replay determinism checks.
+## Supported Guarantee Scope
 
-## Current Guarantee Scope
+- Per-stream append order is monotonic by `seq`.
+- Replay consumes only events matching exact stream identity.
+- Same-stream write/write conflict outcome is deterministic: abort-or-serialize.
+- Cross-stream interleaving is allowed and does not imply a global total order.
+- Pause/migrate/resume protocol rejects writes while paused and resumes on the
+  migrated version.
 
-- Snapshot/read consistency is claimed only within the formal model and theorem
-  premises in `Isolation.lean`.
-- Conflict behavior is claimed only as expressed by
-  `writeWrite_conflict_abort_or_serialize`.
-- Cross-backend operational isolation behavior is not fully specified here and
-  remains an implementation-level responsibility.
+## Explicit Scoped Exclusions
 
-## Explicit Non-Claims
-
-- This document does not claim full serializability.
-- This document does not claim distributed transaction semantics.
-- This document does not define backend-specific lock-manager behavior.
-
+- No distributed transaction guarantee.
+- No full global serializability claim across distinct streams.
+- No backend lock-manager equivalence claim.
+- No cross-tenant causality claim.
