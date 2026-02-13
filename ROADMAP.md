@@ -633,7 +633,7 @@ Phase 9 forced-next mapping:
 
 ### AI3. Production-Grade Continuity Hardening
 
-- [ ] AI3.1 Freeze production-continuity hardening matrix and policy
+- [x] AI3.1 Freeze production-continuity hardening matrix and policy
 - [ ] AI3.2 Add production-continuity verification harnesses
 - [ ] AI3.3 Publish production continuity closure report with residual policy
 

@@ -61,7 +61,7 @@ Close expansion-proof validation with explicit evidence contract and findings go
 Harden production continuity checks for scaled deployments.
 
 ### TODOs
-- [ ] P18.3.1 Freeze production-continuity hardening matrix and policy.
+- [x] P18.3.1 Freeze production-continuity hardening matrix and policy.
 - [ ] P18.3.2 Add production-continuity verification harnesses.
 - [ ] P18.3.3 Publish production continuity closure report with residual policy.
 
