@@ -525,7 +525,7 @@ Phase 9 forced-next mapping:
 
 ### AE3. Adoption and Operator-Readiness Hardening
 
-- [ ] AE3.1 Freeze operator-readiness matrix (runbooks, SLO, diagnostics)
+- [x] AE3.1 Freeze operator-readiness matrix (runbooks, SLO, diagnostics)
 - [ ] AE3.2 Add readiness verification harnesses
 - [ ] AE3.3 Publish readiness closure report with residual policy
 
