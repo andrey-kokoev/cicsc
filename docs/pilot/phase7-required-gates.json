@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase7-required-gates-v1",
+  "timestamp_unix": 1770947599,
+  "overall": "pass",
+  "checks": {
+    "parity":{"status":"pass","log":"docs/pilot/phase7-required-gates.parity.log"},
+    "concurrency":{"status":"pass","log":"docs/pilot/phase7-required-gates.concurrency.log"},
+    "migration_protocol":{"status":"pass","log":"docs/pilot/phase7-required-gates.migration_protocol.log"}
+  }
+}
