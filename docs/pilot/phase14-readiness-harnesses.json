@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase14-readiness-harnesses-v1",
+  "timestamp_unix": 1770956768,
+  "overall": "pass",
+  "checks": {
+    "runbook_contract":{"status":"pass","log":"docs/pilot/phase14-readiness-harnesses.runbook_contract.log"},
+    "slo_gate_status":{"status":"pass","log":"docs/pilot/phase14-readiness-harnesses.slo_gate_status.log"},
+    "diagnostics_gate_status":{"status":"pass","log":"docs/pilot/phase14-readiness-harnesses.diagnostics_gate_status.log"}
+  }
+}
