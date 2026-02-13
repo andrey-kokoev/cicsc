@@ -1,0 +1,45 @@
+{
+  "version": "cicsc/phase21-cross-environment-stability-matrix-v1",
+  "timestamp_unix": 1772313000,
+  "tracks": [
+    {
+      "id": "cross_env_semantic_continuity",
+      "scope": "semantic_continuity",
+      "required_evidence": [
+        "docs/pilot/phase20-multi-environment-assurance-closure-report.json",
+        "docs/pilot/phase19-deployment-assurance-closure-report.json",
+        "docs/pilot/phase21-cross-environment-stability-closure-report.json"
+      ]
+    },
+    {
+      "id": "cross_env_backend_parity",
+      "scope": "backend_parity",
+      "required_evidence": [
+        "docs/pilot/phase20-scale-transition-closure-report.json",
+        "docs/pilot/phase19-runtime-reliability-closure-report.json",
+        "docs/pilot/phase21-cross-environment-stability-closure-report.json"
+      ]
+    },
+    {
+      "id": "cross_env_operational_readiness",
+      "scope": "operations",
+      "required_evidence": [
+        "docs/pilot/phase20-scale-transition-harnesses.json",
+        "docs/pilot/phase19-runtime-reliability-harnesses.json",
+        "docs/pilot/phase21-operational-continuity-harnesses.json"
+      ]
+    }
+  ],
+  "evidence_contract": {
+    "required_gates": [
+      "phase20_doc_consistency",
+      "phase20_multi_environment_assurance_required_gates",
+      "phase21_baseline_continuity"
+    ],
+    "must_capture": [
+      "stability_findings",
+      "disposition_status",
+      "residual_policy"
+    ]
+  }
+}

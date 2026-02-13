@@ -46,7 +46,7 @@ Start Phase 21 from explicit scope, owners, and reproducible baseline truth.
 Close cross-environment stability validation with explicit evidence contract and findings governance.
 
 ### TODOs
-- [ ] P21.2.1 Freeze cross-environment stability matrix and evidence contract.
+- [x] P21.2.1 Freeze cross-environment stability matrix and evidence contract.
 - [ ] P21.2.2 Run cross-environment stability required gates.
 - [ ] P21.2.3 Publish cross-environment stability closure report with findings disposition.
 
