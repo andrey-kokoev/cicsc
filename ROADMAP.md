@@ -210,7 +210,7 @@
 - [x] U4.2 Implement tenant-to-bundle/version binding with immutable audit trail
 - [x] U4.3 Implement bundle signature/hash verification on install
 - [x] U4.4 Add lifecycle tests for publish/bind/upgrade/rollback
-- [ ] U4.5 Add policy controls for who may bind or migrate tenant bundles
+- [x] U4.5 Add policy controls for who may bind or migrate tenant bundles
 
 ### U5. Postgres Adapter Semantic Parity
 

@@ -37,6 +37,6 @@
 
 ## Required Operational Controls
 
-- Token protection for bundle/bind admin endpoints.
+- Token protection for bundle/bind/migration admin endpoints (`BUNDLE_CREATE_TOKEN`, `TENANT_BIND_TOKEN`, `TENANT_MIGRATE_TOKEN`).
 - Audit exports retained for policy and migration operations.
 - Regular full-tenant verification runs.

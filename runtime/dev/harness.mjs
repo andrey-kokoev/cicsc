@@ -10,6 +10,7 @@ const env = {
   DB: makeSqliteFileD1(dbPath),
   BUNDLE_CREATE_TOKEN: process.env.CICSC_BUNDLE_CREATE_TOKEN,
   TENANT_BIND_TOKEN: process.env.CICSC_TENANT_BIND_TOKEN,
+  TENANT_MIGRATE_TOKEN: process.env.CICSC_TENANT_MIGRATE_TOKEN,
 }
 
 const server = createServer(async (req, res) => {

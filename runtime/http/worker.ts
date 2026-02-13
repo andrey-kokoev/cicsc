@@ -15,12 +15,14 @@ import { bindTenant } from "../db/tenant-binding"
 import { CompileDiagnosticsError, compileSpecToBundleV0, readSpecBody } from "./compile"
 import { loadTenantBundle } from "./tenant-bundle"
 import { TenantTokenBucketLimiter } from "./rate-limit"
+import { isAuthorized } from "./authz"
 import { applyRowLevelSecurity } from "../view/rls"
 
 export interface Env {
   DB: D1Database
   BUNDLE_CREATE_TOKEN?: string
   TENANT_BIND_TOKEN?: string
+  TENANT_MIGRATE_TOKEN?: string
   RATE_LIMIT_PER_MINUTE?: string
 }
 
@@ -55,6 +57,7 @@ export default {
 
       // POST /install  (idempotent)
       if (url.pathname === "/install" && req.method === "POST") {
+        if (!isAuthorized(req, env.TENANT_MIGRATE_TOKEN)) return jsonErr(403, "forbidden: tenant_migrate")
         const body = (await req.json().catch(() => ({}))) as any
         const tenant_id = String(body.tenant_id ?? "t")
         const loaded = await loadTenantBundle(env.DB as any, tenant_id)
@@ -125,6 +128,7 @@ export default {
 
       // POST /install-from-spec  (compile + persist + bind tenant + install/activate)
       if (url.pathname === "/install-from-spec" && req.method === "POST") {
+        if (!isAuthorized(req, env.TENANT_MIGRATE_TOKEN)) return jsonErr(403, "forbidden: tenant_migrate")
         const body = await readSpecBody(req)
         const bundle = compileSpecToBundleV0(body)
         const irV = bundle.core_ir as CoreIrV0
@@ -341,15 +345,6 @@ function safeParseJson (s: string) {
   } catch {
     return {}
   }
-}
-
-function isAuthorized (req: Request, expectedToken?: string): boolean {
-  if (!expectedToken) return true
-  const auth = req.headers.get("authorization") ?? ""
-  const bearer = auth.startsWith("Bearer ") ? auth.slice("Bearer ".length).trim() : ""
-  const alt = req.headers.get("x-cicsc-token") ?? ""
-  const provided = bearer || alt
-  return provided.length > 0 && provided === expectedToken
 }
 
 let _limiter: TenantTokenBucketLimiter | null = null
