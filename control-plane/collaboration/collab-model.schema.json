@@ -272,9 +272,10 @@
             "type": "array",
             "items": {
               "type": "object",
-              "required": ["ref", "commit", "digest"],
+              "required": ["ref", "evidence_kind_ref", "commit", "digest"],
               "properties": {
                 "ref": { "type": "string" },
+                "evidence_kind_ref": { "type": "string", "pattern": "^EVID_[A-Z0-9_]+$" },
                 "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
                 "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
               },
@@ -319,9 +320,10 @@
             "type": "array",
             "items": {
               "type": "object",
-              "required": ["ref", "commit", "digest"],
+              "required": ["ref", "evidence_kind_ref", "commit", "digest"],
               "properties": {
                 "ref": { "type": "string" },
+                "evidence_kind_ref": { "type": "string", "pattern": "^EVID_[A-Z0-9_]+$" },
                 "commit": { "type": "string", "pattern": "^[0-9a-f]{7,40}$" },
                 "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
               },

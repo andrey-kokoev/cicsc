@@ -19,7 +19,7 @@
       "id": "ASSIGN_PHASE33_AX22_ANTIGRAVITY",
       "agent_ref": "AGENT_ANTIGRAVITY",
       "checkbox_ref": "AX2.2",
-      "claim_kind_ref": "CLAIM_SEMANTIC_INVARIANT",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/antigravity",
       "branch": "phase33.ax2.2",
       "status": "done",

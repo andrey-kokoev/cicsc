@@ -138,7 +138,7 @@ assignments:
   - id: ASSIGN_PHASE33_AX22_ANTIGRAVITY
     agent_ref: AGENT_ANTIGRAVITY
     checkbox_ref: AX2.2
-    claim_kind_ref: CLAIM_SEMANTIC_INVARIANT
+    claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
     worktree: /home/andrey/src/antigravity
     branch: phase33.ax2.2
     status: done
@@ -268,9 +268,11 @@ message_events:
     commit: ffdb218
     evidence_bindings:
       - ref: scripts/check_phase33_proof_evidence_coupling.sh
+        evidence_kind_ref: EVID_SCRIPT
         commit: ffdb218
         digest: sha256:1111111111111111111111111111111111111111111111111111111111111111
       - ref: docs/pilot/phase33-proof-evidence-coupling.json
+        evidence_kind_ref: EVID_GATE_REPORT
         commit: ffdb218
         digest: sha256:2222222222222222222222222222222222222222222222222222222222222222
     notes: Kimi completed AX1.2 outputs with required artifact/script evidence.
@@ -283,9 +285,11 @@ message_events:
     commit: 3a17615
     evidence_bindings:
       - ref: scripts/check_phase33_proof_evidence_coupling.sh
+        evidence_kind_ref: EVID_SCRIPT
         commit: 3a17615
         digest: sha256:3333333333333333333333333333333333333333333333333333333333333333
       - ref: docs/pilot/phase33-proof-evidence-coupling.json
+        evidence_kind_ref: EVID_GATE_REPORT
         commit: 3a17615
         digest: sha256:4444444444444444444444444444444444444444444444444444444444444444
     notes: Main ingested Kimi AX1.2 commit via cherry-pick.
@@ -316,9 +320,11 @@ message_events:
     commit: 7c7d5b3
     evidence_bindings:
       - ref: scripts/phase33_ax22_formalization_gate.sh
+        evidence_kind_ref: EVID_SCRIPT
         commit: 7c7d5b3
         digest: sha256:9365a20a866aa1da76ac2ebd85ae3b19952954ad485219e74c22c87779d9ebfa
       - ref: docs/pilot/phase33-ax22-formalization-gate-report.json
+        evidence_kind_ref: EVID_GATE_REPORT
         commit: 7c7d5b3
         digest: sha256:e4c6c98002d43258eecce996132edd7e70b9c608c148ece0bdf269246509c6b6
     notes: Antigravity completed AX2.2 outputs with required artifact/script evidence.
@@ -331,9 +337,11 @@ message_events:
     commit: 01ea9a8
     evidence_bindings:
       - ref: scripts/phase33_ax22_formalization_gate.sh
+        evidence_kind_ref: EVID_SCRIPT
         commit: 01ea9a8
         digest: sha256:9365a20a866aa1da76ac2ebd85ae3b19952954ad485219e74c22c87779d9ebfa
       - ref: docs/pilot/phase33-ax22-formalization-gate-report.json
+        evidence_kind_ref: EVID_GATE_REPORT
         commit: 01ea9a8
         digest: sha256:e4c6c98002d43258eecce996132edd7e70b9c608c148ece0bdf269246509c6b6
     notes: Main ingested Antigravity AX2.2 commit via cherry-pick.
@@ -374,9 +382,11 @@ message_events:
     rescinded_reason: execution_taken_over_in_main_worktree
     evidence_bindings:
       - ref: scripts/check_phase34_block.sh
+        evidence_kind_ref: EVID_SCRIPT
         commit: 5d445b7
         digest: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
       - ref: docs/pilot/phase34-gate.json
+        evidence_kind_ref: EVID_GATE_REPORT
         commit: 5d445b7
         digest: sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
     notes: AX2.4 dispatch rescinded after direct implementation in canonical worktree.

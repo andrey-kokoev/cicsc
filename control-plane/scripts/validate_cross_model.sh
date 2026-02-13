@@ -55,8 +55,10 @@ def main() -> int:
                 errors.append(f"capability-model: missing referenced artifact {ref}")
 
     claim_kind_ids = {c.get("id") for c in collab.get("claim_kinds", [])}
+    claim_kind_map = {c.get("id"): c for c in collab.get("claim_kinds", [])}
     evidence_kind_ids = {e.get("id") for e in collab.get("evidence_kinds", [])}
     obligation_ids = {o.get("id") for o in collab.get("obligation_profiles", [])}
+    obligation_map = {o.get("id"): o for o in collab.get("obligation_profiles", [])}
     message_kind_ids = {m.get("id") for m in collab.get("message_kinds", [])}
 
     for ck in collab.get("claim_kinds", []):
@@ -336,10 +338,13 @@ def main() -> int:
                 errors.append(f"collab-model: message {mid} missing evidence ref {ref}")
         for ev in msg.get("evidence_bindings", []):
             ref = ev.get("ref")
+            evidence_kind_ref = ev.get("evidence_kind_ref")
             commit = ev.get("commit")
             digest = ev.get("digest")
             if isinstance(ref, str) and maybe_path_ref(ref) and not path_exists(ref):
                 errors.append(f"collab-model: message {mid} missing evidence binding ref {ref}")
+            if evidence_kind_ref not in evidence_kind_ids:
+                errors.append(f"collab-model: message {mid} invalid evidence kind ref {evidence_kind_ref}")
             if not isinstance(commit, str) or not commit_re.match(commit):
                 errors.append(f"collab-model: message {mid} invalid evidence commit {commit}")
             if not isinstance(digest, str) or not digest_re.match(digest):
@@ -365,6 +370,7 @@ def main() -> int:
     events_by_message = {}
     terminal_status_by_message = {}
     saw_fulfilled_by_message = {}
+    fulfilled_events_by_message = {}
     seen_event_ids = set()
     for ev in events:
         eid = ev.get("id")
@@ -405,10 +411,15 @@ def main() -> int:
 
             for bind in ev.get("evidence_bindings", []):
                 ref = bind.get("ref")
+                evidence_kind_ref = bind.get("evidence_kind_ref")
                 bcommit = bind.get("commit")
                 digest = bind.get("digest")
                 if isinstance(ref, str) and maybe_path_ref(ref) and not path_exists(ref):
                     errors.append(f"collab-model: message event {eid} missing evidence binding ref {ref}")
+                if evidence_kind_ref not in evidence_kind_ids:
+                    errors.append(
+                        f"collab-model: message event {eid} invalid evidence kind ref {evidence_kind_ref}"
+                    )
                 if not isinstance(bcommit, str) or not commit_re.match(bcommit):
                     errors.append(f"collab-model: message event {eid} invalid evidence commit {bcommit}")
                 if not isinstance(digest, str) or not digest_re.match(digest):
@@ -444,6 +455,7 @@ def main() -> int:
                     )
             if to_status == "fulfilled":
                 saw_fulfilled = True
+                fulfilled_events_by_message.setdefault(mid, []).append(ev)
 
         terminal_status_by_message[mid] = expected_prev
         saw_fulfilled_by_message[mid] = saw_fulfilled
@@ -480,6 +492,43 @@ def main() -> int:
                     errors.append(
                         f"collab-model: assignment {aid} fulfilled_by_assignee requires closed terminal and fulfilled event"
                     )
+                assignment_claim = assignment.get("claim_kind_ref")
+                claim_cfg = claim_kind_map.get(assignment_claim) or {}
+                profile_refs = claim_cfg.get("required_obligation_profile_refs", [])
+                fulfilled_events = []
+                for mid in mids:
+                    fulfilled_events.extend(fulfilled_events_by_message.get(mid, []))
+                fulfilled_by_assignee_events = [
+                    ev for ev in fulfilled_events if ev.get("actor_agent_ref") == assignment.get("agent_ref")
+                ]
+                if not fulfilled_by_assignee_events:
+                    errors.append(
+                        f"collab-model: assignment {aid} has no fulfilled event by assigned agent for obligation discharge"
+                    )
+                evidence_bindings = []
+                for ev in fulfilled_by_assignee_events:
+                    evidence_bindings.extend(ev.get("evidence_bindings", []))
+                evidence_kind_counts = {}
+                for bind in evidence_bindings:
+                    k = bind.get("evidence_kind_ref")
+                    evidence_kind_counts[k] = evidence_kind_counts.get(k, 0) + 1
+                for pref in profile_refs:
+                    profile = obligation_map.get(pref)
+                    if not profile:
+                        errors.append(f"collab-model: assignment {aid} missing obligation profile {pref}")
+                        continue
+                    for req_ev in profile.get("required_evidence", []):
+                        kind = req_ev.get("evidence_kind_ref")
+                        min_count = req_ev.get("min_count", 0)
+                        if evidence_kind_counts.get(kind, 0) < min_count:
+                            errors.append(
+                                f"collab-model: assignment {aid} does not satisfy required evidence {kind} (need {min_count})"
+                            )
+                    required_scripts = profile.get("required_scripts", [])
+                    if required_scripts and evidence_kind_counts.get("EVID_SCRIPT", 0) < 1:
+                        errors.append(
+                            f"collab-model: assignment {aid} has required_scripts but no EVID_SCRIPT in fulfilled evidence"
+                        )
             elif outcome == "fulfilled_by_main":
                 if not has_rescinded:
                     errors.append(
