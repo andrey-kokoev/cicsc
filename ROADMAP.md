@@ -643,3 +643,30 @@ Phase 9 forced-next mapping:
 - [x] AI4.2 Add PHASE18↔ROADMAP drift consistency gate
 - [x] AI4.3 Add Phase 19 block gate from Phase 18 checklist
 - [x] AI4.4 Publish Phase 18 closure report and mark exit criteria
+
+## AJ. Phase 19: Generalized Deployment Assurance and Transition Readiness
+
+### AJ1. Scope Freeze and Baseline Continuity
+
+- [ ] AJ1.1 Freeze Phase 19 scope and owner contract
+- [ ] AJ1.2 Publish Phase 19 baseline continuity snapshot
+- [ ] AJ1.3 Add Phase 19 status register with owner/date discipline
+
+### AJ2. Deployment-Assurance Validation Closure
+
+- [ ] AJ2.1 Freeze deployment-assurance matrix and evidence contract
+- [ ] AJ2.2 Run deployment-assurance required gates
+- [ ] AJ2.3 Publish deployment-assurance closure report with findings disposition
+
+### AJ3. Runtime Reliability Hardening
+
+- [ ] AJ3.1 Freeze runtime-reliability hardening matrix and policy
+- [ ] AJ3.2 Add runtime-reliability verification harnesses
+- [ ] AJ3.3 Publish runtime reliability closure report with residual policy
+
+### AJ4. Governance Closure and Phase 20 Gate
+
+- [ ] AJ4.1 Define objective Phase 19 exit checklist mapped to artifacts
+- [ ] AJ4.2 Add PHASE19↔ROADMAP drift consistency gate
+- [ ] AJ4.3 Add Phase 20 block gate from Phase 19 checklist
+- [ ] AJ4.4 Publish Phase 19 closure report and mark exit criteria
