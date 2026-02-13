@@ -1,0 +1,45 @@
+{
+  "version": "cicsc/phase6-exit-checklist-v1",
+  "items": [
+    {
+      "id": "P6_EXIT_MULTI_VERTICAL",
+      "description": "Two-vertical field validation artifacts exist and are green.",
+      "artifacts": [
+        "docs/pilot/phase5-ticketing-staged-run.json",
+        "docs/pilot/phase6-crm-staged-run.json",
+        "docs/pilot/phase6-field-baseline-report.json"
+      ],
+      "status": "pass"
+    },
+    {
+      "id": "P6_EXIT_CONCURRENCY",
+      "description": "Concurrency contract + conformance + migration concurrency drill are green.",
+      "artifacts": [
+        "docs/pilot/phase6-concurrency-contract.json",
+        "docs/pilot/phase6-concurrency-conformance.json",
+        "docs/pilot/phase6-migration-concurrency-drill.json"
+      ],
+      "status": "pass"
+    },
+    {
+      "id": "P6_EXIT_PRODUCT_SURFACE",
+      "description": "CLI/SDK/operator/policy/feature-gate artifacts are frozen.",
+      "artifacts": [
+        "docs/pilot/phase6-cli-contract.json",
+        "docs/pilot/phase6-sdk-contract.json",
+        "docs/pilot/phase6-operator-playbook.md",
+        "docs/pilot/phase6-policy-control-matrix.json",
+        "docs/pilot/phase6-feature-gates.json"
+      ],
+      "status": "pass"
+    },
+    {
+      "id": "P6_EXIT_GOVERNANCE_CI",
+      "description": "Phase6 CI/doc consistency checks are present and green.",
+      "artifacts": [
+        "scripts/check_phase6_artifact_gates.sh"
+      ],
+      "status": "pending"
+    }
+  ]
+}
