@@ -1,0 +1,27 @@
+{
+  "version": "cicsc/phase12-deployment-expansion-report-v1",
+  "timestamp_unix": 1771055400,
+  "inputs": {
+    "domain_matrix": "docs/pilot/phase12-domain-matrix.json",
+    "workload_suite": "docs/pilot/phase12-multi-domain-workloads.json"
+  },
+  "findings": [
+    {
+      "id": "P12FIND-DOMAIN-CASE-MGMT-001",
+      "severity": "medium",
+      "status": "deferred",
+      "owner": "phase12-ops-owner",
+      "target_date": "2026-06-24",
+      "summary": "Case-management workload authoring latency above baseline in migration-heavy flow."
+    },
+    {
+      "id": "P12FIND-DOMAIN-PARITY-001",
+      "severity": "low",
+      "status": "closed",
+      "owner": "phase12-parity-owner",
+      "summary": "Expanded domain workload suite remained green under required gates."
+    }
+  ],
+  "unresolved_criticals": [],
+  "status": "pass"
+}

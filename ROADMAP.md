@@ -462,7 +462,7 @@ Phase 9 forced-next mapping:
 
 - [x] AC2.1 Freeze expanded domain matrix and workload contract
 - [x] AC2.2 Run expanded multi-domain workload suites with required gates
-- [ ] AC2.3 Publish deployment expansion report with findings disposition
+- [x] AC2.3 Publish deployment expansion report with findings disposition
 
 ### AC3. Backend Parity Envelope Widening
 
