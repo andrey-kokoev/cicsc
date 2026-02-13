@@ -872,7 +872,7 @@ Phase 9 forced-next mapping:
 
 - [x] AR2.1 Freeze deployment-integrity matrix and evidence contract
 - [x] AR2.2 Run deployment-integrity required gates
-- [ ] AR2.3 Publish deployment-integrity closure report with findings disposition
+- [x] AR2.3 Publish deployment-integrity closure report with findings disposition
 
 ### AR3. Evolution-Continuity Hardening
 
