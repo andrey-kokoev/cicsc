@@ -778,3 +778,30 @@ Phase 9 forced-next mapping:
 - [x] AN4.2 Add PHASE23↔ROADMAP drift consistency gate
 - [x] AN4.3 Add Phase 24 block gate from Phase 23 checklist
 - [x] AN4.4 Publish Phase 23 closure report and mark exit criteria
+
+## AO. Phase 24: Assurance Maturity and Continuity Proof Discipline
+
+### AO1. Scope Freeze and Baseline Continuity
+
+- [ ] AO1.1 Freeze Phase 24 scope and owner contract
+- [ ] AO1.2 Publish Phase 24 baseline continuity snapshot
+- [ ] AO1.3 Add Phase 24 status register with owner/date discipline
+
+### AO2. Assurance-Maturity Validation Closure
+
+- [ ] AO2.1 Freeze assurance-maturity matrix and evidence contract
+- [ ] AO2.2 Run assurance-maturity required gates
+- [ ] AO2.3 Publish assurance-maturity closure report with findings disposition
+
+### AO3. Continuity-Proof Hardening
+
+- [ ] AO3.1 Freeze continuity-proof hardening matrix and policy
+- [ ] AO3.2 Add continuity-proof verification harnesses
+- [ ] AO3.3 Publish continuity-proof closure report with residual policy
+
+### AO4. Governance Closure and Phase 25 Gate
+
+- [ ] AO4.1 Define objective Phase 24 exit checklist mapped to artifacts
+- [ ] AO4.2 Add PHASE24↔ROADMAP drift consistency gate
+- [ ] AO4.3 Add Phase 25 block gate from Phase 24 checklist
+- [ ] AO4.4 Publish Phase 24 closure report and mark exit criteria
