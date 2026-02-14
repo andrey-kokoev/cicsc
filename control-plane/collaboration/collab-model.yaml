@@ -723,8 +723,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase33.ax1.3.i06
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i06 for AX1.3: Publish coupling conformance report with
     residual gaps register'
 - id: ASSIGN_PHASE34_AY11_KIMI_I06
@@ -733,8 +733,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase34.ay1.1.i06
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i06 for AY1.1: Freeze Phase 34 context matrix and expanded
     acceptance contract'
 - id: ASSIGN_PHASE34_AY12_KIMI_I06
@@ -743,8 +743,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase34.ay1.2.i06
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i06 for AY1.2: Execute multi-context workloads under expanded
     objective envelopes'
 - id: ASSIGN_PHASE34_AY13_KIMI_I03
@@ -753,8 +753,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase34.ay1.3.i03
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i03 for AY1.3: Publish incident and drift localization
     report with forced-next mapping policy'
 - id: ASSIGN_PHASE34_AY21_KIMI_I03
@@ -763,8 +763,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase34.ay2.1.i03
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i03 for AY2.1: Add Phase 34 required-gates script/report
     for expanded multi-context envelope'
 - id: ASSIGN_PHASE34_AY22_KIMI_I03
@@ -773,8 +773,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase34.ay2.2.i03
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i03 for AY2.2: Publish Phase 34 closure report with unresolved
     critical disposition'
 message_kinds:
@@ -4748,3 +4748,111 @@ message_events:
     commit: 9ef1c43
     digest: sha256:cb42d64bfb20b2cb21d10c4246c49a9e54ac5fbeb32a05f13534f0ef9930bd25
   notes: Fulfilled by AGENT_KIMI via collab_fulfill.sh
+- id: MSGEV_PHASE33_AX13_KIMI_I06_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE33_AX13_KIMI_I06_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 3deac63
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE33_AX13_KIMI_I06_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE33_AX13_KIMI_I06_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 3deac63
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY11_KIMI_I06_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY11_KIMI_I06_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 3deac63
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY11_KIMI_I06_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY11_KIMI_I06_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 3deac63
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY12_KIMI_I06_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY12_KIMI_I06_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 3deac63
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY12_KIMI_I06_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY12_KIMI_I06_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 3deac63
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY13_KIMI_I03_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY13_KIMI_I03_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 3deac63
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY13_KIMI_I03_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY13_KIMI_I03_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 3deac63
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY21_KIMI_I03_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY21_KIMI_I03_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 3deac63
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY21_KIMI_I03_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY21_KIMI_I03_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 3deac63
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY22_KIMI_I03_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY22_KIMI_I03_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 3deac63
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY22_KIMI_I03_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY22_KIMI_I03_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 3deac63
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
