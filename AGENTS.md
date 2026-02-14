@@ -164,6 +164,20 @@ Happy path:
 4. `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --script <script> --gate-report <report>`
 5. Main ingests/closes via `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`.
 
+Canonical worker loop (multi-assignment):
+1. `./control-plane/scripts/collab_status.sh --worktree "$WORKTREE"`
+2. If `in_progress` is non-empty, fulfill the acknowledged message before any new claim.
+3. Else claim next actionable: `./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE"`.
+4. Generate required evidence and fulfill:
+   - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$WORKTREE" --script <script> --gate-report <report> --suggest-commit`
+5. Main ingests/closes fulfilled message:
+   - `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`
+6. Repeat until `next_action=idle`.
+
+WIP semantic rule (mechanically enforced):
+- A worktree may not claim new `sent/queued` work while any message remains `acknowledged` in that same worktree.
+- Override is exceptional and explicit: `collab_claim_next.sh --force`.
+
 ### 1. Preserve invariants before adding features
 Never add functionality that weakens:
 - transactional semantics
