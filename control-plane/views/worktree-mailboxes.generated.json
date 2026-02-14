@@ -304,8 +304,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch Kimi multi-lane task 8 (AZ2.1).",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "fulfilled",
+          "event_count": 3
         },
         {
           "id": "MSG_PHASE35_AZ22_KIMI_BATCH_DISPATCH",
@@ -568,8 +568,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch Kimi multi-lane task 8 (AZ2.1).",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "fulfilled",
+          "event_count": 3
         },
         {
           "id": "MSG_PHASE35_AZ22_KIMI_BATCH_DISPATCH",
