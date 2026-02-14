@@ -101,6 +101,10 @@ agent = next((a for a in agents if a.get("worktree") == worktree), None)
 if agent is None:
     raise SystemExit(f"no agent mapped to worktree {worktree}")
 
+if force and acknowledged:
+    print("FORCE_OVERRIDE_ACKNOWLEDGED")
+    print(",".join(m.get("id", "") for m in acknowledged if m.get("id")))
+
 print(msg.get("id"))
 print(agent.get("id"))
 print(msg.get("assignment_ref"))
@@ -126,12 +130,22 @@ if [[ "${_resolved}" == BLOCKED_ACKNOWLEDGED* ]]; then
 fi
 
 readarray -t _lines <<<"${_resolved}"
-MESSAGE_REF="${_lines[0]}"
-ACTOR_AGENT="${_lines[1]}"
-ASSIGNMENT_REF="${_lines[2]}"
+line_ix=0
+FORCED_ACK_IDS=""
+if [[ "${_lines[0]}" == "FORCE_OVERRIDE_ACKNOWLEDGED" ]]; then
+  FORCED_ACK_IDS="${_lines[1]}"
+  line_ix=2
+  echo "warning: --force override used; claiming new actionable message while acknowledged work exists: ${FORCED_ACK_IDS}" >&2
+fi
+MESSAGE_REF="${_lines[$line_ix]}"
+ACTOR_AGENT="${_lines[$((line_ix + 1))]}"
+ASSIGNMENT_REF="${_lines[$((line_ix + 2))]}"
 
 if [[ -z "${NOTES}" ]]; then
   NOTES="Acknowledged by ${ACTOR_AGENT} via collab_claim_next.sh"
+fi
+if [[ -n "${FORCED_ACK_IDS}" ]]; then
+  NOTES="${NOTES}; force_override_acknowledged=${FORCED_ACK_IDS}"
 fi
 
 ./control-plane/scripts/collab_append_event.sh \
