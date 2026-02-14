@@ -1662,3 +1662,12 @@ message_events:
   commit: dc31d1c
   evidence_bindings: []
   notes: Initial dispatch event for ASSIGN_PHASE33_AX13_KIMI_BATCH.
+- id: MSGEV_PHASE33_AX13_KIMI_BATCH_DISPATCH_ACKNOWLEDGED_2
+  message_ref: MSG_PHASE33_AX13_KIMI_BATCH_DISPATCH
+  from_status: sent
+  to_status: acknowledged
+  actor_agent_ref: AGENT_KIMI
+  at_seq: 2
+  commit: 7a1a4e1
+  evidence_bindings: []
+  notes: Acknowledged by AGENT_KIMI via collab_claim_next.sh
