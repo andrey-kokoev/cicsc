@@ -945,6 +945,20 @@ messages:
   evidence_refs: []
   evidence_bindings: []
   notes: Batch dispatch AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh
+- id: MSG_FRICTION_KIMI_20260214T042345Z
+  kind_ref: MSGK_FRICTION_REQUEST
+  assignment_ref: null
+  from_agent_ref: AGENT_KIMI
+  to_agent_ref: AGENT_MAIN
+  from_worktree: /home/andrey/src/cicsc/worktrees/kimi
+  to_worktree: /home/andrey/src/cicsc
+  branch: ''
+  initial_status: sent
+  payload_refs:
+  - control-plane/logs/friction-requests/MSG_FRICTION_KIMI_20260214T042345Z.json
+  evidence_refs: []
+  evidence_bindings: []
+  notes: Friction request from AGENT_KIMI
 message_events:
 - id: MSGEV_PHASE33_AX12_DISPATCH_SENT
   message_ref: MSG_PHASE33_AX12_DISPATCH
@@ -2369,3 +2383,12 @@ message_events:
     commit: 17d3765
     digest: sha256:cb42d64bfb20b2cb21d10c4246c49a9e54ac5fbeb32a05f13534f0ef9930bd25
   notes: Fulfilled by AGENT_KIMI via collab_fulfill.sh
+- id: MSGEV_FRICTION_KIMI_20260214T042345Z_SENT_1
+  message_ref: MSG_FRICTION_KIMI_20260214T042345Z
+  from_status: null
+  to_status: sent
+  actor_agent_ref: AGENT_KIMI
+  at_seq: 1
+  commit: 11111ab
+  evidence_bindings: []
+  notes: Initial friction request dispatch from AGENT_KIMI.

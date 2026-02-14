@@ -5,7 +5,27 @@
   "version": "cicsc/worktree-mailboxes-v1",
   "mailboxes": {
     "/home/andrey/src/cicsc": {
-      "inbox": [],
+      "inbox": [
+        {
+          "id": "MSG_FRICTION_KIMI_20260214T042345Z",
+          "kind_ref": "MSGK_FRICTION_REQUEST",
+          "assignment_ref": null,
+          "from_agent_ref": "AGENT_KIMI",
+          "to_agent_ref": "AGENT_MAIN",
+          "from_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "to_worktree": "/home/andrey/src/cicsc",
+          "branch": "",
+          "initial_status": "sent",
+          "payload_refs": [
+            "control-plane/logs/friction-requests/MSG_FRICTION_KIMI_20260214T042345Z.json"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Friction request from AGENT_KIMI",
+          "current_status": "sent",
+          "event_count": 1
+        }
+      ],
       "outbox": [
         {
           "id": "MSG_PHASE33_AX12_DISPATCH",
@@ -1112,7 +1132,27 @@
           "event_count": 3
         }
       ],
-      "outbox": []
+      "outbox": [
+        {
+          "id": "MSG_FRICTION_KIMI_20260214T042345Z",
+          "kind_ref": "MSGK_FRICTION_REQUEST",
+          "assignment_ref": null,
+          "from_agent_ref": "AGENT_KIMI",
+          "to_agent_ref": "AGENT_MAIN",
+          "from_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "to_worktree": "/home/andrey/src/cicsc",
+          "branch": "",
+          "initial_status": "sent",
+          "payload_refs": [
+            "control-plane/logs/friction-requests/MSG_FRICTION_KIMI_20260214T042345Z.json"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Friction request from AGENT_KIMI",
+          "current_status": "sent",
+          "event_count": 1
+        }
+      ]
     },
     "/home/andrey/src/cicsc/worktrees/antigravity": {
       "inbox": [
