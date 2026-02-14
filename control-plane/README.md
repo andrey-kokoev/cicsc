@@ -172,6 +172,40 @@ Phase workflow is controlled via `control-plane/scripts/phase_governance_control
 **Integration with Auto-Dispatch:**
 The `auto_dispatch_loop.sh` reads active phase from `execution-ledger.yaml` but does NOT perform promotion. Promotion is an explicit governance decision made by the main agent via the controller.
 
+## Progress Request Protocol
+
+For assignments in `acknowledged` status, Main can request progress updates:
+
+**Main sends progress request:**
+```bash
+./control-plane/scripts/collab_request_progress.sh \
+  --assignment-ref ASSIGN_PHASE34_AY13_GEMINI_I02 \
+  --notes "2 hours elapsed, checking status"
+```
+
+**Worker receives request and responds:**
+```bash
+./control-plane/scripts/collab_report_progress.sh \
+  --message-ref MSG_PROGRESS_AY13_GEMINI_20260214T230000Z \
+  --status in_progress \
+  --notes "implementing core logic, tests passing" \
+  --elapsed-minutes 120 \
+  --eta-minutes 30
+```
+
+**Status values:**
+- `in_progress` - Actively working, no blockers
+- `blocked` - Stuck, needs assistance (consider also filing friction request)
+- `nearing_completion` - Expected to fulfill within ETA
+
+**Protocol flow:**
+1. Main detects acknowledged assignment with no recent activity
+2. Main sends `MSGK_PROGRESS_REQUEST` to worker
+3. Worker appends `PROGRESS_REPORT` event with status and ETA
+4. Main reviews and decides: continue waiting, escalate, or dispatch alternative
+
+This protocol provides visibility into long-running acknowledged assignments without requiring fulfillment completion.
+
 ## Status-Data Discipline
 
 - Status checkboxes belong only to canonical execution ledger artifacts.

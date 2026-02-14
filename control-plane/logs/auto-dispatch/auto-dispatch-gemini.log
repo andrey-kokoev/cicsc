@@ -364,3 +364,61 @@ Awaiting Main Ingest:
 Stale Acknowledged:
 - (none)
 [cycle 0] pending=1 (> 0), waiting 5s
+main process-messages: canonical collab/view files are pre-dirty, using --no-commit mode for this run
+Main Collaboration Status
+By Worktree:
+- /home/andrey/src/cicsc: queued=0 sent=0 acknowledged=0 fulfilled=0 ingested=0
+- /home/andrey/src/cicsc/worktrees/antigravity: queued=0 sent=0 acknowledged=0 fulfilled=0 ingested=0
+- /home/andrey/src/cicsc/worktrees/gemini: queued=0 sent=0 acknowledged=0 fulfilled=1 ingested=0
+- /home/andrey/src/cicsc/worktrees/kimi: queued=0 sent=0 acknowledged=0 fulfilled=0 ingested=0
+Totals: queued=0 sent=0 acknowledged=0 fulfilled=1 ingested=0 closed=208 rescinded=7
+Awaiting Main Ingest:
+- MSG_PHASE34_AY13_GEMINI_I02_DISPATCH ASSIGN_PHASE34_AY13_GEMINI_I02 [fulfilled] @ /home/andrey/src/cicsc/worktrees/gemini
+Stale Acknowledged:
+- (none)
+[cycle 0] dispatch batch size 3
+batch apply with commit requires clean collab model/views before dispatch starts (unrelated dirty files are allowed)
+auto-dispatch-loop error: dispatch@cycle-0 failed (exit=1)
+auto-dispatch-loop recoverable path: sleeping 5s before retry loop
+[cycle 0] process main
+main process-messages: canonical collab/view files are pre-dirty, using --no-commit mode for this run
+batch-close messages (1):
+ - MSG_PHASE34_AY13_GEMINI_I02_DISPATCH
+appended event MSGEV_PHASE34_AY13_GEMINI_I02_DISPATCH_INGESTED_4 to /home/andrey/src/cicsc/control-plane/collaboration/collab-model.yaml
+appended event to /home/andrey/src/cicsc/control-plane/collaboration/collab-model.yaml (validation skipped)
+appended event MSGEV_PHASE34_AY13_GEMINI_I02_DISPATCH_CLOSED_5 to /home/andrey/src/cicsc/control-plane/collaboration/collab-model.yaml
+appended event to /home/andrey/src/cicsc/control-plane/collaboration/collab-model.yaml (validation skipped)
+synchronized assignment ASSIGN_PHASE34_AY13_GEMINI_I02 -> done/fulfilled_by_assignee
+cross-model validation failed
+- collab-model: assignment ASSIGN_PHASE34_AY13_GEMINI_I02 does not satisfy required evidence EVID_SCRIPT (need 1)
+- collab-model: assignment ASSIGN_PHASE34_AY13_GEMINI_I02 has required_scripts but no EVID_SCRIPT in fulfilled evidence
+auto-dispatch-loop error: process-main@cycle-0 failed (exit=1)
+auto-dispatch-loop recoverable path: sleeping 5s before retry loop
+[cycle 0] process main
+main process-messages: canonical collab/view files are pre-dirty, using --no-commit mode for this run
+cross-model validation failed
+- collab-model: assignment ASSIGN_PHASE34_AY13_GEMINI_I02 does not satisfy required evidence EVID_SCRIPT (need 1)
+- collab-model: assignment ASSIGN_PHASE34_AY13_GEMINI_I02 has required_scripts but no EVID_SCRIPT in fulfilled evidence
+auto-dispatch-loop error: process-main@cycle-0 failed (exit=1)
+auto-dispatch-loop recoverable path: sleeping 5s before retry loop
+[cycle 0] process main
+main process-messages: canonical collab/view files are pre-dirty, using --no-commit mode for this run
+cross-model validation failed
+- collab-model: assignment ASSIGN_PHASE34_AY13_GEMINI_I02 does not satisfy required evidence EVID_SCRIPT (need 1)
+- collab-model: assignment ASSIGN_PHASE34_AY13_GEMINI_I02 has required_scripts but no EVID_SCRIPT in fulfilled evidence
+auto-dispatch-loop error: process-main@cycle-0 failed (exit=1)
+auto-dispatch-loop recoverable path: sleeping 5s before retry loop
+[cycle 0] process main
+main process-messages: canonical collab/view files are pre-dirty, using --no-commit mode for this run
+cross-model validation failed
+- collab-model: assignment ASSIGN_PHASE34_AY13_GEMINI_I02 does not satisfy required evidence EVID_SCRIPT (need 1)
+- collab-model: assignment ASSIGN_PHASE34_AY13_GEMINI_I02 has required_scripts but no EVID_SCRIPT in fulfilled evidence
+auto-dispatch-loop error: process-main@cycle-0 failed (exit=1)
+auto-dispatch-loop recoverable path: sleeping 5s before retry loop
+[cycle 0] process main
+main process-messages: canonical collab/view files are pre-dirty, using --no-commit mode for this run
+cross-model validation failed
+- collab-model: assignment ASSIGN_PHASE34_AY13_GEMINI_I02 does not satisfy required evidence EVID_SCRIPT (need 1)
+- collab-model: assignment ASSIGN_PHASE34_AY13_GEMINI_I02 has required_scripts but no EVID_SCRIPT in fulfilled evidence
+auto-dispatch-loop error: process-main@cycle-0 failed (exit=1)
+auto-dispatch-loop recoverable path: sleeping 5s before retry loop

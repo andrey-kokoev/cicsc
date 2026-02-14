@@ -258,6 +258,9 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_request_friction.sh --worktree "$WORKTREE" --type ergonomics --severity medium --summary "..." --repro-step "..."`
 - main friction triage:
   - `./control-plane/scripts/collab_triage_friction.sh --message-ref MSG_... --decision accept_now --notes "..."`
+- progress request protocol (main checks on acknowledged work):
+  - Main sends: `./control-plane/scripts/collab_request_progress.sh --assignment-ref ASSIGN_... --notes "checking status"`
+  - Worker responds: `./control-plane/scripts/collab_report_progress.sh --message-ref MSG_PROGRESS_... --status in_progress --notes "running tests"`
 - assignment-level delta view:
   - `./control-plane/scripts/collab_diff.sh --assignment-ref ASSIGN_...`
 - aggregate history summary:

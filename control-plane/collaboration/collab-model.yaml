@@ -2301,6 +2301,10 @@ message_kinds:
   title: Worker friction request.
   description: Worker requests ergonomic/process hardening with typed reproducible
     friction payload for triage by main authority.
+- id: MSGK_PROGRESS_REQUEST
+  title: Progress request from main to worker.
+  description: Main authority requests status update on acknowledged assignment.
+    Worker must respond with PROGRESS_REPORT event or fulfill the assignment.
 messages:
 - id: MSG_PHASE33_AX12_DISPATCH
   kind_ref: MSGK_ASSIGNMENT_DISPATCH
@@ -16710,6 +16714,10 @@ message_events:
     evidence_kind_ref: EVID_GATE_REPORT
     commit: 4a87b38
     digest: sha256:cb42d64bfb20b2cb21d10c4246c49a9e54ac5fbeb32a05f13534f0ef9930bd25
+  - ref: scripts/check_canonical_execution_model.sh
+    evidence_kind_ref: EVID_SCRIPT
+    commit: 4a87b38
+    digest: sha256:98de93665660d0b4f902ac3c2e17b78ae97b30842350d902bc625fb950039159
   notes: Fulfilled by AGENT_GEMINI via collab_fulfill.sh
 - id: MSGEV_PHASE34_AY13_GEMINI_I02_DISPATCH_INGESTED_4
   message_ref: MSG_PHASE34_AY13_GEMINI_I02_DISPATCH

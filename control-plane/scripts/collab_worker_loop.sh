@@ -138,8 +138,10 @@ while true; do
   fi
   
   # Try to process one message
+  set +e
   process_one "${WORKTREE}"
   process_result=$?
+  set -e
   
   if [[ "${process_result}" -eq 2 ]]; then
     # No messages available - this is normal, not failure
