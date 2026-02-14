@@ -62,6 +62,25 @@
           "notes": "Friction request from AGENT_GEMINI",
           "current_status": "sent",
           "event_count": 1
+        },
+        {
+          "id": "MSG_FRICTION_GEMINI_20260214T200756Z",
+          "kind_ref": "MSGK_FRICTION_REQUEST",
+          "assignment_ref": null,
+          "from_agent_ref": "AGENT_GEMINI",
+          "to_agent_ref": "AGENT_MAIN",
+          "from_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "to_worktree": "/home/andrey/src/cicsc",
+          "branch": "",
+          "initial_status": "sent",
+          "payload_refs": [
+            "control-plane/logs/friction-requests/MSG_FRICTION_GEMINI_20260214T200756Z.json"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Friction request from AGENT_GEMINI",
+          "current_status": "sent",
+          "event_count": 1
         }
       ],
       "outbox": [
@@ -4124,8 +4143,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i48 AY1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "fulfilled",
+          "event_count": 3
         },
         {
           "id": "MSG_PHASE34_AY12_KIMI_I41_DISPATCH",
@@ -7909,8 +7928,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i48 AY1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "fulfilled",
+          "event_count": 3
         },
         {
           "id": "MSG_PHASE34_AY12_KIMI_I41_DISPATCH",
@@ -8456,6 +8475,25 @@
           "initial_status": "sent",
           "payload_refs": [
             "control-plane/logs/friction-requests/MSG_FRICTION_GEMINI_20260214T200724Z.json"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Friction request from AGENT_GEMINI",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_FRICTION_GEMINI_20260214T200756Z",
+          "kind_ref": "MSGK_FRICTION_REQUEST",
+          "assignment_ref": null,
+          "from_agent_ref": "AGENT_GEMINI",
+          "to_agent_ref": "AGENT_MAIN",
+          "from_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "to_worktree": "/home/andrey/src/cicsc",
+          "branch": "",
+          "initial_status": "sent",
+          "payload_refs": [
+            "control-plane/logs/friction-requests/MSG_FRICTION_GEMINI_20260214T200756Z.json"
           ],
           "evidence_refs": [],
           "evidence_bindings": [],

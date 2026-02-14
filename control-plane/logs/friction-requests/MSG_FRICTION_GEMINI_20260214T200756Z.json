@@ -1,0 +1,16 @@
+{
+  "message_id": "MSG_FRICTION_GEMINI_20260214T200756Z",
+  "from_agent_ref": "AGENT_GEMINI",
+  "from_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+  "to_agent_ref": "AGENT_MAIN",
+  "friction_type": "safety",
+  "severity": "high",
+  "summary": "Cross-model validation failed: illegal transition sent -> fulfilled",
+  "repro_steps": [
+    "Run ./control-plane/scripts/collab_wait_for_messages.sh --worktree /home/andrey/src/cicsc/worktrees/gemini --run-on-found \"./control-plane/scripts/collab_process_messages.sh --role worker --worktree /home/andrey/src/cicsc/worktrees/gemini\". The error is in a message for another agent (KIMI), but it is blocking my work."
+  ],
+  "frequency": null,
+  "proposed_fix": null,
+  "requested_at": "2026-02-14T20:07:56.207866+00:00",
+  "requested_commit": "ca8e255"
+}
