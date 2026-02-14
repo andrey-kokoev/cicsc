@@ -157,6 +157,36 @@ out = {
     "candidate_evidence": candidate_evidence,
 }
 
+next_step = {"action": "none", "detail": "no further action suggested", "command": ""}
+ack_msgs = [m for m in out["messages"] if m["current_status"] == "acknowledged"]
+sent_msgs = [m for m in out["messages"] if m["current_status"] in {"sent", "queued"}]
+fulfilled_msgs = [m for m in out["messages"] if m["current_status"] == "fulfilled"]
+if ack_msgs:
+    m = sorted(ack_msgs, key=lambda r: r["id"])[0]
+    next_step = {
+        "action": "fulfill",
+        "detail": f"message {m['id']} is acknowledged and should be fulfilled",
+        "command": (
+            f"./control-plane/scripts/collab_fulfill.sh --message-ref {m['id']} "
+            f"--worktree \"{assignment.get('worktree')}\" --script <path> --gate-report <path>"
+        ),
+    }
+elif sent_msgs:
+    m = sorted(sent_msgs, key=lambda r: (r["current_status"] != "sent", r["id"]))[0]
+    next_step = {
+        "action": "claim",
+        "detail": f"message {m['id']} is actionable and should be claimed",
+        "command": f"./control-plane/scripts/collab_claim_next.sh --worktree \"{assignment.get('worktree')}\"",
+    }
+elif fulfilled_msgs:
+    m = sorted(fulfilled_msgs, key=lambda r: r["id"])[0]
+    next_step = {
+        "action": "close_ingested",
+        "detail": f"message {m['id']} is fulfilled and should be ingested/closed in main",
+        "command": f"./control-plane/scripts/collab_close_ingested.sh --message-ref {m['id']} --commit <sha>",
+    }
+out["next_step"] = next_step
+
 if json_mode:
     print(json.dumps(out, indent=2, sort_keys=False))
     raise SystemExit(0)
@@ -167,6 +197,10 @@ print(f"Agent: {assignment.get('agent_ref')}")
 print(f"Worktree: {assignment.get('worktree')}")
 print(f"Branch: {assignment.get('branch')}")
 print(f"Status/Outcome: {assignment.get('status')} / {assignment.get('outcome')}")
+print("")
+print(f"Next Step: {out['next_step']['detail']}")
+if out["next_step"]["command"]:
+    print(f"Run: {out['next_step']['command']}")
 print("")
 print("Messages:")
 for r in out["messages"]:
