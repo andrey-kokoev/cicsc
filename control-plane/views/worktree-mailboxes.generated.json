@@ -64,8 +64,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch AX1.3 report publication obligations and residual-gap closure.",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE33_AX24_DISPATCH",
@@ -148,8 +148,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch AX1.3 report publication obligations and residual-gap closure.",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "closed",
+          "event_count": 5
         }
       ],
       "outbox": []

@@ -99,7 +99,6 @@ fi
 
 cd "${ROOT_DIR}"
 
-SNIPPET="$(
 python3 - "$COLLAB_PATH" "$MESSAGE_REF" "$TO_STATUS" "$ACTOR" "$COMMIT_SHA" "$FROM_STATUS" "$EVENT_ID" "$NOTES" "$RESCINDED_REASON" "${EVIDENCE_ITEMS[@]}" <<'PY'
 import re
 import sys
@@ -187,12 +186,11 @@ if rescinded_reason_arg:
 if notes_arg:
     event["notes"] = notes_arg
 
-snippet = yaml.safe_dump([event], sort_keys=False).rstrip("\n")
-print("\n".join(f"  {line}" for line in snippet.splitlines()))
+events.append(event)
+data["message_events"] = events
+collab_path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+print(f"appended event {event_id} to {collab_path}")
 PY
-)"
-
-printf '\n%s\n' "${SNIPPET}" >> "${COLLAB_PATH}"
 
 if [[ "${NO_REFRESH}" -eq 0 ]]; then
   ./control-plane/scripts/generate_views.sh >/dev/null
