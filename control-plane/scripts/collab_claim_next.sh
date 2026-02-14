@@ -7,6 +7,7 @@ MESSAGE_REF=""
 COMMIT_SHA=""
 NOTES=""
 NO_REFRESH=0
+DRY_RUN=0
 
 usage() {
   cat <<'USAGE'
@@ -19,6 +20,7 @@ Options:
   --commit <sha>        Commit to bind on event (default: current HEAD short).
   --notes <text>        Optional event note.
   --no-refresh          Do not regenerate mailbox projection before reading.
+  --dry-run             Resolve target and validate, but do not append event.
 USAGE
 }
 
@@ -29,12 +31,14 @@ while [[ $# -gt 0 ]]; do
     --commit) COMMIT_SHA="${2:-}"; shift 2 ;;
     --notes) NOTES="${2:-}"; shift 2 ;;
     --no-refresh) NO_REFRESH=1; shift ;;
+    --dry-run) DRY_RUN=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
 done
 
 cd "${ROOT_DIR}"
+./control-plane/scripts/collab_validate.sh >/dev/null
 
 if [[ -z "${COMMIT_SHA}" ]]; then
   COMMIT_SHA="$(git rev-parse --short HEAD)"
@@ -44,7 +48,7 @@ if [[ "${NO_REFRESH}" -eq 0 ]]; then
   ./control-plane/scripts/generate_views.sh >/dev/null
 fi
 
-readarray -t _resolved < <(
+_resolved="$(
 python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$ROOT_DIR/control-plane/views/worktree-mailboxes.generated.json" "$WORKTREE" "$MESSAGE_REF" <<'PY'
 import json
 import sys
@@ -62,7 +66,10 @@ entry = mailboxes.get(worktree, {"inbox": []})
 inbox = entry.get("inbox", [])
 actionable = [m for m in inbox if m.get("current_status") in {"queued", "sent"}]
 if not actionable:
-    raise SystemExit("no actionable inbox messages")
+    if message_ref:
+        raise SystemExit(f"message {message_ref} is not actionable in inbox for {worktree}")
+    print("NO_ACTIONABLE")
+    raise SystemExit(0)
 
 if message_ref:
     msg = next((m for m in actionable if m.get("id") == message_ref), None)
@@ -82,10 +89,19 @@ if agent is None:
 print(msg.get("id"))
 print(agent.get("id"))
 PY
-)
+)" || {
+  echo "failed to resolve claim target for worktree ${WORKTREE}" >&2
+  exit 1
+}
 
-MESSAGE_REF="${_resolved[0]}"
-ACTOR_AGENT="${_resolved[1]}"
+if [[ "${_resolved}" == "NO_ACTIONABLE" ]]; then
+  echo "no actionable inbox messages for ${WORKTREE}"
+  exit 0
+fi
+
+readarray -t _lines <<<"${_resolved}"
+MESSAGE_REF="${_lines[0]}"
+ACTOR_AGENT="${_lines[1]}"
 
 if [[ -z "${NOTES}" ]]; then
   NOTES="Acknowledged by ${ACTOR_AGENT} via collab_claim_next.sh"
@@ -96,6 +112,11 @@ fi
   --to-status acknowledged \
   --actor-agent-ref "${ACTOR_AGENT}" \
   --commit "${COMMIT_SHA}" \
-  --notes "${NOTES}"
+  --notes "${NOTES}" \
+  $([[ "${DRY_RUN}" -eq 1 ]] && echo --dry-run)
 
-echo "claimed message: ${MESSAGE_REF}"
+if [[ "${DRY_RUN}" -eq 1 ]]; then
+  echo "dry-run: would claim message ${MESSAGE_REF}"
+else
+  echo "claimed message: ${MESSAGE_REF}"
+fi

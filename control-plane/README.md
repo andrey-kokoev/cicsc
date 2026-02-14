@@ -67,6 +67,7 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `control-plane/scripts/validate_gate_model.sh`
 - `control-plane/scripts/validate_collab_model.sh`
 - `control-plane/scripts/validate_cross_model.sh`
+- `control-plane/scripts/collab_validate.sh`
 - `control-plane/scripts/validate_all.sh`
 - `control-plane/scripts/generate_views.sh`
 - `control-plane/scripts/collab_inbox.sh`

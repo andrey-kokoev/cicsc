@@ -59,6 +59,7 @@ if [[ -z "${WORKTREE}" || -z "${OWNER_AGENT_REF}" || -z "${DELEGATED_TO_AGENT_RE
 fi
 
 cd "${ROOT_DIR}"
+./control-plane/scripts/collab_validate.sh >/dev/null
 
 if [[ -z "${COMMIT_SHA}" ]]; then
   COMMIT_SHA="$(git rev-parse --short HEAD)"
@@ -174,4 +175,8 @@ PY
 
 if [[ "${DRY_RUN}" -eq 0 && "${NO_REFRESH}" -eq 0 ]]; then
   ./control-plane/scripts/generate_views.sh >/dev/null
+fi
+
+if [[ "${DRY_RUN}" -eq 0 ]]; then
+  ./control-plane/scripts/collab_validate.sh >/dev/null
 fi

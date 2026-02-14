@@ -6,6 +6,7 @@ MESSAGE_REF=""
 ACTOR_AGENT_REF="AGENT_MAIN"
 COMMIT_SHA=""
 NO_REFRESH=0
+DRY_RUN=0
 INGESTED_NOTES=""
 CLOSED_NOTES=""
 
@@ -20,6 +21,7 @@ Options:
   --ingested-notes <txt>  Optional notes for ingested event.
   --closed-notes <txt>    Optional notes for closed event.
   --no-refresh            Do not regenerate views after update.
+  --dry-run               Validate and print closure actions without mutation.
 USAGE
 }
 
@@ -31,6 +33,7 @@ while [[ $# -gt 0 ]]; do
     --ingested-notes) INGESTED_NOTES="${2:-}"; shift 2 ;;
     --closed-notes) CLOSED_NOTES="${2:-}"; shift 2 ;;
     --no-refresh) NO_REFRESH=1; shift ;;
+    --dry-run) DRY_RUN=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -43,6 +46,7 @@ if [[ -z "${MESSAGE_REF}" ]]; then
 fi
 
 cd "${ROOT_DIR}"
+./control-plane/scripts/collab_validate.sh >/dev/null
 
 if [[ -z "${COMMIT_SHA}" ]]; then
   COMMIT_SHA="$(git rev-parse --short HEAD)"
@@ -75,6 +79,7 @@ case "${CURRENT_STATUS}" in
       --actor-agent-ref "${ACTOR_AGENT_REF}" \
       --commit "${COMMIT_SHA}" \
       --notes "${INGESTED_NOTES}" \
+      $([[ "${DRY_RUN}" -eq 1 ]] && echo --dry-run) \
       --no-refresh
     ;&
   ingested)
@@ -87,6 +92,7 @@ case "${CURRENT_STATUS}" in
       --actor-agent-ref "${ACTOR_AGENT_REF}" \
       --commit "${COMMIT_SHA}" \
       --notes "${CLOSED_NOTES}" \
+      $([[ "${DRY_RUN}" -eq 1 ]] && echo --dry-run) \
       --no-refresh
     ;;
   closed)
@@ -98,6 +104,7 @@ case "${CURRENT_STATUS}" in
     ;;
 esac
 
+if [[ "${DRY_RUN}" -eq 0 ]]; then
 python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$MESSAGE_REF" <<'PY'
 import sys
 from pathlib import Path
@@ -145,9 +152,17 @@ data["assignments"] = assignments
 collab_path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
 print(f"synchronized assignment {assignment_ref} -> {assignment['status']}/{assignment['outcome']}")
 PY
+else
+  echo "dry-run: would synchronize assignment for ${MESSAGE_REF}"
+fi
 
-if [[ "${NO_REFRESH}" -eq 0 ]]; then
+if [[ "${DRY_RUN}" -eq 0 && "${NO_REFRESH}" -eq 0 ]]; then
   ./control-plane/scripts/generate_views.sh >/dev/null
 fi
 
-echo "message close path complete: ${MESSAGE_REF} (from ${CURRENT_STATUS})"
+if [[ "${DRY_RUN}" -eq 0 ]]; then
+  ./control-plane/scripts/collab_validate.sh >/dev/null
+  echo "message close path complete: ${MESSAGE_REF} (from ${CURRENT_STATUS})"
+else
+  echo "dry-run: close path validated for ${MESSAGE_REF} (from ${CURRENT_STATUS})"
+fi

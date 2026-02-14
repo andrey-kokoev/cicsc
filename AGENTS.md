@@ -111,6 +111,8 @@ Protocol rule:
 - mailbox messages are the only admissible worktree task input
 
 Message I/O command surface:
+- collaboration preflight gate:
+  - `./control-plane/scripts/collab_validate.sh`
 - quickstart command map (worker/main):
   - `./control-plane/scripts/collab_help.sh --role worker --worktree "$PWD"`
 - read inbox (actionable only):

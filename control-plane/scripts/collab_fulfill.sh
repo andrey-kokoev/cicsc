@@ -8,6 +8,7 @@ ACTOR_AGENT=""
 COMMIT_SHA=""
 NOTES=""
 NO_REFRESH=0
+DRY_RUN=0
 SCRIPT_REFS=()
 GATE_REFS=()
 THEOREM_REFS=()
@@ -32,6 +33,7 @@ Options:
   --evidence <ref|EVID_KIND>
                         Add custom typed evidence (digest auto-computed from ref path).
   --no-refresh          Do not regenerate mailbox projection after append.
+  --dry-run             Validate and resolve evidence bindings, but do not append event.
 USAGE
 }
 
@@ -48,6 +50,7 @@ while [[ $# -gt 0 ]]; do
     --diff-log) DIFFLOG_REFS+=("${2:-}"); shift 2 ;;
     --evidence) RAW_EVIDENCE+=("${2:-}"); shift 2 ;;
     --no-refresh) NO_REFRESH=1; shift ;;
+    --dry-run) DRY_RUN=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -60,6 +63,7 @@ if [[ -z "${MESSAGE_REF}" ]]; then
 fi
 
 cd "${ROOT_DIR}"
+./control-plane/scripts/collab_validate.sh >/dev/null
 
 if [[ -z "${COMMIT_SHA}" ]]; then
   COMMIT_SHA="$(git rev-parse --short HEAD)"
@@ -146,9 +150,17 @@ cmd=(
 if [[ "${NO_REFRESH}" -eq 1 ]]; then
   cmd+=(--no-refresh)
 fi
+if [[ "${DRY_RUN}" -eq 1 ]]; then
+  cmd+=(--dry-run)
+fi
 for e in "${EVIDENCE_ITEMS[@]}"; do
   cmd+=(--evidence "${e}")
 done
 
 "${cmd[@]}"
-echo "fulfilled message: ${MESSAGE_REF}"
+if [[ "${DRY_RUN}" -eq 1 ]]; then
+  echo "dry-run: would fulfill message ${MESSAGE_REF}"
+else
+  ./control-plane/scripts/collab_validate.sh >/dev/null
+  echo "fulfilled message: ${MESSAGE_REF}"
+fi

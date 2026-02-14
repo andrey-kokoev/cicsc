@@ -13,6 +13,7 @@ EVENT_ID=""
 NOTES=""
 RESCINDED_REASON=""
 NO_REFRESH=0
+DRY_RUN=0
 EVIDENCE_ITEMS=()
 
 usage() {
@@ -79,6 +80,10 @@ while [[ $# -gt 0 ]]; do
       NO_REFRESH=1
       shift
       ;;
+    --dry-run)
+      DRY_RUN=1
+      shift
+      ;;
     -h|--help)
       usage
       exit 0
@@ -98,8 +103,9 @@ if [[ -z "${MESSAGE_REF}" || -z "${TO_STATUS}" || -z "${ACTOR}" || -z "${COMMIT_
 fi
 
 cd "${ROOT_DIR}"
+./control-plane/scripts/collab_validate.sh >/dev/null
 
-python3 - "$COLLAB_PATH" "$MESSAGE_REF" "$TO_STATUS" "$ACTOR" "$COMMIT_SHA" "$FROM_STATUS" "$EVENT_ID" "$NOTES" "$RESCINDED_REASON" "${EVIDENCE_ITEMS[@]}" <<'PY'
+python3 - "$COLLAB_PATH" "$MESSAGE_REF" "$TO_STATUS" "$ACTOR" "$COMMIT_SHA" "$FROM_STATUS" "$EVENT_ID" "$NOTES" "$RESCINDED_REASON" "$DRY_RUN" "${EVIDENCE_ITEMS[@]}" <<'PY'
 import re
 import sys
 from pathlib import Path
@@ -114,7 +120,8 @@ from_status_arg = sys.argv[6]
 event_id_arg = sys.argv[7]
 notes_arg = sys.argv[8]
 rescinded_reason_arg = sys.argv[9]
-evidence_items = sys.argv[10:]
+dry_run = sys.argv[10] == "1"
+evidence_items = sys.argv[11:]
 
 data = yaml.safe_load(collab_path.read_text(encoding="utf-8"))
 messages = data.get("messages", [])
@@ -186,14 +193,21 @@ if rescinded_reason_arg:
 if notes_arg:
     event["notes"] = notes_arg
 
+if dry_run:
+    print(f"dry-run: would append event {event_id} to {collab_path}")
+    raise SystemExit(0)
+
 events.append(event)
 data["message_events"] = events
 collab_path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
 print(f"appended event {event_id} to {collab_path}")
 PY
 
-if [[ "${NO_REFRESH}" -eq 0 ]]; then
+if [[ "${DRY_RUN}" -eq 0 && "${NO_REFRESH}" -eq 0 ]]; then
   ./control-plane/scripts/generate_views.sh >/dev/null
 fi
 
-echo "appended event to ${COLLAB_PATH}"
+if [[ "${DRY_RUN}" -eq 0 ]]; then
+  ./control-plane/scripts/collab_validate.sh >/dev/null
+  echo "appended event to ${COLLAB_PATH}"
+fi
