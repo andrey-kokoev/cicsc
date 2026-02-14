@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -uo pipefail
 
 on_err() {
   local rc="$?"
@@ -7,6 +7,16 @@ on_err() {
   echo "autopilot fatal: rc=${rc} cmd=${cmd}" >&2
 }
 trap on_err ERR
+
+on_exit() {
+  local rc="$?"
+  if [[ "${rc}" -eq 0 ]]; then
+    echo "autopilot exit: rc=0" >&2
+  else
+    echo "autopilot exit: rc=${rc}" >&2
+  fi
+}
+trap on_exit EXIT
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 "${ROOT_DIR}/control-plane/scripts/collab_require_root.sh" "${ROOT_DIR}"
@@ -181,10 +191,8 @@ safe_step() {
   local label="$1"
   shift
   local rc=0
-  set +e
   "$@"
   rc=$?
-  set -e
   if [[ "${rc}" -eq 0 ]]; then
     return 0
   fi
