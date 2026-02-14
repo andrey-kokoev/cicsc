@@ -58,6 +58,28 @@
       "status": "assigned",
       "outcome": "pending",
       "notes": "AY1.1 prep lane: freeze context matrix draft and acceptance contract scaffold for Phase 34."
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY12_KIMI_SYNC",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY1.2",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay1.2",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Protocol sync: rebase worktree branch on main and confirm AGENTS/README parity."
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY13_ANTIGRAVITY_SYNC",
+      "agent_ref": "AGENT_ANTIGRAVITY",
+      "checkbox_ref": "AY1.3",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/antigravity",
+      "branch": "phase34.ay1.3",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Protocol sync: rebase worktree branch on main and confirm AGENTS/README parity."
     }
   ]
 }

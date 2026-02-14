@@ -106,6 +106,46 @@
           "notes": "Dispatch AY1.1 prep lane (Antigravity): context-matrix and acceptance-contract freeze draft.",
           "current_status": "sent",
           "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY12_KIMI_SYNC_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY12_KIMI_SYNC",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay1.2",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Protocol sync request: rebase with main and verify AGENTS+control-plane README parity before next assignment.",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY13_ANTIGRAVITY_SYNC_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY13_ANTIGRAVITY_SYNC",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_ANTIGRAVITY",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/antigravity",
+          "branch": "phase34.ay1.3",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Protocol sync request: rebase with main and verify AGENTS+control-plane README parity before next assignment.",
+          "current_status": "sent",
+          "event_count": 1
         }
       ]
     },
@@ -150,6 +190,26 @@
           "notes": "Dispatch AX1.3 report publication obligations and residual-gap closure.",
           "current_status": "closed",
           "event_count": 5
+        },
+        {
+          "id": "MSG_PHASE34_AY12_KIMI_SYNC_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY12_KIMI_SYNC",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay1.2",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Protocol sync request: rebase with main and verify AGENTS+control-plane README parity before next assignment.",
+          "current_status": "sent",
+          "event_count": 1
         }
       ],
       "outbox": []
@@ -213,6 +273,26 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch AY1.1 prep lane (Antigravity): context-matrix and acceptance-contract freeze draft.",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY13_ANTIGRAVITY_SYNC_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY13_ANTIGRAVITY_SYNC",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_ANTIGRAVITY",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/antigravity",
+          "branch": "phase34.ay1.3",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Protocol sync request: rebase with main and verify AGENTS+control-plane README parity before next assignment.",
           "current_status": "sent",
           "event_count": 1
         }
