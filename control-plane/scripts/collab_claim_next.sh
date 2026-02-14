@@ -33,6 +33,7 @@ Options:
   --auto-commit         Auto-commit collab model/views after successful claim (requires clean tree).
   --commit              Alias for --auto-commit with editor-enabled commit body.
   --commit-subject <t>  Commit subject override when --auto-commit is set.
+  --message <t>         Alias for --commit-subject.
   --commit-body <t>     Additional commit body line (repeatable) for --auto-commit.
   --checkout-branch     Checkout/create assignment branch in target worktree after claim.
 USAGE
@@ -50,6 +51,7 @@ while [[ $# -gt 0 ]]; do
     --auto-commit) AUTO_COMMIT=1; shift ;;
     --commit) COMMIT_MODE=1; AUTO_COMMIT=1; shift ;;
     --commit-subject) COMMIT_SUBJECT="${2:-}"; shift 2 ;;
+    --message) COMMIT_SUBJECT="${2:-}"; shift 2 ;;
     --commit-body) COMMIT_BODY+=("${2:-}"); shift 2 ;;
     --checkout-branch) CHECKOUT_BRANCH=1; shift ;;
     -h|--help) usage; exit 0 ;;
