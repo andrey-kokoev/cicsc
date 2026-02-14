@@ -13,6 +13,7 @@ FORCE=0
 AUTO_COMMIT=0
 COMMIT_SUBJECT=""
 COMMIT_BODY=()
+CHECKOUT_BRANCH=0
 
 usage() {
   cat <<'USAGE'
@@ -30,6 +31,7 @@ Options:
   --auto-commit         Auto-commit collab model/views after successful claim (requires clean tree).
   --commit-subject <t>  Commit subject override when --auto-commit is set.
   --commit-body <t>     Additional commit body line (repeatable) for --auto-commit.
+  --checkout-branch     Checkout/create assignment branch in target worktree after claim.
 USAGE
 }
 
@@ -45,6 +47,7 @@ while [[ $# -gt 0 ]]; do
     --auto-commit) AUTO_COMMIT=1; shift ;;
     --commit-subject) COMMIT_SUBJECT="${2:-}"; shift 2 ;;
     --commit-body) COMMIT_BODY+=("${2:-}"); shift 2 ;;
+    --checkout-branch) CHECKOUT_BRANCH=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -120,9 +123,14 @@ if force and acknowledged:
     print("FORCE_OVERRIDE_ACKNOWLEDGED")
     print(",".join(m.get("id", "") for m in acknowledged if m.get("id")))
 
+assignments = {a.get("id"): a for a in collab.get("assignments", [])}
+assignment_ref = msg.get("assignment_ref")
+branch = (assignments.get(assignment_ref) or {}).get("branch", "")
+
 print(msg.get("id"))
 print(agent.get("id"))
-print(msg.get("assignment_ref"))
+print(assignment_ref)
+print(branch)
 PY
 )" || {
   echo "failed to resolve claim target for worktree ${WORKTREE}" >&2
@@ -155,6 +163,7 @@ fi
 MESSAGE_REF="${_lines[$line_ix]}"
 ACTOR_AGENT="${_lines[$((line_ix + 1))]}"
 ASSIGNMENT_REF="${_lines[$((line_ix + 2))]}"
+ASSIGNMENT_BRANCH="${_lines[$((line_ix + 3))]}"
 
 if [[ -z "${NOTES}" ]]; then
   NOTES="Acknowledged by ${ACTOR_AGENT} via collab_claim_next.sh"
@@ -177,6 +186,18 @@ if [[ "${DRY_RUN}" -eq 1 ]]; then
 else
   echo "claimed message: ${MESSAGE_REF}"
   echo "run: ./control-plane/scripts/collab_show_assignment.sh --ref ${ASSIGNMENT_REF}"
+  if [[ "${CHECKOUT_BRANCH}" -eq 1 ]]; then
+    if [[ -z "${ASSIGNMENT_BRANCH}" ]]; then
+      echo "warning: assignment ${ASSIGNMENT_REF} has no branch configured; skipping checkout" >&2
+    else
+      if git -C "${WORKTREE}" rev-parse --verify "${ASSIGNMENT_BRANCH}" >/dev/null 2>&1; then
+        git -C "${WORKTREE}" checkout "${ASSIGNMENT_BRANCH}" >/dev/null
+      else
+        git -C "${WORKTREE}" checkout -b "${ASSIGNMENT_BRANCH}" >/dev/null
+      fi
+      echo "checked out branch ${ASSIGNMENT_BRANCH} in ${WORKTREE}"
+    fi
+  fi
   if [[ "${AUTO_COMMIT}" -eq 1 ]]; then
     _commit_cmd=(./control-plane/scripts/collab_commit_views.sh --from-last-collab-action)
     if [[ -n "${COMMIT_SUBJECT}" ]]; then
