@@ -1,0 +1,28 @@
+{
+  "run_id": "dispatch-run-20260214T024422Z",
+  "created_at": "2026-02-14T02:44:22.875029+00:00",
+  "agent_ref": "AGENT_KIMI",
+  "from_agent_ref": "AGENT_MAIN",
+  "initial_status": "sent",
+  "commit": "dc31d1c",
+  "filters": {
+    "phase_number": null,
+    "milestone_id": null,
+    "strategy": "fifo",
+    "count": 1
+  },
+  "rows": [
+    {
+      "state": "applied",
+      "error": "",
+      "assignment_id": "ASSIGN_PHASE33_AX13_KIMI_BATCH",
+      "message_id": "MSG_PHASE33_AX13_KIMI_BATCH_DISPATCH",
+      "checkbox_ref": "AX1.3",
+      "phase_number": 33,
+      "milestone_id": "AX1",
+      "title": "Publish coupling conformance report with residual gaps register",
+      "branch": "phase33.ax1.3",
+      "commit": "dc31d1c"
+    }
+  ]
+}
