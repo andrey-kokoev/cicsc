@@ -185,6 +185,10 @@ Quickstart helpers:
   - `./control-plane/scripts/auto_dispatch_loop.sh --agent-ref AGENT_KIMI --batch-size 3 --interval-seconds 5 --max-cycles 0 --friction-decision accept_later --friction-backlog-ref phase36.collab-ergonomics`
   - bounded test run:
     - `./control-plane/scripts/auto_dispatch_loop.sh --agent-ref AGENT_KIMI --batch-size 3 --max-cycles 1`
+- workspace-open autostart (VS Code):
+  - on folder open: task `cicsc:auto-dispatch-loop:launch-on-open`
+  - stop task: `cicsc:auto-dispatch-loop:stop`
+  - pid/log location: `control-plane/logs/auto-dispatch-loop/`
 - typed friction loop:
   - worker request: `./control-plane/scripts/collab_request_friction.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --type ergonomics --severity medium --summary "..." --repro-step "..."`
   - main triage: `./control-plane/scripts/collab_triage_friction.sh --message-ref MSG_... --decision accept_now --notes "..."`
