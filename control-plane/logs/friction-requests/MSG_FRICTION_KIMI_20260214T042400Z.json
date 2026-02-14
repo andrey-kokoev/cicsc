@@ -1,0 +1,18 @@
+{
+  "message_id": "MSG_FRICTION_KIMI_20260214T042400Z",
+  "from_agent_ref": "AGENT_KIMI",
+  "from_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+  "to_agent_ref": "AGENT_MAIN",
+  "friction_type": "ergonomics",
+  "severity": "low",
+  "summary": "No branch cleanup guidance after assignment fulfillment",
+  "repro_steps": [
+    "Process multiple assignments with --checkout-branch",
+    "Observe 10+ branches created: phase33.ax1.2, phase33.ax1.3, phase34.ay1.1, etc.",
+    "No guidance on which branches can be safely deleted"
+  ],
+  "frequency": "often",
+  "proposed_fix": "Add collab_branch_cleanup.sh to suggest/archive completed branches",
+  "requested_at": "2026-02-14T04:24:00.764441+00:00",
+  "requested_commit": "9fbbb61"
+}

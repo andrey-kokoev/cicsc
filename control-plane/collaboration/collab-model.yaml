@@ -454,8 +454,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase33.ax1.3
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Batch dispatch for AX1.3: Publish coupling conformance report with residual
     gaps register'
 - id: ASSIGN_PHASE34_AY11_KIMI_BATCH_4
@@ -464,8 +464,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase34.ay1.1
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Batch dispatch for AY1.1: Freeze Phase 34 context matrix and expanded acceptance
     contract'
 - id: ASSIGN_PHASE34_AY12_KIMI_BATCH_3
@@ -474,8 +474,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase34.ay1.2
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Batch dispatch for AY1.2: Execute multi-context workloads under expanded
     objective envelopes'
 message_kinds:
@@ -2415,3 +2415,105 @@ message_events:
   commit: 9fbbb61
   evidence_bindings: []
   notes: Initial friction request dispatch from AGENT_KIMI.
+- id: MSGEV_PHASE33_AX13_KIMI_BATCH_4_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE33_AX13_KIMI_BATCH_4_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 2f86db9
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE33_AX13_KIMI_BATCH_4_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE33_AX13_KIMI_BATCH_4_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 2f86db9
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY11_KIMI_BATCH_4_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY11_KIMI_BATCH_4_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 2f86db9
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY11_KIMI_BATCH_4_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY11_KIMI_BATCH_4_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 2f86db9
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY12_KIMI_BATCH_3_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY12_KIMI_BATCH_3_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 2f86db9
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY12_KIMI_BATCH_3_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY12_KIMI_BATCH_3_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 2f86db9
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_FRICTION_KIMI_20260214T042345Z_ACKNOWLEDGED_2
+  message_ref: MSG_FRICTION_KIMI_20260214T042345Z
+  from_status: sent
+  to_status: acknowledged
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 2
+  commit: 2f86db9
+  evidence_bindings: []
+  notes: friction triage decision=accept_now; notes=Promote tokenized phase/checkbox
+    auto-commit subjects in next hardening slice.
+- id: MSGEV_FRICTION_KIMI_20260214T042345Z_CLOSED_3
+  message_ref: MSG_FRICTION_KIMI_20260214T042345Z
+  from_status: acknowledged
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 3
+  commit: 2f86db9
+  evidence_bindings:
+  - ref: control-plane/logs/friction-triage/MSG_FRICTION_KIMI_20260214T042345Z.json
+    evidence_kind_ref: EVID_GATE_REPORT
+    commit: 2f86db9
+    digest: sha256:044405f40d12dcf337ac5ae0fed2c73cc5481f8a75a858bde42896d850034325
+  notes: friction triage decision=accept_now; notes=Promote tokenized phase/checkbox
+    auto-commit subjects in next hardening slice.
+- id: MSGEV_FRICTION_KIMI_20260214T042400Z_ACKNOWLEDGED_2
+  message_ref: MSG_FRICTION_KIMI_20260214T042400Z
+  from_status: sent
+  to_status: acknowledged
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 2
+  commit: 2f86db9
+  evidence_bindings: []
+  notes: friction triage decision=accept_later; notes=Queue branch lifecycle tooling
+    after commit-subject hardening lands.; backlog_ref=phase36.collab-ergonomics
+- id: MSGEV_FRICTION_KIMI_20260214T042400Z_CLOSED_3
+  message_ref: MSG_FRICTION_KIMI_20260214T042400Z
+  from_status: acknowledged
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 3
+  commit: 2f86db9
+  evidence_bindings:
+  - ref: control-plane/logs/friction-triage/MSG_FRICTION_KIMI_20260214T042400Z.json
+    evidence_kind_ref: EVID_GATE_REPORT
+    commit: 2f86db9
+    digest: sha256:5d148cfe3cc56814f72a7fe3c3bad09e5a4459f2fb4b9820a33444cb898b024f
+  notes: friction triage decision=accept_later; notes=Queue branch lifecycle tooling
+    after commit-subject hardening lands.; backlog_ref=phase36.collab-ergonomics

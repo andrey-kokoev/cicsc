@@ -1,0 +1,14 @@
+{
+  "message_ref": "MSG_FRICTION_KIMI_20260214T042400Z",
+  "decision": "accept_later",
+  "current_status_before": "sent",
+  "planned_transitions": [
+    "acknowledged",
+    "closed"
+  ],
+  "triage_agent_ref": "AGENT_MAIN",
+  "triaged_at": "2026-02-14T04:25:29.971936+00:00",
+  "commit": "2f86db9",
+  "notes": "Queue branch lifecycle tooling after commit-subject hardening lands.",
+  "backlog_ref": "phase36.collab-ergonomics"
+}

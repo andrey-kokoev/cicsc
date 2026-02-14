@@ -1,0 +1,14 @@
+{
+  "message_ref": "MSG_FRICTION_KIMI_20260214T042345Z",
+  "decision": "accept_now",
+  "current_status_before": "sent",
+  "planned_transitions": [
+    "acknowledged",
+    "closed"
+  ],
+  "triage_agent_ref": "AGENT_MAIN",
+  "triaged_at": "2026-02-14T04:25:26.854332+00:00",
+  "commit": "2f86db9",
+  "notes": "Promote tokenized phase/checkbox auto-commit subjects in next hardening slice.",
+  "backlog_ref": null
+}
