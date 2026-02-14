@@ -31,7 +31,7 @@ If you are the main agent opening this repository for the first time, do this in
 
 1. `./control-plane/scripts/generate_views.sh`
 2. `./control-plane/scripts/collab_help.sh --role main --worktree /home/andrey/src/cicsc`
-3. `./control-plane/scripts/collab_inbox.sh --worktree /home/andrey/src/cicsc --refresh --actionable-only`
+3. `./control-plane/scripts/collab_inbox.sh --worktree /home/andrey/src/cicsc --refresh`
 4. `./scripts/check_canonical_execution_model.sh`
 5. Dispatch or delegate only through WMCC command surface (`collab_dispatch.sh`, `collab_delegate_worktree.sh`).
 
@@ -51,7 +51,7 @@ then execute exactly this protocol:
    - main agent: `WORKTREE=/home/andrey/src/cicsc`
    - worker agent: `WORKTREE=<your assigned worktree>`
 4. Read actionable inbox:
-   - `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh --actionable-only`
+   - `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh`
 5. If no actionable messages: stand down and report `no actionable inbox messages`.
 6. If actionable messages exist: process mailbox protocol (claim -> fulfill with required evidence -> commit), repeating until no actionable messages remain.
 7. Return a completion report containing:
@@ -168,7 +168,7 @@ Message I/O command surface:
 - operator quickstart (copy/paste):
   - `cd /home/andrey/src/cicsc`
   - `WORKTREE=/home/andrey/src/cicsc/worktrees/kimi`
-  - `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh --actionable-only`
+  - `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh`
   - `./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE" --commit`
 - collaboration preflight gate:
   - `./control-plane/scripts/collab_validate.sh`
@@ -200,13 +200,13 @@ Message I/O command surface:
 - worktree status summary + recommended next action:
   - `./control-plane/scripts/collab_status.sh --worktree "$WORKTREE"`
 - batch sweep mode:
-  - `./control-plane/scripts/collab_sweep.sh --worktree "$WORKTREE" --script scripts/check_x.sh --gate-report docs/pilot/report.json --lazy`
+  - `./control-plane/scripts/collab_sweep.sh --worktree "$WORKTREE" --with scripts/check_x.sh --auto-report --lazy`
 - revert mistaken claim:
   - `./control-plane/scripts/collab_revert.sh --message-ref MSG_... --reason "claimed wrong assignment"`
 - assignment-level delta view:
   - `./control-plane/scripts/collab_diff.sh --assignment-ref ASSIGN_...`
 - aggregate history summary:
-  - `./control-plane/scripts/collab_summary.sh --worktree "$PWD" --since 2026-02-13`
+  - `./control-plane/scripts/collab_summary.sh --worktree "$WORKTREE" --since 2026-02-13`
 - interactive loop wrapper:
   - `./control-plane/scripts/collab_interactive.sh --worktree "$WORKTREE"`
 - fuzzy interactive picker (requires `fzf`):

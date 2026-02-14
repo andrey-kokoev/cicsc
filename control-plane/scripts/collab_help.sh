@@ -45,7 +45,9 @@ if [[ "${ROLE}" == "worker" ]]; then
    ./control-plane/scripts/generate_views.sh
 
 2) Inspect actionable inbox for this worktree:
-   ./control-plane/scripts/collab_inbox.sh --worktree "${WORKTREE}" --refresh --actionable-only
+   ./control-plane/scripts/collab_inbox.sh --worktree "${WORKTREE}" --refresh
+   # full history:
+   ./control-plane/scripts/collab_inbox.sh --worktree "${WORKTREE}" --refresh --all
 
 2.5) Fast sync repair (if gates complain views/model are stale):
    ./control-plane/scripts/collab_sync.sh
@@ -59,7 +61,9 @@ if [[ "${ROLE}" == "worker" ]]; then
    ./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "${WORKTREE}" --with scripts/check_x.sh --auto-report --lazy --auto-commit --message "phaseXX ayY.Y fulfill ..."
 
 5) Batch/sweep homogeneous assignments:
-   ./control-plane/scripts/collab_sweep.sh --worktree "${WORKTREE}" --script scripts/check_x.sh --gate-report docs/pilot/report.json --lazy
+   ./control-plane/scripts/collab_sweep.sh --worktree "${WORKTREE}" --with scripts/check_x.sh --auto-report --lazy
+   # optional branch summary:
+   ./control-plane/scripts/collab_sweep.sh --worktree "${WORKTREE}" --with scripts/check_x.sh --auto-report --lazy --checkout-branch
 
 6) Revert mistaken claim:
    ./control-plane/scripts/collab_revert.sh --message-ref MSG_... --reason "claimed wrong assignment"

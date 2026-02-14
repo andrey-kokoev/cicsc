@@ -20,6 +20,8 @@ RUN_SCRIPTS=()
 DEPS=()
 WITH_ITEMS=()
 AUTO_REPORT=0
+QUIET=0
+SUMMARY=0
 SCRIPT_REFS=()
 GATE_REFS=()
 THEOREM_REFS=()
@@ -57,6 +59,8 @@ Options:
   --dep <path>          Additional dependency path for --lazy freshness checks (repeatable).
   --lazy                Skip --run-script when evidence appears fresh.
   --max-age-minutes <n> Freshness TTL for --lazy (default: 30).
+  --quiet               Minimize output noise.
+  --summary             Print concise fulfillment summary (implies --quiet).
 USAGE
 }
 
@@ -85,6 +89,8 @@ while [[ $# -gt 0 ]]; do
     --dep) DEPS+=("${2:-}"); shift 2 ;;
     --lazy) LAZY=1; shift ;;
     --max-age-minutes) MAX_AGE_MINUTES="${2:-}"; shift 2 ;;
+    --quiet) QUIET=1; shift ;;
+    --summary) SUMMARY=1; QUIET=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -218,6 +224,8 @@ done
 
 if [[ ${#RUN_SCRIPTS[@]} -gt 0 ]]; then
   _run_start_epoch="$(date +%s)"
+  _checks_passed=0
+  _checks_failed=0
   _target_report=""
   if [[ ${#GATE_REFS[@]} -gt 0 ]]; then
     _target_report="$(to_abs_path "${GATE_REFS[0]}")"
@@ -267,10 +275,21 @@ if [[ ${#RUN_SCRIPTS[@]} -gt 0 ]]; then
       fi
     fi
     if [[ "${should_run}" -eq 1 ]]; then
-      echo "run-script: executing (${reason}): ${cmdline}"
-      bash -lc "${cmdline}"
+      [[ "${QUIET}" -eq 0 ]] && echo "run-script: executing (${reason}): ${cmdline}"
+      if [[ "${QUIET}" -eq 1 ]]; then
+        if bash -lc "${cmdline}" >/dev/null 2>&1; then
+          _checks_passed=$((_checks_passed + 1))
+        else
+          _checks_failed=$((_checks_failed + 1))
+          echo "run-script failed: ${cmdline}" >&2
+          exit 1
+        fi
+      else
+        bash -lc "${cmdline}"
+        _checks_passed=$((_checks_passed + 1))
+      fi
     else
-      echo "run-script: skipping (${reason}): ${cmdline}"
+      [[ "${QUIET}" -eq 0 ]] && echo "run-script: skipping (${reason}): ${cmdline}"
     fi
   done
 fi
@@ -290,7 +309,7 @@ if [[ "${AUTO_REPORT}" -eq 1 && ${#GATE_REFS[@]} -eq 0 ]]; then
   fi
   if [[ -n "${_auto_report}" ]]; then
     append_unique "${_auto_report}" GATE_REFS
-    echo "auto-report: selected ${_auto_report}"
+    [[ "${QUIET}" -eq 0 ]] && echo "auto-report: selected ${_auto_report}"
   else
     echo "auto-report: no candidate report found under docs/pilot" >&2
     exit 1
@@ -339,7 +358,11 @@ for e in "${EVIDENCE_ITEMS[@]}"; do
   cmd+=(--evidence "${e}")
 done
 
-"${cmd[@]}"
+if [[ "${QUIET}" -eq 1 ]]; then
+  "${cmd[@]}" >/dev/null
+else
+  "${cmd[@]}"
+fi
 if [[ "${DRY_RUN}" -eq 1 ]]; then
   echo "dry-run: would fulfill message ${MESSAGE_REF}"
 else
@@ -385,9 +408,16 @@ PY
   _assignment_ref="${_sum_lines[0]}"
   _checkbox_ref="${_sum_lines[1]}"
   _remaining="${_sum_lines[2]}"
-  echo "fulfilled message: ${MESSAGE_REF}"
-  echo "assignment: ${_assignment_ref}"
-  echo "remaining actionable in ${WORKTREE}: ${_remaining}"
+  if [[ "${SUMMARY}" -eq 1 ]]; then
+    echo "fulfilled: ${MESSAGE_REF}"
+    echo "assignment: ${_assignment_ref}"
+    echo "checks: ${_checks_passed:-0} passed, ${_checks_failed:-0} failed"
+    echo "next: ${_remaining} actionable"
+  else
+    echo "fulfilled message: ${MESSAGE_REF}"
+    echo "assignment: ${_assignment_ref}"
+    echo "remaining actionable in ${WORKTREE}: ${_remaining}"
+  fi
   if [[ "${SUGGEST_COMMIT}" -eq 1 ]]; then
     _subject="governance/collab: fulfill ${_assignment_ref}"
     if [[ -n "${_checkbox_ref}" ]]; then
@@ -406,6 +436,10 @@ PY
       _commit_cmd+=(--body "${line}")
     done
     "${_commit_cmd[@]}"
-    echo "auto-committed collab model/views"
+    if [[ "${SUMMARY}" -eq 1 ]]; then
+      echo "committed: $(git rev-parse --short HEAD)"
+    else
+      echo "auto-committed collab model/views"
+    fi
   fi
 fi

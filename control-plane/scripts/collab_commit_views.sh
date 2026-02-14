@@ -62,9 +62,27 @@ assignment = assignments.get(assignment_ref, {})
 checkbox = assignment.get("checkbox_ref")
 actor = last.get("actor_agent_ref")
 to_status = last.get("to_status")
+action_map = {
+    "acknowledged": "claim",
+    "fulfilled": "fulfill",
+    "ingested": "ingest",
+    "closed": "close",
+    "rescinded": "rescind",
+    "rejected": "reject",
+}
+action = action_map.get(to_status, "sync")
+phase_num = ""
+if isinstance(assignment_ref, str):
+    import re
+    m = re.search(r"ASSIGN_PHASE(\d+)_", assignment_ref)
+    if m:
+        phase_num = str(int(m.group(1)))
+
 subject = f"governance/collab: sync {assignment_ref} -> {to_status}"
-if checkbox:
-    subject = f"governance/collab: sync {checkbox} ({assignment_ref}) -> {to_status}"
+if checkbox and phase_num:
+    subject = f"phase{phase_num} {checkbox.lower()} {action} {assignment_ref}"
+elif checkbox:
+    subject = f"governance/collab: {action} {checkbox} ({assignment_ref})"
 print(subject)
 print(f"MessageRef: {last.get('message_ref')}")
 print(f"MessageEvent: {last.get('id')}")
