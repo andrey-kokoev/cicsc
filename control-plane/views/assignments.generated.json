@@ -2167,8 +2167,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase34.ay1.1.i47",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Dispatch instance i47 for AY1.1: Freeze Phase 34 context matrix and expanded acceptance contract"
     },
     {
@@ -2200,8 +2200,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/gemini",
       "branch": "phase34.ay2.1.i01",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Dispatch instance i01 for AY2.1: Add Phase 34 required-gates script/report for expanded multi-context envelope"
     },
     {
@@ -2211,8 +2211,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/gemini",
       "branch": "phase34.ay2.2.i01",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Dispatch instance i01 for AY2.2: Publish Phase 34 closure report with unresolved critical disposition"
     },
     {
@@ -2222,8 +2222,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/gemini",
       "branch": "phase34.ay2.3.i01",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Dispatch instance i01 for AY2.3: Define objective Phase 34 exit checklist mapped to artifacts"
     }
   ]

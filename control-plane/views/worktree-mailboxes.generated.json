@@ -3985,8 +3985,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i47 AY1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY12_KIMI_I40_DISPATCH",
@@ -4045,8 +4045,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i01 AY2.1 -> AGENT_GEMINI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY22_GEMINI_I01_DISPATCH",
@@ -4065,8 +4065,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i01 AY2.2 -> AGENT_GEMINI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY23_GEMINI_I01_DISPATCH",
@@ -4085,8 +4085,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i01 AY2.3 -> AGENT_GEMINI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         }
       ]
     },
@@ -7710,8 +7710,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i47 AY1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY12_KIMI_I40_DISPATCH",
@@ -8140,8 +8140,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i01 AY2.1 -> AGENT_GEMINI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY22_GEMINI_I01_DISPATCH",
@@ -8160,8 +8160,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i01 AY2.2 -> AGENT_GEMINI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY23_GEMINI_I01_DISPATCH",
@@ -8180,8 +8180,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i01 AY2.3 -> AGENT_GEMINI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         }
       ],
       "outbox": []
