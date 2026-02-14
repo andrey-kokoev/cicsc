@@ -124,8 +124,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Protocol sync request: rebase with main and verify AGENTS+control-plane README parity before next assignment.",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "acknowledged",
+          "event_count": 2
         },
         {
           "id": "MSG_PHASE34_AY13_ANTIGRAVITY_SYNC_DISPATCH",
@@ -144,6 +144,46 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Protocol sync request: rebase with main and verify AGENTS+control-plane README parity before next assignment.",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY21_KIMI_MULTI1_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY21_KIMI_MULTI1",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay2.1",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch Kimi multi-lane task 1 (AY2.1).",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY22_KIMI_MULTI2_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY22_KIMI_MULTI2",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay2.2",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch Kimi multi-lane task 2 (AY2.2).",
           "current_status": "sent",
           "event_count": 1
         }
@@ -208,6 +248,46 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Protocol sync request: rebase with main and verify AGENTS+control-plane README parity before next assignment.",
+          "current_status": "acknowledged",
+          "event_count": 2
+        },
+        {
+          "id": "MSG_PHASE34_AY21_KIMI_MULTI1_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY21_KIMI_MULTI1",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay2.1",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch Kimi multi-lane task 1 (AY2.1).",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY22_KIMI_MULTI2_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY22_KIMI_MULTI2",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay2.2",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch Kimi multi-lane task 2 (AY2.2).",
           "current_status": "sent",
           "event_count": 1
         }

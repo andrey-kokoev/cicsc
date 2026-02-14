@@ -235,6 +235,25 @@ assignments:
   outcome: pending
   notes: 'Protocol sync: rebase worktree branch on main and confirm AGENTS/README
     parity.'
+- id: ASSIGN_PHASE34_AY21_KIMI_MULTI1
+  agent_ref: AGENT_KIMI
+  checkbox_ref: AY2.1
+  claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
+  worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase34.ay2.1
+  status: assigned
+  outcome: pending
+  notes: 'Multi-task lane 1 for Kimi: protocol sync proof and AY2.1 gate/report prep.'
+- id: ASSIGN_PHASE34_AY22_KIMI_MULTI2
+  agent_ref: AGENT_KIMI
+  checkbox_ref: AY2.2
+  claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
+  worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase34.ay2.2
+  status: assigned
+  outcome: pending
+  notes: 'Multi-task lane 2 for Kimi: closure-report skeleton and unresolved-critical
+    disposition matrix.'
 message_kinds:
 - id: MSGK_ASSIGNMENT_DISPATCH
   title: Assignment dispatch from canonical worktree.
@@ -353,6 +372,36 @@ messages:
   evidence_bindings: []
   notes: 'Protocol sync request: rebase with main and verify AGENTS+control-plane
     README parity before next assignment.'
+- id: MSG_PHASE34_AY21_KIMI_MULTI1_DISPATCH
+  kind_ref: MSGK_ASSIGNMENT_DISPATCH
+  assignment_ref: ASSIGN_PHASE34_AY21_KIMI_MULTI1
+  from_agent_ref: AGENT_MAIN
+  to_agent_ref: AGENT_KIMI
+  from_worktree: /home/andrey/src/cicsc
+  to_worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase34.ay2.1
+  initial_status: sent
+  payload_refs:
+  - AGENTS.md
+  - control-plane/README.md
+  evidence_refs: []
+  evidence_bindings: []
+  notes: Dispatch Kimi multi-lane task 1 (AY2.1).
+- id: MSG_PHASE34_AY22_KIMI_MULTI2_DISPATCH
+  kind_ref: MSGK_ASSIGNMENT_DISPATCH
+  assignment_ref: ASSIGN_PHASE34_AY22_KIMI_MULTI2
+  from_agent_ref: AGENT_MAIN
+  to_agent_ref: AGENT_KIMI
+  from_worktree: /home/andrey/src/cicsc
+  to_worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase34.ay2.2
+  initial_status: sent
+  payload_refs:
+  - AGENTS.md
+  - control-plane/README.md
+  evidence_refs: []
+  evidence_bindings: []
+  notes: Dispatch Kimi multi-lane task 2 (AY2.2).
 message_events:
 - id: MSGEV_PHASE33_AX12_DISPATCH_SENT
   message_ref: MSG_PHASE33_AX12_DISPATCH
@@ -582,3 +631,30 @@ message_events:
   commit: 8af1c6b
   evidence_bindings: []
   notes: Initial dispatch event for ASSIGN_PHASE34_AY13_ANTIGRAVITY_SYNC.
+- id: MSGEV_PHASE34_AY12_KIMI_SYNC_DISPATCH_ACKNOWLEDGED_2
+  message_ref: MSG_PHASE34_AY12_KIMI_SYNC_DISPATCH
+  from_status: sent
+  to_status: acknowledged
+  actor_agent_ref: AGENT_KIMI
+  at_seq: 2
+  commit: b89cf60
+  evidence_bindings: []
+  notes: Acknowledged by AGENT_KIMI via collab_claim_next.sh
+- id: MSGEV_PHASE34_AY21_KIMI_MULTI1_DISPATCH_SENT_1
+  message_ref: MSG_PHASE34_AY21_KIMI_MULTI1_DISPATCH
+  from_status: null
+  to_status: sent
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 1
+  commit: 65a5bb5
+  evidence_bindings: []
+  notes: Initial dispatch event for ASSIGN_PHASE34_AY21_KIMI_MULTI1.
+- id: MSGEV_PHASE34_AY22_KIMI_MULTI2_DISPATCH_SENT_1
+  message_ref: MSG_PHASE34_AY22_KIMI_MULTI2_DISPATCH
+  from_status: null
+  to_status: sent
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 1
+  commit: 65a5bb5
+  evidence_bindings: []
+  notes: Initial dispatch event for ASSIGN_PHASE34_AY22_KIMI_MULTI2.

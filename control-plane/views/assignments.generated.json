@@ -80,6 +80,28 @@
       "status": "assigned",
       "outcome": "pending",
       "notes": "Protocol sync: rebase worktree branch on main and confirm AGENTS/README parity."
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY21_KIMI_MULTI1",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY2.1",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay2.1",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Multi-task lane 1 for Kimi: protocol sync proof and AY2.1 gate/report prep."
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY22_KIMI_MULTI2",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY2.2",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay2.2",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Multi-task lane 2 for Kimi: closure-report skeleton and unresolved-critical disposition matrix."
     }
   ]
 }
