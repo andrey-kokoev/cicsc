@@ -15,6 +15,7 @@ NOTES=""
 RESCINDED_REASON=""
 NO_REFRESH=0
 DRY_RUN=0
+SKIP_VALIDATE=0
 EVIDENCE_ITEMS=()
 
 usage() {
@@ -30,6 +31,7 @@ Usage:
     [--notes "<text>"] \
     [--rescinded-reason "<text>"] \
     [--evidence "ref|EVID_KIND|commit|sha256:digest"] ... \
+    [--skip-validate] \
     [--no-refresh]
 
 Notes:
@@ -85,6 +87,10 @@ while [[ $# -gt 0 ]]; do
       DRY_RUN=1
       shift
       ;;
+    --skip-validate)
+      SKIP_VALIDATE=1
+      shift
+      ;;
     -h|--help)
       usage
       exit 0
@@ -104,7 +110,9 @@ if [[ -z "${MESSAGE_REF}" || -z "${TO_STATUS}" || -z "${ACTOR}" || -z "${COMMIT_
 fi
 
 cd "${ROOT_DIR}"
-./control-plane/scripts/collab_validate.sh >/dev/null
+if [[ "${SKIP_VALIDATE}" -eq 0 ]]; then
+  ./control-plane/scripts/collab_validate.sh >/dev/null
+fi
 
 python3 - "$COLLAB_PATH" "$MESSAGE_REF" "$TO_STATUS" "$ACTOR" "$COMMIT_SHA" "$FROM_STATUS" "$EVENT_ID" "$NOTES" "$RESCINDED_REASON" "$DRY_RUN" "${EVIDENCE_ITEMS[@]}" <<'PY'
 import re
@@ -208,7 +216,9 @@ if [[ "${DRY_RUN}" -eq 0 && "${NO_REFRESH}" -eq 0 ]]; then
   ./control-plane/scripts/generate_views.sh >/dev/null
 fi
 
-if [[ "${DRY_RUN}" -eq 0 ]]; then
+if [[ "${DRY_RUN}" -eq 0 && "${SKIP_VALIDATE}" -eq 0 ]]; then
   ./control-plane/scripts/collab_validate.sh >/dev/null
   echo "appended event to ${COLLAB_PATH}"
+elif [[ "${DRY_RUN}" -eq 0 ]]; then
+  echo "appended event to ${COLLAB_PATH} (validation skipped)"
 fi

@@ -96,6 +96,7 @@ case "${CURRENT_STATUS}" in
       --commit "${COMMIT_SHA}" \
       --notes "${INGESTED_NOTES}" \
       $([[ "${DRY_RUN}" -eq 1 ]] && echo --dry-run) \
+      --skip-validate \
       --no-refresh
     ;&
   ingested)
@@ -109,6 +110,7 @@ case "${CURRENT_STATUS}" in
       --commit "${COMMIT_SHA}" \
       --notes "${CLOSED_NOTES}" \
       $([[ "${DRY_RUN}" -eq 1 ]] && echo --dry-run) \
+      --skip-validate \
       --no-refresh
     ;;
   closed)

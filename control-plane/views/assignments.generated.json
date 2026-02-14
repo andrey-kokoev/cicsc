@@ -154,8 +154,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase35.az1.3",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Multi-task lane 7 for Kimi: AZ1.3 project completion verdict by objective."
     },
     {
@@ -165,8 +165,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase35.az2.1",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Multi-task lane 8 for Kimi: AZ2.1 stewardship model freeze and evidence pack."
     },
     {
@@ -176,8 +176,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase35.az2.2",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Batch dispatch for AZ2.2: Publish completion release/transition note with declared scope and limits"
     },
     {
@@ -187,8 +187,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase35.az2.3",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Batch dispatch for AZ2.3: Mark final completion gate pass and archive execution-era closure index"
     }
   ]
