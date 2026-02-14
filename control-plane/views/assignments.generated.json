@@ -2093,6 +2093,17 @@
       "status": "assigned",
       "outcome": "pending",
       "notes": "Dispatch instance i03 for AY1.1: Freeze Phase 34 context matrix and expanded acceptance contract"
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY12_GEMINI_I02",
+      "agent_ref": "AGENT_GEMINI",
+      "checkbox_ref": "AY1.2",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+      "branch": "phase34.ay1.2.i02",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Dispatch instance i02 for AY1.2: Execute multi-context workloads under expanded objective envelopes"
     }
   ]
 }
