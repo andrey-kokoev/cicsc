@@ -98,7 +98,39 @@ Consequences:
 This closes the semantic cavity where a worker acts on stale projections while
 still producing structurally valid events.
 
-## 5. First-principles grounding
+## 5. Role Authority Model
+
+WMCC defines two collaboration roles with asymmetric authority:
+
+**Main (AGENT_MAIN)**
+- Holds **dispatch authority**: decides what work is assigned and to whom
+- Holds **completion authority**: decides when fulfilled work is accepted (ingest/close)
+- Holds **governance authority**: promotes workflow phases, triages friction requests
+- Holds **delegation authority**: assigns worktree ownership
+- **Proactive**: drives workflow state, orchestrates execution
+
+**Worker (AGENT_*)**
+- Holds **execution authority**: implements assigned scope on bound branch
+- **Reactive**: claims dispatched work, fulfills with evidence, reports friction
+- Cannot self-assign, self-validate completion, or promote workflow phases
+
+**Separation of Concerns**
+
+| Decision | Authority | Rationale |
+|----------|-----------|-----------|
+| What gets worked on | Main | Maintains coherent workflow priority |
+| Who does the work | Main | Balances load, matches capabilities |
+| When work is accepted | Main | Ensures gate compliance before convergence |
+| Phase promotion | Main | Controls milestone workflow transitions |
+| Friction disposition | Main | Resolves blockers, accepts/rejects requests |
+| How work is implemented | Worker | Autonomous execution within scoped bounds |
+| Evidence quality | Worker | Responsible for proof of completion |
+
+This asymmetry ensures constructive evolution: Main maintains coherent
+workflow state; Workers maintain coherent implementation state. Neither can
+unilaterally claim completion or bypass validation.
+
+## 6. First-principles grounding
 
 - **State machine discipline**: collaboration is modeled as valid/invalid
   transitions over worktree states.
@@ -107,7 +139,7 @@ still producing structurally valid events.
   handoff boundaries.
 - **Compositionality**: local validated transitions compose into global progress.
 
-## 6. Role of branches
+## 7. Role of branches
 
 Branches are intentionally not semantic authorities.
 They serve as:
@@ -119,7 +151,7 @@ They serve as:
 After successful ingestion, branch retention has no semantic value and should
 default to deletion.
 
-## 7. Implementation projection in this repository
+## 8. Implementation projection in this repository
 
 WMCC is operationalized through control-plane collaboration artifacts:
 
@@ -172,7 +204,7 @@ Assignment closure semantics include explicit outcomes:
 - assignment claim kind determines required obligation profile(s),
 - obligation evidence minima are checked during cross-model validation.
 
-## 8. Failure modes
+## 9. Failure modes
 
 - agent-centric coordination with no worktree-bound obligations
 - branch completion claims without canonical gate evidence
@@ -181,7 +213,7 @@ Assignment closure semantics include explicit outcomes:
 
 Each failure mode weakens constructive collaboration guarantees.
 
-## 9. Scope and limits
+## 10. Scope and limits
 
 - WMCC governs collaboration semantics inside the declared repository process.
 - It does not replace CICSC semantic proofs.
@@ -189,7 +221,7 @@ Each failure mode weakens constructive collaboration guarantees.
 - Current protocol checks type/structure and obligation evidence minima;
   it does not yet cryptographically verify artifact digests against bytes.
 
-## 10. Summary
+## 11. Summary
 
 WMCC is the collaboration semantics for constructive evolution workflows.
 If CICSC defines what is right and CIECP defines how rightness survives change,
