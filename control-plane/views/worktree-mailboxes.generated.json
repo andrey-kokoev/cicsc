@@ -903,8 +903,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i04 AX1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY11_KIMI_I04_DISPATCH",
@@ -923,8 +923,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i04 AY1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY12_KIMI_I04_DISPATCH",
@@ -943,8 +943,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i04 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY13_KIMI_I02_DISPATCH",
@@ -963,8 +963,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i02 AY1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY21_KIMI_I02_DISPATCH",
@@ -983,8 +983,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i02 AY2.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY22_KIMI_I02_DISPATCH",
@@ -1003,8 +1003,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i02 AY2.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY23_KIMI_I01_DISPATCH",
@@ -1827,8 +1827,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i04 AX1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY11_KIMI_I04_DISPATCH",
@@ -1847,8 +1847,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i04 AY1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY12_KIMI_I04_DISPATCH",
@@ -1867,8 +1867,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i04 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY13_KIMI_I02_DISPATCH",
@@ -1887,8 +1887,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i02 AY1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY21_KIMI_I02_DISPATCH",
@@ -1907,8 +1907,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i02 AY2.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY22_KIMI_I02_DISPATCH",
@@ -1927,8 +1927,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i02 AY2.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY23_KIMI_I01_DISPATCH",
