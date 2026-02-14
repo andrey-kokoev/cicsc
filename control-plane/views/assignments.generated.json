@@ -1840,6 +1840,28 @@
       "status": "assigned",
       "outcome": "pending",
       "notes": "Dispatch instance i45 for AX1.3: Publish coupling conformance report with residual gaps register"
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY11_KIMI_I41",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY1.1",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay1.1.i41",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Dispatch instance i41 for AY1.1: Freeze Phase 34 context matrix and expanded acceptance contract"
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY12_KIMI_I35",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY1.2",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay1.2.i35",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Dispatch instance i35 for AY1.2: Execute multi-context workloads under expanded objective envelopes"
     }
   ]
 }
