@@ -80,6 +80,12 @@ Before doing any implementation work:
 
 If no actionable inbox messages exist, do not invent local task authority.
 
+WIP ordering rule:
+- if any inbox message is `acknowledged` for your worktree, fulfill it before
+  claiming additional `sent`/`queued` messages.
+- `sent`/`queued` are claimable; `acknowledged` is already owned and should be
+  executed to `fulfilled` before taking new ownership.
+
 ### 0. Canonical Execution Model (Mandatory)
 Execution status truth is single-source:
 - `control-plane/execution/execution-ledger.yaml` is the only canonical status ledger.
