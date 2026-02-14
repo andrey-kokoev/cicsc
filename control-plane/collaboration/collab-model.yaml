@@ -1104,3 +1104,12 @@ message_events:
   commit: 45b7ebf
   evidence_bindings: []
   notes: Initial dispatch event for ASSIGN_PHASE35_AZ23_KIMI_BATCH.
+- id: MSGEV_PHASE35_AZ13_KIMI_MULTI7_DISPATCH_ACKNOWLEDGED_2
+  message_ref: MSG_PHASE35_AZ13_KIMI_MULTI7_DISPATCH
+  from_status: sent
+  to_status: acknowledged
+  actor_agent_ref: AGENT_KIMI
+  at_seq: 2
+  commit: edc816a
+  evidence_bindings: []
+  notes: Acknowledged by AGENT_KIMI via collab_claim_next.sh
