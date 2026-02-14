@@ -146,6 +146,8 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_show_assignment.sh --ref ASSIGN_...`
 - unified dry-run wrapper:
   - `./control-plane/scripts/collab_dry_run.sh <create|claim-next|fulfill|close|dispatch|delegate|append-event> ...`
+- collab/view commit wrapper:
+  - `./control-plane/scripts/collab_commit_views.sh --subject "governance/collab: ..."`
 
 Happy path:
 1. `./control-plane/scripts/collab_help.sh --role worker --worktree "$PWD"`

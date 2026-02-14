@@ -82,6 +82,7 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `control-plane/scripts/collab_show_assignment.sh`
 - `control-plane/scripts/collab_status.sh`
 - `control-plane/scripts/collab_dry_run.sh`
+- `control-plane/scripts/collab_commit_views.sh`
 - `control-plane/scripts/collab_run_once.sh`
 - `control-plane/scripts/collab_stale_watch.sh`
 
