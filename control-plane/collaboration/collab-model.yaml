@@ -8069,3 +8069,21 @@ message_events:
   commit: da8958e
   evidence_bindings: []
   notes: Acknowledged by AGENT_KIMI via collab_claim_next.sh
+- id: MSGEV_PHASE34_AY12_KIMI_I18_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY12_KIMI_I18_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 0f6cfca
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY12_KIMI_I18_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY12_KIMI_I18_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 0f6cfca
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
