@@ -1848,8 +1848,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase34.ay1.1.i41",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Dispatch instance i41 for AY1.1: Freeze Phase 34 context matrix and expanded acceptance contract"
     },
     {
