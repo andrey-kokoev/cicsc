@@ -85,6 +85,9 @@ else
 2) Dispatch assignment message:
    ./control-plane/scripts/collab_dispatch.sh --assignment-ref ASSIGN_... --payload-ref control-plane/collaboration/collab-model.yaml
 
+2.5) Batch dispatch next N open checkboxes to an agent (single command):
+   ./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --count 2
+
 3) Optionally delegate effective ownership for a worktree:
    ./control-plane/scripts/collab_delegate_worktree.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --owner-agent-ref AGENT_MAIN --delegate-to AGENT_KIMI
 

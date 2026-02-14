@@ -150,6 +150,7 @@ For each execution worktree:
 Quickstart helpers:
 - worker flow: `./control-plane/scripts/collab_help.sh --role worker --worktree "$PWD"`
 - main flow: `./control-plane/scripts/collab_help.sh --role main --worktree /home/andrey/src/cicsc`
+- main batch dispatch: `./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --count 2`
 
 ## Multi-Assignment Worker Flow (End-to-End)
 

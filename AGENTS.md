@@ -133,6 +133,8 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_inbox.sh --worktree "$PWD" --refresh --actionable-only`
 - main-side dispatch wrapper:
   - `./control-plane/scripts/collab_dispatch.sh --assignment-ref ASSIGN_... --payload-ref control-plane/collaboration/collab-model.yaml`
+- main-side batch dispatch wrapper:
+  - `./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --count 2`
 - atomic create+dispatch wrapper (for new assignments):
   - `./control-plane/scripts/collab_create_assignment.sh --assignment-id ASSIGN_... --agent-ref AGENT_KIMI --checkbox-ref AY1.2 --branch phase34.ay1.2 --payload-ref AGENTS.md`
 - owner delegation wrapper (effective ownership handoff/revoke):
