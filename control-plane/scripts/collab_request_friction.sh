@@ -86,8 +86,12 @@ fi
 
 cd "${ROOT_DIR}"
 if [[ "${AUTO_COMMIT}" -eq 1 && "${DRY_RUN}" -eq 0 ]]; then
-  if [[ -n "$(git status --porcelain)" ]]; then
+  _dirty_non_collab="$(git status --porcelain -- . ':(exclude)control-plane/collaboration/collab-model.yaml' ':(exclude)control-plane/views' || true)"
+  if [[ -n "${_dirty_non_collab}" ]]; then
     echo "auto-commit requires a clean working tree" >&2
+    echo "non-collab dirty paths detected:" >&2
+    echo "${_dirty_non_collab}" | sed -n '1,40p' >&2
+    echo "allowed dirty paths: control-plane/collaboration/collab-model.yaml, control-plane/views/*" >&2
     exit 1
   fi
 fi
