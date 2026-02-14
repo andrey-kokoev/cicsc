@@ -315,6 +315,26 @@ assignments:
   outcome: pending
   notes: 'Multi-task lane 8 for Kimi: AZ2.1 stewardship model freeze and evidence
     pack.'
+- id: ASSIGN_PHASE35_AZ22_KIMI_BATCH
+  agent_ref: AGENT_KIMI
+  checkbox_ref: AZ2.2
+  claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
+  worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase35.az2.2
+  status: assigned
+  outcome: pending
+  notes: 'Batch dispatch for AZ2.2: Publish completion release/transition note with
+    declared scope and limits'
+- id: ASSIGN_PHASE35_AZ23_KIMI_BATCH
+  agent_ref: AGENT_KIMI
+  checkbox_ref: AZ2.3
+  claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
+  worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase35.az2.3
+  status: assigned
+  outcome: pending
+  notes: 'Batch dispatch for AZ2.3: Mark final completion gate pass and archive execution-era
+    closure index'
 message_kinds:
 - id: MSGK_ASSIGNMENT_DISPATCH
   title: Assignment dispatch from canonical worktree.
@@ -553,6 +573,36 @@ messages:
   evidence_refs: []
   evidence_bindings: []
   notes: Dispatch Kimi multi-lane task 8 (AZ2.1).
+- id: MSG_PHASE35_AZ22_KIMI_BATCH_DISPATCH
+  kind_ref: MSGK_ASSIGNMENT_DISPATCH
+  assignment_ref: ASSIGN_PHASE35_AZ22_KIMI_BATCH
+  from_agent_ref: AGENT_MAIN
+  to_agent_ref: AGENT_KIMI
+  from_worktree: /home/andrey/src/cicsc
+  to_worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase35.az2.2
+  initial_status: sent
+  payload_refs:
+  - AGENTS.md
+  - control-plane/README.md
+  evidence_refs: []
+  evidence_bindings: []
+  notes: Batch dispatch AZ2.2 -> AGENT_KIMI via collab_dispatch_batch.sh
+- id: MSG_PHASE35_AZ23_KIMI_BATCH_DISPATCH
+  kind_ref: MSGK_ASSIGNMENT_DISPATCH
+  assignment_ref: ASSIGN_PHASE35_AZ23_KIMI_BATCH
+  from_agent_ref: AGENT_MAIN
+  to_agent_ref: AGENT_KIMI
+  from_worktree: /home/andrey/src/cicsc
+  to_worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase35.az2.3
+  initial_status: sent
+  payload_refs:
+  - AGENTS.md
+  - control-plane/README.md
+  evidence_refs: []
+  evidence_bindings: []
+  notes: Batch dispatch AZ2.3 -> AGENT_KIMI via collab_dispatch_batch.sh
 message_events:
 - id: MSGEV_PHASE33_AX12_DISPATCH_SENT
   message_ref: MSG_PHASE33_AX12_DISPATCH
@@ -1036,3 +1086,21 @@ message_events:
   commit: '3704360'
   evidence_bindings: []
   notes: Initial dispatch event for ASSIGN_PHASE35_AZ21_KIMI_MULTI8.
+- id: MSGEV_PHASE35_AZ22_KIMI_BATCH_DISPATCH_SENT_1
+  message_ref: MSG_PHASE35_AZ22_KIMI_BATCH_DISPATCH
+  from_status: null
+  to_status: sent
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 1
+  commit: 45b7ebf
+  evidence_bindings: []
+  notes: Initial dispatch event for ASSIGN_PHASE35_AZ22_KIMI_BATCH.
+- id: MSGEV_PHASE35_AZ23_KIMI_BATCH_DISPATCH_SENT_1
+  message_ref: MSG_PHASE35_AZ23_KIMI_BATCH_DISPATCH
+  from_status: null
+  to_status: sent
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 1
+  commit: 45b7ebf
+  evidence_bindings: []
+  notes: Initial dispatch event for ASSIGN_PHASE35_AZ23_KIMI_BATCH.

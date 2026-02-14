@@ -168,6 +168,28 @@
       "status": "assigned",
       "outcome": "pending",
       "notes": "Multi-task lane 8 for Kimi: AZ2.1 stewardship model freeze and evidence pack."
+    },
+    {
+      "id": "ASSIGN_PHASE35_AZ22_KIMI_BATCH",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AZ2.2",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase35.az2.2",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Batch dispatch for AZ2.2: Publish completion release/transition note with declared scope and limits"
+    },
+    {
+      "id": "ASSIGN_PHASE35_AZ23_KIMI_BATCH",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AZ2.3",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase35.az2.3",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Batch dispatch for AZ2.3: Mark final completion gate pass and archive execution-era closure index"
     }
   ]
 }
