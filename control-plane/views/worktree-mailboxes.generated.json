@@ -124,8 +124,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Protocol sync request: rebase with main and verify AGENTS+control-plane README parity before next assignment.",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "fulfilled",
+          "event_count": 3
         },
         {
           "id": "MSG_PHASE34_AY13_ANTIGRAVITY_SYNC_DISPATCH",
@@ -248,8 +248,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Protocol sync request: rebase with main and verify AGENTS+control-plane README parity before next assignment.",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "fulfilled",
+          "event_count": 3
         },
         {
           "id": "MSG_PHASE34_AY21_KIMI_MULTI1_DISPATCH",
