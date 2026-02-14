@@ -66,12 +66,20 @@ if [[ "${DRY_RUN}" -eq 0 && "${NO_REFRESH}" -eq 0 ]]; then
   ./control-plane/scripts/generate_views.sh >/dev/null 2>&1 || true
 fi
 
-# Check dirty state - warn but don't fail (ergonomics: allow operation to continue)
+# Check dirty state - fail with helpful message
 if [[ "${AUTO_COMMIT}" -eq 1 && "${DRY_RUN}" -eq 0 ]]; then
   _dirty_non_collab="$(git status --porcelain -- . ':(exclude)control-plane/collaboration/collab-model.yaml' ':(exclude)control-plane/views' ':(exclude)control-plane/logs' || true)"
   if [[ -n "${_dirty_non_collab}" ]]; then
-    echo "warning: non-collab dirty paths detected, disabling auto-commit" >&2
-    AUTO_COMMIT=0
+    echo "ERROR: cannot auto-commit: working tree has uncommitted changes" >&2
+    echo "" >&2
+    echo "Dirty files (excluding collab model/views):" >&2
+    echo "${_dirty_non_collab}" | head -10 >&2
+    echo "" >&2
+    echo "Recovery options:" >&2
+    echo "  1. Commit changes: git add -A && git commit -m 'your message'" >&2
+    echo "  2. Stash changes: git stash" >&2
+    echo "  3. Run without --auto-commit (commit manually after)" >&2
+    exit 1
   fi
 fi
 

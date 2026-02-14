@@ -81,6 +81,25 @@
           "notes": "Friction request from AGENT_GEMINI",
           "current_status": "closed",
           "event_count": 3
+        },
+        {
+          "id": "MSG_FRICTION_GEMINI_20260214T223231Z",
+          "kind_ref": "MSGK_FRICTION_REQUEST",
+          "assignment_ref": null,
+          "from_agent_ref": "AGENT_GEMINI",
+          "to_agent_ref": "AGENT_MAIN",
+          "from_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "to_worktree": "/home/andrey/src/cicsc",
+          "branch": "",
+          "initial_status": "sent",
+          "payload_refs": [
+            "control-plane/logs/friction-requests/MSG_FRICTION_GEMINI_20260214T223231Z.json"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Friction request from AGENT_GEMINI",
+          "current_status": "closed",
+          "event_count": 3
         }
       ],
       "outbox": [
@@ -4203,8 +4222,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i02 AY2.1 -> AGENT_GEMINI via collab_dispatch_batch.sh",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "fulfilled",
+          "event_count": 3
         },
         {
           "id": "MSG_PHASE34_AY22_GEMINI_I02_DISPATCH",
@@ -4223,8 +4242,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i02 AY2.2 -> AGENT_GEMINI via collab_dispatch_batch.sh",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "fulfilled",
+          "event_count": 3
         },
         {
           "id": "MSG_PHASE34_AY23_GEMINI_I02_DISPATCH",
@@ -4243,8 +4262,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i02 AY2.3 -> AGENT_GEMINI via collab_dispatch_batch.sh",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "fulfilled",
+          "event_count": 3
         }
       ]
     },
@@ -8418,8 +8437,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i02 AY2.1 -> AGENT_GEMINI via collab_dispatch_batch.sh",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "fulfilled",
+          "event_count": 3
         },
         {
           "id": "MSG_PHASE34_AY22_GEMINI_I02_DISPATCH",
@@ -8438,8 +8457,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i02 AY2.2 -> AGENT_GEMINI via collab_dispatch_batch.sh",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "fulfilled",
+          "event_count": 3
         },
         {
           "id": "MSG_PHASE34_AY23_GEMINI_I02_DISPATCH",
@@ -8458,8 +8477,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i02 AY2.3 -> AGENT_GEMINI via collab_dispatch_batch.sh",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "fulfilled",
+          "event_count": 3
         }
       ],
       "outbox": [
@@ -8494,6 +8513,25 @@
           "initial_status": "sent",
           "payload_refs": [
             "control-plane/logs/friction-requests/MSG_FRICTION_GEMINI_20260214T200756Z.json"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Friction request from AGENT_GEMINI",
+          "current_status": "closed",
+          "event_count": 3
+        },
+        {
+          "id": "MSG_FRICTION_GEMINI_20260214T223231Z",
+          "kind_ref": "MSGK_FRICTION_REQUEST",
+          "assignment_ref": null,
+          "from_agent_ref": "AGENT_GEMINI",
+          "to_agent_ref": "AGENT_MAIN",
+          "from_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "to_worktree": "/home/andrey/src/cicsc",
+          "branch": "",
+          "initial_status": "sent",
+          "payload_refs": [
+            "control-plane/logs/friction-requests/MSG_FRICTION_GEMINI_20260214T223231Z.json"
           ],
           "evidence_refs": [],
           "evidence_bindings": [],

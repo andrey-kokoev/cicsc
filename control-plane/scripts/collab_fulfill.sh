@@ -113,12 +113,20 @@ if [[ "${DRY_RUN}" -eq 0 ]]; then
   ./control-plane/scripts/generate_views.sh >/dev/null 2>&1 || true
 fi
 
-# Check dirty state - warn but don't fail (ergonomics: allow operation to continue)
+# Check dirty state - fail with helpful message
 if [[ "${AUTO_COMMIT}" -eq 1 && "${DRY_RUN}" -eq 0 ]]; then
   _dirty_non_collab="$(git status --porcelain -- . ':(exclude)control-plane/collaboration/collab-model.yaml' ':(exclude)control-plane/views' ':(exclude)control-plane/logs' || true)"
   if [[ -n "${_dirty_non_collab}" ]]; then
-    echo "warning: non-collab dirty paths detected, disabling auto-commit" >&2
-    AUTO_COMMIT=0
+    echo "ERROR: cannot auto-commit: working tree has uncommitted changes" >&2
+    echo "" >&2
+    echo "Dirty files (excluding collab model/views):" >&2
+    echo "${_dirty_non_collab}" | head -10 >&2
+    echo "" >&2
+    echo "Recovery options:" >&2
+    echo "  1. Commit changes: git add -A && git commit -m 'your message'" >&2
+    echo "  2. Stash changes: git stash" >&2
+    echo "  3. Run without --auto-commit (commit manually after)" >&2
+    exit 1
   fi
 fi
 
@@ -143,6 +151,30 @@ if agent is None:
 print(agent.get("id"))
 PY
   )"
+fi
+
+# Verify message is in 'acknowledged' state
+_msg_status="$(
+  python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$MESSAGE_REF" <<'PY'
+import sys
+from pathlib import Path
+import yaml
+collab = yaml.safe_load(Path(sys.argv[1]).read_text(encoding="utf-8"))
+msg_ref = sys.argv[2]
+events = sorted([e for e in collab.get("message_events", []) if e.get("message_ref") == msg_ref], key=lambda x: int(x.get("at_seq", 0)))
+if events:
+    print(events[-1].get("to_status"))
+else:
+    msg = next((m for m in collab.get("messages", []) if m.get("id") == msg_ref), None)
+    print(msg.get("initial_status", "sent") if msg else "unknown")
+PY
+)"
+
+if [[ "${_msg_status}" != "acknowledged" ]]; then
+  echo "error: message ${MESSAGE_REF} is in status '${_msg_status}'" >&2
+  echo "hint: message must be 'acknowledged' before fulfillment" >&2
+  echo "hint: run ./control-plane/scripts/collab_claim_next.sh first" >&2
+  exit 1
 fi
 
 if [[ -z "${NOTES}" ]]; then
@@ -392,15 +424,6 @@ events = collab.get("message_events", [])
 msg = next((m for m in messages if m.get("id") == message_ref), None)
 if msg is None:
     raise SystemExit("unknown message")
-
-# Validate message is in acknowledged status before fulfilling
-msg_events = sorted([e for e in events if e.get("message_ref") == message_ref], 
-                    key=lambda e: int(e.get("at_seq", 0)))
-current_status = msg_events[-1].get("to_status") if msg_events else msg.get("initial_status")
-
-if current_status != "acknowledged":
-    raise SystemExit(f"cannot fulfill: message status is '{current_status}', must be 'acknowledged'. run collab_claim_next.sh first")
-
 assignment_ref = msg.get("assignment_ref")
 assignments = {a.get("id"): a for a in collab.get("assignments", [])}
 checkbox_ref = (assignments.get(assignment_ref) or {}).get("checkbox_ref", "")

@@ -5454,6 +5454,20 @@ messages:
   evidence_refs: []
   evidence_bindings: []
   notes: Friction request from AGENT_GEMINI
+- id: MSG_FRICTION_GEMINI_20260214T223231Z
+  kind_ref: MSGK_FRICTION_REQUEST
+  assignment_ref: null
+  from_agent_ref: AGENT_GEMINI
+  to_agent_ref: AGENT_MAIN
+  from_worktree: /home/andrey/src/cicsc/worktrees/gemini
+  to_worktree: /home/andrey/src/cicsc
+  branch: ''
+  initial_status: sent
+  payload_refs:
+  - control-plane/logs/friction-requests/MSG_FRICTION_GEMINI_20260214T223231Z.json
+  evidence_refs: []
+  evidence_bindings: []
+  notes: Friction request from AGENT_GEMINI
 message_events:
 - id: MSGEV_PHASE33_AX12_DISPATCH_SENT
   message_ref: MSG_PHASE33_AX12_DISPATCH
@@ -16327,3 +16341,107 @@ message_events:
     commit: 3e3f99f
     digest: sha256:5ea662af0dcd468848867adc5e4361d689f2e0f7c9e1c6f2768896c810d7c5a9
   notes: friction triage decision=accept_later
+- id: MSGEV_PHASE34_AY21_GEMINI_I02_DISPATCH_FULFILLED_3
+  message_ref: MSG_PHASE34_AY21_GEMINI_I02_DISPATCH
+  from_status: acknowledged
+  to_status: fulfilled
+  actor_agent_ref: AGENT_GEMINI
+  at_seq: 3
+  commit: 26958b0
+  evidence_bindings:
+  - ref: scripts/check_canonical_execution_model.sh
+    evidence_kind_ref: EVID_SCRIPT
+    commit: 26958b0
+    digest: sha256:98de93665660d0b4f902ac3c2e17b78ae97b30842350d902bc625fb950039159
+  - ref: docs/pilot/category-model-conformance.json
+    evidence_kind_ref: EVID_GATE_REPORT
+    commit: 26958b0
+    digest: sha256:cb42d64bfb20b2cb21d10c4246c49a9e54ac5fbeb32a05f13534f0ef9930bd25
+  notes: Fulfilled by AGENT_GEMINI via collab_fulfill.sh
+- id: MSGEV_PHASE34_AY22_GEMINI_I02_DISPATCH_ACKNOWLEDGED_2
+  message_ref: MSG_PHASE34_AY22_GEMINI_I02_DISPATCH
+  from_status: sent
+  to_status: acknowledged
+  actor_agent_ref: AGENT_GEMINI
+  at_seq: 2
+  commit: 26958b0
+  evidence_bindings: []
+  notes: Acknowledged by AGENT_GEMINI via collab_claim_next.sh
+- id: MSGEV_PHASE34_AY22_GEMINI_I02_DISPATCH_FULFILLED_3
+  message_ref: MSG_PHASE34_AY22_GEMINI_I02_DISPATCH
+  from_status: acknowledged
+  to_status: fulfilled
+  actor_agent_ref: AGENT_GEMINI
+  at_seq: 3
+  commit: 26958b0
+  evidence_bindings:
+  - ref: scripts/check_canonical_execution_model.sh
+    evidence_kind_ref: EVID_SCRIPT
+    commit: 26958b0
+    digest: sha256:98de93665660d0b4f902ac3c2e17b78ae97b30842350d902bc625fb950039159
+  - ref: docs/pilot/category-model-conformance.json
+    evidence_kind_ref: EVID_GATE_REPORT
+    commit: 26958b0
+    digest: sha256:cb42d64bfb20b2cb21d10c4246c49a9e54ac5fbeb32a05f13534f0ef9930bd25
+  notes: Fulfilled by AGENT_GEMINI via collab_fulfill.sh
+- id: MSGEV_PHASE34_AY23_GEMINI_I02_DISPATCH_ACKNOWLEDGED_2
+  message_ref: MSG_PHASE34_AY23_GEMINI_I02_DISPATCH
+  from_status: sent
+  to_status: acknowledged
+  actor_agent_ref: AGENT_GEMINI
+  at_seq: 2
+  commit: 26958b0
+  evidence_bindings: []
+  notes: Acknowledged by AGENT_GEMINI via collab_claim_next.sh
+- id: MSGEV_PHASE34_AY23_GEMINI_I02_DISPATCH_FULFILLED_3
+  message_ref: MSG_PHASE34_AY23_GEMINI_I02_DISPATCH
+  from_status: acknowledged
+  to_status: fulfilled
+  actor_agent_ref: AGENT_GEMINI
+  at_seq: 3
+  commit: 26958b0
+  evidence_bindings:
+  - ref: scripts/check_canonical_execution_model.sh
+    evidence_kind_ref: EVID_SCRIPT
+    commit: 26958b0
+    digest: sha256:98de93665660d0b4f902ac3c2e17b78ae97b30842350d902bc625fb950039159
+  - ref: docs/pilot/category-model-conformance.json
+    evidence_kind_ref: EVID_GATE_REPORT
+    commit: 26958b0
+    digest: sha256:cb42d64bfb20b2cb21d10c4246c49a9e54ac5fbeb32a05f13534f0ef9930bd25
+  notes: Fulfilled by AGENT_GEMINI via collab_fulfill.sh
+- id: MSGEV_FRICTION_GEMINI_20260214T223231Z_SENT_1
+  message_ref: MSG_FRICTION_GEMINI_20260214T223231Z
+  from_status: null
+  to_status: sent
+  actor_agent_ref: AGENT_GEMINI
+  at_seq: 1
+  commit: 26958b0
+  evidence_bindings: []
+  notes: Initial friction request dispatch from AGENT_GEMINI.
+- id: MSGEV_FRICTION_GEMINI_20260214T223231Z_ACKNOWLEDGED_2
+  message_ref: MSG_FRICTION_GEMINI_20260214T223231Z
+  from_status: sent
+  to_status: acknowledged
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 2
+  commit: 26958b0
+  evidence_bindings: []
+  notes: friction triage decision=accept_now; notes=Valid ergonomics issue. Silent
+    auto-commit disable is worse than clear error. Will fix to show specific dirty
+    files and suggest recovery command.
+- id: MSGEV_FRICTION_GEMINI_20260214T223231Z_CLOSED_3
+  message_ref: MSG_FRICTION_GEMINI_20260214T223231Z
+  from_status: acknowledged
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 3
+  commit: 26958b0
+  evidence_bindings:
+  - ref: control-plane/logs/friction-triage/MSG_FRICTION_GEMINI_20260214T223231Z.json
+    evidence_kind_ref: EVID_GATE_REPORT
+    commit: 26958b0
+    digest: sha256:641effcdba2825afde7332670ed6a48037a60364f750d43a189774dbee0bfd45
+  notes: friction triage decision=accept_now; notes=Valid ergonomics issue. Silent
+    auto-commit disable is worse than clear error. Will fix to show specific dirty
+    files and suggest recovery command.

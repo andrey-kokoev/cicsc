@@ -339,9 +339,9 @@ Manual path (when you need granular control):
 
 Ergonomic features:
 - `--auto-report`: auto-discovers evidence files
-- `--auto-commit`: commits model changes (warns if dirty)
+- `--auto-commit`: commits model changes (fails with specific error if dirty)
 - Views auto-sync before operations
-- Operations continue despite warnings (don't block on non-fatal issues)
+- Clear error messages with recovery steps
 
 Canonical worker loop (multi-assignment):
 1. `./control-plane/scripts/collab_status.sh --worktree "$WORKTREE"`
