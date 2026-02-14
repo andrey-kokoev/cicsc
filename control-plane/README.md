@@ -150,3 +150,22 @@ For each execution worktree:
 Quickstart helpers:
 - worker flow: `./control-plane/scripts/collab_help.sh --role worker --worktree "$PWD"`
 - main flow: `./control-plane/scripts/collab_help.sh --role main --worktree /home/andrey/src/cicsc`
+
+## Multi-Assignment Worker Flow (End-to-End)
+
+Example with two queued assignments for Kimi:
+
+1. Inspect current lane state:
+   - `./control-plane/scripts/collab_status.sh --worktree /home/andrey/src/cicsc/worktrees/kimi`
+2. Claim next actionable message (acknowledged-first guard enforced):
+   - `./control-plane/scripts/collab_claim_next.sh --worktree /home/andrey/src/cicsc/worktrees/kimi`
+3. Show obligation delta and next step:
+   - `./control-plane/scripts/collab_show_assignment.sh --ref ASSIGN_...`
+4. Pick likely evidence refs:
+   - `./control-plane/scripts/collab_pick_evidence.sh --assignment-ref ASSIGN_...`
+5. Fulfill with typed evidence bindings:
+   - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree /home/andrey/src/cicsc/worktrees/kimi --script scripts/check_canonical_execution_model.sh --gate-report docs/pilot/category-model-conformance.json --suggest-commit`
+6. Main ingests and closes:
+   - `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`
+7. Repeat until status is idle:
+   - `./control-plane/scripts/collab_run_loop.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --max-steps 20`
