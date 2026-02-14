@@ -51,9 +51,22 @@ if [[ "${ROLE}" == "worker" ]]; then
    ./control-plane/scripts/collab_run_once.sh --worktree "${WORKTREE}"
 
 4) Fulfill with typed evidence:
-   ./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "${WORKTREE}" --script scripts/check_x.sh --gate-report docs/pilot/report.json
+   ./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "${WORKTREE}" --script scripts/check_x.sh --gate-report docs/pilot/report.json --run-script scripts/check_x.sh --lazy --auto-commit --commit-subject "phaseXX ayY.Y fulfill ..."
 
-5) Watch for stale inbox:
+5) Batch/sweep homogeneous assignments:
+   ./control-plane/scripts/collab_sweep.sh --worktree "${WORKTREE}" --script scripts/check_x.sh --gate-report docs/pilot/report.json --lazy
+
+6) Revert mistaken claim:
+   ./control-plane/scripts/collab_revert.sh --message-ref MSG_... --reason "claimed wrong assignment"
+
+7) Assignment diff + summary:
+   ./control-plane/scripts/collab_diff.sh --assignment-ref ASSIGN_...
+   ./control-plane/scripts/collab_summary.sh --worktree "${WORKTREE}" --since 2026-02-13
+
+8) Interactive session:
+   ./control-plane/scripts/collab_interactive.sh --worktree "${WORKTREE}"
+
+9) Watch for stale inbox:
    ./control-plane/scripts/collab_stale_watch.sh --warn-hours 24 --fail-hours 72
 EOF
 else

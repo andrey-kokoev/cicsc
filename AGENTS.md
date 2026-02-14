@@ -144,8 +144,22 @@ Message I/O command surface:
   - override WIP guard only when necessary: `./control-plane/scripts/collab_claim_next.sh --worktree "$PWD" --force`
 - fulfill message with typed evidence (digest auto-computed):
   - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --script scripts/check_x.sh --gate-report docs/pilot/report.json`
+  - lazy re-run support for expensive checks:
+    - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --script scripts/check_x.sh --gate-report docs/pilot/report.json --run-script scripts/check_x.sh --lazy`
+  - auto-commit with custom message:
+    - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --script scripts/check_x.sh --gate-report docs/pilot/report.json --auto-commit --commit-subject "phaseXX ayY.Y fulfill ..."`
 - worktree status summary + recommended next action:
   - `./control-plane/scripts/collab_status.sh --worktree "$PWD"`
+- batch sweep mode:
+  - `./control-plane/scripts/collab_sweep.sh --worktree "$PWD" --script scripts/check_x.sh --gate-report docs/pilot/report.json --lazy`
+- revert mistaken claim:
+  - `./control-plane/scripts/collab_revert.sh --message-ref MSG_... --reason "claimed wrong assignment"`
+- assignment-level delta view:
+  - `./control-plane/scripts/collab_diff.sh --assignment-ref ASSIGN_...`
+- aggregate history summary:
+  - `./control-plane/scripts/collab_summary.sh --worktree "$PWD" --since 2026-02-13`
+- interactive loop wrapper:
+  - `./control-plane/scripts/collab_interactive.sh --worktree "$PWD"`
 - main-side ingest+close wrapper:
   - `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`
 - stale mailbox watcher (warn/fail thresholds):

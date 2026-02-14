@@ -164,8 +164,13 @@ Example with two queued assignments for Kimi:
 4. Pick likely evidence refs:
    - `./control-plane/scripts/collab_pick_evidence.sh --assignment-ref ASSIGN_...`
 5. Fulfill with typed evidence bindings:
-   - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree /home/andrey/src/cicsc/worktrees/kimi --script scripts/check_canonical_execution_model.sh --gate-report docs/pilot/category-model-conformance.json --suggest-commit`
+   - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree /home/andrey/src/cicsc/worktrees/kimi --script scripts/check_canonical_execution_model.sh --gate-report docs/pilot/category-model-conformance.json --run-script scripts/check_canonical_execution_model.sh --lazy --suggest-commit --auto-commit`
 6. Main ingests and closes:
    - `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`
 7. Repeat until status is idle:
    - `./control-plane/scripts/collab_run_loop.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --max-steps 20`
+8. Optional homogeneous batch mode:
+   - `./control-plane/scripts/collab_sweep.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --script scripts/check_canonical_execution_model.sh --gate-report docs/pilot/category-model-conformance.json --lazy`
+9. Optional diagnostics:
+   - `./control-plane/scripts/collab_diff.sh --assignment-ref ASSIGN_...`
+   - `./control-plane/scripts/collab_summary.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --since 2026-02-13`
