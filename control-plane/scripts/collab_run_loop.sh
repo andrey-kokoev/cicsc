@@ -5,11 +5,13 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 "${ROOT_DIR}/control-plane/scripts/collab_require_root.sh" "${ROOT_DIR}"
 
 WORKTREE="${PWD}"
+MAX_STEPS=20
+DRY_RUN=0
 
 usage() {
   cat <<'USAGE'
 Usage:
-  control-plane/scripts/collab_run_loop.sh [--worktree <path>]
+  control-plane/scripts/collab_run_loop.sh [--worktree <path>] [--max-steps <n>] [--dry-run]
 
 Behavior:
   - claims next actionable message(s) for the target worktree
@@ -20,15 +22,24 @@ USAGE
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --worktree) WORKTREE="${2:-}"; shift 2 ;;
+    --max-steps) MAX_STEPS="${2:-}"; shift 2 ;;
+    --dry-run) DRY_RUN=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
 done
 
+if ! [[ "${MAX_STEPS}" =~ ^[0-9]+$ ]] || [[ "${MAX_STEPS}" -lt 1 ]]; then
+  echo "--max-steps must be a positive integer" >&2
+  exit 1
+fi
+
 cd "${ROOT_DIR}"
 
-echo "run-loop start: worktree=${WORKTREE}"
-while true; do
+echo "run-loop start: worktree=${WORKTREE} max_steps=${MAX_STEPS} dry_run=${DRY_RUN}"
+steps=0
+while [[ "${steps}" -lt "${MAX_STEPS}" ]]; do
+  steps=$((steps + 1))
   status_json="$(./control-plane/scripts/collab_status.sh --worktree "${WORKTREE}" --json)"
   _resolved="$(
     python3 - "${status_json}" <<'PY'
@@ -62,6 +73,11 @@ PY
 
   if [[ "${_action}" == "claim_next_actionable" ]]; then
     echo "run-loop: ${_detail}"
+    if [[ "${DRY_RUN}" -eq 1 ]]; then
+      ./control-plane/scripts/collab_claim_next.sh --worktree "${WORKTREE}" --dry-run
+      echo "run-loop: dry-run claim executed; stopping"
+      break
+    fi
     ./control-plane/scripts/collab_claim_next.sh --worktree "${WORKTREE}"
     continue
   fi
@@ -84,3 +100,6 @@ PY
   echo "run-loop: unknown next_action=${_action}; stopping"
   break
 done
+if [[ "${steps}" -ge "${MAX_STEPS}" ]]; then
+  echo "run-loop: reached max steps (${MAX_STEPS}); stopping"
+fi
