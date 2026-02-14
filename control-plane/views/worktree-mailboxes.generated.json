@@ -3845,8 +3845,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i03 AY1.1 -> AGENT_GEMINI via collab_dispatch_batch.sh",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "fulfilled",
+          "event_count": 3
         }
       ]
     },
@@ -7700,8 +7700,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i03 AY1.1 -> AGENT_GEMINI via collab_dispatch_batch.sh",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "fulfilled",
+          "event_count": 3
         }
       ],
       "outbox": []
