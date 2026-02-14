@@ -181,10 +181,10 @@ Quickstart helpers:
   - `./control-plane/scripts/collab_wait_main.sh --interval-seconds 5 --agent-ref AGENT_KIMI --friction-decision accept_later --friction-backlog-ref phase36.collab-ergonomics`
   - status-only wake:
     - `./control-plane/scripts/collab_wait_main.sh --interval-seconds 5 --status-only`
-- autopilot regime (main dispatch + wait + ingest loop):
-  - `./control-plane/scripts/collab_autopilot.sh --agent-ref AGENT_KIMI --batch-size 3 --interval-seconds 5 --max-cycles 0 --friction-decision accept_later --friction-backlog-ref phase36.collab-ergonomics`
+- auto-dispatch-loop regime (main dispatch + wait + ingest loop):
+  - `./control-plane/scripts/auto_dispatch_loop.sh --agent-ref AGENT_KIMI --batch-size 3 --interval-seconds 5 --max-cycles 0 --friction-decision accept_later --friction-backlog-ref phase36.collab-ergonomics`
   - bounded test run:
-    - `./control-plane/scripts/collab_autopilot.sh --agent-ref AGENT_KIMI --batch-size 3 --max-cycles 1`
+    - `./control-plane/scripts/auto_dispatch_loop.sh --agent-ref AGENT_KIMI --batch-size 3 --max-cycles 1`
 - typed friction loop:
   - worker request: `./control-plane/scripts/collab_request_friction.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --type ergonomics --severity medium --summary "..." --repro-step "..."`
   - main triage: `./control-plane/scripts/collab_triage_friction.sh --message-ref MSG_... --decision accept_now --notes "..."`

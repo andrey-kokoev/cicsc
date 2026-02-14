@@ -132,10 +132,10 @@ else
    # status-only wake (no processing):
    ./control-plane/scripts/collab_wait_main.sh --interval-seconds 5 --status-only
 
-6.6) Main autopilot regime (dispatch + wait + process loop):
-   ./control-plane/scripts/collab_autopilot.sh --agent-ref AGENT_KIMI --batch-size 3 --interval-seconds 5 --max-cycles 0 --friction-decision accept_later --friction-backlog-ref phase36.collab-ergonomics
+6.6) Main auto-dispatch-loop regime (dispatch + wait + process loop):
+   ./control-plane/scripts/auto_dispatch_loop.sh --agent-ref AGENT_KIMI --batch-size 3 --interval-seconds 5 --max-cycles 0 --friction-decision accept_later --friction-backlog-ref phase36.collab-ergonomics
    # bounded run:
-   ./control-plane/scripts/collab_autopilot.sh --agent-ref AGENT_KIMI --batch-size 3 --max-cycles 2
+   ./control-plane/scripts/auto_dispatch_loop.sh --agent-ref AGENT_KIMI --batch-size 3 --max-cycles 2
 
 7) Triage friction requests:
    ./control-plane/scripts/collab_triage_friction.sh --message-ref MSG_... --decision accept_now --notes "scheduled in next hardening batch"

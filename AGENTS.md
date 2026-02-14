@@ -242,10 +242,10 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_wait_main.sh --interval-seconds 5 --agent-ref AGENT_KIMI --friction-decision accept_later`
   - status-only wake:
     - `./control-plane/scripts/collab_wait_main.sh --interval-seconds 5 --status-only`
-- main autopilot regime (dispatch + wait + process continuously):
-  - `./control-plane/scripts/collab_autopilot.sh --agent-ref AGENT_KIMI --batch-size 3 --interval-seconds 5 --max-cycles 0 --friction-decision accept_later`
+- main auto-dispatch-loop regime (dispatch + wait + process continuously):
+  - `./control-plane/scripts/auto_dispatch_loop.sh --agent-ref AGENT_KIMI --batch-size 3 --interval-seconds 5 --max-cycles 0 --friction-decision accept_later`
   - bounded run:
-    - `./control-plane/scripts/collab_autopilot.sh --agent-ref AGENT_KIMI --batch-size 3 --max-cycles 1`
+    - `./control-plane/scripts/auto_dispatch_loop.sh --agent-ref AGENT_KIMI --batch-size 3 --max-cycles 1`
 - assignment obligation/evidence delta view:
   - `./control-plane/scripts/collab_show_assignment.sh --ref ASSIGN_...`
 - unified dry-run wrapper:
