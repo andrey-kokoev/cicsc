@@ -1683,8 +1683,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i12 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "acknowledged",
+          "event_count": 2
         }
       ]
     },
@@ -3227,8 +3227,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i12 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "acknowledged",
+          "event_count": 2
         }
       ],
       "outbox": [
