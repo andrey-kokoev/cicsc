@@ -124,6 +124,28 @@
       "status": "assigned",
       "outcome": "pending",
       "notes": "Multi-task lane 4 for Kimi: AY2.4 block-gate integration and closure hardening."
+    },
+    {
+      "id": "ASSIGN_PHASE35_AZ11_KIMI_MULTI5",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AZ1.1",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase35.az1.1",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Multi-task lane 5 for Kimi: AZ1.1 final objective verdict execution envelope."
+    },
+    {
+      "id": "ASSIGN_PHASE35_AZ12_KIMI_MULTI6",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AZ1.2",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase35.az1.2",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Multi-task lane 6 for Kimi: AZ1.2 forced-next disposition synthesis and evidence."
     }
   ]
 }

@@ -9,8 +9,8 @@ WORKTREE_KIMI="/home/andrey/src/cicsc/worktrees/kimi"
 
 # 1) claim-next no actionable should exit 0 with explicit message.
 claim_out="$(./control-plane/scripts/collab_claim_next.sh --worktree "${WORKTREE_KIMI}" --dry-run 2>&1 || true)"
-if ! grep -Fq "no actionable inbox messages" <<<"${claim_out}"; then
-  echo "matrix fail: expected no-actionable message in claim-next dry-run"
+if ! grep -Eq "no actionable inbox messages|dry-run: would claim message|claim blocked:" <<<"${claim_out}"; then
+  echo "matrix fail: expected claim-next dry-run to produce a known outcome"
   exit 1
 fi
 

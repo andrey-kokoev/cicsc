@@ -226,6 +226,46 @@
           "notes": "Dispatch Kimi multi-lane task 4 (AY2.4).",
           "current_status": "fulfilled",
           "event_count": 3
+        },
+        {
+          "id": "MSG_PHASE35_AZ11_KIMI_MULTI5_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE35_AZ11_KIMI_MULTI5",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase35.az1.1",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch Kimi multi-lane task 5 (AZ1.1).",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE35_AZ12_KIMI_MULTI6_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE35_AZ12_KIMI_MULTI6",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase35.az1.2",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch Kimi multi-lane task 6 (AZ1.2).",
+          "current_status": "sent",
+          "event_count": 1
         }
       ]
     },
@@ -370,6 +410,46 @@
           "notes": "Dispatch Kimi multi-lane task 4 (AY2.4).",
           "current_status": "fulfilled",
           "event_count": 3
+        },
+        {
+          "id": "MSG_PHASE35_AZ11_KIMI_MULTI5_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE35_AZ11_KIMI_MULTI5",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase35.az1.1",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch Kimi multi-lane task 5 (AZ1.1).",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE35_AZ12_KIMI_MULTI6_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE35_AZ12_KIMI_MULTI6",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase35.az1.2",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch Kimi multi-lane task 6 (AZ1.2).",
+          "current_status": "sent",
+          "event_count": 1
         }
       ],
       "outbox": []
