@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cicsc/control-plane/collaboration/collab-status-output.schema.json",
+  "title": "Collab Status Output",
+  "type": "object",
+  "required": [
+    "worktree",
+    "in_progress",
+    "actionable",
+    "next_action",
+    "next_detail",
+    "next_command",
+    "script_hints"
+  ],
+  "properties": {
+    "worktree": {
+      "type": "string",
+      "minLength": 1
+    },
+    "in_progress": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/messageRow" }
+    },
+    "actionable": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/messageRow" }
+    },
+    "next_action": {
+      "type": "string",
+      "enum": [
+        "idle",
+        "fulfill_acknowledged_first",
+        "claim_next_actionable"
+      ]
+    },
+    "next_detail": {
+      "type": "string"
+    },
+    "next_command": {
+      "type": "string"
+    },
+    "script_hints": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "$defs": {
+    "messageRow": {
+      "type": "object",
+      "required": [
+        "message_id",
+        "assignment_ref",
+        "checkbox_ref",
+        "branch",
+        "status"
+      ],
+      "properties": {
+        "message_id": {
+          "type": ["string", "null"]
+        },
+        "assignment_ref": {
+          "type": ["string", "null"]
+        },
+        "checkbox_ref": {
+          "type": ["string", "null"]
+        },
+        "branch": {
+          "type": ["string", "null"]
+        },
+        "status": {
+          "type": ["string", "null"]
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
