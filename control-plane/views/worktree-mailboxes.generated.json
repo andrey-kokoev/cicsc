@@ -3305,6 +3305,26 @@
           "notes": "Dispatch instance i33 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
           "current_status": "closed",
           "event_count": 5
+        },
+        {
+          "id": "MSG_PHASE33_AX13_KIMI_I44_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE33_AX13_KIMI_I44",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase33.ax1.3.i44",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i44 AX1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
         }
       ]
     },
@@ -6469,6 +6489,26 @@
           "notes": "Dispatch instance i33 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
           "current_status": "closed",
           "event_count": 5
+        },
+        {
+          "id": "MSG_PHASE33_AX13_KIMI_I44_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE33_AX13_KIMI_I44",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase33.ax1.3.i44",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i44 AX1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
         }
       ],
       "outbox": [
