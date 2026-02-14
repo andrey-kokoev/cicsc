@@ -59,6 +59,30 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `PHASE*.md` remain derived status views.
 - `control-plane/*` models are authoritative for structure, status (modeled scope), and gating intent.
 
+## Automation Boundaries
+
+The control-plane provides **resilient automation**, not **full autonomy**:
+
+**What is automated:**
+- Pre-flight validation before mutations (`collab_execute.sh`)
+- Common error repair (orphaned event detection in `collab_execute.sh`)
+- Circuit breaker pattern (5 failures → stop + alert in `collab_worker_loop.sh`)
+- View regeneration and model syncing (`generate_views.sh`, `collab_sync.sh`)
+
+**What requires human intervention:**
+- Recovery from circuit breaker trips (check logs, fix state, restart)
+- Git merge conflicts (automation cannot resolve semantic conflicts)
+- Friction triage decisions (requires judgment on validity)
+- Phase promotion (requires verification of completion criteria)
+- Evidence quality disputes (requires semantic assessment)
+
+**Why these boundaries exist:**
+1. **Git/YAML storage** - No ACID transactions; atomicity is simulated via verification between steps
+2. **Distributed agents** - Race conditions possible; we detect rather than prevent
+3. **Correctness priority** - Fail closed rather than automate potentially wrong decisions
+
+See `docs/genesis/worktree-mediated-constructive-collaboration.md` section 5.1 for conceptual grounding.
+
 ## Derivation Flow
 
 1. Validate schemas and model cross-references.

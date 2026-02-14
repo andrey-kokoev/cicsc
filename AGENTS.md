@@ -25,6 +25,43 @@ Lean proof baseline:
 - Lean Kernel v1.5 is the coherency-complete baseline for kernel semantics.
 - New semantics work must preserve the canonical evaluator/typing/WF bridges established in v1.5.
 
+## Automation Boundaries (Critical)
+
+This system provides **resilient automation with circuit breakers**, not **full autonomy**.
+
+**The system handles automatically:**
+- Routine claim → fulfill → commit cycles
+- Stale view regeneration
+- Common error patterns (orphaned events, sync drift)
+- Retry with exponential backoff
+
+**The system does NOT handle (requires your intervention):**
+- Circuit breaker trips (5 consecutive failures)
+- Git merge conflicts
+- Validation failures that persist after retry
+- Ambiguous friction requests (requires triage judgment)
+
+**When the circuit breaker trips, you will see:**
+```
+CIRCUIT BREAKER TRIPPED
+  Consecutive failures: 5
+  Manual intervention required.
+```
+
+**Recovery procedure:**
+1. Run: `./control-plane/scripts/collab_sync.sh`
+2. Check: `./control-plane/scripts/validate_cross_model.sh`
+3. Review: `git status` and recent commits
+4. Fix any obvious issues (merge conflicts, dirty state)
+5. Restart: `./control-plane/scripts/collab_worker_loop.sh --worktree "$WORKTREE"`
+
+**Why this design:**
+- We prioritize correctness over availability
+- Silent automation errors are worse than explicit failure modes
+- Some decisions require semantic understanding (evidence quality, friction validity)
+
+See `docs/genesis/worktree-mediated-constructive-collaboration.md` section 5.1 for architectural rationale.
+
 ## Main Agent Day-0 Checklist
 
 If you are the main agent opening this repository for the first time, do this in order:

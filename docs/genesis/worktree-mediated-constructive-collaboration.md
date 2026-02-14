@@ -130,6 +130,35 @@ This asymmetry ensures constructive evolution: Main maintains coherent
 workflow state; Workers maintain coherent implementation state. Neither can
 unilaterally claim completion or bypass validation.
 
+### 5.1 Architectural Limitations and Tradeoffs
+
+WMCC makes explicit tradeoffs that create boundaries on full automation:
+
+**Git/YAML as Event Store (Transparency over Transactions)**
+- We chose human-readable YAML files in Git over a database with ACID transactions
+- This provides auditability and accessibility but means we cannot implement true atomicity
+- A failed claim+fulfill sequence cannot be rolled back atomically; we can only append compensating events
+- Consequence: Some edge cases (race conditions, orphaned events) require manual intervention
+
+**Consistency over Availability (Correctness over Automation)**
+- The system validates preconditions before mutation and fails closed on conflict
+- We do not auto-retry indefinitely because retries without understanding the failure mode can amplify errors
+- Consequence: Circuit breakers trip; human judgment is required for recovery
+
+**Human Judgment for Ambiguous Cases**
+- Friction triage, phase promotion, and evidence quality assessment require semantic understanding
+- Automating these would require either: (a) perfect error classification (unsolved), or (b) accepting wrong decisions (unacceptable)
+- Consequence: 5% of operations require human decision; the system detects and escalates these cases
+
+**Distributed by Design**
+- Multiple agents (Main, Workers) mutate shared state
+- Without distributed transactions (2PC, Paxos), race conditions are possible
+- The protocol detects races (via at_seq ordering and lifecycle validation) but cannot prevent all of them
+- Consequence: Orphaned events can occur; automated repair handles common patterns but not all
+
+**Implication for Agent Operators**
+The system is designed to be *resilient* (detects failures, provides recovery paths) not *autonomous* (handles all cases without intervention). This is a deliberate choice: we prefer explicit failure modes over silent automation errors.
+
 ## 6. First-principles grounding
 
 - **State machine discipline**: collaboration is modeled as valid/invalid
