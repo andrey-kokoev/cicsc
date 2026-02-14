@@ -65,25 +65,27 @@ PY
   _cmd="${_lines[2]:-}"
   _ack_msg="${_lines[3]:-}"
   _ack_assign="${_lines[4]:-}"
+  echo "run-loop: step=${steps} action=${_action} detail=\"${_detail}\""
 
   if [[ "${_action}" == "idle" ]]; then
-    echo "run-loop: no actionable or in-progress work; exiting idle"
+    echo "run-loop: step=${steps} result=idle_exit"
     break
   fi
 
   if [[ "${_action}" == "claim_next_actionable" ]]; then
-    echo "run-loop: ${_detail}"
+    echo "run-loop: step=${steps} transition=claim_next_actionable"
     if [[ "${DRY_RUN}" -eq 1 ]]; then
       ./control-plane/scripts/collab_claim_next.sh --worktree "${WORKTREE}" --dry-run
-      echo "run-loop: dry-run claim executed; stopping"
+      echo "run-loop: step=${steps} result=dry_run_claim_stop"
       break
     fi
     ./control-plane/scripts/collab_claim_next.sh --worktree "${WORKTREE}"
+    echo "run-loop: step=${steps} result=claimed_continue"
     continue
   fi
 
   if [[ "${_action}" == "fulfill_acknowledged_first" ]]; then
-    echo "run-loop: fulfill boundary reached"
+    echo "run-loop: step=${steps} result=fulfill_boundary"
     if [[ -n "${_ack_assign}" ]]; then
       echo "assignment: ${_ack_assign}"
       ./control-plane/scripts/collab_show_assignment.sh --ref "${_ack_assign}" | sed -n '1,24p'
@@ -97,9 +99,9 @@ PY
     break
   fi
 
-  echo "run-loop: unknown next_action=${_action}; stopping"
+  echo "run-loop: step=${steps} result=unknown_action_stop"
   break
 done
 if [[ "${steps}" -ge "${MAX_STEPS}" ]]; then
-  echo "run-loop: reached max steps (${MAX_STEPS}); stopping"
+  echo "run-loop: result=max_steps_stop max_steps=${MAX_STEPS}"
 fi
