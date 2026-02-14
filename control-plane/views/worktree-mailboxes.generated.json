@@ -3663,8 +3663,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i10 AY1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "fulfilled",
+          "event_count": 3
         }
       ]
     },
@@ -7187,8 +7187,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i10 AY1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "fulfilled",
+          "event_count": 3
         }
       ],
       "outbox": [
