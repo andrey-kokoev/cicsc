@@ -124,8 +124,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Protocol sync request: rebase with main and verify AGENTS+control-plane README parity before next assignment.",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY13_ANTIGRAVITY_SYNC_DISPATCH",
@@ -164,8 +164,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch Kimi multi-lane task 1 (AY2.1).",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY22_KIMI_MULTI2_DISPATCH",
@@ -184,8 +184,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch Kimi multi-lane task 2 (AY2.2).",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY23_KIMI_MULTI3_DISPATCH",
@@ -204,8 +204,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch Kimi multi-lane task 3 (AY2.3).",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY24_KIMI_MULTI4_DISPATCH",
@@ -224,8 +224,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch Kimi multi-lane task 4 (AY2.4).",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE35_AZ11_KIMI_MULTI5_DISPATCH",
@@ -244,8 +244,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch Kimi multi-lane task 5 (AZ1.1).",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE35_AZ12_KIMI_MULTI6_DISPATCH",
@@ -264,8 +264,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch Kimi multi-lane task 6 (AZ1.2).",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE35_AZ13_KIMI_MULTI7_DISPATCH",
@@ -364,8 +364,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Batch dispatch AY1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY13_KIMI_BATCH_DISPATCH",
@@ -384,8 +384,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Batch dispatch AY1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         }
       ]
     },
@@ -448,8 +448,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Protocol sync request: rebase with main and verify AGENTS+control-plane README parity before next assignment.",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY21_KIMI_MULTI1_DISPATCH",
@@ -468,8 +468,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch Kimi multi-lane task 1 (AY2.1).",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY22_KIMI_MULTI2_DISPATCH",
@@ -488,8 +488,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch Kimi multi-lane task 2 (AY2.2).",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY23_KIMI_MULTI3_DISPATCH",
@@ -508,8 +508,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch Kimi multi-lane task 3 (AY2.3).",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY24_KIMI_MULTI4_DISPATCH",
@@ -528,8 +528,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch Kimi multi-lane task 4 (AY2.4).",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE35_AZ11_KIMI_MULTI5_DISPATCH",
@@ -548,8 +548,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch Kimi multi-lane task 5 (AZ1.1).",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE35_AZ12_KIMI_MULTI6_DISPATCH",
@@ -568,8 +568,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch Kimi multi-lane task 6 (AZ1.2).",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE35_AZ13_KIMI_MULTI7_DISPATCH",
@@ -668,8 +668,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Batch dispatch AY1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY13_KIMI_BATCH_DISPATCH",
@@ -688,8 +688,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Batch dispatch AY1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         }
       ],
       "outbox": []
