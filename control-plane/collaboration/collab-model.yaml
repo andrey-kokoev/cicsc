@@ -1773,8 +1773,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase34.ay1.3.i09
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i09 for AY1.3: Publish incident and drift localization
     report with forced-next mapping policy'
 - id: ASSIGN_PHASE33_AX13_KIMI_I43
@@ -12749,3 +12749,21 @@ message_events:
   commit: bd1bdbd
   evidence_bindings: []
   notes: Acknowledged by AGENT_KIMI via collab_claim_next.sh
+- id: MSGEV_PHASE34_AY13_KIMI_I09_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY13_KIMI_I09_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: '5225636'
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY13_KIMI_I09_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY13_KIMI_I09_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: '5225636'
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
