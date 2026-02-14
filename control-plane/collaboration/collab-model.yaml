@@ -1903,8 +1903,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase33.ax1.3.i47
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i47 for AX1.3: Publish coupling conformance report with
     residual gaps register'
 - id: ASSIGN_PHASE34_AY11_KIMI_I43
@@ -13720,3 +13720,30 @@ message_events:
     commit: 544fc43
     digest: sha256:cb42d64bfb20b2cb21d10c4246c49a9e54ac5fbeb32a05f13534f0ef9930bd25
   notes: Fulfilled by AGENT_KIMI via collab_fulfill.sh
+- id: MSGEV_PHASE33_AX13_KIMI_I47_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE33_AX13_KIMI_I47_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 544fc43
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE33_AX13_KIMI_I47_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE33_AX13_KIMI_I47_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 544fc43
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY11_KIMI_I43_DISPATCH_ACKNOWLEDGED_2
+  message_ref: MSG_PHASE34_AY11_KIMI_I43_DISPATCH
+  from_status: sent
+  to_status: acknowledged
+  actor_agent_ref: AGENT_KIMI
+  at_seq: 2
+  commit: 3617cf9
+  evidence_bindings: []
+  notes: Acknowledged by AGENT_KIMI via collab_claim_next.sh
