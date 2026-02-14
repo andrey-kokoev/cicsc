@@ -133,6 +133,8 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_stale_watch.sh --warn-hours 24 --fail-hours 72`
 - assignment obligation/evidence delta view:
   - `./control-plane/scripts/collab_show_assignment.sh --ref ASSIGN_...`
+- unified dry-run wrapper:
+  - `./control-plane/scripts/collab_dry_run.sh <claim-next|fulfill|close|dispatch|delegate> ...`
 
 Happy path:
 1. `./control-plane/scripts/collab_help.sh --role worker --worktree "$PWD"`
