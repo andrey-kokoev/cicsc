@@ -1023,8 +1023,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i01 AY2.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY24_KIMI_I01_DISPATCH",
@@ -1043,8 +1043,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i01 AY2.4 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE35_AZ11_KIMI_I01_DISPATCH",
@@ -1063,8 +1063,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i01 AZ1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         }
       ]
     },
@@ -1947,8 +1947,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i01 AY2.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE34_AY24_KIMI_I01_DISPATCH",
@@ -1967,8 +1967,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i01 AY2.4 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         },
         {
           "id": "MSG_PHASE35_AZ11_KIMI_I01_DISPATCH",
@@ -1987,8 +1987,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i01 AZ1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         }
       ],
       "outbox": [

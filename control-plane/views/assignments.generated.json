@@ -539,8 +539,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase34.ay2.3.i01",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Dispatch instance i01 for AY2.3: Define objective Phase 34 exit checklist mapped to artifacts"
     },
     {
@@ -550,8 +550,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase34.ay2.4.i01",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Dispatch instance i01 for AY2.4: Add Phase 35 block gate from Phase 34 checklist"
     },
     {
@@ -561,8 +561,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase35.az1.1.i01",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Dispatch instance i01 for AZ1.1: Execute final objective verdict run over expanded-scope envelopes"
     }
   ]
