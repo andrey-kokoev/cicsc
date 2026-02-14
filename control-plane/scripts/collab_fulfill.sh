@@ -392,6 +392,15 @@ events = collab.get("message_events", [])
 msg = next((m for m in messages if m.get("id") == message_ref), None)
 if msg is None:
     raise SystemExit("unknown message")
+
+# Validate message is in acknowledged status before fulfilling
+msg_events = sorted([e for e in events if e.get("message_ref") == message_ref], 
+                    key=lambda e: int(e.get("at_seq", 0)))
+current_status = msg_events[-1].get("to_status") if msg_events else msg.get("initial_status")
+
+if current_status != "acknowledged":
+    raise SystemExit(f"cannot fulfill: message status is '{current_status}', must be 'acknowledged'. run collab_claim_next.sh first")
+
 assignment_ref = msg.get("assignment_ref")
 assignments = {a.get("id"): a for a in collab.get("assignments", [])}
 checkbox_ref = (assignments.get(assignment_ref) or {}).get("checkbox_ref", "")
