@@ -1235,6 +1235,39 @@
       "status": "assigned",
       "outcome": "pending",
       "notes": "Dispatch instance i21 for AY1.2: Execute multi-context workloads under expanded objective envelopes"
+    },
+    {
+      "id": "ASSIGN_PHASE33_AX13_KIMI_I27",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AX1.3",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase33.ax1.3.i27",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Dispatch instance i27 for AX1.3: Publish coupling conformance report with residual gaps register"
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY11_KIMI_I23",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY1.1",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay1.1.i23",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Dispatch instance i23 for AY1.1: Freeze Phase 34 context matrix and expanded acceptance contract"
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY13_KIMI_I05",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY1.3",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay1.3.i05",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Dispatch instance i05 for AY1.3: Publish incident and drift localization report with forced-next mapping policy"
     }
   ]
 }
