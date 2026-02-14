@@ -2027,6 +2027,17 @@
       "status": "assigned",
       "outcome": "pending",
       "notes": "Dispatch instance i39 for AY1.2: Execute multi-context workloads under expanded objective envelopes"
+    },
+    {
+      "id": "ASSIGN_PHASE36_BA11_KIMI_I01",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "BA1.1",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase36.ba1.1.i01",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Dispatch instance i01 for BA1.1: Define Lean collaboration state machine for message lifecycle transitions"
     }
   ]
 }
