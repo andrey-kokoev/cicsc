@@ -8,7 +8,7 @@ if [[ -z "${EXPECTED_ROOT}" ]]; then
 fi
 
 if [[ "${PWD}" != "${EXPECTED_ROOT}" ]]; then
-  echo "error: run this command from repository root: ${EXPECTED_ROOT}" >&2
-  echo "hint: cd ${EXPECTED_ROOT}" >&2
+  ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+  "${ROOT_DIR}/control-plane/scripts/collab_root_hint.sh" "${EXPECTED_ROOT}"
   exit 1
 fi
