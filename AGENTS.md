@@ -120,6 +120,11 @@ Message I/O command surface:
 - execution location rule:
   - run all `control-plane/scripts/collab_*.sh` commands from repository root `/home/andrey/src/cicsc`
   - target worker context via `--worktree <path>`; do not invoke collab scripts from worker worktree directories
+- operator quickstart (copy/paste):
+  - `cd /home/andrey/src/cicsc`
+  - `WORKTREE=/home/andrey/src/cicsc/worktrees/kimi`
+  - `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh --actionable-only`
+  - `./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE"`
 - collaboration preflight gate:
   - `./control-plane/scripts/collab_validate.sh`
 - quickstart command map (worker/main):
