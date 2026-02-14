@@ -18,6 +18,7 @@ Actions:
   dispatch     -> collab_dispatch.sh --dry-run
   delegate     -> collab_delegate_worktree.sh --dry-run
   append-event -> collab_append_event.sh --dry-run
+  revert       -> collab_revert.sh --dry-run
 
 Examples:
   ./control-plane/scripts/collab_dry_run.sh claim-next --worktree "$PWD"
@@ -67,6 +68,9 @@ case "${ACTION}" in
     ;;
   append-event)
     ./control-plane/scripts/collab_append_event.sh --dry-run "$@"
+    ;;
+  revert)
+    ./control-plane/scripts/collab_revert.sh --dry-run "$@"
     ;;
   -h|--help)
     usage
