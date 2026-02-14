@@ -1182,3 +1182,12 @@ message_events:
     commit: 07ee507
     digest: sha256:cb42d64bfb20b2cb21d10c4246c49a9e54ac5fbeb32a05f13534f0ef9930bd25
   notes: Fulfilled by AGENT_KIMI via collab_fulfill.sh
+- id: MSGEV_PHASE35_AZ23_KIMI_BATCH_DISPATCH_ACKNOWLEDGED_2
+  message_ref: MSG_PHASE35_AZ23_KIMI_BATCH_DISPATCH
+  from_status: sent
+  to_status: acknowledged
+  actor_agent_ref: AGENT_KIMI
+  at_seq: 2
+  commit: 1d21a90
+  evidence_bindings: []
+  notes: Acknowledged by AGENT_KIMI via collab_claim_next.sh
