@@ -118,12 +118,27 @@ def main() -> int:
     ownership_mode = worktree_gov.get("ownership_mode")
     assignment_dispatch_kind_ref = worktree_gov.get("assignment_dispatch_kind_ref")
     enforce_owner_dispatch = bool(worktree_gov.get("enforce_owner_dispatch"))
+    canonical_worker_root = worktree_gov.get("canonical_worker_worktree_root")
+    enforce_worker_root = bool(worktree_gov.get("enforce_canonical_worker_worktree_root"))
     creation_authorities = worktree_gov.get("worktree_creation_authority_agent_refs", [])
     if ownership_mode != "single_owner":
         errors.append(f"collab-model: unsupported ownership_mode {ownership_mode}")
     for aid in creation_authorities:
         if aid not in agent_map:
             errors.append(f"collab-model: unknown worktree creation authority agent {aid}")
+    if enforce_worker_root and (not isinstance(canonical_worker_root, str) or not canonical_worker_root):
+        errors.append("collab-model: canonical_worker_worktree_root must be set when enforcement is enabled")
+
+    if enforce_worker_root and isinstance(canonical_worker_root, str):
+        root_prefix = canonical_worker_root.rstrip("/") + "/"
+        for aid, a in agent_map.items():
+            if aid == "AGENT_MAIN":
+                continue
+            wt = a.get("worktree")
+            if not isinstance(wt, str) or not wt.startswith(root_prefix):
+                errors.append(
+                    f"collab-model: agent {aid} worktree {wt} violates canonical worker root {canonical_worker_root}"
+                )
 
     delegations = collab.get("worktree_delegations", [])
     active_delegation_by_worktree = {}

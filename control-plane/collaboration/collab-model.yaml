@@ -7,12 +7,12 @@ agents:
   - phase
 - id: AGENT_KIMI
   kind: automation
-  worktree: /home/andrey/src/kimi
+  worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch_prefixes:
   - phase
 - id: AGENT_ANTIGRAVITY
   kind: automation
-  worktree: /home/andrey/src/antigravity
+  worktree: /home/andrey/src/cicsc/worktrees/antigravity
   branch_prefixes:
   - phase
 worktree_governance:
@@ -21,6 +21,8 @@ worktree_governance:
   enforce_owner_dispatch: true
   worktree_creation_authority_agent_refs:
   - AGENT_MAIN
+  canonical_worker_worktree_root: /home/andrey/src/cicsc/worktrees
+  enforce_canonical_worker_worktree_root: true
 worktree_delegations: []
 claim_kinds:
 - id: CLAIM_SEMANTIC_INVARIANT
@@ -170,7 +172,7 @@ assignments:
   agent_ref: AGENT_KIMI
   checkbox_ref: AX1.2
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
-  worktree: /home/andrey/src/kimi
+  worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase33.ax1.2
   status: done
   outcome: fulfilled_by_assignee
@@ -179,7 +181,7 @@ assignments:
   agent_ref: AGENT_ANTIGRAVITY
   checkbox_ref: AX2.2
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
-  worktree: /home/andrey/src/antigravity
+  worktree: /home/andrey/src/cicsc/worktrees/antigravity
   branch: phase33.ax2.2
   status: done
   outcome: fulfilled_by_assignee
@@ -188,7 +190,7 @@ assignments:
   agent_ref: AGENT_KIMI
   checkbox_ref: AX1.3
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
-  worktree: /home/andrey/src/kimi
+  worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase33.ax1.3
   status: assigned
   outcome: pending
@@ -197,7 +199,7 @@ assignments:
   agent_ref: AGENT_ANTIGRAVITY
   checkbox_ref: AX2.4
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
-  worktree: /home/andrey/src/antigravity
+  worktree: /home/andrey/src/cicsc/worktrees/antigravity
   branch: phase33.ax2.4
   status: done
   outcome: fulfilled_by_main
@@ -207,7 +209,7 @@ assignments:
   agent_ref: AGENT_ANTIGRAVITY
   checkbox_ref: AY1.1
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
-  worktree: /home/andrey/src/antigravity
+  worktree: /home/andrey/src/cicsc/worktrees/antigravity
   branch: phase34.ay1.1
   status: assigned
   outcome: pending
@@ -228,7 +230,7 @@ messages:
   from_agent_ref: AGENT_MAIN
   to_agent_ref: AGENT_KIMI
   from_worktree: /home/andrey/src/cicsc
-  to_worktree: /home/andrey/src/kimi
+  to_worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase33.ax1.2
   initial_status: sent
   payload_refs:
@@ -243,7 +245,7 @@ messages:
   from_agent_ref: AGENT_MAIN
   to_agent_ref: AGENT_ANTIGRAVITY
   from_worktree: /home/andrey/src/cicsc
-  to_worktree: /home/andrey/src/antigravity
+  to_worktree: /home/andrey/src/cicsc/worktrees/antigravity
   branch: phase33.ax2.2
   initial_status: sent
   payload_refs:
@@ -258,7 +260,7 @@ messages:
   from_agent_ref: AGENT_MAIN
   to_agent_ref: AGENT_KIMI
   from_worktree: /home/andrey/src/cicsc
-  to_worktree: /home/andrey/src/kimi
+  to_worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase33.ax1.3
   initial_status: sent
   payload_refs:
@@ -273,7 +275,7 @@ messages:
   from_agent_ref: AGENT_MAIN
   to_agent_ref: AGENT_ANTIGRAVITY
   from_worktree: /home/andrey/src/cicsc
-  to_worktree: /home/andrey/src/antigravity
+  to_worktree: /home/andrey/src/cicsc/worktrees/antigravity
   branch: phase33.ax2.4
   initial_status: sent
   payload_refs:
@@ -289,7 +291,7 @@ messages:
   from_agent_ref: AGENT_MAIN
   to_agent_ref: AGENT_ANTIGRAVITY
   from_worktree: /home/andrey/src/cicsc
-  to_worktree: /home/andrey/src/antigravity
+  to_worktree: /home/andrey/src/cicsc/worktrees/antigravity
   branch: phase34.ay1.1
   initial_status: sent
   payload_refs:

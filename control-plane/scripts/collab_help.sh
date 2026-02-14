@@ -64,7 +64,7 @@ else
    ./control-plane/scripts/collab_dispatch.sh --assignment-ref ASSIGN_... --payload-ref control-plane/collaboration/collab-model.yaml
 
 3) Optionally delegate effective ownership for a worktree:
-   ./control-plane/scripts/collab_delegate_worktree.sh --worktree /home/andrey/src/kimi --owner-agent-ref AGENT_MAIN --delegate-to AGENT_KIMI
+   ./control-plane/scripts/collab_delegate_worktree.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --owner-agent-ref AGENT_MAIN --delegate-to AGENT_KIMI
 
 4) Ingest and close after fulfillment:
    ./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit \$(git rev-parse --short HEAD)

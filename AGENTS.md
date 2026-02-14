@@ -106,7 +106,7 @@ Message I/O command surface:
 - main-side dispatch wrapper:
   - `./control-plane/scripts/collab_dispatch.sh --assignment-ref ASSIGN_... --payload-ref control-plane/collaboration/collab-model.yaml`
 - owner delegation wrapper (effective ownership handoff/revoke):
-  - `./control-plane/scripts/collab_delegate_worktree.sh --worktree /home/andrey/src/kimi --owner-agent-ref AGENT_MAIN --delegate-to AGENT_KIMI`
+  - `./control-plane/scripts/collab_delegate_worktree.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --owner-agent-ref AGENT_MAIN --delegate-to AGENT_KIMI`
 - single-step worker loop helper (claim + fulfillment guidance):
   - `./control-plane/scripts/collab_run_once.sh --worktree "$PWD"`
 - acknowledge next actionable message:

@@ -14,7 +14,7 @@
           "from_agent_ref": "AGENT_MAIN",
           "to_agent_ref": "AGENT_KIMI",
           "from_worktree": "/home/andrey/src/cicsc",
-          "to_worktree": "/home/andrey/src/kimi",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
           "branch": "phase33.ax1.2",
           "initial_status": "sent",
           "payload_refs": [
@@ -34,7 +34,7 @@
           "from_agent_ref": "AGENT_MAIN",
           "to_agent_ref": "AGENT_ANTIGRAVITY",
           "from_worktree": "/home/andrey/src/cicsc",
-          "to_worktree": "/home/andrey/src/antigravity",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/antigravity",
           "branch": "phase33.ax2.2",
           "initial_status": "sent",
           "payload_refs": [
@@ -54,7 +54,7 @@
           "from_agent_ref": "AGENT_MAIN",
           "to_agent_ref": "AGENT_KIMI",
           "from_worktree": "/home/andrey/src/cicsc",
-          "to_worktree": "/home/andrey/src/kimi",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
           "branch": "phase33.ax1.3",
           "initial_status": "sent",
           "payload_refs": [
@@ -74,7 +74,7 @@
           "from_agent_ref": "AGENT_MAIN",
           "to_agent_ref": "AGENT_ANTIGRAVITY",
           "from_worktree": "/home/andrey/src/cicsc",
-          "to_worktree": "/home/andrey/src/antigravity",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/antigravity",
           "branch": "phase33.ax2.4",
           "initial_status": "sent",
           "payload_refs": [
@@ -94,7 +94,7 @@
           "from_agent_ref": "AGENT_MAIN",
           "to_agent_ref": "AGENT_ANTIGRAVITY",
           "from_worktree": "/home/andrey/src/cicsc",
-          "to_worktree": "/home/andrey/src/antigravity",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/antigravity",
           "branch": "phase34.ay1.1",
           "initial_status": "sent",
           "payload_refs": [
@@ -109,7 +109,7 @@
         }
       ]
     },
-    "/home/andrey/src/kimi": {
+    "/home/andrey/src/cicsc/worktrees/kimi": {
       "inbox": [
         {
           "id": "MSG_PHASE33_AX12_DISPATCH",
@@ -118,7 +118,7 @@
           "from_agent_ref": "AGENT_MAIN",
           "to_agent_ref": "AGENT_KIMI",
           "from_worktree": "/home/andrey/src/cicsc",
-          "to_worktree": "/home/andrey/src/kimi",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
           "branch": "phase33.ax1.2",
           "initial_status": "sent",
           "payload_refs": [
@@ -138,7 +138,7 @@
           "from_agent_ref": "AGENT_MAIN",
           "to_agent_ref": "AGENT_KIMI",
           "from_worktree": "/home/andrey/src/cicsc",
-          "to_worktree": "/home/andrey/src/kimi",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
           "branch": "phase33.ax1.3",
           "initial_status": "sent",
           "payload_refs": [
@@ -154,7 +154,7 @@
       ],
       "outbox": []
     },
-    "/home/andrey/src/antigravity": {
+    "/home/andrey/src/cicsc/worktrees/antigravity": {
       "inbox": [
         {
           "id": "MSG_PHASE33_AX22_DISPATCH",
@@ -163,7 +163,7 @@
           "from_agent_ref": "AGENT_MAIN",
           "to_agent_ref": "AGENT_ANTIGRAVITY",
           "from_worktree": "/home/andrey/src/cicsc",
-          "to_worktree": "/home/andrey/src/antigravity",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/antigravity",
           "branch": "phase33.ax2.2",
           "initial_status": "sent",
           "payload_refs": [
@@ -183,7 +183,7 @@
           "from_agent_ref": "AGENT_MAIN",
           "to_agent_ref": "AGENT_ANTIGRAVITY",
           "from_worktree": "/home/andrey/src/cicsc",
-          "to_worktree": "/home/andrey/src/antigravity",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/antigravity",
           "branch": "phase33.ax2.4",
           "initial_status": "sent",
           "payload_refs": [
@@ -203,7 +203,7 @@
           "from_agent_ref": "AGENT_MAIN",
           "to_agent_ref": "AGENT_ANTIGRAVITY",
           "from_worktree": "/home/andrey/src/cicsc",
-          "to_worktree": "/home/andrey/src/antigravity",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/antigravity",
           "branch": "phase34.ay1.1",
           "initial_status": "sent",
           "payload_refs": [
