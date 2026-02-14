@@ -2046,8 +2046,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/gemini",
       "branch": "phase34.ay1.1.i01",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Reassigned from KIMI lane AY1.1"
     },
     {
@@ -2057,8 +2057,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/gemini",
       "branch": "phase34.ay1.2.i01",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Reassigned from KIMI lane AY1.2"
     },
     {
@@ -2068,8 +2068,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/gemini",
       "branch": "phase36.ba1.1.i01",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Reassigned from KIMI lane BA1.1"
     }
   ]
