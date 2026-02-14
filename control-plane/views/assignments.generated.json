@@ -1265,8 +1265,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase34.ay1.3.i05",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Dispatch instance i05 for AY1.3: Publish incident and drift localization report with forced-next mapping policy"
     }
   ]
