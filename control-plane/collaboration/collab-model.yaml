@@ -363,8 +363,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/antigravity
   branch: phase33.ax1.3
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_main
   notes: 'Batch dispatch for AX1.3: Publish coupling conformance report with residual
     gaps register'
 message_kinds:
@@ -1618,3 +1618,13 @@ message_events:
   commit: f4015ec
   evidence_bindings: []
   notes: Initial dispatch event for ASSIGN_PHASE33_AX13_ANTIGRAVITY_BATCH.
+- id: MSGEV_PHASE33_AX13_ANTIGRAVITY_BATCH_DISPATCH_RESCINDED_2
+  message_ref: MSG_PHASE33_AX13_ANTIGRAVITY_BATCH_DISPATCH
+  from_status: sent
+  to_status: rescinded
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 2
+  commit: 4ef487d
+  evidence_bindings: []
+  rescinded_reason: Antigravity lane disabled by operator
+  notes: 'Reverted via collab_revert.sh: Antigravity lane disabled by operator'
