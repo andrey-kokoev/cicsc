@@ -32,7 +32,7 @@ projections used for executable validation and gating.
   - Typed agent collaboration contract (claims, obligations, evidence, handoff protocol).
   - Includes executable task assignments (`assignments`) binding agent/worktree/branch to ledger checkbox scope.
   - Includes immutable message envelopes with append-only `message_events`, transition policy, rescind/supersede semantics, and evidence bindings (`commit` + `digest`).
-  - Includes `worktree_governance` semantics (single owner per worktree, owner-dispatch authority, and worktree creation authority list).
+  - Includes `worktree_governance` semantics (single owner per worktree, owner-dispatch authority, optional strict main-dispatch authority, and worktree creation authority list).
   - Binds collaboration claims to objective/capability/ledger scope.
   - No execution status.
   - Canonical worktree processing entry point is mailbox projection:
@@ -79,8 +79,10 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `control-plane/scripts/collab_claim_next.sh`
 - `control-plane/scripts/collab_fulfill.sh`
 - `control-plane/scripts/collab_close_ingested.sh`
+- `control-plane/scripts/collab_close_batch.sh`
 - `control-plane/scripts/collab_show_assignment.sh`
 - `control-plane/scripts/collab_status.sh`
+- `control-plane/scripts/collab_main_status.sh`
 - `control-plane/scripts/collab_dry_run.sh`
 - `control-plane/scripts/collab_commit_views.sh`
 - `control-plane/scripts/collab_run_once.sh`
@@ -151,6 +153,11 @@ Quickstart helpers:
 - worker flow: `./control-plane/scripts/collab_help.sh --role worker --worktree "$PWD"`
 - main flow: `./control-plane/scripts/collab_help.sh --role main --worktree /home/andrey/src/cicsc`
 - main batch dispatch: `./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --count 2`
+- main dispatch runbook:
+  - plan: `./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --phase 35 --count 2 --plan-only --run-id phase35-kimi`
+  - apply: `./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --apply-run control-plane/logs/dispatch-runs/phase35-kimi.json`
+  - resume: `./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --resume phase35-kimi`
+- main dashboard: `./control-plane/scripts/collab_main_status.sh --refresh`
 
 ## Multi-Assignment Worker Flow (End-to-End)
 

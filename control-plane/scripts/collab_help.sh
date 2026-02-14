@@ -87,11 +87,22 @@ else
 
 2.5) Batch dispatch next N open checkboxes to an agent (single command):
    ./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --count 2
+   # planned run (no mutation):
+   ./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --phase 35 --count 2 --plan-only --run-id phase35-kimi
+   # apply existing run:
+   ./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --apply-run control-plane/logs/dispatch-runs/phase35-kimi.json
+   # resume failed/pending rows:
+   ./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --resume phase35-kimi
 
 3) Optionally delegate effective ownership for a worktree:
    ./control-plane/scripts/collab_delegate_worktree.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --owner-agent-ref AGENT_MAIN --delegate-to AGENT_KIMI
 
 4) Ingest and close after fulfillment:
    ./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit \$(git rev-parse --short HEAD)
+   # close many at once:
+   ./control-plane/scripts/collab_close_batch.sh --agent-ref AGENT_KIMI --status fulfilled --count 10
+
+5) Main dashboard:
+   ./control-plane/scripts/collab_main_status.sh --refresh
 EOF
 fi

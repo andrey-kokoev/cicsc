@@ -11,8 +11,17 @@ INITIAL_STATUS="sent"
 COMMIT_SHA=""
 NO_COMMIT=0
 DRY_RUN=0
+PLAN_ONLY=0
+APPLY_RUN=""
+RESUME_RUN=""
+RUN_ID=""
+JOURNAL_DIR="control-plane/logs/dispatch-runs"
 PAYLOAD_REFS=()
 CHECKBOX_REFS=()
+EXCLUDE_CHECKBOX_REFS=()
+PHASE_FILTER=""
+MILESTONE_FILTER=""
+STRATEGY="fifo"
 SUBJECT=""
 BODY=()
 
@@ -21,17 +30,32 @@ usage() {
 Usage:
   control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_... [options]
 
-Options:
-  --count <n>           Number of next unassigned open checkboxes to dispatch (default: 1).
-  --checkbox-ref <id>   Explicit checkbox ref (repeatable); overrides --count selection.
-  --payload-ref <path>  Payload ref for each dispatch (repeatable).
-  --from-agent-ref <id> Dispatching agent (default: AGENT_MAIN).
-  --initial-status <s>  queued|sent (default: sent).
-  --commit <sha>        Event commit sha (default: current HEAD short).
-  --subject <text>      Commit subject override for batch commit.
-  --body <text>         Commit body line (repeatable).
-  --no-commit           Do not commit after dispatching.
-  --dry-run             Resolve plan and validate IDs without writing.
+Plan selection:
+  --count <n>                 Number of checkboxes to select when auto-planning (default: 1).
+  --checkbox-ref <id>         Explicit checkbox ref (repeatable); bypasses auto-selection.
+  --exclude-checkbox <id>     Exclude checkbox from auto-selection (repeatable).
+  --phase <n|Pnn>             Restrict auto-selection to a phase (e.g. 35 or P35).
+  --milestone <id>            Restrict auto-selection to a milestone (e.g. AZ2).
+  --strategy <fifo|lifo>      Ordering strategy for auto-selection (default: fifo).
+
+Dispatch context:
+  --payload-ref <path>        Payload ref for each dispatch (repeatable).
+  --from-agent-ref <id>       Dispatching agent (default: AGENT_MAIN).
+  --initial-status <s>        queued|sent (default: sent).
+  --commit <sha>              Event commit sha (default: current HEAD short).
+
+Run lifecycle:
+  --run-id <id>               Explicit run id for new plan file.
+  --plan-only                 Create run plan file only; do not apply.
+  --apply-run <id|path>       Apply an existing run file.
+  --resume <id|path>          Apply pending/failed rows from an existing run file.
+  --journal-dir <path>        Run journal directory (default: control-plane/logs/dispatch-runs).
+
+Commit control:
+  --subject <text>            Commit subject override.
+  --body <text>               Commit body line (repeatable).
+  --no-commit                 Do not commit after successful apply.
+  --dry-run                   Resolve plan and validate IDs without writing.
 USAGE
 }
 
@@ -40,10 +64,19 @@ while [[ $# -gt 0 ]]; do
     --agent-ref) AGENT_REF="${2:-}"; shift 2 ;;
     --count) COUNT="${2:-}"; shift 2 ;;
     --checkbox-ref) CHECKBOX_REFS+=("${2:-}"); shift 2 ;;
+    --exclude-checkbox) EXCLUDE_CHECKBOX_REFS+=("${2:-}"); shift 2 ;;
+    --phase) PHASE_FILTER="${2:-}"; shift 2 ;;
+    --milestone) MILESTONE_FILTER="${2:-}"; shift 2 ;;
+    --strategy) STRATEGY="${2:-}"; shift 2 ;;
     --payload-ref) PAYLOAD_REFS+=("${2:-}"); shift 2 ;;
     --from-agent-ref) FROM_AGENT_REF="${2:-}"; shift 2 ;;
     --initial-status) INITIAL_STATUS="${2:-}"; shift 2 ;;
     --commit) COMMIT_SHA="${2:-}"; shift 2 ;;
+    --run-id) RUN_ID="${2:-}"; shift 2 ;;
+    --plan-only) PLAN_ONLY=1; shift ;;
+    --apply-run) APPLY_RUN="${2:-}"; shift 2 ;;
+    --resume) RESUME_RUN="${2:-}"; shift 2 ;;
+    --journal-dir) JOURNAL_DIR="${2:-}"; shift 2 ;;
     --subject) SUBJECT="${2:-}"; shift 2 ;;
     --body) BODY+=("${2:-}"); shift 2 ;;
     --no-commit) NO_COMMIT=1; shift ;;
@@ -55,7 +88,6 @@ done
 
 if [[ -z "${AGENT_REF}" ]]; then
   echo "--agent-ref is required" >&2
-  usage >&2
   exit 1
 fi
 if ! [[ "${COUNT}" =~ ^[0-9]+$ ]] || [[ "${COUNT}" -lt 1 ]]; then
@@ -66,6 +98,19 @@ if [[ "${INITIAL_STATUS}" != "queued" && "${INITIAL_STATUS}" != "sent" ]]; then
   echo "--initial-status must be queued or sent" >&2
   exit 1
 fi
+if [[ "${STRATEGY}" != "fifo" && "${STRATEGY}" != "lifo" ]]; then
+  echo "--strategy must be fifo or lifo" >&2
+  exit 1
+fi
+
+mode_count=0
+[[ -n "${APPLY_RUN}" ]] && mode_count=$((mode_count+1))
+[[ -n "${RESUME_RUN}" ]] && mode_count=$((mode_count+1))
+if [[ "${mode_count}" -gt 1 ]]; then
+  echo "--apply-run and --resume are mutually exclusive" >&2
+  exit 1
+fi
+
 if [[ ${#PAYLOAD_REFS[@]} -eq 0 ]]; then
   PAYLOAD_REFS=("AGENTS.md" "control-plane/README.md")
 fi
@@ -77,10 +122,83 @@ if [[ -z "${COMMIT_SHA}" ]]; then
   COMMIT_SHA="$(git rev-parse --short HEAD)"
 fi
 
-plan_json="$(
-python3 - "$ROOT_DIR/control-plane/execution/execution-ledger.yaml" \
-  "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" \
-  "$AGENT_REF" "$COUNT" "$COMMIT_SHA" "${CHECKBOX_REFS[@]}" <<'PY'
+mkdir -p "${JOURNAL_DIR}"
+
+normalize_phase_filter() {
+  local v="$1"
+  if [[ -z "${v}" ]]; then
+    echo ""
+    return
+  fi
+  if [[ "${v}" =~ ^[Pp]([0-9]+)$ ]]; then
+    echo "${BASH_REMATCH[1]}"
+  elif [[ "${v}" =~ ^[0-9]+$ ]]; then
+    echo "${v}"
+  else
+    echo "invalid --phase value: ${v}" >&2
+    exit 1
+  fi
+}
+
+phase_num_filter="$(normalize_phase_filter "${PHASE_FILTER}")"
+
+resolve_run_file_path() {
+  local run_ref="$1"
+  if [[ -z "${run_ref}" ]]; then
+    echo ""
+    return
+  fi
+  if [[ "${run_ref}" == */* || "${run_ref}" == *.json ]]; then
+    echo "${run_ref}"
+    return
+  fi
+  echo "${JOURNAL_DIR%/}/${run_ref}.json"
+}
+
+write_plan_file() {
+  local run_path="$1"
+  local rows_json="$2"
+  python3 - "$run_path" "$rows_json" "$AGENT_REF" "$FROM_AGENT_REF" "$INITIAL_STATUS" "$COMMIT_SHA" "$phase_num_filter" "$MILESTONE_FILTER" "$STRATEGY" "$COUNT" <<'PY'
+import json
+import os
+import sys
+from datetime import datetime, timezone
+from pathlib import Path
+
+run_path = Path(sys.argv[1])
+rows = json.loads(sys.argv[2])
+agent_ref = sys.argv[3]
+from_agent_ref = sys.argv[4]
+initial_status = sys.argv[5]
+commit_sha = sys.argv[6]
+phase_filter = sys.argv[7]
+milestone_filter = sys.argv[8]
+strategy = sys.argv[9]
+count = int(sys.argv[10])
+
+doc = {
+    "run_id": run_path.stem,
+    "created_at": datetime.now(timezone.utc).isoformat(),
+    "agent_ref": agent_ref,
+    "from_agent_ref": from_agent_ref,
+    "initial_status": initial_status,
+    "commit": commit_sha,
+    "filters": {
+        "phase_number": int(phase_filter) if phase_filter else None,
+        "milestone_id": milestone_filter or None,
+        "strategy": strategy,
+        "count": count,
+    },
+    "rows": rows,
+}
+run_path.parent.mkdir(parents=True, exist_ok=True)
+run_path.write_text(json.dumps(doc, indent=2) + "\n", encoding="utf-8")
+print(str(run_path))
+PY
+}
+
+build_rows_json() {
+  python3 - "$ROOT_DIR/control-plane/execution/execution-ledger.yaml" "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$AGENT_REF" "$COUNT" "$COMMIT_SHA" "$phase_num_filter" "$MILESTONE_FILTER" "$STRATEGY" "${CHECKBOX_REFS[@]}" -- "${EXCLUDE_CHECKBOX_REFS[@]}" <<'PY'
 import json
 import re
 import sys
@@ -92,51 +210,82 @@ collab = yaml.safe_load(Path(sys.argv[2]).read_text(encoding="utf-8"))
 agent_ref = sys.argv[3]
 count = int(sys.argv[4])
 commit_sha = sys.argv[5]
-explicit = sys.argv[6:]
+phase_filter = sys.argv[6]
+milestone_filter = sys.argv[7]
+strategy = sys.argv[8]
+args = sys.argv[9:]
+sep = args.index("--") if "--" in args else len(args)
+explicit = [x for x in args[:sep] if x]
+excluded = set(x for x in args[sep+1:] if x)
 
 agents = {a.get("id"): a for a in collab.get("agents", [])}
 if agent_ref not in agents:
     raise SystemExit(f"unknown agent_ref: {agent_ref}")
 
+gov = collab.get("worktree_governance", {})
+if gov.get("enforce_main_dispatch_authority"):
+    expected = gov.get("main_dispatch_authority_agent_ref")
+    # Dispatcher validates at runtime too; include in plan metadata via each row.
+
 assigned = {a.get("checkbox_ref") for a in collab.get("assignments", [])}
 existing_assign_ids = {a.get("id") for a in collab.get("assignments", [])}
 existing_msg_ids = {m.get("id") for m in collab.get("messages", [])}
 
-checkbox_meta = {}
+rows_all = []
+order = 0
 for ph in exe.get("phases", []):
     pnum = ph.get("number")
+    pid = ph.get("id")
+    if phase_filter and str(pnum) != str(phase_filter):
+        continue
     for ms in ph.get("milestones", []):
+        mid = ms.get("id")
+        if milestone_filter and mid != milestone_filter:
+            continue
         for cb in ms.get("checkboxes", []):
             cid = cb.get("id")
-            checkbox_meta[cid] = {
-                "phase_id": ph.get("id"),
-                "phase_number": pnum,
-                "title": cb.get("title", ""),
+            order += 1
+            rows_all.append({
+                "order": order,
+                "phase_id": pid,
+                "phase_number": int(pnum),
+                "milestone_id": mid,
+                "checkbox_ref": cid,
+                "checkbox_title": cb.get("title", ""),
                 "status": cb.get("status"),
-            }
+            })
+
+meta = {r["checkbox_ref"]: r for r in rows_all}
 
 if explicit:
-    selected = explicit
-else:
     selected = []
-    for ph in exe.get("phases", []):
-        for ms in ph.get("milestones", []):
-            for cb in ms.get("checkboxes", []):
-                cid = cb.get("id")
-                if cb.get("status") != "open":
-                    continue
-                if cid in assigned:
-                    continue
-                selected.append(cid)
-                if len(selected) >= count:
-                    break
-            if len(selected) >= count:
-                break
-        if len(selected) >= count:
-            break
-
-if len(selected) < (len(explicit) if explicit else count):
-    raise SystemExit(f"insufficient eligible checkboxes: requested={len(explicit) if explicit else count} got={len(selected)}")
+    for cid in explicit:
+        if cid in excluded:
+            continue
+        if cid not in meta:
+            raise SystemExit(f"unknown checkbox_ref in execution ledger: {cid}")
+        r = meta[cid]
+        if r["status"] != "open":
+            raise SystemExit(f"checkbox not open: {cid}")
+        if cid in assigned:
+            raise SystemExit(f"checkbox already assigned: {cid}")
+        selected.append(r)
+else:
+    candidates = []
+    for r in rows_all:
+        cid = r["checkbox_ref"]
+        if cid in excluded:
+            continue
+        if r["status"] != "open":
+            continue
+        if cid in assigned:
+            continue
+        candidates.append(r)
+    if strategy == "lifo":
+        candidates = list(reversed(candidates))
+    selected = candidates[:count]
+    if len(selected) < count:
+        raise SystemExit(f"insufficient eligible checkboxes: requested={count} got={len(selected)}")
 
 agent_tag = re.sub(r"^AGENT_", "", agent_ref).upper()
 
@@ -154,17 +303,14 @@ def next_unique_id(base: str, existing: set[str]) -> str:
         i += 1
 
 rows = []
-for idx, cb in enumerate(selected, start=1):
-    meta = checkbox_meta.get(cb)
-    if not meta:
-        raise SystemExit(f"unknown checkbox_ref in execution ledger: {cb}")
-    if meta["status"] != "open":
-        raise SystemExit(f"checkbox not open: {cb}")
-    pnum = int(meta["phase_number"])
+for item in selected:
+    cb = item["checkbox_ref"]
+    pnum = int(item["phase_number"])
     cb_token = cb.replace(".", "")
     base_assign = f"ASSIGN_PHASE{pnum:02d}_{cb_token}_{agent_tag}_BATCH"
     aid = next_unique_id(base_assign, existing_assign_ids)
     existing_assign_ids.add(aid)
+
     mid = f"MSG_{aid.removeprefix('ASSIGN_')}_DISPATCH"
     if mid in existing_msg_ids:
         j = 2
@@ -172,72 +318,185 @@ for idx, cb in enumerate(selected, start=1):
             j += 1
         mid = f"{mid}_{j}"
     existing_msg_ids.add(mid)
+
     rows.append({
-        "checkbox_ref": cb,
-        "phase_number": pnum,
+        "state": "planned",
+        "error": "",
         "assignment_id": aid,
         "message_id": mid,
+        "checkbox_ref": cb,
+        "phase_number": pnum,
+        "milestone_id": item["milestone_id"],
+        "title": item["checkbox_title"],
         "branch": mk_branch(pnum, cb),
-        "title": meta["title"],
         "commit": commit_sha,
     })
 
-print(json.dumps({"rows": rows}, indent=2))
+print(json.dumps(rows))
 PY
-)"
+}
 
-if [[ "${DRY_RUN}" -eq 1 ]]; then
-  echo "dry-run dispatch plan:"
-  echo "${plan_json}"
-  exit 0
-fi
+update_run_row_state() {
+  local run_path="$1"
+  local idx="$2"
+  local state="$3"
+  local error="$4"
+  python3 - "$run_path" "$idx" "$state" "$error" <<'PY'
+import json
+import sys
+from pathlib import Path
+p = Path(sys.argv[1])
+idx = int(sys.argv[2])
+state = sys.argv[3]
+err = sys.argv[4]
+doc = json.loads(p.read_text(encoding="utf-8"))
+rows = doc.get("rows", [])
+if idx < 0 or idx >= len(rows):
+    raise SystemExit(f"row index out of range: {idx}")
+rows[idx]["state"] = state
+rows[idx]["error"] = err
+p.write_text(json.dumps(doc, indent=2) + "\n", encoding="utf-8")
+PY
+}
 
-readarray -t _dispatch_lines < <(python3 - "${plan_json}" <<'PY'
+ensure_dispatch_authority() {
+  python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$FROM_AGENT_REF" <<'PY'
+import sys
+from pathlib import Path
+import yaml
+collab = yaml.safe_load(Path(sys.argv[1]).read_text(encoding="utf-8"))
+from_agent = sys.argv[2]
+agents = {a.get("id") for a in collab.get("agents", [])}
+if from_agent not in agents:
+    raise SystemExit(f"unknown from-agent-ref: {from_agent}")
+gov = collab.get("worktree_governance", {})
+if gov.get("enforce_main_dispatch_authority"):
+    expected = gov.get("main_dispatch_authority_agent_ref")
+    if from_agent != expected:
+        raise SystemExit(
+            f"dispatch authority denied: enforce_main_dispatch_authority=true expects {expected}, got {from_agent}"
+        )
+PY
+}
+
+apply_run_file() {
+  local run_path="$1"
+  local only_pending="$2"
+
+  mapfile -t rows < <(python3 - "$run_path" "$only_pending" <<'PY'
 import json, sys
-doc = json.loads(sys.argv[1])
-for r in doc["rows"]:
+from pathlib import Path
+p = Path(sys.argv[1])
+only_pending = sys.argv[2] == "1"
+doc = json.loads(p.read_text(encoding="utf-8"))
+for i, r in enumerate(doc.get("rows", [])):
+    state = r.get("state", "planned")
+    if only_pending and state == "applied":
+        continue
     print("\t".join([
-        r["assignment_id"], r["checkbox_ref"], r["branch"], r["message_id"], r["title"], r["commit"]
+      str(i), r.get("assignment_id", ""), r.get("checkbox_ref", ""), r.get("branch", ""),
+      r.get("message_id", ""), r.get("title", ""), r.get("commit", ""), state
     ]))
 PY
 )
 
-for line in "${_dispatch_lines[@]}"; do
-  IFS=$'\t' read -r assignment_id checkbox_ref branch message_id title commit_sha <<<"${line}"
-  create_cmd=(
-    ./control-plane/scripts/collab_create_assignment.sh
-    --assignment-id "${assignment_id}"
-    --agent-ref "${AGENT_REF}"
-    --checkbox-ref "${checkbox_ref}"
-    --branch "${branch}"
-    --from-agent-ref "${FROM_AGENT_REF}"
-    --initial-status "${INITIAL_STATUS}"
-    --commit "${commit_sha}"
-    --message-id "${message_id}"
-    --assignment-notes "Batch dispatch for ${checkbox_ref}: ${title}"
-    --dispatch-notes "Batch dispatch ${checkbox_ref} -> ${AGENT_REF} via collab_dispatch_batch.sh"
-    --no-refresh
-  )
-  for p in "${PAYLOAD_REFS[@]}"; do
-    create_cmd+=(--payload-ref "${p}")
+  local applied=0
+  local failed=0
+  for line in "${rows[@]}"; do
+    IFS=$'\t' read -r idx assignment_id checkbox_ref branch message_id title row_commit row_state <<<"${line}"
+
+    if [[ "${row_state}" == "applied" ]]; then
+      continue
+    fi
+
+    create_cmd=(
+      ./control-plane/scripts/collab_create_assignment.sh
+      --assignment-id "${assignment_id}"
+      --agent-ref "${AGENT_REF}"
+      --checkbox-ref "${checkbox_ref}"
+      --branch "${branch}"
+      --from-agent-ref "${FROM_AGENT_REF}"
+      --initial-status "${INITIAL_STATUS}"
+      --commit "${row_commit}"
+      --message-id "${message_id}"
+      --assignment-notes "Batch dispatch for ${checkbox_ref}: ${title}"
+      --dispatch-notes "Batch dispatch ${checkbox_ref} -> ${AGENT_REF} via collab_dispatch_batch.sh"
+      --no-refresh
+    )
+    for p in "${PAYLOAD_REFS[@]}"; do
+      create_cmd+=(--payload-ref "${p}")
+    done
+
+    if output="$(${create_cmd[@]} 2>&1)"; then
+      update_run_row_state "${run_path}" "${idx}" "applied" ""
+      applied=$((applied + 1))
+    else
+      update_run_row_state "${run_path}" "${idx}" "failed" "${output//$'\n'/ | }"
+      echo "dispatch failed for row ${idx} (${checkbox_ref}): ${output}" >&2
+      failed=$((failed + 1))
+    fi
   done
-  "${create_cmd[@]}"
-done
 
-./control-plane/scripts/collab_sync.sh >/dev/null
+  echo "${applied}:${failed}"
+}
 
-if [[ "${NO_COMMIT}" -eq 0 ]]; then
-  if [[ -z "${SUBJECT}" ]]; then
-    SUBJECT="governance/collab: batch dispatch $(python3 - "${plan_json}" <<'PY'
+ensure_dispatch_authority
+
+run_path=""
+if [[ -n "${APPLY_RUN}" || -n "${RESUME_RUN}" ]]; then
+  run_ref="${APPLY_RUN:-$RESUME_RUN}"
+  run_path="$(resolve_run_file_path "${run_ref}")"
+  if [[ ! -f "${run_path}" ]]; then
+    echo "run file not found: ${run_path}" >&2
+    exit 1
+  fi
+else
+  rows_json="$(build_rows_json)"
+  if [[ "${DRY_RUN}" -eq 1 ]]; then
+    echo "dry-run dispatch plan:"
+    python3 - "$rows_json" <<'PY'
 import json,sys
-d=json.loads(sys.argv[1])
-print(", ".join(r["checkbox_ref"] for r in d["rows"]))
+print(json.dumps(json.loads(sys.argv[1]), indent=2))
 PY
-)"
+    exit 0
+  fi
+  if [[ -z "${RUN_ID}" ]]; then
+    RUN_ID="dispatch-run-$(date -u +%Y%m%dT%H%M%SZ)"
+  fi
+  run_path="${JOURNAL_DIR%/}/${RUN_ID}.json"
+  if [[ -f "${run_path}" ]]; then
+    echo "run file already exists: ${run_path}" >&2
+    exit 1
+  fi
+  run_path="$(write_plan_file "${run_path}" "${rows_json}")"
+  echo "dispatch plan written: ${run_path}"
+  if [[ "${PLAN_ONLY}" -eq 1 ]]; then
+    exit 0
+  fi
+fi
+
+if [[ "${NO_COMMIT}" -eq 0 && -n "$(git status --porcelain)" ]]; then
+  echo "batch apply with commit requires a clean working tree" >&2
+  exit 1
+fi
+
+only_pending=0
+[[ -n "${RESUME_RUN}" ]] && only_pending=1
+result="$(apply_run_file "${run_path}" "${only_pending}")"
+applied_count="${result%%:*}"
+failed_count="${result##*:}"
+
+if [[ "${applied_count}" -gt 0 ]]; then
+  ./control-plane/scripts/collab_sync.sh >/dev/null
+fi
+
+if [[ "${NO_COMMIT}" -eq 0 && "${applied_count}" -gt 0 ]]; then
+  if [[ -z "${SUBJECT}" ]]; then
+    SUBJECT="governance/collab: batch dispatch apply $(basename "${run_path}" .json)"
   fi
   commit_cmd=(./control-plane/scripts/collab_commit_views.sh --subject "${SUBJECT}" --no-refresh)
   if [[ ${#BODY[@]} -eq 0 ]]; then
-    commit_cmd+=(--body "Batch dispatcher: collab_dispatch_batch.sh")
+    commit_cmd+=(--body "Dispatch run: ${run_path}" --body "Applied rows: ${applied_count}, Failed rows: ${failed_count}")
   else
     for b in "${BODY[@]}"; do
       commit_cmd+=(--body "${b}")
@@ -246,5 +505,8 @@ PY
   "${commit_cmd[@]}"
 fi
 
-echo "batch dispatch complete for ${AGENT_REF}"
-echo "${plan_json}"
+echo "dispatch apply complete: applied=${applied_count} failed=${failed_count} run=${run_path}"
+if [[ "${failed_count}" -gt 0 ]]; then
+  echo "resume with: ./control-plane/scripts/collab_dispatch_batch.sh --agent-ref ${AGENT_REF} --resume ${run_path} --no-commit" >&2
+  exit 1
+fi
