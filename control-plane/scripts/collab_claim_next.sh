@@ -88,6 +88,7 @@ if agent is None:
 
 print(msg.get("id"))
 print(agent.get("id"))
+print(msg.get("assignment_ref"))
 PY
 )" || {
   echo "failed to resolve claim target for worktree ${WORKTREE}" >&2
@@ -102,6 +103,7 @@ fi
 readarray -t _lines <<<"${_resolved}"
 MESSAGE_REF="${_lines[0]}"
 ACTOR_AGENT="${_lines[1]}"
+ASSIGNMENT_REF="${_lines[2]}"
 
 if [[ -z "${NOTES}" ]]; then
   NOTES="Acknowledged by ${ACTOR_AGENT} via collab_claim_next.sh"
@@ -117,6 +119,8 @@ fi
 
 if [[ "${DRY_RUN}" -eq 1 ]]; then
   echo "dry-run: would claim message ${MESSAGE_REF}"
+  echo "run: ./control-plane/scripts/collab_show_assignment.sh --ref ${ASSIGNMENT_REF}"
 else
   echo "claimed message: ${MESSAGE_REF}"
+  echo "run: ./control-plane/scripts/collab_show_assignment.sh --ref ${ASSIGNMENT_REF}"
 fi

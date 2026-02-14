@@ -7,6 +7,7 @@ usage() {
   cat <<'USAGE'
 Usage:
   control-plane/scripts/collab_dry_run.sh <action> [args...]
+  control-plane/scripts/collab_dry_run.sh --<action> [args...]
 
 Actions:
   create       -> collab_create_assignment.sh --dry-run
@@ -31,6 +32,16 @@ fi
 
 ACTION="$1"
 shift || true
+
+case "${ACTION}" in
+  --create) ACTION="create" ;;
+  --claim-next) ACTION="claim-next" ;;
+  --fulfill) ACTION="fulfill" ;;
+  --close) ACTION="close" ;;
+  --dispatch) ACTION="dispatch" ;;
+  --delegate) ACTION="delegate" ;;
+  --append-event) ACTION="append-event" ;;
+esac
 
 cd "${ROOT_DIR}"
 
