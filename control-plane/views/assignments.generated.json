@@ -718,6 +718,17 @@
       "status": "done",
       "outcome": "fulfilled_by_assignee",
       "notes": "Dispatch instance i09 for AX1.3: Publish coupling conformance report with residual gaps register"
+    },
+    {
+      "id": "ASSIGN_PHASE33_AX13_KIMI_I10",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AX1.3",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase33.ax1.3.i10",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Dispatch instance i10 for AX1.3: Publish coupling conformance report with residual gaps register"
     }
   ]
 }

@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+on_err() {
+  local rc="$?"
+  local cmd="${BASH_COMMAND:-unknown}"
+  echo "autopilot fatal: rc=${rc} cmd=${cmd}" >&2
+}
+trap on_err ERR
+
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 "${ROOT_DIR}/control-plane/scripts/collab_require_root.sh" "${ROOT_DIR}"
 
@@ -120,6 +127,22 @@ print(ingestable)
 PY
 }
 
+read_counts_safe() {
+  local attempts=0
+  local max_attempts=3
+  while (( attempts < max_attempts )); do
+    if readarray -t c < <(counts_for_agent); then
+      pending="${c[0]:-0}"
+      ingestable="${c[1]:-0}"
+      return 0
+    fi
+    attempts=$((attempts + 1))
+    echo "autopilot warning: counts_for_agent failed (attempt ${attempts}/${max_attempts})" >&2
+    sleep 1
+  done
+  return 1
+}
+
 run_main_process() {
   cmd=(
     ./control-plane/scripts/collab_process_messages.sh
@@ -157,10 +180,14 @@ run_dispatch() {
 safe_step() {
   local label="$1"
   shift
-  if "$@"; then
+  local rc=0
+  set +e
+  "$@"
+  rc=$?
+  set -e
+  if [[ "${rc}" -eq 0 ]]; then
     return 0
   fi
-  rc=$?
   echo "autopilot error: ${label} failed (exit=${rc})" >&2
   if [[ "${CONTINUE_ON_ERROR}" -eq 0 ]]; then
     exit "${rc}"
@@ -187,9 +214,11 @@ while true; do
 
   # Wait until worker backlog is below threshold.
   while true; do
-    readarray -t c < <(counts_for_agent)
-    pending="${c[0]:-0}"
-    ingestable="${c[1]:-0}"
+    if ! read_counts_safe; then
+      echo "autopilot error: unable to read counts; deferring cycle" >&2
+      sleep "${ERROR_SLEEP_SECONDS}"
+      continue
+    fi
     if [[ "${pending}" -le "${MAX_INFLIGHT}" ]]; then
       break
     fi
@@ -209,9 +238,11 @@ while true; do
   # Wait for ingestable work from worker before next dispatch cycle.
   started="$(date +%s)"
   while true; do
-    readarray -t c < <(counts_for_agent)
-    pending="${c[0]:-0}"
-    ingestable="${c[1]:-0}"
+    if ! read_counts_safe; then
+      echo "autopilot warning: unable to read counts while waiting; retrying" >&2
+      sleep "${INTERVAL_SECONDS}"
+      continue
+    fi
     if [[ "${ingestable}" -gt 0 ]]; then
       if [[ "${QUIET}" -eq 0 ]]; then
         echo "[cycle ${cycle}] ingestable=${ingestable}; running main process"
