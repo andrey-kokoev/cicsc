@@ -114,6 +114,11 @@ else
 3) Optionally delegate effective ownership for a worktree:
    ./control-plane/scripts/collab_delegate_worktree.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --owner-agent-ref AGENT_MAIN --delegate-to AGENT_KIMI
 
+3.5) Reassign an active assignment to another agent/worktree:
+   ./control-plane/scripts/collab_reassign_assignment.sh --assignment-ref ASSIGN_... --to-agent-ref AGENT_GEMINI
+   # dry-run:
+   ./control-plane/scripts/collab_reassign_assignment.sh --assignment-ref ASSIGN_... --to-agent-ref AGENT_GEMINI --dry-run
+
 4) Ingest and close after fulfillment:
    ./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit \$(git rev-parse --short HEAD)
    # close many at once:
