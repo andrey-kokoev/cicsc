@@ -37,12 +37,14 @@ cd "${ROOT_DIR}"
 python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$ASSIGNMENT_REF" "$JSON_MODE" <<'PY'
 import json
 import sys
+import time
 from pathlib import Path
 import yaml
 
 collab = yaml.safe_load(Path(sys.argv[1]).read_text(encoding="utf-8"))
 assignment_ref = sys.argv[2]
 json_mode = sys.argv[3] == "1"
+repo_root = Path.cwd()
 
 assignments = {a.get("id"): a for a in collab.get("assignments", [])}
 messages = collab.get("messages", [])
@@ -85,8 +87,10 @@ for m in msgs:
 claim_kind = claim_kinds.get(assignment.get("claim_kind_ref"), {})
 profile_refs = claim_kind.get("required_obligation_profile_refs", [])
 requirements = []
+required_script_hints = []
 for pref in profile_refs:
     profile = oblig_profiles.get(pref, {})
+    required_script_hints.extend(profile.get("required_scripts", []))
     for req in profile.get("required_evidence", []):
         kind = req.get("evidence_kind_ref")
         need = int(req.get("min_count", 0))
@@ -101,11 +105,56 @@ for pref in profile_refs:
             }
         )
 
+def recent_files(glob_pattern: str, limit: int = 5):
+    out = []
+    now = int(time.time())
+    for p in repo_root.glob(glob_pattern):
+        if not p.is_file():
+            continue
+        st = p.stat()
+        age = max(0, now - int(st.st_mtime))
+        out.append(
+            {
+                "ref": str(p.relative_to(repo_root)),
+                "mtime_unix": int(st.st_mtime),
+                "age_seconds": age,
+            }
+        )
+    out.sort(key=lambda r: r["mtime_unix"], reverse=True)
+    return out[:limit]
+
+candidate_evidence = {
+    "EVID_SCRIPT": [],
+    "EVID_GATE_REPORT": [],
+    "EVID_THEOREM": [],
+    "EVID_DIFFERENTIAL_LOG": [],
+}
+
+# Scripts: obligation-profile required scripts are strongest hints.
+for s in sorted(set(required_script_hints)):
+    p = repo_root / s
+    if p.exists() and p.is_file():
+        st = p.stat()
+        candidate_evidence["EVID_SCRIPT"].append(
+            {
+                "ref": s,
+                "mtime_unix": int(st.st_mtime),
+                "age_seconds": max(0, int(time.time()) - int(st.st_mtime)),
+                "source": "obligation_required_script",
+            }
+        )
+
+# Reports/logs: recent artifacts in docs/pilot.
+candidate_evidence["EVID_GATE_REPORT"] = recent_files("docs/pilot/*.json", limit=8)
+candidate_evidence["EVID_DIFFERENTIAL_LOG"] = recent_files("docs/pilot/*.log", limit=8)
+candidate_evidence["EVID_THEOREM"] = recent_files("lean/**/*.lean", limit=5)
+
 out = {
     "assignment": assignment,
     "messages": sorted(message_rows, key=lambda r: r["id"]),
     "evidence_counts": evidence_counts,
     "requirements": requirements,
+    "candidate_evidence": candidate_evidence,
 }
 
 if json_mode:
@@ -139,4 +188,14 @@ if out["requirements"]:
         )
 else:
     print("- (no declared obligation requirements)")
+print("")
+print("Candidate Evidence Artifacts:")
+for kind in ["EVID_SCRIPT", "EVID_GATE_REPORT", "EVID_DIFFERENTIAL_LOG", "EVID_THEOREM"]:
+    print(f"- {kind}:")
+    rows = out["candidate_evidence"].get(kind, [])
+    if not rows:
+        print("  - (none)")
+        continue
+    for r in rows:
+        print(f"  - {r['ref']} (age_s={r['age_seconds']})")
 PY
