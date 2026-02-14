@@ -8,7 +8,7 @@
 
 - Objectives: 5
 - Capabilities: 5
-- Phases in execution model: 31
+- Phases in execution model: 32
 - Gate contracts: 13
 - Status source mode: execution_ledger_yaml_canonical
 
@@ -45,6 +45,7 @@
 - Phase 33 (AX): Formal Coupling and Semantic Strengthening [active]
 - Phase 34 (AY): Field Generalization and Multi-Context Validation [planned]
 - Phase 35 (AZ): Final Completion and Transition Closure [planned]
+- Phase 36 (BA): Lean Formalization of Worktree Collaboration Protocol [planned]
 
 ## Canonical Rule
 

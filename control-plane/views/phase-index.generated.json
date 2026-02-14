@@ -2983,6 +2983,87 @@
           ]
         }
       ]
+    },
+    {
+      "id": "BA",
+      "number": 36,
+      "title": "Lean Formalization of Worktree Collaboration Protocol",
+      "status": "planned",
+      "milestones": [
+        {
+          "id": "BA1",
+          "title": "Collaboration Semantics Kernelization",
+          "checkboxes": [
+            {
+              "id": "BA1.1",
+              "title": "Define Lean collaboration state machine for message lifecycle transitions",
+              "status": "open"
+            },
+            {
+              "id": "BA1.2",
+              "title": "Define event-fold semantics yielding deterministic current message status",
+              "status": "open"
+            },
+            {
+              "id": "BA1.3",
+              "title": "Prove legal-transition safety (no sent->fulfilled skip, no illegal regressions)",
+              "status": "open"
+            },
+            {
+              "id": "BA1.4",
+              "title": "Prove sequence monotonicity per message (strict at_seq progression)",
+              "status": "open"
+            }
+          ]
+        },
+        {
+          "id": "BA2",
+          "title": "Main-Loop Safety and Closure Properties",
+          "checkboxes": [
+            {
+              "id": "BA2.1",
+              "title": "Formalize close preconditions (only fulfilled or ingested may be closed)",
+              "status": "open"
+            },
+            {
+              "id": "BA2.2",
+              "title": "Prove closure soundness and post-close terminality",
+              "status": "open"
+            },
+            {
+              "id": "BA2.3",
+              "title": "Prove rescind admissibility and non-interference with fulfilled/closed histories",
+              "status": "open"
+            },
+            {
+              "id": "BA2.4",
+              "title": "Publish Lean theorem index mapped to collaboration gate checks",
+              "status": "open"
+            }
+          ]
+        },
+        {
+          "id": "BA3",
+          "title": "Governance Integration Gate for Lean Collaboration Model",
+          "checkboxes": [
+            {
+              "id": "BA3.1",
+              "title": "Add required gate script validating Lean theorem presence for declared collaboration claims",
+              "status": "open"
+            },
+            {
+              "id": "BA3.2",
+              "title": "Publish Phase 36 closure report with residual admissibility policy",
+              "status": "open"
+            },
+            {
+              "id": "BA3.3",
+              "title": "Define objective Phase 36 exit checklist and Phase 37 block gate",
+              "status": "open"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

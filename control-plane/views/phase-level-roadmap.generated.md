@@ -41,6 +41,7 @@ Canonical status truth is `control-plane/execution/execution-ledger.yaml`.
 | AX | 33 | Formal Coupling and Semantic Strengthening | active |
 | AY | 34 | Field Generalization and Multi-Context Validation | planned |
 | AZ | 35 | Final Completion and Transition Closure | planned |
+| BA | 36 | Lean Formalization of Worktree Collaboration Protocol | planned |
 
 ## Notes
 
@@ -82,3 +83,4 @@ Canonical status truth is `control-plane/execution/execution-ledger.yaml`.
 | AX | 6 | 1 |
 | AY | 0 | 0 |
 | AZ | 0 | 0 |
+| BA | 0 | 0 |
