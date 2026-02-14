@@ -25,6 +25,18 @@ Lean proof baseline:
 - Lean Kernel v1.5 is the coherency-complete baseline for kernel semantics.
 - New semantics work must preserve the canonical evaluator/typing/WF bridges established in v1.5.
 
+## Main Agent Day-0 Checklist
+
+If you are the main agent opening this repository for the first time, do this in order:
+
+1. `./control-plane/scripts/generate_views.sh`
+2. `./control-plane/scripts/collab_help.sh --role main --worktree /home/andrey/src/cicsc`
+3. `./control-plane/scripts/collab_inbox.sh --worktree /home/andrey/src/cicsc --refresh --actionable-only`
+4. `./scripts/check_canonical_execution_model.sh`
+5. Dispatch or delegate only through WMCC command surface (`collab_dispatch.sh`, `collab_delegate_worktree.sh`).
+
+Do not create local ad hoc task files. Protocol truth is mailbox + append-only message events.
+
 ## Normative Conceptual Sources
 
 Execution guidance in this file is operational. Conceptual semantic intent is
