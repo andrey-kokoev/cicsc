@@ -1,0 +1,3 @@
+auto-dispatch-loop start: agent=AGENT_GEMINI batch=3 max_cycles=0 max_inflight=0 interval=5s timeout=0s
+[cycle 0] process main
+main process-messages: canonical collab/view files are pre-dirty, using --no-commit mode for this run

@@ -4163,8 +4163,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i41 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "fulfilled",
+          "event_count": 3
         },
         {
           "id": "MSG_PHASE34_AY13_KIMI_I12_DISPATCH",
@@ -7948,8 +7948,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i41 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "fulfilled",
+          "event_count": 3
         },
         {
           "id": "MSG_PHASE34_AY13_KIMI_I12_DISPATCH",
