@@ -78,6 +78,26 @@ Dispatch authority is constrained by worktree governance:
   worktree,
 - worktree creation authority is explicitly declared.
 
+**Guarantee 5 — Synchronization as Proof Obligation**  
+Synchronization is not operational courtesy; it is a validity condition for
+collaboration transitions.
+
+For any worker-side mutation `μ` (claim/fulfill/revert), admissibility requires:
+- binding to `base_main_commit`,
+- binding to `message_ref`,
+- binding to `expected_from_status`.
+
+A transition is accepted iff all three bindings match canonical state at
+write-time. Preflight success alone is insufficient.
+
+Consequences:
+- fetch/rebase freshness checks are mandatory before action,
+- transition writes must re-check lifecycle preconditions atomically,
+- stale writes fail closed and are retried only after re-sync and re-read.
+
+This closes the semantic cavity where a worker acts on stale projections while
+still producing structurally valid events.
+
 ## 5. First-principles grounding
 
 - **State machine discipline**: collaboration is modeled as valid/invalid
