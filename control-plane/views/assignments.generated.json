@@ -2002,8 +2002,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase33.ax1.3.i50",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Dispatch instance i50 for AX1.3: Publish coupling conformance report with residual gaps register"
     },
     {
@@ -2013,9 +2013,9 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase34.ay1.1.i46",
-      "status": "assigned",
-      "outcome": "pending",
-      "notes": "Dispatch instance i46 for AY1.1: Freeze Phase 34 context matrix and expanded acceptance contract"
+      "status": "done",
+      "outcome": "blocked",
+      "notes": "Dispatch instance i46 for AY1.1: Freeze Phase 34 context matrix and expanded acceptance contract | Reassigned to AGENT_GEMINI after rescind."
     },
     {
       "id": "ASSIGN_PHASE34_AY12_KIMI_I39",
@@ -2024,9 +2024,9 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase34.ay1.2.i39",
-      "status": "assigned",
-      "outcome": "pending",
-      "notes": "Dispatch instance i39 for AY1.2: Execute multi-context workloads under expanded objective envelopes"
+      "status": "done",
+      "outcome": "blocked",
+      "notes": "Dispatch instance i39 for AY1.2: Execute multi-context workloads under expanded objective envelopes | Reassigned to AGENT_GEMINI after rescind."
     },
     {
       "id": "ASSIGN_PHASE36_BA11_KIMI_I01",
@@ -2035,9 +2035,42 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase36.ba1.1.i01",
+      "status": "done",
+      "outcome": "blocked",
+      "notes": "Dispatch instance i01 for BA1.1: Define Lean collaboration state machine for message lifecycle transitions | Reassigned to AGENT_GEMINI after rescind."
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY11_GEMINI_I01",
+      "agent_ref": "AGENT_GEMINI",
+      "checkbox_ref": "AY1.1",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+      "branch": "phase34.ay1.1.i01",
       "status": "assigned",
       "outcome": "pending",
-      "notes": "Dispatch instance i01 for BA1.1: Define Lean collaboration state machine for message lifecycle transitions"
+      "notes": "Reassigned from KIMI lane AY1.1"
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY12_GEMINI_I01",
+      "agent_ref": "AGENT_GEMINI",
+      "checkbox_ref": "AY1.2",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+      "branch": "phase34.ay1.2.i01",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Reassigned from KIMI lane AY1.2"
+    },
+    {
+      "id": "ASSIGN_PHASE36_BA11_GEMINI_I01",
+      "agent_ref": "AGENT_GEMINI",
+      "checkbox_ref": "BA1.1",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+      "branch": "phase36.ba1.1.i01",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Reassigned from KIMI lane BA1.1"
     }
   ]
 }

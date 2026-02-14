@@ -3703,8 +3703,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i46 AY1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "rescinded",
+          "event_count": 4
         },
         {
           "id": "MSG_PHASE34_AY12_KIMI_I39_DISPATCH",
@@ -3723,8 +3723,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i39 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "rescinded",
+          "event_count": 2
         },
         {
           "id": "MSG_PHASE36_BA11_KIMI_I01_DISPATCH",
@@ -3744,6 +3744,67 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i01 BA1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
+          "current_status": "rescinded",
+          "event_count": 2
+        },
+        {
+          "id": "MSG_PHASE34_AY11_GEMINI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY11_GEMINI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay1.1.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Reassignment dispatch to AGENT_GEMINI",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY12_GEMINI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY12_GEMINI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay1.2.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Reassignment dispatch to AGENT_GEMINI",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE36_BA11_GEMINI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE36_BA11_GEMINI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase36.ba1.1.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md",
+            "docs/genesis/worktree-mediated-constructive-collaboration.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Reassignment dispatch to AGENT_GEMINI",
           "current_status": "sent",
           "event_count": 1
         }
@@ -7308,8 +7369,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i46 AY1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "rescinded",
+          "event_count": 4
         },
         {
           "id": "MSG_PHASE34_AY12_KIMI_I39_DISPATCH",
@@ -7328,8 +7389,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i39 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "rescinded",
+          "event_count": 2
         },
         {
           "id": "MSG_PHASE36_BA11_KIMI_I01_DISPATCH",
@@ -7349,8 +7410,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i01 BA1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "rescinded",
+          "event_count": 2
         }
       ],
       "outbox": [
@@ -7495,6 +7556,72 @@
           "notes": "Batch dispatch AX1.3 -> AGENT_ANTIGRAVITY via collab_dispatch_batch.sh",
           "current_status": "rescinded",
           "event_count": 2
+        }
+      ],
+      "outbox": []
+    },
+    "/home/andrey/src/cicsc/worktrees/gemini": {
+      "inbox": [
+        {
+          "id": "MSG_PHASE34_AY11_GEMINI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY11_GEMINI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay1.1.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Reassignment dispatch to AGENT_GEMINI",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY12_GEMINI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY12_GEMINI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay1.2.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Reassignment dispatch to AGENT_GEMINI",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE36_BA11_GEMINI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE36_BA11_GEMINI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase36.ba1.1.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md",
+            "docs/genesis/worktree-mediated-constructive-collaboration.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Reassignment dispatch to AGENT_GEMINI",
+          "current_status": "sent",
+          "event_count": 1
         }
       ],
       "outbox": []
