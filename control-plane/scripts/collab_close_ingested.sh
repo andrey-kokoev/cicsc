@@ -113,11 +113,14 @@ case "${CURRENT_STATUS}" in
       --skip-validate \
       --no-refresh
     ;;
+  rescinded)
+    # No additional event; synchronize assignment outcome from terminal message state.
+    ;;
   closed)
     echo "message already closed: ${MESSAGE_REF}"
     ;;
   *)
-    echo "cannot close message from status '${CURRENT_STATUS}' (expected fulfilled|ingested|closed)" >&2
+    echo "cannot close message from status '${CURRENT_STATUS}' (expected fulfilled|ingested|rescinded|closed)" >&2
     exit 1
     ;;
 esac

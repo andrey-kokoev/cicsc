@@ -227,7 +227,12 @@ if gov.get("enforce_main_dispatch_authority"):
     expected = gov.get("main_dispatch_authority_agent_ref")
     # Dispatcher validates at runtime too; include in plan metadata via each row.
 
-assigned = {a.get("checkbox_ref") for a in collab.get("assignments", [])}
+active_statuses = {"assigned", "in_progress", "submitted"}
+assigned = {
+    a.get("checkbox_ref")
+    for a in collab.get("assignments", [])
+    if a.get("status") in active_statuses
+}
 existing_assign_ids = {a.get("id") for a in collab.get("assignments", [])}
 existing_msg_ids = {m.get("id") for m in collab.get("messages", [])}
 
