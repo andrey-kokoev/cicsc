@@ -1,0 +1,56 @@
+{
+  "run_id": "dispatch-run-20260214T065918Z",
+  "created_at": "2026-02-14T06:59:18.747422+00:00",
+  "agent_ref": "AGENT_KIMI",
+  "from_agent_ref": "AGENT_MAIN",
+  "initial_status": "sent",
+  "commit": "0f61690",
+  "filters": {
+    "phase_number": null,
+    "milestone_id": null,
+    "strategy": "fifo",
+    "count": 3,
+    "requested_count": 3
+  },
+  "rows": [
+    {
+      "state": "applied",
+      "error": "",
+      "assignment_id": "ASSIGN_PHASE33_AX13_KIMI_I24",
+      "message_id": "MSG_PHASE33_AX13_KIMI_I24_DISPATCH",
+      "checkbox_ref": "AX1.3",
+      "phase_number": 33,
+      "instance_no": 24,
+      "milestone_id": "AX1",
+      "title": "Publish coupling conformance report with residual gaps register",
+      "branch": "phase33.ax1.3.i24",
+      "commit": "0f61690"
+    },
+    {
+      "state": "applied",
+      "error": "",
+      "assignment_id": "ASSIGN_PHASE34_AY11_KIMI_I20",
+      "message_id": "MSG_PHASE34_AY11_KIMI_I20_DISPATCH",
+      "checkbox_ref": "AY1.1",
+      "phase_number": 34,
+      "instance_no": 20,
+      "milestone_id": "AY1",
+      "title": "Freeze Phase 34 context matrix and expanded acceptance contract",
+      "branch": "phase34.ay1.1.i20",
+      "commit": "0f61690"
+    },
+    {
+      "state": "applied",
+      "error": "",
+      "assignment_id": "ASSIGN_PHASE34_AY12_KIMI_I19",
+      "message_id": "MSG_PHASE34_AY12_KIMI_I19_DISPATCH",
+      "checkbox_ref": "AY1.2",
+      "phase_number": 34,
+      "instance_no": 19,
+      "milestone_id": "AY1",
+      "title": "Execute multi-context workloads under expanded objective envelopes",
+      "branch": "phase34.ay1.2.i19",
+      "commit": "0f61690"
+    }
+  ]
+}
