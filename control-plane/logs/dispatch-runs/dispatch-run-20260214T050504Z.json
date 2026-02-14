@@ -1,0 +1,56 @@
+{
+  "run_id": "dispatch-run-20260214T050504Z",
+  "created_at": "2026-02-14T05:05:04.742898+00:00",
+  "agent_ref": "AGENT_KIMI",
+  "from_agent_ref": "AGENT_MAIN",
+  "initial_status": "sent",
+  "commit": "aebfd64",
+  "filters": {
+    "phase_number": null,
+    "milestone_id": null,
+    "strategy": "fifo",
+    "count": 3,
+    "requested_count": 3
+  },
+  "rows": [
+    {
+      "state": "applied",
+      "error": "",
+      "assignment_id": "ASSIGN_PHASE34_AY23_KIMI_I01",
+      "message_id": "MSG_PHASE34_AY23_KIMI_I01_DISPATCH",
+      "checkbox_ref": "AY2.3",
+      "phase_number": 34,
+      "instance_no": 1,
+      "milestone_id": "AY2",
+      "title": "Define objective Phase 34 exit checklist mapped to artifacts",
+      "branch": "phase34.ay2.3.i01",
+      "commit": "aebfd64"
+    },
+    {
+      "state": "applied",
+      "error": "",
+      "assignment_id": "ASSIGN_PHASE34_AY24_KIMI_I01",
+      "message_id": "MSG_PHASE34_AY24_KIMI_I01_DISPATCH",
+      "checkbox_ref": "AY2.4",
+      "phase_number": 34,
+      "instance_no": 1,
+      "milestone_id": "AY2",
+      "title": "Add Phase 35 block gate from Phase 34 checklist",
+      "branch": "phase34.ay2.4.i01",
+      "commit": "aebfd64"
+    },
+    {
+      "state": "applied",
+      "error": "",
+      "assignment_id": "ASSIGN_PHASE35_AZ11_KIMI_I01",
+      "message_id": "MSG_PHASE35_AZ11_KIMI_I01_DISPATCH",
+      "checkbox_ref": "AZ1.1",
+      "phase_number": 35,
+      "instance_no": 1,
+      "milestone_id": "AZ1",
+      "title": "Execute final objective verdict run over expanded-scope envelopes",
+      "branch": "phase35.az1.1.i01",
+      "commit": "aebfd64"
+    }
+  ]
+}

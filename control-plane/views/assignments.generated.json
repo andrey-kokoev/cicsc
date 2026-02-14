@@ -531,6 +531,39 @@
       "status": "assigned",
       "outcome": "pending",
       "notes": "Dispatch instance i02 for AY2.2: Publish Phase 34 closure report with unresolved critical disposition"
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY23_KIMI_I01",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY2.3",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay2.3.i01",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Dispatch instance i01 for AY2.3: Define objective Phase 34 exit checklist mapped to artifacts"
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY24_KIMI_I01",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY2.4",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay2.4.i01",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Dispatch instance i01 for AY2.4: Add Phase 35 block gate from Phase 34 checklist"
+    },
+    {
+      "id": "ASSIGN_PHASE35_AZ11_KIMI_I01",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AZ1.1",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase35.az1.1.i01",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Dispatch instance i01 for AZ1.1: Execute final objective verdict run over expanded-scope envelopes"
     }
   ]
 }
