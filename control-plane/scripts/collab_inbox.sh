@@ -6,17 +6,18 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 MAILBOX_PATH="${ROOT_DIR}/control-plane/views/worktree-mailboxes.generated.json"
 
 WORKTREE=""
-ACTIONABLE_ONLY=0
+ACTIONABLE_ONLY=1
 REFRESH=0
 
 usage() {
   cat <<'USAGE'
 Usage:
-  control-plane/scripts/collab_inbox.sh --worktree <path> [--actionable-only] [--refresh]
+  control-plane/scripts/collab_inbox.sh --worktree <path> [--all] [--refresh]
 
 Options:
   --worktree <path>    Absolute worktree path key in mailbox projection.
-  --actionable-only    Filter inbox to current_status in {queued, sent}.
+  --all                Return full inbox history (default is actionable-only).
+  --actionable-only    Filter inbox to current_status in {queued, sent} (default).
   --refresh            Regenerate mailbox projection before reading.
 USAGE
 }
@@ -29,6 +30,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --actionable-only)
       ACTIONABLE_ONLY=1
+      shift
+      ;;
+    --all)
+      ACTIONABLE_ONLY=0
       shift
       ;;
     --refresh)

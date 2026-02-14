@@ -7,6 +7,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 WORKTREE=""
 AGENT_REF=""
 MESSAGE_REFS=()
+ASSIGNMENT_REFS=()
+RUN_REF=""
 TARGET_STATUS="fulfilled"
 COUNT=0
 ACTOR_AGENT_REF="AGENT_MAIN"
@@ -25,6 +27,8 @@ Options:
   --worktree <path>       Filter candidates by message to_worktree.
   --agent-ref <id>        Filter candidates by message to_agent_ref.
   --message-ref <id>      Explicit message ref to close (repeatable).
+  --assignment-ref <id>   Explicit assignment ref to close (repeatable).
+  --run <id|path>         Select messages from a dispatch run journal.
   --status <s>            Candidate status: fulfilled|ingested (default: fulfilled).
   --count <n>             Max candidate messages when auto-selecting (0 = all).
   --actor-agent-ref <id>  Actor for emitted close events (default: AGENT_MAIN).
@@ -41,6 +45,8 @@ while [[ $# -gt 0 ]]; do
     --worktree) WORKTREE="${2:-}"; shift 2 ;;
     --agent-ref) AGENT_REF="${2:-}"; shift 2 ;;
     --message-ref) MESSAGE_REFS+=("${2:-}"); shift 2 ;;
+    --assignment-ref) ASSIGNMENT_REFS+=("${2:-}"); shift 2 ;;
+    --run) RUN_REF="${2:-}"; shift 2 ;;
     --status) TARGET_STATUS="${2:-}"; shift 2 ;;
     --count) COUNT="${2:-}"; shift 2 ;;
     --actor-agent-ref) ACTOR_AGENT_REF="${2:-}"; shift 2 ;;
@@ -75,8 +81,9 @@ fi
 ./control-plane/scripts/collab_validate.sh >/dev/null
 
 if [[ ${#MESSAGE_REFS[@]} -eq 0 ]]; then
-  mapfile -t MESSAGE_REFS < <(python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$WORKTREE" "$AGENT_REF" "$TARGET_STATUS" "$COUNT" <<'PY'
+  mapfile -t MESSAGE_REFS < <(python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$WORKTREE" "$AGENT_REF" "$TARGET_STATUS" "$COUNT" "$RUN_REF" "${ASSIGNMENT_REFS[@]}" <<'PY'
 import sys
+import json
 from pathlib import Path
 import yaml
 
@@ -85,14 +92,32 @@ worktree = sys.argv[2]
 agent_ref = sys.argv[3]
 target_status = sys.argv[4]
 count = int(sys.argv[5])
+run_ref = sys.argv[6]
+assignment_refs = {x for x in sys.argv[7:] if x}
 
 messages = {m.get("id"): m for m in collab.get("messages", [])}
 events_by = {}
 for ev in collab.get("message_events", []):
     events_by.setdefault(ev.get("message_ref"), []).append(ev)
 
+run_message_refs = set()
+if run_ref:
+    rp = Path(run_ref)
+    if not rp.exists():
+        rp2 = Path("control-plane/logs/dispatch-runs") / f"{run_ref}.json"
+        if rp2.exists():
+            rp = rp2
+    if not rp.exists():
+        raise SystemExit(f"run file not found: {run_ref}")
+    run_doc = json.loads(rp.read_text(encoding="utf-8"))
+    run_message_refs = {r.get("message_id") for r in run_doc.get("rows", []) if r.get("message_id")}
+
 rows = []
 for mid, msg in messages.items():
+    if run_message_refs and mid not in run_message_refs:
+        continue
+    if assignment_refs and msg.get("assignment_ref") not in assignment_refs:
+        continue
     if worktree and msg.get("to_worktree") != worktree:
         continue
     if agent_ref and msg.get("to_agent_ref") != agent_ref:
@@ -146,7 +171,7 @@ fi
 
 if [[ "${NO_COMMIT}" -eq 0 ]]; then
   if [[ -z "${SUBJECT}" ]]; then
-    SUBJECT="governance/collab: close batch ${TARGET_STATUS} ($(IFS=,; echo "${MESSAGE_REFS[*]}") )"
+    SUBJECT="governance/collab: close ${TARGET_STATUS} batch (${#MESSAGE_REFS[@]})"
   fi
   commit_cmd=(./control-plane/scripts/collab_commit_views.sh --subject "${SUBJECT}" --no-refresh)
   if [[ ${#BODY[@]} -eq 0 ]]; then

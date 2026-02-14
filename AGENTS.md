@@ -75,6 +75,9 @@ Interpret short operator instructions as follows:
   - process lifecycle transitions end-to-end (claim/fulfill for workers; ingest/close for main)
   - continue until no actionable messages remain for the targeted worktree
   - do not pause for confirmation between deterministic protocol steps
+  - preferred command:
+    - main: `./control-plane/scripts/collab_process_messages.sh --role main --agent-ref <AGENT_...>`
+    - worker: `./control-plane/scripts/collab_process_messages.sh --role worker --worktree "$WORKTREE" --with <script> --auto-report --lazy`
 
 ## Normative Conceptual Sources
 
@@ -172,7 +175,8 @@ Message I/O command surface:
 - quickstart command map (worker/main):
   - `./control-plane/scripts/collab_help.sh --role worker --worktree "$WORKTREE"`
 - read inbox (actionable only):
-  - `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh --actionable-only`
+  - `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh`
+  - full history: `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh --all`
 - main-side dispatch wrapper:
   - `./control-plane/scripts/collab_dispatch.sh --assignment-ref ASSIGN_... --payload-ref control-plane/collaboration/collab-model.yaml`
 - main-side batch dispatch wrapper:
@@ -209,6 +213,7 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_fzf.sh --worktree "$WORKTREE"`
 - main-side ingest+close wrapper:
   - `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`
+  - batch: `./control-plane/scripts/collab_close_batch.sh --agent-ref AGENT_KIMI --status fulfilled --count 0`
 - stale mailbox watcher (warn/fail thresholds):
   - `./control-plane/scripts/collab_stale_watch.sh --warn-hours 24 --fail-hours 72`
 - assignment obligation/evidence delta view:

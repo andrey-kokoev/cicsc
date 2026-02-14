@@ -28,7 +28,7 @@ BODY=()
 usage() {
   cat <<'USAGE'
 Usage:
-  control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_... [options]
+  control-plane/scripts/collab_dispatch_batch.sh [--agent-ref AGENT_...] [options]
 
 Plan selection:
   --count <n>                 Number of checkboxes to select when auto-planning (default: 1).
@@ -38,7 +38,7 @@ Plan selection:
   --milestone <id>            Restrict auto-selection to a milestone (e.g. AZ2).
   --strategy <fifo|lifo>      Ordering strategy for auto-selection (default: fifo).
 
-Dispatch context:
+Dispatch context (for new plan/apply):
   --payload-ref <path>        Payload ref for each dispatch (repeatable).
   --from-agent-ref <id>       Dispatching agent (default: AGENT_MAIN).
   --initial-status <s>        queued|sent (default: sent).
@@ -86,10 +86,6 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [[ -z "${AGENT_REF}" ]]; then
-  echo "--agent-ref is required" >&2
-  exit 1
-fi
 if ! [[ "${COUNT}" =~ ^[0-9]+$ ]] || [[ "${COUNT}" -lt 1 ]]; then
   echo "--count must be a positive integer" >&2
   exit 1
@@ -124,10 +120,6 @@ if [[ "${NO_COMMIT}" -eq 0 && "${DRY_RUN}" -eq 0 && -n "$(git status --porcelain
   exit 1
 fi
 
-if [[ -z "${COMMIT_SHA}" ]]; then
-  COMMIT_SHA="$(git rev-parse --short HEAD)"
-fi
-
 mkdir -p "${JOURNAL_DIR}"
 
 normalize_phase_filter() {
@@ -159,6 +151,35 @@ resolve_run_file_path() {
     return
   fi
   echo "${JOURNAL_DIR%/}/${run_ref}.json"
+}
+
+load_run_defaults() {
+  local run_path="$1"
+  python3 - "$run_path" "$AGENT_REF" "$FROM_AGENT_REF" "$INITIAL_STATUS" "$COMMIT_SHA" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+doc = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
+agent_ref = sys.argv[2]
+from_agent_ref = sys.argv[3]
+initial_status = sys.argv[4]
+commit_sha = sys.argv[5]
+
+if not agent_ref:
+    agent_ref = doc.get("agent_ref", "")
+if not from_agent_ref or from_agent_ref == "AGENT_MAIN":
+    from_agent_ref = doc.get("from_agent_ref", from_agent_ref)
+if not initial_status or initial_status == "sent":
+    initial_status = doc.get("initial_status", initial_status)
+if not commit_sha:
+    commit_sha = doc.get("commit", "")
+
+print(agent_ref)
+print(from_agent_ref)
+print(initial_status)
+print(commit_sha)
+PY
 }
 
 write_plan_file() {
@@ -452,8 +473,6 @@ PY
   echo "${applied}:${failed}"
 }
 
-ensure_dispatch_authority
-
 run_path=""
 if [[ -n "${APPLY_RUN}" || -n "${RESUME_RUN}" ]]; then
   run_ref="${APPLY_RUN:-$RESUME_RUN}"
@@ -462,7 +481,21 @@ if [[ -n "${APPLY_RUN}" || -n "${RESUME_RUN}" ]]; then
     echo "run file not found: ${run_path}" >&2
     exit 1
   fi
+  readarray -t _defaults < <(load_run_defaults "${run_path}")
+  AGENT_REF="${_defaults[0]}"
+  FROM_AGENT_REF="${_defaults[1]}"
+  INITIAL_STATUS="${_defaults[2]}"
+  if [[ -z "${COMMIT_SHA}" ]]; then
+    COMMIT_SHA="${_defaults[3]}"
+  fi
 else
+  if [[ -z "${AGENT_REF}" ]]; then
+    echo "--agent-ref is required (or provide --apply-run/--resume with run metadata)" >&2
+    exit 1
+  fi
+  if [[ -z "${COMMIT_SHA}" ]]; then
+    COMMIT_SHA="$(git rev-parse --short HEAD)"
+  fi
   rows_json="$(build_rows_json)"
   if [[ "${DRY_RUN}" -eq 1 ]]; then
     echo "dry-run dispatch plan:"
@@ -486,6 +519,16 @@ PY
     exit 0
   fi
 fi
+
+if [[ -z "${AGENT_REF}" ]]; then
+  echo "could not resolve agent_ref from arguments or run metadata" >&2
+  exit 1
+fi
+if [[ -z "${COMMIT_SHA}" ]]; then
+  COMMIT_SHA="$(git rev-parse --short HEAD)"
+fi
+
+ensure_dispatch_authority
 
 only_pending=0
 [[ -n "${RESUME_RUN}" ]] && only_pending=1

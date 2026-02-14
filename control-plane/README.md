@@ -76,6 +76,7 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `control-plane/scripts/collab_create_assignment.sh`
 - `control-plane/scripts/collab_delegate_worktree.sh`
 - `control-plane/scripts/collab_help.sh`
+- `control-plane/scripts/collab_process_messages.sh`
 - `control-plane/scripts/collab_claim_next.sh`
 - `control-plane/scripts/collab_fulfill.sh`
 - `control-plane/scripts/collab_close_ingested.sh`
@@ -158,6 +159,9 @@ Quickstart helpers:
   - apply: `./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --apply-run control-plane/logs/dispatch-runs/phase35-kimi.json`
   - resume: `./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --resume phase35-kimi`
 - main dashboard: `./control-plane/scripts/collab_main_status.sh --refresh`
+- one-command processing:
+  - main: `./control-plane/scripts/collab_process_messages.sh --role main --agent-ref AGENT_KIMI`
+  - worker: `./control-plane/scripts/collab_process_messages.sh --role worker --worktree /home/andrey/src/cicsc/worktrees/kimi --with scripts/check_canonical_execution_model.sh --auto-report --lazy`
 
 ## Multi-Assignment Worker Flow (End-to-End)
 

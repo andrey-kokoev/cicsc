@@ -76,6 +76,9 @@ if [[ "${ROLE}" == "worker" ]]; then
 
 9) Watch for stale inbox:
    ./control-plane/scripts/collab_stale_watch.sh --warn-hours 24 --fail-hours 72
+
+10) One-command protocol loop:
+   ./control-plane/scripts/collab_process_messages.sh --role worker --worktree "${WORKTREE}" --with scripts/check_x.sh --auto-report --lazy
 EOF
 else
   cat <<EOF
@@ -104,5 +107,8 @@ else
 
 5) Main dashboard:
    ./control-plane/scripts/collab_main_status.sh --refresh
+
+6) One-command main processing loop:
+   ./control-plane/scripts/collab_process_messages.sh --role main --agent-ref AGENT_KIMI
 EOF
 fi
