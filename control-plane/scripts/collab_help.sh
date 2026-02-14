@@ -47,11 +47,16 @@ if [[ "${ROLE}" == "worker" ]]; then
 2) Inspect actionable inbox for this worktree:
    ./control-plane/scripts/collab_inbox.sh --worktree "${WORKTREE}" --refresh --actionable-only
 
+2.5) Fast sync repair (if gates complain views/model are stale):
+   ./control-plane/scripts/collab_sync.sh
+
 3) Claim next actionable message and print obligation guidance:
    ./control-plane/scripts/collab_run_once.sh --worktree "${WORKTREE}"
+   # one-command claim+commit:
+   ./control-plane/scripts/collab_claim_next.sh --worktree "${WORKTREE}" --commit
 
 4) Fulfill with typed evidence:
-   ./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "${WORKTREE}" --script scripts/check_x.sh --gate-report docs/pilot/report.json --run-script scripts/check_x.sh --lazy --auto-commit --commit-subject "phaseXX ayY.Y fulfill ..."
+   ./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "${WORKTREE}" --with scripts/check_x.sh --auto-report --lazy --auto-commit --message "phaseXX ayY.Y fulfill ..."
 
 5) Batch/sweep homogeneous assignments:
    ./control-plane/scripts/collab_sweep.sh --worktree "${WORKTREE}" --script scripts/check_x.sh --gate-report docs/pilot/report.json --lazy
@@ -65,6 +70,9 @@ if [[ "${ROLE}" == "worker" ]]; then
 
 8) Interactive session:
    ./control-plane/scripts/collab_interactive.sh --worktree "${WORKTREE}"
+
+8.5) Fuzzy interactive picker (requires fzf):
+   ./control-plane/scripts/collab_fzf.sh --worktree "${WORKTREE}"
 
 9) Watch for stale inbox:
    ./control-plane/scripts/collab_stale_watch.sh --warn-hours 24 --fail-hours 72
