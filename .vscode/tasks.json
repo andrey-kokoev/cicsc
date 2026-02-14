@@ -1,0 +1,30 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "cicsc:auto-dispatch-loop:launch-on-open",
+      "type": "shell",
+      "command": "./control-plane/scripts/auto_dispatch_loop_launch_on_open.sh",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "presentation": {
+        "reveal": "never",
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "cicsc:auto-dispatch-loop:stop",
+      "type": "shell",
+      "command": "./control-plane/scripts/auto_dispatch_loop_stop.sh",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
