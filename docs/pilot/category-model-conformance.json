@@ -1,9 +1,9 @@
 {
   "version": "cicsc/category-model-conformance-v1",
-  "timestamp_unix": 1771018499,
   "obligations_version": "cicsc/category-model-obligations-v1",
   "source_model_doc": "docs/foundations/category-model.md",
   "status": "pass",
+  "deterministic_report": true,
   "obligations": [
     {
       "id": "CM1_OBJECT_FAMILIES_DEFINED",
