@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+"${ROOT_DIR}/control-plane/scripts/collab_require_root.sh" "${ROOT_DIR}"
 MAILBOX_PATH="${ROOT_DIR}/control-plane/views/worktree-mailboxes.generated.json"
 
 WORKTREE=""

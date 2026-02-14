@@ -134,6 +134,11 @@ Generated views:
 
 ## Worktree Agent Loop (Normative)
 
+Execution location rule:
+- run `control-plane/scripts/collab_*.sh` from repository root
+  (`/home/andrey/src/cicsc`)
+- select target worker context with `--worktree <path>`
+
 For each execution worktree:
 1. Read `control-plane/views/worktree-mailboxes.generated.json`.
 2. Select inbox messages addressed to that worktree with actionable status

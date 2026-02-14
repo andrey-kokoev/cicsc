@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+"${ROOT_DIR}/control-plane/scripts/collab_require_root.sh" "${ROOT_DIR}"
 SUBJECT="governance/collab: commit model and generated views"
 BODY=()
 DRY_RUN=0
