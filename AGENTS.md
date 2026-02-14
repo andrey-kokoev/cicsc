@@ -77,10 +77,12 @@ Interpret short operator instructions as follows:
 - `process messages`
   - execution mode
   - process lifecycle transitions end-to-end (claim/fulfill for workers; ingest/close for main)
+  - main full-cycle may include friction triage when enabled
   - continue until no actionable messages remain for the targeted worktree
   - do not pause for confirmation between deterministic protocol steps
   - preferred command:
     - main: `./control-plane/scripts/collab_process_messages.sh --role main --agent-ref <AGENT_...>`
+      - full-cycle: `./control-plane/scripts/collab_process_messages.sh --role main --agent-ref <AGENT_...> --with-friction-triage --friction-decision accept_later`
     - worker: `./control-plane/scripts/collab_process_messages.sh --role worker --worktree "$WORKTREE"`
       - optional overrides: `--with <script> --auto-report --lazy`
 

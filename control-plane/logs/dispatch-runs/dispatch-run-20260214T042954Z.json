@@ -14,8 +14,8 @@
   },
   "rows": [
     {
-      "state": "failed",
-      "error": "assignment already exists: ASSIGN_PHASE33_AX13_KIMI_I01",
+      "state": "applied",
+      "error": "",
       "assignment_id": "ASSIGN_PHASE33_AX13_KIMI_I01",
       "message_id": "MSG_PHASE33_AX13_KIMI_I01_DISPATCH",
       "checkbox_ref": "AX1.3",

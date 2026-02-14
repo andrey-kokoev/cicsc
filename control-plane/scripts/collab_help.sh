@@ -119,6 +119,8 @@ else
 
 6) One-command main processing loop:
    ./control-plane/scripts/collab_process_messages.sh --role main --agent-ref AGENT_KIMI
+   # full-cycle mode (close fulfilled/ingested + triage friction requests):
+   ./control-plane/scripts/collab_process_messages.sh --role main --agent-ref AGENT_KIMI --with-friction-triage --friction-decision accept_later --friction-backlog-ref phase36.collab-ergonomics
 
 7) Triage friction requests:
    ./control-plane/scripts/collab_triage_friction.sh --message-ref MSG_... --decision accept_now --notes "scheduled in next hardening batch"

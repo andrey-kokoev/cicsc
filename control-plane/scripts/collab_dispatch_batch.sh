@@ -115,9 +115,12 @@ cd "${ROOT_DIR}"
 ./control-plane/scripts/collab_validate.sh >/dev/null
 
 # In commit mode, require a clean starting point before creating run journals or applying.
-if [[ "${NO_COMMIT}" -eq 0 && "${DRY_RUN}" -eq 0 && "${PLAN_ONLY}" -eq 0 && -n "$(git status --porcelain)" ]]; then
-  echo "batch apply with commit requires a clean working tree before dispatch starts" >&2
-  exit 1
+if [[ "${NO_COMMIT}" -eq 0 && "${DRY_RUN}" -eq 0 && "${PLAN_ONLY}" -eq 0 ]]; then
+  # Only block when canonical collab/view files are already dirty.
+  if [[ -n "$(git status --porcelain -- control-plane/collaboration/collab-model.yaml control-plane/views)" ]]; then
+    echo "batch apply with commit requires clean collab model/views before dispatch starts (unrelated dirty files are allowed)" >&2
+    exit 1
+  fi
 fi
 
 mkdir -p "${JOURNAL_DIR}"
@@ -435,11 +438,43 @@ PY
 
   local applied=0
   local failed=0
+  row_already_applied() {
+    local assignment_id="$1"
+    local message_id="$2"
+    python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$assignment_id" "$message_id" <<'PY'
+import sys
+from pathlib import Path
+import yaml
+
+doc = yaml.safe_load(Path(sys.argv[1]).read_text(encoding="utf-8"))
+aid = sys.argv[2]
+mid = sys.argv[3]
+assignments = {a.get("id") for a in doc.get("assignments", [])}
+messages = {m.get("id"): m for m in doc.get("messages", [])}
+if aid not in assignments:
+    print("0")
+    raise SystemExit(0)
+if mid not in messages:
+    print("0")
+    raise SystemExit(0)
+events = [e for e in doc.get("message_events", []) if e.get("message_ref") == mid]
+if not events:
+    print("0")
+    raise SystemExit(0)
+print("1")
+PY
+  }
   for line in "${rows[@]}"; do
     IFS=$'\t' read -r idx assignment_id checkbox_ref branch message_id title row_commit row_state row_instance <<<"${line}"
     row_instance="$(printf '%02d' "${row_instance:-1}")"
 
     if [[ "${row_state}" == "applied" ]]; then
+      continue
+    fi
+
+    if [[ "$(row_already_applied "${assignment_id}" "${message_id}")" == "1" ]]; then
+      update_run_row_state "${run_path}" "${idx}" "applied" ""
+      applied=$((applied + 1))
       continue
     fi
 

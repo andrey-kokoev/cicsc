@@ -76,9 +76,12 @@ cd "${ROOT_DIR}"
 if [[ -z "${COMMIT_SHA}" ]]; then
   COMMIT_SHA="$(git rev-parse --short HEAD)"
 fi
-if [[ "${NO_COMMIT}" -eq 0 && "${DRY_RUN}" -eq 0 && -n "$(git status --porcelain)" ]]; then
-  echo "batch close with commit requires a clean working tree" >&2
-  exit 1
+if [[ "${NO_COMMIT}" -eq 0 && "${DRY_RUN}" -eq 0 ]]; then
+  # Only block when canonical collab/view files are already dirty.
+  if [[ -n "$(git status --porcelain -- control-plane/collaboration/collab-model.yaml control-plane/views)" ]]; then
+    echo "batch close with commit requires clean collab model/views (unrelated dirty files are allowed)" >&2
+    exit 1
+  fi
 fi
 
 ./control-plane/scripts/collab_validate.sh >/dev/null
@@ -176,10 +179,15 @@ fi
 
 if [[ "${NO_COMMIT}" -eq 0 ]]; then
   if [[ -z "${SUBJECT}" ]]; then
-    commit_cmd=(./control-plane/scripts/collab_commit_views.sh --from-last-collab-action --no-refresh)
-  else
-    commit_cmd=(./control-plane/scripts/collab_commit_views.sh --subject "${SUBJECT}" --no-refresh)
+    scope="all"
+    if [[ -n "${AGENT_REF}" ]]; then
+      scope="${AGENT_REF}"
+    elif [[ -n "${WORKTREE}" ]]; then
+      scope="${WORKTREE}"
+    fi
+    SUBJECT="governance/collab: batch close ${TARGET_STATUS} x${#MESSAGE_REFS[@]} (${scope})"
   fi
+  commit_cmd=(./control-plane/scripts/collab_commit_views.sh --subject "${SUBJECT}" --no-refresh)
   if [[ ${#BODY[@]} -eq 0 ]]; then
     commit_cmd+=(--body "Batch close actor: ${ACTOR_AGENT_REF}" --body "Batch close source status: ${TARGET_STATUS}")
   else

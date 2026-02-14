@@ -10,6 +10,10 @@ AGENT_REF=""
 MAX_ITER=50
 NO_COMMIT=0
 DRY_RUN=0
+WITH_FRICTION_TRIAGE=0
+FRICTION_DECISION="accept_later"
+FRICTION_NOTES=""
+FRICTION_BACKLOG_REF=""
 
 WITH_ITEMS=()
 SCRIPT_REFS=()
@@ -32,6 +36,12 @@ Options:
   --max-iterations <n>   Safety bound for loop iterations (default: 50).
   --no-commit            Do not auto-commit state transitions.
   --dry-run              Print intended actions only.
+  --with-friction-triage Enable main-side triage for actionable friction requests.
+  --friction-decision <accept_now|accept_later|reject>
+                         Decision applied when triaging friction requests (default: accept_later).
+  --friction-notes <t>   Optional notes for friction triage decisions.
+  --friction-backlog-ref <id>
+                         Optional backlog ref used for accept_later decisions.
 
 Worker fulfill options (optional):
   --with <path|cmd>
@@ -56,6 +66,10 @@ while [[ $# -gt 0 ]]; do
     --max-iterations) MAX_ITER="${2:-}"; shift 2 ;;
     --no-commit) NO_COMMIT=1; shift ;;
     --dry-run) DRY_RUN=1; shift ;;
+    --with-friction-triage) WITH_FRICTION_TRIAGE=1; shift ;;
+    --friction-decision) FRICTION_DECISION="${2:-}"; shift 2 ;;
+    --friction-notes) FRICTION_NOTES="${2:-}"; shift 2 ;;
+    --friction-backlog-ref) FRICTION_BACKLOG_REF="${2:-}"; shift 2 ;;
     --with) WITH_ITEMS+=("${2:-}"); shift 2 ;;
     --script) SCRIPT_REFS+=("${2:-}"); shift 2 ;;
     --gate-report) GATE_REFS+=("${2:-}"); shift 2 ;;
@@ -71,6 +85,10 @@ done
 
 if ! [[ "${MAX_ITER}" =~ ^[0-9]+$ ]] || [[ "${MAX_ITER}" -lt 1 ]]; then
   echo "--max-iterations must be a positive integer" >&2
+  exit 1
+fi
+if [[ "${FRICTION_DECISION}" != "accept_now" && "${FRICTION_DECISION}" != "accept_later" && "${FRICTION_DECISION}" != "reject" ]]; then
+  echo "--friction-decision must be accept_now, accept_later, or reject" >&2
   exit 1
 fi
 
@@ -89,24 +107,157 @@ if [[ "${ROLE}" != "main" && "${ROLE}" != "worker" ]]; then
 fi
 
 if [[ "${ROLE}" == "main" ]]; then
+  close_filters=()
   main_args=()
   if [[ -n "${AGENT_REF}" ]]; then
     main_args+=(--agent-ref "${AGENT_REF}")
+    close_filters+=(--agent-ref "${AGENT_REF}")
   fi
   if [[ "${DRY_RUN}" -eq 1 ]]; then
     ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status fulfilled --count 0 --dry-run --silent-empty
     ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status ingested --count 0 --dry-run --silent-empty
+    if [[ "${WITH_FRICTION_TRIAGE}" -eq 1 ]]; then
+      python3 - "$ROOT_DIR/control-plane/views/worktree-mailboxes.generated.json" <<'PY'
+import json,sys
+doc=json.load(open(sys.argv[1], encoding="utf-8"))
+mb=doc.get("mailboxes",{}).get("/home/andrey/src/cicsc",{})
+inbox=mb.get("inbox",[])
+rows=[m for m in inbox if m.get("kind_ref")=="MSGK_FRICTION_REQUEST" and m.get("current_status") in {"queued","sent"}]
+for r in sorted(rows, key=lambda m: m.get("id","")):
+    print(r.get("id",""))
+PY
+    fi
     exit 0
   fi
 
-  if [[ "${NO_COMMIT}" -eq 1 ]]; then
-    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status fulfilled --count 0 --no-commit --silent-empty
-    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status ingested --count 0 --no-commit --silent-empty
+  loop_no_commit="${NO_COMMIT}"
+  if [[ "${loop_no_commit}" -eq 0 ]]; then
+    # If canonical collab/view files are dirty, degrade gracefully to no-commit mode.
+    if [[ -n "$(git status --porcelain -- control-plane/collaboration/collab-model.yaml control-plane/views)" ]]; then
+      echo "main process-messages: canonical collab/view files are pre-dirty, using --no-commit mode for this run" >&2
+      loop_no_commit=1
+    fi
+  fi
+
+  did_mutation=0
+  while [[ 1 -eq 1 ]]; do
+    before="$(python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "${close_filters[@]}" <<'PY'
+import sys
+from pathlib import Path
+import yaml
+
+doc=yaml.safe_load(Path(sys.argv[1]).read_text(encoding="utf-8"))
+agent_ref=""
+args=sys.argv[2:]
+i=0
+while i < len(args):
+    if args[i] == "--agent-ref" and i+1 < len(args):
+        agent_ref=args[i+1]
+        i += 2
+    else:
+        i += 1
+messages={m.get("id"):m for m in doc.get("messages",[])}
+events_by={}
+for ev in doc.get("message_events",[]):
+    events_by.setdefault(ev.get("message_ref"), []).append(ev)
+def cur(mid,m):
+    evs=sorted(events_by.get(mid,[]), key=lambda e:int(e.get("at_seq",0)))
+    return evs[-1].get("to_status") if evs else m.get("initial_status")
+rows=[]
+for mid,m in messages.items():
+    if agent_ref and m.get("to_agent_ref") != agent_ref:
+        continue
+    rows.append((mid,cur(mid,m)))
+rows.sort()
+print("|".join(f"{a}:{b}" for a,b in rows))
+PY
+)"
+
+    if [[ "${loop_no_commit}" -eq 1 ]]; then
+      ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status fulfilled --count 0 --no-commit --silent-empty
+      ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status ingested --count 0 --no-commit --silent-empty
+    else
+      ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status fulfilled --count 0 --silent-empty
+      ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status ingested --count 0 --silent-empty
+    fi
+
+    if [[ "${WITH_FRICTION_TRIAGE}" -eq 1 ]]; then
+      mapfile -t _friction_msgs < <(python3 - "$ROOT_DIR/control-plane/views/worktree-mailboxes.generated.json" "${AGENT_REF}" <<'PY'
+import json,sys
+doc=json.load(open(sys.argv[1], encoding="utf-8"))
+agent_ref=sys.argv[2]
+mb=doc.get("mailboxes",{}).get("/home/andrey/src/cicsc",{})
+inbox=mb.get("inbox",[])
+rows=[]
+for m in inbox:
+    if m.get("kind_ref") != "MSGK_FRICTION_REQUEST":
+        continue
+    if m.get("current_status") not in {"queued","sent"}:
+        continue
+    if agent_ref and m.get("from_agent_ref") != agent_ref:
+        continue
+    rows.append(m.get("id",""))
+for mid in sorted(set(x for x in rows if x)):
+    print(mid)
+PY
+      )
+      for fm in "${_friction_msgs[@]}"; do
+        triage_cmd=(./control-plane/scripts/collab_triage_friction.sh --message-ref "${fm}" --decision "${FRICTION_DECISION}" --no-refresh)
+        [[ -n "${FRICTION_NOTES}" ]] && triage_cmd+=(--notes "${FRICTION_NOTES}")
+        if [[ -n "${FRICTION_BACKLOG_REF}" ]]; then
+          triage_cmd+=(--backlog-ref "${FRICTION_BACKLOG_REF}")
+        fi
+        if [[ "${loop_no_commit}" -eq 1 ]]; then
+          triage_cmd+=(--no-refresh)
+        fi
+        "${triage_cmd[@]}"
+      done
+    fi
+
     ./control-plane/scripts/generate_views.sh >/dev/null
     ./control-plane/scripts/collab_validate.sh >/dev/null
-  else
-    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status fulfilled --count 0 --silent-empty
-    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status ingested --count 0 --silent-empty
+
+    after="$(python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "${close_filters[@]}" <<'PY'
+import sys
+from pathlib import Path
+import yaml
+
+doc=yaml.safe_load(Path(sys.argv[1]).read_text(encoding="utf-8"))
+agent_ref=""
+args=sys.argv[2:]
+i=0
+while i < len(args):
+    if args[i] == "--agent-ref" and i+1 < len(args):
+        agent_ref=args[i+1]
+        i += 2
+    else:
+        i += 1
+messages={m.get("id"):m for m in doc.get("messages",[])}
+events_by={}
+for ev in doc.get("message_events",[]):
+    events_by.setdefault(ev.get("message_ref"), []).append(ev)
+def cur(mid,m):
+    evs=sorted(events_by.get(mid,[]), key=lambda e:int(e.get("at_seq",0)))
+    return evs[-1].get("to_status") if evs else m.get("initial_status")
+rows=[]
+for mid,m in messages.items():
+    if agent_ref and m.get("to_agent_ref") != agent_ref:
+        continue
+    rows.append((mid,cur(mid,m)))
+rows.sort()
+print("|".join(f"{a}:{b}" for a,b in rows))
+PY
+)"
+
+    if [[ "${before}" != "${after}" ]]; then
+      did_mutation=1
+      continue
+    fi
+    break
+  done
+
+  if [[ "${loop_no_commit}" -eq 1 && "${NO_COMMIT}" -eq 0 && "${did_mutation}" -eq 1 ]]; then
+    ./control-plane/scripts/collab_commit_views.sh --subject "governance/collab: process main message loop" --body "Loop mode: no-commit fallback with consolidated sync commit"
   fi
 
   ./control-plane/scripts/collab_main_status.sh --refresh
