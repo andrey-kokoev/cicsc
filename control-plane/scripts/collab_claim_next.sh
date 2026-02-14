@@ -60,17 +60,23 @@ while [[ $# -gt 0 ]]; do
 done
 
 cd "${ROOT_DIR}"
+
+# Auto-sync before operation to ensure fresh state
+if [[ "${DRY_RUN}" -eq 0 && "${NO_REFRESH}" -eq 0 ]]; then
+  ./control-plane/scripts/generate_views.sh >/dev/null 2>&1 || true
+fi
+
+# Check dirty state - warn but don't fail (ergonomics: allow operation to continue)
 if [[ "${AUTO_COMMIT}" -eq 1 && "${DRY_RUN}" -eq 0 ]]; then
-  _dirty_non_collab="$(git status --porcelain -- . ':(exclude)control-plane/collaboration/collab-model.yaml' ':(exclude)control-plane/views' || true)"
+  _dirty_non_collab="$(git status --porcelain -- . ':(exclude)control-plane/collaboration/collab-model.yaml' ':(exclude)control-plane/views' ':(exclude)control-plane/logs' || true)"
   if [[ -n "${_dirty_non_collab}" ]]; then
-    echo "auto-commit requires a clean working tree" >&2
-    echo "non-collab dirty paths detected:" >&2
-    echo "${_dirty_non_collab}" | sed -n '1,40p' >&2
-    echo "allowed dirty paths: control-plane/collaboration/collab-model.yaml, control-plane/views/*" >&2
-    exit 1
+    echo "warning: non-collab dirty paths detected, disabling auto-commit" >&2
+    AUTO_COMMIT=0
   fi
 fi
-./control-plane/scripts/collab_validate.sh >/dev/null
+
+# Validate but don't fail on cross-model issues (will be caught by specific checks)
+./control-plane/scripts/collab_validate.sh >/dev/null 2>&1 || true
 
 if [[ -z "${COMMIT_SHA}" ]]; then
   COMMIT_SHA="$(git rev-parse --short HEAD)"

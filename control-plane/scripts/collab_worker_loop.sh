@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# collab_worker_loop.sh - Simple robust worker wait-process loop
+# collab_worker_loop.sh - Ergonomic continuous worker loop with auto-recovery
 # Usage: ./control-plane/scripts/collab_worker_loop.sh --worktree /path/to/worktree
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
@@ -9,51 +9,80 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
 WORKTREE="${PWD}"
 INTERVAL_SECONDS=5
-QUIET=0
 
 cd "${ROOT_DIR}"
 
-echo "worker-loop: starting (worktree: ${WORKTREE})"
+echo "worker-loop: starting continuous loop (worktree: ${WORKTREE})"
 echo "Press Ctrl+C to stop"
 echo ""
 
-while true; do
-  # Process all current messages
+repair_and_continue() {
+  echo "[$(date '+%H:%M:%S')] attempting repair..."
+  
+  # Fix common issues
+  ./control-plane/scripts/collab_sync.sh >/dev/null 2>&1 || true
+  
+  # Commit any pending changes
+  if ! git diff --cached --quiet 2>/dev/null; then
+    git commit -m "autopilot: sync ($(date +%H%M))" 2>/dev/null || true
+  fi
+  
+  sleep 1
+}
+
+process_batch() {
+  local worktree="$1"
+  local processed=0
+  
   while true; do
-    # Refresh and check
-    ./control-plane/scripts/generate_views.sh >/dev/null 2>&1 || true
-    
+    # Check for messages
     local count
-    count="$(./control-plane/scripts/collab_inbox.sh --worktree "${WORKTREE}" --refresh --actionable-only 2>/dev/null | jq 'length')" || count=0
+    count="$(./control-plane/scripts/collab_inbox.sh --worktree "${worktree}" --refresh --actionable-only 2>/dev/null | jq 'length')" || count=0
     
     if [[ "${count}" -eq 0 ]]; then
       break
     fi
     
-    echo "[$(date '+%H:%M:%S')] ${count} message(s) - processing..."
+    # Get first message
+    local msg_ref
+    msg_ref="$(./control-plane/scripts/collab_inbox.sh --worktree "${worktree}" --refresh --actionable-only 2>/dev/null | jq -r '.[0].id')" || break
     
-    # Process one batch (claim + fulfill + commit)
-    if ./control-plane/scripts/collab_run_once.sh --worktree "${WORKTREE}" 2>/dev/null; then
-      echo "[$(date '+%H:%M:%S')] completed one assignment"
-    else
-      echo "[$(date '+%H:%M:%S')] processing failed, attempting repair..."
-      
-      # Common repairs
-      ./control-plane/scripts/collab_sync.sh >/dev/null 2>&1 || true
-      
-      # If still failing, skip and continue
-      sleep 2
+    echo "[$(date '+%H:%M:%S')] claiming: ${msg_ref}"
+    
+    # Try to claim
+    if ! ./control-plane/scripts/collab_claim_next.sh --worktree "${worktree}" --auto-commit 2>/dev/null; then
+      echo "[$(date '+%H:%M:%S')] claim failed, repairing..."
+      repair_and_continue
+      continue
     fi
     
-    # Commit any pending changes
-    if ! git diff --cached --quiet 2>/dev/null; then
-      git commit -m "autopilot: sync ($(date '+%H%M'))" 2>/dev/null || true
+    echo "[$(date '+%H:%M:%S')] fulfilling: ${msg_ref}"
+    
+    # Try to fulfill
+    if ./control-plane/scripts/collab_fulfill.sh \
+         --message-ref "${msg_ref}" \
+         --worktree "${worktree}" \
+         --with scripts/check_canonical_execution_model.sh \
+         --auto-report \
+         --auto-commit 2>/dev/null; then
+      echo "[$(date '+%H:%M:%S')] completed: ${msg_ref}"
+      processed=$((processed + 1))
+    else
+      echo "[$(date '+%H:%M:%S')] fulfill failed, repairing..."
+      repair_and_continue
     fi
   done
   
-  # Wait for new messages
-  if [[ "${QUIET}" -eq 0 ]]; then
-    echo "[$(date '+%H:%M:%S')] waiting ${INTERVAL_SECONDS}s for new messages..."
-  fi
+  return "${processed}"
+}
+
+# Main loop
+while true; do
+  # Process current batch
+  process_batch "${WORKTREE}"
+  
+  # Wait for new work
+  echo "[$(date '+%H:%M:%S')] waiting ${INTERVAL_SECONDS}s..."
   sleep "${INTERVAL_SECONDS}"
+  echo ""
 done
