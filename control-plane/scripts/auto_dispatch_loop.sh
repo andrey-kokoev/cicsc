@@ -4,16 +4,16 @@ set -uo pipefail
 on_err() {
   local rc="$?"
   local cmd="${BASH_COMMAND:-unknown}"
-  echo "autopilot fatal: rc=${rc} cmd=${cmd}" >&2
+  echo "auto-dispatch-loop fatal: rc=${rc} cmd=${cmd}" >&2
 }
 trap on_err ERR
 
 on_exit() {
   local rc="$?"
   if [[ "${rc}" -eq 0 ]]; then
-    echo "autopilot exit: rc=0" >&2
+    echo "auto-dispatch-loop exit: rc=0" >&2
   else
-    echo "autopilot exit: rc=${rc}" >&2
+    echo "auto-dispatch-loop exit: rc=${rc}" >&2
   fi
 }
 trap on_exit EXIT
@@ -38,7 +38,7 @@ ERROR_SLEEP_SECONDS=5
 usage() {
   cat <<'USAGE'
 Usage:
-  control-plane/scripts/collab_autopilot.sh [options]
+  control-plane/scripts/auto_dispatch_loop.sh [options]
 
 Options:
   --agent-ref <AGENT_...>      Target worker agent (default: AGENT_KIMI).
@@ -107,7 +107,7 @@ fi
 cd "${ROOT_DIR}"
 
 if [[ "${QUIET}" -eq 0 ]]; then
-  echo "autopilot start: agent=${AGENT_REF} batch=${BATCH_SIZE} max_cycles=${MAX_CYCLES} max_inflight=${MAX_INFLIGHT} interval=${INTERVAL_SECONDS}s timeout=${WAIT_TIMEOUT_SECONDS}s"
+  echo "auto-dispatch-loop start: agent=${AGENT_REF} batch=${BATCH_SIZE} max_cycles=${MAX_CYCLES} max_inflight=${MAX_INFLIGHT} interval=${INTERVAL_SECONDS}s timeout=${WAIT_TIMEOUT_SECONDS}s"
 fi
 
 counts_for_agent() {
@@ -147,7 +147,7 @@ read_counts_safe() {
       return 0
     fi
     attempts=$((attempts + 1))
-    echo "autopilot warning: counts_for_agent failed (attempt ${attempts}/${max_attempts})" >&2
+    echo "auto-dispatch-loop warning: counts_for_agent failed (attempt ${attempts}/${max_attempts})" >&2
     sleep 1
   done
   return 1
@@ -176,7 +176,7 @@ run_dispatch() {
     ./control-plane/scripts/collab_dispatch_batch.sh
     --agent-ref "${AGENT_REF}"
     --count "${BATCH_SIZE}"
-    --subject "governance/collab: autopilot dispatch to ${AGENT_REF}"
+    --subject "governance/collab: auto-dispatch-loop dispatch to ${AGENT_REF}"
     --body "Autopilot batch dispatch to ${AGENT_REF}."
   )
   if [[ "${DRY_RUN}" -eq 1 ]]; then
@@ -196,11 +196,11 @@ safe_step() {
   if [[ "${rc}" -eq 0 ]]; then
     return 0
   fi
-  echo "autopilot error: ${label} failed (exit=${rc})" >&2
+  echo "auto-dispatch-loop error: ${label} failed (exit=${rc})" >&2
   if [[ "${CONTINUE_ON_ERROR}" -eq 0 ]]; then
     exit "${rc}"
   fi
-  echo "autopilot recoverable path: sleeping ${ERROR_SLEEP_SECONDS}s before retry loop" >&2
+  echo "auto-dispatch-loop recoverable path: sleeping ${ERROR_SLEEP_SECONDS}s before retry loop" >&2
   sleep "${ERROR_SLEEP_SECONDS}"
   return "${rc}"
 }
@@ -209,7 +209,7 @@ cycle=0
 while true; do
   if [[ "${MAX_CYCLES}" -gt 0 && "${cycle}" -ge "${MAX_CYCLES}" ]]; then
     if [[ "${QUIET}" -eq 0 ]]; then
-      echo "autopilot complete: reached max cycles ${MAX_CYCLES}"
+      echo "auto-dispatch-loop complete: reached max cycles ${MAX_CYCLES}"
     fi
     break
   fi
@@ -223,7 +223,7 @@ while true; do
   # Wait until worker backlog is below threshold.
   while true; do
     if ! read_counts_safe; then
-      echo "autopilot error: unable to read counts; deferring cycle" >&2
+      echo "auto-dispatch-loop error: unable to read counts; deferring cycle" >&2
       sleep "${ERROR_SLEEP_SECONDS}"
       continue
     fi
@@ -247,7 +247,7 @@ while true; do
   started="$(date +%s)"
   while true; do
     if ! read_counts_safe; then
-      echo "autopilot warning: unable to read counts while waiting; retrying" >&2
+      echo "auto-dispatch-loop warning: unable to read counts while waiting; retrying" >&2
       sleep "${INTERVAL_SECONDS}"
       continue
     fi
