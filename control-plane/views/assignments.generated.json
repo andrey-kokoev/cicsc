@@ -212,6 +212,17 @@
       "status": "done",
       "outcome": "fulfilled_by_assignee",
       "notes": "Batch dispatch for AY1.3: Publish incident and drift localization report with forced-next mapping policy"
+    },
+    {
+      "id": "ASSIGN_PHASE33_AX13_ANTIGRAVITY_BATCH",
+      "agent_ref": "AGENT_ANTIGRAVITY",
+      "checkbox_ref": "AX1.3",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/antigravity",
+      "branch": "phase33.ax1.3",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Batch dispatch for AX1.3: Publish coupling conformance report with residual gaps register"
     }
   ]
 }
