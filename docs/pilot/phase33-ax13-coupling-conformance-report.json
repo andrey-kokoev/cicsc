@@ -1,0 +1,55 @@
+{
+  "version": "cicsc/phase33-ax13-coupling-conformance-report-v1",
+  "timestamp_unix": 1771094966,
+  "phase": 33,
+  "checkbox": "AX1.3",
+  "status": "pass",
+  "inputs": {
+    "proof_obligation_index": "docs/pilot/phase33-proof-obligation-index.json",
+    "proof_evidence_coupling": "docs/pilot/phase33-proof-evidence-coupling.json",
+    "admissible_claims_policy": "docs/pilot/phase33-admissible-claims-policy.json",
+    "formalization_gate": "docs/pilot/phase33-ax22-formalization-gate-report.json"
+  },
+  "conformance": {
+    "coupling_policy": "claims_without_proof_evidence_coupling_are_rejected",
+    "coupling_status": "pass",
+    "index_coverage_status": "pass"
+  },
+  "residual_gaps_register": [
+    {
+      "id": "AX1.3-RG1",
+      "scope": "expanded_claim_admissibility",
+      "status": "blocked",
+      "reason": "Missing soundness_of_conflict_matrix in Replay.lean."
+    },
+    {
+      "id": "AX1.3-RG2",
+      "scope": "expanded_claim_admissibility",
+      "status": "blocked",
+      "reason": "Missing WFGovernance in Commands.lean."
+    },
+    {
+      "id": "AX1.3-RG3",
+      "scope": "expanded_claim_admissibility",
+      "status": "blocked",
+      "reason": "Missing spec_to_ir_well_typed in Typecheck.lean."
+    },
+    {
+      "id": "AX1.3-RG4",
+      "scope": "expanded_claim_admissibility",
+      "status": "blocked",
+      "reason": "Missing replay_commutes for joins in Migration.lean."
+    },
+    {
+      "id": "AX1.3-RG5",
+      "scope": "expanded_claim_admissibility",
+      "status": "blocked",
+      "reason": "Missing HavingSemantics and ExistsSemantics in Syntax.lean."
+    }
+  ],
+  "forced_next_phase_refs": [
+    "AY1.1",
+    "AY1.2",
+    "AY1.3"
+  ]
+}

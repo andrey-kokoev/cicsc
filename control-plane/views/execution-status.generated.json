@@ -2373,7 +2373,7 @@
       "phase_id": "AX",
       "phase_number": 33,
       "checkbox_id": "AX1.3",
-      "status": "open"
+      "status": "done"
     },
     {
       "phase_id": "AX",
@@ -2398,6 +2398,48 @@
       "phase_number": 33,
       "checkbox_id": "AX2.4",
       "status": "done"
+    },
+    {
+      "phase_id": "AY",
+      "phase_number": 34,
+      "checkbox_id": "AY1.1",
+      "status": "open"
+    },
+    {
+      "phase_id": "AY",
+      "phase_number": 34,
+      "checkbox_id": "AY1.2",
+      "status": "open"
+    },
+    {
+      "phase_id": "AY",
+      "phase_number": 34,
+      "checkbox_id": "AY1.3",
+      "status": "open"
+    },
+    {
+      "phase_id": "AY",
+      "phase_number": 34,
+      "checkbox_id": "AY2.1",
+      "status": "open"
+    },
+    {
+      "phase_id": "AY",
+      "phase_number": 34,
+      "checkbox_id": "AY2.2",
+      "status": "open"
+    },
+    {
+      "phase_id": "AY",
+      "phase_number": 34,
+      "checkbox_id": "AY2.3",
+      "status": "open"
+    },
+    {
+      "phase_id": "AY",
+      "phase_number": 34,
+      "checkbox_id": "AY2.4",
+      "status": "open"
     }
   ]
 }

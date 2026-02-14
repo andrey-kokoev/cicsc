@@ -786,3 +786,18 @@ This file captures expected phase/milestone/checkbox structure for non-planned p
 - AX2.2 Add formalization progress gate tied to expanded-scope claim admissibility
 - AX2.3 Publish Phase 33 closure report and updated admissible-claims policy
 - AX2.4 Add Phase 34 block gate from Phase 33 checklist
+
+## AY. Phase 34: Field Generalization and Multi-Context Validation
+
+### AY1. Multi-Context Validation Expansion
+
+- AY1.1 Freeze Phase 34 context matrix and expanded acceptance contract
+- AY1.2 Execute multi-context workloads under expanded objective envelopes
+- AY1.3 Publish incident and drift localization report with forced-next mapping policy
+
+### AY2. Generalization Closure Gate
+
+- AY2.1 Add Phase 34 required-gates script/report for expanded multi-context envelope
+- AY2.2 Publish Phase 34 closure report with unresolved critical disposition
+- AY2.3 Define objective Phase 34 exit checklist mapped to artifacts
+- AY2.4 Add Phase 35 block gate from Phase 34 checklist

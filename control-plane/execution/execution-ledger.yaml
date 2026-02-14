@@ -1679,7 +1679,7 @@ phases:
 - id: AX
   number: 33
   title: Formal Coupling and Semantic Strengthening
-  status: active
+  status: complete
   milestones:
   - id: AX1
     title: Proof-Evidence Coupling Realization
@@ -1692,7 +1692,7 @@ phases:
       status: done
     - id: AX1.3
       title: Publish coupling conformance report with residual gaps register
-      status: open
+      status: done
   - id: AX2
     title: Lean and Semantic Closure Tightening
     checkboxes:
@@ -1711,7 +1711,7 @@ phases:
 - id: AY
   number: 34
   title: Field Generalization and Multi-Context Validation
-  status: planned
+  status: active
   milestones:
   - id: AY1
     title: Multi-Context Validation Expansion
