@@ -543,22 +543,10 @@ def main() -> int:
         terminal_status_by_message[mid] = expected_prev
         saw_fulfilled_by_message[mid] = saw_fulfilled
 
-    # Mechanical WIP rule: a worktree cannot hold acknowledged work while also
-    # holding newly actionable (queued/sent) messages.
-    worktree_statuses = {}
-    for mid, msg in message_map.items():
-        wt = msg.get("to_worktree")
-        status = terminal_status_by_message.get(mid)
-        if not isinstance(wt, str) or status is None:
-            continue
-        worktree_statuses.setdefault(wt, []).append((mid, status))
-    for wt, rows in worktree_statuses.items():
-        ack_ids = sorted([mid for mid, st in rows if st == "acknowledged"])
-        actionable_ids = sorted([mid for mid, st in rows if st in {"queued", "sent"}])
-        if ack_ids and actionable_ids:
-            errors.append(
-                f"collab-model: WIP policy violation for {wt}; acknowledged={ack_ids} conflicts with actionable={actionable_ids}"
-            )
+    # WIP policy is enforced at claim-time by collab_claim_next.sh:
+    # when acknowledged work exists for a worktree, claiming new actionable
+    # messages is blocked unless force-overridden. Coexistence of
+    # acknowledged + actionable in mailbox state is valid.
 
     for aid, assignment in assignment_map.items():
         astatus = assignment.get("status")
