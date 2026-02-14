@@ -2233,8 +2233,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase34.ay1.1.i48",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Dispatch instance i48 for AY1.1: Freeze Phase 34 context matrix and expanded acceptance contract"
     },
     {
@@ -2244,8 +2244,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase34.ay1.2.i41",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Dispatch instance i41 for AY1.2: Execute multi-context workloads under expanded objective envelopes"
     },
     {
@@ -2255,8 +2255,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
       "branch": "phase34.ay1.3.i12",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_assignee",
       "notes": "Dispatch instance i12 for AY1.3: Publish incident and drift localization report with forced-next mapping policy"
     },
     {
