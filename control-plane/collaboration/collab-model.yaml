@@ -1394,7 +1394,7 @@ assignments:
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase33.ax1.3.i30
   status: done
-  outcome: fulfilled
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i30 for AX1.3: Publish coupling conformance report with
     residual gaps register'
 - id: ASSIGN_PHASE34_AY11_KIMI_I26
