@@ -105,7 +105,18 @@ for pref in profile_refs:
             }
         )
 
-def recent_files(glob_pattern: str, limit: int = 5):
+FRESHNESS_SECONDS = {
+    "EVID_SCRIPT": 7 * 24 * 3600,
+    "EVID_GATE_REPORT": 24 * 3600,
+    "EVID_DIFFERENTIAL_LOG": 24 * 3600,
+    "EVID_THEOREM": 30 * 24 * 3600,
+}
+
+def freshness_label(kind: str, age_seconds: int) -> str:
+    limit = FRESHNESS_SECONDS.get(kind, 24 * 3600)
+    return "fresh" if age_seconds <= limit else "stale"
+
+def recent_files(glob_pattern: str, evidence_kind: str, limit: int = 5):
     out = []
     now = int(time.time())
     for p in repo_root.glob(glob_pattern):
@@ -118,6 +129,7 @@ def recent_files(glob_pattern: str, limit: int = 5):
                 "ref": str(p.relative_to(repo_root)),
                 "mtime_unix": int(st.st_mtime),
                 "age_seconds": age,
+                "freshness": freshness_label(evidence_kind, age),
             }
         )
     out.sort(key=lambda r: r["mtime_unix"], reverse=True)
@@ -140,14 +152,15 @@ for s in sorted(set(required_script_hints)):
                 "ref": s,
                 "mtime_unix": int(st.st_mtime),
                 "age_seconds": max(0, int(time.time()) - int(st.st_mtime)),
+                "freshness": freshness_label("EVID_SCRIPT", max(0, int(time.time()) - int(st.st_mtime))),
                 "source": "obligation_required_script",
             }
         )
 
 # Reports/logs: recent artifacts in docs/pilot.
-candidate_evidence["EVID_GATE_REPORT"] = recent_files("docs/pilot/*.json", limit=8)
-candidate_evidence["EVID_DIFFERENTIAL_LOG"] = recent_files("docs/pilot/*.log", limit=8)
-candidate_evidence["EVID_THEOREM"] = recent_files("lean/**/*.lean", limit=5)
+candidate_evidence["EVID_GATE_REPORT"] = recent_files("docs/pilot/*.json", "EVID_GATE_REPORT", limit=8)
+candidate_evidence["EVID_DIFFERENTIAL_LOG"] = recent_files("docs/pilot/*.log", "EVID_DIFFERENTIAL_LOG", limit=8)
+candidate_evidence["EVID_THEOREM"] = recent_files("lean/**/*.lean", "EVID_THEOREM", limit=5)
 
 out = {
     "assignment": assignment,
@@ -231,5 +244,5 @@ for kind in ["EVID_SCRIPT", "EVID_GATE_REPORT", "EVID_DIFFERENTIAL_LOG", "EVID_T
         print("  - (none)")
         continue
     for r in rows:
-        print(f"  - {r['ref']} (age_s={r['age_seconds']})")
+        print(f"  - {r['ref']} (age_s={r['age_seconds']}, freshness={r['freshness']})")
 PY
