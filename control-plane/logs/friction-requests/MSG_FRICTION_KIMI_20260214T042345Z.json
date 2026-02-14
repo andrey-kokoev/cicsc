@@ -1,0 +1,17 @@
+{
+  "message_id": "MSG_FRICTION_KIMI_20260214T042345Z",
+  "from_agent_ref": "AGENT_KIMI",
+  "from_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+  "to_agent_ref": "AGENT_MAIN",
+  "friction_type": "ergonomics",
+  "severity": "medium",
+  "summary": "Auto-commit message uses generic template instead of phase/checkbox token",
+  "repro_steps": [
+    "Run collab_claim_next.sh --auto-commit or collab_fulfill.sh --auto-commit",
+    "Observe commit message: 'governance/collab: sync AZ1.2...' instead of 'phase35 az1.2 fulfill...'"
+  ],
+  "frequency": "always",
+  "proposed_fix": "Extract phase/checkbox from assignment_ref and use as commit subject template",
+  "requested_at": "2026-02-14T04:23:45.764124+00:00",
+  "requested_commit": "11111ab"
+}
