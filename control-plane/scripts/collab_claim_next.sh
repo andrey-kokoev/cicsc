@@ -10,6 +10,7 @@ NOTES=""
 NO_REFRESH=0
 DRY_RUN=0
 FORCE=0
+AUTO_COMMIT=0
 
 usage() {
   cat <<'USAGE'
@@ -24,6 +25,7 @@ Options:
   --no-refresh          Do not regenerate mailbox projection before reading.
   --dry-run             Resolve target and validate, but do not append event.
   --force               Allow claiming new sent/queued messages even when acknowledged work exists.
+  --auto-commit         Auto-commit collab model/views after successful claim (requires clean tree).
 USAGE
 }
 
@@ -36,12 +38,19 @@ while [[ $# -gt 0 ]]; do
     --no-refresh) NO_REFRESH=1; shift ;;
     --dry-run) DRY_RUN=1; shift ;;
     --force) FORCE=1; shift ;;
+    --auto-commit) AUTO_COMMIT=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
 done
 
 cd "${ROOT_DIR}"
+if [[ "${AUTO_COMMIT}" -eq 1 && "${DRY_RUN}" -eq 0 ]]; then
+  if [[ -n "$(git status --porcelain)" ]]; then
+    echo "auto-commit requires a clean working tree" >&2
+    exit 1
+  fi
+fi
 ./control-plane/scripts/collab_validate.sh >/dev/null
 
 if [[ -z "${COMMIT_SHA}" ]]; then
@@ -162,4 +171,8 @@ if [[ "${DRY_RUN}" -eq 1 ]]; then
 else
   echo "claimed message: ${MESSAGE_REF}"
   echo "run: ./control-plane/scripts/collab_show_assignment.sh --ref ${ASSIGNMENT_REF}"
+  if [[ "${AUTO_COMMIT}" -eq 1 ]]; then
+    ./control-plane/scripts/collab_commit_views.sh --from-last-collab-action
+    echo "auto-committed collab model/views"
+  fi
 fi

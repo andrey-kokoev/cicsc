@@ -8,6 +8,7 @@ ACTOR_AGENT_REF="AGENT_MAIN"
 COMMIT_SHA=""
 NO_REFRESH=0
 DRY_RUN=0
+AUTO_COMMIT=0
 INGESTED_NOTES=""
 CLOSED_NOTES=""
 
@@ -23,6 +24,7 @@ Options:
   --closed-notes <txt>    Optional notes for closed event.
   --no-refresh            Do not regenerate views after update.
   --dry-run               Validate and print closure actions without mutation.
+  --auto-commit           Auto-commit collab model/views after close (requires clean tree).
 USAGE
 }
 
@@ -35,6 +37,7 @@ while [[ $# -gt 0 ]]; do
     --closed-notes) CLOSED_NOTES="${2:-}"; shift 2 ;;
     --no-refresh) NO_REFRESH=1; shift ;;
     --dry-run) DRY_RUN=1; shift ;;
+    --auto-commit) AUTO_COMMIT=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -47,6 +50,12 @@ if [[ -z "${MESSAGE_REF}" ]]; then
 fi
 
 cd "${ROOT_DIR}"
+if [[ "${AUTO_COMMIT}" -eq 1 && "${DRY_RUN}" -eq 0 ]]; then
+  if [[ -n "$(git status --porcelain)" ]]; then
+    echo "auto-commit requires a clean working tree" >&2
+    exit 1
+  fi
+fi
 ./control-plane/scripts/collab_validate.sh >/dev/null
 
 if [[ -z "${COMMIT_SHA}" ]]; then
@@ -164,6 +173,10 @@ fi
 if [[ "${DRY_RUN}" -eq 0 ]]; then
   ./control-plane/scripts/collab_validate.sh >/dev/null
   echo "message close path complete: ${MESSAGE_REF} (from ${CURRENT_STATUS})"
+  if [[ "${AUTO_COMMIT}" -eq 1 ]]; then
+    ./control-plane/scripts/collab_commit_views.sh --from-last-collab-action
+    echo "auto-committed collab model/views"
+  fi
 else
   echo "dry-run: close path validated for ${MESSAGE_REF} (from ${CURRENT_STATUS})"
 fi

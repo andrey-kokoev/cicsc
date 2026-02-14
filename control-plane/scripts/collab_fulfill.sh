@@ -11,6 +11,7 @@ NOTES=""
 NO_REFRESH=0
 DRY_RUN=0
 SUGGEST_COMMIT=0
+AUTO_COMMIT=0
 SCRIPT_REFS=()
 GATE_REFS=()
 THEOREM_REFS=()
@@ -37,6 +38,7 @@ Options:
   --no-refresh          Do not regenerate mailbox projection after append.
   --dry-run             Validate and resolve evidence bindings, but do not append event.
   --suggest-commit      Print a suggested git commit command after fulfill.
+  --auto-commit         Auto-commit collab model/views after fulfill (requires clean tree).
 USAGE
 }
 
@@ -55,6 +57,7 @@ while [[ $# -gt 0 ]]; do
     --no-refresh) NO_REFRESH=1; shift ;;
     --dry-run) DRY_RUN=1; shift ;;
     --suggest-commit) SUGGEST_COMMIT=1; shift ;;
+    --auto-commit) AUTO_COMMIT=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -67,6 +70,12 @@ if [[ -z "${MESSAGE_REF}" ]]; then
 fi
 
 cd "${ROOT_DIR}"
+if [[ "${AUTO_COMMIT}" -eq 1 && "${DRY_RUN}" -eq 0 ]]; then
+  if [[ -n "$(git status --porcelain)" ]]; then
+    echo "auto-commit requires a clean working tree" >&2
+    exit 1
+  fi
+fi
 ./control-plane/scripts/collab_validate.sh >/dev/null
 
 if [[ -z "${COMMIT_SHA}" ]]; then
@@ -218,5 +227,9 @@ PY
     echo "suggested commit:"
     echo "git add control-plane/collaboration/collab-model.yaml control-plane/views/ && \\"
     echo "  git commit -m \"${_subject}\""
+  fi
+  if [[ "${AUTO_COMMIT}" -eq 1 ]]; then
+    ./control-plane/scripts/collab_commit_views.sh --from-last-collab-action
+    echo "auto-committed collab model/views"
   fi
 fi
