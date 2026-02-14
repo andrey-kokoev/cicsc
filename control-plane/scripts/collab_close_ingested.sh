@@ -98,6 +98,54 @@ case "${CURRENT_STATUS}" in
     ;;
 esac
 
+python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$MESSAGE_REF" <<'PY'
+import sys
+from pathlib import Path
+import yaml
+
+collab_path = Path(sys.argv[1])
+message_ref = sys.argv[2]
+data = yaml.safe_load(collab_path.read_text(encoding="utf-8"))
+
+messages = {m.get("id"): m for m in data.get("messages", [])}
+msg = messages.get(message_ref)
+if msg is None:
+    raise SystemExit(f"message not found: {message_ref}")
+
+assignment_ref = msg.get("assignment_ref")
+assignments = data.get("assignments", [])
+assignment = next((a for a in assignments if a.get("id") == assignment_ref), None)
+if assignment is None:
+    raise SystemExit(f"assignment not found for message: {assignment_ref}")
+
+events = [e for e in data.get("message_events", []) if e.get("message_ref") == message_ref]
+events = sorted(events, key=lambda e: int(e.get("at_seq", 0)))
+if not events:
+    raise SystemExit(f"no events for message: {message_ref}")
+
+terminal = events[-1].get("to_status")
+if terminal not in {"closed", "rescinded"}:
+    # Only synchronize assignment on terminal message states.
+    raise SystemExit(0)
+
+assigned_agent = assignment.get("agent_ref")
+has_assignee_fulfilled = any(
+    e.get("to_status") == "fulfilled" and e.get("actor_agent_ref") == assigned_agent
+    for e in events
+)
+
+if terminal == "closed":
+    assignment["status"] = "done"
+    assignment["outcome"] = "fulfilled_by_assignee" if has_assignee_fulfilled else "fulfilled_by_main"
+elif terminal == "rescinded":
+    assignment["status"] = "done"
+    assignment["outcome"] = "fulfilled_by_main"
+
+data["assignments"] = assignments
+collab_path.write_text(yaml.safe_dump(data, sort_keys=False), encoding="utf-8")
+print(f"synchronized assignment {assignment_ref} -> {assignment['status']}/{assignment['outcome']}")
+PY
+
 if [[ "${NO_REFRESH}" -eq 0 ]]; then
   ./control-plane/scripts/generate_views.sh >/dev/null
 fi

@@ -569,6 +569,10 @@ def main() -> int:
             errors.append(
                 f"collab-model: assignment {aid} terminal-ish status {astatus} cannot have pending outcome"
             )
+        if has_closed and astatus in active_assignment_statuses:
+            errors.append(
+                f"collab-model: assignment {aid} has closed message but remains active ({astatus})"
+            )
         if astatus == "done":
             if outcome == "fulfilled_by_assignee":
                 if not (has_closed and has_fulfilled):

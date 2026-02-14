@@ -192,8 +192,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase33.ax1.3
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: Publish coupling conformance report with residual gaps register.
 - id: ASSIGN_PHASE33_AX24_ANTIGRAVITY
   agent_ref: AGENT_ANTIGRAVITY
