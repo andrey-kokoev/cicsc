@@ -61,6 +61,21 @@ then execute exactly this protocol:
    - `commit_sha`
    - `current_status`
 
+### Intent Resolution Rule (Mandatory)
+
+Interpret short operator instructions as follows:
+
+- `status`
+  - read-only mode
+  - inspect and report mailbox/state
+  - do not mutate collaboration state
+
+- `process messages`
+  - execution mode
+  - process lifecycle transitions end-to-end (claim/fulfill for workers; ingest/close for main)
+  - continue until no actionable messages remain for the targeted worktree
+  - do not pause for confirmation between deterministic protocol steps
+
 ## Normative Conceptual Sources
 
 Execution guidance in this file is operational. Conceptual semantic intent is
