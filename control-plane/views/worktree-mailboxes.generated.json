@@ -60,8 +60,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Friction request from AGENT_GEMINI",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "closed",
+          "event_count": 3
         },
         {
           "id": "MSG_FRICTION_GEMINI_20260214T200756Z",
@@ -79,8 +79,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Friction request from AGENT_GEMINI",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "closed",
+          "event_count": 3
         }
       ],
       "outbox": [
@@ -8479,8 +8479,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Friction request from AGENT_GEMINI",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "closed",
+          "event_count": 3
         },
         {
           "id": "MSG_FRICTION_GEMINI_20260214T200756Z",
@@ -8498,8 +8498,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Friction request from AGENT_GEMINI",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "closed",
+          "event_count": 3
         }
       ]
     }

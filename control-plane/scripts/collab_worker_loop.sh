@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Worker Autopilot - Single command for continuous wait-process loop
-# Usage: ./control-plane/scripts/collab_worker_autopilot.sh --worktree /path/to/worktree
+# Usage: ./control-plane/scripts/collab_worker_loop.sh --worktree /path/to/worktree
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 "${ROOT_DIR}/control-plane/scripts/collab_require_root.sh" "${ROOT_DIR}"
@@ -13,7 +13,7 @@ QUIET=0
 
 cd "${ROOT_DIR}"
 
-echo "worker-autopilot: starting continuous wait-process loop"
+echo "worker-loop: starting continuous wait-process loop"
 echo "worktree: ${WORKTREE}"
 echo "interval: ${INTERVAL_SECONDS}s"
 echo ""

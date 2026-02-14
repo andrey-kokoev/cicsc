@@ -12,7 +12,7 @@ const { execSync } = require('node:child_process')
 const errors = []
 let files = []
 try {
-  const out = execSync("rg --files -g '*.generated.*'", { encoding: 'utf8' }).trim()
+  const out = execSync("find . -name '*.generated.*'", { encoding: 'utf8' }).trim()
   files = out ? out.split(/\r?\n/) : []
 } catch {
   files = []

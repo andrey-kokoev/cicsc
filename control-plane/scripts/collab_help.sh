@@ -81,12 +81,16 @@ if [[ "${ROLE}" == "worker" ]]; then
 9) Watch for stale inbox:
    ./control-plane/scripts/collab_stale_watch.sh --warn-hours 24 --fail-hours 72
 
-10) Wait regime (poll every 5s; wake when actionable arrives):
+10) One-command continuous loop (continuous wait + auto-process):
+   ./control-plane/scripts/collab_worker_loop.sh --worktree "${WORKTREE}"
+   # runs indefinitely until interrupted (Ctrl+C)
+
+11) Wait regime (poll every 5s; wake when actionable arrives):
    ./control-plane/scripts/collab_wait_for_messages.sh --worktree "${WORKTREE}" --interval-seconds 5
    # auto-run worker loop on wake:
    ./control-plane/scripts/collab_wait_for_messages.sh --worktree "${WORKTREE}" --interval-seconds 5 --run-on-found "./control-plane/scripts/collab_process_messages.sh --role worker --worktree ${WORKTREE}"
 
-11) One-command protocol loop:
+12) One-shot protocol processing (current inbox only):
    ./control-plane/scripts/collab_process_messages.sh --role worker --worktree "${WORKTREE}"
    # optional explicit overrides:
    ./control-plane/scripts/collab_process_messages.sh --role worker --worktree "${WORKTREE}" --with scripts/check_x.sh --auto-report --lazy

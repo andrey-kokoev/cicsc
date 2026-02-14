@@ -16283,3 +16283,47 @@ message_events:
   commit: 230a5df
   evidence_bindings: []
   notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_FRICTION_GEMINI_20260214T200724Z_ACKNOWLEDGED_2
+  message_ref: MSG_FRICTION_GEMINI_20260214T200724Z
+  from_status: sent
+  to_status: acknowledged
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 2
+  commit: 3e3f99f
+  evidence_bindings: []
+  notes: friction triage decision=accept_later
+- id: MSGEV_FRICTION_GEMINI_20260214T200724Z_CLOSED_3
+  message_ref: MSG_FRICTION_GEMINI_20260214T200724Z
+  from_status: acknowledged
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 3
+  commit: 3e3f99f
+  evidence_bindings:
+  - ref: control-plane/logs/friction-triage/MSG_FRICTION_GEMINI_20260214T200724Z.json
+    evidence_kind_ref: EVID_GATE_REPORT
+    commit: 3e3f99f
+    digest: sha256:b04ab81d6afe01f7b6bad631504728d33a0bb5ba52dac9fab0c1b2ef6f8fc2ee
+  notes: friction triage decision=accept_later
+- id: MSGEV_FRICTION_GEMINI_20260214T200756Z_ACKNOWLEDGED_2
+  message_ref: MSG_FRICTION_GEMINI_20260214T200756Z
+  from_status: sent
+  to_status: acknowledged
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 2
+  commit: 3e3f99f
+  evidence_bindings: []
+  notes: friction triage decision=accept_later
+- id: MSGEV_FRICTION_GEMINI_20260214T200756Z_CLOSED_3
+  message_ref: MSG_FRICTION_GEMINI_20260214T200756Z
+  from_status: acknowledged
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 3
+  commit: 3e3f99f
+  evidence_bindings:
+  - ref: control-plane/logs/friction-triage/MSG_FRICTION_GEMINI_20260214T200756Z.json
+    evidence_kind_ref: EVID_GATE_REPORT
+    commit: 3e3f99f
+    digest: sha256:5ea662af0dcd468848867adc5e4361d689f2e0f7c9e1c6f2768896c810d7c5a9
+  notes: friction triage decision=accept_later

@@ -1,0 +1,14 @@
+{
+  "message_ref": "MSG_FRICTION_GEMINI_20260214T200756Z",
+  "decision": "accept_later",
+  "current_status_before": "sent",
+  "planned_transitions": [
+    "acknowledged",
+    "closed"
+  ],
+  "triage_agent_ref": "AGENT_MAIN",
+  "triaged_at": "2026-02-14T20:11:58.449169+00:00",
+  "commit": "3e3f99f",
+  "notes": null,
+  "backlog_ref": null
+}

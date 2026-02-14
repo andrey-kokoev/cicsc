@@ -234,6 +234,9 @@ Message I/O command surface:
   - batch: `./control-plane/scripts/collab_close_batch.sh --agent-ref AGENT_KIMI --status fulfilled --count 0`
 - stale mailbox watcher (warn/fail thresholds):
   - `./control-plane/scripts/collab_stale_watch.sh --warn-hours 24 --fail-hours 72`
+- worker autopilot (single-command wait + auto-process loop):
+  - `./control-plane/scripts/collab_worker_loop.sh --worktree "$WORKTREE"`
+  - continuous wait-process cycle; runs until interrupted (Ctrl+C)
 - worker wait regime (poll + wake on actionable):
   - `./control-plane/scripts/collab_wait_for_messages.sh --worktree "$WORKTREE" --interval-seconds 5`
   - optional auto-process:
