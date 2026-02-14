@@ -3784,8 +3784,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Reassignment dispatch to AGENT_GEMINI",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "fulfilled",
+          "event_count": 3
         },
         {
           "id": "MSG_PHASE36_BA11_GEMINI_I01_DISPATCH",
@@ -7599,8 +7599,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Reassignment dispatch to AGENT_GEMINI",
-          "current_status": "acknowledged",
-          "event_count": 2
+          "current_status": "fulfilled",
+          "event_count": 3
         },
         {
           "id": "MSG_PHASE36_BA11_GEMINI_I01_DISPATCH",
