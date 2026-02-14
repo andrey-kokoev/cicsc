@@ -1,0 +1,9 @@
+autopilot start: agent=AGENT_KIMI batch=3 max_cycles=0 max_inflight=0 interval=5s timeout=0s
+[cycle 0] process main
+batch-close messages (6):
+ - MSG_PHASE33_AX13_KIMI_I06_DISPATCH
+ - MSG_PHASE34_AY11_KIMI_I06_DISPATCH
+ - MSG_PHASE34_AY12_KIMI_I06_DISPATCH
+ - MSG_PHASE34_AY13_KIMI_I03_DISPATCH
+ - MSG_PHASE34_AY21_KIMI_I03_DISPATCH
+ - MSG_PHASE34_AY22_KIMI_I03_DISPATCH
