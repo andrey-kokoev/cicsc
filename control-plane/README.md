@@ -39,6 +39,12 @@ projections used for executable validation and gating.
     `control-plane/views/worktree-mailboxes.generated.json`.
   - `WORKTREE_ASSIGNMENT.md` files are disallowed for protocol execution.
 
+- `collaboration/role-model.yaml`
+  - Collaboration role definitions (main, worker) and their authorities.
+  - Authority matrix mapping decisions to role ownership.
+  - Normative for WMCC: gates validate agents act within role authorities.
+  - No execution status.
+
 - `execution/execution-ledger.yaml`
   - Canonical phase/milestone/checkbox status model.
 
@@ -66,6 +72,7 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `control-plane/scripts/validate_execution_ledger_model.sh`
 - `control-plane/scripts/validate_gate_model.sh`
 - `control-plane/scripts/validate_collab_model.sh`
+- `control-plane/scripts/validate_role_model.sh`
 - `control-plane/scripts/validate_cross_model.sh`
 - `control-plane/scripts/collab_validate.sh`
 - `control-plane/scripts/validate_all.sh`
