@@ -8,6 +8,7 @@ BODY=()
 DRY_RUN=0
 NO_REFRESH=0
 FROM_LAST_COLLAB_ACTION=0
+EDIT_BODY=0
 
 usage() {
   cat <<'USAGE'
@@ -20,6 +21,7 @@ Options:
   --no-refresh        Do not run generate_views before staging.
   --from-last-collab-action
                       Derive commit subject/body from latest message_event.
+  --edit-body         Open commit editor for body/note editing.
   --dry-run           Show staged files and commit command, do not commit.
 USAGE
 }
@@ -30,6 +32,7 @@ while [[ $# -gt 0 ]]; do
     --body) BODY+=("${2:-}"); shift 2 ;;
     --no-refresh) NO_REFRESH=1; shift ;;
     --from-last-collab-action) FROM_LAST_COLLAB_ACTION=1; shift ;;
+    --edit-body) EDIT_BODY=1; shift ;;
     --dry-run) DRY_RUN=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
@@ -117,4 +120,7 @@ cmd=(git commit -m "${SUBJECT}")
 for line in "${BODY[@]}"; do
   cmd+=(-m "${line}")
 done
+if [[ "${EDIT_BODY}" -eq 1 ]]; then
+  cmd+=(-e)
+fi
 "${cmd[@]}"

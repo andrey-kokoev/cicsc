@@ -14,6 +14,7 @@ AUTO_COMMIT=0
 COMMIT_SUBJECT=""
 COMMIT_BODY=()
 CHECKOUT_BRANCH=0
+COMMIT_MODE=0
 
 usage() {
   cat <<'USAGE'
@@ -23,12 +24,14 @@ Usage:
 Options:
   --worktree <path>     Worktree path key (default: current $PWD).
   --message-ref <id>    Explicit message to acknowledge. If omitted, first actionable message is selected.
-  --commit <sha>        Commit to bind on event (default: current HEAD short).
+  --event-commit <sha>  Commit to bind on event (default: current HEAD short).
+  --commit-sha <sha>    Alias for --event-commit.
   --notes <text>        Optional event note.
   --no-refresh          Do not regenerate mailbox projection before reading.
   --dry-run             Resolve target and validate, but do not append event.
   --force               Allow claiming new sent/queued messages even when acknowledged work exists.
   --auto-commit         Auto-commit collab model/views after successful claim (requires clean tree).
+  --commit              Alias for --auto-commit with editor-enabled commit body.
   --commit-subject <t>  Commit subject override when --auto-commit is set.
   --commit-body <t>     Additional commit body line (repeatable) for --auto-commit.
   --checkout-branch     Checkout/create assignment branch in target worktree after claim.
@@ -39,12 +42,13 @@ while [[ $# -gt 0 ]]; do
   case "$1" in
     --worktree) WORKTREE="${2:-}"; shift 2 ;;
     --message-ref) MESSAGE_REF="${2:-}"; shift 2 ;;
-    --commit) COMMIT_SHA="${2:-}"; shift 2 ;;
+    --event-commit|--commit-sha) COMMIT_SHA="${2:-}"; shift 2 ;;
     --notes) NOTES="${2:-}"; shift 2 ;;
     --no-refresh) NO_REFRESH=1; shift ;;
     --dry-run) DRY_RUN=1; shift ;;
     --force) FORCE=1; shift ;;
     --auto-commit) AUTO_COMMIT=1; shift ;;
+    --commit) COMMIT_MODE=1; AUTO_COMMIT=1; shift ;;
     --commit-subject) COMMIT_SUBJECT="${2:-}"; shift 2 ;;
     --commit-body) COMMIT_BODY+=("${2:-}"); shift 2 ;;
     --checkout-branch) CHECKOUT_BRANCH=1; shift ;;
@@ -202,6 +206,9 @@ else
     _commit_cmd=(./control-plane/scripts/collab_commit_views.sh --from-last-collab-action)
     if [[ -n "${COMMIT_SUBJECT}" ]]; then
       _commit_cmd+=(--subject "${COMMIT_SUBJECT}")
+    fi
+    if [[ "${COMMIT_MODE}" -eq 1 ]]; then
+      _commit_cmd+=(--edit-body)
     fi
     for line in "${COMMIT_BODY[@]}"; do
       _commit_cmd+=(--body "${line}")

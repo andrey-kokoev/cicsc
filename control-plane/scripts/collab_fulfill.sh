@@ -18,6 +18,8 @@ LAZY=0
 MAX_AGE_MINUTES=30
 RUN_SCRIPTS=()
 DEPS=()
+WITH_ITEMS=()
+AUTO_REPORT=0
 SCRIPT_REFS=()
 GATE_REFS=()
 THEOREM_REFS=()
@@ -46,8 +48,12 @@ Options:
   --suggest-commit      Print a suggested git commit command after fulfill.
   --auto-commit         Auto-commit collab model/views after fulfill (requires clean tree).
   --commit-subject <t>  Commit subject override when --auto-commit is set.
+  --message <t>         Alias for --commit-subject.
   --commit-body <t>     Additional commit body line (repeatable) for --auto-commit.
   --run-script <cmd>    Execute a script/command before fulfill (repeatable).
+  --with <path|cmd>     Sugar: add script evidence + execute command in one flag.
+  --auto-report         Auto-select gate report from script header/recent docs artifacts.
+  --report-auto         Alias for --auto-report.
   --dep <path>          Additional dependency path for --lazy freshness checks (repeatable).
   --lazy                Skip --run-script when evidence appears fresh.
   --max-age-minutes <n> Freshness TTL for --lazy (default: 30).
@@ -71,8 +77,11 @@ while [[ $# -gt 0 ]]; do
     --suggest-commit) SUGGEST_COMMIT=1; shift ;;
     --auto-commit) AUTO_COMMIT=1; shift ;;
     --commit-subject) COMMIT_SUBJECT="${2:-}"; shift 2 ;;
+    --message) COMMIT_SUBJECT="${2:-}"; shift 2 ;;
     --commit-body) COMMIT_BODY+=("${2:-}"); shift 2 ;;
     --run-script) RUN_SCRIPTS+=("${2:-}"); shift 2 ;;
+    --with) WITH_ITEMS+=("${2:-}"); shift 2 ;;
+    --auto-report|--report-auto) AUTO_REPORT=1; shift ;;
     --dep) DEPS+=("${2:-}"); shift 2 ;;
     --lazy) LAZY=1; shift ;;
     --max-age-minutes) MAX_AGE_MINUTES="${2:-}"; shift 2 ;;
@@ -148,6 +157,22 @@ print(os.path.relpath(ap, root))
 PY
 }
 
+extract_header_single() {
+  local file="$1"
+  local key="$2"
+  grep -E "^[[:space:]]*#[[:space:]]*${key}:[[:space:]]*" "${file}" | head -n 1 | sed -E "s/^[[:space:]]*#[[:space:]]*${key}:[[:space:]]*//"
+}
+
+append_unique() {
+  local value="$1"
+  shift
+  local -n arr_ref="$1"
+  for existing in "${arr_ref[@]}"; do
+    [[ "${existing}" == "${value}" ]] && return 0
+  done
+  arr_ref+=("${value}")
+}
+
 mk_evidence_item() {
   local ref="$1"
   local kind="$2"
@@ -162,7 +187,37 @@ mk_evidence_item() {
   echo "${rel}|${kind}|${COMMIT_SHA}|sha256:${digest}"
 }
 
+if [[ ${#WITH_ITEMS[@]} -gt 0 ]]; then
+  for w in "${WITH_ITEMS[@]}"; do
+    if abs="$(to_abs_path "${w}" 2>/dev/null)" && [[ -f "${abs}" ]]; then
+      append_unique "${w}" SCRIPT_REFS
+      append_unique "${w}" RUN_SCRIPTS
+    else
+      append_unique "${w}" RUN_SCRIPTS
+    fi
+  done
+fi
+
+# Derive default deps/report hints from script headers.
+for s in "${SCRIPT_REFS[@]}"; do
+  if abs="$(to_abs_path "${s}" 2>/dev/null)" && [[ -f "${abs}" ]]; then
+    rep="$(extract_header_single "${abs}" "collab-report" || true)"
+    if [[ -n "${rep}" && "${AUTO_REPORT}" -eq 1 && ${#GATE_REFS[@]} -eq 0 ]]; then
+      append_unique "${rep}" GATE_REFS
+    fi
+    dep_line="$(extract_header_single "${abs}" "collab-deps" || true)"
+    if [[ -n "${dep_line}" ]]; then
+      IFS=',' read -r -a _deps <<<"${dep_line}"
+      for d in "${_deps[@]}"; do
+        d="$(echo "${d}" | xargs)"
+        [[ -n "${d}" ]] && append_unique "${d}" DEPS
+      done
+    fi
+  fi
+done
+
 if [[ ${#RUN_SCRIPTS[@]} -gt 0 ]]; then
+  _run_start_epoch="$(date +%s)"
   _target_report=""
   if [[ ${#GATE_REFS[@]} -gt 0 ]]; then
     _target_report="$(to_abs_path "${GATE_REFS[0]}")"
@@ -185,6 +240,13 @@ if [[ ${#RUN_SCRIPTS[@]} -gt 0 ]]; then
           reason="report-too-old"
         else
           newest_dep=0
+          # always include core protocol models as lazy deps
+          for base_dep in control-plane/collaboration/collab-model.yaml control-plane/execution/execution-ledger.yaml; do
+            ap="$(to_abs_path "${base_dep}")"
+            [[ -e "${ap}" ]] || continue
+            mt="$(stat -c %Y "${ap}")"
+            if [[ "${mt}" -gt "${newest_dep}" ]]; then newest_dep="${mt}"; fi
+          done
           for ref in "${SCRIPT_REFS[@]}"; do
             ap="$(to_abs_path "${ref}")"
             [[ -f "${ap}" ]] || continue
@@ -211,6 +273,28 @@ if [[ ${#RUN_SCRIPTS[@]} -gt 0 ]]; then
       echo "run-script: skipping (${reason}): ${cmdline}"
     fi
   done
+fi
+
+if [[ "${AUTO_REPORT}" -eq 1 && ${#GATE_REFS[@]} -eq 0 ]]; then
+  _auto_report=""
+  # Prefer freshly updated report since run start.
+  _auto_report="$(find docs/pilot -maxdepth 1 -name '*.json' -type f -printf '%T@ %p\n' 2>/dev/null | sort -nr | awk -v s="${_run_start_epoch:-0}" '$1 >= (s-1) {print $2; exit}')"
+  if [[ -z "${_auto_report}" && ${#SCRIPT_REFS[@]} -gt 0 ]]; then
+    _stem="$(basename "${SCRIPT_REFS[0]}")"
+    _stem="${_stem%.*}"
+    _stem="${_stem#check_}"
+    _auto_report="$(find docs/pilot -maxdepth 1 -name "*${_stem}*.json" -type f -printf '%T@ %p\n' 2>/dev/null | sort -nr | awk 'NR==1 {print $2}')"
+  fi
+  if [[ -z "${_auto_report}" ]]; then
+    _auto_report="$(find docs/pilot -maxdepth 1 -name '*.json' -type f -printf '%T@ %p\n' 2>/dev/null | sort -nr | awk 'NR==1 {print $2}')"
+  fi
+  if [[ -n "${_auto_report}" ]]; then
+    append_unique "${_auto_report}" GATE_REFS
+    echo "auto-report: selected ${_auto_report}"
+  else
+    echo "auto-report: no candidate report found under docs/pilot" >&2
+    exit 1
+  fi
 fi
 
 EVIDENCE_ITEMS=()
