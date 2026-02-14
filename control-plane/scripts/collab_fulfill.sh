@@ -14,6 +14,10 @@ SUGGEST_COMMIT=0
 AUTO_COMMIT=0
 COMMIT_SUBJECT=""
 COMMIT_BODY=()
+LAZY=0
+MAX_AGE_MINUTES=30
+RUN_SCRIPTS=()
+DEPS=()
 SCRIPT_REFS=()
 GATE_REFS=()
 THEOREM_REFS=()
@@ -43,6 +47,10 @@ Options:
   --auto-commit         Auto-commit collab model/views after fulfill (requires clean tree).
   --commit-subject <t>  Commit subject override when --auto-commit is set.
   --commit-body <t>     Additional commit body line (repeatable) for --auto-commit.
+  --run-script <cmd>    Execute a script/command before fulfill (repeatable).
+  --dep <path>          Additional dependency path for --lazy freshness checks (repeatable).
+  --lazy                Skip --run-script when evidence appears fresh.
+  --max-age-minutes <n> Freshness TTL for --lazy (default: 30).
 USAGE
 }
 
@@ -64,6 +72,10 @@ while [[ $# -gt 0 ]]; do
     --auto-commit) AUTO_COMMIT=1; shift ;;
     --commit-subject) COMMIT_SUBJECT="${2:-}"; shift 2 ;;
     --commit-body) COMMIT_BODY+=("${2:-}"); shift 2 ;;
+    --run-script) RUN_SCRIPTS+=("${2:-}"); shift 2 ;;
+    --dep) DEPS+=("${2:-}"); shift 2 ;;
+    --lazy) LAZY=1; shift ;;
+    --max-age-minutes) MAX_AGE_MINUTES="${2:-}"; shift 2 ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -72,6 +84,10 @@ done
 if [[ -z "${MESSAGE_REF}" ]]; then
   echo "--message-ref is required" >&2
   usage >&2
+  exit 1
+fi
+if ! [[ "${MAX_AGE_MINUTES}" =~ ^[0-9]+$ ]] || [[ "${MAX_AGE_MINUTES}" -lt 1 ]]; then
+  echo "--max-age-minutes must be a positive integer" >&2
   exit 1
 fi
 
@@ -108,6 +124,18 @@ if [[ -z "${NOTES}" ]]; then
   NOTES="Fulfilled by ${ACTOR_AGENT} via collab_fulfill.sh"
 fi
 
+to_abs_path() {
+  python3 - "$ROOT_DIR" "$1" <<'PY'
+import os, sys
+root = os.path.abspath(sys.argv[1])
+path = sys.argv[2]
+ap = os.path.abspath(path if os.path.isabs(path) else os.path.join(root, path))
+if not ap.startswith(root + os.sep):
+    raise SystemExit(f"path outside repo: {path}")
+print(ap)
+PY
+}
+
 to_rel_path() {
   python3 - "$ROOT_DIR" "$1" <<'PY'
 import os, sys
@@ -133,6 +161,57 @@ mk_evidence_item() {
   digest="$(sha256sum "${ROOT_DIR}/${rel}" | awk '{print $1}')"
   echo "${rel}|${kind}|${COMMIT_SHA}|sha256:${digest}"
 }
+
+if [[ ${#RUN_SCRIPTS[@]} -gt 0 ]]; then
+  _target_report=""
+  if [[ ${#GATE_REFS[@]} -gt 0 ]]; then
+    _target_report="$(to_abs_path "${GATE_REFS[0]}")"
+  fi
+  for cmdline in "${RUN_SCRIPTS[@]}"; do
+    should_run=1
+    reason="no-lazy"
+    if [[ "${LAZY}" -eq 1 ]]; then
+      should_run=0
+      reason="fresh-skip"
+      if [[ -z "${_target_report}" || ! -f "${_target_report}" ]]; then
+        should_run=1
+        reason="missing-report"
+      else
+        report_mtime="$(stat -c %Y "${_target_report}")"
+        now_epoch="$(date +%s)"
+        age_secs=$((now_epoch - report_mtime))
+        if [[ "${age_secs}" -gt $((MAX_AGE_MINUTES * 60)) ]]; then
+          should_run=1
+          reason="report-too-old"
+        else
+          newest_dep=0
+          for ref in "${SCRIPT_REFS[@]}"; do
+            ap="$(to_abs_path "${ref}")"
+            [[ -f "${ap}" ]] || continue
+            mt="$(stat -c %Y "${ap}")"
+            if [[ "${mt}" -gt "${newest_dep}" ]]; then newest_dep="${mt}"; fi
+          done
+          for ref in "${DEPS[@]}"; do
+            ap="$(to_abs_path "${ref}")"
+            [[ -e "${ap}" ]] || continue
+            mt="$(stat -c %Y "${ap}")"
+            if [[ "${mt}" -gt "${newest_dep}" ]]; then newest_dep="${mt}"; fi
+          done
+          if [[ "${newest_dep}" -gt "${report_mtime}" ]]; then
+            should_run=1
+            reason="deps-newer-than-report"
+          fi
+        fi
+      fi
+    fi
+    if [[ "${should_run}" -eq 1 ]]; then
+      echo "run-script: executing (${reason}): ${cmdline}"
+      bash -lc "${cmdline}"
+    else
+      echo "run-script: skipping (${reason}): ${cmdline}"
+    fi
+  done
+fi
 
 EVIDENCE_ITEMS=()
 for ref in "${SCRIPT_REFS[@]}"; do
