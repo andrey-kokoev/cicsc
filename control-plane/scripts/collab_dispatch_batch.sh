@@ -118,6 +118,12 @@ fi
 cd "${ROOT_DIR}"
 ./control-plane/scripts/collab_validate.sh >/dev/null
 
+# In commit mode, require a clean starting point before creating run journals or applying.
+if [[ "${NO_COMMIT}" -eq 0 && "${DRY_RUN}" -eq 0 && -n "$(git status --porcelain)" ]]; then
+  echo "batch apply with commit requires a clean working tree before dispatch starts" >&2
+  exit 1
+fi
+
 if [[ -z "${COMMIT_SHA}" ]]; then
   COMMIT_SHA="$(git rev-parse --short HEAD)"
 fi
@@ -187,7 +193,8 @@ doc = {
         "phase_number": int(phase_filter) if phase_filter else None,
         "milestone_id": milestone_filter or None,
         "strategy": strategy,
-        "count": count,
+        "count": len(rows),
+        "requested_count": count,
     },
     "rows": rows,
 }
@@ -480,11 +487,6 @@ PY
   fi
 fi
 
-if [[ "${NO_COMMIT}" -eq 0 && -n "$(git status --porcelain)" ]]; then
-  echo "batch apply with commit requires a clean working tree" >&2
-  exit 1
-fi
-
 only_pending=0
 [[ -n "${RESUME_RUN}" ]] && only_pending=1
 result="$(apply_run_file "${run_path}" "${only_pending}")"
@@ -496,6 +498,10 @@ if [[ "${applied_count}" -gt 0 ]]; then
 fi
 
 if [[ "${NO_COMMIT}" -eq 0 && "${applied_count}" -gt 0 ]]; then
+  # Include run journal in the same atomic dispatch commit.
+  if [[ -f "${run_path}" ]]; then
+    git add "${run_path}"
+  fi
   if [[ -z "${SUBJECT}" ]]; then
     SUBJECT="governance/collab: batch dispatch apply $(basename "${run_path}" .json)"
   fi
