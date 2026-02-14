@@ -156,9 +156,13 @@ message_transition_policy:
   - from: queued
     to: rescinded
   - from: sent
+    to: queued
+  - from: sent
     to: acknowledged
   - from: sent
     to: rescinded
+  - from: acknowledged
+    to: sent
   - from: acknowledged
     to: fulfilled
   - from: acknowledged
