@@ -62,20 +62,30 @@ def enrich(m):
     }
 
 ack = [enrich(m) for m in inbox if m.get("current_status") == "acknowledged"]
-sent = [enrich(m) for m in inbox if m.get("current_status") in {"sent", "queued"}]
+sent_only = [enrich(m) for m in inbox if m.get("current_status") == "sent"]
+queued_only = [enrich(m) for m in inbox if m.get("current_status") == "queued"]
+sent = sent_only + queued_only
 ack.sort(key=lambda r: r["message_id"] or "")
-sent.sort(key=lambda r: r["message_id"] or "")
+sent_only.sort(key=lambda r: r["message_id"] or "")
+queued_only.sort(key=lambda r: r["message_id"] or "")
 
 next_action = "idle"
 next_detail = ""
+next_command = ""
 if ack:
     first = ack[0]
     next_action = "fulfill_acknowledged_first"
     next_detail = f"fulfill {first['assignment_ref']} ({first['message_id']})"
+    next_command = (
+        f"./control-plane/scripts/collab_show_assignment.sh --ref {first['assignment_ref']} && "
+        f"./control-plane/scripts/collab_fulfill.sh --message-ref {first['message_id']} "
+        f"--worktree \"{worktree}\" --script <path> --gate-report <path>"
+    )
 elif sent:
     first = sent[0]
     next_action = "claim_next_actionable"
     next_detail = f"claim {first['assignment_ref']} ({first['message_id']})"
+    next_command = f"./control-plane/scripts/collab_claim_next.sh --worktree \"{worktree}\""
 
 # Provide lightweight script hints for next action.
 script_hints = []
@@ -93,6 +103,7 @@ out = {
     "actionable": sent,
     "next_action": next_action,
     "next_detail": next_detail,
+    "next_command": next_command,
     "script_hints": sorted(set(script_hints)),
 }
 
@@ -116,6 +127,8 @@ else:
     print("- (none)")
 
 print(f"Next Action: {next_detail if next_detail else 'none'}")
+if next_command:
+    print(f"Run: {next_command}")
 if script_hints:
     print("Script Hints:")
     for s in sorted(set(script_hints)):
