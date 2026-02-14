@@ -118,6 +118,8 @@ def main() -> int:
     ownership_mode = worktree_gov.get("ownership_mode")
     assignment_dispatch_kind_ref = worktree_gov.get("assignment_dispatch_kind_ref")
     enforce_owner_dispatch = bool(worktree_gov.get("enforce_owner_dispatch"))
+    enforce_main_dispatch_authority = bool(worktree_gov.get("enforce_main_dispatch_authority"))
+    main_dispatch_authority_agent_ref = worktree_gov.get("main_dispatch_authority_agent_ref")
     canonical_worker_root = worktree_gov.get("canonical_worker_worktree_root")
     enforce_worker_root = bool(worktree_gov.get("enforce_canonical_worker_worktree_root"))
     creation_authorities = worktree_gov.get("worktree_creation_authority_agent_refs", [])
@@ -126,6 +128,10 @@ def main() -> int:
     for aid in creation_authorities:
         if aid not in agent_map:
             errors.append(f"collab-model: unknown worktree creation authority agent {aid}")
+    if main_dispatch_authority_agent_ref not in agent_map:
+        errors.append(
+            f"collab-model: unknown main_dispatch_authority_agent_ref {main_dispatch_authority_agent_ref}"
+        )
     if enforce_worker_root and (not isinstance(canonical_worker_root, str) or not canonical_worker_root):
         errors.append("collab-model: canonical_worker_worktree_root must be set when enforcement is enabled")
 
@@ -384,6 +390,14 @@ def main() -> int:
         ):
             errors.append(
                 f"collab-model: message {mid} dispatch authority mismatch; {from_agent_ref} is not effective owner of {from_worktree}"
+            )
+        if (
+            enforce_main_dispatch_authority
+            and kind_ref == assignment_dispatch_kind_ref
+            and from_agent_ref != main_dispatch_authority_agent_ref
+        ):
+            errors.append(
+                f"collab-model: message {mid} violates main dispatch authority; expected {main_dispatch_authority_agent_ref}, got {from_agent_ref}"
             )
 
         if to_agent_ref not in agent_map:

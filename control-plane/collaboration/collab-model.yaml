@@ -19,6 +19,8 @@ worktree_governance:
   ownership_mode: single_owner
   assignment_dispatch_kind_ref: MSGK_ASSIGNMENT_DISPATCH
   enforce_owner_dispatch: true
+  enforce_main_dispatch_authority: false
+  main_dispatch_authority_agent_ref: AGENT_MAIN
   worktree_creation_authority_agent_refs:
   - AGENT_MAIN
   canonical_worker_worktree_root: /home/andrey/src/cicsc/worktrees

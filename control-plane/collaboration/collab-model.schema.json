@@ -45,6 +45,8 @@
         "ownership_mode",
         "assignment_dispatch_kind_ref",
         "enforce_owner_dispatch",
+        "enforce_main_dispatch_authority",
+        "main_dispatch_authority_agent_ref",
         "worktree_creation_authority_agent_refs",
         "canonical_worker_worktree_root",
         "enforce_canonical_worker_worktree_root"
@@ -53,6 +55,8 @@
         "ownership_mode": { "type": "string", "enum": ["single_owner"] },
         "assignment_dispatch_kind_ref": { "type": "string", "pattern": "^MSGK_[A-Z0-9_]+$" },
         "enforce_owner_dispatch": { "type": "boolean" },
+        "enforce_main_dispatch_authority": { "type": "boolean" },
+        "main_dispatch_authority_agent_ref": { "type": "string", "pattern": "^AGENT_[A-Z0-9_]+$" },
         "canonical_worker_worktree_root": { "type": "string" },
         "enforce_canonical_worker_worktree_root": { "type": "boolean" },
         "worktree_creation_authority_agent_refs": {
