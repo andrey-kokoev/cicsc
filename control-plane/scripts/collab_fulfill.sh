@@ -162,5 +162,44 @@ if [[ "${DRY_RUN}" -eq 1 ]]; then
   echo "dry-run: would fulfill message ${MESSAGE_REF}"
 else
   ./control-plane/scripts/collab_validate.sh >/dev/null
+  _summary="$(
+    python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$MESSAGE_REF" "$WORKTREE" <<'PY'
+import sys
+from pathlib import Path
+import yaml
+
+collab = yaml.safe_load(Path(sys.argv[1]).read_text(encoding="utf-8"))
+message_ref = sys.argv[2]
+worktree = sys.argv[3]
+messages = collab.get("messages", [])
+events = collab.get("message_events", [])
+
+msg = next((m for m in messages if m.get("id") == message_ref), None)
+if msg is None:
+    raise SystemExit("unknown message")
+assignment_ref = msg.get("assignment_ref")
+
+events_by_message = {}
+for e in events:
+    events_by_message.setdefault(e.get("message_ref"), []).append(e)
+
+remaining = 0
+for m in messages:
+    if m.get("to_worktree") != worktree:
+        continue
+    evs = sorted(events_by_message.get(m.get("id"), []), key=lambda e: int(e.get("at_seq", 0)))
+    cur = evs[-1].get("to_status") if evs else m.get("initial_status")
+    if cur in {"queued", "sent"}:
+        remaining += 1
+
+print(assignment_ref)
+print(remaining)
+PY
+  )"
+  readarray -t _sum_lines <<<"${_summary}"
+  _assignment_ref="${_sum_lines[0]}"
+  _remaining="${_sum_lines[1]}"
   echo "fulfilled message: ${MESSAGE_REF}"
+  echo "assignment: ${_assignment_ref}"
+  echo "remaining actionable in ${WORKTREE}: ${_remaining}"
 fi

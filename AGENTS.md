@@ -133,8 +133,11 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_run_once.sh --worktree "$PWD"`
 - acknowledge next actionable message:
   - `./control-plane/scripts/collab_claim_next.sh --worktree "$PWD"`
+  - override WIP guard only when necessary: `./control-plane/scripts/collab_claim_next.sh --worktree "$PWD" --force`
 - fulfill message with typed evidence (digest auto-computed):
   - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --script scripts/check_x.sh --gate-report docs/pilot/report.json`
+- worktree status summary + recommended next action:
+  - `./control-plane/scripts/collab_status.sh --worktree "$PWD"`
 - main-side ingest+close wrapper:
   - `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`
 - stale mailbox watcher (warn/fail thresholds):

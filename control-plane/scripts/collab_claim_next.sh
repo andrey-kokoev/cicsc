@@ -8,6 +8,7 @@ COMMIT_SHA=""
 NOTES=""
 NO_REFRESH=0
 DRY_RUN=0
+FORCE=0
 
 usage() {
   cat <<'USAGE'
@@ -21,6 +22,7 @@ Options:
   --notes <text>        Optional event note.
   --no-refresh          Do not regenerate mailbox projection before reading.
   --dry-run             Resolve target and validate, but do not append event.
+  --force               Allow claiming new sent/queued messages even when acknowledged work exists.
 USAGE
 }
 
@@ -32,6 +34,7 @@ while [[ $# -gt 0 ]]; do
     --notes) NOTES="${2:-}"; shift 2 ;;
     --no-refresh) NO_REFRESH=1; shift ;;
     --dry-run) DRY_RUN=1; shift ;;
+    --force) FORCE=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -49,7 +52,7 @@ if [[ "${NO_REFRESH}" -eq 0 ]]; then
 fi
 
 _resolved="$(
-python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$ROOT_DIR/control-plane/views/worktree-mailboxes.generated.json" "$WORKTREE" "$MESSAGE_REF" <<'PY'
+python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$ROOT_DIR/control-plane/views/worktree-mailboxes.generated.json" "$WORKTREE" "$MESSAGE_REF" "$FORCE" <<'PY'
 import json
 import sys
 from pathlib import Path
@@ -59,11 +62,22 @@ collab_path = Path(sys.argv[1])
 mailbox_path = Path(sys.argv[2])
 worktree = sys.argv[3]
 message_ref = sys.argv[4]
+force = sys.argv[5] == "1"
 
 collab = yaml.safe_load(collab_path.read_text(encoding="utf-8"))
 mailboxes = json.loads(mailbox_path.read_text(encoding="utf-8")).get("mailboxes", {})
 entry = mailboxes.get(worktree, {"inbox": []})
 inbox = entry.get("inbox", [])
+acknowledged = sorted(
+    [m for m in inbox if m.get("current_status") == "acknowledged"],
+    key=lambda m: m.get("id", "")
+)
+if acknowledged and not force:
+    print("BLOCKED_ACKNOWLEDGED")
+    for m in acknowledged:
+        print(m.get("id"))
+    raise SystemExit(0)
+
 actionable = [m for m in inbox if m.get("current_status") in {"queued", "sent"}]
 if not actionable:
     if message_ref:
@@ -98,6 +112,16 @@ PY
 if [[ "${_resolved}" == "NO_ACTIONABLE" ]]; then
   echo "no actionable inbox messages for ${WORKTREE}"
   exit 0
+fi
+
+if [[ "${_resolved}" == BLOCKED_ACKNOWLEDGED* ]]; then
+  readarray -t _blk <<<"${_resolved}"
+  echo "claim blocked: worktree ${WORKTREE} has acknowledged messages that must be fulfilled first" >&2
+  for ((i=1; i<${#_blk[@]}; i++)); do
+    [[ -n "${_blk[$i]}" ]] && echo " - ${_blk[$i]}" >&2
+  done
+  echo "use --force to override" >&2
+  exit 1
 fi
 
 readarray -t _lines <<<"${_resolved}"
