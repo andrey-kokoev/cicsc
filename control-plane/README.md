@@ -73,6 +73,7 @@ Current mode (`status_source_mode: execution_ledger_yaml_canonical`):
 - `control-plane/scripts/collab_inbox.sh`
 - `control-plane/scripts/collab_append_event.sh`
 - `control-plane/scripts/collab_dispatch.sh`
+- `control-plane/scripts/collab_create_assignment.sh`
 - `control-plane/scripts/collab_delegate_worktree.sh`
 - `control-plane/scripts/collab_help.sh`
 - `control-plane/scripts/collab_claim_next.sh`

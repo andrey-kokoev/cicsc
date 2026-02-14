@@ -119,6 +119,8 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_inbox.sh --worktree "$PWD" --refresh --actionable-only`
 - main-side dispatch wrapper:
   - `./control-plane/scripts/collab_dispatch.sh --assignment-ref ASSIGN_... --payload-ref control-plane/collaboration/collab-model.yaml`
+- atomic create+dispatch wrapper (for new assignments):
+  - `./control-plane/scripts/collab_create_assignment.sh --assignment-id ASSIGN_... --agent-ref AGENT_KIMI --checkbox-ref AY1.2 --branch phase34.ay1.2 --payload-ref AGENTS.md`
 - owner delegation wrapper (effective ownership handoff/revoke):
   - `./control-plane/scripts/collab_delegate_worktree.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --owner-agent-ref AGENT_MAIN --delegate-to AGENT_KIMI`
 - single-step worker loop helper (claim + fulfillment guidance):
@@ -134,7 +136,7 @@ Message I/O command surface:
 - assignment obligation/evidence delta view:
   - `./control-plane/scripts/collab_show_assignment.sh --ref ASSIGN_...`
 - unified dry-run wrapper:
-  - `./control-plane/scripts/collab_dry_run.sh <claim-next|fulfill|close|dispatch|delegate> ...`
+  - `./control-plane/scripts/collab_dry_run.sh <create|claim-next|fulfill|close|dispatch|delegate|append-event> ...`
 
 Happy path:
 1. `./control-plane/scripts/collab_help.sh --role worker --worktree "$PWD"`

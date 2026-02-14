@@ -9,6 +9,7 @@ Usage:
   control-plane/scripts/collab_dry_run.sh <action> [args...]
 
 Actions:
+  create       -> collab_create_assignment.sh --dry-run
   claim-next   -> collab_claim_next.sh --dry-run
   fulfill      -> collab_fulfill.sh --dry-run
   close        -> collab_close_ingested.sh --dry-run
@@ -18,6 +19,7 @@ Actions:
 
 Examples:
   ./control-plane/scripts/collab_dry_run.sh claim-next --worktree "$PWD"
+  ./control-plane/scripts/collab_dry_run.sh create --assignment-id ASSIGN_... --agent-ref AGENT_KIMI --checkbox-ref AY1.2 --branch phase34.ay1.2 --payload-ref AGENTS.md
   ./control-plane/scripts/collab_dry_run.sh fulfill --message-ref MSG_... --worktree "$PWD" --script scripts/check_x.sh --gate-report docs/pilot/report.json
 USAGE
 }
@@ -35,6 +37,9 @@ cd "${ROOT_DIR}"
 case "${ACTION}" in
   claim-next)
     ./control-plane/scripts/collab_claim_next.sh --dry-run "$@"
+    ;;
+  create)
+    ./control-plane/scripts/collab_create_assignment.sh --dry-run "$@"
     ;;
   fulfill)
     ./control-plane/scripts/collab_fulfill.sh --dry-run "$@"
