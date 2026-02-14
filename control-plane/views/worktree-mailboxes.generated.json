@@ -104,8 +104,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch AY1.1 prep lane (Antigravity): context-matrix and acceptance-contract freeze draft.",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "rescinded",
+          "event_count": 2
         },
         {
           "id": "MSG_PHASE34_AY12_KIMI_SYNC_DISPATCH",
@@ -144,8 +144,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Protocol sync request: rebase with main and verify AGENTS+control-plane README parity before next assignment.",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "rescinded",
+          "event_count": 2
         },
         {
           "id": "MSG_PHASE34_AY21_KIMI_MULTI1_DISPATCH",
@@ -346,6 +346,46 @@
           "notes": "Batch dispatch AZ2.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
           "current_status": "closed",
           "event_count": 5
+        },
+        {
+          "id": "MSG_PHASE34_AY11_KIMI_BATCH_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY11_KIMI_BATCH",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay1.1",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Batch dispatch AY1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY13_KIMI_BATCH_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY13_KIMI_BATCH",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay1.3",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Batch dispatch AY1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
         }
       ]
     },
@@ -610,6 +650,46 @@
           "notes": "Batch dispatch AZ2.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
           "current_status": "closed",
           "event_count": 5
+        },
+        {
+          "id": "MSG_PHASE34_AY11_KIMI_BATCH_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY11_KIMI_BATCH",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay1.1",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Batch dispatch AY1.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY13_KIMI_BATCH_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY13_KIMI_BATCH",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay1.3",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Batch dispatch AY1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
         }
       ],
       "outbox": []
@@ -673,8 +753,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch AY1.1 prep lane (Antigravity): context-matrix and acceptance-contract freeze draft.",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "rescinded",
+          "event_count": 2
         },
         {
           "id": "MSG_PHASE34_AY13_ANTIGRAVITY_SYNC_DISPATCH",
@@ -693,8 +773,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Protocol sync request: rebase with main and verify AGENTS+control-plane README parity before next assignment.",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "rescinded",
+          "event_count": 2
         }
       ],
       "outbox": []

@@ -55,8 +55,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/antigravity",
       "branch": "phase34.ay1.1",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_main",
       "notes": "AY1.1 prep lane: freeze context matrix draft and acceptance contract scaffold for Phase 34."
     },
     {
@@ -77,8 +77,8 @@
       "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
       "worktree": "/home/andrey/src/cicsc/worktrees/antigravity",
       "branch": "phase34.ay1.3",
-      "status": "assigned",
-      "outcome": "pending",
+      "status": "done",
+      "outcome": "fulfilled_by_main",
       "notes": "Protocol sync: rebase worktree branch on main and confirm AGENTS/README parity."
     },
     {
@@ -190,6 +190,28 @@
       "status": "done",
       "outcome": "fulfilled_by_assignee",
       "notes": "Batch dispatch for AZ2.3: Mark final completion gate pass and archive execution-era closure index"
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY11_KIMI_BATCH",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY1.1",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay1.1",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Batch dispatch for AY1.1: Freeze Phase 34 context matrix and expanded acceptance contract"
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY13_KIMI_BATCH",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY1.3",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay1.3",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Batch dispatch for AY1.3: Publish incident and drift localization report with forced-next mapping policy"
     }
   ]
 }

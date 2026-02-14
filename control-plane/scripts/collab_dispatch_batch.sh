@@ -432,7 +432,7 @@ PY
       create_cmd+=(--payload-ref "${p}")
     done
 
-    if output="$(${create_cmd[@]} 2>&1)"; then
+    if output="$("${create_cmd[@]}" 2>&1)"; then
       update_run_row_state "${run_path}" "${idx}" "applied" ""
       applied=$((applied + 1))
     else
