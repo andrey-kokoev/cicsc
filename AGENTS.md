@@ -124,7 +124,7 @@ Message I/O command surface:
   - `cd /home/andrey/src/cicsc`
   - `WORKTREE=/home/andrey/src/cicsc/worktrees/kimi`
   - `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh --actionable-only`
-  - `./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE"`
+  - `./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE" --commit`
 - collaboration preflight gate:
   - `./control-plane/scripts/collab_validate.sh`
 - quickstart command map (worker/main):
@@ -141,11 +141,12 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_run_once.sh --worktree "$PWD"`
 - acknowledge next actionable message:
   - `./control-plane/scripts/collab_claim_next.sh --worktree "$PWD"`
+  - one-command claim+commit: `./control-plane/scripts/collab_claim_next.sh --worktree "$PWD" --commit`
   - override WIP guard only when necessary: `./control-plane/scripts/collab_claim_next.sh --worktree "$PWD" --force`
 - fulfill message with typed evidence (digest auto-computed):
   - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --script scripts/check_x.sh --gate-report docs/pilot/report.json`
   - lazy re-run support for expensive checks:
-    - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --script scripts/check_x.sh --gate-report docs/pilot/report.json --run-script scripts/check_x.sh --lazy`
+    - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --with scripts/check_x.sh --auto-report --lazy`
   - auto-commit with custom message:
     - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --script scripts/check_x.sh --gate-report docs/pilot/report.json --auto-commit --commit-subject "phaseXX ayY.Y fulfill ..."`
 - worktree status summary + recommended next action:
@@ -160,6 +161,8 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_summary.sh --worktree "$PWD" --since 2026-02-13`
 - interactive loop wrapper:
   - `./control-plane/scripts/collab_interactive.sh --worktree "$PWD"`
+- fuzzy interactive picker (requires `fzf`):
+  - `./control-plane/scripts/collab_fzf.sh --worktree "$PWD"`
 - main-side ingest+close wrapper:
   - `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`
 - stale mailbox watcher (warn/fail thresholds):
@@ -187,6 +190,8 @@ Canonical worker loop (multi-assignment):
 5. Main ingests/closes fulfilled message:
    - `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`
 6. Repeat until `next_action=idle`.
+7. If canonical sync/view drift appears in gates:
+   - `./control-plane/scripts/collab_sync.sh`
 
 WIP semantic rule (mechanically enforced):
 - A worktree may not claim new `sent/queued` work while any message remains `acknowledged` in that same worktree.
