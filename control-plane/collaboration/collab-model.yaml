@@ -2235,8 +2235,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/gemini
   branch: phase34.ay2.1.i02
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i02 for AY2.1: Add Phase 34 required-gates script/report
     for expanded multi-context envelope'
 - id: ASSIGN_PHASE34_AY22_GEMINI_I02
@@ -2245,8 +2245,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/gemini
   branch: phase34.ay2.2.i02
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i02 for AY2.2: Publish Phase 34 closure report with unresolved
     critical disposition'
 - id: ASSIGN_PHASE34_AY23_GEMINI_I02
@@ -2255,8 +2255,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/gemini
   branch: phase34.ay2.3.i02
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i02 for AY2.3: Define objective Phase 34 exit checklist
     mapped to artifacts'
 message_kinds:
@@ -16445,3 +16445,57 @@ message_events:
   notes: friction triage decision=accept_now; notes=Valid ergonomics issue. Silent
     auto-commit disable is worse than clear error. Will fix to show specific dirty
     files and suggest recovery command.
+- id: MSGEV_PHASE34_AY21_GEMINI_I02_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY21_GEMINI_I02_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: b100da2
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY21_GEMINI_I02_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY21_GEMINI_I02_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: b100da2
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY22_GEMINI_I02_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY22_GEMINI_I02_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: b100da2
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY22_GEMINI_I02_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY22_GEMINI_I02_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: b100da2
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY23_GEMINI_I02_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY23_GEMINI_I02_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: b100da2
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY23_GEMINI_I02_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY23_GEMINI_I02_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: b100da2
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
