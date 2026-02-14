@@ -15,6 +15,8 @@ FRICTION_BACKLOG_REF=""
 FRICTION_NOTES=""
 QUIET=0
 DRY_RUN=0
+CONTINUE_ON_ERROR=1
+ERROR_SLEEP_SECONDS=5
 
 usage() {
   cat <<'USAGE'
@@ -34,6 +36,8 @@ Options:
   --friction-notes <text>      Optional triage note.
   --dry-run                    Print planned actions without mutating.
   --quiet                      Reduce log output.
+  --fail-fast                  Exit on first process/dispatch failure.
+  --error-sleep-seconds <n>    Backoff after recoverable errors (default: 5).
 
 Semantics:
   Loop: process main ingestables -> wait until worker pending <= max_inflight -> dispatch batch
@@ -54,6 +58,8 @@ while [[ $# -gt 0 ]]; do
     --friction-notes) FRICTION_NOTES="${2:-}"; shift 2 ;;
     --dry-run) DRY_RUN=1; shift ;;
     --quiet) QUIET=1; shift ;;
+    --fail-fast) CONTINUE_ON_ERROR=0; shift ;;
+    --error-sleep-seconds) ERROR_SLEEP_SECONDS="${2:-}"; shift 2 ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -64,7 +70,8 @@ for pair in \
   "MAX_CYCLES:$MAX_CYCLES" \
   "MAX_INFLIGHT:$MAX_INFLIGHT" \
   "INTERVAL_SECONDS:$INTERVAL_SECONDS" \
-  "WAIT_TIMEOUT_SECONDS:$WAIT_TIMEOUT_SECONDS"; do
+  "WAIT_TIMEOUT_SECONDS:$WAIT_TIMEOUT_SECONDS" \
+  "ERROR_SLEEP_SECONDS:$ERROR_SLEEP_SECONDS"; do
   name="${pair%%:*}"; val="${pair##*:}"
   if ! [[ "${val}" =~ ^[0-9]+$ ]]; then
     echo "${name} must be an integer >= 0" >&2
@@ -147,6 +154,22 @@ run_dispatch() {
   fi
 }
 
+safe_step() {
+  local label="$1"
+  shift
+  if "$@"; then
+    return 0
+  fi
+  rc=$?
+  echo "autopilot error: ${label} failed (exit=${rc})" >&2
+  if [[ "${CONTINUE_ON_ERROR}" -eq 0 ]]; then
+    exit "${rc}"
+  fi
+  echo "autopilot recoverable path: sleeping ${ERROR_SLEEP_SECONDS}s before retry loop" >&2
+  sleep "${ERROR_SLEEP_SECONDS}"
+  return "${rc}"
+}
+
 cycle=0
 while true; do
   if [[ "${MAX_CYCLES}" -gt 0 && "${cycle}" -ge "${MAX_CYCLES}" ]]; then
@@ -160,7 +183,7 @@ while true; do
   if [[ "${QUIET}" -eq 0 ]]; then
     echo "[cycle ${cycle}] process main"
   fi
-  run_main_process
+  safe_step "process-main@cycle-${cycle}" run_main_process || continue
 
   # Wait until worker backlog is below threshold.
   while true; do
@@ -174,13 +197,13 @@ while true; do
       echo "[cycle ${cycle}] pending=${pending} (> ${MAX_INFLIGHT}), waiting ${INTERVAL_SECONDS}s"
     fi
     sleep "${INTERVAL_SECONDS}"
-    run_main_process
+    safe_step "process-main-backlog@cycle-${cycle}" run_main_process || continue
   done
 
   if [[ "${QUIET}" -eq 0 ]]; then
     echo "[cycle ${cycle}] dispatch batch size ${BATCH_SIZE}"
   fi
-  run_dispatch
+  safe_step "dispatch@cycle-${cycle}" run_dispatch || continue
   cycle=$((cycle + 1))
 
   # Wait for ingestable work from worker before next dispatch cycle.
@@ -193,7 +216,7 @@ while true; do
       if [[ "${QUIET}" -eq 0 ]]; then
         echo "[cycle ${cycle}] ingestable=${ingestable}; running main process"
       fi
-      run_main_process
+      safe_step "process-main-ingestable@cycle-${cycle}" run_main_process || true
       break
     fi
 
