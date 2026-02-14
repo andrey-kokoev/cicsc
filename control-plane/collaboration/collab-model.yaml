@@ -1533,8 +1533,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase34.ay1.2.i26
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i26 for AY1.2: Execute multi-context workloads under expanded
     objective envelopes'
 - id: ASSIGN_PHASE33_AX13_KIMI_I35
@@ -10877,3 +10877,21 @@ message_events:
   commit: 9b67ff9
   evidence_bindings: []
   notes: Acknowledged by AGENT_KIMI via collab_claim_next.sh
+- id: MSGEV_PHASE34_AY12_KIMI_I26_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY12_KIMI_I26_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 9d2c381
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY12_KIMI_I26_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY12_KIMI_I26_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 9d2c381
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
