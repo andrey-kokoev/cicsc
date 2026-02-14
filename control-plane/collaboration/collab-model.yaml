@@ -1643,8 +1643,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase34.ay1.1.i34
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i34 for AY1.1: Freeze Phase 34 context matrix and expanded
     acceptance contract'
 - id: ASSIGN_PHASE34_AY12_KIMI_I29
@@ -11658,3 +11658,21 @@ message_events:
     commit: a30258f
     digest: sha256:cb42d64bfb20b2cb21d10c4246c49a9e54ac5fbeb32a05f13534f0ef9930bd25
   notes: Fulfilled by AGENT_KIMI via collab_fulfill.sh
+- id: MSGEV_PHASE34_AY11_KIMI_I34_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY11_KIMI_I34_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: d56e520
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY11_KIMI_I34_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY11_KIMI_I34_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: d56e520
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
