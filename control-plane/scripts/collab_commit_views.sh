@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 "${ROOT_DIR}/control-plane/scripts/collab_require_root.sh" "${ROOT_DIR}"
 SUBJECT="governance/collab: commit model and generated views"
+SUBJECT_EXPLICIT=0
 BODY=()
 DRY_RUN=0
 NO_REFRESH=0
@@ -28,7 +29,7 @@ USAGE
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --subject) SUBJECT="${2:-}"; shift 2 ;;
+    --subject) SUBJECT="${2:-}"; SUBJECT_EXPLICIT=1; shift 2 ;;
     --body) BODY+=("${2:-}"); shift 2 ;;
     --no-refresh) NO_REFRESH=1; shift ;;
     --from-last-collab-action) FROM_LAST_COLLAB_ACTION=1; shift ;;
@@ -73,11 +74,16 @@ PY
   )"
   if [[ -n "${_derived}" ]]; then
     readarray -t _dlines <<<"${_derived}"
-    SUBJECT="${_dlines[0]}"
-    BODY=()
-    for ((i=1; i<${#_dlines[@]}; i++)); do
-      BODY+=("${_dlines[$i]}")
-    done
+    if [[ "${SUBJECT_EXPLICIT}" -eq 0 ]]; then
+      SUBJECT="${_dlines[0]}"
+    fi
+    # If body was not explicitly provided, use derived metadata lines.
+    if [[ ${#BODY[@]} -eq 0 ]]; then
+      BODY=()
+      for ((i=1; i<${#_dlines[@]}; i++)); do
+        BODY+=("${_dlines[$i]}")
+      done
+    fi
   fi
 fi
 
