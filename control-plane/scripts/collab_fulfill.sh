@@ -10,6 +10,7 @@ COMMIT_SHA=""
 NOTES=""
 NO_REFRESH=0
 DRY_RUN=0
+SUGGEST_COMMIT=0
 SCRIPT_REFS=()
 GATE_REFS=()
 THEOREM_REFS=()
@@ -35,6 +36,7 @@ Options:
                         Add custom typed evidence (digest auto-computed from ref path).
   --no-refresh          Do not regenerate mailbox projection after append.
   --dry-run             Validate and resolve evidence bindings, but do not append event.
+  --suggest-commit      Print a suggested git commit command after fulfill.
 USAGE
 }
 
@@ -52,6 +54,7 @@ while [[ $# -gt 0 ]]; do
     --evidence) RAW_EVIDENCE+=("${2:-}"); shift 2 ;;
     --no-refresh) NO_REFRESH=1; shift ;;
     --dry-run) DRY_RUN=1; shift ;;
+    --suggest-commit) SUGGEST_COMMIT=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -179,6 +182,8 @@ msg = next((m for m in messages if m.get("id") == message_ref), None)
 if msg is None:
     raise SystemExit("unknown message")
 assignment_ref = msg.get("assignment_ref")
+assignments = {a.get("id"): a for a in collab.get("assignments", [])}
+checkbox_ref = (assignments.get(assignment_ref) or {}).get("checkbox_ref", "")
 
 events_by_message = {}
 for e in events:
@@ -194,13 +199,24 @@ for m in messages:
         remaining += 1
 
 print(assignment_ref)
+print(checkbox_ref)
 print(remaining)
 PY
   )"
   readarray -t _sum_lines <<<"${_summary}"
   _assignment_ref="${_sum_lines[0]}"
-  _remaining="${_sum_lines[1]}"
+  _checkbox_ref="${_sum_lines[1]}"
+  _remaining="${_sum_lines[2]}"
   echo "fulfilled message: ${MESSAGE_REF}"
   echo "assignment: ${_assignment_ref}"
   echo "remaining actionable in ${WORKTREE}: ${_remaining}"
+  if [[ "${SUGGEST_COMMIT}" -eq 1 ]]; then
+    _subject="governance/collab: fulfill ${_assignment_ref}"
+    if [[ -n "${_checkbox_ref}" ]]; then
+      _subject="governance/collab: fulfill ${_checkbox_ref} (${_assignment_ref})"
+    fi
+    echo "suggested commit:"
+    echo "git add control-plane/collaboration/collab-model.yaml control-plane/views/ && \\"
+    echo "  git commit -m \"${_subject}\""
+  fi
 fi
