@@ -146,6 +146,28 @@
       "status": "assigned",
       "outcome": "pending",
       "notes": "Multi-task lane 6 for Kimi: AZ1.2 forced-next disposition synthesis and evidence."
+    },
+    {
+      "id": "ASSIGN_PHASE35_AZ13_KIMI_MULTI7",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AZ1.3",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase35.az1.3",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Multi-task lane 7 for Kimi: AZ1.3 project completion verdict by objective."
+    },
+    {
+      "id": "ASSIGN_PHASE35_AZ21_KIMI_MULTI8",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AZ2.1",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase35.az2.1",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Multi-task lane 8 for Kimi: AZ2.1 stewardship model freeze and evidence pack."
     }
   ]
 }
