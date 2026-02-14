@@ -2155,8 +2155,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase34.ay1.2.i40
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i40 for AY1.2: Execute multi-context workloads under expanded
     objective envelopes'
 - id: ASSIGN_PHASE34_AY13_KIMI_I11
@@ -2165,8 +2165,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase34.ay1.3.i11
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i11 for AY1.3: Publish incident and drift localization
     report with forced-next mapping policy'
 - id: ASSIGN_PHASE34_AY21_GEMINI_I01
@@ -15854,5 +15854,41 @@ message_events:
   actor_agent_ref: AGENT_MAIN
   at_seq: 5
   commit: 1115faf
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY12_KIMI_I40_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY12_KIMI_I40_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 140f532
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY12_KIMI_I40_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY12_KIMI_I40_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 140f532
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY13_KIMI_I11_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY13_KIMI_I11_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 140f532
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY13_KIMI_I11_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY13_KIMI_I11_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 140f532
   evidence_bindings: []
   notes: Closed in main via collab_close_ingested.sh
