@@ -703,8 +703,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase34.ay1.1.i05
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i05 for AY1.1: Freeze Phase 34 context matrix and expanded
     acceptance contract'
 - id: ASSIGN_PHASE34_AY12_KIMI_I05
@@ -713,8 +713,8 @@ assignments:
   claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
   worktree: /home/andrey/src/cicsc/worktrees/kimi
   branch: phase34.ay1.2.i05
-  status: assigned
-  outcome: pending
+  status: done
+  outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i05 for AY1.2: Execute multi-context workloads under expanded
     objective envelopes'
 message_kinds:
@@ -4345,6 +4345,42 @@ message_events:
   notes: Ingested in main via collab_close_ingested.sh
 - id: MSGEV_PHASE33_AX13_KIMI_I05_DISPATCH_CLOSED_5
   message_ref: MSG_PHASE33_AX13_KIMI_I05_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 6a5845d
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY11_KIMI_I05_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY11_KIMI_I05_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 6a5845d
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY11_KIMI_I05_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY11_KIMI_I05_DISPATCH
+  from_status: ingested
+  to_status: closed
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 5
+  commit: 6a5845d
+  evidence_bindings: []
+  notes: Closed in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY12_KIMI_I05_DISPATCH_INGESTED_4
+  message_ref: MSG_PHASE34_AY12_KIMI_I05_DISPATCH
+  from_status: fulfilled
+  to_status: ingested
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 4
+  commit: 6a5845d
+  evidence_bindings: []
+  notes: Ingested in main via collab_close_ingested.sh
+- id: MSGEV_PHASE34_AY12_KIMI_I05_DISPATCH_CLOSED_5
+  message_ref: MSG_PHASE34_AY12_KIMI_I05_DISPATCH
   from_status: ingested
   to_status: closed
   actor_agent_ref: AGENT_MAIN
