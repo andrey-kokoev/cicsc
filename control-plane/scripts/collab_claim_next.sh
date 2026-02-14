@@ -11,6 +11,8 @@ NO_REFRESH=0
 DRY_RUN=0
 FORCE=0
 AUTO_COMMIT=0
+COMMIT_SUBJECT=""
+COMMIT_BODY=()
 
 usage() {
   cat <<'USAGE'
@@ -26,6 +28,8 @@ Options:
   --dry-run             Resolve target and validate, but do not append event.
   --force               Allow claiming new sent/queued messages even when acknowledged work exists.
   --auto-commit         Auto-commit collab model/views after successful claim (requires clean tree).
+  --commit-subject <t>  Commit subject override when --auto-commit is set.
+  --commit-body <t>     Additional commit body line (repeatable) for --auto-commit.
 USAGE
 }
 
@@ -39,6 +43,8 @@ while [[ $# -gt 0 ]]; do
     --dry-run) DRY_RUN=1; shift ;;
     --force) FORCE=1; shift ;;
     --auto-commit) AUTO_COMMIT=1; shift ;;
+    --commit-subject) COMMIT_SUBJECT="${2:-}"; shift 2 ;;
+    --commit-body) COMMIT_BODY+=("${2:-}"); shift 2 ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -172,7 +178,14 @@ else
   echo "claimed message: ${MESSAGE_REF}"
   echo "run: ./control-plane/scripts/collab_show_assignment.sh --ref ${ASSIGNMENT_REF}"
   if [[ "${AUTO_COMMIT}" -eq 1 ]]; then
-    ./control-plane/scripts/collab_commit_views.sh --from-last-collab-action
+    _commit_cmd=(./control-plane/scripts/collab_commit_views.sh --from-last-collab-action)
+    if [[ -n "${COMMIT_SUBJECT}" ]]; then
+      _commit_cmd+=(--subject "${COMMIT_SUBJECT}")
+    fi
+    for line in "${COMMIT_BODY[@]}"; do
+      _commit_cmd+=(--body "${line}")
+    done
+    "${_commit_cmd[@]}"
     echo "auto-committed collab model/views"
   fi
 fi

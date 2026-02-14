@@ -12,6 +12,8 @@ NO_REFRESH=0
 DRY_RUN=0
 SUGGEST_COMMIT=0
 AUTO_COMMIT=0
+COMMIT_SUBJECT=""
+COMMIT_BODY=()
 SCRIPT_REFS=()
 GATE_REFS=()
 THEOREM_REFS=()
@@ -39,6 +41,8 @@ Options:
   --dry-run             Validate and resolve evidence bindings, but do not append event.
   --suggest-commit      Print a suggested git commit command after fulfill.
   --auto-commit         Auto-commit collab model/views after fulfill (requires clean tree).
+  --commit-subject <t>  Commit subject override when --auto-commit is set.
+  --commit-body <t>     Additional commit body line (repeatable) for --auto-commit.
 USAGE
 }
 
@@ -58,6 +62,8 @@ while [[ $# -gt 0 ]]; do
     --dry-run) DRY_RUN=1; shift ;;
     --suggest-commit) SUGGEST_COMMIT=1; shift ;;
     --auto-commit) AUTO_COMMIT=1; shift ;;
+    --commit-subject) COMMIT_SUBJECT="${2:-}"; shift 2 ;;
+    --commit-body) COMMIT_BODY+=("${2:-}"); shift 2 ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -229,7 +235,14 @@ PY
     echo "  git commit -m \"${_subject}\""
   fi
   if [[ "${AUTO_COMMIT}" -eq 1 ]]; then
-    ./control-plane/scripts/collab_commit_views.sh --from-last-collab-action
+    _commit_cmd=(./control-plane/scripts/collab_commit_views.sh --from-last-collab-action)
+    if [[ -n "${COMMIT_SUBJECT}" ]]; then
+      _commit_cmd+=(--subject "${COMMIT_SUBJECT}")
+    fi
+    for line in "${COMMIT_BODY[@]}"; do
+      _commit_cmd+=(--body "${line}")
+    done
+    "${_commit_cmd[@]}"
     echo "auto-committed collab model/views"
   fi
 fi
