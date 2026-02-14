@@ -33,7 +33,7 @@ Options:
   --no-commit            Do not auto-commit state transitions.
   --dry-run              Print intended actions only.
 
-Worker fulfill options (required for full worker lifecycle):
+Worker fulfill options (optional):
   --with <path|cmd>
   --script <path>
   --gate-report <path>
@@ -42,6 +42,9 @@ Worker fulfill options (required for full worker lifecycle):
   --evidence <ref|EVID_KIND>
   --lazy
   --auto-report
+
+If omitted, worker mode auto-resolves required script/report evidence from
+assignment obligation profiles.
 USAGE
 }
 
@@ -91,19 +94,19 @@ if [[ "${ROLE}" == "main" ]]; then
     main_args+=(--agent-ref "${AGENT_REF}")
   fi
   if [[ "${DRY_RUN}" -eq 1 ]]; then
-    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status fulfilled --count 0 --dry-run
-    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status ingested --count 0 --dry-run
+    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status fulfilled --count 0 --dry-run --silent-empty
+    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status ingested --count 0 --dry-run --silent-empty
     exit 0
   fi
 
   if [[ "${NO_COMMIT}" -eq 1 ]]; then
-    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status fulfilled --count 0 --no-commit
-    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status ingested --count 0 --no-commit
+    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status fulfilled --count 0 --no-commit --silent-empty
+    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status ingested --count 0 --no-commit --silent-empty
     ./control-plane/scripts/generate_views.sh >/dev/null
     ./control-plane/scripts/collab_validate.sh >/dev/null
   else
-    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status fulfilled --count 0 --subject "governance/collab: process messages (main/fulfilled)"
-    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status ingested --count 0 --subject "governance/collab: process messages (main/ingested)"
+    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status fulfilled --count 0 --subject "governance/collab: process messages (main/fulfilled)" --silent-empty
+    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status ingested --count 0 --subject "governance/collab: process messages (main/ingested)" --silent-empty
   fi
 
   ./control-plane/scripts/collab_main_status.sh --refresh
@@ -143,30 +146,117 @@ PY
   fi
 
   if [[ "${next_action}" == "fulfill_acknowledged_first" ]]; then
-    if [[ "${needs_evidence}" -eq 0 ]]; then
-      echo "worker process-messages halted: acknowledged work requires fulfill evidence flags (--with/--script/--gate-report/etc)." >&2
-      exit 1
-    fi
-    msg_ref="$(python3 - "$status_json" <<'PY'
+    _ids="$(python3 - "$status_json" <<'PY'
 import json,sys
 d=json.loads(sys.argv[1])
 arr=d.get('in_progress',[])
-print(arr[0].get('message_id','') if arr else '')
+if arr:
+  print(arr[0].get('message_id',''))
+  print(arr[0].get('assignment_ref',''))
+else:
+  print("")
+  print("")
 PY
 )"
-    if [[ -z "${msg_ref}" ]]; then
+    readarray -t _id_lines <<<"${_ids}"
+    msg_ref="${_id_lines[0]:-}"
+    assignment_ref="${_id_lines[1]:-}"
+    if [[ -z "${msg_ref}" || -z "${assignment_ref}" ]]; then
       echo "worker process-messages: missing acknowledged message_ref" >&2
       exit 1
     fi
+
+    resolved_with=()
+    resolved_gate=""
+    resolved_theorem=()
+    resolved_diff=()
+    if [[ "${needs_evidence}" -eq 0 ]]; then
+      _resolved="$(python3 - "$assignment_ref" <<'PY'
+import json
+import subprocess
+import sys
+
+assignment_ref = sys.argv[1]
+p = subprocess.run(
+    ["./control-plane/scripts/collab_show_assignment.sh", "--ref", assignment_ref, "--json"],
+    check=True,
+    capture_output=True,
+    text=True,
+)
+doc = json.loads(p.stdout)
+cand = doc.get("candidate_evidence", {})
+reqs = doc.get("requirements", [])
+required = {r.get("evidence_kind_ref") for r in reqs if int(r.get("missing", 0)) > 0}
+if not required:
+    required = {"EVID_SCRIPT", "EVID_GATE_REPORT"}
+
+def pick_best(kind):
+    rows = cand.get(kind, [])
+    if not rows:
+        return ""
+    rows = sorted(rows, key=lambda r: (0 if r.get("freshness") == "fresh" else 1, int(r.get("age_seconds", 10**9))))
+    return rows[0].get("ref", "")
+
+scripts = []
+for r in cand.get("EVID_SCRIPT", []):
+    if r.get("source") == "obligation_required_script" and r.get("ref"):
+        scripts.append(r["ref"])
+if not scripts:
+    s = pick_best("EVID_SCRIPT")
+    if s:
+        scripts = [s]
+
+gate = pick_best("EVID_GATE_REPORT")
+theorem = pick_best("EVID_THEOREM")
+diff = pick_best("EVID_DIFFERENTIAL_LOG")
+
+for s in scripts:
+    print(f"WITH\t{s}")
+if gate:
+    print(f"GATE\t{gate}")
+if theorem and "EVID_THEOREM" in required:
+    print(f"THEOREM\t{theorem}")
+if diff and "EVID_DIFFERENTIAL_LOG" in required:
+    print(f"DIFF\t{diff}")
+PY
+)"
+      while IFS=$'\t' read -r kind ref; do
+        [[ -z "${kind}" || -z "${ref}" ]] && continue
+        case "${kind}" in
+          WITH) resolved_with+=("${ref}") ;;
+          GATE) resolved_gate="${ref}" ;;
+          THEOREM) resolved_theorem+=("${ref}") ;;
+          DIFF) resolved_diff+=("${ref}") ;;
+        esac
+      done <<<"${_resolved}"
+
+      if [[ ${#resolved_with[@]} -eq 0 ]]; then
+        echo "worker process-messages: could not auto-resolve required script evidence for ${assignment_ref}" >&2
+        exit 1
+      fi
+      AUTO_REPORT=1
+    fi
+
     cmd=(./control-plane/scripts/collab_fulfill.sh --message-ref "${msg_ref}" --worktree "${WORKTREE}")
-    for x in "${WITH_ITEMS[@]}"; do cmd+=(--with "$x"); done
+    if [[ ${#WITH_ITEMS[@]} -gt 0 ]]; then
+      for x in "${WITH_ITEMS[@]}"; do cmd+=(--with "$x"); done
+    else
+      for x in "${resolved_with[@]}"; do cmd+=(--with "$x"); done
+    fi
     for x in "${SCRIPT_REFS[@]}"; do cmd+=(--script "$x"); done
-    for x in "${GATE_REFS[@]}"; do cmd+=(--gate-report "$x"); done
+    if [[ ${#GATE_REFS[@]} -gt 0 ]]; then
+      for x in "${GATE_REFS[@]}"; do cmd+=(--gate-report "$x"); done
+    elif [[ -n "${resolved_gate}" ]]; then
+      cmd+=(--gate-report "${resolved_gate}")
+    fi
     for x in "${THEOREM_REFS[@]}"; do cmd+=(--theorem "$x"); done
+    for x in "${resolved_theorem[@]}"; do cmd+=(--theorem "$x"); done
     for x in "${DIFFLOG_REFS[@]}"; do cmd+=(--diff-log "$x"); done
+    for x in "${resolved_diff[@]}"; do cmd+=(--diff-log "$x"); done
     for x in "${RAW_EVIDENCE[@]}"; do cmd+=(--evidence "$x"); done
     [[ "${LAZY}" -eq 1 ]] && cmd+=(--lazy)
     [[ "${AUTO_REPORT}" -eq 1 ]] && cmd+=(--auto-report)
+    cmd+=(--summary)
     if [[ "${DRY_RUN}" -eq 1 ]]; then
       cmd+=(--dry-run)
     elif [[ "${NO_COMMIT}" -eq 0 ]]; then

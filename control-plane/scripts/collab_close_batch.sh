@@ -17,6 +17,7 @@ NO_COMMIT=0
 DRY_RUN=0
 SUBJECT=""
 BODY=()
+SILENT_EMPTY=0
 
 usage() {
   cat <<'USAGE'
@@ -35,6 +36,7 @@ Options:
   --commit <sha>          Commit to bind on emitted events (default: current HEAD short).
   --subject <text>        Commit subject override.
   --body <text>           Commit body line (repeatable).
+  --silent-empty          Exit silently when no messages are selected.
   --no-commit             Do not commit after close batch.
   --dry-run               Resolve plan and validate only.
 USAGE
@@ -53,6 +55,7 @@ while [[ $# -gt 0 ]]; do
     --commit) COMMIT_SHA="${2:-}"; shift 2 ;;
     --subject) SUBJECT="${2:-}"; shift 2 ;;
     --body) BODY+=("${2:-}"); shift 2 ;;
+    --silent-empty) SILENT_EMPTY=1; shift ;;
     --no-commit) NO_COMMIT=1; shift ;;
     --dry-run) DRY_RUN=1; shift ;;
     -h|--help) usage; exit 0 ;;
@@ -140,7 +143,9 @@ PY
 fi
 
 if [[ ${#MESSAGE_REFS[@]} -eq 0 ]]; then
-  echo "no messages selected for batch close"
+  if [[ "${SILENT_EMPTY}" -eq 0 ]]; then
+    echo "no messages selected for batch close"
+  fi
   exit 0
 fi
 

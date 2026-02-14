@@ -161,7 +161,8 @@ Quickstart helpers:
 - main dashboard: `./control-plane/scripts/collab_main_status.sh --refresh`
 - one-command processing:
   - main: `./control-plane/scripts/collab_process_messages.sh --role main --agent-ref AGENT_KIMI`
-  - worker: `./control-plane/scripts/collab_process_messages.sh --role worker --worktree /home/andrey/src/cicsc/worktrees/kimi --with scripts/check_canonical_execution_model.sh --auto-report --lazy`
+  - worker: `./control-plane/scripts/collab_process_messages.sh --role worker --worktree /home/andrey/src/cicsc/worktrees/kimi`
+    - optional overrides: `--with scripts/check_canonical_execution_model.sh --auto-report --lazy`
 
 ## Multi-Assignment Worker Flow (End-to-End)
 

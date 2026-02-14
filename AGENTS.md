@@ -77,7 +77,8 @@ Interpret short operator instructions as follows:
   - do not pause for confirmation between deterministic protocol steps
   - preferred command:
     - main: `./control-plane/scripts/collab_process_messages.sh --role main --agent-ref <AGENT_...>`
-    - worker: `./control-plane/scripts/collab_process_messages.sh --role worker --worktree "$WORKTREE" --with <script> --auto-report --lazy`
+    - worker: `./control-plane/scripts/collab_process_messages.sh --role worker --worktree "$WORKTREE"`
+      - optional overrides: `--with <script> --auto-report --lazy`
 
 ## Normative Conceptual Sources
 
