@@ -39,7 +39,7 @@ preflight_check() {
   if [[ -n "${msg_ref}" ]]; then
     local status
     status="$(./control-plane/scripts/collab_inbox.sh --worktree "${worktree}" --refresh --actionable-only 2>/dev/null | jq -r --arg ref "${msg_ref}" '.[] | select(.id == $ref) | .current_status')" || status=""
-    if [[ "${status}" != "sent" && "${status}" != "queued" ]]; then
+    if [[ "${status}" != "sent" && "${status}" != "queued" && "${status}" != "acknowledged" ]]; then
       echo "PREFLIGHT_FAIL: message ${msg_ref} not actionable (status: ${status:-unknown})"
       return 1
     fi
@@ -154,7 +154,7 @@ execute_atomic() {
   
   # Verify claim succeeded
   local claim_status
-  claim_status="$(./control-plane/scripts/collab_inbox.sh --worktree "${worktree}" --refresh --actionable-only 2>/dev/null | jq -r --arg ref "${target_msg}" '.[] | select(.id == $ref) | .current_status')" || claim_status=""
+  claim_status="$(./control-plane/scripts/collab_inbox.sh --worktree "${worktree}" --refresh --all 2>/dev/null | jq -r --arg ref "${target_msg}" '.[] | select(.id == $ref) | .current_status')" || claim_status=""
   if [[ "${claim_status}" != "acknowledged" ]]; then
     echo "[execute] FAILED: claim verification failed (status: ${claim_status:-unknown})"
     return 1

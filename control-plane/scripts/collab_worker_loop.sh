@@ -12,6 +12,32 @@ INTERVAL_SECONDS=5
 MAX_CONSECUTIVE_FAILURES=5
 FAILURE_WINDOW_SECONDS=300  # 5 minutes
 
+# Parse arguments
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --worktree)
+      WORKTREE="$2"
+      shift 2
+      ;;
+    --interval-seconds)
+      INTERVAL_SECONDS="$2"
+      shift 2
+      ;;
+    --failure-window)
+      FAILURE_WINDOW_SECONDS="$2"
+      shift 2
+      ;;
+    --max-failures)
+      MAX_CONSECUTIVE_FAILURES="$2"
+      shift 2
+      ;;
+    *)
+      echo "unknown argument: $1"
+      exit 1
+      ;;
+  esac
+done
+
 # State tracking
 CONSECUTIVE_FAILURES=0
 FIRST_FAILURE_TIME=""

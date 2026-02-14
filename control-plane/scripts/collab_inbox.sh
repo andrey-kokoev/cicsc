@@ -17,7 +17,7 @@ Usage:
 Options:
   --worktree <path>    Absolute worktree path key in mailbox projection.
   --all                Return full inbox history (default is actionable-only).
-  --actionable-only    Filter inbox to current_status in {queued, sent} (default).
+  --actionable-only    Filter inbox to current_status in {queued, sent, acknowledged} (default).
   --refresh            Regenerate mailbox projection before reading.
 USAGE
 }
@@ -85,7 +85,7 @@ if entry is None:
 
 inbox = entry.get("inbox", [])
 if actionable_only:
-    inbox = [m for m in inbox if m.get("current_status") in {"queued", "sent"}]
+    inbox = [m for m in inbox if m.get("current_status") in {"queued", "sent", "acknowledged"}]
 
 print(json.dumps(inbox, indent=2))
 PY

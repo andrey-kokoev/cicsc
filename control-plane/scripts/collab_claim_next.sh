@@ -115,6 +115,12 @@ acknowledged = sorted(
     [m for m in inbox if m.get("current_status") == "acknowledged"],
     key=lambda m: m.get("id", "")
 )
+
+if message_ref and any(m.get("id") == message_ref for m in acknowledged):
+    print("ALREADY_ACKNOWLEDGED")
+    print(message_ref)
+    raise SystemExit(0)
+
 if acknowledged and not force:
     print("BLOCKED_ACKNOWLEDGED")
     for m in acknowledged:
@@ -163,6 +169,11 @@ PY
 
 if [[ "${_resolved}" == "NO_ACTIONABLE" ]]; then
   echo "no actionable inbox messages for ${WORKTREE}"
+  exit 0
+fi
+
+if [[ "${_resolved}" == ALREADY_ACKNOWLEDGED* ]]; then
+  echo "message $(echo "${_resolved}" | head -2 | tail -1) is already acknowledged; success"
   exit 0
 fi
 
