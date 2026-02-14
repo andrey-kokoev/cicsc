@@ -64,4 +64,24 @@ if ! grep -Fq "run-loop: step=" <<<"${loop_out}"; then
   exit 1
 fi
 
+# 6) revert guard: fulfilled -> sent must be blocked without --force.
+set +e
+revert_out="$(
+  ./control-plane/scripts/collab_revert.sh \
+    --message-ref MSG_PHASE34_AY24_KIMI_MULTI4_DISPATCH \
+    --to-status sent \
+    --reason "matrix guard check" \
+    --dry-run 2>&1
+)"
+revert_code=$?
+set -e
+if [[ "${revert_code}" -eq 0 ]]; then
+  echo "matrix fail: expected revert guard failure for fulfilled->sent without force"
+  exit 1
+fi
+if ! grep -Fq "revert blocked: unsupported source->target without --force" <<<"${revert_out}"; then
+  echo "matrix fail: missing revert guard diagnostic"
+  exit 1
+fi
+
 echo "collab lifecycle matrix check passed"

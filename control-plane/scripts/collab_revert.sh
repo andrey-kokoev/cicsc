@@ -11,6 +11,7 @@ ACTOR_AGENT_REF="AGENT_MAIN"
 COMMIT_SHA=""
 NO_REFRESH=0
 DRY_RUN=0
+FORCE=0
 
 usage() {
   cat <<'USAGE'
@@ -23,6 +24,7 @@ Options:
   --commit <sha>         Commit to bind on event (default: current HEAD short).
   --no-refresh           Do not regenerate views after update.
   --dry-run              Validate and print action without mutation.
+  --force                Override source-status guards (still subject to transition policy).
 USAGE
 }
 
@@ -35,6 +37,7 @@ while [[ $# -gt 0 ]]; do
     --commit) COMMIT_SHA="${2:-}"; shift 2 ;;
     --no-refresh) NO_REFRESH=1; shift ;;
     --dry-run) DRY_RUN=1; shift ;;
+    --force) FORCE=1; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
   esac
@@ -43,6 +46,10 @@ done
 if [[ -z "${MESSAGE_REF}" || -z "${REASON}" ]]; then
   echo "--message-ref and --reason are required" >&2
   usage >&2
+  exit 1
+fi
+if [[ "${#REASON}" -gt 240 ]]; then
+  echo "--reason is too long (max 240 chars)" >&2
   exit 1
 fi
 case "${TO_STATUS}" in
@@ -55,6 +62,36 @@ cd "${ROOT_DIR}"
 
 if [[ -z "${COMMIT_SHA}" ]]; then
   COMMIT_SHA="$(git rev-parse --short HEAD)"
+fi
+
+CURRENT_STATUS="$(
+  python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$MESSAGE_REF" <<'PY'
+import sys
+from pathlib import Path
+import yaml
+
+collab = yaml.safe_load(Path(sys.argv[1]).read_text(encoding="utf-8"))
+message_ref = sys.argv[2]
+messages = {m.get("id"): m for m in collab.get("messages", [])}
+if message_ref not in messages:
+    raise SystemExit(f"unknown message_ref: {message_ref}")
+events = [e for e in collab.get("message_events", []) if e.get("message_ref") == message_ref]
+if not events:
+    raise SystemExit(f"no events found for message {message_ref}")
+events = sorted(events, key=lambda e: int(e.get("at_seq", 0)))
+print(events[-1].get("to_status"))
+PY
+)"
+
+if [[ "${FORCE}" -eq 0 ]]; then
+  case "${CURRENT_STATUS}:${TO_STATUS}" in
+    acknowledged:sent|acknowledged:queued|sent:queued|queued:sent|sent:rescinded|queued:rescinded) ;;
+    *)
+      echo "revert blocked: unsupported source->target without --force (${CURRENT_STATUS} -> ${TO_STATUS})" >&2
+      echo "allowed without --force: acknowledged->sent|queued, sent->queued|rescinded, queued->sent|rescinded" >&2
+      exit 1
+      ;;
+  esac
 fi
 
 notes="Reverted via collab_revert.sh: ${REASON}"
