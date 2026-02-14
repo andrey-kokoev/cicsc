@@ -276,6 +276,46 @@ WIP semantic rule (mechanically enforced):
 - A worktree may not claim new `sent/queued` work while any message remains `acknowledged` in that same worktree.
 - Override is exceptional and explicit: `collab_claim_next.sh --force`.
 
+### 0.2 Phase Governance Controller (Mandatory for Main Agent)
+Phase workflow transitions must be explicit and gated. The phase governance controller enforces strict rules for phase promotion.
+
+**Phase Status Model:**
+- `planned` - Phase is scheduled but not yet active.
+- `active` - Exactly one phase is active at any time; work is dispatched from active phase.
+- `complete` - Phase has achieved all milestones and checkboxes.
+
+**Promotion Rules (enforced by controller):**
+1. Only one phase may be `active` at any time.
+2. A phase can only be promoted to `active` if the current active phase is `complete`.
+3. All checkboxes in the current active phase must be `done` before promotion.
+4. A phase can only be promoted if its current status is `planned`.
+
+**Command Surface:**
+- Check current phase status:
+  ```bash
+  ./control-plane/scripts/phase_governance_controller.sh --status
+  ```
+- Promote a specific phase (requires current active to be complete):
+  ```bash
+  ./control-plane/scripts/phase_governance_controller.sh --promote AY
+  ```
+- Promote next planned phase (auto-selects lowest-numbered planned):
+  ```bash
+  ./control-plane/scripts/phase_governance_controller.sh --promote-next
+  ```
+- Dry-run validation (no mutation):
+  ```bash
+  ./control-plane/scripts/phase_governance_controller.sh --promote-next --dry-run
+  ```
+
+**Auto-Dispatch Loop Integration:**
+The `auto_dispatch_loop.sh` reads the active phase from `execution-ledger.yaml`. It does NOT perform phase promotion itself - promotion is an explicit governance decision made via the controller.
+
+**Gate Enforcement:**
+- `scripts/check_phase_governance.sh` validates phase transition legality.
+- Illegal transitions (e.g., promoting incomplete phase) fail CI.
+- Cross-model validation ensures `execution-ledger.yaml` phase status aligns with dispatched assignments.
+
 ### 1. Preserve invariants before adding features
 Never add functionality that weakens:
 - transactional semantics

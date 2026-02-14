@@ -137,7 +137,17 @@ else
    # bounded run:
    ./control-plane/scripts/auto_dispatch_loop.sh --agent-ref AGENT_KIMI --batch-size 3 --max-cycles 2
 
-7) Triage friction requests:
+7) Phase governance (promote workflow phases):
+   # check current phase status:
+   ./control-plane/scripts/phase_governance_controller.sh --status
+   # promote specific phase:
+   ./control-plane/scripts/phase_governance_controller.sh --promote AY
+   # promote next planned phase:
+   ./control-plane/scripts/phase_governance_controller.sh --promote-next
+   # dry-run validation (no mutation):
+   ./control-plane/scripts/phase_governance_controller.sh --promote-next --dry-run
+
+8) Triage friction requests:
    ./control-plane/scripts/collab_triage_friction.sh --message-ref MSG_... --decision accept_now --notes "scheduled in next hardening batch"
 EOF
 fi

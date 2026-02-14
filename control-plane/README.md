@@ -102,6 +102,44 @@ Sync gate:
   - validates allowed status source mode values.
 - `scripts/check_status_projection_sync.sh`
   - validates execution status projection coverage for execution-ledger non-planned checkbox scope.
+- `scripts/check_phase_governance.sh`
+  - validates phase transition legality (active -> complete -> active).
+  - ensures all checkboxes in active phase are done before promotion allowed.
+
+## Phase Governance
+
+Phase workflow is controlled via `control-plane/scripts/phase_governance_controller.sh`:
+
+**Phase Status Model:**
+- `planned` - Phase is scheduled but not yet active.
+- `active` - Exactly one phase is active at any time; dispatch selects checkboxes from active phase.
+- `complete` - Phase has achieved all milestones and checkboxes.
+
+**Promotion Preconditions (enforced)::**
+1. Current active phase must have all checkboxes `done`.
+2. Target phase must be in `planned` status.
+3. Only one phase may be `active` at any time.
+
+**Command Reference:**
+- Status check:
+  ```bash
+  ./control-plane/scripts/phase_governance_controller.sh --status
+  ```
+- Promote specific phase:
+  ```bash
+  ./control-plane/scripts/phase_governance_controller.sh --promote AY
+  ```
+- Promote next planned phase:
+  ```bash
+  ./control-plane/scripts/phase_governance_controller.sh --promote-next
+  ```
+- Dry-run validation:
+  ```bash
+  ./control-plane/scripts/phase_governance_controller.sh --promote-next --dry-run
+  ```
+
+**Integration with Auto-Dispatch:**
+The `auto_dispatch_loop.sh` reads active phase from `execution-ledger.yaml` but does NOT perform promotion. Promotion is an explicit governance decision made by the main agent via the controller.
 
 ## Status-Data Discipline
 
