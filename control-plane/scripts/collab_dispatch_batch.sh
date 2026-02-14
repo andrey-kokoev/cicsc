@@ -115,7 +115,7 @@ cd "${ROOT_DIR}"
 ./control-plane/scripts/collab_validate.sh >/dev/null
 
 # In commit mode, require a clean starting point before creating run journals or applying.
-if [[ "${NO_COMMIT}" -eq 0 && "${DRY_RUN}" -eq 0 && -n "$(git status --porcelain)" ]]; then
+if [[ "${NO_COMMIT}" -eq 0 && "${DRY_RUN}" -eq 0 && "${PLAN_ONLY}" -eq 0 && -n "$(git status --porcelain)" ]]; then
   echo "batch apply with commit requires a clean working tree before dispatch starts" >&2
   exit 1
 fi
@@ -322,17 +322,16 @@ else:
 
 agent_tag = re.sub(r"^AGENT_", "", agent_ref).upper()
 
-def mk_branch(phase_number: int, checkbox_ref: str) -> str:
-    return f"phase{int(phase_number)}.{checkbox_ref.lower()}"
+def mk_branch(phase_number: int, checkbox_ref: str, instance_no: int) -> str:
+    # Each dispatch instance gets an explicit branch suffix to avoid lane ambiguity.
+    return f"phase{int(phase_number)}.{checkbox_ref.lower()}.i{instance_no:02d}"
 
-def next_unique_id(base: str, existing: set[str]) -> str:
-    if base not in existing:
-        return base
-    i = 2
+def next_instance_number(phase_number: int, cb_token: str, agent_tag: str, existing: set[str]) -> int:
+    i = 1
     while True:
-        cand = f"{base}_{i}"
+        cand = f"ASSIGN_PHASE{phase_number:02d}_{cb_token}_{agent_tag}_I{i:02d}"
         if cand not in existing:
-            return cand
+            return i
         i += 1
 
 rows = []
@@ -340,8 +339,8 @@ for item in selected:
     cb = item["checkbox_ref"]
     pnum = int(item["phase_number"])
     cb_token = cb.replace(".", "")
-    base_assign = f"ASSIGN_PHASE{pnum:02d}_{cb_token}_{agent_tag}_BATCH"
-    aid = next_unique_id(base_assign, existing_assign_ids)
+    instance_no = next_instance_number(pnum, cb_token, agent_tag, existing_assign_ids)
+    aid = f"ASSIGN_PHASE{pnum:02d}_{cb_token}_{agent_tag}_I{instance_no:02d}"
     existing_assign_ids.add(aid)
 
     mid = f"MSG_{aid.removeprefix('ASSIGN_')}_DISPATCH"
@@ -359,9 +358,10 @@ for item in selected:
         "message_id": mid,
         "checkbox_ref": cb,
         "phase_number": pnum,
+        "instance_no": instance_no,
         "milestone_id": item["milestone_id"],
         "title": item["checkbox_title"],
-        "branch": mk_branch(pnum, cb),
+        "branch": mk_branch(pnum, cb, instance_no),
         "commit": commit_sha,
     })
 
@@ -428,7 +428,7 @@ for i, r in enumerate(doc.get("rows", [])):
         continue
     print("\t".join([
       str(i), r.get("assignment_id", ""), r.get("checkbox_ref", ""), r.get("branch", ""),
-      r.get("message_id", ""), r.get("title", ""), r.get("commit", ""), state
+      r.get("message_id", ""), r.get("title", ""), r.get("commit", ""), state, str(r.get("instance_no", 1))
     ]))
 PY
 )
@@ -436,7 +436,8 @@ PY
   local applied=0
   local failed=0
   for line in "${rows[@]}"; do
-    IFS=$'\t' read -r idx assignment_id checkbox_ref branch message_id title row_commit row_state <<<"${line}"
+    IFS=$'\t' read -r idx assignment_id checkbox_ref branch message_id title row_commit row_state row_instance <<<"${line}"
+    row_instance="$(printf '%02d' "${row_instance:-1}")"
 
     if [[ "${row_state}" == "applied" ]]; then
       continue
@@ -452,8 +453,8 @@ PY
       --initial-status "${INITIAL_STATUS}"
       --commit "${row_commit}"
       --message-id "${message_id}"
-      --assignment-notes "Batch dispatch for ${checkbox_ref}: ${title}"
-      --dispatch-notes "Batch dispatch ${checkbox_ref} -> ${AGENT_REF} via collab_dispatch_batch.sh"
+      --assignment-notes "Dispatch instance i${row_instance} for ${checkbox_ref}: ${title}"
+      --dispatch-notes "Dispatch instance i${row_instance} ${checkbox_ref} -> ${AGENT_REF} via collab_dispatch_batch.sh"
       --no-refresh
     )
     for p in "${PAYLOAD_REFS[@]}"; do

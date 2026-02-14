@@ -8,6 +8,7 @@
     "agents",
     "worktree_governance",
     "worktree_delegations",
+    "friction_request_policy",
     "claim_kinds",
     "evidence_kinds",
     "obligation_profiles",
@@ -90,6 +91,28 @@
         },
         "additionalProperties": false
       }
+    },
+    "friction_request_policy": {
+      "type": "object",
+      "required": [
+        "message_kind_ref",
+        "triage_authority_agent_ref",
+        "decision_values",
+        "ack_within_hours",
+        "triage_within_hours"
+      ],
+      "properties": {
+        "message_kind_ref": { "type": "string", "pattern": "^MSGK_[A-Z0-9_]+$" },
+        "triage_authority_agent_ref": { "type": "string", "pattern": "^AGENT_[A-Z0-9_]+$" },
+        "decision_values": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "enum": ["accept_now", "accept_later", "reject"] }
+        },
+        "ack_within_hours": { "type": "integer", "minimum": 1 },
+        "triage_within_hours": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
     },
     "claim_kinds": {
       "type": "array",
@@ -289,7 +312,6 @@
         "required": [
           "id",
           "kind_ref",
-          "assignment_ref",
           "from_agent_ref",
           "to_agent_ref",
           "from_worktree",
@@ -303,7 +325,12 @@
         "properties": {
           "id": { "type": "string", "pattern": "^MSG_[A-Z0-9_]+$" },
           "kind_ref": { "type": "string", "pattern": "^MSGK_[A-Z0-9_]+$" },
-          "assignment_ref": { "type": "string", "pattern": "^ASSIGN_[A-Z0-9_]+$" },
+          "assignment_ref": {
+            "anyOf": [
+              { "type": "string", "pattern": "^ASSIGN_[A-Z0-9_]+$" },
+              { "type": "null" }
+            ]
+          },
           "from_agent_ref": { "type": "string", "pattern": "^AGENT_[A-Z0-9_]+$" },
           "to_agent_ref": { "type": "string", "pattern": "^AGENT_[A-Z0-9_]+$" },
           "from_worktree": { "type": "string" },

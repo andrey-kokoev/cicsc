@@ -16,6 +16,11 @@ MAX_AGE_MINUTES=30
 COMMIT_EACH=1
 CHECKOUT_BRANCH=0
 BRANCHES_TOUCHED=()
+SUMMARY=0
+COMMITS_MADE=0
+CLAIMED_COUNT=0
+FULFILLED_COUNT=0
+FULFILLED_MSGS=()
 
 usage() {
   cat <<'USAGE'
@@ -25,11 +30,13 @@ Usage:
 Options:
   --with <path|cmd>     Sugar: execute script and bind EVID_SCRIPT. Repeatable.
   --auto-report         Auto-pick gate report when using --with/--script.
+  --auto-commit         Explicitly enable auto-commit per fulfilled assignment.
   --interactive         Ask y/n/skip before processing each assignment.
   --max-items <n>       Maximum assignments to process this run (default: 100).
   --lazy                Enable lazy run-script logic in fulfill.
   --max-age-minutes <n> Freshness TTL for --lazy (default: 30).
   --checkout-branch     Checkout assignment branch when claiming.
+  --summary             Print concise batch completion summary.
   --no-commit           Do not auto-commit per fulfilled assignment.
 USAGE
 }
@@ -41,11 +48,13 @@ while [[ $# -gt 0 ]]; do
     --gate-report) GATE_REPORT="${2:-}"; shift 2 ;;
     --with) WITH_ITEMS+=("${2:-}"); shift 2 ;;
     --auto-report|--report-auto) AUTO_REPORT=1; shift ;;
+    --auto-commit) COMMIT_EACH=1; shift ;;
     --interactive) INTERACTIVE=1; shift ;;
     --max-items) MAX_ITEMS="${2:-}"; shift 2 ;;
     --lazy) LAZY=1; shift ;;
     --max-age-minutes) MAX_AGE_MINUTES="${2:-}"; shift 2 ;;
     --checkout-branch) CHECKOUT_BRANCH=1; shift ;;
+    --summary) SUMMARY=1; shift ;;
     --no-commit) COMMIT_EACH=0; shift ;;
     -h|--help) usage; exit 0 ;;
     *) echo "unknown option: $1" >&2; usage >&2; exit 1 ;;
@@ -107,36 +116,21 @@ PY
   fi
 
   if [[ "${action}" == "claim_next_actionable" ]]; then
+    before_head="$(git -C "${ROOT_DIR}" rev-parse --short HEAD 2>/dev/null || true)"
     claim_cmd=(./control-plane/scripts/collab_claim_next.sh --worktree "${WORKTREE}")
     if [[ "${CHECKOUT_BRANCH}" -eq 1 ]]; then
       claim_cmd+=(--checkout-branch)
-      # Collect touched branch for end-of-run summary.
-      b="$(python3 - "$ROOT_DIR/control-plane/collaboration/collab-model.yaml" "$WORKTREE" <<'PY'
-import sys
-from pathlib import Path
-import yaml
-c = yaml.safe_load(Path(sys.argv[1]).read_text(encoding="utf-8"))
-wt = sys.argv[2]
-msgs = [m for m in c.get("messages", []) if m.get("to_worktree")==wt]
-evs = {}
-for e in c.get("message_events", []):
-  evs.setdefault(e.get("message_ref"), []).append(e)
-actionable = []
-for m in msgs:
-  cur = sorted(evs.get(m.get("id"), []), key=lambda x:int(x.get("at_seq",0)))
-  if not cur:
-    continue
-  s = cur[-1].get("to_status")
-  if s in {"queued","sent"}:
-    actionable.append(m)
-if actionable:
-  actionable = sorted(actionable, key=lambda m:m.get("id",""))
-  print(actionable[0].get("branch",""))
-PY
-)"
-      [[ -n "${b}" ]] && BRANCHES_TOUCHED+=("${b}")
     fi
     "${claim_cmd[@]}"
+    CLAIMED_COUNT=$((CLAIMED_COUNT + 1))
+    if [[ "${COMMIT_EACH}" -eq 1 ]]; then
+      after_head="$(git -C "${ROOT_DIR}" rev-parse --short HEAD 2>/dev/null || true)"
+      [[ -n "${before_head}" && -n "${after_head}" && "${before_head}" != "${after_head}" ]] && COMMITS_MADE=$((COMMITS_MADE + 1))
+    fi
+    if [[ "${CHECKOUT_BRANCH}" -eq 1 ]]; then
+      b="$(git -C "${WORKTREE}" branch --show-current 2>/dev/null || true)"
+      [[ -n "${b}" ]] && BRANCHES_TOUCHED+=("${b}")
+    fi
     status_json="$(./control-plane/scripts/collab_status.sh --worktree "${WORKTREE}" --json)"
     _ack="$(
       python3 - "${status_json}" <<'PY'
@@ -203,7 +197,14 @@ PY
   if [[ "${COMMIT_EACH}" -eq 1 ]]; then
     fulfill_cmd+=(--auto-commit)
   fi
+  before_head="$(git -C "${ROOT_DIR}" rev-parse --short HEAD 2>/dev/null || true)"
   "${fulfill_cmd[@]}"
+  after_head="$(git -C "${ROOT_DIR}" rev-parse --short HEAD 2>/dev/null || true)"
+  if [[ "${COMMIT_EACH}" -eq 1 && -n "${before_head}" && -n "${after_head}" && "${before_head}" != "${after_head}" ]]; then
+    COMMITS_MADE=$((COMMITS_MADE + 1))
+  fi
+  FULFILLED_COUNT=$((FULFILLED_COUNT + 1))
+  FULFILLED_MSGS+=("${msg}")
 
   processed=$((processed + 1))
   echo "sweep: processed=${processed} assignment=${assignment}"
@@ -212,12 +213,36 @@ done
 if [[ "${processed}" -ge "${MAX_ITEMS}" ]]; then
   echo "sweep: reached max_items=${MAX_ITEMS}"
 fi
-if [[ "${CHECKOUT_BRANCH}" -eq 1 ]]; then
+if [[ "${CHECKOUT_BRANCH}" -eq 1 || "${SUMMARY}" -eq 1 ]]; then
   if [[ ${#BRANCHES_TOUCHED[@]} -gt 0 ]]; then
     uniq_branches="$(printf '%s\n' "${BRANCHES_TOUCHED[@]}" | awk 'NF && !seen[$0]++' | paste -sd ', ' -)"
     echo "branches touched: ${uniq_branches}"
     echo "current: $(git -C "${WORKTREE}" branch --show-current 2>/dev/null || true)"
+    main_ref="$(git -C "${WORKTREE}" rev-parse --abbrev-ref origin/HEAD 2>/dev/null | sed 's@^origin/@@' || true)"
+    [[ -z "${main_ref}" || "${main_ref}" == "origin/HEAD" ]] && main_ref="main"
+    unmerged=()
+    while IFS= read -r b; do
+      [[ -z "${b}" ]] && continue
+      if ! git -C "${WORKTREE}" merge-base --is-ancestor "${b}" "origin/${main_ref}" >/dev/null 2>&1; then
+        unmerged+=("${b}")
+      fi
+    done < <(printf '%s\n' "${BRANCHES_TOUCHED[@]}" | awk 'NF && !seen[$0]++')
+    if [[ ${#unmerged[@]} -gt 0 ]]; then
+      echo "unmerged branches: $(printf '%s' "${unmerged[*]}")"
+      echo "cleanup hint: merge/rebase then delete with: git -C \"${WORKTREE}\" branch -d <branch>"
+    fi
   else
     echo "branches touched: (none)"
+  fi
+fi
+if [[ "${SUMMARY}" -eq 1 ]]; then
+  remaining="$(./control-plane/scripts/collab_inbox.sh --worktree "${WORKTREE}" --refresh | jq 'length')"
+  echo "batch summary:"
+  echo "claimed: ${CLAIMED_COUNT}"
+  echo "fulfilled: ${FULFILLED_COUNT}"
+  echo "commits: ${COMMITS_MADE}"
+  echo "remaining actionable: ${remaining}"
+  if [[ ${#FULFILLED_MSGS[@]} -gt 0 ]]; then
+    echo "fulfilled messages: $(printf '%s' "${FULFILLED_MSGS[*]}")"
   fi
 fi

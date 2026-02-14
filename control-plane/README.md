@@ -143,6 +143,10 @@ Execution location rule:
 - select target worker context with `--worktree <path>`
 
 For each execution worktree:
+0. Sync worktree to current protocol/scripts:
+   - `git -C <worktree> fetch origin`
+   - `git -C <worktree> rebase origin/main`
+   - if rebase blocks, stop and resolve before mailbox processing
 1. Read `control-plane/views/worktree-mailboxes.generated.json`.
 2. Select inbox messages addressed to that worktree with actionable status
    (`queued` or `sent`).
@@ -154,6 +158,10 @@ Quickstart helpers:
 - worker flow: `./control-plane/scripts/collab_help.sh --role worker --worktree "$PWD"`
 - main flow: `./control-plane/scripts/collab_help.sh --role main --worktree /home/andrey/src/cicsc`
 - main batch dispatch: `./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --count 2`
+  - dispatch instance naming is explicit:
+    - assignment: `ASSIGN_PHASE<NN>_<CHECKBOXTOKEN>_<AGENTTAG>_I<NN>`
+    - message: `MSG_PHASE<NN>_<CHECKBOXTOKEN>_<AGENTTAG>_I<NN>_DISPATCH`
+    - branch: `phase<NN>.<checkbox>.i<NN>`
 - main dispatch runbook:
   - plan: `./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --phase 35 --count 2 --plan-only --run-id phase35-kimi`
   - apply: `./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --apply-run control-plane/logs/dispatch-runs/phase35-kimi.json`
@@ -163,6 +171,9 @@ Quickstart helpers:
   - main: `./control-plane/scripts/collab_process_messages.sh --role main --agent-ref AGENT_KIMI`
   - worker: `./control-plane/scripts/collab_process_messages.sh --role worker --worktree /home/andrey/src/cicsc/worktrees/kimi`
     - optional overrides: `--with scripts/check_canonical_execution_model.sh --auto-report --lazy`
+- typed friction loop:
+  - worker request: `./control-plane/scripts/collab_request_friction.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --type ergonomics --severity medium --summary "..." --repro-step "..."`
+  - main triage: `./control-plane/scripts/collab_triage_friction.sh --message-ref MSG_... --decision accept_now --notes "..."`
 
 ## Multi-Assignment Worker Flow (End-to-End)
 
@@ -184,9 +195,31 @@ Example with two queued assignments for Kimi:
 7. Repeat until status is idle:
    - `./control-plane/scripts/collab_run_loop.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --max-steps 20`
 8. Optional homogeneous batch mode:
-   - `./control-plane/scripts/collab_sweep.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --script scripts/check_canonical_execution_model.sh --gate-report docs/pilot/category-model-conformance.json --lazy`
+   - `./control-plane/scripts/collab_sweep.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --with scripts/check_canonical_execution_model.sh --auto-report --auto-commit --summary`
 9. Optional diagnostics:
    - `./control-plane/scripts/collab_diff.sh --assignment-ref ASSIGN_...`
    - `./control-plane/scripts/collab_summary.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --since 2026-02-13`
 10. Optional fuzzy picker session (requires `fzf`):
    - `./control-plane/scripts/collab_fzf.sh --worktree /home/andrey/src/cicsc/worktrees/kimi`
+
+## Friction Requests
+
+Friction requests are first-class collaboration messages (not ad hoc chat):
+
+- Message kind: `MSGK_FRICTION_REQUEST`
+- Assignment binding: `assignment_ref: null` (by design)
+- Policy source: `control-plane/collaboration/collab-model.yaml` -> `friction_request_policy`
+
+Required request fields:
+- `friction_type`: `ergonomics|safety|performance|clarity`
+- `severity`: `low|medium|high|critical`
+- `summary`
+- one or more `repro_step`
+
+Lifecycle:
+1. Worker emits typed request via `collab_request_friction.sh` (initial `sent` by default).
+2. Main triages via `collab_triage_friction.sh` with decision:
+   - `accept_now`
+   - `accept_later`
+   - `reject`
+3. Triage report artifact is written under `control-plane/logs/friction-triage/` and bound as event evidence.

@@ -176,9 +176,10 @@ fi
 
 if [[ "${NO_COMMIT}" -eq 0 ]]; then
   if [[ -z "${SUBJECT}" ]]; then
-    SUBJECT="governance/collab: close ${TARGET_STATUS} batch (${#MESSAGE_REFS[@]})"
+    commit_cmd=(./control-plane/scripts/collab_commit_views.sh --from-last-collab-action --no-refresh)
+  else
+    commit_cmd=(./control-plane/scripts/collab_commit_views.sh --subject "${SUBJECT}" --no-refresh)
   fi
-  commit_cmd=(./control-plane/scripts/collab_commit_views.sh --subject "${SUBJECT}" --no-refresh)
   if [[ ${#BODY[@]} -eq 0 ]]; then
     commit_cmd+=(--body "Batch close actor: ${ACTOR_AGENT_REF}" --body "Batch close source status: ${TARGET_STATUS}")
   else

@@ -82,7 +82,12 @@ if [[ "${ROLE}" == "worker" ]]; then
    ./control-plane/scripts/collab_stale_watch.sh --warn-hours 24 --fail-hours 72
 
 10) One-command protocol loop:
+   ./control-plane/scripts/collab_process_messages.sh --role worker --worktree "${WORKTREE}"
+   # optional explicit overrides:
    ./control-plane/scripts/collab_process_messages.sh --role worker --worktree "${WORKTREE}" --with scripts/check_x.sh --auto-report --lazy
+
+11) Request friction reduction (typed request to triage authority):
+   ./control-plane/scripts/collab_request_friction.sh --worktree "${WORKTREE}" --type ergonomics --severity medium --summary "claim loop is too verbose" --repro-step "run collab_claim_next.sh then collab_fulfill.sh repeatedly"
 EOF
 else
   cat <<EOF
@@ -114,5 +119,8 @@ else
 
 6) One-command main processing loop:
    ./control-plane/scripts/collab_process_messages.sh --role main --agent-ref AGENT_KIMI
+
+7) Triage friction requests:
+   ./control-plane/scripts/collab_triage_friction.sh --message-ref MSG_... --decision accept_now --notes "scheduled in next hardening batch"
 EOF
 fi

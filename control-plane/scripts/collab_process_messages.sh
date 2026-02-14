@@ -105,8 +105,8 @@ if [[ "${ROLE}" == "main" ]]; then
     ./control-plane/scripts/generate_views.sh >/dev/null
     ./control-plane/scripts/collab_validate.sh >/dev/null
   else
-    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status fulfilled --count 0 --subject "governance/collab: process messages (main/fulfilled)" --silent-empty
-    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status ingested --count 0 --subject "governance/collab: process messages (main/ingested)" --silent-empty
+    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status fulfilled --count 0 --silent-empty
+    ./control-plane/scripts/collab_close_batch.sh "${main_args[@]}" --status ingested --count 0 --silent-empty
   fi
 
   ./control-plane/scripts/collab_main_status.sh --refresh

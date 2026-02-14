@@ -146,6 +146,21 @@ def main() -> int:
                     f"collab-model: agent {aid} worktree {wt} violates canonical worker root {canonical_worker_root}"
                 )
 
+    friction_policy = collab.get("friction_request_policy", {})
+    friction_kind_ref = friction_policy.get("message_kind_ref")
+    friction_triage_authority = friction_policy.get("triage_authority_agent_ref")
+    friction_decisions = set(friction_policy.get("decision_values", []))
+    if friction_kind_ref not in message_kind_ids:
+        errors.append(f"collab-model: friction_request_policy unknown message kind {friction_kind_ref}")
+    if friction_triage_authority not in agent_map:
+        errors.append(
+            f"collab-model: friction_request_policy unknown triage authority {friction_triage_authority}"
+        )
+    if not {"accept_now", "accept_later", "reject"}.issubset(friction_decisions):
+        errors.append(
+            "collab-model: friction_request_policy decision_values must include accept_now, accept_later, reject"
+        )
+
     delegations = collab.get("worktree_delegations", [])
     active_delegation_by_worktree = {}
     for d in delegations:
@@ -367,12 +382,19 @@ def main() -> int:
         branch = msg.get("branch")
         initial_status = msg.get("initial_status")
         supersedes = msg.get("supersedes_message_ref")
+        is_friction_request = kind_ref == friction_kind_ref
 
         if kind_ref not in message_kind_ids:
             errors.append(f"collab-model: message {mid} unknown kind_ref {kind_ref}")
-        if assignment_ref not in assignment_map:
-            errors.append(f"collab-model: message {mid} unknown assignment_ref {assignment_ref}")
-            continue
+        if assignment_ref is None:
+            if not is_friction_request:
+                errors.append(
+                    f"collab-model: message {mid} has null assignment_ref but kind {kind_ref} is not friction request"
+                )
+        else:
+            if assignment_ref not in assignment_map:
+                errors.append(f"collab-model: message {mid} unknown assignment_ref {assignment_ref}")
+                continue
 
         if from_agent_ref not in agent_map:
             errors.append(f"collab-model: message {mid} unknown from_agent_ref {from_agent_ref}")
@@ -409,18 +431,23 @@ def main() -> int:
                     f"collab-model: message {mid} to_worktree mismatch (got {to_worktree}, expected {expected})"
                 )
 
-        assignment = assignment_map[assignment_ref]
-        if assignment.get("agent_ref") != to_agent_ref:
-            errors.append(
-                f"collab-model: message {mid} to_agent_ref {to_agent_ref} does not match assignment agent_ref {assignment.get('agent_ref')}"
-            )
-        if assignment.get("branch") != branch:
-            errors.append(
-                f"collab-model: message {mid} branch {branch} does not match assignment branch {assignment.get('branch')}"
-            )
-
-        if branch_re and isinstance(branch, str) and not branch_re.match(branch):
-            errors.append(f"collab-model: message {mid} branch {branch} violates handoff branch_pattern")
+        if assignment_ref is not None:
+            assignment = assignment_map[assignment_ref]
+            if assignment.get("agent_ref") != to_agent_ref:
+                errors.append(
+                    f"collab-model: message {mid} to_agent_ref {to_agent_ref} does not match assignment agent_ref {assignment.get('agent_ref')}"
+                )
+            if assignment.get("branch") != branch:
+                errors.append(
+                    f"collab-model: message {mid} branch {branch} does not match assignment branch {assignment.get('branch')}"
+                )
+            if branch_re and isinstance(branch, str) and not branch_re.match(branch):
+                errors.append(f"collab-model: message {mid} branch {branch} violates handoff branch_pattern")
+        else:
+            if is_friction_request and to_agent_ref != friction_triage_authority:
+                errors.append(
+                    f"collab-model: friction request {mid} must target triage authority {friction_triage_authority}, got {to_agent_ref}"
+                )
 
         if initial_status not in initial_statuses:
             errors.append(

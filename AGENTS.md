@@ -50,11 +50,15 @@ then execute exactly this protocol:
 3. Resolve your worktree path:
    - main agent: `WORKTREE=/home/andrey/src/cicsc`
    - worker agent: `WORKTREE=<your assigned worktree>`
-4. Read actionable inbox:
+4. Sync your worktree to current `main` before reading inbox:
+   - `git -C "$WORKTREE" fetch origin`
+   - `git -C "$WORKTREE" rebase origin/main`
+   - if rebase cannot proceed, stop and report blocker (do not continue on stale scripts/protocol)
+5. Read actionable inbox:
    - `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh`
-5. If no actionable messages: stand down and report `no actionable inbox messages`.
-6. If actionable messages exist: process mailbox protocol (claim -> fulfill with required evidence -> commit), repeating until no actionable messages remain.
-7. Return a completion report containing:
+6. If no actionable messages: stand down and report `no actionable inbox messages`.
+7. If actionable messages exist: process mailbox protocol (claim -> fulfill with required evidence -> commit), repeating until no actionable messages remain.
+8. Return a completion report containing:
    - `message_ref`
    - `assignment_ref`
    - `checkbox_ref`
@@ -117,9 +121,12 @@ Do not treat prose files as canonical status ledgers or gate inputs.
 Before doing any implementation work:
 
 1. Run `./control-plane/scripts/generate_views.sh`
-2. Read inbox from `control-plane/views/worktree-mailboxes.generated.json` for
+2. Sync worktree branch tip to `origin/main`:
+   - `git -C "$WORKTREE" fetch origin`
+   - `git -C "$WORKTREE" rebase origin/main`
+3. Read inbox from `control-plane/views/worktree-mailboxes.generated.json` for
    the current worktree path
-3. Process only actionable messages (`current_status` in `queued`, `sent`)
+4. Process only actionable messages (`current_status` in `queued`, `sent`)
 
 If no actionable inbox messages exist, do not invent local task authority.
 
@@ -182,6 +189,10 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_dispatch.sh --assignment-ref ASSIGN_... --payload-ref control-plane/collaboration/collab-model.yaml`
 - main-side batch dispatch wrapper:
   - `./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --count 2`
+  - dispatch instances are explicit and monotonic per checkbox lane:
+    - assignment id: `ASSIGN_PHASE<NN>_<CHECKBOXTOKEN>_<AGENTTAG>_I<NN>`
+    - message id: `MSG_PHASE<NN>_<CHECKBOXTOKEN>_<AGENTTAG>_I<NN>_DISPATCH`
+    - branch: `phase<NN>.<checkbox>.i<NN>`
 - atomic create+dispatch wrapper (for new assignments):
   - `./control-plane/scripts/collab_create_assignment.sh --assignment-id ASSIGN_... --agent-ref AGENT_KIMI --checkbox-ref AY1.2 --branch phase34.ay1.2 --payload-ref AGENTS.md`
 - owner delegation wrapper (effective ownership handoff/revoke):
@@ -204,6 +215,10 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_sweep.sh --worktree "$WORKTREE" --with scripts/check_x.sh --auto-report --lazy`
 - revert mistaken claim:
   - `./control-plane/scripts/collab_revert.sh --message-ref MSG_... --reason "claimed wrong assignment"`
+- worker friction request (typed, immutable):
+  - `./control-plane/scripts/collab_request_friction.sh --worktree "$WORKTREE" --type ergonomics --severity medium --summary "..." --repro-step "..."`
+- main friction triage:
+  - `./control-plane/scripts/collab_triage_friction.sh --message-ref MSG_... --decision accept_now --notes "..."`
 - assignment-level delta view:
   - `./control-plane/scripts/collab_diff.sh --assignment-ref ASSIGN_...`
 - aggregate history summary:

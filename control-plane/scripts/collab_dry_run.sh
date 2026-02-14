@@ -19,6 +19,8 @@ Actions:
   delegate     -> collab_delegate_worktree.sh --dry-run
   append-event -> collab_append_event.sh --dry-run
   revert       -> collab_revert.sh --dry-run
+  request-friction -> collab_request_friction.sh --dry-run
+  triage-friction  -> collab_triage_friction.sh --dry-run
 
 Examples:
   ./control-plane/scripts/collab_dry_run.sh claim-next --worktree "$PWD"
@@ -43,6 +45,8 @@ case "${ACTION}" in
   --dispatch) ACTION="dispatch" ;;
   --delegate) ACTION="delegate" ;;
   --append-event) ACTION="append-event" ;;
+  --request-friction) ACTION="request-friction" ;;
+  --triage-friction) ACTION="triage-friction" ;;
 esac
 
 cd "${ROOT_DIR}"
@@ -71,6 +75,12 @@ case "${ACTION}" in
     ;;
   revert)
     ./control-plane/scripts/collab_revert.sh --dry-run "$@"
+    ;;
+  request-friction)
+    ./control-plane/scripts/collab_request_friction.sh --dry-run "$@"
+    ;;
+  triage-friction)
+    ./control-plane/scripts/collab_triage_friction.sh --dry-run "$@"
     ;;
   -h|--help)
     usage
