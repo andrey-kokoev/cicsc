@@ -2163,8 +2163,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i19 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         }
       ]
     },
@@ -4187,8 +4187,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i19 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "fulfilled",
-          "event_count": 3
+          "current_status": "closed",
+          "event_count": 5
         }
       ],
       "outbox": [
