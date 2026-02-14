@@ -238,6 +238,10 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_wait_for_messages.sh --worktree "$WORKTREE" --interval-seconds 5`
   - optional auto-process:
     - `./control-plane/scripts/collab_wait_for_messages.sh --worktree "$WORKTREE" --interval-seconds 5 --run-on-found "./control-plane/scripts/collab_process_messages.sh --role worker --worktree $WORKTREE"`
+- main wait regime (poll + auto-process on actionable):
+  - `./control-plane/scripts/collab_wait_main.sh --interval-seconds 5 --agent-ref AGENT_KIMI --friction-decision accept_later`
+  - status-only wake:
+    - `./control-plane/scripts/collab_wait_main.sh --interval-seconds 5 --status-only`
 - assignment obligation/evidence delta view:
   - `./control-plane/scripts/collab_show_assignment.sh --ref ASSIGN_...`
 - unified dry-run wrapper:

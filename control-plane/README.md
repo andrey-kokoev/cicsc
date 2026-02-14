@@ -177,6 +177,10 @@ Quickstart helpers:
   - `./control-plane/scripts/collab_wait_for_messages.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --interval-seconds 5`
   - auto-process on wake:
     - `./control-plane/scripts/collab_wait_for_messages.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --interval-seconds 5 --run-on-found "./control-plane/scripts/collab_process_messages.sh --role worker --worktree /home/andrey/src/cicsc/worktrees/kimi"`
+- wait regime (main polling loop):
+  - `./control-plane/scripts/collab_wait_main.sh --interval-seconds 5 --agent-ref AGENT_KIMI --friction-decision accept_later --friction-backlog-ref phase36.collab-ergonomics`
+  - status-only wake:
+    - `./control-plane/scripts/collab_wait_main.sh --interval-seconds 5 --status-only`
 - typed friction loop:
   - worker request: `./control-plane/scripts/collab_request_friction.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --type ergonomics --severity medium --summary "..." --repro-step "..."`
   - main triage: `./control-plane/scripts/collab_triage_friction.sh --message-ref MSG_... --decision accept_now --notes "..."`
