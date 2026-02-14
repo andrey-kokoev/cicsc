@@ -1,0 +1,56 @@
+{
+  "run_id": "dispatch-run-20260214T045345Z",
+  "created_at": "2026-02-14T04:53:45.540361+00:00",
+  "agent_ref": "AGENT_KIMI",
+  "from_agent_ref": "AGENT_MAIN",
+  "initial_status": "sent",
+  "commit": "45dd868",
+  "filters": {
+    "phase_number": null,
+    "milestone_id": null,
+    "strategy": "fifo",
+    "count": 3,
+    "requested_count": 3
+  },
+  "rows": [
+    {
+      "state": "applied",
+      "error": "",
+      "assignment_id": "ASSIGN_PHASE34_AY13_KIMI_I01",
+      "message_id": "MSG_PHASE34_AY13_KIMI_I01_DISPATCH",
+      "checkbox_ref": "AY1.3",
+      "phase_number": 34,
+      "instance_no": 1,
+      "milestone_id": "AY1",
+      "title": "Publish incident and drift localization report with forced-next mapping policy",
+      "branch": "phase34.ay1.3.i01",
+      "commit": "45dd868"
+    },
+    {
+      "state": "applied",
+      "error": "",
+      "assignment_id": "ASSIGN_PHASE34_AY21_KIMI_I01",
+      "message_id": "MSG_PHASE34_AY21_KIMI_I01_DISPATCH",
+      "checkbox_ref": "AY2.1",
+      "phase_number": 34,
+      "instance_no": 1,
+      "milestone_id": "AY2",
+      "title": "Add Phase 34 required-gates script/report for expanded multi-context envelope",
+      "branch": "phase34.ay2.1.i01",
+      "commit": "45dd868"
+    },
+    {
+      "state": "applied",
+      "error": "",
+      "assignment_id": "ASSIGN_PHASE34_AY22_KIMI_I01",
+      "message_id": "MSG_PHASE34_AY22_KIMI_I01_DISPATCH",
+      "checkbox_ref": "AY2.2",
+      "phase_number": 34,
+      "instance_no": 1,
+      "milestone_id": "AY2",
+      "title": "Publish Phase 34 closure report with unresolved critical disposition",
+      "branch": "phase34.ay2.2.i01",
+      "commit": "45dd868"
+    }
+  ]
+}

@@ -825,6 +825,66 @@
           "notes": "Dispatch instance i03 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
           "current_status": "fulfilled",
           "event_count": 3
+        },
+        {
+          "id": "MSG_PHASE34_AY13_KIMI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY13_KIMI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay1.3.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i01 AY1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY21_KIMI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY21_KIMI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay2.1.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i01 AY2.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY22_KIMI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY22_KIMI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay2.2.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i01 AY2.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
         }
       ]
     },
@@ -1509,6 +1569,66 @@
           "notes": "Dispatch instance i03 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
           "current_status": "fulfilled",
           "event_count": 3
+        },
+        {
+          "id": "MSG_PHASE34_AY13_KIMI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY13_KIMI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay1.3.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i01 AY1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY21_KIMI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY21_KIMI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay2.1.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i01 AY2.1 -> AGENT_KIMI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY22_KIMI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY22_KIMI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay2.2.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i01 AY2.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
         }
       ],
       "outbox": [

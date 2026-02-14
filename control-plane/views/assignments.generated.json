@@ -432,6 +432,39 @@
       "status": "assigned",
       "outcome": "pending",
       "notes": "Dispatch instance i03 for AY1.2: Execute multi-context workloads under expanded objective envelopes"
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY13_KIMI_I01",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY1.3",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay1.3.i01",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Dispatch instance i01 for AY1.3: Publish incident and drift localization report with forced-next mapping policy"
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY21_KIMI_I01",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY2.1",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay2.1.i01",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Dispatch instance i01 for AY2.1: Add Phase 34 required-gates script/report for expanded multi-context envelope"
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY22_KIMI_I01",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY2.2",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay2.2.i01",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Dispatch instance i01 for AY2.2: Publish Phase 34 closure report with unresolved critical disposition"
     }
   ]
 }
