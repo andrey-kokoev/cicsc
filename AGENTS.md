@@ -37,6 +37,30 @@ If you are the main agent opening this repository for the first time, do this in
 
 Do not create local ad hoc task files. Protocol truth is mailbox + append-only message events.
 
+## Deterministic Invocation Contract
+
+If the instruction is only:
+
+`Follow AGENTS.md`
+
+then execute exactly this protocol:
+
+1. `cd /home/andrey/src/cicsc`
+2. `./control-plane/scripts/generate_views.sh`
+3. Resolve your worktree path:
+   - main agent: `WORKTREE=/home/andrey/src/cicsc`
+   - worker agent: `WORKTREE=<your assigned worktree>`
+4. Read actionable inbox:
+   - `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh --actionable-only`
+5. If no actionable messages: stand down and report `no actionable inbox messages`.
+6. If actionable messages exist: process mailbox protocol (claim -> fulfill with required evidence -> commit), repeating until no actionable messages remain.
+7. Return a completion report containing:
+   - `message_ref`
+   - `assignment_ref`
+   - `checkbox_ref`
+   - `commit_sha`
+   - `current_status`
+
 ## Normative Conceptual Sources
 
 Execution guidance in this file is operational. Conceptual semantic intent is
@@ -120,6 +144,9 @@ Message I/O command surface:
 - execution location rule:
   - run all `control-plane/scripts/collab_*.sh` commands from repository root `/home/andrey/src/cicsc`
   - target worker context via `--worktree <path>`; do not invoke collab scripts from worker worktree directories
+- required variables for examples below:
+  - `ROOT=/home/andrey/src/cicsc`
+  - `WORKTREE=<target worktree path>`
 - operator quickstart (copy/paste):
   - `cd /home/andrey/src/cicsc`
   - `WORKTREE=/home/andrey/src/cicsc/worktrees/kimi`
@@ -128,9 +155,9 @@ Message I/O command surface:
 - collaboration preflight gate:
   - `./control-plane/scripts/collab_validate.sh`
 - quickstart command map (worker/main):
-  - `./control-plane/scripts/collab_help.sh --role worker --worktree "$PWD"`
+  - `./control-plane/scripts/collab_help.sh --role worker --worktree "$WORKTREE"`
 - read inbox (actionable only):
-  - `./control-plane/scripts/collab_inbox.sh --worktree "$PWD" --refresh --actionable-only`
+  - `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh --actionable-only`
 - main-side dispatch wrapper:
   - `./control-plane/scripts/collab_dispatch.sh --assignment-ref ASSIGN_... --payload-ref control-plane/collaboration/collab-model.yaml`
 - main-side batch dispatch wrapper:
@@ -140,21 +167,21 @@ Message I/O command surface:
 - owner delegation wrapper (effective ownership handoff/revoke):
   - `./control-plane/scripts/collab_delegate_worktree.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --owner-agent-ref AGENT_MAIN --delegate-to AGENT_KIMI`
 - single-step worker loop helper (claim + fulfillment guidance):
-  - `./control-plane/scripts/collab_run_once.sh --worktree "$PWD"`
+  - `./control-plane/scripts/collab_run_once.sh --worktree "$WORKTREE"`
 - acknowledge next actionable message:
-  - `./control-plane/scripts/collab_claim_next.sh --worktree "$PWD"`
-  - one-command claim+commit: `./control-plane/scripts/collab_claim_next.sh --worktree "$PWD" --commit`
-  - override WIP guard only when necessary: `./control-plane/scripts/collab_claim_next.sh --worktree "$PWD" --force`
+  - `./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE"`
+  - one-command claim+commit: `./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE" --commit`
+  - override WIP guard only when necessary: `./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE" --force`
 - fulfill message with typed evidence (digest auto-computed):
-  - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --script scripts/check_x.sh --gate-report docs/pilot/report.json`
+  - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$WORKTREE" --script scripts/check_x.sh --gate-report docs/pilot/report.json`
   - lazy re-run support for expensive checks:
-    - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --with scripts/check_x.sh --auto-report --lazy`
+    - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$WORKTREE" --with scripts/check_x.sh --auto-report --lazy`
   - auto-commit with custom message:
-    - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$PWD" --script scripts/check_x.sh --gate-report docs/pilot/report.json --auto-commit --commit-subject "phaseXX ayY.Y fulfill ..."`
+    - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$WORKTREE" --script scripts/check_x.sh --gate-report docs/pilot/report.json --auto-commit --commit-subject "phaseXX ayY.Y fulfill ..."`
 - worktree status summary + recommended next action:
-  - `./control-plane/scripts/collab_status.sh --worktree "$PWD"`
+  - `./control-plane/scripts/collab_status.sh --worktree "$WORKTREE"`
 - batch sweep mode:
-  - `./control-plane/scripts/collab_sweep.sh --worktree "$PWD" --script scripts/check_x.sh --gate-report docs/pilot/report.json --lazy`
+  - `./control-plane/scripts/collab_sweep.sh --worktree "$WORKTREE" --script scripts/check_x.sh --gate-report docs/pilot/report.json --lazy`
 - revert mistaken claim:
   - `./control-plane/scripts/collab_revert.sh --message-ref MSG_... --reason "claimed wrong assignment"`
 - assignment-level delta view:
@@ -162,9 +189,9 @@ Message I/O command surface:
 - aggregate history summary:
   - `./control-plane/scripts/collab_summary.sh --worktree "$PWD" --since 2026-02-13`
 - interactive loop wrapper:
-  - `./control-plane/scripts/collab_interactive.sh --worktree "$PWD"`
+  - `./control-plane/scripts/collab_interactive.sh --worktree "$WORKTREE"`
 - fuzzy interactive picker (requires `fzf`):
-  - `./control-plane/scripts/collab_fzf.sh --worktree "$PWD"`
+  - `./control-plane/scripts/collab_fzf.sh --worktree "$WORKTREE"`
 - main-side ingest+close wrapper:
   - `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`
 - stale mailbox watcher (warn/fail thresholds):
