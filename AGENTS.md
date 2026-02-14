@@ -131,6 +131,8 @@ Message I/O command surface:
   - `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`
 - stale mailbox watcher (warn/fail thresholds):
   - `./control-plane/scripts/collab_stale_watch.sh --warn-hours 24 --fail-hours 72`
+- assignment obligation/evidence delta view:
+  - `./control-plane/scripts/collab_show_assignment.sh --ref ASSIGN_...`
 
 Happy path:
 1. `./control-plane/scripts/collab_help.sh --role worker --worktree "$PWD"`
