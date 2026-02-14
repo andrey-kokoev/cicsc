@@ -4005,8 +4005,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i40 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "acknowledged",
+          "event_count": 2
         },
         {
           "id": "MSG_PHASE34_AY13_KIMI_I11_DISPATCH",
@@ -4025,6 +4025,66 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i11 AY1.3 -> AGENT_KIMI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY21_GEMINI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY21_GEMINI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay2.1.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i01 AY2.1 -> AGENT_GEMINI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY22_GEMINI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY22_GEMINI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay2.2.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i01 AY2.2 -> AGENT_GEMINI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY23_GEMINI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY23_GEMINI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay2.3.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i01 AY2.3 -> AGENT_GEMINI via collab_dispatch_batch.sh",
           "current_status": "sent",
           "event_count": 1
         }
@@ -7670,8 +7730,8 @@
           "evidence_refs": [],
           "evidence_bindings": [],
           "notes": "Dispatch instance i40 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh",
-          "current_status": "sent",
-          "event_count": 1
+          "current_status": "acknowledged",
+          "event_count": 2
         },
         {
           "id": "MSG_PHASE34_AY13_KIMI_I11_DISPATCH",
@@ -8062,6 +8122,66 @@
           "notes": "Dispatch instance i01 AY1.3 -> AGENT_GEMINI via collab_dispatch_batch.sh",
           "current_status": "closed",
           "event_count": 5
+        },
+        {
+          "id": "MSG_PHASE34_AY21_GEMINI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY21_GEMINI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay2.1.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i01 AY2.1 -> AGENT_GEMINI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY22_GEMINI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY22_GEMINI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay2.2.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i01 AY2.2 -> AGENT_GEMINI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY23_GEMINI_I01_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY23_GEMINI_I01",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay2.3.i01",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i01 AY2.3 -> AGENT_GEMINI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
         }
       ],
       "outbox": []
