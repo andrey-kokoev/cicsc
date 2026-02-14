@@ -1747,6 +1747,36 @@ assignments:
   outcome: pending
   notes: 'Dispatch instance i32 for AY1.2: Execute multi-context workloads under expanded
     objective envelopes'
+- id: ASSIGN_PHASE33_AX13_KIMI_I42
+  agent_ref: AGENT_KIMI
+  checkbox_ref: AX1.3
+  claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
+  worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase33.ax1.3.i42
+  status: assigned
+  outcome: pending
+  notes: 'Dispatch instance i42 for AX1.3: Publish coupling conformance report with
+    residual gaps register'
+- id: ASSIGN_PHASE34_AY11_KIMI_I38
+  agent_ref: AGENT_KIMI
+  checkbox_ref: AY1.1
+  claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
+  worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase34.ay1.1.i38
+  status: assigned
+  outcome: pending
+  notes: 'Dispatch instance i38 for AY1.1: Freeze Phase 34 context matrix and expanded
+    acceptance contract'
+- id: ASSIGN_PHASE34_AY13_KIMI_I09
+  agent_ref: AGENT_KIMI
+  checkbox_ref: AY1.3
+  claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
+  worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase34.ay1.3.i09
+  status: assigned
+  outcome: pending
+  notes: 'Dispatch instance i09 for AY1.3: Publish incident and drift localization
+    report with forced-next mapping policy'
 message_kinds:
 - id: MSGK_ASSIGNMENT_DISPATCH
   title: Assignment dispatch from canonical worktree.
@@ -4147,6 +4177,51 @@ messages:
   evidence_refs: []
   evidence_bindings: []
   notes: Dispatch instance i32 AY1.2 -> AGENT_KIMI via collab_dispatch_batch.sh
+- id: MSG_PHASE33_AX13_KIMI_I42_DISPATCH
+  kind_ref: MSGK_ASSIGNMENT_DISPATCH
+  assignment_ref: ASSIGN_PHASE33_AX13_KIMI_I42
+  from_agent_ref: AGENT_MAIN
+  to_agent_ref: AGENT_KIMI
+  from_worktree: /home/andrey/src/cicsc
+  to_worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase33.ax1.3.i42
+  initial_status: sent
+  payload_refs:
+  - AGENTS.md
+  - control-plane/README.md
+  evidence_refs: []
+  evidence_bindings: []
+  notes: Dispatch instance i42 AX1.3 -> AGENT_KIMI via collab_dispatch_batch.sh
+- id: MSG_PHASE34_AY11_KIMI_I38_DISPATCH
+  kind_ref: MSGK_ASSIGNMENT_DISPATCH
+  assignment_ref: ASSIGN_PHASE34_AY11_KIMI_I38
+  from_agent_ref: AGENT_MAIN
+  to_agent_ref: AGENT_KIMI
+  from_worktree: /home/andrey/src/cicsc
+  to_worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase34.ay1.1.i38
+  initial_status: sent
+  payload_refs:
+  - AGENTS.md
+  - control-plane/README.md
+  evidence_refs: []
+  evidence_bindings: []
+  notes: Dispatch instance i38 AY1.1 -> AGENT_KIMI via collab_dispatch_batch.sh
+- id: MSG_PHASE34_AY13_KIMI_I09_DISPATCH
+  kind_ref: MSGK_ASSIGNMENT_DISPATCH
+  assignment_ref: ASSIGN_PHASE34_AY13_KIMI_I09
+  from_agent_ref: AGENT_MAIN
+  to_agent_ref: AGENT_KIMI
+  from_worktree: /home/andrey/src/cicsc
+  to_worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase34.ay1.3.i09
+  initial_status: sent
+  payload_refs:
+  - AGENTS.md
+  - control-plane/README.md
+  evidence_refs: []
+  evidence_bindings: []
+  notes: Dispatch instance i09 AY1.3 -> AGENT_KIMI via collab_dispatch_batch.sh
 message_events:
 - id: MSGEV_PHASE33_AX12_DISPATCH_SENT
   message_ref: MSG_PHASE33_AX12_DISPATCH
@@ -12404,3 +12479,30 @@ message_events:
     commit: f154231
     digest: sha256:cb42d64bfb20b2cb21d10c4246c49a9e54ac5fbeb32a05f13534f0ef9930bd25
   notes: Fulfilled by AGENT_KIMI via collab_fulfill.sh
+- id: MSGEV_PHASE33_AX13_KIMI_I42_DISPATCH_SENT_1
+  message_ref: MSG_PHASE33_AX13_KIMI_I42_DISPATCH
+  from_status: null
+  to_status: sent
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 1
+  commit: df7e2a0
+  evidence_bindings: []
+  notes: Initial dispatch event for ASSIGN_PHASE33_AX13_KIMI_I42.
+- id: MSGEV_PHASE34_AY11_KIMI_I38_DISPATCH_SENT_1
+  message_ref: MSG_PHASE34_AY11_KIMI_I38_DISPATCH
+  from_status: null
+  to_status: sent
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 1
+  commit: df7e2a0
+  evidence_bindings: []
+  notes: Initial dispatch event for ASSIGN_PHASE34_AY11_KIMI_I38.
+- id: MSGEV_PHASE34_AY13_KIMI_I09_DISPATCH_SENT_1
+  message_ref: MSG_PHASE34_AY13_KIMI_I09_DISPATCH
+  from_status: null
+  to_status: sent
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 1
+  commit: df7e2a0
+  evidence_bindings: []
+  notes: Initial dispatch event for ASSIGN_PHASE34_AY13_KIMI_I09.
