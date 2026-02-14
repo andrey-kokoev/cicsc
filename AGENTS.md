@@ -256,26 +256,55 @@ Message I/O command surface:
 - collab/view commit wrapper:
   - `./control-plane/scripts/collab_commit_views.sh --subject "governance/collab: ..."`
 
-Happy path (ergonomic - single command):
+Happy path (robust - single command with circuit breaker):
 ```bash
 ./control-plane/scripts/collab_worker_loop.sh --worktree "$WORKTREE"
 ```
-This runs continuously: waits for messages, auto-claims, auto-fulfills with evidence,
-auto-commits, and handles repairs automatically. Runs until Ctrl+C.
 
-Manual path (when you need control):
-1. `./control-plane/scripts/collab_help.sh --role worker --worktree "$PWD"`
-2. `./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE" --commit`
-3. Execute required scripts and generate required artifacts.
-4. `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$WORKTREE" --auto-report --auto-commit`
-5. Main ingests/closes via `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`.
+What it does:
+- Waits for actionable messages
+- Executes claim+fulfill atomically for each message
+- Auto-detects and repairs orphaned events
+- Commits state changes after each message
+- Circuit breaker: stops after 5 consecutive failures
 
-Ergonomic improvements:
-- `collab_claim_next` and `collab_fulfill` auto-sync views before operations
-- Dirty trees no longer block operations (auto-commit is disabled, operation continues)
-- `collab_worker_loop` auto-repairs on common failures (sync, commit)
-- Use `--auto-report` to auto-discover evidence files
-- Use `--auto-commit` to commit model changes (skips if dirty)
+What it does NOT do:
+- Does NOT fix all possible error states (some require manual intervention)
+- Does NOT handle git merge conflicts (stops and alerts)
+- Does NOT retry indefinitely (circuit breaker prevents infinite loops)
+
+On circuit breaker trip, you'll see:
+```
+CIRCUIT BREAKER TRIPPED
+  Consecutive failures: 5
+  Manual intervention required.
+```
+
+Recovery steps:
+1. Run: `./control-plane/scripts/collab_sync.sh`
+2. Check: `./control-plane/scripts/validate_cross_model.sh`
+3. Review: `git status`
+4. If orphaned events exist, they are auto-repaired on next run
+5. Restart: `./control-plane/scripts/collab_worker_loop.sh --worktree "$WORKTREE"`
+
+Manual path (when you need granular control):
+```bash
+# Pre-flight check
+./control-plane/scripts/collab_execute.sh --worktree "$WORKTREE" --dry-run
+
+# Atomic execution (claim+fulfill+commit)
+./control-plane/scripts/collab_execute.sh --worktree "$WORKTREE"
+
+# Or step-by-step (useful for debugging)
+./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE"
+./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$WORKTREE" --auto-report
+```
+
+Ergonomic features:
+- `--auto-report`: auto-discovers evidence files
+- `--auto-commit`: commits model changes (warns if dirty)
+- Views auto-sync before operations
+- Operations continue despite warnings (don't block on non-fatal issues)
 
 Canonical worker loop (multi-assignment):
 1. `./control-plane/scripts/collab_status.sh --worktree "$WORKTREE"`
