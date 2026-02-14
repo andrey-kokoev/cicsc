@@ -102,6 +102,28 @@
       "status": "assigned",
       "outcome": "pending",
       "notes": "Multi-task lane 2 for Kimi: closure-report skeleton and unresolved-critical disposition matrix."
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY23_KIMI_MULTI3",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY2.3",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay2.3",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Multi-task lane 3 for Kimi: AY2.3 exit checklist synthesis and evidence binding."
+    },
+    {
+      "id": "ASSIGN_PHASE34_AY24_KIMI_MULTI4",
+      "agent_ref": "AGENT_KIMI",
+      "checkbox_ref": "AY2.4",
+      "claim_kind_ref": "CLAIM_EXECUTION_GOVERNANCE",
+      "worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+      "branch": "phase34.ay2.4",
+      "status": "assigned",
+      "outcome": "pending",
+      "notes": "Multi-task lane 4 for Kimi: AY2.4 block-gate integration and closure hardening."
     }
   ]
 }

@@ -186,6 +186,46 @@
           "notes": "Dispatch Kimi multi-lane task 2 (AY2.2).",
           "current_status": "fulfilled",
           "event_count": 3
+        },
+        {
+          "id": "MSG_PHASE34_AY23_KIMI_MULTI3_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY23_KIMI_MULTI3",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay2.3",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch Kimi multi-lane task 3 (AY2.3).",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY24_KIMI_MULTI4_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY24_KIMI_MULTI4",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay2.4",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch Kimi multi-lane task 4 (AY2.4).",
+          "current_status": "sent",
+          "event_count": 1
         }
       ]
     },
@@ -290,6 +330,46 @@
           "notes": "Dispatch Kimi multi-lane task 2 (AY2.2).",
           "current_status": "fulfilled",
           "event_count": 3
+        },
+        {
+          "id": "MSG_PHASE34_AY23_KIMI_MULTI3_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY23_KIMI_MULTI3",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay2.3",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch Kimi multi-lane task 3 (AY2.3).",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY24_KIMI_MULTI4_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY24_KIMI_MULTI4",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_KIMI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/kimi",
+          "branch": "phase34.ay2.4",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch Kimi multi-lane task 4 (AY2.4).",
+          "current_status": "sent",
+          "event_count": 1
         }
       ],
       "outbox": []

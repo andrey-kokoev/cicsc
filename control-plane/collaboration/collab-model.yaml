@@ -254,6 +254,25 @@ assignments:
   outcome: pending
   notes: 'Multi-task lane 2 for Kimi: closure-report skeleton and unresolved-critical
     disposition matrix.'
+- id: ASSIGN_PHASE34_AY23_KIMI_MULTI3
+  agent_ref: AGENT_KIMI
+  checkbox_ref: AY2.3
+  claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
+  worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase34.ay2.3
+  status: assigned
+  outcome: pending
+  notes: 'Multi-task lane 3 for Kimi: AY2.3 exit checklist synthesis and evidence
+    binding.'
+- id: ASSIGN_PHASE34_AY24_KIMI_MULTI4
+  agent_ref: AGENT_KIMI
+  checkbox_ref: AY2.4
+  claim_kind_ref: CLAIM_EXECUTION_GOVERNANCE
+  worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase34.ay2.4
+  status: assigned
+  outcome: pending
+  notes: 'Multi-task lane 4 for Kimi: AY2.4 block-gate integration and closure hardening.'
 message_kinds:
 - id: MSGK_ASSIGNMENT_DISPATCH
   title: Assignment dispatch from canonical worktree.
@@ -402,6 +421,36 @@ messages:
   evidence_refs: []
   evidence_bindings: []
   notes: Dispatch Kimi multi-lane task 2 (AY2.2).
+- id: MSG_PHASE34_AY23_KIMI_MULTI3_DISPATCH
+  kind_ref: MSGK_ASSIGNMENT_DISPATCH
+  assignment_ref: ASSIGN_PHASE34_AY23_KIMI_MULTI3
+  from_agent_ref: AGENT_MAIN
+  to_agent_ref: AGENT_KIMI
+  from_worktree: /home/andrey/src/cicsc
+  to_worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase34.ay2.3
+  initial_status: sent
+  payload_refs:
+  - AGENTS.md
+  - control-plane/README.md
+  evidence_refs: []
+  evidence_bindings: []
+  notes: Dispatch Kimi multi-lane task 3 (AY2.3).
+- id: MSG_PHASE34_AY24_KIMI_MULTI4_DISPATCH
+  kind_ref: MSGK_ASSIGNMENT_DISPATCH
+  assignment_ref: ASSIGN_PHASE34_AY24_KIMI_MULTI4
+  from_agent_ref: AGENT_MAIN
+  to_agent_ref: AGENT_KIMI
+  from_worktree: /home/andrey/src/cicsc
+  to_worktree: /home/andrey/src/cicsc/worktrees/kimi
+  branch: phase34.ay2.4
+  initial_status: sent
+  payload_refs:
+  - AGENTS.md
+  - control-plane/README.md
+  evidence_refs: []
+  evidence_bindings: []
+  notes: Dispatch Kimi multi-lane task 4 (AY2.4).
 message_events:
 - id: MSGEV_PHASE33_AX12_DISPATCH_SENT
   message_ref: MSG_PHASE33_AX12_DISPATCH
@@ -727,3 +776,21 @@ message_events:
     commit: ffbf5a5
     digest: sha256:f965b6b46245324b5d28c6937cb667102718dd8382bcb21924ff3fab53907cca
   notes: Fulfilled by AGENT_KIMI via collab_fulfill.sh
+- id: MSGEV_PHASE34_AY23_KIMI_MULTI3_DISPATCH_SENT_1
+  message_ref: MSG_PHASE34_AY23_KIMI_MULTI3_DISPATCH
+  from_status: null
+  to_status: sent
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 1
+  commit: 1de10aa
+  evidence_bindings: []
+  notes: Initial dispatch event for ASSIGN_PHASE34_AY23_KIMI_MULTI3.
+- id: MSGEV_PHASE34_AY24_KIMI_MULTI4_DISPATCH_SENT_1
+  message_ref: MSG_PHASE34_AY24_KIMI_MULTI4_DISPATCH
+  from_status: null
+  to_status: sent
+  actor_agent_ref: AGENT_MAIN
+  at_seq: 1
+  commit: 1de10aa
+  evidence_bindings: []
+  notes: Initial dispatch event for ASSIGN_PHASE34_AY24_KIMI_MULTI4.
