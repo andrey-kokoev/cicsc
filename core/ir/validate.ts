@@ -60,6 +60,14 @@ export function validateBundleV0 (bundle: unknown): { ok: true; value: CoreIrBun
     }
   }
 
+  // Validate row_policies if present (BT1.4)
+  if (ir.row_policies != null && !isObject(ir.row_policies)) errors.push({ path: "$.core_ir.row_policies", message: "row_policies must be an object" })
+  else if (ir.row_policies != null) {
+    for (const [rpName, rpSpec] of Object.entries(ir.row_policies)) {
+      validateRowPolicy(errors, `$.core_ir.row_policies.${rpName}`, rpSpec as any)
+    }
+  }
+
   if (errors.length) return { ok: false, errors }
 
   const tc = typecheckCoreIrV0(ir as CoreIrV0)
@@ -122,6 +130,45 @@ function validateEntityType (errors: ValidationError[], path: string, typeName: 
       if (!Array.isArray(ops)) errors.push({ path: rp, message: "reducer entry must be array of ops" })
       else ops.forEach((op: any, i: number) => validateReducerOp(errors, `${rp}[${i}]`, op))
     }
+  }
+
+  // Validate row_policy if present (BT1.4)
+  if (spec.row_policy != null) {
+    validateRowPolicy(errors, `${path}.row_policy`, spec.row_policy)
+  }
+}
+
+function validateRowPolicy (errors: ValidationError[], path: string, policy: any) {
+  if (!isObject(policy)) {
+    errors.push({ path, message: "row_policy must be an object" })
+    return
+  }
+
+  const keys = Object.keys(policy)
+  if (keys.length !== 1) {
+    errors.push({ path, message: "row_policy must have exactly one tag key (owner, member_of, or expr)" })
+    return
+  }
+
+  const tag = keys[0]!
+  const body = policy[tag]
+
+  switch (tag) {
+    case "owner":
+      if (!isObject(body) || typeof body.actor_field !== "string") {
+        errors.push({ path, message: "owner policy requires {actor_field: string}" })
+      }
+      break
+    case "member_of":
+      if (!isObject(body) || typeof body.actor_field !== "string" || typeof body.target_type !== "string" || typeof body.target_field !== "string") {
+        errors.push({ path, message: "member_of policy requires {actor_field: string, target_type: string, target_field: string}" })
+      }
+      break
+    case "expr":
+      validateExpr(errors, `${path}.expr`, body)
+      break
+    default:
+      errors.push({ path, message: `unknown row_policy tag: ${tag}` })
   }
 }
 

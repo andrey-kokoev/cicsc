@@ -17,6 +17,7 @@ export type CoreIrV0 = {
   queues?: Record<string, QueueSpecV0>
   schedules?: Record<string, ScheduleSpecV0>
   workflows?: Record<string, WorkflowSpecV0>
+  row_policies?: Record<string, RowPolicyV0> // named RLS policies for reuse
 }
 
 export type EntityTypeSpecV0 = {
@@ -29,6 +30,8 @@ export type EntityTypeSpecV0 = {
 
   commands: Record<string, CommandSpecV0>
   reducer: Record<string, ReducerOpV0[]> // keyed by event_type
+
+  row_policy?: RowPolicyV0 // entity-level default RLS policy
 }
 
 export type AttrTypeSpecV0 = {
@@ -77,9 +80,14 @@ export type ViewSpecV0 = {
   on_type?: string
   lanes?: string[]
   args?: Record<string, AttrTypeSpecV0>
-  row_policy?: ExprV0
+  row_policy?: RowPolicyV0
   query: QueryV0
 }
+
+export type RowPolicyV0 =
+  | { owner: { actor_field: string } }
+  | { member_of: { actor_field: string; target_type: string; target_field: string } }
+  | { expr: ExprV0 }
 
 export type SlaSpecV0 = {
   name: string
@@ -265,9 +273,6 @@ export type AggExprV0 =
   | { sum: { expr: ExprV0 } }
   | { min: { expr: ExprV0 } }
   | { max: { expr: ExprV0 } }
-  | { rate: { numerator: ExprV0; denominator: ExprV0; unit: "per_second" | "per_minute" | "per_hour" | "per_day" } }
-  | { ratio: { numerator: ExprV0; denominator: ExprV0; scale?: number } }
-  | { time_between: { start_expr: ExprV0; end_expr: ExprV0; unit?: "seconds" | "minutes" | "hours" | "days" } }
 
 export type ScheduleSpecV0 = {
   trigger: ScheduleTriggerV0

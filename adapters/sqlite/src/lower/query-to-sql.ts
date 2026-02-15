@@ -13,6 +13,7 @@ export type SqlPlan = {
 export type LoweringCtx = {
   version: number // events_v{v}, snapshots_v{v}
   tenant_id: string
+  actor_id?: string // for RLS enforcement (BT2.4)
 
   // In v0 we assume snapshots are stored flat as:
   //   snapshots_vX: tenant_id, entity_type, entity_id, state, attrs_json, updated_ts, + shadow columns
@@ -26,10 +27,15 @@ export type LoweringCtx = {
   //   left.<field>, right.<field>
 }
 
-export function lowerQueryToSql (q: QueryV0, ctx: LoweringCtx): SqlPlan {
+export function lowerQueryToSql (q: QueryV0, ctx: LoweringCtx, rowPolicy?: any): SqlPlan {
   const binds: any[] = []
 
-  const from = lowerSource(q.source, ctx)
+  const from = lowerSource(q.source, ctx, rowPolicy)
+  
+  // Add any RLS binds from the source
+  if (from.binds) {
+    binds.push(...from.binds)
+  }
 
   // pipeline lowering: fold into WHERE / SELECT / GROUP BY / ORDER / LIMIT/OFFSET
   let where: string[] = []
@@ -155,7 +161,7 @@ export function lowerQueryToSql (q: QueryV0, ctx: LoweringCtx): SqlPlan {
   return { sql, binds }
 }
 
-function lowerSource (src: SourceV0, ctx: LoweringCtx): { sql: string } {
+function lowerSource (src: SourceV0, ctx: LoweringCtx, rowPolicy?: any): { sql: string; binds?: any[] } {
   const tag = soleKey(src)
   const body: any = (src as any)[tag]
 
@@ -163,13 +169,23 @@ function lowerSource (src: SourceV0, ctx: LoweringCtx): { sql: string } {
     case "snap": {
       const t = body.type as string
       const table = `snapshots_v${ctx.version}`
-      // expose stream row columns and any materialized shadow columns
-      return {
-        sql:
-          `(SELECT *\n` +
-          ` FROM ${table}\n` +
-          ` WHERE tenant_id=? AND entity_type=?) AS row`,
+      
+      // Build base SQL
+      let sql =
+        `(SELECT *\n` +
+        ` FROM ${table}\n` +
+        ` WHERE tenant_id=? AND entity_type=?`
+      
+      // Apply RLS if provided and actor_id is in context (BT2.4)
+      if (rowPolicy && ctx.actor_id) {
+        const rls = lowerRowPolicyToSql(rowPolicy, ctx)
+        if (rls.sql) {
+          sql += ` AND ${rls.sql}`
+          return { sql: sql + `) AS row`, binds: rls.binds }
+        }
       }
+      
+      return { sql: sql + `) AS row` }
     }
 
     case "sla_status": {
@@ -541,4 +557,50 @@ function clampInt (n: number, lo: number, hi: number): number {
   if (!Number.isFinite(n)) return lo
   const x = Math.trunc(n)
   return Math.min(hi, Math.max(lo, x))
+}
+
+// Row-Level Security SQL generation (BT2.4)
+export function lowerRowPolicyToSql (policy: any, ctx: LoweringCtx): { sql: string; binds: any[] } {
+  if (!policy || !ctx.actor_id) {
+    return { sql: "", binds: [] }
+  }
+
+  const tag = soleKey(policy)
+  const body = policy[tag]
+
+  switch (tag) {
+    case "owner": {
+      // row.actor_field = actor_id
+      return {
+        sql: `${escapeIdent(body.actor_field)} = ?`,
+        binds: [ctx.actor_id],
+      }
+    }
+    case "member_of": {
+      // row.target_field IN (SELECT target_field FROM memberships WHERE actor_id = ctx.actor_id AND target_type = body.target_type)
+      return {
+        sql: `${escapeIdent(body.target_field)} IN (SELECT target_id FROM rls_memberships WHERE actor_id = ? AND target_type = ?)`,
+        binds: [ctx.actor_id, body.target_type],
+      }
+    }
+    case "expr": {
+      // Custom expression - would need full expression lowering with actor context
+      // For now, return empty to allow fallback behavior
+      return { sql: "", binds: [] }
+    }
+    default:
+      return { sql: "", binds: [] }
+  }
+}
+
+// Apply RLS to a snap source SQL
+export function applyRlsToSnapSql (baseSql: string, policy: any, ctx: LoweringCtx): { sql: string; binds: any[] } {
+  const rls = lowerRowPolicyToSql(policy, ctx)
+  if (!rls.sql) {
+    return { sql: baseSql, binds: [] }
+  }
+
+  // Inject RLS clause before the closing ) AS row
+  const modifiedSql = baseSql.replace(/\) AS row$/, ` AND ${rls.sql}) AS row`)
+  return { sql: modifiedSql, binds: rls.binds }
 }

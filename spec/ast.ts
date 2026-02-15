@@ -9,6 +9,7 @@ export type SpecV0 = {
   subscriptions?: Record<string, SpecSubscriptionV0>
   webhooks?: Record<string, SpecWebhookV0>
   queues?: Record<string, SpecQueueV0>
+  row_policies?: Record<string, RowPolicySugarV0>
 }
 
 export type SpecEntityV0 = {
@@ -21,6 +22,8 @@ export type SpecEntityV0 = {
 
   commands?: Record<string, SpecCommandV0>
   reducers?: Record<string, any[]>
+
+  row_policy?: RowPolicySugarV0
 }
 
 export type SpecAttrV0 = {
@@ -48,7 +51,7 @@ export type SpecViewV0 = {
   kind: string
   on: string
   query?: any
-  row_policy?: any
+  row_policy?: RowPolicySugarV0
   lanes?: {
     states?: string[]
     order_by?: { field: string; dir?: "asc" | "desc" }
@@ -142,3 +145,10 @@ export type SpecQueueV0 = {
     input_map: Record<string, any>
   }
 }
+
+// Row-Level Security policy sugar (BT1.1-BT1.3)
+export type RowPolicySugarV0 =
+  | { owner: { field: string } }
+  | { member_of: { field: string; through: string; target_field?: string } }
+  | { expr: any }
+  | string // reference to named policy
