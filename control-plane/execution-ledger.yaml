@@ -2075,7 +2075,7 @@ phases:
       description: Cloud deployment templates
 - id: BG
   number: 8
-  status: active
+  status: complete
   title: Conversational Spec Assistant - True Accessibility
   milestones:
   - id: BG1
