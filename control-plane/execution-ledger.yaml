@@ -1975,7 +1975,7 @@ phases:
       description: Migration acceptance gates
 - id: BE
   number: 6
-  status: planned
+  status: complete
   title: Postgres Adapter - Backend Parity
   milestones:
   - id: BE1
