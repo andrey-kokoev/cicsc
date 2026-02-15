@@ -1875,7 +1875,7 @@ phases:
       description: Document sugar transformations
 - id: BC
   number: 4
-  status: active
+  status: complete
   title: Bundle Registry - Storage and Versioning
   milestones:
   - id: BC1
@@ -1932,16 +1932,16 @@ phases:
     title: Schema Diff Engine
     checkboxes:
     - id: BD1.1
-      status: open
+      status: done
       description: Diff two Core IR schemas (entities, fields, constraints)
     - id: BD1.2
-      status: open
+      status: done
       description: Classify changes (safe, dangerous, breaking)
     - id: BD1.3
-      status: open
+      status: done
       description: Detect data loss scenarios
     - id: BD1.4
-      status: open
+      status: done
       description: Diff visualization for migration planning
   - id: BD2
     title: Migration Script Generation
