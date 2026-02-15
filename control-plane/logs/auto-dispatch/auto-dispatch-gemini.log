@@ -66,3 +66,11 @@ auto-dispatch-loop error: process-main@cycle-0 failed (exit=1)
 auto-dispatch-loop recoverable path: sleeping 5s before retry loop
 [cycle 0] process main
 main process-messages: canonical collab/view files are pre-dirty, using --no-commit mode for this run
+/home/andrey/src/cicsc/control-plane/collaboration/collab-model.yaml:1: schema validation failed: path=assignments.210.status 'fulfilled_by_assignee' is not one of ['assigned', 'in_progress', 'submitted', 'ingested', 'done', 'blocked']. hint: check required fields/types at the reported path.
+auto-dispatch-loop error: process-main@cycle-0 failed (exit=1)
+auto-dispatch-loop recoverable path: sleeping 5s before retry loop
+[cycle 0] process main
+/home/andrey/src/cicsc/control-plane/collaboration/collab-model.yaml:1: schema validation failed: path=assignments.210.status 'fulfilled_by_assignee' is not one of ['assigned', 'in_progress', 'submitted', 'ingested', 'done', 'blocked']. hint: check required fields/types at the reported path.
+auto-dispatch-loop error: process-main@cycle-0 failed (exit=1)
+auto-dispatch-loop recoverable path: sleeping 5s before retry loop
+auto-dispatch-loop exit: rc=0
