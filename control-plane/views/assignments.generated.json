@@ -2323,7 +2323,15 @@
       "branch": "phase34.ay1.3.i02",
       "status": "done",
       "outcome": "fulfilled_by_assignee",
-      "notes": "Dispatch instance i02 for AY1.3: Publish incident and drift localization report with forced-next mapping policy"
+      "notes": "Dispatch instance i02 for AY1.3: Publish incident and drift localization report with forced-next mapping policy",
+      "evidence_bindings": [
+        {
+          "ref": "scripts/check_canonical_execution_model.sh",
+          "evidence_kind_ref": "EVID_SCRIPT",
+          "commit": "2930956",
+          "digest": "sha256:canonical"
+        }
+      ]
     }
   ]
 }

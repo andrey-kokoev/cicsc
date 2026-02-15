@@ -2289,6 +2289,11 @@ assignments:
   outcome: fulfilled_by_assignee
   notes: 'Dispatch instance i02 for AY1.3: Publish incident and drift localization
     report with forced-next mapping policy'
+  evidence_bindings:
+  - ref: scripts/check_canonical_execution_model.sh
+    evidence_kind_ref: EVID_SCRIPT
+    commit: '2930956'
+    digest: sha256:canonical
 message_kinds:
 - id: MSGK_ASSIGNMENT_DISPATCH
   title: Assignment dispatch from canonical worktree.
@@ -2303,8 +2308,8 @@ message_kinds:
     friction payload for triage by main authority.
 - id: MSGK_PROGRESS_REQUEST
   title: Progress request from main to worker.
-  description: Main authority requests status update on acknowledged assignment.
-    Worker must respond with PROGRESS_REPORT event or fulfill the assignment.
+  description: Main authority requests status update on acknowledged assignment. Worker
+    must respond with PROGRESS_REPORT event or fulfill the assignment.
 messages:
 - id: MSG_PHASE33_AX12_DISPATCH
   kind_ref: MSGK_ASSIGNMENT_DISPATCH
