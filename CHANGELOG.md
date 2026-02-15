@@ -37,3 +37,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Microsoft OAuth adapter (Entra ID / Azure AD support)
+
+## [v1.3.0] - $(date +%Y-%m-%d)
+
+### Added
+- Blob Storage Support (Phase BK)
+  - New 'blob' type in Spec DSL with constraints (maxSize, allowedTypes)
+  - R2 adapter (Cloudflare) with S3-compatible API
+  - S3 adapter (AWS) with presigned URL generation
+  - Runtime integration for uploads, metadata storage, and secure downloads
+  - Storage backend configuration in Spec
+
+### Changed
+- Extended Spec DSL parser to support blob declarations
+- Added storage adapters framework for extensibility
