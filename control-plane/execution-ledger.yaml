@@ -2025,7 +2025,7 @@ phases:
       description: CI integration for Postgres tests
 - id: BF
   number: 7
-  status: active
+  status: complete
   title: v1.0 Integration and Documentation
   milestones:
   - id: BF1
