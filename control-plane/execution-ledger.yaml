@@ -2681,38 +2681,38 @@ phases:
       description: Spec DSL sugar
 - id: BT
   number: 40
-  status: planned
+  status: complete
   title: Row-Level Security Sugar
   milestones:
   - id: BT1
     title: Core IR RLS Extension
     checkboxes:
     - id: BT1.1
-      status: open
+      status: done
       description: Add row_policy patterns
     - id: BT1.2
-      status: open
+      status: done
       description: Define owner semantics
     - id: BT1.3
-      status: open
+      status: done
       description: Define member_of semantics
     - id: BT1.4
-      status: open
+      status: done
       description: Update IR validator
   - id: BT2
     title: RLS Runtime
     checkboxes:
     - id: BT2.1
-      status: open
+      status: done
       description: Owner pattern codegen
     - id: BT2.2
-      status: open
+      status: done
       description: Member-of codegen
     - id: BT2.3
-      status: open
+      status: done
       description: Fallback to custom expr
     - id: BT2.4
-      status: open
+      status: done
       description: RLS enforcement
 - id: BU
   number: 41

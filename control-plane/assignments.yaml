@@ -1521,33 +1521,49 @@ assignments:
   completed_at: '2026-02-15T17:15:00.000000Z'
 - checkbox_ref: BT1.1
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T17:31:11.476566Z'
+  completed_at: '2026-02-15T17:42:00Z'
+  commit: 0bd98d3
 - checkbox_ref: BT1.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T17:31:11.734089Z'
+  completed_at: '2026-02-15T17:42:00Z'
+  commit: 0bd98d3
 - checkbox_ref: BT1.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T17:31:12.017572Z'
+  completed_at: '2026-02-15T17:42:00Z'
+  commit: 0bd98d3
 - checkbox_ref: BT1.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T17:31:12.281542Z'
+  completed_at: '2026-02-15T17:42:00Z'
+  commit: 0bd98d3
 - checkbox_ref: BT2.1
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T17:31:12.533293Z'
+  completed_at: '2026-02-15T17:42:00Z'
+  commit: 0bd98d3
 - checkbox_ref: BT2.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T17:31:12.784862Z'
+  completed_at: '2026-02-15T17:42:00Z'
+  commit: 0bd98d3
 - checkbox_ref: BT2.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T17:31:13.076168Z'
+  completed_at: '2026-02-15T17:42:00Z'
+  commit: 0bd98d3
 - checkbox_ref: BT2.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T17:31:13.328074Z'
+  completed_at: '2026-02-15T17:42:00Z'
+  commit: 0bd98d3
