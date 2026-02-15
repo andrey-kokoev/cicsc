@@ -1912,16 +1912,16 @@ phases:
     title: Tenant-Bundle Binding
     checkboxes:
     - id: BC3.1
-      status: open
+      status: done
       description: Tenant schema with bundle references
     - id: BC3.2
-      status: open
+      status: done
       description: Install bundle to tenant workflow
     - id: BC3.3
-      status: open
+      status: done
       description: Multi-bundle dependency resolution
     - id: BC3.4
-      status: open
+      status: done
       description: Bundle uninstall and cleanup
 - id: BD
   number: 5
