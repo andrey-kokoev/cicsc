@@ -2,21 +2,33 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.0] - 2026-02-15
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+## [v1.2.0] - TBD
 
 ### Added
-- **Surface DSL**: New indentation-based language for describing entities and constraints.
-- **Bundle Registry**: R2 blobs and KV index for immutable bundle distribution.
-- **Postgres Adapter**: Robust backend support with native JSONB and window functions.
-- **Migration Engine**: Automated diffing and event replay for schema evolution.
-- **Conformance Suite**: Cross-backend differential testing against Lean 4 oracle.
+- OAuth integration (Phase BH)
+- RBAC engine (Phase BI)
+- Audit logging (Phase BJ)
 
-### Changed
-- **Lean Kernel**: Upgraded to v4 with complete typing and WF bridges.
-- **Control Plane**: Simplified collaboration model using direct `execution-ledger.yaml` state.
-- **Lowering**: Optimized SQLite lowering for complex nested expressions.
+## [v1.1.0] - 2026-02-15
 
-### Fixed
-- Fixed race condition in SQLite stream lock implementation.
-- Corrected SemVer resolution logic in Bundle Registry.
-- Improved error messaging for guard rejections in the runtime.
+### Added
+- Conversational Spec Assistant (Phase BG)
+- Natural language to Spec DSL translation
+- Interactive interview engine
+- Iterative refinement interface
+
+## [v1.0.0] - 2026-02-15
+
+### Added
+- Spec DSL surface language
+- Bundle Registry (R2/KV storage)
+- Migration System with replay verification
+- Postgres Adapter with conformance testing
+- Complete documentation and examples
+- v1.0 integration and release
+
