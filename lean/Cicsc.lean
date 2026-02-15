@@ -15,6 +15,7 @@ import Cicsc.Core.Meta.EnvCoherence
 import Cicsc.Tactics.QueryEquiv
 import Cicsc.Evolution.Migration
 import Cicsc.Evolution.Naturality
+import Cicsc.Evolution.Collaboration
 import Cicsc.Examples.Ticketing
 import Cicsc.Examples.Kanban
 import Cicsc.Examples.QueryConstraints

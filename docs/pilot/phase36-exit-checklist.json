@@ -1,0 +1,11 @@
+{
+  "version": "cicsc/phase36-exit-checklist-v1",
+  "timestamp_unix": 1771169100,
+  "overall": "pass",
+  "items": [
+    { "id": "lean_model_complete", "artifact": "lean/Cicsc/Evolution/Collaboration.lean", "status": "pass" },
+    { "id": "theorems_verified", "artifact": "docs/pilot/phase36-collaboration-theorems.json", "status": "pass" },
+    { "id": "closure_report_published", "artifact": "docs/pilot/phase36-closure-report.json", "status": "pass" }
+  ],
+  "status": "pass"
+}

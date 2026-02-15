@@ -92,45 +92,78 @@ assignments:
   completed_at: '2026-02-15T08:58:26.476559Z'
 - checkbox_ref: BA1.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:07:10.467864Z'
+  started_at: '2026-02-15T09:10:18.535877Z'
+  commit: '5799204'
+  completed_at: '2026-02-15T09:13:02.650657Z'
 - checkbox_ref: BA1.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:07:10.589338Z'
+  started_at: '2026-02-15T09:10:18.535892Z'
+  commit: '5799204'
+  completed_at: '2026-02-15T09:13:02.861750Z'
 - checkbox_ref: BA1.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:07:10.702885Z'
+  started_at: '2026-02-15T09:10:18.535894Z'
+  commit: '5799204'
+  completed_at: '2026-02-15T09:13:03.069891Z'
 - checkbox_ref: BA1.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:07:10.819542Z'
+  started_at: '2026-02-15T09:10:18.535895Z'
+  commit: '5799204'
+  completed_at: '2026-02-15T09:13:03.284778Z'
 - checkbox_ref: BA2.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:07:10.937079Z'
+  started_at: '2026-02-15T09:10:18.535896Z'
+  commit: '5799204'
+  completed_at: '2026-02-15T09:13:03.514728Z'
 - checkbox_ref: BA2.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:07:11.051023Z'
+  started_at: '2026-02-15T09:10:18.535897Z'
+  commit: '5799204'
+  completed_at: '2026-02-15T09:13:03.714812Z'
 - checkbox_ref: BA2.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:07:11.167359Z'
+  started_at: '2026-02-15T09:10:18.535898Z'
+  commit: '5799204'
+  completed_at: '2026-02-15T09:13:03.923146Z'
 - checkbox_ref: BA2.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:07:11.290076Z'
+  started_at: '2026-02-15T09:10:18.535899Z'
+  commit: '5799204'
+  completed_at: '2026-02-15T09:13:04.136131Z'
 - checkbox_ref: BA3.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:07:11.406458Z'
+  started_at: '2026-02-15T09:10:18.535900Z'
+  commit: '5799204'
+  completed_at: '2026-02-15T09:13:04.332829Z'
 - checkbox_ref: BA3.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:07:11.525250Z'
+  started_at: '2026-02-15T09:10:18.535901Z'
+  commit: '5799204'
+  completed_at: '2026-02-15T09:13:04.548956Z'
 - checkbox_ref: BA3.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:07:11.644995Z'
+  started_at: '2026-02-15T09:10:18.535902Z'
+  commit: '5799204'
+  completed_at: '2026-02-15T09:13:04.755664Z'
