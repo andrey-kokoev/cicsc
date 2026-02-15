@@ -1743,7 +1743,7 @@ phases:
       status: done
     - id: AY2.4
       title: Add Phase 35 block gate from Phase 34 checklist
-      status: open
+      status: done
 - id: AZ
   number: 35
   title: Final Completion and Transition Closure
@@ -1754,7 +1754,7 @@ phases:
     checkboxes:
     - id: AZ1.1
       title: Execute final objective verdict run over expanded-scope envelopes
-      status: open
+      status: done
     - id: AZ1.2
       title: Publish final forced-next disposition (must be empty for completion claim)
       status: open
