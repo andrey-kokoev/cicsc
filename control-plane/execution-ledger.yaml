@@ -2524,3 +2524,53 @@ phases:
     - id: BO3.4
       status: open
       description: Schedule metrics (pending count, execution latency)
+- id: BP
+  number: 17
+  status: planned
+  title: Workflow Primitive - Multi-Entity Orchestration
+  milestones:
+  - id: BP1
+    title: Core IR Workflow Extension
+    checkboxes:
+    - id: BP1.1
+      status: open
+      description: Add WorkflowSpecV0 to Core IR (steps, transitions, compensation)
+    - id: BP1.2
+      status: open
+      description: Define step types (command, wait, decision)
+    - id: BP1.3
+      status: open
+      description: Define compensation semantics (Saga pattern)
+    - id: BP1.4
+      status: open
+      description: Update IR validator for workflow specifications
+  - id: BP2
+    title: Workflow Runtime Engine
+    checkboxes:
+    - id: BP2.1
+      status: open
+      description: Workflow state machine (pending, running, completed, compensating)
+    - id: BP2.2
+      status: open
+      description: Step executor (invoke commands, track results)
+    - id: BP2.3
+      status: open
+      description: Compensation engine (rollback on failure)
+    - id: BP2.4
+      status: open
+      description: Workflow persistence (correlation, saga log)
+  - id: BP3
+    title: Integration & Observability
+    checkboxes:
+    - id: BP3.1
+      status: open
+      description: Workflow initiation API (start workflow with input)
+    - id: BP3.2
+      status: open
+      description: Event-driven step triggering (on event, advance workflow)
+    - id: BP3.3
+      status: open
+      description: Workflow admin API (status, history, cancel)
+    - id: BP3.4
+      status: open
+      description: Dead workflow detection and recovery
