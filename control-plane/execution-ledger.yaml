@@ -2032,44 +2032,44 @@ phases:
     title: Documentation
     checkboxes:
     - id: BF1.1
-      status: open
+      status: done
       description: Spec DSL reference manual
     - id: BF1.2
-      status: open
+      status: done
       description: API documentation (OpenAPI)
     - id: BF1.3
-      status: open
+      status: done
       description: Architecture decision records (ADRs)
     - id: BF1.4
-      status: open
+      status: done
       description: Troubleshooting guide
   - id: BF2
     title: Examples and Tutorials
     checkboxes:
     - id: BF2.1
-      status: open
+      status: done
       description: Ticketing system walkthrough
     - id: BF2.2
-      status: open
+      status: done
       description: CRM example with migrations
     - id: BF2.3
-      status: open
+      status: done
       description: Kanban board tutorial
     - id: BF2.4
-      status: open
+      status: done
       description: Video tutorial series
   - id: BF3
     title: Release
     checkboxes:
     - id: BF3.1
-      status: open
+      status: done
       description: v1.0.0 version bump
     - id: BF3.2
-      status: open
+      status: done
       description: Release notes and changelog
     - id: BF3.3
-      status: open
+      status: done
       description: Docker image publication
     - id: BF3.4
-      status: open
+      status: done
       description: Cloud deployment templates

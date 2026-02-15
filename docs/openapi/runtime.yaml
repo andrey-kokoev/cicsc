@@ -1,70 +1,73 @@
 openapi: 3.1.0
 info:
   title: CICSC Runtime API
-  version: "0.1.0"
+  description: |
+    The CICSC Runtime API provides endpoints for bundle management, tenant binding, 
+    and transactional command execution.
+  version: "1.0.0"
 servers:
-  - url: http://localhost
+  - url: http://localhost:3000
+    description: local dev server
 x-cicsc-feature-gates:
   proven_paths:
     - /compile
     - /install
-    - /install-from-spec
+    - /bind
     - /cmd/{entity_type}/{command_name}
+    - /view/{name}
+  experimental_paths: 
     - /verify
-  experimental_paths: []
+    - /migrations
 paths:
   /_caps:
     get:
-      summary: Adapter capabilities
+      summary: Get adapter capabilities
+      description: Returns what features are supported by the current storage adapter (e.g. SQLite, Postgres).
       responses:
         "200":
           description: Capabilities payload
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Capabilities'
   /compile:
     post:
-      summary: Compile Spec and persist bundle
+      summary: Compile Spec to IR
+      description: Compiles a Surface DSL string into a Core IR bundle.
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+              example: |
+                entity Ticket:
+                    states: [Open, Closed]
       responses:
         "200":
           description: Bundle compiled and stored
-  /bundle:
-    post:
-      summary: Persist bundle or compile+persist from Spec body
-      responses:
-        "200":
-          description: Bundle hash returned
-  /bundle/{hash}:
-    get:
-      summary: Get bundle by hash
-      parameters:
-        - name: hash
-          in: path
-          required: true
-          schema: { type: string }
-      responses:
-        "200":
-          description: Bundle payload
-        "404":
-          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bundle'
   /bind:
     post:
-      summary: Bind tenant to bundle/version
+      summary: Bind tenant to bundle
+      description: Assigns a specific bundle version to a tenant.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [tenant_id, bundle_hash]
+              properties:
+                tenant_id: { type: string }
+                bundle_hash: { type: string }
       responses:
         "200":
           description: Binding updated
-  /install:
-    post:
-      summary: Install active tenant bundle schema
-      responses:
-        "200":
-          description: Installed
-  /install-from-spec:
-    post:
-      summary: Compile Spec, persist bundle, bind tenant, and activate
-      responses:
-        "200":
-          description: Installed from Spec
   /cmd/{entity_type}/{command_name}:
     post:
-      summary: Execute command transactionally
+      summary: Execute command
       parameters:
         - name: entity_type
           in: path
@@ -74,12 +77,23 @@ paths:
           in: path
           required: true
           schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommandInput'
       responses:
         "200":
-          description: Command execution result
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommandResult'
+        "400":
+          description: Validation or Guard failure
   /view/{name}:
     get:
-      summary: Execute one view
+      summary: Execute view
       parameters:
         - name: name
           in: path
@@ -87,17 +101,55 @@ paths:
           schema: { type: string }
         - name: tenant_id
           in: query
-          required: false
+          required: true
           schema: { type: string }
       responses:
         "200":
-          description: View rows
-  /views:
-    get:
-      summary: List available views
-      parameters:
-        - name: tenant_id
-          in: query
+          description: Query results
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { type: object }
+
+components:
+  schemas:
+    Capabilities:
+      type: object
+      properties:
+        transactions:
+          type: object
+          properties:
+            atomic_batch_append: { type: boolean }
+        query:
+          type: object
+          properties:
+            json_extract: { type: string, enum: [none, partial, full] }
+    
+    Bundle:
+      type: object
+      properties:
+        hash: { type: string }
+        ir: { type: object }
+        ts: { type: integer }
+
+    CommandInput:
+      type: object
+      required: [tenant_id, entity_id, command_id, input]
+      properties:
+        tenant_id: { type: string }
+        entity_id: { type: string }
+        command_id: { type: string }
+        actor_id: { type: string }
+        input: { type: object }
+
+    CommandResult:
+      type: object
+      properties:
+        entity_id: { type: string }
+        seq_from: { type: integer }
+        seq_to: { type: integer }
+        state: { type: string }
           required: false
           schema: { type: string }
       responses:

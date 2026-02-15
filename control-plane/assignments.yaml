@@ -505,49 +505,85 @@ assignments:
   completed_at: '2026-02-15T10:04:07.027801Z'
 - checkbox_ref: BF1.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T10:09:14.619664Z'
+  started_at: '2026-02-15T10:11:02.418335Z'
+  commit: 026ce64
+  completed_at: '2026-02-15T10:12:42.969084Z'
 - checkbox_ref: BF1.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T10:09:14.769868Z'
+  started_at: '2026-02-15T10:11:02.418367Z'
+  commit: 026ce64
+  completed_at: '2026-02-15T10:12:43.211913Z'
 - checkbox_ref: BF1.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T10:09:14.920674Z'
+  started_at: '2026-02-15T10:11:02.418370Z'
+  commit: 026ce64
+  completed_at: '2026-02-15T10:12:43.464851Z'
 - checkbox_ref: BF1.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T10:09:15.081386Z'
+  started_at: '2026-02-15T10:11:02.418372Z'
+  commit: 026ce64
+  completed_at: '2026-02-15T10:12:43.722228Z'
 - checkbox_ref: BF2.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T10:09:15.250799Z'
+  started_at: '2026-02-15T10:11:02.418374Z'
+  commit: 026ce64
+  completed_at: '2026-02-15T10:12:43.963175Z'
 - checkbox_ref: BF2.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T10:09:15.403596Z'
+  started_at: '2026-02-15T10:11:02.418375Z'
+  commit: 026ce64
+  completed_at: '2026-02-15T10:12:44.207406Z'
 - checkbox_ref: BF2.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T10:09:15.562280Z'
+  started_at: '2026-02-15T10:11:02.418377Z'
+  commit: 026ce64
+  completed_at: '2026-02-15T10:12:44.491621Z'
 - checkbox_ref: BF2.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T10:09:15.714349Z'
+  started_at: '2026-02-15T10:11:02.418379Z'
+  commit: 026ce64
+  completed_at: '2026-02-15T10:12:44.749348Z'
 - checkbox_ref: BF3.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T10:09:15.865428Z'
+  started_at: '2026-02-15T10:11:02.418380Z'
+  commit: 026ce64
+  completed_at: '2026-02-15T10:12:44.992141Z'
 - checkbox_ref: BF3.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T10:09:16.038707Z'
+  started_at: '2026-02-15T10:11:02.418382Z'
+  commit: 026ce64
+  completed_at: '2026-02-15T10:12:45.243165Z'
 - checkbox_ref: BF3.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T10:09:16.194923Z'
+  started_at: '2026-02-15T10:11:02.418383Z'
+  commit: 026ce64
+  completed_at: '2026-02-15T10:12:45.516615Z'
 - checkbox_ref: BF3.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T10:09:16.348843Z'
+  started_at: '2026-02-15T10:11:02.418385Z'
+  commit: 026ce64
+  completed_at: '2026-02-15T10:12:45.758824Z'

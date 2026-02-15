@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cicsc-runtime
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cicsc-runtime
+  template:
+    metadata:
+      labels:
+        app: cicsc-runtime
+    spec:
+      containers:
+      - name: runtime
+        image: cicsc/runtime:1.0.0
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: url
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cicsc-runtime
+spec:
+  selector:
+    app: cicsc-runtime
+  ports:
+  - port: 80
+    targetPort: 3000

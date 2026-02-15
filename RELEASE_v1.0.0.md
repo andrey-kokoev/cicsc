@@ -33,3 +33,11 @@ Current repository status after v1.0.0:
   - `docs/pilot/phase6-exit-checklist.json`
   - `docs/pilot/phase7-gate.json`
   - `scripts/check_phase7_block.sh`
+
+## v1.0.0 Final Convergence (Feb 2026)
+
+- **Spec DSL**: Indentation-aware ergonomic language with desugaring to Core IR.
+- **Bundle Registry**: Content-addressed, immutable storage for compiled distributions (SHA-256).
+- **Migration System**: Differential schema evolution with dry-runs and replay verification.
+- **Postgres Adapter**: Native support for Postgres with `JSONB` optimization and dialect-specific lowerings.
+- **Operational Reliability**: Full suite of conformance tests against the Lean-derived oracle.
