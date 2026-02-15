@@ -1882,16 +1882,16 @@ phases:
     title: R2/KV Storage Backend
     checkboxes:
     - id: BC1.1
-      status: open
+      status: done
       description: Design bundle schema (manifest + compiled IR)
     - id: BC1.2
-      status: open
+      status: done
       description: Implement R2 upload/download adapters
     - id: BC1.3
-      status: open
+      status: done
       description: Implement KV metadata indexing
     - id: BC1.4
-      status: open
+      status: done
       description: Bundle integrity verification (checksums)
   - id: BC2
     title: Bundle Versioning
