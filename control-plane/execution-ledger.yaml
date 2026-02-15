@@ -2275,51 +2275,51 @@ phases:
       description: Audit log export formats (JSON, CSV, PDF)
 - id: BK
   number: 12
-  status: active
+  status: complete
   title: Blob Storage Support - R2/S3 File Attachments
   milestones:
   - id: BK1
     title: Spec DSL Extension for Blob Type
     checkboxes:
     - id: BK1.1
-      status: open
+      status: done
       description: Add 'blob' type to Spec DSL grammar
     - id: BK1.2
-      status: open
+      status: done
       description: 'Blob constraints: maxSize, allowedTypes, required'
     - id: BK1.3
-      status: open
+      status: done
       description: Storage backend configuration in Spec
     - id: BK1.4
-      status: open
+      status: done
       description: Parse blob declarations to Core IR
   - id: BK2
     title: Storage Backend Adapters
     checkboxes:
     - id: BK2.1
-      status: open
+      status: done
       description: R2 adapter (Cloudflare) with S3-compatible API
     - id: BK2.2
-      status: open
+      status: done
       description: S3 adapter (AWS)
     - id: BK2.3
-      status: open
+      status: done
       description: Upload endpoint with streaming support
     - id: BK2.4
-      status: open
+      status: done
       description: Presigned URL generation for secure downloads
   - id: BK3
     title: Runtime Integration
     checkboxes:
     - id: BK3.1
-      status: open
+      status: done
       description: Blob upload validation (size, type)
     - id: BK3.2
-      status: open
+      status: done
       description: Blob metadata storage in database
     - id: BK3.3
-      status: open
+      status: done
       description: Command context with blob references
     - id: BK3.4
-      status: open
+      status: done
       description: View field rendering for blob URLs

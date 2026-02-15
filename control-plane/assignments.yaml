@@ -925,49 +925,73 @@ assignments:
   completed_at: '2026-02-15T12:13:37.127156Z'
 - checkbox_ref: BK1.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T12:47:58.571396Z'
+  commit: 647c901
+  completed_at: '2026-02-15T14:41:05.530229Z'
 - checkbox_ref: BK1.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T12:47:58.755044Z'
+  commit: 647c901
+  completed_at: '2026-02-15T14:41:05.530320Z'
 - checkbox_ref: BK1.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T12:47:58.940863Z'
+  commit: 647c901
+  completed_at: '2026-02-15T14:41:05.530364Z'
 - checkbox_ref: BK1.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T12:47:59.127492Z'
+  commit: 647c901
+  completed_at: '2026-02-15T14:41:05.530406Z'
 - checkbox_ref: BK2.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T12:47:59.338922Z'
+  commit: 647c901
+  completed_at: '2026-02-15T14:41:05.530448Z'
 - checkbox_ref: BK2.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T12:47:59.531011Z'
+  commit: 647c901
+  completed_at: '2026-02-15T14:41:05.530490Z'
 - checkbox_ref: BK2.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T12:47:59.719818Z'
+  commit: 647c901
+  completed_at: '2026-02-15T14:41:05.530538Z'
 - checkbox_ref: BK2.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T12:47:59.903979Z'
+  commit: 647c901
+  completed_at: '2026-02-15T14:41:05.530582Z'
 - checkbox_ref: BK3.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T12:48:00.109848Z'
+  commit: 647c901
+  completed_at: '2026-02-15T14:41:05.530643Z'
 - checkbox_ref: BK3.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T12:48:00.305776Z'
+  commit: 647c901
+  completed_at: '2026-02-15T14:41:05.530687Z'
 - checkbox_ref: BK3.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T12:48:00.507759Z'
+  commit: 647c901
+  completed_at: '2026-02-15T14:41:05.530729Z'
 - checkbox_ref: BK3.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T12:48:00.695061Z'
+  commit: 647c901
+  completed_at: '2026-02-15T14:41:05.530771Z'
