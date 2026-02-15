@@ -1,7 +1,7 @@
 # Phase BN: Queue Primitive - Reliable Async Processing
 
 **Status**: PLANNED (v1.6.0)  
-**Agent**: AGENT_KIMI  
+**Agent**: AGENT_GEMINI  
 **Goal**: Add `queue` as a first-class Core IR primitive for reliable async message processing
 
 ## Problem Statement

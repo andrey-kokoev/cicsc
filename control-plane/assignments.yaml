@@ -1167,47 +1167,59 @@ assignments:
   agent_ref: AGENT_KIMI
   status: open
   created_at: '2026-02-15T15:32:05.880246Z'
+  agent: AGENT_GEMINI
 - checkbox_ref: BN1.2
   agent_ref: AGENT_KIMI
   status: open
   created_at: '2026-02-15T15:32:06.091695Z'
+  agent: AGENT_GEMINI
 - checkbox_ref: BN1.3
   agent_ref: AGENT_KIMI
   status: open
   created_at: '2026-02-15T15:32:06.302353Z'
+  agent: AGENT_GEMINI
 - checkbox_ref: BN1.4
   agent_ref: AGENT_KIMI
   status: open
   created_at: '2026-02-15T15:32:06.530463Z'
+  agent: AGENT_GEMINI
 - checkbox_ref: BN2.1
   agent_ref: AGENT_KIMI
   status: open
   created_at: '2026-02-15T15:32:06.742721Z'
+  agent: AGENT_GEMINI
 - checkbox_ref: BN2.2
   agent_ref: AGENT_KIMI
   status: open
   created_at: '2026-02-15T15:32:06.948096Z'
+  agent: AGENT_GEMINI
 - checkbox_ref: BN2.3
   agent_ref: AGENT_KIMI
   status: open
   created_at: '2026-02-15T15:32:07.154895Z'
+  agent: AGENT_GEMINI
 - checkbox_ref: BN2.4
   agent_ref: AGENT_KIMI
   status: open
   created_at: '2026-02-15T15:32:07.363199Z'
+  agent: AGENT_GEMINI
 - checkbox_ref: BN3.1
   agent_ref: AGENT_KIMI
   status: open
   created_at: '2026-02-15T15:32:07.572807Z'
+  agent: AGENT_GEMINI
 - checkbox_ref: BN3.2
   agent_ref: AGENT_KIMI
   status: open
   created_at: '2026-02-15T15:32:07.782773Z'
+  agent: AGENT_GEMINI
 - checkbox_ref: BN3.3
   agent_ref: AGENT_KIMI
   status: open
   created_at: '2026-02-15T15:32:08.000391Z'
+  agent: AGENT_GEMINI
 - checkbox_ref: BN3.4
   agent_ref: AGENT_KIMI
   status: open
   created_at: '2026-02-15T15:32:08.216570Z'
+  agent: AGENT_GEMINI
