@@ -1825,7 +1825,7 @@ phases:
       status: done
 - id: BB
   number: 3
-  status: active
+  status: complete
   title: Spec DSL Design - Ergonomic Surface Language
   milestones:
   - id: BB1
@@ -1875,7 +1875,7 @@ phases:
       description: Document sugar transformations
 - id: BC
   number: 4
-  status: planned
+  status: active
   title: Bundle Registry - Storage and Versioning
   milestones:
   - id: BC1
