@@ -2175,7 +2175,7 @@ phases:
       description: Account provisioning/deprovisioning
 - id: BI
   number: 10
-  status: planned
+  status: complete
   title: RBAC Engine - Role-Based Access Control
   milestones:
   - id: BI1
@@ -2225,7 +2225,7 @@ phases:
       description: Role hierarchy visualization
 - id: BJ
   number: 11
-  status: planned
+  status: complete
   title: Audit Logging - Immutable Activity Trail
   milestones:
   - id: BJ1
