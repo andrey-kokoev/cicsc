@@ -2373,3 +2373,53 @@ phases:
     - id: BL3.4
       status: open
       description: Handle missed events during disconnect (replay buffer)
+- id: BM
+  number: 14
+  status: planned
+  title: Inbound Webhooks - Async Message Ingestion
+  milestones:
+  - id: BM1
+    title: Spec DSL Extension for Inbound Webhooks
+    checkboxes:
+    - id: BM1.1
+      status: open
+      description: Add 'webhook' keyword to Spec DSL for external event sources
+    - id: BM1.2
+      status: open
+      description: Define webhook payload schema and validation
+    - id: BM1.3
+      status: open
+      description: "Map webhook payloads to commands (webhook \u2192 command binding)"
+    - id: BM1.4
+      status: open
+      description: Parse webhooks to Core IR with source metadata
+  - id: BM2
+    title: Webhook Ingestion Server
+    checkboxes:
+    - id: BM2.1
+      status: open
+      description: HTTP endpoint for webhook reception (POST /hook/:name)
+    - id: BM2.2
+      status: open
+      description: HMAC signature verification middleware
+    - id: BM2.3
+      status: open
+      description: Idempotency key handling (prevent duplicate processing)
+    - id: BM2.4
+      status: open
+      description: Queue-based ingestion (buffer before processing)
+  - id: BM3
+    title: Async Processing & Delivery
+    checkboxes:
+    - id: BM3.1
+      status: open
+      description: Webhook-to-command transformation engine
+    - id: BM3.2
+      status: open
+      description: Retry policy with exponential backoff
+    - id: BM3.3
+      status: open
+      description: Dead letter queue for failed webhooks
+    - id: BM3.4
+      status: open
+      description: Webhook delivery status tracking and replay
