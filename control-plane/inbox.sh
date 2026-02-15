@@ -13,6 +13,14 @@ from pathlib import Path
 agent = sys.argv[1] if len(sys.argv) > 1 else ""
 
 assignments = yaml.safe_load(Path("control-plane/assignments.yaml").read_text())
+ledger = yaml.safe_load(Path("control-plane/execution-ledger.yaml").read_text())
+
+# Build description lookup
+descriptions = {}
+for ph in ledger.get("phases", []):
+    for ms in ph.get("milestones", []):
+        for cb in ms.get("checkboxes", []):
+            descriptions[cb["id"]] = cb.get("description", "No description")
 
 open_count = 0
 in_progress_count = 0
@@ -23,17 +31,22 @@ for a in assignments.get("assignments", []):
     status = a["status"]
     cb = a["checkbox_ref"]
     ag = a["agent_ref"]
+    desc = descriptions.get(cb, "")[:50]
     
     if status == "open":
         open_count += 1
         if agent:
             print(f"[OPEN] {cb}")
+            if desc:
+                print(f"       {desc}...")
         else:
             print(f"[OPEN] {cb} -> {ag}")
     elif status == "in_progress":
         in_progress_count += 1
         if agent:
             print(f"[IN_PROGRESS] {cb}")
+            if desc:
+                print(f"              {desc}...")
         else:
             print(f"[IN_PROGRESS] {cb} -> {ag}")
 

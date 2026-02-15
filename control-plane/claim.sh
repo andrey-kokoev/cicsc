@@ -4,6 +4,26 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 AGENT="$1"
+SYNC=0
+
+# Parse optional flags
+while [[ $# -gt 1 ]]; do
+    case "$2" in
+        --sync) SYNC=1; shift ;;
+        *) break ;;
+    esac
+    shift
+done
+
+# Sync if requested
+if [[ "$SYNC" -eq 1 ]]; then
+    echo "Syncing with origin/main..."
+    git fetch origin
+    git rebase origin/main || {
+        echo "ERROR: Rebase failed. Resolve conflicts manually."
+        exit 1
+    }
+fi
 
 python3 - "$AGENT" << 'PY'
 import yaml

@@ -331,3 +331,47 @@ At completion, CICSC should allow:
 > and retain invariants provably across time.
 
 Everything you build should move the system toward that state.
+
+---
+
+## Collaboration System Design Notes
+
+### Why Git for State (vs. Live Database)
+
+The system uses Git as the source of truth for execution state. This is **intentional**, not accidental:
+
+**Benefits:**
+- **Immutable audit trail**: Every state change is permanently recorded
+- **Content-addressed evidence**: Commits provide cryptographic proof of work
+- **Branch isolation**: Worktrees don't interfere with each other until merge
+- **No single point of failure**: Distributed by design
+
+**Trade-off:**
+- **Sync latency**: Changes in one worktree aren't visible to others until merge
+
+This is a **consistency over availability** choice. We prefer:
+- Accurate history over live updates
+- Deterministic replay over real-time collaboration
+- Auditability over convenience
+
+**Pattern for Multi-Agent Work:**
+```bash
+# Worker: claim with sync to get latest
+git fetch origin && git rebase origin/main
+./control-plane/claim.sh AGENT_NAME
+
+# Or use --sync flag:
+./control-plane/claim.sh AGENT_NAME --sync
+
+# Worker: complete work
+./control-plane/complete.sh CHECKBOX_REF
+
+# Worker: push branch
+git push origin worktree-branch
+
+# Main: merge and sync
+git merge worktree-branch
+./control-plane/validate.sh
+```
+
+The "fragmentation" across branches is **isolation by design**, not a bug.
