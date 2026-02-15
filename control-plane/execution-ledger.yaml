@@ -1734,13 +1734,13 @@ phases:
     - id: AY2.1
       title: Add Phase 34 required-gates script/report for expanded multi-context
         envelope
-      status: open
+      status: done
     - id: AY2.2
       title: Publish Phase 34 closure report with unresolved critical disposition
-      status: open
+      status: done
     - id: AY2.3
       title: Define objective Phase 34 exit checklist mapped to artifacts
-      status: open
+      status: done
     - id: AY2.4
       title: Add Phase 35 block gate from Phase 34 checklist
       status: open

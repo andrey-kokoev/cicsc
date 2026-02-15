@@ -22,13 +22,22 @@ assignments:
   completed_at: '2026-02-14T22:39:57.460696Z'
 - checkbox_ref: AY2.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-14T22:46:01.026949Z'
+  started_at: '2026-02-14T22:50:23.364930Z'
+  commit: 5b4ce3e
+  completed_at: '2026-02-14T22:51:13.329057Z'
 - checkbox_ref: AY2.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-14T22:46:01.138600Z'
+  started_at: '2026-02-14T22:50:23.364943Z'
+  commit: 5b4ce3e
+  completed_at: '2026-02-14T22:51:13.529340Z'
 - checkbox_ref: AY2.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-14T22:46:01.256023Z'
+  started_at: '2026-02-14T22:50:23.364945Z'
+  commit: 5b4ce3e
+  completed_at: '2026-02-14T22:51:13.722122Z'
