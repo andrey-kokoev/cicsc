@@ -29,14 +29,14 @@ Reach a state where:
 Expand multi-context validation with explicit matrices and executable workloads.
 
 ### TODOs
-- [ ] AY1.1 Freeze Phase 34 context matrix and expanded acceptance contract.
-- [ ] AY1.2 Execute multi-context workloads under expanded objective envelopes.
-- [ ] AY1.3 Publish incident and drift localization report with forced-next mapping policy.
+- [x] AY1.1 Freeze Phase 34 context matrix and expanded acceptance contract.
+- [x] AY1.2 Execute multi-context workloads under expanded objective envelopes.
+- [x] AY1.3 Publish incident and drift localization report with forced-next mapping policy.
 
 ### Acceptance
-- [ ] Phase 34 context matrix and acceptance contract are frozen.
-- [ ] Multi-context workloads are executed with evidence.
-- [ ] Drift localization report is published with forced-next policy.
+- [x] Phase 34 context matrix and acceptance contract are frozen.
+- [x] Multi-context workloads are executed with evidence.
+- [x] Drift localization report is published with forced-next policy.
 
 ---
 
