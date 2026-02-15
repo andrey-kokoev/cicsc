@@ -281,6 +281,46 @@ export async function executeCommandTx (params: {
       },
     })
 
+    // 12) hook into workflows
+    const workflowTxStore: any = {
+      create_workflow_instance: async (inst: any) => {
+        await tx.exec(
+          `INSERT INTO workflow_instances 
+          (tenant_id, workflow_id, workflow_name, current_step, status, wait_event_type, context_json, history_json, next_run_at, created_ts, updated_ts)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+          [inst.tenant_id, inst.workflow_id, inst.workflow_name, inst.current_step, inst.status, inst.wait_event_type, inst.context_json, inst.history_json, inst.next_run_at, inst.created_ts, inst.updated_ts]
+        )
+      },
+      list_workflow_instances_waiting_for_event: async (p: any) => {
+        const res = await tx.exec(`SELECT * FROM workflow_instances WHERE tenant_id = ? AND status = 'waiting' AND wait_event_type = ?`, [p.tenant_id, p.event_type])
+        return (res.rows ?? []) as any[]
+      },
+      update_workflow_instance: async (inst: any) => {
+        const fields: string[] = []
+        const params: any[] = []
+        if (inst.current_step !== undefined) { fields.push("current_step = ?"); params.push(inst.current_step) }
+        if (inst.status !== undefined) { fields.push("status = ?"); params.push(inst.status) }
+        if (inst.wait_event_type !== undefined) { fields.push("wait_event_type = ?"); params.push(inst.wait_event_type) }
+        if (inst.context_json !== undefined) { fields.push("context_json = ?"); params.push(inst.context_json) }
+        if (inst.history_json !== undefined) { fields.push("history_json = ?"); params.push(inst.history_json) }
+        if (inst.next_run_at !== undefined) { fields.push("next_run_at = ?"); params.push(inst.next_run_at) }
+        if (inst.updated_ts !== undefined) { fields.push("updated_ts = ?"); params.push(inst.updated_ts) }
+
+        if (fields.length > 0) {
+          params.push(inst.tenant_id, inst.workflow_id)
+          await tx.exec(`UPDATE workflow_instances SET ${fields.join(", ")} WHERE tenant_id = ? AND workflow_id = ?`, params)
+        }
+      }
+    }
+
+    const workflowManager = new WorkflowManager(ir, workflowTxStore)
+    await workflowManager.onEventsEmitted({
+      tenant_id: req.tenant_id,
+      entity_type: req.entity_type,
+      entity_id: req.entity_id,
+      events
+    })
+
     return result
   })
 }

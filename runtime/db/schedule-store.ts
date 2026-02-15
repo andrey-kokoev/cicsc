@@ -73,12 +73,12 @@ export interface ScheduleStore {
   /**
    * Get metrics for schedules.
    */
-  getScheduleMetrics(tenant_id: string): Promise<{ pending_count: number; failed_count: number; avg_latency_ms: number }>;
+  getScheduleMetrics (tenant_id: string): Promise<{ pending_count: number; failed_count: number; avg_latency_ms: number }>
 
   /**
    * CRON management
    */
-  upsertCronSchedule(params: { tenant_id: string, name: string, expression: string, timezone?: string, next_run_at: number }): Promise<void>;
-  listDueCronSchedules(params: { tenant_id: string, now: number }): Promise<any[]>;
-  updateCronLastRun(params: { tenant_id: string, name: string, last_run_at: number, next_run_at: number }): Promise<void>;
+  upsertCronSchedule (params: { tenant_id: string, name: string, expression: string, timezone?: string, next_run_at: number }): Promise<void>
+  listDueCronSchedules (params: { tenant_id: string, now: number }): Promise<any[]>
+  updateCronLastRun (params: { tenant_id: string, name: string, last_run_at: number, next_run_at: number }): Promise<void>
 }

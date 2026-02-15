@@ -295,43 +295,12 @@ export type ScheduleActionV0 = {
 
 export type WorkflowSpecV0 = {
   initial_step: string
+  on_event?: string
   steps: Record<string, WorkflowStepV0>
 }
 
-export type WorkflowStepV0 = {
-  kind: "command" | "wait" | "decision" | "end"
-  
-  // Transitions
-  next_step?: string
-  
-  // Command step
-  invoke?: {
-    entity_type: string
-    entity_id: ExprV0
-    command: string
-    input_map: Record<string, ExprV0>
-  }
-  
-  // Compensation for this step (if invoked successfully)
-  compensate?: {
-    entity_type: string
-    entity_id: ExprV0
-    command: string
-    input_map: Record<string, ExprV0>
-  }
-
-  // Wait step
-  wait?: {
-    on_event: string
-    condition?: ExprV0 // Filter for the event
-    timeout_seconds?: number
-    on_timeout?: string
-  }
-
-  // Decision step
-  decision?: {
-    condition: ExprV0
-    on_true: string
-    on_false: string
-  }
-}
+export type WorkflowStepV0 =
+  | { kind: "command"; entity_type: string; command: string; input_map: Record<string, ExprV0>; next?: string; compensate?: WorkflowStepV0 }
+  | { kind: "wait"; event_type: string; timeout_seconds?: number; next: string; on_timeout?: string }
+  | { kind: "decision"; cases: { condition: ExprV0; next: string }[]; default_next: string }
+  | { kind: "end" }

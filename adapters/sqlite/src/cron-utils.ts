@@ -1,4 +1,4 @@
-import parser from "cron-parser";
+import parser from "cron-parser"
 
 /**
  * Compute the next run time from a cron expression.
@@ -11,7 +11,7 @@ export function getNextCronRun (expression: string, after: number = Date.now(), 
   const options = {
     currentDate: new Date(after),
     tz: timezone,
-  };
-  const interval = parser.parseExpression(expression, options);
-  return interval.next().getTime();
+  }
+  const interval = parser.parseExpression(expression, options)
+  return interval.next().getTime()
 }

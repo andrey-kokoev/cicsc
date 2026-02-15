@@ -9,18 +9,18 @@ import { SqliteD1Adapter } from "../../../adapters/sqlite/src/adapter"
 import type { CoreIrV0 } from "../../../core/ir/types"
 
 // A smart fake D1 for testing scheduling logic
-function makeMemoryD1() {
+function makeMemoryD1 () {
   const tables = new Map<string, any[]>()
-  
+
   return {
     tables,
-    prepare(sql: string) {
+    prepare (sql: string) {
       return {
-        bind(...binds: any[]) {
+        bind (...binds: any[]) {
           return {
             sql,
             binds,
-            async all() {
+            async all () {
               if (sql.includes("FROM scheduled_jobs")) {
                 let results = tables.get("scheduled_jobs") || []
                 if (sql.includes("scheduled_at <= ?")) {
@@ -41,7 +41,7 @@ function makeMemoryD1() {
               }
               return { results: [] }
             },
-            async first() {
+            async first () {
               if (sql.includes("FROM snapshots_v0")) return null
               if (sql.includes("active_version")) return { active_version: 0 }
               return null
@@ -50,12 +50,12 @@ function makeMemoryD1() {
         }
       }
     },
-    async batch(stmts: any[]) {
+    async batch (stmts: any[]) {
       const results: any[] = []
       for (const s of stmts) {
         const sql = s.sql
         const binds = s.binds || []
-        
+
         if (sql.includes("INSERT INTO scheduled_jobs")) {
           const table = tables.get("scheduled_jobs") || []
           table.push({
@@ -86,8 +86,8 @@ function makeMemoryD1() {
           const table = tables.get("cron_schedules") || []
           const existing = table.find(r => r.tenant_id === binds[0] && r.name === binds[1])
           if (existing) {
-             existing.expression = binds[2]
-             existing.next_run_at = binds[4]
+            existing.expression = binds[2]
+            existing.next_run_at = binds[4]
           } else {
             table.push({
               tenant_id: binds[0],
@@ -103,49 +103,49 @@ function makeMemoryD1() {
         }
 
         if (sql.includes("UPDATE cron_schedules")) {
-           const table = tables.get("cron_schedules") || []
-           const cron = table.find(r => r.tenant_id === binds[2] && r.name === binds[3])
-           if (cron) {
-             cron.last_run_at = binds[0]
-             cron.next_run_at = binds[1]
-             results.push({ success: true, meta: { changes: 1 } })
-           } else {
-             results.push({ success: true, meta: { changes: 0 } })
-           }
-           continue
+          const table = tables.get("cron_schedules") || []
+          const cron = table.find(r => r.tenant_id === binds[2] && r.name === binds[3])
+          if (cron) {
+            cron.last_run_at = binds[0]
+            cron.next_run_at = binds[1]
+            results.push({ success: true, meta: { changes: 1 } })
+          } else {
+            results.push({ success: true, meta: { changes: 0 } })
+          }
+          continue
         }
 
         if (sql.includes("UPDATE scheduled_jobs SET status='executing'")) {
-            const table = tables.get("scheduled_jobs") || []
-            const job = table.find(j => j.id === binds[2] && j.tenant_id === binds[1])
-            if (job) {
-                job.status = 'executing'
-                job.attempts++
-                results.push({ success: true, meta: { changes: 1 } })
-            } else {
-                results.push({ success: true, meta: { changes: 0 } })
-            }
-            continue
+          const table = tables.get("scheduled_jobs") || []
+          const job = table.find(j => j.id === binds[2] && j.tenant_id === binds[1])
+          if (job) {
+            job.status = 'executing'
+            job.attempts++
+            results.push({ success: true, meta: { changes: 1 } })
+          } else {
+            results.push({ success: true, meta: { changes: 0 } })
+          }
+          continue
         }
 
         if (sql.includes("UPDATE scheduled_jobs SET status='completed'")) {
-            const table = tables.get("scheduled_jobs") || []
-            const job = table.find(j => j.id === binds[1] && j.tenant_id === binds[0])
-            if (job) {
-                job.status = 'completed'
-                results.push({ success: true, meta: { changes: 1 } })
-            } else {
-                results.push({ success: true, meta: { changes: 0 } })
-            }
-            continue
+          const table = tables.get("scheduled_jobs") || []
+          const job = table.find(j => j.id === binds[1] && j.tenant_id === binds[0])
+          if (job) {
+            job.status = 'completed'
+            results.push({ success: true, meta: { changes: 1 } })
+          } else {
+            results.push({ success: true, meta: { changes: 0 } })
+          }
+          continue
         }
 
         results.push({ success: true, meta: { changes: 0 } })
       }
       return results
     },
-    async exec(sql: string) {
-       return { count: 0, duration: 0 }
+    async exec (sql: string) {
+      return { count: 0, duration: 0 }
     }
   }
 }
@@ -217,32 +217,32 @@ describe("Schedule Integration", () => {
     const db = makeMemoryD1()
     const adapter = new SqliteD1Adapter(db as any)
     const store = makeD1Store({ adapter })
-    
+
     // Manually push a job
     await adapter.schedule_job({
-        tenant_id: "t1",
-        job: {
-            schedule_name: "FollowUp",
-            trigger_type: "event",
-            entity_type: "Ticket",
-            entity_id: "e1",
-            event_type: "Created",
-            scheduled_at: 1000,
-            command_entity: "Ticket",
-            command_name: "Remind",
-            input_json: '{"msg":"hello"}'
-        }
+      tenant_id: "t1",
+      job: {
+        schedule_name: "FollowUp",
+        trigger_type: "event",
+        entity_type: "Ticket",
+        entity_id: "e1",
+        event_type: "Created",
+        scheduled_at: 1000,
+        command_entity: "Ticket",
+        command_name: "Remind",
+        input_json: '{"msg":"hello"}'
+      }
     })
 
     const worker = new ScheduleWorker(store, ir, intrinsics as any)
-    
+
     const dueBefore = await adapter.list_due_jobs({ tenant_id: "t1", now: 5000 })
     assert.equal(dueBefore.length, 1, "Job should be due before poll")
 
     const result = await worker.pollAndExecute("t1", { now: 5000 })
-    
+
     assert.equal(result.processed, 1, `Expected 1 job processed, got ${result.processed}. Errors: ${result.errors}`)
-    
+
     // Check if job is completed
     const due = await adapter.list_due_jobs({ tenant_id: "t1", now: 5000 })
     assert.equal(due.length, 0)
@@ -252,11 +252,11 @@ describe("Schedule Integration", () => {
     const irCron: CoreIrV0 = {
       version: "0",
       types: {
-         System: {
-           initial_state: "ok",
-           commands: { Tick: { guard: { expr: { literal: true } }, emits: [] } },
-           shadows: {}
-         }
+        System: {
+          initial_state: "ok",
+          commands: { Tick: { guard: { expr: { literal: true } }, emits: [] } },
+          shadows: {}
+        }
       },
       schedules: {
         DailyTick: {

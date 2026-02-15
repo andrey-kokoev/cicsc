@@ -365,8 +365,8 @@ CREATE TABLE IF NOT EXISTS ${dlqTable} (
 `.trim())
   }
 
-function genSchedules (): string {
-  return `
+  function genSchedules (): string {
+    return `
 CREATE TABLE IF NOT EXISTS scheduled_jobs (
   tenant_id      TEXT NOT NULL,
   id             TEXT NOT NULL,
@@ -416,10 +416,10 @@ CREATE TABLE IF NOT EXISTS cron_schedules (
   PRIMARY KEY (tenant_id, name)
 );
 `.trim()
-}
+  }
 
-function genWorkflows (): string {
-  return `
+  function genWorkflows (): string {
+    return `
 -- Workflow instances track the active state of a saga/workflow
 CREATE TABLE IF NOT EXISTS workflow_instances (
   tenant_id       TEXT NOT NULL,
@@ -449,5 +449,20 @@ CREATE TABLE IF NOT EXISTS workflow_log (
 );
 
 CREATE INDEX IF NOT EXISTS idx_workflow_log_id ON workflow_log (tenant_id, workflow_id);
+
+-- Incidents for tracking failures and stuck processes
+CREATE TABLE IF NOT EXISTS incidents (
+  id              TEXT PRIMARY KEY,
+  tenant_id       TEXT NOT NULL,
+  source_type     TEXT NOT NULL, -- 'workflow', 'schedule'
+  source_id       TEXT NOT NULL,
+  incident_type   TEXT NOT NULL, -- 'workflow_stuck', 'schedule_failed', etc.
+  message         TEXT NOT NULL,
+  status          TEXT NOT NULL, -- 'open', 'resolved', 'ignored'
+  context_json    TEXT NOT NULL,
+  created_ts      INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_incidents_tenant_status ON incidents (tenant_id, status);
 `.trim()
-}
+  }

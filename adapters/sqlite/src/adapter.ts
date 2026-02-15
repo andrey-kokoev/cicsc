@@ -889,6 +889,14 @@ export class SqliteD1Adapter {
       .bind(entry.tenant_id, entry.workflow_id, entry.step_name, entry.action, entry.payload_json, entry.ts)
       .run()
   }
+
+  async list_stuck_workflow_instances (params: { tenant_id: string; threshold: number }): Promise<any[]> {
+    const res = await this.db
+      .prepare(`SELECT * FROM workflow_instances WHERE tenant_id = ? AND status = 'running' AND updated_ts < ?`)
+      .bind(params.tenant_id, params.threshold)
+      .all()
+    return res.results || []
+  }
 }
 
 function nowUnix (): UnixSeconds {

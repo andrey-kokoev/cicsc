@@ -9,12 +9,12 @@ export class ScheduleManager {
     private store: ScheduleStore,
     private ir: CoreIrV0,
     private intrinsics: VmIntrinsics
-  ) {}
+  ) { }
 
   /**
    * Hook to be called after events are appended.
    */
-  async onEventsEmitted(params: {
+  async onEventsEmitted (params: {
     tenant_id: string
     entity_type: string
     entity_id: string
@@ -27,7 +27,7 @@ export class ScheduleManager {
       if (!spec.trigger || !("on_event" in spec.trigger)) continue
 
       const trigger = spec.trigger as { on_event: string; delay_seconds?: number }
-      
+
       for (const event of events) {
         if (event.event_type !== trigger.on_event) continue
 
@@ -46,13 +46,13 @@ export class ScheduleManager {
 
         // Check condition if any
         if (spec.condition) {
-           const ok = evalExpr(spec.condition, env)
-           if (!ok) continue
+          const ok = evalExpr(spec.condition, env)
+          if (!ok) continue
         }
 
         // Schedule it
         const scheduledAt = event.ts + (trigger.delay_seconds ?? 0) * 1000
-        
+
         // Compute input_map
         const inputMap: Record<string, any> = {}
         for (const [k, ex] of Object.entries(spec.action.input_map)) {

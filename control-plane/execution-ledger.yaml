@@ -2425,7 +2425,7 @@ phases:
       description: Webhook delivery status tracking and replay
 - id: BN
   number: 15
-  status: deferred
+  status: complete
   title: Queue Primitive - Reliable Async Processing
   milestones:
   - id: BN1
@@ -2476,7 +2476,7 @@ phases:
       description: DLQ admin API (list, inspect, replay)
 - id: BO
   number: 16
-  status: deferred
+  status: complete
   title: Schedule Primitive - Time-Based Execution
   milestones:
   - id: BO1
@@ -2526,51 +2526,226 @@ phases:
       description: Schedule metrics (pending count, execution latency)
 - id: BP
   number: 17
-  status: deferred
+  status: complete
   title: Workflow Primitive - Multi-Entity Orchestration
   milestones:
   - id: BP1
     title: Core IR Workflow Extension
     checkboxes:
     - id: BP1.1
-      status: deferred
+      status: done
       description: Add WorkflowSpecV0 to Core IR (steps, transitions, compensation)
     - id: BP1.2
-      status: deferred
+      status: done
       description: Define step types (command, wait, decision)
     - id: BP1.3
-      status: deferred
+      status: done
       description: Define compensation semantics (Saga pattern)
     - id: BP1.4
-      status: deferred
+      status: done
       description: Update IR validator for workflow specifications
   - id: BP2
     title: Workflow Runtime Engine
     checkboxes:
     - id: BP2.1
-      status: deferred
+      status: done
       description: Workflow state machine (pending, running, completed, compensating)
     - id: BP2.2
-      status: deferred
+      status: done
       description: Step executor (invoke commands, track results)
     - id: BP2.3
-      status: deferred
+      status: done
       description: Compensation engine (rollback on failure)
     - id: BP2.4
-      status: deferred
+      status: done
       description: Workflow persistence (correlation, saga log)
   - id: BP3
     title: Integration & Observability
     checkboxes:
     - id: BP3.1
-      status: deferred
+      status: done
       description: Workflow initiation API (start workflow with input)
     - id: BP3.2
-      status: deferred
+      status: done
       description: Event-driven step triggering (on event, advance workflow)
     - id: BP3.3
-      status: deferred
+      status: done
       description: Workflow admin API (status, history, cancel)
     - id: BP3.4
-      status: deferred
+      status: done
       description: Dead workflow detection and recovery
+- id: BQ
+  number: 18
+  status: planned
+  title: Event Transform Fan-out - One-to-Many Migrations
+  milestones:
+  - id: BQ1
+    title: Core IR Fan-out Extension
+    checkboxes:
+    - id: BQ1.1
+      status: open
+      description: Add fan-out operator to EventTransformV0 (emit_many)
+    - id: BQ1.2
+      status: open
+      description: Define fan-out expression context (original event access)
+    - id: BQ1.3
+      status: open
+      description: Update IR validator for fan-out transforms
+    - id: BQ1.4
+      status: open
+      description: Spec DSL syntax for fan-out declaration
+  - id: BQ2
+    title: Migration Engine Fan-out Support
+    checkboxes:
+    - id: BQ2.1
+      status: open
+      description: Migration engine handles multiple output events
+    - id: BQ2.2
+      status: open
+      description: Preserve event ordering with fan-out sequences
+    - id: BQ2.3
+      status: open
+      description: Idempotency for fan-out migrations
+    - id: BQ2.4
+      status: open
+      description: Replay verification with fan-out
+- id: BR
+  number: 19
+  status: planned
+  title: Native SLA Declaration - First-class Spec DSL SLAs
+  milestones:
+  - id: BR1
+    title: Core IR SLA Extension
+    checkboxes:
+    - id: BR1.1
+      status: open
+      description: SlaSpecV0 with start/stop event selectors
+    - id: BR1.2
+      status: open
+      description: SLA breach detection logic
+    - id: BR1.3
+      status: open
+      description: Breach action binding (command emission)
+    - id: BR1.4
+      status: open
+      description: Update IR validator for SLA specs
+  - id: BR2
+    title: SLA Runtime Engine
+    checkboxes:
+    - id: BR2.1
+      status: open
+      description: SLA tracker (start timers on events)
+    - id: BR2.2
+      status: open
+      description: Breach detector (scheduled checks)
+    - id: BR2.3
+      status: open
+      description: Breach action executor
+    - id: BR2.4
+      status: open
+      description: SLA metrics export
+- id: BS
+  number: 20
+  status: planned
+  title: Rich Aggregates - Rate/Ratio View Operators
+  milestones:
+  - id: BS1
+    title: Query AST Aggregate Extension
+    checkboxes:
+    - id: BS1.1
+      status: open
+      description: Add rate operator (events per time window)
+    - id: BS1.2
+      status: open
+      description: Add ratio operator (a/b)
+    - id: BS1.3
+      status: open
+      description: Add time_between operator for durations
+    - id: BS1.4
+      status: open
+      description: Update QueryV0 types
+  - id: BS2
+    title: View Runtime Implementation
+    checkboxes:
+    - id: BS2.1
+      status: open
+      description: SQL generation for rate()
+    - id: BS2.2
+      status: open
+      description: SQL generation for ratio()
+    - id: BS2.3
+      status: open
+      description: Oracle conformance for aggregates
+    - id: BS2.4
+      status: open
+      description: Spec DSL sugar for common patterns
+- id: BT
+  number: 21
+  status: planned
+  title: Row-Level Security Sugar - Spec-level RLS Patterns
+  milestones:
+  - id: BT1
+    title: Core IR RLS Extension
+    checkboxes:
+    - id: BT1.1
+      status: open
+      description: Add row_policy patterns to ViewSpecV0
+    - id: BT1.2
+      status: open
+      description: Define owner pattern semantics
+    - id: BT1.3
+      status: open
+      description: Define member_of pattern semantics
+    - id: BT1.4
+      status: open
+      description: Update IR validator for RLS specs
+  - id: BT2
+    title: RLS Runtime Implementation
+    checkboxes:
+    - id: BT2.1
+      status: open
+      description: Owner pattern code generation
+    - id: BT2.2
+      status: open
+      description: Member-of pattern code generation
+    - id: BT2.3
+      status: open
+      description: Fallback to custom expr
+    - id: BT2.4
+      status: open
+      description: RLS enforcement in views
+- id: BU
+  number: 22
+  status: planned
+  title: Multi-Entity Commands - Atomic Cross-Entity Intents
+  milestones:
+  - id: BU1
+    title: Core IR Multi-Entity Extension
+    checkboxes:
+    - id: BU1.1
+      status: open
+      description: Add WorkflowCommandSpecV0 (atomic block)
+    - id: BU1.2
+      status: open
+      description: Define transaction boundary semantics
+    - id: BU1.3
+      status: open
+      description: Define partial failure handling
+    - id: BU1.4
+      status: open
+      description: Update IR validator for multi-entity commands
+  - id: BU2
+    title: Multi-Entity Transaction Runtime
+    checkboxes:
+    - id: BU2.1
+      status: open
+      description: Saga orchestrator for atomic commands
+    - id: BU2.2
+      status: open
+      description: Compensation on partial failure
+    - id: BU2.3
+      status: open
+      description: Idempotency across entity streams
+    - id: BU2.4
+      status: open
+      description: Conformance testing with oracle

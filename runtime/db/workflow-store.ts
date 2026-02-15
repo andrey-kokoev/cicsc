@@ -1,6 +1,6 @@
 // /runtime/db/workflow-store.ts
 
-export type WorkflowStatus = 'running' | 'waiting' | 'completed' | 'failed' | 'compensated'
+export type WorkflowStatus = "running" | "waiting" | "completed" | "failed" | "failing" | "compensating" | "compensated"
 
 export interface WorkflowInstance {
   tenant_id: string
@@ -17,9 +17,16 @@ export interface WorkflowInstance {
 }
 
 export interface WorkflowStore {
-  createInstance(instance: WorkflowInstance): Promise<void>
-  updateInstance(instance: Partial<WorkflowInstance> & { tenant_id: string, workflow_id: string }): Promise<void>
-  getInstance(tenant_id: string, workflow_id: string): Promise<WorkflowInstance | null>
-  listDueInstances(params: { tenant_id: string, now: number }): Promise<WorkflowInstance[]>
-  appendLog(entry: { tenant_id: string, workflow_id: string, step_name: string, action: string, payload_json: string, ts: number }): Promise<void>
+  create_workflow_instance (instance: WorkflowInstance): Promise<void>
+  update_workflow_instance (instance: Partial<WorkflowInstance> & { tenant_id: string; workflow_id: string }): Promise<void>
+  get_workflow_instance (tenant_id: string, workflow_id: string): Promise<WorkflowInstance | null>
+  list_due_workflow_instances (params: { tenant_id: string; now: number }): Promise<WorkflowInstance[]>
+  append_workflow_log (entry: {
+    tenant_id: string
+    workflow_id: string
+    step_name: string
+    action: string
+    payload_json: string
+    ts: number
+  }): Promise<void>
 }
