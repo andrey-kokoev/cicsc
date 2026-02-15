@@ -8,7 +8,10 @@ export interface MicrosoftConfig {
 export class MicrosoftProvider implements AuthProvider {
   readonly id = "microsoft"
 
-  constructor(private config: MicrosoftConfig) { }
+  constructor(_config: MicrosoftConfig) {
+    // Config stored for future use (token validation, Graph API calls)
+    // Prefix with underscore to indicate intentionally unused for now
+  }
 
   async validateToken(token: string): Promise<UserProfile> {
     try {
@@ -31,12 +34,10 @@ export class MicrosoftProvider implements AuthProvider {
         id: payload.id,
         email: payload.mail || payload.userPrincipalName,
         name: payload.displayName,
-        provider: this.id,
         raw: payload
       }
-    } catch (error) {
-      if (error instanceof AuthError) throw error
-      throw new AuthError(this.id, `Token validation failed: ${error}`)
+    } catch (error: any) {
+      throw new AuthError(this.id, `Token validation failed: ${error.message}`)
     }
   }
 }
