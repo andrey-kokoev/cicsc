@@ -1825,7 +1825,7 @@ phases:
       status: done
 - id: BB
   number: 3
-  status: planned
+  status: active
   title: Spec DSL Design - Ergonomic Surface Language
   milestones:
   - id: BB1
