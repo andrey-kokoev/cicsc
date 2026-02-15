@@ -2323,3 +2323,53 @@ phases:
     - id: BK3.4
       status: done
       description: View field rendering for blob URLs
+- id: BL
+  number: 13
+  status: planned
+  title: Real-time / WebSockets - Live Updates
+  milestones:
+  - id: BL1
+    title: Spec DSL Extension for Real-time
+    checkboxes:
+    - id: BL1.1
+      status: open
+      description: Add 'subscription' keyword to Spec DSL for real-time queries
+    - id: BL1.2
+      status: open
+      description: Define subscription filters (watch specific entity instances)
+    - id: BL1.3
+      status: open
+      description: Parse subscriptions to Core IR
+    - id: BL1.4
+      status: open
+      description: Generate WebSocket endpoint schema from Spec
+  - id: BL2
+    title: WebSocket Server Implementation
+    checkboxes:
+    - id: BL2.1
+      status: open
+      description: WebSocket server with connection upgrade handling
+    - id: BL2.2
+      status: open
+      description: Connection manager (track active subscriptions per client)
+    - id: BL2.3
+      status: open
+      description: Broadcast events to subscribed clients
+    - id: BL2.4
+      status: open
+      description: Authentication over WebSocket (token validation on connect)
+  - id: BL3
+    title: Client SDK & Reconnection
+    checkboxes:
+    - id: BL3.1
+      status: open
+      description: Client-side subscription API (subscribe/unsubscribe)
+    - id: BL3.2
+      status: open
+      description: Automatic reconnection with exponential backoff
+    - id: BL3.3
+      status: open
+      description: Message delivery acknowledgment
+    - id: BL3.4
+      status: open
+      description: Handle missed events during disconnect (replay buffer)
