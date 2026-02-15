@@ -41,3 +41,11 @@ assignments:
   started_at: '2026-02-14T22:50:23.364945Z'
   commit: 5b4ce3e
   completed_at: '2026-02-14T22:51:13.722122Z'
+- checkbox_ref: AY2.4
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T08:32:23.470068Z'
+- checkbox_ref: AZ1.1
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T08:32:23.595902Z'
