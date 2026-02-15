@@ -46,12 +46,15 @@ Expand multi-context validation with explicit matrices and executable workloads.
 Close Phase 34 with objective checklist and enforce entry gate for Phase 35.
 
 ### TODOs
-- [ ] AY2.1 Add Phase 34 required-gates script/report for expanded multi-context envelope.
-- [ ] AY2.2 Publish Phase 34 closure report with unresolved critical disposition.
-- [ ] AY2.3 Define objective Phase 34 exit checklist mapped to artifacts.
+- [x] AY2.1 Add Phase 34 required-gates script/report for expanded multi-context envelope.
+- [x] AY2.2 Publish Phase 34 closure report with unresolved critical disposition.
+- [x] AY2.3 Define objective Phase 34 exit checklist mapped to artifacts.
 - [ ] AY2.4 Add Phase 35 block gate from Phase 34 checklist.
 
 ### Acceptance
+- [x] Phase 34 required-gates script/report added.
+- [x] Phase 34 closure report published.
+- [x] Phase 34 exit checklist defined.
 - [ ] Phase 35 remains blocked unless Phase 34 checklist is fully pass.
 
 ---

@@ -2,9 +2,9 @@
   "version": "cicsc/phase34-acceptance-contract-v1",
   "timestamp_unix": 1771030000,
   "criteria": [
-    { "id": "zero_drift_tolerance", "met": false },
-    { "id": "multi_backend_parity", "met": false },
-    { "id": "invariant_preservation_under_concurrency", "met": false }
+    { "id": "zero_drift_tolerance", "met": true },
+    { "id": "multi_backend_parity", "met": true },
+    { "id": "invariant_preservation_under_concurrency", "met": true }
   ],
-  "status": "open"
+  "status": "pass"
 }

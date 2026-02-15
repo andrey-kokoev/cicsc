@@ -1,0 +1,12 @@
+{
+  "version": "cicsc/phase34-closure-report-v1",
+  "timestamp_unix": 1771033000,
+  "overall": "pass",
+  "required_gates": "docs/pilot/phase34-expanded-multi-context-required-gates.json",
+  "disposition": {
+    "unresolved_critical": 0,
+    "minor_deferred": 1,
+    "blockers": []
+  },
+  "status": "pass"
+}

@@ -1,0 +1,31 @@
+{
+  "version": "cicsc/phase34-expanded-multi-context-required-gates-v1",
+  "timestamp_unix": 1771131049,
+  "overall": "pass",
+  "checks": [
+    {
+      "id": "context_matrix",
+      "artifact": "docs/pilot/phase34-context-matrix.json",
+      "status": "pass",
+      "detail": "status=pass"
+    },
+    {
+      "id": "acceptance_contract",
+      "artifact": "docs/pilot/phase34-acceptance-contract.json",
+      "status": "pass",
+      "detail": "status=pass"
+    },
+    {
+      "id": "multi_context_workloads",
+      "artifact": "docs/pilot/phase34-multi-context-workloads.json",
+      "status": "pass",
+      "detail": "status=pass"
+    },
+    {
+      "id": "drift_localization_report",
+      "artifact": "docs/pilot/phase34-drift-localization-report.json",
+      "status": "pass",
+      "detail": "status=pass"
+    }
+  ]
+}
