@@ -1,0 +1,10 @@
+{
+  "version": "cicsc/phase34-context-matrix-v1",
+  "timestamp_unix": 1771030000,
+  "contexts": [
+    { "id": "isolation_context", "evidence": "pending", "status": "open" },
+    { "id": "concurrency_context", "evidence": "pending", "status": "open" },
+    { "id": "migration_context", "evidence": "pending", "status": "open" }
+  ],
+  "status": "open"
+}
