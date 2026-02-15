@@ -673,145 +673,181 @@ assignments:
   completed_at: '2026-02-15T11:36:21.193778Z'
 - checkbox_ref: BH1.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:26.663714Z'
+  started_at: '2026-02-15T12:09:43.507600Z'
 - checkbox_ref: BH1.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:26.835980Z'
+  started_at: '2026-02-15T12:09:43.507630Z'
 - checkbox_ref: BH1.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:27.005474Z'
+  started_at: '2026-02-15T12:09:43.507633Z'
 - checkbox_ref: BH1.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:27.190694Z'
+  started_at: '2026-02-15T12:09:43.507634Z'
 - checkbox_ref: BH2.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:27.361264Z'
+  started_at: '2026-02-15T12:09:43.507635Z'
 - checkbox_ref: BH2.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:27.528251Z'
+  started_at: '2026-02-15T12:09:43.507636Z'
 - checkbox_ref: BH2.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:27.695609Z'
+  started_at: '2026-02-15T12:09:43.507638Z'
 - checkbox_ref: BH2.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:27.871756Z'
+  started_at: '2026-02-15T12:09:43.507639Z'
 - checkbox_ref: BH3.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:28.057099Z'
+  started_at: '2026-02-15T12:09:43.507640Z'
 - checkbox_ref: BH3.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:28.236690Z'
+  started_at: '2026-02-15T12:09:43.507641Z'
 - checkbox_ref: BH3.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:28.410915Z'
+  started_at: '2026-02-15T12:09:43.507642Z'
 - checkbox_ref: BH3.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:28.580969Z'
+  started_at: '2026-02-15T12:09:43.507643Z'
 - checkbox_ref: BI1.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:28.765220Z'
+  started_at: '2026-02-15T12:09:43.507644Z'
 - checkbox_ref: BI1.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:28.941123Z'
+  started_at: '2026-02-15T12:09:43.507645Z'
 - checkbox_ref: BI1.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:29.116277Z'
+  started_at: '2026-02-15T12:09:43.507646Z'
 - checkbox_ref: BI1.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:29.285619Z'
+  started_at: '2026-02-15T12:09:43.507647Z'
 - checkbox_ref: BI2.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:29.454520Z'
+  started_at: '2026-02-15T12:09:43.507648Z'
 - checkbox_ref: BI2.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:29.647829Z'
+  started_at: '2026-02-15T12:09:43.507649Z'
 - checkbox_ref: BI2.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:29.819761Z'
+  started_at: '2026-02-15T12:09:43.507650Z'
 - checkbox_ref: BI2.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:29.992709Z'
+  started_at: '2026-02-15T12:09:43.507651Z'
 - checkbox_ref: BI3.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:30.164943Z'
+  started_at: '2026-02-15T12:09:43.507652Z'
 - checkbox_ref: BI3.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:30.343164Z'
+  started_at: '2026-02-15T12:09:43.507653Z'
 - checkbox_ref: BI3.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:30.535541Z'
+  started_at: '2026-02-15T12:09:43.507654Z'
 - checkbox_ref: BI3.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:30.714908Z'
+  started_at: '2026-02-15T12:09:43.507655Z'
 - checkbox_ref: BJ1.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:30.888068Z'
+  started_at: '2026-02-15T12:09:43.507656Z'
 - checkbox_ref: BJ1.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:31.061305Z'
+  started_at: '2026-02-15T12:09:43.507657Z'
 - checkbox_ref: BJ1.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:31.236806Z'
+  started_at: '2026-02-15T12:09:43.507658Z'
 - checkbox_ref: BJ1.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:31.428732Z'
+  started_at: '2026-02-15T12:09:43.507659Z'
 - checkbox_ref: BJ2.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:31.603776Z'
+  started_at: '2026-02-15T12:09:43.507660Z'
 - checkbox_ref: BJ2.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:31.776782Z'
+  started_at: '2026-02-15T12:09:43.507660Z'
 - checkbox_ref: BJ2.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:31.952178Z'
+  started_at: '2026-02-15T12:09:43.507661Z'
 - checkbox_ref: BJ2.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:32.148029Z'
+  started_at: '2026-02-15T12:09:43.507662Z'
 - checkbox_ref: BJ3.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:32.324134Z'
+  started_at: '2026-02-15T12:09:43.507663Z'
 - checkbox_ref: BJ3.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:32.503464Z'
+  started_at: '2026-02-15T12:09:43.507664Z'
 - checkbox_ref: BJ3.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:32.676976Z'
+  started_at: '2026-02-15T12:09:43.507665Z'
 - checkbox_ref: BJ3.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T11:59:32.854839Z'
+  started_at: '2026-02-15T12:09:43.507666Z'
