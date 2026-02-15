@@ -381,12 +381,13 @@ export class SqliteD1Adapter {
     const { tenant_id, queue_name, message, idempotency_key } = params
     const message_json = JSON.stringify(message)
     const now = Date.now()
+    const table = `queue_${escapeIdent(queue_name)}`
 
     await this.tx(async (tx) => {
       await tx.exec(
-        `INSERT INTO queue_${queue_name} (id, message_json, idempotency_key, created_at, updated_at, visible_after)
-         VALUES (?, ?, ?, ?, ?, ?)`,
-        [crypto.randomUUID(), message_json, idempotency_key, now, now, now]
+        `INSERT INTO ${table} (tenant_id, id, message_json, idempotency_key, created_at, updated_at, visible_after)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [tenant_id, crypto.randomUUID(), message_json, idempotency_key, now, now, now]
       )
     })
   }
@@ -396,8 +397,40 @@ export class SqliteD1Adapter {
     queue_name: string
     visibility_timeout_ms: number
   }): Promise<any | null> {
-    // Implementation will come in BN2.2
-    return null
+    const { tenant_id, queue_name, visibility_timeout_ms } = params
+    const table = `queue_${escapeIdent(queue_name)}`
+    const now = Date.now()
+    const visible_after = now + visibility_timeout_ms
+
+    return this.tx(async (tx) => {
+      const row = firstRow<any>(
+        await tx.exec(
+          `SELECT id, message_json, attempts, created_at 
+           FROM ${table} 
+           WHERE tenant_id=? AND visible_after <= ? 
+           ORDER BY visible_after ASC, created_at ASC 
+           LIMIT 1`,
+          [tenant_id, now]
+        )
+      )
+
+      if (!row) return null
+
+      await tx.exec(
+        `UPDATE ${table} 
+         SET visible_after=?, attempts=attempts+1, updated_at=? 
+         WHERE tenant_id=? AND id=?`,
+        [visible_after, now, tenant_id, row.id]
+      )
+
+      return {
+        id: row.id,
+        payload: JSON.parse(row.message_json),
+        attempts: row.attempts + 1,
+        visible_after,
+        created_at: row.created_at,
+      }
+    })
   }
 
   async ack_message (params: {
@@ -405,7 +438,15 @@ export class SqliteD1Adapter {
     queue_name: string
     message_id: string
   }): Promise<void> {
-    // Implementation will come in BN2.2
+    const { tenant_id, queue_name, message_id } = params
+    const table = `queue_${escapeIdent(queue_name)}`
+
+    await this.tx(async (tx) => {
+      await tx.exec(
+        `DELETE FROM ${table} WHERE tenant_id=? AND id=?`,
+        [tenant_id, message_id]
+      )
+    })
   }
 
   async retry_message (params: {
@@ -414,7 +455,17 @@ export class SqliteD1Adapter {
     message_id: string
     delay_ms: number
   }): Promise<void> {
-    // Implementation will come in BN2.2
+    const { tenant_id, queue_name, message_id, delay_ms } = params
+    const table = `queue_${escapeIdent(queue_name)}`
+    const now = Date.now()
+    const visible_after = now + delay_ms
+
+    await this.tx(async (tx) => {
+      await tx.exec(
+        `UPDATE ${table} SET visible_after=?, updated_at=? WHERE tenant_id=? AND id=?`,
+        [visible_after, now, tenant_id, message_id]
+      )
+    })
   }
 
   async dead_letter_message (params: {
@@ -423,7 +474,8 @@ export class SqliteD1Adapter {
     message_id: string
     error: string
   }): Promise<void> {
-    // Implementation will come in BN2.2
+    // v0: just ack (delete). implementation in BN2.4.
+    await this.ack_message(params)
   }
 }
 

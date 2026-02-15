@@ -76,6 +76,15 @@ export async function installSchemaV0 (db: D1Database): Promise<void> {
 
     CREATE INDEX IF NOT EXISTS idx_sla_breached
       ON sla_status(tenant_id, name, breached, deadline_ts);
+
+    CREATE TABLE IF NOT EXISTS idempotency_keys (
+      tenant_id    TEXT NOT NULL,
+      key          TEXT NOT NULL,
+      queue_name   TEXT NOT NULL,
+      processed_at INTEGER NOT NULL,
+      result_json  TEXT,
+      PRIMARY KEY (tenant_id, key, queue_name)
+    );
   `
 
   await db.exec(sql)

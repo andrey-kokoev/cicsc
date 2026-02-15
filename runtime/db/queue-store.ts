@@ -10,33 +10,33 @@ export type QueueMessage = {
 }
 
 export interface QueueStore {
-  enqueue(params: {
+  enqueue (params: {
     tenant_id: string
     queue_name: string
     message: any
     idempotency_key?: string
   }): Promise<void>
 
-  dequeue(params: {
+  dequeue (params: {
     tenant_id: string
     queue_name: string
     visibility_timeout_ms: number
   }): Promise<QueueMessage | null>
 
-  ack(params: {
+  ack (params: {
     tenant_id: string
     queue_name: string
     message_id: string
   }): Promise<void>
 
-  retry(params: {
+  retry (params: {
     tenant_id: string
     queue_name: string
     message_id: string
     delay_ms: number
   }): Promise<void>
 
-  deadLetter(params: {
+  deadLetter (params: {
     tenant_id: string
     queue_name: string
     message_id: string

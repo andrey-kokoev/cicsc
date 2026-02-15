@@ -2451,7 +2451,7 @@ phases:
       status: done
       description: Queue storage abstraction (enqueue, dequeue, ack, retry)
     - id: BN2.2
-      status: open
+      status: done
       description: SQLite/D1 queue table schema with visibility timeouts
     - id: BN2.3
       status: open
