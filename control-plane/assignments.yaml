@@ -1,13 +1,22 @@
 assignments:
 - checkbox_ref: AY1.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-14T22:04:57.377382Z'
+  started_at: '2026-02-14T22:33:30.906159Z'
+  commit: aeac78c
+  completed_at: '2026-02-14T22:39:57.460676Z'
 - checkbox_ref: AY1.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-14T22:04:57.377398Z'
+  started_at: '2026-02-14T22:33:30.906168Z'
+  commit: 15d48e1
+  completed_at: '2026-02-14T22:39:57.460693Z'
 - checkbox_ref: AY1.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-14T22:04:57.377400Z'
+  started_at: '2026-02-14T22:33:30.906169Z'
+  commit: 79c5313
+  completed_at: '2026-02-14T22:39:57.460696Z'
