@@ -2,7 +2,7 @@
 
 import { makeD1Store } from "../db/d1-store"
 import { executeCommandTx } from "../execute-command-tx"
-import type { VmIntrinsics } from "../../core/vm/eval"
+import { evalExprV0, type VmIntrinsics } from "../../core/vm/eval"
 
 import { SqliteD1Adapter } from "../../adapters/sqlite/src/adapter"
 import { genSqliteSchemaFromIr } from "../../adapters/sqlite/src/schema/gen"
@@ -36,6 +36,21 @@ type D1Database = {
 
 export default {
   async fetch (req: Request, env: Env): Promise<Response> {
+    const adapter = new SqliteD1Adapter(env.DB as any)
+    const store = makeD1Store({ adapter })
+
+    // Intrinsics: wire your auth/roles here. v0: permissive defaults.
+    const intrinsics: VmIntrinsics = {
+      has_role: () => true,
+      role_of: () => "user",
+      auth_ok: () => true,
+      constraint: () => true,
+      len: (v: any) => (Array.isArray(v) ? v.length : typeof v === "string" ? v.length : v && typeof v === "object" ? Object.keys(v).length : 0),
+      str: (v: any) => (v === null ? null : String(v)),
+      int: (v: any) => (typeof v === "number" ? Math.trunc(v) : typeof v === "string" && v.trim() !== "" ? Number.parseInt(v, 10) : null),
+      float: (v: any) => (typeof v === "number" ? v : typeof v === "string" && v.trim() !== "" ? Number.parseFloat(v) : null),
+    }
+
     try {
       const url = new URL(req.url)
 
@@ -65,6 +80,33 @@ export default {
 
         const body = (await req.json().catch(() => ({}))) as any
         const command_id = req.headers.get("Idempotency-Key") || crypto.randomUUID()
+
+        // Async routing
+        let targetQueue = hookSpec.queue
+        if (hookSpec.routing) {
+          try {
+            const routed = evalExprV0(hookSpec.routing, {
+              vars: { payload: body },
+              intrinsics,
+            })
+            if (typeof routed === "string") {
+              targetQueue = routed
+            }
+          } catch (e) {
+            console.error("Webhook routing failed:", e)
+          }
+        }
+
+        if (targetQueue) {
+          await store.enqueue({
+            tenant_id,
+            queue_name: targetQueue,
+            message: body,
+            idempotency_key: command_id
+          })
+          return Response.json({ ok: true, async: true, queue: targetQueue, message_id: command_id })
+        }
+
         const result = await executeCommandTx({
           ir,
           store: { adapter: store.adapter },
@@ -84,21 +126,7 @@ export default {
         return Response.json({ ok: true, result })
       }
 
-      const adapter = new SqliteD1Adapter(env.DB as any)
-      const store = makeD1Store({ adapter })
       const limiter = getLimiter(env.RATE_LIMIT_PER_MINUTE)
-
-      // Intrinsics: wire your auth/roles here. v0: permissive defaults.
-      const intrinsics: VmIntrinsics = {
-        has_role: () => true,
-        role_of: () => "user",
-        auth_ok: () => true,
-        constraint: () => true,
-        len: (v: any) => (Array.isArray(v) ? v.length : typeof v === "string" ? v.length : v && typeof v === "object" ? Object.keys(v).length : 0),
-        str: (v: any) => (v === null ? null : String(v)),
-        int: (v: any) => (typeof v === "number" ? Math.trunc(v) : typeof v === "string" && v.trim() !== "" ? Number.parseInt(v, 10) : null),
-        float: (v: any) => (typeof v === "number" ? v : typeof v === "string" && v.trim() !== "" ? Number.parseFloat(v) : null),
-      }
 
       if (url.pathname === "/_caps") return Response.json(adapter.caps)
 

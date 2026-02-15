@@ -346,7 +346,19 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_${table}_idempotency
 CREATE INDEX IF NOT EXISTS idx_${table}_visible 
   ON ${table}(tenant_id, visible_after, created_at);
 `.trim())
-  }
 
-  return out.join("\n\n")
-}
+    // DLQ Table
+    const dlqTable = `queue_${name}_dlq`
+    out.push(`
+CREATE TABLE IF NOT EXISTS ${dlqTable} (
+  tenant_id        TEXT NOT NULL,
+  id               TEXT NOT NULL,
+  message_json     TEXT NOT NULL,
+  attempts         INTEGER,
+  error            TEXT,
+  failed_at        INTEGER NOT NULL,
+  
+  PRIMARY KEY (tenant_id, id)
+);
+`.trim())
+  }

@@ -141,9 +141,12 @@ export function makeD1Store (params: { adapter: SqliteD1Adapter }): D1Store {
 
     enqueue: (p) => adapter.enqueue(p),
     dequeue: (p) => adapter.dequeue(p) as Promise<QueueMessage | null>,
-    ack: (p) => adapter.ack_message(p),
-    retry: (p) => adapter.retry_message(p),
-    deadLetter: (p) => adapter.dead_letter_message(p),
+    ack: (p) => adapter.ack(p),
+    retry: (p) => adapter.retry(p),
+    deadLetter: (p) => adapter.deadLetter(p),
+    getMetrics: (p) => adapter.getMetrics(p),
+    listDlq: (p) => adapter.listDlq(p),
+    replayDlq: (p) => adapter.replayDlq(p),
   }
 }
 

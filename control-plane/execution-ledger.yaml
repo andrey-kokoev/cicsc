@@ -2425,7 +2425,7 @@ phases:
       description: Webhook delivery status tracking and replay
 - id: BN
   number: 15
-  status: planned
+  status: complete
   title: Queue Primitive - Reliable Async Processing
   milestones:
   - id: BN1
@@ -2454,23 +2454,23 @@ phases:
       status: done
       description: SQLite/D1 queue table schema with visibility timeouts
     - id: BN2.3
-      status: open
+      status: done
       description: Queue worker polling with backoff
     - id: BN2.4
-      status: open
+      status: done
       description: Dead letter queue implementation
   - id: BN3
     title: Webhook Integration & Observability
     checkboxes:
     - id: BN3.1
-      status: open
+      status: done
       description: "Route webhooks through queue (202 Accepted \u2192 enqueue)"
     - id: BN3.2
-      status: open
+      status: done
       description: Idempotency tracking (24h window)
     - id: BN3.3
-      status: open
+      status: done
       description: Queue metrics API (depth, oldest message, DLQ size)
     - id: BN3.4
-      status: open
+      status: done
       description: DLQ admin API (list, inspect, replay)

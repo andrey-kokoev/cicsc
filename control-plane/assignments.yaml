@@ -1207,31 +1207,43 @@ assignments:
   completed_at: '2026-02-15T15:47:42.869615Z'
 - checkbox_ref: BN2.3
   agent_ref: AGENT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-15T15:32:07.154895Z'
   started_at: '2026-02-15T15:42:35.934934Z'
+  commit: 77d1d0c
+  completed_at: '2026-02-15T15:49:23.274855Z'
 - checkbox_ref: BN2.4
   agent_ref: AGENT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-15T15:32:07.363199Z'
   started_at: '2026-02-15T15:42:35.934934Z'
+  commit: 77d1d0c
+  completed_at: '2026-02-15T15:55:16.749292Z'
 - checkbox_ref: BN3.1
   agent_ref: AGENT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-15T15:32:07.572807Z'
   started_at: '2026-02-15T15:42:35.934935Z'
+  commit: 77d1d0c
+  completed_at: '2026-02-15T15:57:11.587416Z'
 - checkbox_ref: BN3.2
   agent_ref: AGENT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-15T15:32:07.782773Z'
   started_at: '2026-02-15T15:42:35.934936Z'
+  commit: 77d1d0c
+  completed_at: '2026-02-15T15:57:11.897865Z'
 - checkbox_ref: BN3.3
   agent_ref: AGENT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-15T15:32:08.000391Z'
   started_at: '2026-02-15T15:42:35.934937Z'
+  commit: 77d1d0c
+  completed_at: '2026-02-15T15:58:20.312658Z'
 - checkbox_ref: BN3.4
   agent_ref: AGENT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-15T15:32:08.216570Z'
   started_at: '2026-02-15T15:42:35.934938Z'
+  commit: 77d1d0c
+  completed_at: '2026-02-15T15:58:40.420672Z'

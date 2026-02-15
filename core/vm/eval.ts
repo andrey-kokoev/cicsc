@@ -17,7 +17,8 @@ export type VmEnv = {
   rows_count?: number
   agg?: Record<string, Value>
 
-  // event selector context
+  // queue/event context
+  payload?: any
   e?: { type: string; actor: string; time: number; payload: Record<string, Value> }
 
   // intrinsics
@@ -251,6 +252,9 @@ function evalVar (v: VarRefV0, env: VmEnv): Value {
       return env.e?.time ?? null
     case "e_payload":
       return env.e ? getPath(env.e.payload, body.path) : null
+
+    case "payload":
+      return env.payload ? getPath(env.payload, body.path) : null
 
     default:
       return null

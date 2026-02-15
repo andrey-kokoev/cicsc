@@ -108,6 +108,7 @@ export type WebhookSpecV0 = {
   on_type: string
   command: string
   queue?: string
+  routing?: ExprV0
   verify?: {
     hmac?: {
       secret_env: string
@@ -217,6 +218,7 @@ export type VarRefV0 =
   | { e_actor: true }
   | { e_time: true }
   | { e_payload: { path: string } }
+  | { payload: { path: string } }
 
 export type IntrinsicFnV0 =
   | "has_role"

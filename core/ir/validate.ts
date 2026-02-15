@@ -32,6 +32,13 @@ export function validateBundleV0 (bundle: unknown): { ok: true; value: CoreIrBun
   if (ir.views != null && !isObject(ir.views)) errors.push({ path: "$.core_ir.views", message: "views must be an object" })
   if (ir.slas != null && !isObject(ir.slas)) errors.push({ path: "$.core_ir.slas", message: "slas must be an object" })
 
+  if (ir.webhooks != null && !isObject(ir.webhooks)) errors.push({ path: "$.core_ir.webhooks", message: "webhooks must be an object" })
+  else if (ir.webhooks != null) {
+    for (const [hookName, hookSpec] of Object.entries(ir.webhooks)) {
+      validateWebhook(errors, `$.core_ir.webhooks.${hookName}`, hookName, hookSpec as any)
+    }
+  }
+
   if (ir.queues != null && !isObject(ir.queues)) errors.push({ path: "$.core_ir.queues", message: "queues must be an object" })
   else if (ir.queues != null) {
     for (const [qName, qSpec] of Object.entries(ir.queues)) {
@@ -226,6 +233,17 @@ export function validateExpr (errors: ValidationError[], path: string, expr: any
     default:
       errors.push({ path, message: `unknown expr tag: ${tag}` })
   }
+}
+
+function validateWebhook (errors: ValidationError[], path: string, name: string, spec: any) {
+  if (!isObject(spec)) {
+    errors.push({ path, message: "webhook spec must be an object" })
+    return
+  }
+  if (typeof spec.on_type !== "string") errors.push({ path: `${path}.on_type`, message: "on_type must be a string" })
+  if (typeof spec.command !== "string") errors.push({ path: `${path}.command`, message: "command must be a string" })
+  if (spec.queue !== undefined && typeof spec.queue !== "string") errors.push({ path: `${path}.queue`, message: "queue must be a string" })
+  if (spec.routing !== undefined) validateExpr(errors, `${path}.routing`, spec.routing)
 }
 
 function isObject (x: unknown): x is Record<string, unknown> {
