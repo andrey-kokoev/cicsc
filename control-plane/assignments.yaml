@@ -1164,65 +1164,89 @@ assignments:
   commit: 0b4292f
   completed_at: '2026-02-15T15:21:46.337078Z'
 - checkbox_ref: BN1.1
-  agent_ref: AGENT_KIMI
-  status: open
+  agent_ref: AGENT_GEMINI
+  status: done
   created_at: '2026-02-15T15:32:05.880246Z'
-  agent: AGENT_GEMINI
+  started_at: '2026-02-15T15:42:35.934912Z'
+  commit: 6073bfa
+  completed_at: '2026-02-15T15:43:01.432647Z'
 - checkbox_ref: BN1.2
-  agent_ref: AGENT_KIMI
-  status: open
+  agent_ref: AGENT_GEMINI
+  status: done
   created_at: '2026-02-15T15:32:06.091695Z'
-  agent: AGENT_GEMINI
+  started_at: '2026-02-15T15:42:35.934927Z'
+  commit: 42174c4
+  completed_at: '2026-02-15T15:43:27.421318Z'
 - checkbox_ref: BN1.3
-  agent_ref: AGENT_KIMI
-  status: open
+  agent_ref: AGENT_GEMINI
+  status: done
   created_at: '2026-02-15T15:32:06.302353Z'
-  agent: AGENT_GEMINI
+  started_at: '2026-02-15T15:42:35.934929Z'
+  commit: b20a083
+  completed_at: '2026-02-15T15:43:43.748846Z'
 - checkbox_ref: BN1.4
-  agent_ref: AGENT_KIMI
-  status: open
+  agent_ref: AGENT_GEMINI
+  status: done
   created_at: '2026-02-15T15:32:06.530463Z'
-  agent: AGENT_GEMINI
+  started_at: '2026-02-15T15:42:35.934930Z'
+  commit: '7212255'
+  completed_at: '2026-02-15T15:44:13.326635Z'
 - checkbox_ref: BN2.1
-  agent_ref: AGENT_KIMI
-  status: open
+  agent_ref: AGENT_GEMINI
+  status: done
   created_at: '2026-02-15T15:32:06.742721Z'
-  agent: AGENT_GEMINI
+  started_at: '2026-02-15T15:42:35.934931Z'
+  commit: b129042
+  completed_at: '2026-02-15T15:45:20.336435Z'
 - checkbox_ref: BN2.2
-  agent_ref: AGENT_KIMI
-  status: open
+  agent_ref: AGENT_GEMINI
+  status: done
   created_at: '2026-02-15T15:32:06.948096Z'
-  agent: AGENT_GEMINI
+  started_at: '2026-02-15T15:42:35.934933Z'
+  commit: 07d7697
+  completed_at: '2026-02-15T15:47:42.869615Z'
 - checkbox_ref: BN2.3
-  agent_ref: AGENT_KIMI
-  status: open
+  agent_ref: AGENT_GEMINI
+  status: done
   created_at: '2026-02-15T15:32:07.154895Z'
-  agent: AGENT_GEMINI
+  started_at: '2026-02-15T15:42:35.934934Z'
+  commit: 77d1d0c
+  completed_at: '2026-02-15T15:49:23.274855Z'
 - checkbox_ref: BN2.4
-  agent_ref: AGENT_KIMI
-  status: open
+  agent_ref: AGENT_GEMINI
+  status: done
   created_at: '2026-02-15T15:32:07.363199Z'
-  agent: AGENT_GEMINI
+  started_at: '2026-02-15T15:42:35.934934Z'
+  commit: 77d1d0c
+  completed_at: '2026-02-15T15:55:16.749292Z'
 - checkbox_ref: BN3.1
-  agent_ref: AGENT_KIMI
-  status: open
+  agent_ref: AGENT_GEMINI
+  status: done
   created_at: '2026-02-15T15:32:07.572807Z'
-  agent: AGENT_GEMINI
+  started_at: '2026-02-15T15:42:35.934935Z'
+  commit: 77d1d0c
+  completed_at: '2026-02-15T15:57:11.587416Z'
 - checkbox_ref: BN3.2
-  agent_ref: AGENT_KIMI
-  status: open
+  agent_ref: AGENT_GEMINI
+  status: done
   created_at: '2026-02-15T15:32:07.782773Z'
-  agent: AGENT_GEMINI
+  started_at: '2026-02-15T15:42:35.934936Z'
+  commit: 77d1d0c
+  completed_at: '2026-02-15T15:57:11.897865Z'
 - checkbox_ref: BN3.3
-  agent_ref: AGENT_KIMI
-  status: open
+  agent_ref: AGENT_GEMINI
+  status: done
   created_at: '2026-02-15T15:32:08.000391Z'
-  agent: AGENT_GEMINI
+  started_at: '2026-02-15T15:42:35.934937Z'
+  commit: 77d1d0c
+  completed_at: '2026-02-15T15:58:20.312658Z'
 - checkbox_ref: BN3.4
-  agent_ref: AGENT_KIMI
-  status: open
+  agent_ref: AGENT_GEMINI
+  status: done
   created_at: '2026-02-15T15:32:08.216570Z'
-  agent: AGENT_GEMINI
+  started_at: '2026-02-15T15:42:35.934938Z'
+  commit: 77d1d0c
+  completed_at: '2026-02-15T15:58:40.420672Z'
 - checkbox_ref: BO1.1
   agent_ref: AGENT_GEMINI
   status: open

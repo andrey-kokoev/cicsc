@@ -659,6 +659,44 @@
           ]
         }
       }
+    },
+    "queues": {
+      "email_queue": {
+        "message_type": {
+          "to": { "type": "string" },
+          "body": { "type": "string" }
+        },
+        "delivery": {
+          "max_attempts": 5,
+          "initial_backoff_ms": 1000,
+          "max_backoff_ms": 60000
+        },
+        "retention": { "max_age_seconds": 86400 }
+      },
+      "audit_queue": {
+        "message_type": {
+          "event": { "type": "string" },
+          "actor": { "type": "string" }
+        },
+        "delivery": {
+          "max_attempts": 3,
+          "initial_backoff_ms": 500,
+          "max_backoff_ms": 5000
+        },
+        "retention": { "max_age_seconds": 86400 }
+      }
+    },
+    "webhooks": {
+      "send_email": {
+        "on_type": "Ticket",
+        "command": "create",
+        "queue": "email_queue"
+      },
+      "log_audit": {
+        "on_type": "Ticket",
+        "command": "create",
+        "queue": "audit_queue"
+      }
     }
   },
   "digest": "0d5275de0855e73777700f8e83ac55932927580ab1c4af9026675966d8388664"

@@ -8,6 +8,7 @@ export type SpecV0 = {
   migrations?: Record<string, SpecMigrationV0>
   subscriptions?: Record<string, SpecSubscriptionV0>
   webhooks?: Record<string, SpecWebhookV0>
+  queues?: Record<string, SpecQueueV0>
 }
 
 export type SpecEntityV0 = {
@@ -90,6 +91,7 @@ export type SpecSubscriptionV0 = {
 export type SpecWebhookV0 = {
   on: string
   command: string
+  queue?: string
   payload_map?: Record<string, any>
   verify?: {
     hmac?: {
@@ -97,5 +99,24 @@ export type SpecWebhookV0 = {
       header: string
       algo: "sha256"
     }
+  }
+}
+
+export type SpecQueueV0 = {
+  message_type: Record<string, SpecAttrV0>
+  ordering?: "unordered" | "fifo" | "per_key"
+  retention?: {
+    max_age_seconds: number
+    max_depth?: number
+  }
+  delivery?: {
+    max_attempts: number
+    initial_backoff_ms: number
+    max_backoff_ms: number
+    dead_letter_queue?: string
+  }
+  map_to?: {
+    command: string // format: Entity.Command
+    input_map: Record<string, any>
   }
 }

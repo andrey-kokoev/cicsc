@@ -14,6 +14,7 @@ export type CoreIrV0 = {
   migrations?: Record<string, MigrationSpecV0>
   subscriptions?: Record<string, SubscriptionSpecV0>
   webhooks?: Record<string, WebhookSpecV0>
+  queues?: Record<string, QueueSpecV0>
 }
 
 export type EntityTypeSpecV0 = {
@@ -106,6 +107,8 @@ export type SubscriptionSpecV0 = {
 export type WebhookSpecV0 = {
   on_type: string
   command: string
+  queue?: string
+  routing?: ExprV0
   verify?: {
     hmac?: {
       secret_env: string
@@ -113,6 +116,28 @@ export type WebhookSpecV0 = {
       algo: "sha256"
     }
   }
+}
+
+export type QueueSpecV0 = {
+  message_type: Record<string, AttrTypeSpecV0>
+  ordering?: "unordered" | "fifo" | "per_key"
+  retention: {
+    max_age_seconds: number
+    max_depth?: number
+  }
+  delivery: {
+    max_attempts: number
+    initial_backoff_ms: number
+    max_backoff_ms: number
+    dead_letter_queue?: string
+  }
+  map_to?: QueueCommandMappingV0
+}
+
+export type QueueCommandMappingV0 = {
+  entity_type: string
+  command: string
+  input_map: Record<string, ExprV0>
 }
 
 export type EventTransformV0 = {
@@ -193,6 +218,7 @@ export type VarRefV0 =
   | { e_actor: true }
   | { e_time: true }
   | { e_payload: { path: string } }
+  | { payload: { path: string } }
 
 export type IntrinsicFnV0 =
   | "has_role"

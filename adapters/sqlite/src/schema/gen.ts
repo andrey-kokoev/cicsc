@@ -21,8 +21,9 @@ export function genSqliteSchemaFromIr (ir: CoreIrV0, opts: SchemaGenOpts): Schem
   const versions = genTenantVersions()
   const receipts = genCommandReceipts()
   const sla = genSlaStatus()
+  const queues = genQueues(ir)
 
-  const sql = [versions, receipts, events, snapshots, viewIndexes, constraintIndexes, sla].join("\n\n")
+  const sql = [versions, receipts, events, snapshots, viewIndexes, constraintIndexes, sla, queues].join("\n\n")
   return { sql }
 }
 
@@ -300,3 +301,64 @@ function soleKey (o: any): string {
   if (ks.length !== 1) throw new Error("invalid tagged object")
   return ks[0]!
 }
+
+function genQueues (ir: CoreIrV0): string {
+  const queues = ir.queues ?? {}
+  if (Object.keys(queues).length === 0) return ""
+
+  const out: string[] = []
+
+  // Operational idempotency table for queue workers
+  out.push(`
+CREATE TABLE IF NOT EXISTS idempotency_keys (
+  tenant_id    TEXT NOT NULL,
+  key          TEXT NOT NULL,
+  queue_name   TEXT NOT NULL,
+  processed_at INTEGER NOT NULL,
+  result_json  TEXT,
+  PRIMARY KEY (tenant_id, key, queue_name)
+);
+`.trim())
+
+  for (const name of Object.keys(queues)) {
+    const table = `queue_${name}`
+    out.push(`
+CREATE TABLE IF NOT EXISTS ${table} (
+  tenant_id        TEXT NOT NULL,
+  id               TEXT NOT NULL,
+  message_json     TEXT NOT NULL,
+  idempotency_key  TEXT,
+  
+  attempts         INTEGER DEFAULT 0,
+  visible_after    INTEGER NOT NULL,
+  locked_by        TEXT,
+  
+  created_at       INTEGER NOT NULL,
+  updated_at       INTEGER NOT NULL,
+  
+  PRIMARY KEY (tenant_id, id)
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_${table}_idempotency 
+  ON ${table}(tenant_id, idempotency_key) 
+  WHERE idempotency_key IS NOT NULL;
+
+CREATE INDEX IF NOT EXISTS idx_${table}_visible 
+  ON ${table}(tenant_id, visible_after, created_at);
+`.trim())
+
+    // DLQ Table
+    const dlqTable = `queue_${name}_dlq`
+    out.push(`
+CREATE TABLE IF NOT EXISTS ${dlqTable} (
+  tenant_id        TEXT NOT NULL,
+  id               TEXT NOT NULL,
+  message_json     TEXT NOT NULL,
+  attempts         INTEGER,
+  error            TEXT,
+  failed_at        INTEGER NOT NULL,
+  
+  PRIMARY KEY (tenant_id, id)
+);
+`.trim())
+  }

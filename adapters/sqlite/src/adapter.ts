@@ -39,7 +39,10 @@ export class SqliteD1Adapter {
     scheduler: { cron: true },
   };
 
-  constructor(private readonly db: D1Database) { }
+  private readonly db: D1Database
+  constructor(db: D1Database) {
+    this.db = db
+  }
 
   async tx<T> (fn: (tx: TxCtx) => Promise<T>): Promise<T> {
     return withImmediateTx(this.db as any, fn)
@@ -366,6 +369,213 @@ export class SqliteD1Adapter {
       await tx.exec(`SELECT active_version FROM tenant_versions WHERE tenant_id=?`, [tenant_id])
     )
     return row?.active_version ?? 0
+  }
+
+  // --------------------------
+  // Queues
+  // --------------------------
+
+  async enqueue (params: {
+    tenant_id: TenantId
+    queue_name: string
+    message: any
+    idempotency_key?: string
+  }): Promise<void> {
+    const { tenant_id, queue_name, message, idempotency_key } = params
+    const message_json = JSON.stringify(message)
+    const now = Date.now()
+    const table = `queue_${escapeIdent(queue_name)}`
+
+    await this.tx(async (tx) => {
+      await tx.exec(
+        `INSERT INTO ${table} (tenant_id, id, message_json, idempotency_key, created_at, updated_at, visible_after)
+         VALUES (?, ?, ?, ?, ?, ?, ?)`,
+        [tenant_id, crypto.randomUUID(), message_json, idempotency_key, now, now, now]
+      )
+    })
+  }
+
+  async dequeue (params: {
+    tenant_id: TenantId
+    queue_name: string
+    visibility_timeout_ms: number
+  }): Promise<any | null> {
+    const { tenant_id, queue_name, visibility_timeout_ms } = params
+    const table = `queue_${escapeIdent(queue_name)}`
+    const now = Date.now()
+    const visible_after = now + visibility_timeout_ms
+
+    return this.tx(async (tx) => {
+      const row = firstRow<any>(
+        await tx.exec(
+          `SELECT id, message_json, attempts, created_at 
+           FROM ${table} 
+           WHERE tenant_id=? AND visible_after <= ? 
+           ORDER BY visible_after ASC, created_at ASC 
+           LIMIT 1`,
+          [tenant_id, now]
+        )
+      )
+
+      if (!row) return null
+
+      await tx.exec(
+        `UPDATE ${table} 
+         SET visible_after=?, attempts=attempts+1, updated_at=? 
+         WHERE tenant_id=? AND id=?`,
+        [visible_after, now, tenant_id, row.id]
+      )
+
+      return {
+        id: row.id,
+        payload: JSON.parse(row.message_json),
+        attempts: row.attempts + 1,
+        visible_after,
+        created_at: row.created_at,
+      }
+    })
+  }
+
+  async ack (params: {
+    tenant_id: TenantId
+    queue_name: string
+    message_id: string
+  }): Promise<void> {
+    const { tenant_id, queue_name, message_id } = params
+    const table = `queue_${escapeIdent(queue_name)}`
+
+    await this.tx(async (tx) => {
+      await tx.exec(
+        `DELETE FROM ${table} WHERE tenant_id=? AND id=?`,
+        [tenant_id, message_id]
+      )
+    })
+  }
+
+  async retry (params: {
+    tenant_id: TenantId
+    queue_name: string
+    message_id: string
+    delay_ms: number
+  }): Promise<void> {
+    const { tenant_id, queue_name, message_id, delay_ms } = params
+    const table = `queue_${escapeIdent(queue_name)}`
+    const now = Date.now()
+    const visible_after = now + delay_ms
+
+    await this.tx(async (tx) => {
+      await tx.exec(
+        `UPDATE ${table} SET visible_after=?, updated_at=? WHERE tenant_id=? AND id=?`,
+        [visible_after, now, tenant_id, message_id]
+      )
+    })
+  }
+
+  async deadLetter (params: {
+    tenant_id: TenantId
+    queue_name: string
+    message_id: string
+    error: string
+  }): Promise<void> {
+    const { tenant_id, queue_name, message_id, error } = params
+    const table = `queue_${escapeIdent(queue_name)}`
+    const dlqTable = `${table}_dlq`
+    const now = Date.now()
+
+    await this.tx(async (tx) => {
+      // 1. Fetch message metadata
+      const row = firstRow<any>(
+        await tx.exec(
+          `SELECT message_json, attempts FROM ${table} WHERE tenant_id=? AND id=?`,
+          [tenant_id, message_id]
+        )
+      )
+
+      if (!row) return
+
+      // 2. Insert into DLQ
+      await tx.exec(
+        `INSERT INTO ${dlqTable} (tenant_id, id, message_json, attempts, error, failed_at)
+         VALUES (?,?,?,?,?,?)`,
+        [tenant_id, message_id, row.message_json, row.attempts, error, now]
+      )
+
+      // 3. Remove from main queue
+      await tx.exec(
+        `DELETE FROM ${table} WHERE tenant_id=? AND id=?`,
+        [tenant_id, message_id]
+      )
+    })
+  }
+
+  async getMetrics (params: {
+    tenant_id: TenantId
+    queue_name: string
+  }): Promise<{
+    depth: number
+    oldest_message_age_seconds: number | null
+    dlq_size: number
+  }> {
+    const { tenant_id, queue_name } = params
+    const table = `queue_${escapeIdent(queue_name)}`
+    const dlqTable = `${table}_dlq`
+    const now = nowUnix()
+
+    return this.tx(async (tx) => {
+      const depthRow = firstRow<any>(
+        await tx.exec(`SELECT COUNT(*) as cnt FROM ${table} WHERE tenant_id=?`, [tenant_id])
+      )
+      const oldestRow = firstRow<any>(
+        await tx.exec(`SELECT MIN(created_at) as min_ts FROM ${table} WHERE tenant_id=?`, [tenant_id])
+      )
+      const dlqRow = firstRow<any>(
+        await tx.exec(`SELECT COUNT(*) as cnt FROM ${dlqTable} WHERE tenant_id=?`, [tenant_id])
+      )
+
+      const minTs = oldestRow?.min_ts ? Math.floor(oldestRow.min_ts / 1000) : null
+
+      return {
+        depth: depthRow?.cnt ?? 0,
+        oldest_message_age_seconds: minTs ? now - minTs : null,
+        dlq_size: dlqRow?.cnt ?? 0,
+      }
+    })
+  }
+
+  async listDlq (params: {
+    tenant_id: TenantId
+    queue_name: string
+    limit?: number
+  }): Promise<any[]> {
+    const { tenant_id, queue_name, limit = 50 } = params
+    const table = `queue_${escapeIdent(queue_name)}_dlq`
+    const rows = await this.db.prepare(`SELECT * FROM ${table} WHERE tenant_id=? LIMIT ?`).bind(tenant_id, limit).all()
+    return rows.results ?? []
+  }
+
+  async replayDlq (params: {
+    tenant_id: TenantId
+    queue_name: string
+    message_id: string
+  }): Promise<void> {
+    const { tenant_id, queue_name, message_id } = params
+    const table = `queue_${escapeIdent(queue_name)}`
+    const dlqTable = `${table}_dlq`
+    const now = nowUnix()
+
+    await this.tx(async (tx) => {
+      const row = firstRow<any>(
+        await tx.exec(`SELECT message_json FROM ${dlqTable} WHERE tenant_id=? AND id=?`, [tenant_id, message_id])
+      )
+      if (!row) return
+
+      await tx.exec(
+        `INSERT INTO ${table} (tenant_id, id, message_json, attempts, visible_after, created_at, updated_at)
+         VALUES (?,?,?,?,?,?,?)`,
+        [tenant_id, message_id, row.message_json, 0, Date.now(), Date.now(), Date.now()]
+      )
+      await tx.exec(`DELETE FROM ${dlqTable} WHERE tenant_id=? AND id=?`, [tenant_id, message_id])
+    })
   }
 }
 

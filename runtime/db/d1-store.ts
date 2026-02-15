@@ -6,6 +6,7 @@ import type { SqliteD1Adapter } from "../../adapters/sqlite/src/adapter"
 import { lowerQueryToSql } from "../../adapters/sqlite/src/lower/query-to-sql"
 import { lowerBoolQueryConstraintToSql } from "../../adapters/sqlite/src/lower/constraint-to-sql"
 import { interpretQuery } from "../../core/query/interpret"
+import type { QueueStore, QueueMessage } from "./queue-store"
 
 export type D1Store = {
   adapter: SqliteD1Adapter
@@ -69,7 +70,7 @@ export type D1Store = {
     constraint_id: string
     args?: Record<string, any>
   }) => Promise<boolean>
-}
+} & QueueStore
 
 export function makeD1Store (params: { adapter: SqliteD1Adapter }): D1Store {
   const { adapter } = params
@@ -137,6 +138,15 @@ export function makeD1Store (params: { adapter: SqliteD1Adapter }): D1Store {
       if (!row) throw new Error("constraint SQL returned no rows")
       return row.ok === 1 || row.ok === true
     },
+
+    enqueue: (p) => adapter.enqueue(p),
+    dequeue: (p) => adapter.dequeue(p) as Promise<QueueMessage | null>,
+    ack: (p) => adapter.ack(p),
+    retry: (p) => adapter.retry(p),
+    deadLetter: (p) => adapter.deadLetter(p),
+    getMetrics: (p) => adapter.getMetrics(p),
+    listDlq: (p) => adapter.listDlq(p),
+    replayDlq: (p) => adapter.replayDlq(p),
   }
 }
 
