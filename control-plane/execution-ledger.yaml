@@ -2448,7 +2448,7 @@ phases:
     title: Queue Runtime Implementation
     checkboxes:
     - id: BN2.1
-      status: open
+      status: done
       description: Queue storage abstraction (enqueue, dequeue, ack, retry)
     - id: BN2.2
       status: open

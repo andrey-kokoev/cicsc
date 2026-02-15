@@ -31,7 +31,7 @@ export function validateBundleV0 (bundle: unknown): { ok: true; value: CoreIrBun
   if (ir.constraints != null && !isObject(ir.constraints)) errors.push({ path: "$.core_ir.constraints", message: "constraints must be an object" })
   if (ir.views != null && !isObject(ir.views)) errors.push({ path: "$.core_ir.views", message: "views must be an object" })
   if (ir.slas != null && !isObject(ir.slas)) errors.push({ path: "$.core_ir.slas", message: "slas must be an object" })
-  
+
   if (ir.queues != null && !isObject(ir.queues)) errors.push({ path: "$.core_ir.queues", message: "queues must be an object" })
   else if (ir.queues != null) {
     for (const [qName, qSpec] of Object.entries(ir.queues)) {

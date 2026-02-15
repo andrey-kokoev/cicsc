@@ -367,6 +367,64 @@ export class SqliteD1Adapter {
     )
     return row?.active_version ?? 0
   }
+
+  // --------------------------
+  // Queues
+  // --------------------------
+
+  async enqueue (params: {
+    tenant_id: TenantId
+    queue_name: string
+    message: any
+    idempotency_key?: string
+  }): Promise<void> {
+    const { tenant_id, queue_name, message, idempotency_key } = params
+    const message_json = JSON.stringify(message)
+    const now = Date.now()
+
+    await this.tx(async (tx) => {
+      await tx.exec(
+        `INSERT INTO queue_${queue_name} (id, message_json, idempotency_key, created_at, updated_at, visible_after)
+         VALUES (?, ?, ?, ?, ?, ?)`,
+        [crypto.randomUUID(), message_json, idempotency_key, now, now, now]
+      )
+    })
+  }
+
+  async dequeue (params: {
+    tenant_id: TenantId
+    queue_name: string
+    visibility_timeout_ms: number
+  }): Promise<any | null> {
+    // Implementation will come in BN2.2
+    return null
+  }
+
+  async ack_message (params: {
+    tenant_id: TenantId
+    queue_name: string
+    message_id: string
+  }): Promise<void> {
+    // Implementation will come in BN2.2
+  }
+
+  async retry_message (params: {
+    tenant_id: TenantId
+    queue_name: string
+    message_id: string
+    delay_ms: number
+  }): Promise<void> {
+    // Implementation will come in BN2.2
+  }
+
+  async dead_letter_message (params: {
+    tenant_id: TenantId
+    queue_name: string
+    message_id: string
+    error: string
+  }): Promise<void> {
+    // Implementation will come in BN2.2
+  }
 }
 
 function nowUnix (): UnixSeconds {

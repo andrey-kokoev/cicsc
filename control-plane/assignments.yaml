@@ -1193,9 +1193,11 @@ assignments:
   completed_at: '2026-02-15T15:44:13.326635Z'
 - checkbox_ref: BN2.1
   agent_ref: AGENT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-15T15:32:06.742721Z'
   started_at: '2026-02-15T15:42:35.934931Z'
+  commit: b129042
+  completed_at: '2026-02-15T15:45:20.336435Z'
 - checkbox_ref: BN2.2
   agent_ref: AGENT_GEMINI
   status: in_progress
