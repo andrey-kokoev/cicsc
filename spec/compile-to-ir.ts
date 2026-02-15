@@ -265,7 +265,13 @@ function wrapExpr (v: any): any {
 
 function lowerViewSugar (v: any): any {
   if (!v || typeof v !== "object") throw new Error("view must be object")
-  if (!v.lanes || typeof v.lanes !== "object") throw new Error("view.query missing and no lanes sugar provided")
+  
+  // Handle rich aggregates metrics sugar (BS2.4)
+  if (v.metrics && typeof v.metrics === "object") {
+    return lowerMetricsSugar(v)
+  }
+  
+  if (!v.lanes || typeof v.lanes !== "object") throw new Error("view.query missing and no lanes/metrics sugar provided")
 
   const lanes = v.lanes as any
   const pipeline: any[] = []
@@ -296,6 +302,66 @@ function lowerViewSugar (v: any): any {
     pipeline.push({ limit: Math.max(0, Math.trunc(lanes.limit)) })
   }
 
+  return {
+    source: { snap: { type: String(v.on) } },
+    pipeline,
+  }
+}
+
+function lowerMetricsSugar (v: any): any {
+  const metrics = v.metrics as any
+  const pipeline: any[] = []
+  const aggs: Record<string, any> = {}
+  
+  // Build aggregations from metrics sugar
+  if (Array.isArray(metrics.rate)) {
+    for (const r of metrics.rate) {
+      aggs[r.name] = {
+        rate: {
+          numerator: { var: { row: { field: r.numerator } } },
+          denominator: { var: { row: { field: r.denominator } } },
+          unit: r.unit ?? "per_hour",
+        },
+      }
+    }
+  }
+  
+  if (Array.isArray(metrics.ratio)) {
+    for (const r of metrics.ratio) {
+      aggs[r.name] = {
+        ratio: {
+          numerator: { var: { row: { field: r.numerator } } },
+          denominator: { var: { row: { field: r.denominator } } },
+          scale: r.scale ?? 1,
+        },
+      }
+    }
+  }
+  
+  if (Array.isArray(metrics.time_between)) {
+    for (const t of metrics.time_between) {
+      aggs[t.name] = {
+        time_between: {
+          start_expr: { var: { row: { field: t.start } } },
+          end_expr: { var: { row: { field: t.end } } },
+          unit: t.unit ?? "seconds",
+        },
+      }
+    }
+  }
+  
+  // Add standard count aggregation
+  aggs.count = { count: {} }
+  
+  // Build group_by keys
+  const keys = Array.isArray(metrics.group_by) 
+    ? metrics.group_by.map((field: string) => ({ name: field, expr: { var: { row: { field } } } }))
+    : []
+  
+  pipeline.push({
+    group_by: { keys, aggs },
+  })
+  
   return {
     source: { snap: { type: String(v.on) } },
     pipeline,

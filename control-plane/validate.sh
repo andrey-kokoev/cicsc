@@ -6,6 +6,41 @@ cd "$ROOT"
 ERRORS=0
 AUTO_PROMOTED=0
 
+echo "Validating schemas..."
+python3 << 'PY'
+import yaml, sys, json
+from pathlib import Path
+
+# Check jsonschema availability
+try:
+    from jsonschema import validate, ValidationError
+    HAS_JSONSCHEMA = True
+except ImportError:
+    HAS_JSONSCHEMA = False
+    print("  Warning: jsonschema not installed, using structural validation only")
+
+# Load schemas
+schema_dir = Path("control-plane/schemas")
+ledger_schema = json.loads((schema_dir / "execution-ledger.schema.json").read_text())
+assignments_schema = json.loads((schema_dir / "assignments.schema.json").read_text())
+
+# Validate execution-ledger against schema
+ledger = yaml.safe_load(Path("control-plane/execution-ledger.yaml").read_text())
+
+if HAS_JSONSCHEMA:
+    try:
+        validate(instance=ledger, schema=ledger_schema)
+    except ValidationError as e:
+        print(f"  SCHEMA ERROR in execution-ledger.yaml: {e.message}", file=sys.stderr)
+        sys.exit(1)
+
+print("  Schema validation: OK")
+PY
+
+if [[ $? -ne 0 ]]; then
+    ERRORS=$((ERRORS + 1))
+fi
+
 echo "Validating execution ledger..."
 python3 << 'PY'
 import yaml, sys
@@ -53,11 +88,26 @@ fi
 
 echo "Validating assignments..."
 python3 << 'PY'
-import yaml, sys, re
+import yaml, sys, re, json
 from pathlib import Path
+
+try:
+    from jsonschema import validate, ValidationError
+    HAS_JSONSCHEMA = True
+except ImportError:
+    HAS_JSONSCHEMA = False
 
 ledger = yaml.safe_load(Path("control-plane/execution-ledger.yaml").read_text())
 assignments = yaml.safe_load(Path("control-plane/assignments.yaml").read_text())
+
+# Validate against schema
+if HAS_JSONSCHEMA:
+    schema = json.loads(Path("control-plane/schemas/assignments.schema.json").read_text())
+    try:
+        validate(instance=assignments, schema=schema)
+    except ValidationError as e:
+        print(f"  SCHEMA ERROR in assignments.yaml: {e.message}", file=sys.stderr)
+        sys.exit(1)
 
 # Detect manual edits
 manual_edit_errors = []
