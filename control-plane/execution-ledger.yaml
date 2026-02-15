@@ -2432,7 +2432,7 @@ phases:
     title: Core IR Queue Extension
     checkboxes:
     - id: BN1.1
-      status: open
+      status: done
       description: Add QueueSpecV0 to Core IR types (message_type, ordering, retention,
         delivery)
     - id: BN1.2

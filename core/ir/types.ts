@@ -14,6 +14,7 @@ export type CoreIrV0 = {
   migrations?: Record<string, MigrationSpecV0>
   subscriptions?: Record<string, SubscriptionSpecV0>
   webhooks?: Record<string, WebhookSpecV0>
+  queues?: Record<string, QueueSpecV0>
 }
 
 export type EntityTypeSpecV0 = {
@@ -113,6 +114,13 @@ export type WebhookSpecV0 = {
       algo: "sha256"
     }
   }
+}
+
+export type QueueSpecV0 = {
+  message_type: string
+  ordering: "fifo" | "none"
+  retention_seconds: number
+  delivery_guarantee: "at_least_once" | "at_most_once"
 }
 
 export type EventTransformV0 = {

@@ -8,6 +8,7 @@ export type SpecV0 = {
   migrations?: Record<string, SpecMigrationV0>
   subscriptions?: Record<string, SpecSubscriptionV0>
   webhooks?: Record<string, SpecWebhookV0>
+  queues?: Record<string, SpecQueueV0>
 }
 
 export type SpecEntityV0 = {
@@ -98,4 +99,11 @@ export type SpecWebhookV0 = {
       algo: "sha256"
     }
   }
+}
+
+export type SpecQueueV0 = {
+  message_type: string
+  ordering?: "fifo" | "none"
+  retention_seconds?: number
+  delivery?: "at_least_once" | "at_most_once"
 }
