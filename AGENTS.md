@@ -41,7 +41,7 @@ Lean proof baseline:
 # Claim open assignments (worker)
 ./control-plane/claim.sh AGENT_KIMI
 
-# Complete work (runs gates, updates both files)
+# Complete work (REQUIRED - updates both tracking files)
 ./control-plane/complete.sh AY1.1 [COMMIT_SHA]
 
 # Validate state
@@ -72,8 +72,10 @@ Lean proof baseline:
 3. Claim work: `./control-plane/claim.sh AGENT_NAME`
 4. Implement in your worktree on appropriate branch
 5. Run gates: `./control-plane/check_gates.sh`
-6. Complete: `./control-plane/complete.sh CHECKBOX_REF`
-7. Commit and push
+6. **Complete (REQUIRED):** `./control-plane/complete.sh CHECKBOX_REF`
+   - This runs gates, updates `assignments.yaml` to `done`, and marks checkbox done in `execution-ledger.yaml`
+   - Must be done BEFORE the final commit
+7. Commit and push (include `control-plane/` changes in commit)
 
 ---
 
@@ -88,7 +90,11 @@ then execute exactly this protocol:
 1. `cd /home/andrey/src/cicsc`
 2. Run `./control-plane/validate.sh`
 3. Check inbox: `./control-plane/inbox.sh [AGENT_NAME]`
-4. If open assignments exist: claim, implement, complete
+4. If open assignments exist: 
+   - Claim: `./control-plane/claim.sh [AGENT_NAME]`
+   - Implement the work
+   - **Complete (REQUIRED):** `./control-plane/complete.sh CHECKBOX_REF` 
+     (updates tracking files, must be committed)
 5. If no assignments: stand down and report status
 6. Return a completion report containing:
    - `checkbox_ref`
