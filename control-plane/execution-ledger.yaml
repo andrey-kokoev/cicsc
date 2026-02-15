@@ -1832,16 +1832,16 @@ phases:
     title: Surface Language Grammar Design
     checkboxes:
     - id: BB1.1
-      status: open
+      status: done
       description: Define Spec syntax grammar (BNF/EBNF) for non-programmer ergonomics
     - id: BB1.2
-      status: open
+      status: done
       description: Design entity/event/command declarations with sugar
     - id: BB1.3
-      status: open
+      status: done
       description: Design constraint and view expression syntax
     - id: BB1.4
-      status: open
+      status: done
       description: Review grammar with target users (non-programmers)
   - id: BB2
     title: Parser Implementation

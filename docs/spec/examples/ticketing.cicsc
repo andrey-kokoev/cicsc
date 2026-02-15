@@ -1,0 +1,31 @@
+entity Ticket:
+  states: [Open, Assigned, Resolved, Closed]
+  initial: Open
+
+  attr title
+  attr description: string optional
+  attr priority: enum [P0, P1, P2]
+  attr assignee: string optional
+
+  command Assign:
+    input to: string
+    when state is Open
+    emit Assigned(assignee: to)
+
+  command Resolve:
+    when state is Assigned
+    emit Resolved()
+
+  command Close:
+    when state is Resolved
+    emit Closed()
+
+view ActiveResolvedTickets:
+  on Ticket
+  where state is Resolved
+  order_by priority desc
+
+constraint HighPriorityDescription:
+  on Ticket
+  when priority is P0
+  assert description is not empty

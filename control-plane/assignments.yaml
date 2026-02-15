@@ -169,49 +169,69 @@ assignments:
   completed_at: '2026-02-15T09:13:04.755664Z'
 - checkbox_ref: BB1.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:40:43.981814Z'
+  started_at: '2026-02-15T09:42:07.526576Z'
+  commit: 0e6db0f
+  completed_at: '2026-02-15T09:42:39.385880Z'
 - checkbox_ref: BB1.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:40:44.111373Z'
+  started_at: '2026-02-15T09:42:07.526587Z'
+  commit: 0e6db0f
+  completed_at: '2026-02-15T09:42:39.616777Z'
 - checkbox_ref: BB1.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:40:44.239865Z'
+  started_at: '2026-02-15T09:42:07.526589Z'
+  commit: 0e6db0f
+  completed_at: '2026-02-15T09:42:39.837435Z'
 - checkbox_ref: BB1.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T09:40:44.383318Z'
+  started_at: '2026-02-15T09:42:07.526590Z'
+  commit: 0e6db0f
+  completed_at: '2026-02-15T09:42:40.061846Z'
 - checkbox_ref: BB2.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T09:40:44.525511Z'
+  started_at: '2026-02-15T09:42:07.526591Z'
 - checkbox_ref: BB2.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T09:40:44.656731Z'
+  started_at: '2026-02-15T09:42:07.526592Z'
 - checkbox_ref: BB2.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T09:40:44.807432Z'
+  started_at: '2026-02-15T09:42:07.526593Z'
 - checkbox_ref: BB2.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T09:40:44.939737Z'
+  started_at: '2026-02-15T09:42:07.526593Z'
 - checkbox_ref: BB3.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T09:40:45.069679Z'
+  started_at: '2026-02-15T09:42:07.526594Z'
 - checkbox_ref: BB3.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T09:40:45.205232Z'
+  started_at: '2026-02-15T09:42:07.526595Z'
 - checkbox_ref: BB3.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T09:40:45.350565Z'
+  started_at: '2026-02-15T09:42:07.526596Z'
 - checkbox_ref: BB3.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-15T09:40:45.480471Z'
+  started_at: '2026-02-15T09:42:07.526596Z'
