@@ -1823,3 +1823,253 @@ phases:
     - id: BA3.3
       title: Define objective Phase 36 exit checklist and Phase 37 block gate
       status: done
+- id: BB
+  number: 3
+  status: planned
+  title: Spec DSL Design - Ergonomic Surface Language
+  milestones:
+  - id: BB1
+    title: Surface Language Grammar Design
+    checkboxes:
+    - id: BB1.1
+      status: open
+      description: Define Spec syntax grammar (BNF/EBNF) for non-programmer ergonomics
+    - id: BB1.2
+      status: open
+      description: Design entity/event/command declarations with sugar
+    - id: BB1.3
+      status: open
+      description: Design constraint and view expression syntax
+    - id: BB1.4
+      status: open
+      description: Review grammar with target users (non-programmers)
+  - id: BB2
+    title: Parser Implementation
+    checkboxes:
+    - id: BB2.1
+      status: open
+      description: Implement Spec parser (PEG or combinators)
+    - id: BB2.2
+      status: open
+      description: Parse to intermediate AST
+    - id: BB2.3
+      status: open
+      description: Error messages with line numbers and suggestions
+    - id: BB2.4
+      status: open
+      description: Parser test suite with 100+ examples
+  - id: BB3
+    title: Sugar Lowering to Core IR
+    checkboxes:
+    - id: BB3.1
+      status: open
+      description: "Implement AST \u2192 Core IR lowering"
+    - id: BB3.2
+      status: open
+      description: Desugar implicit constraints and defaults
+    - id: BB3.3
+      status: open
+      description: "Roundtrip tests: Spec \u2192 IR \u2192 equivalent output"
+    - id: BB3.4
+      status: open
+      description: Document sugar transformations
+- id: BC
+  number: 4
+  status: planned
+  title: Bundle Registry - Storage and Versioning
+  milestones:
+  - id: BC1
+    title: R2/KV Storage Backend
+    checkboxes:
+    - id: BC1.1
+      status: open
+      description: Design bundle schema (manifest + compiled IR)
+    - id: BC1.2
+      status: open
+      description: Implement R2 upload/download adapters
+    - id: BC1.3
+      status: open
+      description: Implement KV metadata indexing
+    - id: BC1.4
+      status: open
+      description: Bundle integrity verification (checksums)
+  - id: BC2
+    title: Bundle Versioning
+    checkboxes:
+    - id: BC2.1
+      status: open
+      description: Semver-based version scheme
+    - id: BC2.2
+      status: open
+      description: Version listing and latest resolution
+    - id: BC2.3
+      status: open
+      description: Deprecation and EOL policies
+    - id: BC2.4
+      status: open
+      description: Version compatibility matrix
+  - id: BC3
+    title: Tenant-Bundle Binding
+    checkboxes:
+    - id: BC3.1
+      status: open
+      description: Tenant schema with bundle references
+    - id: BC3.2
+      status: open
+      description: Install bundle to tenant workflow
+    - id: BC3.3
+      status: open
+      description: Multi-bundle dependency resolution
+    - id: BC3.4
+      status: open
+      description: Bundle uninstall and cleanup
+- id: BD
+  number: 5
+  status: planned
+  title: Migration System - Versioned Evolution
+  milestones:
+  - id: BD1
+    title: Schema Diff Engine
+    checkboxes:
+    - id: BD1.1
+      status: open
+      description: Diff two Core IR schemas (entities, fields, constraints)
+    - id: BD1.2
+      status: open
+      description: Classify changes (safe, dangerous, breaking)
+    - id: BD1.3
+      status: open
+      description: Detect data loss scenarios
+    - id: BD1.4
+      status: open
+      description: Diff visualization for migration planning
+  - id: BD2
+    title: Migration Script Generation
+    checkboxes:
+    - id: BD2.1
+      status: open
+      description: Generate SQL DDL from schema diff
+    - id: BD2.2
+      status: open
+      description: Generate data transformation scripts
+    - id: BD2.3
+      status: open
+      description: Migration dry-run (preview changes)
+    - id: BD2.4
+      status: open
+      description: Rollback script generation
+  - id: BD3
+    title: Replay Verification
+    checkboxes:
+    - id: BD3.1
+      status: open
+      description: Pre-migration state snapshot
+    - id: BD3.2
+      status: open
+      description: Event replay against new schema
+    - id: BD3.3
+      status: open
+      description: Invariant preservation checks
+    - id: BD3.4
+      status: open
+      description: Migration acceptance gates
+- id: BE
+  number: 6
+  status: planned
+  title: Postgres Adapter - Backend Parity
+  milestones:
+  - id: BE1
+    title: Postgres Schema Generator
+    checkboxes:
+    - id: BE1.1
+      status: open
+      description: Postgres DDL generation from Core IR
+    - id: BE1.2
+      status: open
+      description: Postgres-specific type mappings
+    - id: BE1.3
+      status: open
+      description: Index and constraint generation
+    - id: BE1.4
+      status: open
+      description: Shadow column handling (version, seq)
+  - id: BE2
+    title: SQL Dialect Lowering
+    checkboxes:
+    - id: BE2.1
+      status: open
+      description: Postgres query expression lowering
+    - id: BE2.2
+      status: open
+      description: Postgres transaction semantics
+    - id: BE2.3
+      status: open
+      description: RETURNING clause for event IDs
+    - id: BE2.4
+      status: open
+      description: Window functions for reducers
+  - id: BE3
+    title: Conformance Testing
+    checkboxes:
+    - id: BE3.1
+      status: open
+      description: Postgres vs oracle differential tests
+    - id: BE3.2
+      status: open
+      description: Performance benchmarks (SQLite vs Postgres)
+    - id: BE3.3
+      status: open
+      description: Feature parity matrix
+    - id: BE3.4
+      status: open
+      description: CI integration for Postgres tests
+- id: BF
+  number: 7
+  status: planned
+  title: v1.0 Integration and Documentation
+  milestones:
+  - id: BF1
+    title: Documentation
+    checkboxes:
+    - id: BF1.1
+      status: open
+      description: Spec DSL reference manual
+    - id: BF1.2
+      status: open
+      description: API documentation (OpenAPI)
+    - id: BF1.3
+      status: open
+      description: Architecture decision records (ADRs)
+    - id: BF1.4
+      status: open
+      description: Troubleshooting guide
+  - id: BF2
+    title: Examples and Tutorials
+    checkboxes:
+    - id: BF2.1
+      status: open
+      description: Ticketing system walkthrough
+    - id: BF2.2
+      status: open
+      description: CRM example with migrations
+    - id: BF2.3
+      status: open
+      description: Kanban board tutorial
+    - id: BF2.4
+      status: open
+      description: Video tutorial series
+  - id: BF3
+    title: Release
+    checkboxes:
+    - id: BF3.1
+      status: open
+      description: v1.0.0 version bump
+    - id: BF3.2
+      status: open
+      description: Release notes and changelog
+    - id: BF3.3
+      status: open
+      description: Docker image publication
+    - id: BF3.4
+      status: open
+      description: Cloud deployment templates
