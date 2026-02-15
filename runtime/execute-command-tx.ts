@@ -31,6 +31,7 @@ export type ExecuteCommandResult = {
   seq_to: number
   state: string
   updated_ts: number
+  snapshot?: any
 }
 
 export async function executeCommandTx (params: {
@@ -221,6 +222,14 @@ export async function executeCommandTx (params: {
       seq_to,
       state: next.state,
       updated_ts: req.now,
+      snapshot: {
+        entity_id: req.entity_id,
+        entity_type: req.entity_type,
+        state: next.state,
+        attrs: next.attrs,
+        shadows: next.shadows,
+        updated_ts: req.now,
+      }
     }
 
     // 10) receipt
@@ -477,7 +486,7 @@ function toSnapRow (raw: Record<string, any>): SnapRow {
 
   for (const [k, v] of Object.entries(raw)) {
     if (k === "tenant_id" || k === "entity_type" || k === "entity_id" || k === "state" || k === "attrs_json" || k === "updated_ts") continue
-    ;(out as any)[k] = v as any
+      ; (out as any)[k] = v as any
   }
 
   return out

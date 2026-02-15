@@ -6,6 +6,8 @@ export type SpecV0 = {
   views?: Record<string, SpecViewV0>
   slas?: Record<string, SpecSlaV0>
   migrations?: Record<string, SpecMigrationV0>
+  subscriptions?: Record<string, SpecSubscriptionV0>
+  webhooks?: Record<string, SpecWebhookV0>
 }
 
 export type SpecEntityV0 = {
@@ -78,4 +80,22 @@ export type SpecEventTransformV0 = {
   emit_as?: string
   payload_map?: Record<string, any>
   drop?: boolean
+}
+
+export type SpecSubscriptionV0 = {
+  on: string
+  filter?: any
+}
+
+export type SpecWebhookV0 = {
+  on: string
+  command: string
+  payload_map?: Record<string, any>
+  verify?: {
+    hmac?: {
+      secret_env: string
+      header: string
+      algo: "sha256"
+    }
+  }
 }

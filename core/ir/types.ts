@@ -12,6 +12,8 @@ export type CoreIrV0 = {
   views?: Record<string, ViewSpecV0>
   slas?: Record<string, SlaSpecV0>
   migrations?: Record<string, MigrationSpecV0>
+  subscriptions?: Record<string, SubscriptionSpecV0>
+  webhooks?: Record<string, WebhookSpecV0>
 }
 
 export type EntityTypeSpecV0 = {
@@ -94,6 +96,23 @@ export type MigrationSpecV0 = {
   on_type: string
   event_transforms: Record<string, EventTransformV0>
   state_map?: Record<string, string>
+}
+
+export type SubscriptionSpecV0 = {
+  on_type: string
+  filter?: ExprV0
+}
+
+export type WebhookSpecV0 = {
+  on_type: string
+  command: string
+  verify?: {
+    hmac?: {
+      secret_env: string
+      header: string
+      algo: "sha256"
+    }
+  }
 }
 
 export type EventTransformV0 = {

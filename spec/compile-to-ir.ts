@@ -20,6 +20,8 @@ export function compileSpecV0ToCoreIr (spec: SpecV0): CoreIrV0 {
   const slas = mapSlas(spec.slas ?? {})
   const migrations = mapMigrations(spec.migrations ?? {})
   const policies = mapPolicies(spec.policies ?? {})
+  const subscriptions = mapSubscriptions(spec.subscriptions ?? {})
+  const webhooks = mapWebhooks(spec.webhooks ?? {})
 
   return {
     version: 0,
@@ -29,6 +31,8 @@ export function compileSpecV0ToCoreIr (spec: SpecV0): CoreIrV0 {
     views: Object.keys(views).length ? views : undefined,
     slas: Object.keys(slas).length ? slas : undefined,
     migrations: Object.keys(migrations).length ? migrations : undefined,
+    subscriptions: Object.keys(subscriptions).length ? subscriptions : undefined,
+    webhooks: Object.keys(webhooks).length ? webhooks : undefined,
   }
 }
 
@@ -296,4 +300,46 @@ function lowerViewSugar (v: any): any {
     source: { snap: { type: String(v.on) } },
     pipeline,
   }
+}
+
+function mapSubscriptions (subscriptions: Record<string, any>) {
+  const out: Record<string, any> = {}
+  for (const [name, s] of Object.entries(subscriptions)) {
+    out[name] = {
+      on_type: String(s.on),
+      filter: s.filter ? lowerSubscriptionFilter(s.filter) : undefined
+    }
+  }
+  return out
+}
+
+function lowerSubscriptionFilter (filter: any): any {
+  if (filter == null) return filter
+  if (typeof filter !== "object") return filter
+
+  if (filter.var && filter.var.input) {
+    return { var: { row: { field: filter.var.input.field } } }
+  }
+
+  if (Array.isArray(filter)) {
+    return filter.map(x => lowerSubscriptionFilter(x))
+  }
+
+  const out: any = {}
+  for (const [k, v] of Object.entries(filter)) {
+    out[k] = lowerSubscriptionFilter(v)
+  }
+  return out
+}
+
+function mapWebhooks (webhooks: Record<string, any>) {
+  const out: Record<string, any> = {}
+  for (const [name, w] of Object.entries(webhooks)) {
+    out[name] = {
+      on_type: String(w.on),
+      command: String(w.command),
+      verify: w.verify
+    }
+  }
+  return out
 }

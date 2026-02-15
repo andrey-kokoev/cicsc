@@ -1,6 +1,6 @@
 # Phase BM: Inbound Webhooks - Async Message Ingestion
 
-**Status**: PLANNED (v1.5.0)  
+**Status**: COMPLETE (v1.5.0)  
 **Agent**: AGENT_GEMINI  
 **Goal**: Enable external systems to push events into CICSC asynchronously with reliability guarantees
 

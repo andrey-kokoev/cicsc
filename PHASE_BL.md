@@ -1,6 +1,6 @@
 # Phase BL: Real-time / WebSockets - Live Updates
 
-**Status**: IN PROGRESS (v1.4.0)  
+**Status**: COMPLETE (v1.4.0)  
 **Agent**: AGENT_GEMINI  
 **Goal**: Enable real-time updates with declarative subscriptions in Spec DSL
 

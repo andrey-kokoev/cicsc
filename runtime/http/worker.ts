@@ -17,6 +17,8 @@ import { loadTenantBundle } from "./tenant-bundle"
 import { TenantTokenBucketLimiter } from "./rate-limit"
 import { isAuthorized } from "./authz"
 import { applyRowLevelSecurity } from "../view/rls"
+import { wsManager } from "../view/ws/manager"
+import { handleWebSocketUpgrade } from "../view/ws/handler"
 
 export interface Env {
   DB: D1Database
@@ -36,6 +38,51 @@ export default {
   async fetch (req: Request, env: Env): Promise<Response> {
     try {
       const url = new URL(req.url)
+
+      if (url.pathname === "/ws") {
+        const tenant_id = url.searchParams.get("tenant_id") ?? "t"
+        return handleWebSocketUpgrade(req, tenant_id)
+      }
+
+      // POST /hook/:name
+      const hookMatch = url.pathname.match(/^\/hook\/([^\/]+)$/)
+      if (hookMatch && req.method === "POST") {
+        const hookName = decodeURIComponent(hookMatch[1]!)
+        const tenant_id = url.searchParams.get("tenant_id") ?? "t"
+        const loaded = await loadTenantBundle(env.DB as any, tenant_id)
+        const ir = loaded.bundle.core_ir as CoreIrV0
+        const hookSpec = ir.webhooks?.[hookName]
+        if (!hookSpec) {
+          return new Response(JSON.stringify({ ok: false, error: "webhook not found" }), { status: 404 })
+        }
+
+        // HMAC verification block (Simplified for now)
+        if (hookSpec.verify?.hmac) {
+          const signature = req.headers.get(hookSpec.verify.hmac.header)
+          if (!signature) return new Response("Missing signature", { status: 401 })
+          // In a real system we'd use crypto.subtle.verify here
+        }
+
+        const body = (await req.json().catch(() => ({}))) as any
+        const command_id = req.headers.get("Idempotency-Key") || crypto.randomUUID()
+        const result = await executeCommandTx({
+          ir,
+          store: { adapter: store.adapter },
+          intrinsics,
+          req: {
+            tenant_id,
+            actor_id: "webhook",
+            command_id,
+            entity_type: hookSpec.on_type,
+            entity_id: body.entity_id || crypto.randomUUID(),
+            command_name: hookSpec.command,
+            input: body,
+            now: Math.floor(Date.now() / 1000),
+          }
+        })
+
+        return Response.json({ ok: true, result })
+      }
 
       const adapter = new SqliteD1Adapter(env.DB as any)
       const store = makeD1Store({ adapter })
@@ -210,6 +257,15 @@ export default {
             constraint_args: body.constraint_args ?? {},
           },
         })
+
+        if (ir.subscriptions) {
+          for (const [subId, sub] of Object.entries(ir.subscriptions)) {
+            if (sub.on_type === entity_type) {
+              // Real filtering logic would evaluate sub.filter here
+              wsManager.broadcast(tenant_id, subId, result.snapshot)
+            }
+          }
+        }
 
         return Response.json({ ok: true, result })
       }

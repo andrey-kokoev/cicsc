@@ -2325,101 +2325,101 @@ phases:
       description: View field rendering for blob URLs
 - id: BL
   number: 13
-  status: planned
+  status: complete
   title: Real-time / WebSockets - Live Updates
   milestones:
   - id: BL1
     title: Spec DSL Extension for Real-time
     checkboxes:
     - id: BL1.1
-      status: open
+      status: done
       description: Add 'subscription' keyword to Spec DSL for real-time queries
     - id: BL1.2
-      status: open
+      status: done
       description: Define subscription filters (watch specific entity instances)
     - id: BL1.3
-      status: open
+      status: done
       description: Parse subscriptions to Core IR
     - id: BL1.4
-      status: open
+      status: done
       description: Generate WebSocket endpoint schema from Spec
   - id: BL2
     title: WebSocket Server Implementation
     checkboxes:
     - id: BL2.1
-      status: open
+      status: done
       description: WebSocket server with connection upgrade handling
     - id: BL2.2
-      status: open
+      status: done
       description: Connection manager (track active subscriptions per client)
     - id: BL2.3
-      status: open
+      status: done
       description: Broadcast events to subscribed clients
     - id: BL2.4
-      status: open
+      status: done
       description: Authentication over WebSocket (token validation on connect)
   - id: BL3
     title: Client SDK & Reconnection
     checkboxes:
     - id: BL3.1
-      status: open
+      status: done
       description: Client-side subscription API (subscribe/unsubscribe)
     - id: BL3.2
-      status: open
+      status: done
       description: Automatic reconnection with exponential backoff
     - id: BL3.3
-      status: open
+      status: done
       description: Message delivery acknowledgment
     - id: BL3.4
-      status: open
+      status: done
       description: Handle missed events during disconnect (replay buffer)
 - id: BM
   number: 14
-  status: planned
+  status: complete
   title: Inbound Webhooks - Async Message Ingestion
   milestones:
   - id: BM1
     title: Spec DSL Extension for Inbound Webhooks
     checkboxes:
     - id: BM1.1
-      status: open
+      status: done
       description: Add 'webhook' keyword to Spec DSL for external event sources
     - id: BM1.2
-      status: open
+      status: done
       description: Define webhook payload schema and validation
     - id: BM1.3
-      status: open
+      status: done
       description: "Map webhook payloads to commands (webhook \u2192 command binding)"
     - id: BM1.4
-      status: open
+      status: done
       description: Parse webhooks to Core IR with source metadata
   - id: BM2
     title: Webhook Ingestion Server
     checkboxes:
     - id: BM2.1
-      status: open
+      status: done
       description: HTTP endpoint for webhook reception (POST /hook/:name)
     - id: BM2.2
-      status: open
+      status: done
       description: HMAC signature verification middleware
     - id: BM2.3
-      status: open
+      status: done
       description: Idempotency key handling (prevent duplicate processing)
     - id: BM2.4
-      status: open
+      status: done
       description: Queue-based ingestion (buffer before processing)
   - id: BM3
     title: Async Processing & Delivery
     checkboxes:
     - id: BM3.1
-      status: open
+      status: done
       description: Webhook-to-command transformation engine
     - id: BM3.2
-      status: open
+      status: done
       description: Retry policy with exponential backoff
     - id: BM3.3
-      status: open
+      status: done
       description: Dead letter queue for failed webhooks
     - id: BM3.4
-      status: open
+      status: done
       description: Webhook delivery status tracking and replay

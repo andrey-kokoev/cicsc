@@ -1,4 +1,4 @@
-import type { SpecV0, SpecEntityV0, SpecAttrV0, SpecCommandV0, SpecViewV0, SpecConstraintV0 } from "./ast"
+import type { SpecV0, SpecEntityV0, SpecAttrV0, SpecCommandV0, SpecViewV0, SpecConstraintV0, SpecSubscriptionV0, SpecWebhookV0 } from "./ast"
 
 type Line = {
   indent: number
@@ -21,6 +21,8 @@ export function parseDSL (input: string): SpecV0 {
     entities: {},
     views: {},
     constraints: {},
+    subscriptions: {},
+    webhooks: {},
   }
 
   let i = 0
@@ -46,6 +48,20 @@ export function parseDSL (input: string): SpecV0 {
       const name = match[1] || `constraint_${line.lineNum}`
       const { constraint, nextIdx } = parseConstraint(lines, i + 1)
       spec.constraints![name] = constraint
+      i = nextIdx
+    } else if (line.text.startsWith("subscription ")) {
+      const match = line.text.match(/^subscription\s+(\w+):$/)
+      if (!match) throw new Error(`Invalid subscription declaration at line ${line.lineNum}`)
+      const name = match[1]
+      const { subscription, nextIdx } = parseSubscription(lines, i + 1)
+      spec.subscriptions![name] = subscription
+      i = nextIdx
+    } else if (line.text.startsWith("webhook ")) {
+      const match = line.text.match(/^webhook\s+(\w+):$/)
+      if (!match) throw new Error(`Invalid webhook declaration at line ${line.lineNum}`)
+      const name = match[1]
+      const { webhook, nextIdx } = parseWebhook(lines, i + 1)
+      spec.webhooks![name] = webhook
       i = nextIdx
     } else {
       throw new Error(`Unexpected top-level token "${line.text}" at line ${line.lineNum}`)
@@ -171,6 +187,7 @@ function parseExpression (expr: string): any {
 
 function parseTerm (term: string): any {
   if (term === "state") return { var: { state: true } }
+  if (term === "me") return { var: { actor: true } }
   if (term === "empty") return { lit: { null: true } }
   if (term.startsWith("'") || term.startsWith("\"")) return { lit: { string: term.slice(1, -1) } }
   if (!isNaN(Number(term))) return { lit: { int: Number(term) } }
@@ -222,47 +239,86 @@ function parseConstraint (lines: Line[], startIdx: number): { constraint: SpecCo
   return { constraint, nextIdx: i }
 }
 
+function parseSubscription (lines: Line[], startIdx: number): { subscription: SpecSubscriptionV0, nextIdx: number } {
+  const subscription: SpecSubscriptionV0 = { on: "" }
+  const baseIndent = lines[startIdx]?.indent ?? 0
+  let i = startIdx
+  while (i < lines.length && lines[i].indent >= baseIndent) {
+    const line = lines[i]
+    if (line.text.startsWith("on ")) {
+      subscription.on = line.text.replace("on ", "").trim()
+    } else if (line.text.startsWith("filter ")) {
+      subscription.filter = parseExpression(line.text.replace("filter ", "").trim())
+    }
+    i++
+  }
+  return { subscription, nextIdx: i }
+}
+
+function parseWebhook (lines: Line[], startIdx: number): { webhook: SpecWebhookV0, nextIdx: number } {
+  const webhook: SpecWebhookV0 = { on: "", command: "" }
+  const baseIndent = lines[startIdx]?.indent ?? 0
+  let i = startIdx
+  while (i < lines.length && lines[i].indent >= baseIndent) {
+    const line = lines[i]
+    if (line.text.startsWith("on ")) {
+      webhook.on = line.text.replace("on ", "").trim()
+    } else if (line.text.startsWith("command ")) {
+      webhook.command = line.text.replace("command ", "").trim()
+    } else if (line.text.startsWith("hmac ")) {
+      const parts = line.text.split(/\s+/)
+      const secret = parts.find(p => p.startsWith("secret:"))?.split(":")[1]
+      const header = parts.find(p => p.startsWith("header:"))?.split(":")[1]
+      if (secret && header) {
+        webhook.verify = { hmac: { secret_env: secret, header, algo: "sha256" } }
+      }
+    }
+    i++
+  }
+  return { webhook, nextIdx: i }
+}
+
 // BLOB PARSING EXTENSIONS
-function parseBlobType(text: string): { type: "blob", constraints: any } | null {
+function parseBlobType (text: string): { type: "blob", constraints: any } | null {
   // Parse: blob maxSize:10MB types:[image/png,image/jpeg]
   const match = text.match(/^blob(?:\s+maxSize:(\d+(?:MB|GB|KB)?))?(?:\s+types:\[([^\]]+)\])?(?:\s+(optional))?$/)
   if (!match) return null
-  
+
   const [_, maxSizeStr, typesStr, optional] = match
-  
+
   const constraints: any = {
     required: !optional
   }
-  
+
   if (maxSizeStr) {
     // Parse 
 
-// BLOB PARSING EXTENSIONS
-function parseBlobType(text: string): { type: "blob", constraints: any } | null {
-  // Parse: blob maxSize:10MB types:[image/png,image/jpeg]
-  const match = text.match(/^blob(?:\s+maxSize:(\d+(?:MB|GB|KB)?))?(?:\s+types:\[([^\]]+)\])?(?:\s+(optional))?$/)
-  if (!match) return null
-  
-  const [_, maxSizeStr, typesStr, optional] = match
-  
-  const constraints: any = {
-    required: !optional
-  }
-  
-  if (maxSizeStr) {
-    constraints.maxSize = parseSize(maxSizeStr)
-  }
-  
-  if (typesStr) {
-    constraints.allowedTypes = typesStr.split(",").map(t => t.trim())
-  }
-  
-  return { type: "blob", constraints }
-}
+    // BLOB PARSING EXTENSIONS
+    function parseBlobType (text: string): { type: "blob", constraints: any } | null {
+      // Parse: blob maxSize:10MB types:[image/png,image/jpeg]
+      const match = text.match(/^blob(?:\s+maxSize:(\d+(?:MB|GB|KB)?))?(?:\s+types:\[([^\]]+)\])?(?:\s+(optional))?$/)
+      if (!match) return null
 
-function parseSize(sizeStr: string): number {
-  const units: Record<string, number> = { B: 1, KB: 1024, MB: 1024**2, GB: 1024**3 }
-  const match = sizeStr.match(/^(\d+)(B|KB|MB|GB)$/)
-  if (!match) return parseInt(sizeStr) // Assume bytes
-  return parseInt(match[1]) * (units[match[2]] || 1)
-}
+      const [_, maxSizeStr, typesStr, optional] = match
+
+      const constraints: any = {
+        required: !optional
+      }
+
+      if (maxSizeStr) {
+        constraints.maxSize = parseSize(maxSizeStr)
+      }
+
+      if (typesStr) {
+        constraints.allowedTypes = typesStr.split(",").map(t => t.trim())
+      }
+
+      return { type: "blob", constraints }
+    }
+
+    function parseSize (sizeStr: string): number {
+      const units: Record<string, number> = { B: 1, KB: 1024, MB: 1024 ** 2, GB: 1024 ** 3 }
+      const match = sizeStr.match(/^(\d+)(B|KB|MB|GB)$/)
+      if (!match) return parseInt(sizeStr) // Assume bytes
+      return parseInt(match[1]) * (units[match[2]] || 1)
+    }
