@@ -1897,16 +1897,16 @@ phases:
     title: Bundle Versioning
     checkboxes:
     - id: BC2.1
-      status: open
+      status: done
       description: Semver-based version scheme
     - id: BC2.2
-      status: open
+      status: done
       description: Version listing and latest resolution
     - id: BC2.3
-      status: open
+      status: done
       description: Deprecation and EOL policies
     - id: BC2.4
-      status: open
+      status: done
       description: Version compatibility matrix
   - id: BC3
     title: Tenant-Bundle Binding

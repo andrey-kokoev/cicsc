@@ -19,4 +19,9 @@ export type BundleManifestV1 = {
   description?: string
   dependencies?: Record<string, string> // name -> version range
   published_at?: string // ISO-8601
+  deprecated?: {
+    since: string
+    message: string
+    eol_at?: string
+  }
 }
