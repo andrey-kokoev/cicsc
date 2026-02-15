@@ -1,0 +1,12 @@
+{
+  "version": "cicsc/stewardship-model-v1",
+  "timestamp_unix": 1771168000,
+  "era": "Stability",
+  "status": "frozen",
+  "declaration": "docs/governance/stewardship-model.md",
+  "stewardship_anchors": [
+    "docs/governance/lts-policy.md",
+    "docs/governance/semantic-change-review-process.md",
+    "docs/governance/semantic-versioning-policy.md"
+  ]
+}

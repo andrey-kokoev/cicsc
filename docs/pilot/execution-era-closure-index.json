@@ -1,0 +1,46 @@
+{
+  "version": "cicsc/execution-era-closure-index-v1",
+  "timestamp_unix": 1771167503,
+  "completion_state": "final",
+  "artifacts": {
+    "checklists": [
+      "docs/pilot/phase10-exit-checklist.json",
+      "docs/pilot/phase11-exit-checklist.json",
+      "docs/pilot/phase12-exit-checklist.json",
+      "docs/pilot/phase13-exit-checklist.json",
+      "docs/pilot/phase14-exit-checklist.json",
+      "docs/pilot/phase15-exit-checklist.json",
+      "docs/pilot/phase16-exit-checklist.json",
+      "docs/pilot/phase17-exit-checklist.json",
+      "docs/pilot/phase18-exit-checklist.json",
+      "docs/pilot/phase19-exit-checklist.json",
+      "docs/pilot/phase20-exit-checklist.json",
+      "docs/pilot/phase21-exit-checklist.json",
+      "docs/pilot/phase22-exit-checklist.json",
+      "docs/pilot/phase23-exit-checklist.json",
+      "docs/pilot/phase24-exit-checklist.json",
+      "docs/pilot/phase25-exit-checklist.json",
+      "docs/pilot/phase26-exit-checklist.json",
+      "docs/pilot/phase27-exit-checklist.json",
+      "docs/pilot/phase28-exit-checklist.json",
+      "docs/pilot/phase29-exit-checklist.json",
+      "docs/pilot/phase32-exit-checklist.json",
+      "docs/pilot/phase33-exit-checklist.json",
+      "docs/pilot/phase34-exit-checklist.json",
+      "docs/pilot/phase5-exit-checklist.json",
+      "docs/pilot/phase6-exit-checklist.json",
+      "docs/pilot/phase7-exit-checklist.json",
+      "docs/pilot/phase8-exit-checklist.json",
+      "docs/pilot/phase9-exit-checklist.json"
+    ],
+    "verdicts": [
+      "docs/pilot/phase30-objective-verdict-report.json",
+      "docs/pilot/phase35-objective-verdict-report.json",
+      "docs/pilot/project-completion-verdict-report.json"
+    ],
+    "stewardship": [
+      "docs/governance/stewardship-model.json"
+    ]
+  },
+  "final_gate_pass": true
+}

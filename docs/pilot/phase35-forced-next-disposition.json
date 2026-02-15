@@ -1,0 +1,12 @@
+{
+  "version": "cicsc/phase35-forced-next-disposition-v1",
+  "timestamp_unix": 1771167449,
+  "inputs": {
+    "objective_verdict_report": "docs/pilot/phase35-objective-verdict-report.json"
+  },
+  "overall_verdict": "met",
+  "forced_next_required": false,
+  "completion_claim_blocked": false,
+  "derived_forced_next_checkboxes": [],
+  "policy": "allow_completion_no_forced_next_required"
+}

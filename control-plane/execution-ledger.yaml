@@ -1757,23 +1757,23 @@ phases:
       status: done
     - id: AZ1.2
       title: Publish final forced-next disposition (must be empty for completion claim)
-      status: open
+      status: done
     - id: AZ1.3
       title: Publish project completion verdict report with objective-by-objective
         status
-      status: open
+      status: done
   - id: AZ2
     title: Transition and Stewardship Contract
     checkboxes:
     - id: AZ2.1
       title: Freeze post-completion stewardship model for CICSC and CIECP artifacts
-      status: open
+      status: done
     - id: AZ2.2
       title: Publish completion release/transition note with declared scope and limits
-      status: open
+      status: done
     - id: AZ2.3
       title: Mark final completion gate pass and archive execution-era closure index
-      status: open
+      status: done
 - id: BA
   number: 36
   title: Lean Formalization of Worktree Collaboration Protocol
