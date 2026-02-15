@@ -98,6 +98,10 @@ export class PostgresAdapter {
         await c.query(
           `INSERT INTO ${eventsTable}
            (tenant_id, entity_type, entity_id, seq, event_type, payload, ts, actor_id)
+           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+           RETURNING ts`, 
+          [tenant_id, entity_type, entity_id, seq, e.event_type, JSON.stringify(e.payload), e.ts, e.actor_id]
+        )
            VALUES($1,$2,$3,$4,$5,$6,$7,$8)`,
           [tenant_id, entity_type, entity_id, seq.toString(), e.event_type, e.payload ?? null, e.ts, e.actor_id]
         )

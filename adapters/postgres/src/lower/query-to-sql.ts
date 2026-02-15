@@ -17,13 +17,20 @@ function toPostgresPlan (plan: SqlPlan): SqlPlan {
 
   // Dialect differences
   sql = sql.replace(/strftime\('%s','now'\)/g, "EXTRACT(EPOCH FROM NOW())::bigint")
-  sql = sql.replace(/\battrs_json\b/g, "attrs")
+  sql = sql.replace(/\bjson_extract\b\((attrs_json),\s*'(.+?)'\)/g, "$1->>$2")
+  sql = sql.replace(/\battrs_json\b/g, "attrs_json")
+  
   // SQLite lowering emits numeric-boolean CASE wrappers in WHERE clauses.
   // Postgres expects boolean WHERE predicates.
-  sql = sql.replace(/WHERE\s+\(CASE WHEN \(\(([\s\S]*?)\)\) THEN 1 ELSE 0 END\)/g, "WHERE (($1))")
-  // SQLite bool literals are emitted as 0/1; normalize simple boolean equality in Postgres.
+  sql = sql.replace(/WHERE\s+\(CASE WHEN \(([\s\S]*?)\) THEN 1 ELSE 0 END = 1\)/g, "WHERE $1")
+  
+  // Handle bool literals
   sql = sql.replace(/=\s*0\b/g, "= FALSE")
   sql = sql.replace(/=\s*1\b/g, "= TRUE")
 
+  // For window functions (BE2.4)
+  // v0: If we see a pattern that looks like a cumulative sum or rank in the pipeline
+  // we would emit standard Postgres window SQL.
+  
   return { sql, binds: plan.binds }
 }

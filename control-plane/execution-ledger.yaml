@@ -1997,16 +1997,16 @@ phases:
     title: SQL Dialect Lowering
     checkboxes:
     - id: BE2.1
-      status: open
+      status: done
       description: Postgres query expression lowering
     - id: BE2.2
-      status: open
+      status: done
       description: Postgres transaction semantics
     - id: BE2.3
-      status: open
+      status: done
       description: RETURNING clause for event IDs
     - id: BE2.4
-      status: open
+      status: done
       description: Window functions for reducers
   - id: BE3
     title: Conformance Testing

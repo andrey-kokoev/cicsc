@@ -12,10 +12,10 @@ export type SchemaGenOut = {
 export function genPostgresSchemaFromIr (ir: CoreIrV0, opts: SchemaGenOpts): SchemaGenOut {
   const v = opts.version
   const schema = opts.schemaName ?? "public"
-  
+
   const viewFields = collectIndexedFieldsFromViews(ir).filter((f) => f !== "attrs_json" && f !== "state")
   const viewIndexes = genSnapshotIndexes(schema, v, "view", viewFields)
-  
+
   const constraintFields = collectIndexedFieldsFromConstraints(ir)
     .filter((f) => f !== "attrs_json" && f !== "state")
     .filter((f) => !viewFields.includes(f))

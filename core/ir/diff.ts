@@ -66,7 +66,7 @@ export function formatDiff (diff: SchemaDiff): string {
   return lines.join("\n")
 }
 
-function diffEntityType(from: EntityTypeSpecV0, to: EntityTypeSpecV0): TypeDiff {
+function diffEntityType (from: EntityTypeSpecV0, to: EntityTypeSpecV0): TypeDiff {
   const addedFields = Object.keys(to.attrs).filter(f => !from.attrs[f])
   const removedFields = Object.keys(from.attrs).filter(f => !to.attrs[f])
   const changedFields: Record<string, FieldDiff> = {}
@@ -90,10 +90,10 @@ function diffEntityType(from: EntityTypeSpecV0, to: EntityTypeSpecV0): TypeDiff 
   return { addedFields, removedFields, changedFields, addedStates, removedStates, dataLoss }
 }
 
-function hasChanges(diff: TypeDiff): boolean {
-  return diff.addedFields.length > 0 || 
-         diff.removedFields.length > 0 || 
-         Object.keys(diff.changedFields).length > 0 ||
-         diff.addedStates.length > 0 ||
-         diff.removedStates.length > 0
+function hasChanges (diff: TypeDiff): boolean {
+  return diff.addedFields.length > 0 ||
+    diff.removedFields.length > 0 ||
+    Object.keys(diff.changedFields).length > 0 ||
+    diff.addedStates.length > 0 ||
+    diff.removedStates.length > 0
 }
