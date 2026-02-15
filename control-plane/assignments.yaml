@@ -1367,3 +1367,35 @@ assignments:
 - checkbox_ref: BS2.4
   agent: AGENT_COPILOT_GEMINI
   status: open
+- checkbox_ref: BR1.1
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T17:10:23.825623Z'
+- checkbox_ref: BR1.2
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T17:10:33.117782Z'
+- checkbox_ref: BR1.3
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T17:10:33.387137Z'
+- checkbox_ref: BR1.4
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T17:10:33.628447Z'
+- checkbox_ref: BR2.1
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T17:10:33.863224Z'
+- checkbox_ref: BR2.2
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T17:10:34.105510Z'
+- checkbox_ref: BR2.3
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T17:10:34.338479Z'
+- checkbox_ref: BR2.4
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T17:10:34.577573Z'
