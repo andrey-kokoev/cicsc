@@ -1,2 +1,0 @@
-autopilot start: agent=AGENT_KIMI batch=3 max_cycles=0 max_inflight=0 interval=5s timeout=30s
-[cycle 0] process main
