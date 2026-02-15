@@ -21,6 +21,8 @@ export type SpecEntityV0 = {
 
   commands?: Record<string, SpecCommandV0>
   reducers?: Record<string, any[]>
+
+  row_policy?: RowPolicySugarV0
 }
 
 export type SpecAttrV0 = {
@@ -142,3 +144,10 @@ export type SpecQueueV0 = {
     input_map: Record<string, any>
   }
 }
+
+// Row-Level Security policy sugar (BT1.1-BT1.3)
+export type RowPolicySugarV0 =
+  | { owner: { field: string } }
+  | { member_of: { field: string; through: string; target_field?: string } }
+  | { expr: any }
+  | string // reference to named policy
