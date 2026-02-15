@@ -2436,7 +2436,7 @@ phases:
       description: Add QueueSpecV0 to Core IR types (message_type, ordering, retention,
         delivery)
     - id: BN1.2
-      status: open
+      status: done
       description: Add queue reference to WebhookSpecV0
     - id: BN1.3
       status: open

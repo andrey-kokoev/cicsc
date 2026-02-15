@@ -107,6 +107,7 @@ export type SubscriptionSpecV0 = {
 export type WebhookSpecV0 = {
   on_type: string
   command: string
+  queue?: string
   verify?: {
     hmac?: {
       secret_env: string

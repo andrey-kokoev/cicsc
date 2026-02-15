@@ -91,6 +91,7 @@ export type SpecSubscriptionV0 = {
 export type SpecWebhookV0 = {
   on: string
   command: string
+  queue?: string
   payload_map?: Record<string, any>
   verify?: {
     hmac?: {
