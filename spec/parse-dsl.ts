@@ -221,3 +221,48 @@ function parseConstraint (lines: Line[], startIdx: number): { constraint: SpecCo
   }
   return { constraint, nextIdx: i }
 }
+
+// BLOB PARSING EXTENSIONS
+function parseBlobType(text: string): { type: "blob", constraints: any } | null {
+  // Parse: blob maxSize:10MB types:[image/png,image/jpeg]
+  const match = text.match(/^blob(?:\s+maxSize:(\d+(?:MB|GB|KB)?))?(?:\s+types:\[([^\]]+)\])?(?:\s+(optional))?$/)
+  if (!match) return null
+  
+  const [_, maxSizeStr, typesStr, optional] = match
+  
+  const constraints: any = {
+    required: !optional
+  }
+  
+  if (maxSizeStr) {
+    // Parse 
+
+// BLOB PARSING EXTENSIONS
+function parseBlobType(text: string): { type: "blob", constraints: any } | null {
+  // Parse: blob maxSize:10MB types:[image/png,image/jpeg]
+  const match = text.match(/^blob(?:\s+maxSize:(\d+(?:MB|GB|KB)?))?(?:\s+types:\[([^\]]+)\])?(?:\s+(optional))?$/)
+  if (!match) return null
+  
+  const [_, maxSizeStr, typesStr, optional] = match
+  
+  const constraints: any = {
+    required: !optional
+  }
+  
+  if (maxSizeStr) {
+    constraints.maxSize = parseSize(maxSizeStr)
+  }
+  
+  if (typesStr) {
+    constraints.allowedTypes = typesStr.split(",").map(t => t.trim())
+  }
+  
+  return { type: "blob", constraints }
+}
+
+function parseSize(sizeStr: string): number {
+  const units: Record<string, number> = { B: 1, KB: 1024, MB: 1024**2, GB: 1024**3 }
+  const match = sizeStr.match(/^(\d+)(B|KB|MB|GB)$/)
+  if (!match) return parseInt(sizeStr) // Assume bytes
+  return parseInt(match[1]) * (units[match[2]] || 1)
+}
