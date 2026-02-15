@@ -5,16 +5,19 @@ cd "$ROOT"
 
 AGENT="$1"
 
-python3 << PY
+python3 - "$AGENT" << 'PY'
 import yaml
+import sys
 from pathlib import Path
 from datetime import datetime
+
+agent = sys.argv[1]
 
 assignments = yaml.safe_load(Path("control-plane/assignments.yaml").read_text())
 
 claimed = []
 for a in assignments.get("assignments", []):
-    if a["agent_ref"] == "$AGENT" and a["status"] == "open":
+    if a["agent_ref"] == agent and a["status"] == "open":
         a["status"] = "in_progress"
         a["started_at"] = datetime.now().isoformat() + "Z"
         claimed.append(a["checkbox_ref"])

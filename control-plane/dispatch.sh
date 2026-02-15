@@ -19,10 +19,14 @@ if [[ -z "$CHECKBOX" || -z "$AGENT" ]]; then
     exit 1
 fi
 
-python3 << PY
+python3 - "$CHECKBOX" "$AGENT" << 'PY'
 import yaml
+import sys
 from pathlib import Path
 from datetime import datetime
+
+checkbox = sys.argv[1]
+agent = sys.argv[2]
 
 ledger = yaml.safe_load(Path("control-plane/execution-ledger.yaml").read_text())
 assignments = yaml.safe_load(Path("control-plane/assignments.yaml").read_text())
@@ -34,28 +38,28 @@ for ph in ledger.get("phases", []):
         for cb in ms.get("checkboxes", []):
             valid_checkboxes[cb["id"]] = cb.get("status")
 
-if "$CHECKBOX" not in valid_checkboxes:
-    print(f"ERROR: Invalid checkbox: {$CHECKBOX}", file=__import__('sys').stderr)
-    exit(1)
+if checkbox not in valid_checkboxes:
+    print(f"ERROR: Invalid checkbox: {checkbox}", file=sys.stderr)
+    sys.exit(1)
 
-if valid_checkboxes["$CHECKBOX"] == "done":
-    print(f"ERROR: Checkbox already done: {$CHECKBOX}", file=__import__('sys').stderr)
-    exit(1)
+if valid_checkboxes[checkbox] == "done":
+    print(f"ERROR: Checkbox already done: {checkbox}", file=sys.stderr)
+    sys.exit(1)
 
 # Check if already assigned
 for a in assignments.get("assignments", []):
-    if a["checkbox_ref"] == "$CHECKBOX" and a["status"] in ("open", "in_progress"):
-        print(f"ERROR: Checkbox already assigned: {$CHECKBOX} -> {a['agent_ref']}", file=__import__('sys').stderr)
-        exit(1)
+    if a["checkbox_ref"] == checkbox and a["status"] in ("open", "in_progress"):
+        print(f"ERROR: Checkbox already assigned: {checkbox} -> {a['agent_ref']}", file=sys.stderr)
+        sys.exit(1)
 
 # Add assignment
 assignments["assignments"].append({
-    "checkbox_ref": "$CHECKBOX",
-    "agent_ref": "$AGENT",
+    "checkbox_ref": checkbox,
+    "agent_ref": agent,
     "status": "open",
     "created_at": datetime.now().isoformat() + "Z"
 })
 
 Path("control-plane/assignments.yaml").write_text(yaml.dump(assignments, sort_keys=False))
-print(f"Dispatched {$CHECKBOX} -> {$AGENT}")
+print(f"Dispatched {checkbox} -> {agent}")
 PY

@@ -5,13 +5,15 @@ cd "$ROOT"
 
 AGENT="${1:-}"
 
-python3 << PY
+python3 - "$AGENT" << 'PY'
 import yaml
+import sys
 from pathlib import Path
+
+agent = sys.argv[1] if len(sys.argv) > 1 else ""
 
 assignments = yaml.safe_load(Path("control-plane/assignments.yaml").read_text())
 
-agent = "$AGENT"
 open_count = 0
 in_progress_count = 0
 

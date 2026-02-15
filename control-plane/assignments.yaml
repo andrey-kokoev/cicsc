@@ -20,3 +20,15 @@ assignments:
   started_at: '2026-02-14T22:33:30.906169Z'
   commit: 79c5313
   completed_at: '2026-02-14T22:39:57.460696Z'
+- checkbox_ref: AY2.1
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-14T22:46:01.026949Z'
+- checkbox_ref: AY2.2
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-14T22:46:01.138600Z'
+- checkbox_ref: AY2.3
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-14T22:46:01.256023Z'
