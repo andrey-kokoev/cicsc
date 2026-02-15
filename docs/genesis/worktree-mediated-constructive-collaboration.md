@@ -16,6 +16,13 @@ draft: false
 A constructive collaboration model in which Git worktrees, not chat sessions,
 are the primary execution boundaries for change.
 
+> **Implementation Note (2026-02-15):** The WMCC protocol was simplified from a 
+> complex message-passing system (59 scripts, 6 models, 24,000 lines) to direct 
+> state management (6 scripts, 2 files, ~300 lines). The conceptual framework 
+> below remains valid, but specific mechanisms (message_events, evidence bindings,
+> auto-dispatch loops) have been replaced with simpler equivalents.
+> See `AGENTS.md` for current operational guidance.
+
 ## 1. Positioning
 
 This document defines WMCC as a collaboration protocol within CIECP.

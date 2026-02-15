@@ -21,13 +21,12 @@ mistakes: they can break authority, evidence, or progress coherence.
 
 ## 1. Positioning
 
-This document captures what was learned while operationalizing WMCC.
+This document captures what was learned while operationalizing work assignment.
 
 - CIS defines invariance as principle.
 - CICSC defines semantic truth.
 - CIECP defines admissible evolution under evidence.
-- WMCC defines typed collaboration.
-- Agent ergonomics defines how likely executors are to follow WMCC correctly on first try.
+- Agent ergonomics defines how likely executors are to follow the protocol correctly on first try.
 
 Ergonomics quality is therefore part of semantic reliability, not a secondary concern.
 
@@ -47,85 +46,77 @@ practice but not in the formal protocol.
 ### A. Single canonical entry point is non-negotiable
 
 Agents need one place to start execution.
-For WMCC this is the generated mailbox projection:
+For the current system this is `control-plane/assignments.yaml`.
 
-- `control-plane/views/worktree-mailboxes.generated.json`
+### B. Complexity must match the problem
 
-Without a single entry point, local notes become shadow authority.
+**First attempt (v1):** Built a distributed consensus protocol with:
+- Message passing (sent → acknowledged → fulfilled → ingested → closed)
+- Cryptographic evidence bindings
+- Role authority models
+- Auto-dispatch loops with circuit breakers
+- 24,000 lines of code
 
-### B. Messages must be immutable
+**Problem:** We had 2-3 agents on the same machine editing files in a shared git repo.
+The complexity exceeded requirements and caused data integrity issues.
 
-State updates are represented as append-only lifecycle events.
-This preserves replayability and auditability and avoids hidden in-place edits.
+**Second attempt (v2):** Direct state management with:
+- Two YAML files (execution-ledger.yaml, assignments.yaml)
+- Six shell scripts
+- Git history as audit trail
+- ~300 lines of code
 
-### C. Wrapper commands are semantic infrastructure
+**Lesson:** Match the solution to the actual constraints, not theoretical ones.
 
-Typed scripts are not convenience glue; they are safety rails:
+### C. Git is already a database
 
-- `collab_dispatch.sh`
-- `collab_claim_next.sh`
-- `collab_fulfill.sh`
-- `collab_close_ingested.sh`
-- `collab_delegate_worktree.sh`
-- `collab_run_once.sh`
-- `collab_help.sh`
+We tried to build:
+- Immutable event sourcing (git already has this)
+- Content-addressed evidence (git objects are this)
+- Concurrent access control (git merge/rebase handles this)
 
-They reduce discretionary interpretation by constraining action shape.
+**Lesson:** Use existing tools rather than reimplementing their features.
 
-### D. Authority must be explicit and delegable
+### D. Validation is more valuable than enforcement
 
-Single-owner worktree governance with typed delegation/revocation closes an
-important ambiguity: who can dispatch from a worktree right now.
+Complex protocols try to prevent errors through structure.
+Simpler systems:
+- Allow direct edits
+- Validate before commit
+- Fail fast with clear errors
 
-### E. Discoverability is part of correctness
+**Lesson:** `./control-plane/validate.sh` is more maintainable than 42 scripts enforcing rules.
 
-If an agent cannot quickly discover the right procedure, it will improvise.
-Improvisation is an error source in constructive protocols.
+## 4. Current simplification
 
-Therefore:
-- `AGENTS.md` must contain bootstrap + command surface + happy path.
-- `control-plane/README.md` must mirror operational entry points.
+The collaboration system was reduced to:
 
-## 4. Practical ergonomic contract
+1. **execution-ledger.yaml** - Roadmap (phases, milestones, checkboxes)
+2. **assignments.yaml** - Work queue (checkbox, agent, status)
+3. **Six commands** - dispatch, claim, complete, inbox, check_gates, validate
 
-A worker agent should be able to run exactly this loop:
+This removes:
+- Message events
+- Evidence bindings  
+- Role authority
+- Worktree delegation
+- Friction requests
+- Auto-dispatch loops
+- Circuit breakers
 
-1. refresh views,
-2. read actionable inbox,
-3. claim one message,
-4. fulfill with typed evidence,
-5. stop when no actionable messages remain.
+While preserving:
+- Checkbox tracking
+- Assignment to agents
+- Gate validation
+- Git-based audit trail
 
-If this cannot be done in a few commands without guessing, ergonomics is not complete.
+## 5. Protocol stability
 
-## 5. First-principles grounding
+Simpler protocols are more stable because:
+- Fewer moving parts
+- Direct mapping to git operations
+- Clear error messages
+- Human-readable state
 
-- **Control theory**: reduce control variance by reducing operator choice where
-  choice is not semantically meaningful.
-- **Information theory**: minimize ambiguity at handoff boundaries by structured
-  message/evidence typing.
-- **State-machine discipline**: represent collaboration state by explicit
-  transitions, not mutable snapshots.
-
-## 6. Failure modes to avoid
-
-- protocol truth split across mailbox and ad hoc files
-- in-place mutation of message envelopes
-- undocumented authority transfer
-- “expert-only” execution flow requiring tribal knowledge
-
-Each of these increases semantic leakage between intended and actual process.
-
-## 7. Scope and limits
-
-- Ergonomic quality improves protocol adherence probability; it does not replace
-  semantic proofs or gate checks.
-- Current ergonomics is optimized for repository-local agent execution.
-- Human-friendly UX layers can be added later, but must compile down to the
-  same typed WMCC primitives.
-
-## 8. Summary
-
-Agent ergonomics in constructive collaboration is the engineering of
-low-friction correctness.
-The target is simple: doing the right thing must be easier than doing anything else.
+The current system can be understood by reading two YAML files.
+The previous system required understanding 6 interlocking models.

@@ -25,54 +25,57 @@ Lean proof baseline:
 - Lean Kernel v1.5 is the coherency-complete baseline for kernel semantics.
 - New semantics work must preserve the canonical evaluator/typing/WF bridges established in v1.5.
 
-## Automation Boundaries (Critical)
+---
 
-This system provides **resilient automation with circuit breakers**, not **full autonomy**.
+## Quick Reference
 
-**The system handles automatically:**
-- Routine claim → fulfill → commit cycles
-- Stale view regeneration
-- Common error patterns (orphaned events, sync drift)
-- Retry with exponential backoff
+### Control-Plane Commands
 
-**The system does NOT handle (requires your intervention):**
-- Circuit breaker trips (5 consecutive failures)
-- Git merge conflicts
-- Validation failures that persist after retry
-- Ambiguous friction requests (requires triage judgment)
+```bash
+# View assignments
+./control-plane/inbox.sh [AGENT_NAME]
 
-**When the circuit breaker trips, you will see:**
+# Dispatch work (main agent)
+./control-plane/dispatch.sh --checkbox AY1.1 --agent AGENT_KIMI
+
+# Claim open assignments (worker)
+./control-plane/claim.sh AGENT_KIMI
+
+# Complete work (runs gates, updates both files)
+./control-plane/complete.sh AY1.1 [COMMIT_SHA]
+
+# Validate state
+./control-plane/validate.sh
 ```
-CIRCUIT BREAKER TRIPPED
-  Consecutive failures: 5
-  Manual intervention required.
-```
 
-**Recovery procedure:**
-1. Run: `./control-plane/scripts/collab_sync.sh`
-2. Check: `./control-plane/scripts/validate_cross_model.sh`
-3. Review: `git status` and recent commits
-4. Fix any obvious issues (merge conflicts, dirty state)
-5. Restart: `./control-plane/scripts/collab_worker_loop.sh --worktree "$WORKTREE"`
+### Files
 
-**Why this design:**
-- We prioritize correctness over availability
-- Silent automation errors are worse than explicit failure modes
-- Some decisions require semantic understanding (evidence quality, friction validity)
+- `control-plane/execution-ledger.yaml` - Phase/milestone/checkbox definitions (source of truth)
+- `control-plane/assignments.yaml` - Active assignments (checkbox, agent, status)
 
-See `docs/genesis/worktree-mediated-constructive-collaboration.md` section 5.1 for architectural rationale.
+---
 
-## Main Agent Day-0 Checklist
+## Workflow
 
-If you are the main agent opening this repository for the first time, do this in order:
+### Main Agent
 
-1. `./control-plane/scripts/generate_views.sh`
-2. `./control-plane/scripts/collab_help.sh --role main --worktree /home/andrey/src/cicsc`
-3. `./control-plane/scripts/collab_inbox.sh --worktree /home/andrey/src/cicsc --refresh`
-4. `./scripts/check_canonical_execution_model.sh`
-5. Dispatch or delegate only through WMCC command surface (`collab_dispatch.sh`, `collab_delegate_worktree.sh`).
+1. Check current phase/milestone status in `execution-ledger.yaml`
+2. Dispatch work: `./control-plane/dispatch.sh --checkbox REF --agent AGENT`
+3. Commit: `git add control-plane/ && git commit -m "dispatch: REF -> AGENT"`
+4. Workers pull `main`, claim, work, complete
+5. Main pulls worker commits, validates state
 
-Do not create local ad hoc task files. Protocol truth is mailbox + append-only message events.
+### Worker Agent
+
+1. `git fetch origin && git rebase origin/main`
+2. Check inbox: `./control-plane/inbox.sh AGENT_NAME`
+3. Claim work: `./control-plane/claim.sh AGENT_NAME`
+4. Implement in your worktree on appropriate branch
+5. Run gates: `./control-plane/check_gates.sh`
+6. Complete: `./control-plane/complete.sh CHECKBOX_REF`
+7. Commit and push
+
+---
 
 ## Deterministic Invocation Contract
 
@@ -83,101 +86,23 @@ If the instruction is only:
 then execute exactly this protocol:
 
 1. `cd /home/andrey/src/cicsc`
-2. `./control-plane/scripts/generate_views.sh`
-3. Resolve your worktree path:
-   - main agent: `WORKTREE=/home/andrey/src/cicsc`
-   - worker agent: `WORKTREE=<your assigned worktree>`
-4. Sync your worktree to current `main` before reading inbox:
-   - `git -C "$WORKTREE" fetch origin`
-   - `git -C "$WORKTREE" rebase origin/main`
-   - if rebase cannot proceed, stop and report blocker (do not continue on stale scripts/protocol)
-5. Read actionable inbox:
-   - `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh`
-6. If no actionable messages: stand down and report `no actionable inbox messages`.
-7. If actionable messages exist: process mailbox protocol (claim -> fulfill with required evidence -> commit), repeating until no actionable messages remain.
-8. Return a completion report containing:
-   - `message_ref`
-   - `assignment_ref`
+2. Run `./control-plane/validate.sh`
+3. Check inbox: `./control-plane/inbox.sh [AGENT_NAME]`
+4. If open assignments exist: claim, implement, complete
+5. If no assignments: stand down and report status
+6. Return a completion report containing:
    - `checkbox_ref`
    - `commit_sha`
    - `current_status`
-
-### Intent Resolution Rule (Mandatory)
-
-Interpret short operator instructions as follows:
-
-- `status`
-  - read-only mode
-  - inspect and report mailbox/state
-  - do not mutate collaboration state
-
-- `process messages`
-  - execution mode
-  - process lifecycle transitions end-to-end (claim/fulfill for workers; ingest/close for main)
-  - main full-cycle may include friction triage when enabled
-  - continue until no actionable messages remain for the targeted worktree
-  - do not pause for confirmation between deterministic protocol steps
-  - preferred command:
-    - main: `./control-plane/scripts/collab_process_messages.sh --role main --agent-ref <AGENT_...>`
-      - full-cycle: `./control-plane/scripts/collab_process_messages.sh --role main --agent-ref <AGENT_...> --with-friction-triage --friction-decision accept_later`
-    - worker: `./control-plane/scripts/collab_process_messages.sh --role worker --worktree "$WORKTREE"`
-      - optional overrides: `--with <script> --auto-report --lazy`
-
-## Normative Conceptual Sources
-
-Execution guidance in this file is operational. Conceptual semantic intent is
-normatively defined by `docs/genesis/*`.
-
-Primary references:
-- `docs/genesis/README.md`
-- `docs/genesis/on-constructively-invariant-systems.md`
-- `docs/genesis/constructively-invariant-control-system-compiler.md`
-- `docs/genesis/constructive-invariance-evolution-control-plane.md`
-- `docs/genesis/worktree-mediated-constructive-collaboration.md`
-- `docs/genesis/constructive-accretion-method.md`
-
-Precedence rule:
-- if there is tension between execution convenience and genesis semantics,
-  preserve genesis semantics and adjust process artifacts.
-
-## Prose-to-Mechanism Boundary
-
-`docs/genesis/*` is human-language semantic intent.
-It is intentionally prose-first and not treated as machine-enforced status data.
-
-Execution agents must use this boundary:
-- ingest conceptual intent from `docs/genesis/*`,
-- translate that intent into structured control-plane artifacts (`control-plane/*`),
-- enforce behavior through scripts/gates over structured artifacts only.
-
-Do not treat prose files as canonical status ledgers or gate inputs.
 
 ---
 
 ## Working Style
 
-### -1. First Actions In Any Worktree (Mandatory)
-Before doing any implementation work:
-
-1. Run `./control-plane/scripts/generate_views.sh`
-2. Sync worktree branch tip to `origin/main`:
-   - `git -C "$WORKTREE" fetch origin`
-   - `git -C "$WORKTREE" rebase origin/main`
-3. Read inbox from `control-plane/views/worktree-mailboxes.generated.json` for
-   the current worktree path
-4. Process only actionable messages (`current_status` in `queued`, `sent`)
-
-If no actionable inbox messages exist, do not invent local task authority.
-
-WIP ordering rule:
-- if any inbox message is `acknowledged` for your worktree, fulfill it before
-  claiming additional `sent`/`queued` messages.
-- `sent`/`queued` are claimable; `acknowledged` is already owned and should be
-  executed to `fulfilled` before taking new ownership.
-
 ### 0. Canonical Execution Model (Mandatory)
+
 Execution status truth is single-source:
-- `control-plane/execution/execution-ledger.yaml` is the only canonical status ledger.
+- `control-plane/execution-ledger.yaml` is the only canonical status ledger.
 - `PHASE*.md` files are derived views; they are not authoritative for status.
 - Planning/navigation docs (for example `PHASE_LEVEL_ROADMAP.md`, `JOURNEY_VECTOR.md`)
   must not contain execution status checkboxes.
@@ -187,222 +112,44 @@ Work unit policy:
 - commit message must include the checkbox ID token (for example: `phase12 ac3.2`).
 
 Before marking a checkbox complete, run:
-- `./scripts/check_canonical_execution_model.sh`
+- `./control-plane/check_gates.sh`
+- `./control-plane/validate.sh`
 
 This gate enforces:
 - execution-ledger structural integrity,
 - phase-view sync with execution-ledger,
 - commit-evidence presence for checked checkboxes.
 
-### 0.1 Canonical Collaboration Entry Point (Mandatory)
-Worktree agents must use mailbox-driven execution:
-- single entry point: `control-plane/views/worktree-mailboxes.generated.json`
-- read inbox messages for the current worktree
-- process actionable messages (`queued`/`sent`) in order
-- append immutable `message_events` for lifecycle transitions and evidence
+### 0.1 Simplified Collaboration (Current)
 
-Protocol rule:
-- `WORKTREE_ASSIGNMENT.md` is not allowed as an execution protocol artifact
-- mailbox messages are the only admissible worktree task input
+The collaboration system has been simplified from a complex message-passing protocol
+to direct state management:
 
-Message I/O command surface:
-- execution location rule:
-  - run all `control-plane/scripts/collab_*.sh` commands from repository root `/home/andrey/src/cicsc`
-  - target worker context via `--worktree <path>`; do not invoke collab scripts from worker worktree directories
-- required variables for examples below:
-  - `ROOT=/home/andrey/src/cicsc`
-  - `WORKTREE=<target worktree path>`
-- operator quickstart (copy/paste):
-  - `cd /home/andrey/src/cicsc`
-  - `WORKTREE=/home/andrey/src/cicsc/worktrees/kimi`
-  - `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh`
-  - `./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE" --commit`
-- collaboration preflight gate:
-  - `./control-plane/scripts/collab_validate.sh`
-- quickstart command map (worker/main):
-  - `./control-plane/scripts/collab_help.sh --role worker --worktree "$WORKTREE"`
-- read inbox (actionable only):
-  - `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh`
-  - full history: `./control-plane/scripts/collab_inbox.sh --worktree "$WORKTREE" --refresh --all`
-- main-side dispatch wrapper:
-  - `./control-plane/scripts/collab_dispatch.sh --assignment-ref ASSIGN_... --payload-ref control-plane/collaboration/collab-model.yaml`
-- main-side batch dispatch wrapper:
-  - `./control-plane/scripts/collab_dispatch_batch.sh --agent-ref AGENT_KIMI --count 2`
-  - dispatch instances are explicit and monotonic per checkbox lane:
-    - assignment id: `ASSIGN_PHASE<NN>_<CHECKBOXTOKEN>_<AGENTTAG>_I<NN>`
-    - message id: `MSG_PHASE<NN>_<CHECKBOXTOKEN>_<AGENTTAG>_I<NN>_DISPATCH`
-    - branch: `phase<NN>.<checkbox>.i<NN>`
-- atomic create+dispatch wrapper (for new assignments):
-  - `./control-plane/scripts/collab_create_assignment.sh --assignment-id ASSIGN_... --agent-ref AGENT_KIMI --checkbox-ref AY1.2 --branch phase34.ay1.2 --payload-ref AGENTS.md`
-- owner delegation wrapper (effective ownership handoff/revoke):
-  - `./control-plane/scripts/collab_delegate_worktree.sh --worktree /home/andrey/src/cicsc/worktrees/kimi --owner-agent-ref AGENT_MAIN --delegate-to AGENT_KIMI`
-- single-step worker loop helper (claim + fulfillment guidance):
-  - `./control-plane/scripts/collab_run_once.sh --worktree "$WORKTREE"`
-- acknowledge next actionable message:
-  - `./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE"`
-  - one-command claim+commit: `./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE" --commit`
-  - override WIP guard only when necessary: `./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE" --force`
-- fulfill message with typed evidence (digest auto-computed):
-  - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$WORKTREE" --script scripts/check_x.sh --gate-report docs/pilot/report.json`
-  - lazy re-run support for expensive checks:
-    - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$WORKTREE" --with scripts/check_x.sh --auto-report --lazy`
-  - auto-commit with custom message:
-    - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$WORKTREE" --script scripts/check_x.sh --gate-report docs/pilot/report.json --auto-commit --commit-subject "phaseXX ayY.Y fulfill ..."`
-- worktree status summary + recommended next action:
-  - `./control-plane/scripts/collab_status.sh --worktree "$WORKTREE"`
-- batch sweep mode:
-  - `./control-plane/scripts/collab_sweep.sh --worktree "$WORKTREE" --with scripts/check_x.sh --auto-report --lazy`
-- revert mistaken claim:
-  - `./control-plane/scripts/collab_revert.sh --message-ref MSG_... --reason "claimed wrong assignment"`
-- worker friction request (typed, immutable):
-  - `./control-plane/scripts/collab_request_friction.sh --worktree "$WORKTREE" --type ergonomics --severity medium --summary "..." --repro-step "..."`
-- main friction triage:
-  - `./control-plane/scripts/collab_triage_friction.sh --message-ref MSG_... --decision accept_now --notes "..."`
-- progress request protocol (main checks on acknowledged work):
-  - Main sends: `./control-plane/scripts/collab_request_progress.sh --assignment-ref ASSIGN_... --notes "checking status"`
-  - Worker responds: `./control-plane/scripts/collab_report_progress.sh --message-ref MSG_PROGRESS_... --status in_progress --notes "running tests"`
-- assignment-level delta view:
-  - `./control-plane/scripts/collab_diff.sh --assignment-ref ASSIGN_...`
-- aggregate history summary:
-  - `./control-plane/scripts/collab_summary.sh --worktree "$WORKTREE" --since 2026-02-13`
-- interactive loop wrapper:
-  - `./control-plane/scripts/collab_interactive.sh --worktree "$WORKTREE"`
-- fuzzy interactive picker (requires `fzf`):
-  - `./control-plane/scripts/collab_fzf.sh --worktree "$WORKTREE"`
-- main-side ingest+close wrapper:
-  - `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`
-  - batch: `./control-plane/scripts/collab_close_batch.sh --agent-ref AGENT_KIMI --status fulfilled --count 0`
-- stale mailbox watcher (warn/fail thresholds):
-  - `./control-plane/scripts/collab_stale_watch.sh --warn-hours 24 --fail-hours 72`
-- worker autopilot (single-command wait + auto-process loop):
-  - `./control-plane/scripts/collab_worker_loop.sh --worktree "$WORKTREE"`
-  - continuous wait-process cycle; runs until interrupted (Ctrl+C)
-- worker wait regime (poll + wake on actionable):
-  - `./control-plane/scripts/collab_wait_for_messages.sh --worktree "$WORKTREE" --interval-seconds 5`
-  - optional auto-process:
-    - `./control-plane/scripts/collab_wait_for_messages.sh --worktree "$WORKTREE" --interval-seconds 5 --run-on-found "./control-plane/scripts/collab_process_messages.sh --role worker --worktree $WORKTREE"`
-- main wait regime (poll + auto-process on actionable):
-  - `./control-plane/scripts/collab_wait_main.sh --interval-seconds 5 --agent-ref AGENT_KIMI --friction-decision accept_later`
-  - status-only wake:
-    - `./control-plane/scripts/collab_wait_main.sh --interval-seconds 5 --status-only`
-- main auto-dispatch-loop regime (dispatch + wait + process continuously):
-  - `./control-plane/scripts/auto_dispatch_loop.sh --agent-ref AGENT_KIMI --batch-size 3 --interval-seconds 5 --max-cycles 0 --friction-decision accept_later`
-  - bounded run:
-    - `./control-plane/scripts/auto_dispatch_loop.sh --agent-ref AGENT_KIMI --batch-size 3 --max-cycles 1`
-- assignment obligation/evidence delta view:
-  - `./control-plane/scripts/collab_show_assignment.sh --ref ASSIGN_...`
-- unified dry-run wrapper:
-  - `./control-plane/scripts/collab_dry_run.sh <create|claim-next|fulfill|close|dispatch|delegate|append-event> ...`
-- collab/view commit wrapper:
-  - `./control-plane/scripts/collab_commit_views.sh --subject "governance/collab: ..."`
+**Previous (v1):**
+- 59 scripts, 6 YAML models
+- Message events, evidence bindings, role authority
+- Auto-dispatch loops, circuit breakers
 
-Happy path (robust - single command with circuit breaker):
-```bash
-./control-plane/scripts/collab_worker_loop.sh --worktree "$WORKTREE"
-```
+**Current (v2):**
+- 6 scripts, 2 YAML files
+- Direct assignments with 3 states: open/in_progress/done
+- Git history as audit trail
 
-What it does:
-- Waits for actionable messages
-- Executes claim+fulfill atomically for each message
-- Auto-detects and repairs orphaned events
-- Commits state changes after each message
-- Circuit breaker: stops after 5 consecutive failures
+**Why simplified:**
+- The complexity exceeded the problem requirements
+- Event sourcing without transactions caused data integrity issues
+- 24,000 lines for work assignment was accidental complexity
+- Git already provides history, content addressing, and concurrency control
 
-What it does NOT do:
-- Does NOT fix all possible error states (some require manual intervention)
-- Does NOT handle git merge conflicts (stops and alerts)
-- Does NOT retry indefinitely (circuit breaker prevents infinite loops)
+**Migration:**
+- Old system archived in git history (commits before 2026-02-15)
+- New system uses same `execution-ledger.yaml` structure
+- `assignments.yaml` replaces the message/collab model
 
-On circuit breaker trip, you'll see:
-```
-CIRCUIT BREAKER TRIPPED
-  Consecutive failures: 5
-  Manual intervention required.
-```
-
-Recovery steps:
-1. Run: `./control-plane/scripts/collab_sync.sh`
-2. Check: `./control-plane/scripts/validate_cross_model.sh`
-3. Review: `git status`
-4. If orphaned events exist, they are auto-repaired on next run
-5. Restart: `./control-plane/scripts/collab_worker_loop.sh --worktree "$WORKTREE"`
-
-Manual path (when you need granular control):
-```bash
-# Pre-flight check
-./control-plane/scripts/collab_execute.sh --worktree "$WORKTREE" --dry-run
-
-# Atomic execution (claim+fulfill+commit)
-./control-plane/scripts/collab_execute.sh --worktree "$WORKTREE"
-
-# Or step-by-step (useful for debugging)
-./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE"
-./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$WORKTREE" --auto-report
-```
-
-Ergonomic features:
-- `--auto-report`: auto-discovers evidence files
-- `--auto-commit`: commits model changes (fails with specific error if dirty)
-- Views auto-sync before operations
-- Clear error messages with recovery steps
-
-Canonical worker loop (multi-assignment):
-1. `./control-plane/scripts/collab_status.sh --worktree "$WORKTREE"`
-2. If `in_progress` is non-empty, fulfill the acknowledged message before any new claim.
-3. Else claim next actionable: `./control-plane/scripts/collab_claim_next.sh --worktree "$WORKTREE"`.
-4. Generate required evidence and fulfill:
-   - `./control-plane/scripts/collab_fulfill.sh --message-ref MSG_... --worktree "$WORKTREE" --script <script> --gate-report <report> --suggest-commit`
-5. Main ingests/closes fulfilled message:
-   - `./control-plane/scripts/collab_close_ingested.sh --message-ref MSG_... --commit <sha>`
-6. Repeat until `next_action=idle`.
-7. If canonical sync/view drift appears in gates:
-   - `./control-plane/scripts/collab_sync.sh`
-
-WIP semantic rule (mechanically enforced):
-- A worktree may not claim new `sent/queued` work while any message remains `acknowledged` in that same worktree.
-- Override is exceptional and explicit: `collab_claim_next.sh --force`.
-
-### 0.2 Phase Governance Controller (Mandatory for Main Agent)
-Phase workflow transitions must be explicit and gated. The phase governance controller enforces strict rules for phase promotion.
-
-**Phase Status Model:**
-- `planned` - Phase is scheduled but not yet active.
-- `active` - Exactly one phase is active at any time; work is dispatched from active phase.
-- `complete` - Phase has achieved all milestones and checkboxes.
-
-**Promotion Rules (enforced by controller):**
-1. Only one phase may be `active` at any time.
-2. A phase can only be promoted to `active` if the current active phase is `complete`.
-3. All checkboxes in the current active phase must be `done` before promotion.
-4. A phase can only be promoted if its current status is `planned`.
-
-**Command Surface:**
-- Check current phase status:
-  ```bash
-  ./control-plane/scripts/phase_governance_controller.sh --status
-  ```
-- Promote a specific phase (requires current active to be complete):
-  ```bash
-  ./control-plane/scripts/phase_governance_controller.sh --promote AY
-  ```
-- Promote next planned phase (auto-selects lowest-numbered planned):
-  ```bash
-  ./control-plane/scripts/phase_governance_controller.sh --promote-next
-  ```
-- Dry-run validation (no mutation):
-  ```bash
-  ./control-plane/scripts/phase_governance_controller.sh --promote-next --dry-run
-  ```
-
-**Auto-Dispatch Loop Integration:**
-The `auto_dispatch_loop.sh` reads the active phase from `execution-ledger.yaml`. It does NOT perform phase promotion itself - promotion is an explicit governance decision made via the controller.
-
-**Gate Enforcement:**
-- `scripts/check_phase_governance.sh` validates phase transition legality.
-- Illegal transitions (e.g., promoting incomplete phase) fail CI.
-- Cross-model validation ensures `execution-ledger.yaml` phase status aligns with dispatched assignments.
+---
 
 ### 1. Preserve invariants before adding features
+
 Never add functionality that weakens:
 - transactional semantics
 - replay-verification guarantees
@@ -415,6 +162,7 @@ If a feature cannot be implemented without weakening invariants, add:
 ---
 
 ### 2. Always add a conformance test for new lowering logic
+
 If you implement any of the following:
 
 - Query → SQL lowering
@@ -431,7 +179,8 @@ No exceptions. If you cannot write the test, the feature is not done.
 ---
 
 ### 3. Do not encode bundle-specific logic in runtime
-The runtime must not “know” about:
+
+The runtime must not "know" about:
 - Ticketing
 - CRM
 - Kanban
@@ -445,6 +194,7 @@ If you find yourself hardcoding column names, stop and move that logic into:
 ---
 
 ### 4. Fail fast at compile-time, not at runtime
+
 Prefer:
 
 - IR typechecker rejections
@@ -485,6 +235,7 @@ Enforce backend limits via typechecker flags or feature gates.
 ---
 
 ### 6. Add migrations only after type safety is strong
+
 Do not implement migration execution until:
 
 - IR typechecker is strict
@@ -543,11 +294,11 @@ Avoid:
 
 ## Design Smells (Stop If You See These)
 
-- “Let’s special-case Ticketing here”
-- “We’ll just allow this expression in SQL”
-- “Let’s parse SQL back into IR”
-- “We can fix this at runtime”
-- “This migration is best-effort”
+- "Let's special-case Ticketing here"
+- "We'll just allow this expression in SQL"
+- "Let's parse SQL back into IR"
+- "We can fix this at runtime"
+- "This migration is best-effort"
 
 Each of these breaks core invariants.
 
