@@ -24,7 +24,7 @@ export async function withImmediateTx<T> (db: D1Database, fn: (tx: TxCtx) => Pro
     }
     // D1 returns { results } / { success } depending on API; normalize into { rows } for SELECT.
     const rows = (r0?.results ?? r0?.rows ?? undefined) as any[] | undefined
-    return { rows }
+    return { rows, count: r0?.meta?.changes ?? 0 }
   }
 
   await exec("BEGIN IMMEDIATE")

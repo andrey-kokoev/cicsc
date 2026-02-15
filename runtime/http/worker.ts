@@ -19,6 +19,7 @@ import { isAuthorized } from "./authz"
 import { applyRowLevelSecurity } from "../view/rls"
 import { wsManager } from "../view/ws/manager"
 import { handleWebSocketUpgrade } from "../view/ws/handler"
+import { ScheduleWorker } from "../schedule/worker"
 
 export interface Env {
   DB: D1Database
@@ -129,6 +130,27 @@ export default {
       const limiter = getLimiter(env.RATE_LIMIT_PER_MINUTE)
 
       if (url.pathname === "/_caps") return Response.json(adapter.caps)
+
+      // GET /_schedules  (admin: list metrics)
+      if (url.pathname === "/_schedules" && req.method === "GET") {
+        if (!isAuthorized(req, env.TENANT_MIGRATE_TOKEN)) return jsonErr(403, "forbidden: admin")
+        const metrics = await store.getScheduleMetrics()
+        return Response.json({ ok: true, metrics })
+      }
+
+      // POST /_schedules/poll  (admin: force poll)
+      if (url.pathname === "/_schedules/poll" && req.method === "POST") {
+        if (!isAuthorized(req, env.TENANT_MIGRATE_TOKEN)) return jsonErr(403, "forbidden: admin")
+        const body = (await req.json().catch(() => ({}))) as any
+        const tenant_id = String(body.tenant_id ?? "t")
+        const loaded = await loadTenantBundle(env.DB as any, tenant_id)
+        const ir = loaded.bundle.core_ir as CoreIrV0
+
+        const worker = new ScheduleWorker(store, ir, intrinsics)
+        const result = await worker.pollAndExecute(tenant_id)
+
+        return Response.json({ ok: true, processed: result.processed, errors: result.errors })
+      }
 
       // POST /install  (idempotent)
       if (url.pathname === "/install" && req.method === "POST") {

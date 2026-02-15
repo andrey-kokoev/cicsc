@@ -2425,7 +2425,7 @@ phases:
       description: Webhook delivery status tracking and replay
 - id: BN
   number: 15
-  status: complete
+  status: deferred
   title: Queue Primitive - Reliable Async Processing
   milestones:
   - id: BN1
@@ -2476,101 +2476,101 @@ phases:
       description: DLQ admin API (list, inspect, replay)
 - id: BO
   number: 16
-  status: planned
+  status: deferred
   title: Schedule Primitive - Time-Based Execution
   milestones:
   - id: BO1
     title: Core IR Schedule Extension
     checkboxes:
     - id: BO1.1
-      status: open
+      status: done
       description: Add ScheduleSpecV0 to Core IR (cron, delay, action)
     - id: BO1.2
-      status: open
+      status: done
       description: Define schedule trigger types (cron, delay, event+delay)
     - id: BO1.3
-      status: open
+      status: done
       description: Add schedule-to-command input mapping expressions
     - id: BO1.4
-      status: open
+      status: done
       description: Update IR validator for schedule specifications
   - id: BO2
     title: Schedule Storage & Polling
     checkboxes:
     - id: BO2.1
-      status: open
+      status: done
       description: Scheduled jobs table schema (scheduled_at, status, action)
     - id: BO2.2
-      status: open
+      status: done
       description: Cron schedule tracker (last_run, next_run computation)
     - id: BO2.3
-      status: open
+      status: done
       description: Schedule worker polling (due jobs query)
     - id: BO2.4
-      status: open
+      status: done
       description: Event-triggered schedule creation (on event, enqueue delayed job)
   - id: BO3
     title: Execution & Observability
     checkboxes:
     - id: BO3.1
-      status: open
+      status: done
       description: Schedule execution engine (direct or via queue)
     - id: BO3.2
-      status: open
+      status: done
       description: Retry policy for failed scheduled jobs
     - id: BO3.3
-      status: open
+      status: done
       description: Schedule admin API (list, cancel, trigger now)
     - id: BO3.4
-      status: open
+      status: done
       description: Schedule metrics (pending count, execution latency)
 - id: BP
   number: 17
-  status: planned
+  status: deferred
   title: Workflow Primitive - Multi-Entity Orchestration
   milestones:
   - id: BP1
     title: Core IR Workflow Extension
     checkboxes:
     - id: BP1.1
-      status: open
+      status: deferred
       description: Add WorkflowSpecV0 to Core IR (steps, transitions, compensation)
     - id: BP1.2
-      status: open
+      status: deferred
       description: Define step types (command, wait, decision)
     - id: BP1.3
-      status: open
+      status: deferred
       description: Define compensation semantics (Saga pattern)
     - id: BP1.4
-      status: open
+      status: deferred
       description: Update IR validator for workflow specifications
   - id: BP2
     title: Workflow Runtime Engine
     checkboxes:
     - id: BP2.1
-      status: open
+      status: deferred
       description: Workflow state machine (pending, running, completed, compensating)
     - id: BP2.2
-      status: open
+      status: deferred
       description: Step executor (invoke commands, track results)
     - id: BP2.3
-      status: open
+      status: deferred
       description: Compensation engine (rollback on failure)
     - id: BP2.4
-      status: open
+      status: deferred
       description: Workflow persistence (correlation, saga log)
   - id: BP3
     title: Integration & Observability
     checkboxes:
     - id: BP3.1
-      status: open
+      status: deferred
       description: Workflow initiation API (start workflow with input)
     - id: BP3.2
-      status: open
+      status: deferred
       description: Event-driven step triggering (on event, advance workflow)
     - id: BP3.3
-      status: open
+      status: deferred
       description: Workflow admin API (status, history, cancel)
     - id: BP3.4
-      status: open
+      status: deferred
       description: Dead workflow detection and recovery

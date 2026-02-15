@@ -22,8 +22,10 @@ export function genSqliteSchemaFromIr (ir: CoreIrV0, opts: SchemaGenOpts): Schem
   const receipts = genCommandReceipts()
   const sla = genSlaStatus()
   const queues = genQueues(ir)
+  const schedules = genSchedules()
+  const workflows = genWorkflows()
 
-  const sql = [versions, receipts, events, snapshots, viewIndexes, constraintIndexes, sla, queues].join("\n\n")
+  const sql = [versions, receipts, events, snapshots, viewIndexes, constraintIndexes, sla, queues, schedules, workflows].join("\n\n")
   return { sql }
 }
 
@@ -362,3 +364,90 @@ CREATE TABLE IF NOT EXISTS ${dlqTable} (
 );
 `.trim())
   }
+
+function genSchedules (): string {
+  return `
+CREATE TABLE IF NOT EXISTS scheduled_jobs (
+  tenant_id      TEXT NOT NULL,
+  id             TEXT NOT NULL,
+  schedule_name  TEXT NOT NULL,
+  
+  trigger_type   TEXT NOT NULL,
+  entity_type    TEXT,
+  entity_id      TEXT,
+  event_type     TEXT,
+  
+  scheduled_at   INTEGER NOT NULL,
+  timezone       TEXT,
+  
+  command_entity TEXT NOT NULL,
+  command_name   TEXT NOT NULL,
+  input_json     TEXT NOT NULL,
+  
+  queue_name     TEXT,
+  
+  status         TEXT NOT NULL,
+  attempts       INTEGER DEFAULT 0,
+  last_error     TEXT,
+  next_retry_at  INTEGER,
+  
+  created_at     INTEGER NOT NULL,
+  updated_at     INTEGER NOT NULL,
+  executed_at    INTEGER,
+  
+  PRIMARY KEY (tenant_id, id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_scheduled_jobs_due
+  ON scheduled_jobs(tenant_id, status, scheduled_at)
+  WHERE status IN ('pending', 'failed');
+
+CREATE INDEX IF NOT EXISTS idx_scheduled_jobs_entity
+  ON scheduled_jobs(tenant_id, entity_type, entity_id)
+  WHERE entity_type IS NOT NULL;
+
+CREATE TABLE IF NOT EXISTS cron_schedules (
+  tenant_id      TEXT NOT NULL,
+  name           TEXT NOT NULL,
+  expression     TEXT NOT NULL,
+  timezone       TEXT,
+  last_run_at    INTEGER,
+  next_run_at    INTEGER NOT NULL,
+  PRIMARY KEY (tenant_id, name)
+);
+`.trim()
+}
+
+function genWorkflows (): string {
+  return `
+-- Workflow instances track the active state of a saga/workflow
+CREATE TABLE IF NOT EXISTS workflow_instances (
+  tenant_id       TEXT NOT NULL,
+  workflow_id     TEXT NOT NULL,
+  workflow_name   TEXT NOT NULL,
+  current_step    TEXT NOT NULL,
+  status          TEXT NOT NULL, -- 'running', 'waiting', 'completed', 'failed', 'compensated'
+  wait_event_type TEXT,          -- for 'wait' steps expecting an event
+  context_json    TEXT NOT NULL, -- accumulated inputs/outputs
+  history_json    TEXT NOT NULL, -- step history
+  next_run_at     INTEGER,       -- for 'wait' steps
+  created_ts      INTEGER NOT NULL,
+  updated_ts      INTEGER NOT NULL,
+  PRIMARY KEY (tenant_id, workflow_id)
+);
+
+CREATE INDEX IF NOT EXISTS idx_workflow_instances_polling ON workflow_instances (tenant_id, status, next_run_at) WHERE status IN ('running', 'waiting');
+
+-- Workflow log for auditing and replay
+CREATE TABLE IF NOT EXISTS workflow_log (
+  tenant_id       TEXT NOT NULL,
+  workflow_id     TEXT NOT NULL,
+  step_name       TEXT NOT NULL,
+  action          TEXT NOT NULL, -- 'start', 'end', 'fail', 'compensate'
+  payload_json    TEXT NOT NULL,
+  ts              INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_workflow_log_id ON workflow_log (tenant_id, workflow_id);
+`.trim()
+}

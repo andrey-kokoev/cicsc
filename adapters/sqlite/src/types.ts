@@ -86,3 +86,33 @@ export type SlaBreach = {
 }
 
 export type BoolQueryConstraint = unknown // compiled/algebraic AST owned by core; adapter receives lowered plan
+
+export type ScheduledJobStatus = "pending" | "executing" | "completed" | "failed" | "canceled";
+
+export type ScheduledJob = {
+  id: string;
+  schedule_name: string;
+  
+  trigger_type: "cron" | "delay" | "event";
+  entity_type?: string;
+  entity_id?: string;
+  event_type?: string;
+  
+  scheduled_at: number;
+  timezone?: string;
+  
+  command_entity: string;
+  command_name: string;
+  input_json: string;
+  
+  queue_name?: string;
+  
+  status: ScheduledJobStatus;
+  attempts: number;
+  last_error?: string;
+  next_retry_at?: number;
+  
+  created_at: number;
+  updated_at: number;
+  executed_at?: number;
+};

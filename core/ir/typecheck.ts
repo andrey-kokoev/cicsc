@@ -251,6 +251,122 @@ export function typecheckCoreIrV0 (ir: CoreIrV0): TypecheckResult {
     }
   }
 
+  // schedules
+  for (const [sName, sSpecAny] of Object.entries(ir.schedules ?? {})) {
+    const sSpec: any = sSpecAny
+    const path = `schedules.${sName}`
+
+    const tName = sSpec.action?.entity_type
+    if (!typeNames.has(tName)) {
+      errors.push({ code: "UNKNOWN_TYPE", path: `${path}.action.entity_type`, message: `unknown entity_type '${tName}'` })
+    } else {
+      const tSpec: any = ir.types[tName]
+      const cmdName = sSpec.action?.command
+      if (tSpec.commands?.[cmdName] == null) {
+        errors.push({ code: "UNKNOWN_COMMAND", path: `${path}.action.command`, message: `unknown command '${cmdName}' on type '${tName}'` })
+      }
+    }
+
+    if (sSpec.queue && ir.queues?.[sSpec.queue] == null) {
+      errors.push({ code: "UNKNOWN_TYPE", path: `${path}.queue`, message: `unknown queue '${sSpec.queue}'` })
+    }
+
+    const tSpec = ir.types[tName] as any
+    const shadows = new Set(Object.keys(tSpec?.shadows ?? {}))
+    const walkCtx: any = {
+      errors,
+      warnings,
+      path,
+      attrs: new Set(Object.keys(tSpec?.attrs ?? {})),
+      allowedRowFields: buildAllowedRowFields(shadows),
+    }
+
+    for (const [k, ex] of Object.entries((sSpec.action as any)?.input_map ?? {})) {
+      walkExpr(ex, `${path}.action.input_map.${k}`, walkCtx)
+    }
+
+    if (sSpec.condition) {
+      walkExpr(sSpec.condition, `${path}.condition`, walkCtx)
+    }
+
+    if (sSpec.trigger?.delay_expr) {
+      walkExpr(sSpec.trigger.delay_expr, `${path}.trigger.delay_expr`, walkCtx)
+    }
+  }
+
+  // workflows
+  for (const [wfName, wfSpecAny] of Object.entries(ir.workflows ?? {})) {
+    const wfSpec: any = wfSpecAny
+    const stepNames = new Set(Object.keys(wfSpec.steps ?? {}))
+
+    for (const [stepName, stepAny] of Object.entries(wfSpec.steps ?? {})) {
+      const step: any = stepAny
+      const path = `workflows.${wfName}.steps.${stepName}`
+
+      if (step.kind === "command") {
+        if (!typeNames.has(step.entity_type)) {
+          errors.push({ code: "UNKNOWN_TYPE", path: `${path}.entity_type`, message: `unknown type '${step.entity_type}'` })
+        } else {
+          const t = (ir.types as any)[step.entity_type]
+          if (t && t.commands && !t.commands[step.command]) {
+            errors.push({ code: "UNKNOWN_COMMAND", path: `${path}.command`, message: `unknown command '${step.command}' on type '${step.entity_type}'` })
+          }
+        }
+        if (step.next && !stepNames.has(step.next)) {
+          errors.push({ code: "ILLEGAL_EXPR", path: `${path}.next`, message: `step '${step.next}' not found in workflow '${wfName}'` })
+        }
+        // walk input_map
+        for (const [k, ex] of Object.entries(step.input_map ?? {})) {
+          walkExpr(ex as any, `${path}.input_map.${k}`, {
+            allowedRowFields: new Set(),
+            attrs: new Set(),
+            errors,
+            allowSqlOnlyIntrinsics: false,
+          })
+        }
+        if (step.compensate) {
+          const comp = step.compensate
+          if (comp.kind === "command") {
+            if (!typeNames.has(comp.entity_type)) {
+              errors.push({ code: "UNKNOWN_TYPE", path: `${path}.compensate.entity_type`, message: `unknown type '${comp.entity_type}'` })
+            } else {
+              const t = (ir.types as any)[comp.entity_type]
+              if (t && t.commands && !t.commands[comp.command]) {
+                errors.push({ code: "UNKNOWN_COMMAND", path: `${path}.compensate.command`, message: `unknown command '${comp.command}' on type '${comp.entity_type}'` })
+              }
+            }
+          }
+        }
+      } else if (step.kind === "wait") {
+        if (step.next && !stepNames.has(step.next)) {
+          errors.push({ code: "ILLEGAL_EXPR", path: `${path}.next`, message: `step '${step.next}' not found in workflow '${wfName}'` })
+        }
+        if (step.on_timeout && !stepNames.has(step.on_timeout)) {
+          errors.push({ code: "ILLEGAL_EXPR", path: `${path}.on_timeout`, message: `step '${step.on_timeout}' not found in workflow '${wfName}'` })
+        }
+      } else if (step.kind === "decision") {
+        const cases = step.cases ?? []
+        for (let i = 0; i < cases.length; i++) {
+          const c = cases[i]
+          if (c.next && !stepNames.has(c.next)) {
+            errors.push({ code: "ILLEGAL_EXPR", path: `${path}.cases[${i}].next`, message: `step '${c.next}' not found in workflow '${wfName}'` })
+          }
+          if (c.condition) {
+            walkExpr(c.condition, `${path}.cases[${i}].condition`, {
+              allowedRowFields: new Set(),
+              attrs: new Set(),
+              errors,
+              allowSqlOnlyIntrinsics: false,
+            })
+          }
+        }
+        if (step.default_next && !stepNames.has(step.default_next)) {
+          errors.push({ code: "ILLEGAL_EXPR", path: `${path}.default_next`, message: `step '${step.default_next}' not found in workflow '${wfName}'` })
+        }
+      }
+    }
+  }
+
   if (errors.length) return { ok: false, errors, warnings }
   return { ok: true, warnings }
 }

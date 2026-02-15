@@ -14,6 +14,7 @@ import type {
   TenantId,
   UnixSeconds,
   ViewResultPage,
+  ScheduledJob,
 } from "./types"
 
 type D1Database = {
@@ -576,6 +577,317 @@ export class SqliteD1Adapter {
       )
       await tx.exec(`DELETE FROM ${dlqTable} WHERE tenant_id=? AND id=?`, [tenant_id, message_id])
     })
+  }
+
+  // --------------------------
+  // Schedules
+  // --------------------------
+
+  async schedule_job (params: {
+    tenant_id: TenantId
+    job: Omit<ScheduledJob, "id" | "status" | "attempts" | "created_at" | "updated_at">
+  }): Promise<string> {
+    const { tenant_id, job } = params
+    const id = crypto.randomUUID()
+    const now = Date.now()
+
+    await this.tx(async (tx) => {
+      await tx.exec(
+        `INSERT INTO scheduled_jobs (
+          tenant_id, id, schedule_name, trigger_type, entity_type, entity_id, event_type,
+          scheduled_at, timezone, command_entity, command_name, input_json, queue_name,
+          status, attempts, created_at, updated_at
+        ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+        [
+          tenant_id, id, job.schedule_name, job.trigger_type, job.entity_type ?? null, job.entity_id ?? null, job.event_type ?? null,
+          job.scheduled_at, job.timezone ?? null, job.command_entity, job.command_name, job.input_json, job.queue_name ?? null,
+          "pending", 0, now, now
+        ]
+      )
+    })
+    return id
+  }
+
+  async list_due_jobs (params: {
+    tenant_id: TenantId
+    now: number
+    limit?: number
+  }): Promise<ScheduledJob[]> {
+    const { tenant_id, now, limit = 10 } = params
+    const rows = await this.db.prepare(
+      `SELECT * FROM scheduled_jobs 
+       WHERE tenant_id=? AND status IN ('pending', 'failed') AND (next_retry_at IS NULL OR next_retry_at <= ?) AND scheduled_at <= ?
+       ORDER BY scheduled_at ASC
+       LIMIT ?`
+    ).bind(tenant_id, now, now, limit).all<ScheduledJob>()
+    return rows.results ?? []
+  }
+
+  async mark_job_executing (params: {
+    tenant_id: TenantId
+    id: string
+    now: number
+  }): Promise<boolean> {
+    const { tenant_id, id, now } = params
+    return this.tx(async (tx) => {
+      const res = await tx.exec(
+        `UPDATE scheduled_jobs SET status='executing', updated_at=?, attempts=attempts+1
+         WHERE tenant_id=? AND id=? AND status IN ('pending', 'failed')`,
+        [now, tenant_id, id]
+      )
+      return ((res as any).count ?? 0) > 0
+    })
+  }
+
+  async complete_job (params: {
+    tenant_id: TenantId
+    id: string
+    now: number
+  }): Promise<void> {
+    const { tenant_id, id, now } = params
+    await this.tx(async (tx) => {
+      await tx.exec(
+        `UPDATE scheduled_jobs SET status='completed', executed_at=?, updated_at=?
+         WHERE tenant_id=? AND id=?`,
+        [now, now, tenant_id, id]
+      )
+    })
+  }
+
+  async fail_job (params: {
+    tenant_id: TenantId
+    id: string
+    error: string
+    next_retry_at?: number
+  }): Promise<void> {
+    const { tenant_id, id, error, next_retry_at } = params
+    const now = Date.now()
+    await this.tx(async (tx) => {
+      await tx.exec(
+        `UPDATE scheduled_jobs SET status='failed', last_error=?, next_retry_at=?, updated_at=?
+         WHERE tenant_id=? AND id=?`,
+        [error, next_retry_at ?? null, now, tenant_id, id]
+      )
+    })
+  }
+
+  async cancel_job (params: {
+    tenant_id: TenantId
+    id: string
+  }): Promise<void> {
+    const { tenant_id, id } = params
+    const now = Date.now()
+    await this.tx(async (tx) => {
+      await tx.exec(
+        `UPDATE scheduled_jobs SET status='canceled', updated_at=?
+         WHERE tenant_id=? AND id=?`,
+        [now, tenant_id, id]
+      )
+    })
+  }
+
+  async get_job (params: {
+    tenant_id: TenantId
+    id: string
+  }): Promise<ScheduledJob | null> {
+    const { tenant_id, id } = params
+    return await this.db.prepare(`SELECT * FROM scheduled_jobs WHERE tenant_id=? AND id=?`).bind(tenant_id, id).first<ScheduledJob>()
+  }
+
+  async list_jobs_for_entity (params: {
+    tenant_id: TenantId
+    entity_type: string
+    entity_id: string
+  }): Promise<ScheduledJob[]> {
+    const { tenant_id, entity_type, entity_id } = params
+    const rows = await this.db.prepare(
+      `SELECT * FROM scheduled_jobs WHERE tenant_id=? AND entity_type=? AND entity_id=? ORDER BY created_at DESC`
+    ).bind(tenant_id, entity_type, entity_id).all<ScheduledJob>()
+    return rows.results ?? []
+  }
+
+  async get_schedule_metrics (params: {
+    tenant_id: TenantId
+  }): Promise<{
+    pending_count: number
+    failed_count: number
+    avg_latency_ms: number
+  }> {
+    const { tenant_id } = params
+    return this.tx(async (tx) => {
+      const counts = await tx.exec(
+        `SELECT status, COUNT(*) as cnt FROM scheduled_jobs WHERE tenant_id=? GROUP BY status`,
+        [tenant_id]
+      )
+      const res = (counts as any).rows ?? []
+      const pending = res.find((r: any) => (r as any).status === "pending")?.cnt ?? 0
+      const failed = res.find((r: any) => (r as any).status === "failed")?.cnt ?? 0
+
+      const latencyRow = firstRow<any>(
+        await tx.exec(
+          `SELECT AVG(executed_at - scheduled_at) as avg_latency FROM scheduled_jobs 
+            WHERE tenant_id=? AND status='completed' AND executed_at IS NOT NULL`,
+          [tenant_id]
+        )
+      )
+
+      return {
+        pending_count: Number(pending),
+        failed_count: Number(failed),
+        avg_latency_ms: Number(latencyRow?.avg_latency ?? 0),
+      }
+    })
+  }
+
+  // --------------------------
+  // Cron Schedules
+  // --------------------------
+
+  async upsert_cron_schedule (params: {
+    tenant_id: TenantId
+    name: string
+    expression: string
+    timezone?: string
+    next_run_at: number
+  }): Promise<void> {
+    const { tenant_id, name, expression, timezone, next_run_at } = params
+    await this.tx(async (tx) => {
+      await tx.exec(
+        `INSERT INTO cron_schedules (tenant_id, name, expression, timezone, next_run_at)
+         VALUES (?,?,?,?,?)
+         ON CONFLICT(tenant_id, name) DO UPDATE SET 
+           expression=excluded.expression, 
+           timezone=excluded.timezone, 
+           next_run_at=excluded.next_run_at`,
+        [tenant_id, name, expression, timezone ?? null, next_run_at]
+      )
+    })
+  }
+
+  async list_due_cron_schedules (params: {
+    tenant_id: TenantId
+    now: number
+  }): Promise<any[]> {
+    const { tenant_id, now } = params
+    const rows = await this.db.prepare(
+      `SELECT * FROM cron_schedules WHERE tenant_id=? AND next_run_at <= ?`
+    ).bind(tenant_id, now).all()
+    return rows.results ?? []
+  }
+
+  async update_cron_last_run (params: {
+    tenant_id: TenantId
+    name: string
+    last_run_at: number
+    next_run_at: number
+  }): Promise<void> {
+    const { tenant_id, name, last_run_at, next_run_at } = params
+    await this.tx(async (tx) => {
+      await tx.exec(
+        `UPDATE cron_schedules SET last_run_at=?, next_run_at=?
+         WHERE tenant_id=? AND name=?`,
+        [last_run_at, next_run_at, tenant_id, name]
+      )
+    })
+  }
+
+  // Workflows
+  async create_workflow_instance (instance: any): Promise<void> {
+    await this.db
+      .prepare(
+        `INSERT INTO workflow_instances 
+        (tenant_id, workflow_id, workflow_name, current_step, status, wait_event_type, context_json, history_json, next_run_at, created_ts, updated_ts)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+      )
+      .bind(
+        instance.tenant_id,
+        instance.workflow_id,
+        instance.workflow_name,
+        instance.current_step,
+        instance.status,
+        instance.wait_event_type,
+        instance.context_json,
+        instance.history_json,
+        instance.next_run_at,
+        instance.created_ts,
+        instance.updated_ts
+      )
+      .run()
+  }
+
+  async update_workflow_instance (instance: any): Promise<void> {
+    const fields: string[] = []
+    const params: any[] = []
+
+    if (instance.current_step !== undefined) {
+      fields.push("current_step = ?")
+      params.push(instance.current_step)
+    }
+    if (instance.status !== undefined) {
+      fields.push("status = ?")
+      params.push(instance.status)
+    }
+    if (instance.wait_event_type !== undefined) {
+      fields.push("wait_event_type = ?")
+      params.push(instance.wait_event_type)
+    }
+    if (instance.context_json !== undefined) {
+      fields.push("context_json = ?")
+      params.push(instance.context_json)
+    }
+    if (instance.history_json !== undefined) {
+      fields.push("history_json = ?")
+      params.push(instance.history_json)
+    }
+    if (instance.next_run_at !== undefined) {
+      fields.push("next_run_at = ?")
+      params.push(instance.next_run_at)
+    }
+    if (instance.updated_ts !== undefined) {
+      fields.push("updated_ts = ?")
+      params.push(instance.updated_ts)
+    }
+
+    if (fields.length === 0) return
+
+    params.push(instance.tenant_id, instance.workflow_id)
+    await this.db
+      .prepare(`UPDATE workflow_instances SET ${fields.join(", ")} WHERE tenant_id = ? AND workflow_id = ?`)
+      .bind(...params)
+      .run()
+  }
+
+  async list_workflow_instances_waiting_for_event (params: { tenant_id: string; event_type: string }): Promise<any[]> {
+    const res = await this.db
+      .prepare(`SELECT * FROM workflow_instances WHERE tenant_id = ? AND status = 'waiting' AND wait_event_type = ?`)
+      .bind(params.tenant_id, params.event_type)
+      .all()
+    return res.results || []
+  }
+
+  async get_workflow_instance (tenant_id: string, workflow_id: string): Promise<any | null> {
+    const res = await this.db
+      .prepare(`SELECT * FROM workflow_instances WHERE tenant_id = ? AND workflow_id = ?`)
+      .bind(tenant_id, workflow_id)
+      .first()
+    return res
+  }
+
+  async list_due_workflow_instances (params: { tenant_id: string; now: number }): Promise<any[]> {
+    const res = await this.db
+      .prepare(
+        `SELECT * FROM workflow_instances WHERE tenant_id = ? AND (status = 'running' OR (status = 'waiting' AND next_run_at <= ?))`
+      )
+      .bind(params.tenant_id, params.now)
+      .all()
+    return res.results || []
+  }
+
+  async append_workflow_log (entry: any): Promise<void> {
+    await this.db
+      .prepare(`INSERT INTO workflow_log (tenant_id, workflow_id, step_name, action, payload_json, ts) VALUES (?, ?, ?, ?, ?, ?)`)
+      .bind(entry.tenant_id, entry.workflow_id, entry.step_name, entry.action, entry.payload_json, entry.ts)
+      .run()
   }
 }
 

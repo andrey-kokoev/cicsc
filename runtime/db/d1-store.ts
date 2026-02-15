@@ -7,6 +7,7 @@ import { lowerQueryToSql } from "../../adapters/sqlite/src/lower/query-to-sql"
 import { lowerBoolQueryConstraintToSql } from "../../adapters/sqlite/src/lower/constraint-to-sql"
 import { interpretQuery } from "../../core/query/interpret"
 import type { QueueStore, QueueMessage } from "./queue-store"
+import type { ScheduleStore, ScheduledJob } from "./schedule-store"
 
 export type D1Store = {
   adapter: SqliteD1Adapter
@@ -70,7 +71,7 @@ export type D1Store = {
     constraint_id: string
     args?: Record<string, any>
   }) => Promise<boolean>
-} & QueueStore
+} & QueueStore & ScheduleStore
 
 export function makeD1Store (params: { adapter: SqliteD1Adapter }): D1Store {
   const { adapter } = params
@@ -147,6 +148,20 @@ export function makeD1Store (params: { adapter: SqliteD1Adapter }): D1Store {
     getMetrics: (p) => adapter.getMetrics(p),
     listDlq: (p) => adapter.listDlq(p),
     replayDlq: (p) => adapter.replayDlq(p),
+
+    scheduleJob: (tenant_id, job) => adapter.schedule_job({ tenant_id, job }),
+    listDueJobs: (tenant_id, now, limit) => adapter.list_due_jobs({ tenant_id, now, limit }),
+    markExecuting: (tenant_id, id, now) => adapter.mark_job_executing({ tenant_id, id, now }),
+    completeJob: (tenant_id, id, now) => adapter.complete_job({ tenant_id, id, now }),
+    failJob: (tenant_id, id, error, next_retry_at) => adapter.fail_job({ tenant_id, id, error, next_retry_at }),
+    cancelJob: (tenant_id, id) => adapter.cancel_job({ tenant_id, id }),
+    getJob: (tenant_id, id) => adapter.get_job({ tenant_id, id }),
+    listJobsForEntity: (tenant_id, entity_type, entity_id) => adapter.list_jobs_for_entity({ tenant_id, entity_type, entity_id }),
+    getScheduleMetrics: (tenant_id) => adapter.get_schedule_metrics({ tenant_id }),
+
+    upsertCronSchedule: (p) => adapter.upsert_cron_schedule(p),
+    listDueCronSchedules: (p) => adapter.list_due_cron_schedules(p),
+    updateCronLastRun: (p) => adapter.update_cron_last_run(p),
   }
 }
 

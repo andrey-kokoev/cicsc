@@ -15,6 +15,8 @@ export type CoreIrV0 = {
   subscriptions?: Record<string, SubscriptionSpecV0>
   webhooks?: Record<string, WebhookSpecV0>
   queues?: Record<string, QueueSpecV0>
+  schedules?: Record<string, ScheduleSpecV0>
+  workflows?: Record<string, WorkflowSpecV0>
 }
 
 export type EntityTypeSpecV0 = {
@@ -263,3 +265,73 @@ export type AggExprV0 =
   | { sum: { expr: ExprV0 } }
   | { min: { expr: ExprV0 } }
   | { max: { expr: ExprV0 } }
+
+export type ScheduleSpecV0 = {
+  trigger: ScheduleTriggerV0
+  condition?: ExprV0
+  action: ScheduleActionV0
+  queue?: string
+  execution: {
+    timezone?: string
+    max_delay_seconds?: number
+    retry?: {
+      max_attempts: number
+      backoff_ms: number
+    }
+  }
+}
+
+export type ScheduleTriggerV0 =
+  | { cron: string }
+  | { delay_seconds: number }
+  | { delay_expr: ExprV0 }
+  | { on_event: string; delay_seconds?: number }
+
+export type ScheduleActionV0 = {
+  entity_type: string
+  command: string
+  input_map: Record<string, ExprV0>
+}
+
+export type WorkflowSpecV0 = {
+  initial_step: string
+  steps: Record<string, WorkflowStepV0>
+}
+
+export type WorkflowStepV0 = {
+  kind: "command" | "wait" | "decision" | "end"
+  
+  // Transitions
+  next_step?: string
+  
+  // Command step
+  invoke?: {
+    entity_type: string
+    entity_id: ExprV0
+    command: string
+    input_map: Record<string, ExprV0>
+  }
+  
+  // Compensation for this step (if invoked successfully)
+  compensate?: {
+    entity_type: string
+    entity_id: ExprV0
+    command: string
+    input_map: Record<string, ExprV0>
+  }
+
+  // Wait step
+  wait?: {
+    on_event: string
+    condition?: ExprV0 // Filter for the event
+    timeout_seconds?: number
+    on_timeout?: string
+  }
+
+  // Decision step
+  decision?: {
+    condition: ExprV0
+    on_true: string
+    on_false: string
+  }
+}

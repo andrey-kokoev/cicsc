@@ -46,6 +46,20 @@ export function validateBundleV0 (bundle: unknown): { ok: true; value: CoreIrBun
     }
   }
 
+  if (ir.schedules != null && !isObject(ir.schedules)) errors.push({ path: "$.core_ir.schedules", message: "schedules must be an object" })
+  else if (ir.schedules != null) {
+    for (const [sName, sSpec] of Object.entries(ir.schedules)) {
+      validateSchedule(errors, `$.core_ir.schedules.${sName}`, sName, sSpec as any)
+    }
+  }
+
+  if (ir.workflows != null && !isObject(ir.workflows)) errors.push({ path: "$.core_ir.workflows", message: "workflows must be an object" })
+  else if (ir.workflows != null) {
+    for (const [wfName, wfSpec] of Object.entries(ir.workflows)) {
+      validateWorkflow(errors, `$.core_ir.workflows.${wfName}`, wfName, wfSpec as any)
+    }
+  }
+
   if (errors.length) return { ok: false, errors }
 
   const tc = typecheckCoreIrV0(ir as CoreIrV0)
@@ -289,5 +303,146 @@ function validateQueue (errors: ValidationError[], path: string, queueName: stri
       if (typeof spec.map_to.command !== "string") errors.push({ path: `${path}.map_to.command`, message: "command must be string" })
       if (!isObject(spec.map_to.input_map)) errors.push({ path: `${path}.map_to.input_map`, message: "input_map must be an object" })
     }
+  }
+}
+
+function validateSchedule (errors: ValidationError[], path: string, name: string, spec: any) {
+  if (!isObject(spec)) {
+    errors.push({ path, message: "schedule spec must be an object" })
+    return
+  }
+
+  // Trigger
+  if (!isObject(spec.trigger)) {
+    errors.push({ path: `${path}.trigger`, message: "trigger must be an object" })
+  } else {
+    const t = spec.trigger
+    const tp = `${path}.trigger`
+    if (t.cron !== undefined) {
+      if (typeof t.cron !== "string") errors.push({ path: `${tp}.cron`, message: "cron must be a string" })
+    } else if (t.delay_seconds !== undefined) {
+      if (typeof t.delay_seconds !== "number") errors.push({ path: `${tp}.delay_seconds`, message: "delay_seconds must be a number" })
+    } else if (t.delay_expr !== undefined) {
+      validateExpr(errors, `${tp}.delay_expr`, t.delay_expr)
+    } else if (t.on_event !== undefined) {
+      if (typeof t.on_event !== "string") errors.push({ path: `${tp}.on_event`, message: "on_event must be a string" })
+      if (t.delay_seconds !== undefined && typeof t.delay_seconds !== "number") {
+        errors.push({ path: `${tp}.delay_seconds`, message: "delay_seconds must be a number" })
+      }
+    } else {
+      errors.push({ path: tp, message: "trigger must have cron, delay_seconds, delay_expr, or on_event" })
+    }
+  }
+
+  // Action
+  if (!isObject(spec.action)) {
+    errors.push({ path: `${path}.action`, message: "action must be an object" })
+  } else {
+    const a = spec.action
+    const ap = `${path}.action`
+    if (typeof a.entity_type !== "string") errors.push({ path: `${ap}.entity_type`, message: "entity_type must be a string" })
+    if (typeof a.command !== "string") errors.push({ path: `${ap}.command`, message: "command must be a string" })
+    if (!isObject(a.input_map)) errors.push({ path: `${ap}.input_map`, message: "input_map must be an object" })
+    else {
+      for (const [k, ex] of Object.entries(a.input_map)) {
+        validateExpr(errors, `${ap}.input_map.${k}`, ex as any)
+      }
+    }
+  }
+
+  // Execution
+  if (!isObject(spec.execution)) {
+    errors.push({ path: `${path}.execution`, message: "execution must be an object" })
+  } else {
+    const e = spec.execution
+    const ep = `${path}.execution`
+    if (e.timezone !== undefined && typeof e.timezone !== "string") errors.push({ path: `${ep}.timezone`, message: "timezone must be a string" })
+    if (e.max_delay_seconds !== undefined && typeof e.max_delay_seconds !== "number") errors.push({ path: `${ep}.max_delay_seconds`, message: "max_delay_seconds must be a number" })
+    if (e.retry !== undefined) {
+      if (!isObject(e.retry)) errors.push({ path: `${ep}.retry`, message: "retry must be an object" })
+      else {
+        if (typeof e.retry.max_attempts !== "number") errors.push({ path: `${ep}.retry.max_attempts`, message: "max_attempts must be a number" })
+        if (typeof e.retry.backoff_ms !== "number") errors.push({ path: `${ep}.retry.backoff_ms`, message: "backoff_ms must be a number" })
+      }
+    }
+  }
+
+  if (spec.condition !== undefined) validateExpr(errors, `${path}.condition`, spec.condition)
+  if (spec.queue !== undefined && typeof spec.queue !== "string") errors.push({ path: `${path}.queue`, message: "queue must be a string" })
+}
+
+function validateWorkflow (errors: ValidationError[], path: string, name: string, spec: any) {
+  if (!isObject(spec)) {
+    errors.push({ path, message: "workflow spec must be an object" })
+    return
+  }
+
+  if (typeof spec.initial_step !== "string") {
+    errors.push({ path: `${path}.initial_step`, message: "initial_step must be a string" })
+  }
+
+  if (!isObject(spec.steps)) {
+    errors.push({ path: `${path}.steps`, message: "steps must be an object" })
+  } else {
+    for (const [stepName, stepSpec] of Object.entries(spec.steps)) {
+      validateWorkflowStep(errors, `${path}.steps.${stepName}`, stepSpec)
+    }
+    if (spec.initial_step && !isObject(spec.steps[spec.initial_step])) {
+      errors.push({ path: `${path}.initial_step`, message: `initial_step '${spec.initial_step}' not found in steps` })
+    }
+  }
+
+  if (spec.on_event !== undefined && typeof spec.on_event !== "string") {
+    errors.push({ path: `${path}.on_event`, message: "on_event must be a string" })
+  }
+}
+
+function validateWorkflowStep (errors: ValidationError[], path: string, step: any) {
+  if (!isObject(step)) {
+    errors.push({ path, message: "step must be an object" })
+    return
+  }
+
+  if (!["command", "wait", "decision", "end"].includes(step.kind)) {
+    errors.push({ path: `${path}.kind`, message: "invalid step kind" })
+  }
+
+  if (step.kind === "command") {
+    if (typeof step.entity_type !== "string") errors.push({ path: `${path}.entity_type`, message: "entity_type must be string" })
+    if (typeof step.command !== "string") errors.push({ path: `${path}.command`, message: "command must be string" })
+    if (!isObject(step.input_map)) errors.push({ path: `${path}.input_map`, message: "input_map must be an object" })
+    else {
+      for (const [k, ex] of Object.entries(step.input_map)) validateExpr(errors, `${path}.input_map.${k}`, ex as any)
+    }
+    if (step.next !== undefined && typeof step.next !== "string") errors.push({ path: `${path}.next`, message: "next must be string" })
+    if (step.compensate !== undefined) validateWorkflowStep(errors, `${path}.compensate`, step.compensate)
+  }
+
+  if (step.kind === "wait") {
+    if (typeof step.event_type !== "string") errors.push({ path: `${path}.event_type`, message: "event_type must be string" })
+    if (step.timeout_seconds !== undefined && typeof step.timeout_seconds !== "number") {
+      errors.push({ path: `${path}.timeout_seconds`, message: "timeout_seconds must be number" })
+    }
+    if (typeof step.next !== "string") errors.push({ path: `${path}.next`, message: "next must be string" })
+    if (step.on_timeout !== undefined && typeof step.on_timeout !== "string") {
+      errors.push({ path: `${path}.on_timeout`, message: "on_timeout must be string" })
+    }
+  }
+
+  if (step.kind === "decision") {
+    if (!Array.isArray(step.cases)) {
+      errors.push({ path: `${path}.cases`, message: "cases must be an array" })
+    } else {
+      step.cases.forEach((c: any, i: number) => {
+        const cp = `${path}.cases[${i}]`
+        if (!isObject(c)) errors.push({ path: cp, message: "case must be object" })
+        else {
+          if (!isObject(c.condition)) errors.push({ path: `${cp}.condition`, message: "condition must be object" })
+          else validateExpr(errors, `${cp}.condition`, c.condition)
+          if (typeof c.next !== "string") errors.push({ path: `${cp}.next`, message: "next must be string" })
+        }
+      })
+    }
+    if (typeof step.default_next !== "string") errors.push({ path: `${path}.default_next`, message: "default_next must be string" })
   }
 }

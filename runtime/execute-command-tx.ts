@@ -4,6 +4,9 @@ import { applyReducerOps, type Snapshot } from "../core/reducer/apply"
 import { runAllConstraints } from "../core/runtime/constraints"
 import type { SnapRow } from "../core/query/interpret"
 import { lowerBoolQueryConstraintToSql } from "../adapters/sqlite/src/lower/constraint-to-sql"
+import { ScheduleManager } from "./schedule/manager"
+import type { ScheduleStore } from "./db/schedule-store"
+import { WorkflowManager } from "./workflow/manager"
 
 export type ExecuteCommandInput = {
   tenant_id: string
@@ -234,6 +237,49 @@ export async function executeCommandTx (params: {
 
     // 10) receipt
     await writeReceipt(tx, req.tenant_id, req.command_id, req.entity_type, req.entity_id, result, req.now)
+
+    // 11) hook into schedules
+    const txStore: ScheduleStore = {
+      scheduleJob: async (tenant_id, job) => {
+        const id = crypto.randomUUID()
+        const now = Date.now()
+        await tx.exec(
+          `INSERT INTO scheduled_jobs (
+            tenant_id, id, schedule_name, trigger_type, entity_type, entity_id, event_type,
+            scheduled_at, timezone, command_entity, command_name, input_json, queue_name,
+            status, attempts, created_at, updated_at
+          ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+          [
+            tenant_id, id, job.schedule_name, job.trigger_type, job.entity_type ?? null, job.entity_id ?? null, job.event_type ?? null,
+            job.scheduled_at, job.timezone ?? null, job.command_entity, job.command_name, job.input_json, job.queue_name ?? null,
+            "pending", 0, now, now
+          ]
+        )
+        return id
+      },
+      listDueJobs: () => { throw new Error("not implemented in tx") },
+      markExecuting: () => { throw new Error("not implemented in tx") },
+      completeJob: () => { throw new Error("not implemented in tx") },
+      failJob: () => { throw new Error("not implemented in tx") },
+      cancelJob: () => { throw new Error("not implemented in tx") },
+      getJob: () => { throw new Error("not implemented in tx") },
+      listJobsForEntity: () => { throw new Error("not implemented in tx") },
+      getScheduleMetrics: () => { throw new Error("not implemented in tx") },
+    }
+
+    const scheduleManager = new ScheduleManager(txStore, ir, intrinsics)
+    await scheduleManager.onEventsEmitted({
+      tenant_id: req.tenant_id,
+      entity_type: req.entity_type,
+      entity_id: req.entity_id,
+      events,
+      env: {
+        state: snap.state,
+        input: req.input as any,
+        attrs: snap.attrs,
+        policies,
+      },
+    })
 
     return result
   })

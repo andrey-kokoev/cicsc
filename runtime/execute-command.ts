@@ -4,6 +4,7 @@ import type { CoreIrV0, ExprV0 } from "../core/ir/types"
 import { evalExpr, type VmEnv, type VmIntrinsics, type Value } from "../core/vm/eval"
 import { applyReducerOps, type Snapshot } from "../core/reducer/apply"
 import type { D1Store } from "./db/d1-store"
+import { ScheduleManager } from "./schedule/manager"
 
 export type ExecuteCommandInput = {
   tenant_id: string
@@ -149,6 +150,21 @@ export async function executeCommand (params: {
     const ok = await store.checkBoolQueryConstraint({ tenant_id: req.tenant_id, ir, constraint_id: cid, args: {} })
     if (!ok) throw new Error(`constraint violated: ${cid}`)
   }
+
+  // Hook into schedules
+  const scheduleManager = new ScheduleManager(store, ir, intrinsics)
+  await scheduleManager.onEventsEmitted({
+    tenant_id: req.tenant_id,
+    entity_type: req.entity_type,
+    entity_id: req.entity_id,
+    events,
+    env: {
+      state: snap.state,
+      input: req.input as any,
+      attrs: snap.attrs,
+      policies,
+    },
+  })
 
   return { ...append, state: next.state, updated_ts: req.now }
 }
