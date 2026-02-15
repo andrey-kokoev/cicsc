@@ -1,7 +1,7 @@
 # Phase BT: Row-Level Security Sugar
 
-**Status**: PLANNED (v1.9.0)  
-**Agent**: TBD  
+**Status**: PLANNED  
+**Agent**: AGENT_COPILOT_GEMINI  
 **Vertical Gap**: No Spec-level RLS patterns
 
 ## Problem
