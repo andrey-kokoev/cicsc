@@ -1343,3 +1343,27 @@ assignments:
   agent_ref: AGENT_GEMINI
   status: open
   created_at: '2026-02-15T16:02:45.543512Z'
+- checkbox_ref: BS1.1
+  agent: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BS1.2
+  agent: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BS1.3
+  agent: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BS1.4
+  agent: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BS2.1
+  agent: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BS2.2
+  agent: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BS2.3
+  agent: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BS2.4
+  agent: AGENT_COPILOT_GEMINI
+  status: open

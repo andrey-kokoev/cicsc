@@ -2574,3 +2574,178 @@ phases:
     - id: BP3.4
       status: open
       description: Dead workflow detection and recovery
+- id: BQ
+  number: 37
+  status: in_progress
+  title: Event Transform Fan-out
+  milestones:
+  - id: BQ1
+    title: Core IR Fan-out Extension
+    checkboxes:
+    - id: BQ1.1
+      status: open
+      description: Add emit_many to EventTransformV0
+    - id: BQ1.2
+      status: open
+      description: Define fan-out expression context
+    - id: BQ1.3
+      status: open
+      description: Update IR validator
+    - id: BQ1.4
+      status: open
+      description: Spec DSL syntax
+  - id: BQ2
+    title: Migration Engine Fan-out
+    checkboxes:
+    - id: BQ2.1
+      status: open
+      description: Handle multiple output events
+    - id: BQ2.2
+      status: open
+      description: Preserve event ordering
+    - id: BQ2.3
+      status: open
+      description: Idempotency
+    - id: BQ2.4
+      status: open
+      description: Replay verification
+- id: BR
+  number: 38
+  status: planned
+  title: Native SLA Declaration
+  milestones:
+  - id: BR1
+    title: Core IR SLA Extension
+    checkboxes:
+    - id: BR1.1
+      status: open
+      description: SlaSpecV0 with start/stop selectors
+    - id: BR1.2
+      status: open
+      description: SLA breach detection
+    - id: BR1.3
+      status: open
+      description: Breach action binding
+    - id: BR1.4
+      status: open
+      description: Update IR validator
+  - id: BR2
+    title: SLA Runtime
+    checkboxes:
+    - id: BR2.1
+      status: open
+      description: SLA tracker
+    - id: BR2.2
+      status: open
+      description: Breach detector
+    - id: BR2.3
+      status: open
+      description: Action executor
+    - id: BR2.4
+      status: open
+      description: Metrics export
+- id: BS
+  number: 39
+  status: planned
+  title: Rich Aggregates
+  milestones:
+  - id: BS1
+    title: Query AST Extension
+    checkboxes:
+    - id: BS1.1
+      status: open
+      description: Add rate operator
+    - id: BS1.2
+      status: open
+      description: Add ratio operator
+    - id: BS1.3
+      status: open
+      description: Add time_between operator
+    - id: BS1.4
+      status: open
+      description: Update QueryV0 types
+  - id: BS2
+    title: View Runtime
+    checkboxes:
+    - id: BS2.1
+      status: open
+      description: SQL for rate()
+    - id: BS2.2
+      status: open
+      description: SQL for ratio()
+    - id: BS2.3
+      status: open
+      description: Oracle conformance
+    - id: BS2.4
+      status: open
+      description: Spec DSL sugar
+- id: BT
+  number: 40
+  status: planned
+  title: Row-Level Security Sugar
+  milestones:
+  - id: BT1
+    title: Core IR RLS Extension
+    checkboxes:
+    - id: BT1.1
+      status: open
+      description: Add row_policy patterns
+    - id: BT1.2
+      status: open
+      description: Define owner semantics
+    - id: BT1.3
+      status: open
+      description: Define member_of semantics
+    - id: BT1.4
+      status: open
+      description: Update IR validator
+  - id: BT2
+    title: RLS Runtime
+    checkboxes:
+    - id: BT2.1
+      status: open
+      description: Owner pattern codegen
+    - id: BT2.2
+      status: open
+      description: Member-of codegen
+    - id: BT2.3
+      status: open
+      description: Fallback to custom expr
+    - id: BT2.4
+      status: open
+      description: RLS enforcement
+- id: BU
+  number: 41
+  status: planned
+  title: Multi-Entity Commands
+  milestones:
+  - id: BU1
+    title: Core IR Multi-Entity
+    checkboxes:
+    - id: BU1.1
+      status: open
+      description: WorkflowCommandSpecV0
+    - id: BU1.2
+      status: open
+      description: Transaction boundary semantics
+    - id: BU1.3
+      status: open
+      description: Partial failure handling
+    - id: BU1.4
+      status: open
+      description: Update IR validator
+  - id: BU2
+    title: Multi-Entity Runtime
+    checkboxes:
+    - id: BU2.1
+      status: open
+      description: Saga orchestrator
+    - id: BU2.2
+      status: open
+      description: Compensation
+    - id: BU2.3
+      status: open
+      description: Idempotency
+    - id: BU2.4
+      status: open
+      description: Conformance testing
