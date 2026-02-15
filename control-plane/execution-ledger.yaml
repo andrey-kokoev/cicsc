@@ -1947,16 +1947,16 @@ phases:
     title: Migration Script Generation
     checkboxes:
     - id: BD2.1
-      status: open
+      status: done
       description: Generate SQL DDL from schema diff
     - id: BD2.2
-      status: open
+      status: done
       description: Generate data transformation scripts
     - id: BD2.3
-      status: open
+      status: done
       description: Migration dry-run (preview changes)
     - id: BD2.4
-      status: open
+      status: done
       description: Rollback script generation
   - id: BD3
     title: Replay Verification
