@@ -4,6 +4,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 ERRORS=0
+AUTO_PROMOTED=0
 
 echo "Validating execution ledger..."
 python3 << 'PY'
@@ -103,8 +104,74 @@ if [[ $? -ne 0 ]]; then
     ERRORS=$((ERRORS + 1))
 fi
 
+echo "Checking for auto-promotion..."
+python3 << 'PY'
+import yaml
+from pathlib import Path
+
+ledger = yaml.safe_load(Path("control-plane/execution-ledger.yaml").read_text())
+promoted = []
+
+for ph in ledger.get("phases", []):
+    done_count = sum(
+        1 for ms in ph.get("milestones", [])
+        for cb in ms.get("checkboxes", [])
+        if cb.get("status") == "done"
+    )
+    total_count = sum(
+        1 for ms in ph.get("milestones", [])
+        for cb in ms.get("checkboxes", [])
+    )
+    
+    if total_count > 0 and done_count == total_count and ph.get("status") != "complete":
+        ph["status"] = "complete"
+        promoted.append(ph["id"])
+
+if promoted:
+    Path("control-plane/execution-ledger.yaml").write_text(
+        yaml.dump(ledger, sort_keys=False)
+    )
+    for pid in promoted:
+        print(f"  Auto-promoted {pid} -> complete")
+else:
+    print("  No phases to promote")
+
+# Count for shell
+print(f"PROMOTED_COUNT={len(promoted)}")
+PY
+
+# Capture promoted count
+AUTO_PROMOTED=$(python3 << 'PY'
+import yaml
+from pathlib import Path
+
+ledger = yaml.safe_load(Path("control-plane/execution-ledger.yaml").read_text())
+promoted = []
+
+for ph in ledger.get("phases", []):
+    done_count = sum(
+        1 for ms in ph.get("milestones", [])
+        for cb in ms.get("checkboxes", [])
+        if cb.get("status") == "done"
+    )
+    total_count = sum(
+        1 for ms in ph.get("milestones", [])
+        for cb in ms.get("checkboxes", [])
+    )
+    
+    if total_count > 0 and done_count == total_count and ph.get("status") != "complete":
+        promoted.append(ph["id"])
+
+print(len(promoted))
+PY
+)
+
 if [[ $ERRORS -eq 0 ]]; then
-    echo "Validation passed"
+    if [[ $AUTO_PROMOTED -gt 0 ]]; then
+        echo "Validation passed ($AUTO_PROMOTED phase(s) auto-promoted)"
+    else
+        echo "Validation passed"
+    fi
     exit 0
 else
     echo "Validation failed with $ERRORS error(s)" >&2
