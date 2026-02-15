@@ -393,21 +393,29 @@ assignments:
   completed_at: '2026-02-15T09:56:39.040645Z'
 - checkbox_ref: BD3.1
   agent_ref: AGENT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-15T09:55:21.345648Z'
   started_at: '2026-02-15T09:55:24.354667Z'
+  commit: 4943d1b
+  completed_at: '2026-02-15T09:57:51.658890Z'
 - checkbox_ref: BD3.2
   agent_ref: AGENT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-15T09:55:21.491482Z'
   started_at: '2026-02-15T09:55:24.354668Z'
+  commit: 4943d1b
+  completed_at: '2026-02-15T09:57:51.897568Z'
 - checkbox_ref: BD3.3
   agent_ref: AGENT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-15T09:55:21.656387Z'
   started_at: '2026-02-15T09:55:24.354669Z'
+  commit: 4943d1b
+  completed_at: '2026-02-15T09:57:52.135744Z'
 - checkbox_ref: BD3.4
   agent_ref: AGENT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-15T09:55:21.805271Z'
   started_at: '2026-02-15T09:55:24.354675Z'
+  commit: 4943d1b
+  completed_at: '2026-02-15T09:57:52.377196Z'

@@ -11,7 +11,7 @@ entity Ticket:
   states: [Open, Closed]
   command Resolve:
     when state is Open
-    `;
+    `
     const yaml = {
       version: 0,
       entities: {
@@ -27,14 +27,14 @@ entity Ticket:
           }
         }
       }
-    };
+    }
 
-    const irFromCicsc = compileSurfaceToIr(cicsc);
-    const irFromYaml = compileSpecV0ToCoreIr(parseSpecV0(yaml));
+    const irFromCicsc = compileSurfaceToIr(cicsc)
+    const irFromYaml = compileSpecV0ToCoreIr(parseSpecV0(yaml))
 
     // Compare essential parts
-    assert.deepEqual(irFromCicsc.types.Ticket.states, irFromYaml.types.Ticket.states);
-    assert.deepEqual(irFromCicsc.types.Ticket.commands.Resolve.guard, irFromYaml.types.Ticket.commands.Resolve.guard);
-    assert.deepEqual(irFromCicsc.types.Ticket.commands.Resolve.emits, irFromYaml.types.Ticket.commands.Resolve.emits);
-  });
-});
+    assert.deepEqual(irFromCicsc.types.Ticket.states, irFromYaml.types.Ticket.states)
+    assert.deepEqual(irFromCicsc.types.Ticket.commands.Resolve.guard, irFromYaml.types.Ticket.commands.Resolve.guard)
+    assert.deepEqual(irFromCicsc.types.Ticket.commands.Resolve.emits, irFromYaml.types.Ticket.commands.Resolve.emits)
+  })
+})

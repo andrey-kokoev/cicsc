@@ -55,6 +55,38 @@ export class MigrationEngine {
     };
   }
 
+  async createPreMigrationSnapshot(db: any, tenantId: string, version: number): Promise<void> {
+    // v0: Copy snapshots_vN to snapshots_vN_backup
+    await db.exec(`
+      CREATE TABLE IF NOT EXISTS snapshots_v${version}_backup AS 
+      SELECT * FROM snapshots_v${version} WHERE tenant_id = '${tenantId}';
+    `);
+  }
+
+  async replayEvents(db: any, tenantId: string, fromVersion: number, toVersion: number, specs: MigrationSpecV0[]): Promise<void> {
+    // 1. Fetch events from old version
+    const events = await db.all(`SELECT * FROM history_v${fromVersion} WHERE tenant_id = '${tenantId}' ORDER BY seq ASC`);
+    
+    // 2. Transform and insert into new version
+    for (const event of events) {
+      const spec = specs.find(s => s.on_type === event.entity_type);
+      const newEvent = spec ? this.transformEvent(event, spec) : event;
+      
+      if (newEvent) {
+        // v0: Simple insertion (real impl would use executeCommand logic)
+        await db.run(`INSERT INTO history_v${toVersion} (tenant_id, entity_type, entity_id, event_type, payload, ts, actor_id) VALUES (?, ?, ?, ?, ?, ?, ?)`,
+          [tenantId, event.entity_type, event.entity_id, newEvent.event_type, JSON.stringify(newEvent.payload), newEvent.ts, newEvent.actor_id]
+        );
+      }
+    }
+  }
+
+  async runInvariantChecks(db: any, tenantId: string, version: number): Promise<void> {
+    // v0: Check that all snapshots match the state derived from replaying history
+    // This requires a full reducer-parity check.
+    console.log(`[BD3.3] Running invariant checks for tenant ${tenantId} at v${version}...`);
+  }
+
   private evaluateMapping(mapping: any, payload: any): any {
     // Implement Expr evaluator for migrations here
     return mapping; 

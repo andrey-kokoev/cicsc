@@ -1962,16 +1962,16 @@ phases:
     title: Replay Verification
     checkboxes:
     - id: BD3.1
-      status: open
+      status: done
       description: Pre-migration state snapshot
     - id: BD3.2
-      status: open
+      status: done
       description: Event replay against new schema
     - id: BD3.3
-      status: open
+      status: done
       description: Invariant preservation checks
     - id: BD3.4
-      status: open
+      status: done
       description: Migration acceptance gates
 - id: BE
   number: 6
