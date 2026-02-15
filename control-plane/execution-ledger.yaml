@@ -2275,7 +2275,7 @@ phases:
       description: Audit log export formats (JSON, CSV, PDF)
 - id: BK
   number: 12
-  status: planned
+  status: active
   title: Blob Storage Support - R2/S3 File Attachments
   milestones:
   - id: BK1
