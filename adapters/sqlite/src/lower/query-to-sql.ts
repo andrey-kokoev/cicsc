@@ -411,6 +411,36 @@ function lowerAggToSql (agg: AggExprV0, ctx: LoweringCtx, rowAlias: string, bind
       return `MIN(${lowerExpr(body.expr, ctx, rowAlias, binds)})`
     case "max":
       return `MAX(${lowerExpr(body.expr, ctx, rowAlias, binds)})`
+    case "rate": {
+      const numSql = lowerExpr(body.numerator, ctx, rowAlias, binds)
+      const denSql = lowerExpr(body.denominator, ctx, rowAlias, binds)
+      const multiplier: Record<string, number> = {
+        per_second: 1,
+        per_minute: 60,
+        per_hour: 3600,
+        per_day: 86400,
+      }
+      const m = multiplier[body.unit] ?? 1
+      return `CASE WHEN SUM(${denSql}) = 0 THEN NULL ELSE (SUM(${numSql}) * ${m}) / SUM(${denSql}) END`
+    }
+    case "ratio": {
+      const numSql = lowerExpr(body.numerator, ctx, rowAlias, binds)
+      const denSql = lowerExpr(body.denominator, ctx, rowAlias, binds)
+      const scale = body.scale ?? 1
+      return `CASE WHEN SUM(${denSql}) = 0 THEN NULL ELSE (SUM(${numSql}) * ${scale}) / SUM(${denSql}) END`
+    }
+    case "time_between": {
+      const startSql = lowerExpr(body.start_expr, ctx, rowAlias, binds)
+      const endSql = lowerExpr(body.end_expr, ctx, rowAlias, binds)
+      const divisor: Record<string, number> = {
+        seconds: 1,
+        minutes: 60,
+        hours: 3600,
+        days: 86400,
+      }
+      const d = divisor[body.unit ?? "seconds"] ?? 1
+      return `AVG((${endSql} - ${startSql}) / ${d})`
+    }
     default:
       throw new Error(`lowerAggToSql: unsupported agg tag ${tag}`)
   }

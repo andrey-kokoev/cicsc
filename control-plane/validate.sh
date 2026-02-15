@@ -53,11 +53,40 @@ fi
 
 echo "Validating assignments..."
 python3 << 'PY'
-import yaml, sys
+import yaml, sys, re
 from pathlib import Path
 
 ledger = yaml.safe_load(Path("control-plane/execution-ledger.yaml").read_text())
 assignments = yaml.safe_load(Path("control-plane/assignments.yaml").read_text())
+
+# Detect manual edits
+manual_edit_errors = []
+for a in assignments.get("assignments", []):
+    # Check for wrong field name (manual edit indicator)
+    if "agent" in a and "agent_ref" not in a:
+        manual_edit_errors.append(f"Assignment {a.get('checkbox_ref', '?')} uses 'agent' instead of 'agent_ref' - manual edit detected")
+    
+    # Check for missing required fields
+    required = ["checkbox_ref", "agent_ref", "status"]
+    for field in required:
+        if field not in a:
+            manual_edit_errors.append(f"Assignment {a.get('checkbox_ref', '?')} missing required field: {field}")
+    
+    # Check agent_ref format (must be uppercase with underscores)
+    agent_ref = a.get("agent_ref", "")
+    if agent_ref and not re.match(r'^AGENT_[A-Z_]+$', agent_ref):
+        manual_edit_errors.append(f"Assignment {a['checkbox_ref']} has invalid agent_ref format: {agent_ref}")
+    
+    # Check status values
+    status = a.get("status", "")
+    if status and status not in ("open", "in_progress", "done", "deferred"):
+        manual_edit_errors.append(f"Assignment {a.get('checkbox_ref', '?')} has invalid status: {status}")
+
+if manual_edit_errors:
+    for e in manual_edit_errors:
+        print(f"  MANUAL EDIT DETECTED: {e}", file=sys.stderr)
+    print("  Use dispatch.sh/claim.sh/complete.sh instead of manual edits", file=sys.stderr)
+    sys.exit(1)
 
 # Build set of valid checkboxes
 valid_checkboxes = set()

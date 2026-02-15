@@ -202,6 +202,64 @@ function computeAgg (agg: AggExprV0, rows: Record<string, Value>[], ctx: QueryCo
       return m
     }
 
+    case "rate": {
+      let numSum = 0
+      let denSum = 0
+      for (const r of rows) {
+        const num = evalInRow(body.numerator, r, ctx)
+        const den = evalInRow(body.denominator, r, ctx)
+        if (typeof num === "number") numSum += num
+        if (typeof den === "number") denSum += den
+      }
+      if (denSum === 0) return null
+      const rate = numSum / denSum
+      // Convert to requested unit
+      const multiplier: Record<string, number> = {
+        per_second: 1,
+        per_minute: 60,
+        per_hour: 3600,
+        per_day: 86400,
+      }
+      return rate * (multiplier[body.unit] ?? 1)
+    }
+
+    case "ratio": {
+      let numSum = 0
+      let denSum = 0
+      for (const r of rows) {
+        const num = evalInRow(body.numerator, r, ctx)
+        const den = evalInRow(body.denominator, r, ctx)
+        if (typeof num === "number") numSum += num
+        if (typeof den === "number") denSum += den
+      }
+      if (denSum === 0) return null
+      const scale = body.scale ?? 1
+      return (numSum / denSum) * scale
+    }
+
+    case "time_between": {
+      let total = 0
+      let count = 0
+      for (const r of rows) {
+        const start = evalInRow(body.start_expr, r, ctx)
+        const end = evalInRow(body.end_expr, r, ctx)
+        if (typeof start === "number" && typeof end === "number") {
+          total += end - start
+          count++
+        }
+      }
+      if (count === 0) return null
+      const avgSeconds = total / count
+      // Convert to requested unit
+      const divisor: Record<string, number> = {
+        seconds: 1,
+        minutes: 60,
+        hours: 3600,
+        days: 86400,
+      }
+      return avgSeconds / (divisor[body.unit ?? "seconds"] ?? 1)
+    }
+
     default:
       return null
   }

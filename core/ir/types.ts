@@ -263,3 +263,6 @@ export type AggExprV0 =
   | { sum: { expr: ExprV0 } }
   | { min: { expr: ExprV0 } }
   | { max: { expr: ExprV0 } }
+  | { rate: { numerator: ExprV0; denominator: ExprV0; unit: "per_second" | "per_minute" | "per_hour" | "per_day" } }
+  | { ratio: { numerator: ExprV0; denominator: ExprV0; scale?: number } }
+  | { time_between: { start_expr: ExprV0; end_expr: ExprV0; unit?: "seconds" | "minutes" | "hours" | "days" } }
