@@ -2646,38 +2646,38 @@ phases:
       description: Metrics export
 - id: BS
   number: 39
-  status: planned
+  status: complete
   title: Rich Aggregates
   milestones:
   - id: BS1
     title: Query AST Extension
     checkboxes:
     - id: BS1.1
-      status: open
+      status: done
       description: Add rate operator
     - id: BS1.2
-      status: open
+      status: done
       description: Add ratio operator
     - id: BS1.3
-      status: open
+      status: done
       description: Add time_between operator
     - id: BS1.4
-      status: open
+      status: done
       description: Update QueryV0 types
   - id: BS2
     title: View Runtime
     checkboxes:
     - id: BS2.1
-      status: open
+      status: done
       description: SQL for rate()
     - id: BS2.2
-      status: open
+      status: done
       description: SQL for ratio()
     - id: BS2.3
-      status: open
+      status: done
       description: Oracle conformance
     - id: BS2.4
-      status: open
+      status: done
       description: Spec DSL sugar
 - id: BT
   number: 40

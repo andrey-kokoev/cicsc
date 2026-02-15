@@ -54,6 +54,28 @@ export type SpecViewV0 = {
     order_by?: { field: string; dir?: "asc" | "desc" }
     limit?: number
   }
+  // Rich aggregates sugar (BS2.4)
+  metrics?: {
+    rate?: Array<{
+      name: string
+      numerator: string
+      denominator: string
+      unit?: "per_second" | "per_minute" | "per_hour" | "per_day"
+    }>
+    ratio?: Array<{
+      name: string
+      numerator: string
+      denominator: string
+      scale?: number
+    }>
+    time_between?: Array<{
+      name: string
+      start: string
+      end: string
+      unit?: "seconds" | "minutes" | "hours" | "days"
+    }>
+    group_by?: string[]
+  }
   [k: string]: any
 }
 

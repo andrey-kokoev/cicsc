@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CICSC Execution Ledger Schema",
+  "description": "Schema for execution-ledger.yaml - canonical status ledger",
+  "type": "object",
+  "required": ["phases"],
+  "properties": {
+    "phases": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/phase"
+      }
+    }
+  },
+  "definitions": {
+    "phase": {
+      "type": "object",
+      "required": ["id", "number", "status", "title", "milestones"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z]{1,2}$",
+          "description": "Two-letter uppercase phase identifier"
+        },
+        "number": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Sequential phase number"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["planned", "in_progress", "complete", "deferred"],
+          "description": "Phase status"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Phase title"
+        },
+        "milestones": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/milestone"
+          }
+        }
+      }
+    },
+    "milestone": {
+      "type": "object",
+      "required": ["id", "title", "checkboxes"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z]{1,2}[0-9]+$",
+          "description": "Milestone identifier (e.g., BQ1)"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Milestone title"
+        },
+        "checkboxes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/checkbox"
+          }
+        }
+      }
+    },
+    "checkbox": {
+      "type": "object",
+      "required": ["id", "status"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z]{1,2}[0-9]+\\.[0-9]+$",
+          "description": "Checkbox identifier (e.g., BQ1.1)"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["open", "done", "deferred"],
+          "description": "Checkbox status"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Checkbox description"
+        }
+      }
+    }
+  }
+}
