@@ -2012,16 +2012,16 @@ phases:
     title: Conformance Testing
     checkboxes:
     - id: BE3.1
-      status: open
+      status: done
       description: Postgres vs oracle differential tests
     - id: BE3.2
-      status: open
+      status: done
       description: Performance benchmarks (SQLite vs Postgres)
     - id: BE3.3
-      status: open
+      status: done
       description: Feature parity matrix
     - id: BE3.4
-      status: open
+      status: done
       description: CI integration for Postgres tests
 - id: BF
   number: 7

@@ -99,18 +99,18 @@ export class PostgresAdapter {
           `INSERT INTO ${eventsTable}
            (tenant_id, entity_type, entity_id, seq, event_type, payload, ts, actor_id)
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-           RETURNING ts`, 
+           RETURNING ts`,
           [tenant_id, entity_type, entity_id, seq, e.event_type, JSON.stringify(e.payload), e.ts, e.actor_id]
         )
-           VALUES($1,$2,$3,$4,$5,$6,$7,$8)`,
+        VALUES($1, $2, $3, $4, $5, $6, $7, $8)`,
           [tenant_id, entity_type, entity_id, seq.toString(), e.event_type, e.payload ?? null, e.ts, e.actor_id]
         )
       }
 
       // ensure snapshot exists
       await c.query(
-        `INSERT INTO ${snapshotsTable}(tenant_id, entity_type, entity_id, state, attrs, updated_ts)
-         VALUES($1,$2,$3,$4,$5,$6)
+        `INSERT INTO ${ snapshotsTable } (tenant_id, entity_type, entity_id, state, attrs, updated_ts)
+        VALUES($1, $2, $3, $4, $5, $6)
          ON CONFLICT(tenant_id, entity_type, entity_id) DO NOTHING`,
         [tenant_id, entity_type, entity_id, "new", {}, nowUnix()]
       )
@@ -123,7 +123,7 @@ export class PostgresAdapter {
 
       await c.query(
         `INSERT INTO command_receipts(tenant_id, command_id, entity_type, entity_id, result_json, ts)
-         VALUES($1,$2,$3,$4,$5,$6)
+        VALUES($1, $2, $3, $4, $5, $6)
          ON CONFLICT(tenant_id, command_id) DO NOTHING`,
         [tenant_id, command_id, entity_type, entity_id, result, nowUnix()]
       )
@@ -146,11 +146,11 @@ export class PostgresAdapter {
     const c = await this.pool.connect()
     try {
       const ver = await this.get_active_version(c, tenant_id)
-      const eventsTable = `events_v${ver}`
+      const eventsTable = `events_v${ ver } `
       const r = await c.query<EventRow>(
-        `SELECT tenant_id, entity_type, entity_id, seq::int, event_type, payload, ts::int, actor_id
-         FROM ${eventsTable}
-         WHERE tenant_id=$1 AND entity_type=$2 AND entity_id=$3 AND seq>$4
+        `SELECT tenant_id, entity_type, entity_id, seq:: int, event_type, payload, ts:: int, actor_id
+         FROM ${ eventsTable }
+         WHERE tenant_id = $1 AND entity_type = $2 AND entity_id = $3 AND seq > $4
          ORDER BY seq ASC
          LIMIT $5`,
         [tenant_id, entity_type, entity_id, fromSeq, lim]
@@ -171,11 +171,11 @@ export class PostgresAdapter {
     const c = await this.pool.connect()
     try {
       const ver = await this.get_active_version(c, tenant_id)
-      const snapshotsTable = `snapshots_v${ver}`
+      const snapshotsTable = `snapshots_v${ ver } `
       const r = await c.query<SnapshotRow>(
         `SELECT tenant_id, entity_type, entity_id, state, attrs, updated_ts::int AS updated_ts
-         FROM ${snapshotsTable}
-         WHERE tenant_id=$1 AND entity_type=$2 AND entity_id=$3`,
+         FROM ${ snapshotsTable }
+         WHERE tenant_id = $1 AND entity_type = $2 AND entity_id = $3`,
         [tenant_id, entity_type, entity_id]
       )
       return r.rowCount ? r.rows[0]! : null
@@ -196,18 +196,18 @@ export class PostgresAdapter {
     const { tenant_id, entity_type, entity_id, state, attrs, updated_ts, shadows } = params
     await this.with_txn(async (c) => {
       const ver = await this.get_active_version(c, tenant_id)
-      const snapshotsTable = `snapshots_v${ver}`
+      const snapshotsTable = `snapshots_v${ ver } `
 
       const shadowCols = shadows ? Object.keys(shadows) : []
       const setShadowSql =
-        shadowCols.length === 0 ? "" : ", " + shadowCols.map((k, i) => `${escapeIdent(k)}=$${6 + i}`).join(", ")
+        shadowCols.length === 0 ? "" : ", " + shadowCols.map((k, i) => `${ escapeIdent(k) }=$${ 6 + i } `).join(", ")
       const bindShadowVals = shadowCols.map((k) => (shadows as any)[k])
 
       const sql =
-        `UPDATE ${snapshotsTable}
-         SET state=$4, attrs=$5, updated_ts=$6` +
+        `UPDATE ${ snapshotsTable }
+         SET state = $4, attrs = $5, updated_ts = $6` +
         setShadowSql +
-        ` WHERE tenant_id=$1 AND entity_type=$2 AND entity_id=$3`
+        ` WHERE tenant_id = $1 AND entity_type = $2 AND entity_id = $3`
 
       const binds = [tenant_id, entity_type, entity_id, state, attrs, updated_ts, ...bindShadowVals]
       await c.query(sql, binds)
@@ -234,7 +234,7 @@ export class PostgresAdapter {
     const r = await this.pool.query<SlaBreach>(
       `SELECT tenant_id, name, entity_type, entity_id, deadline_ts::int AS deadline_ts
        FROM sla_status
-       WHERE tenant_id=$1 AND name=$2 AND breached=false AND stop_ts IS NULL AND deadline_ts IS NOT NULL AND deadline_ts < $3
+       WHERE tenant_id = $1 AND name = $2 AND breached = false AND stop_ts IS NULL AND deadline_ts IS NOT NULL AND deadline_ts < $3
        ORDER BY deadline_ts ASC
        LIMIT $4`,
       [params.tenant_id, params.name, params.now, lim]
@@ -251,8 +251,8 @@ export class PostgresAdapter {
   }): Promise<void> {
     await this.pool.query(
       `UPDATE sla_status
-       SET breached=true, updated_ts=$1
-       WHERE tenant_id=$2 AND name=$3 AND entity_type=$4 AND entity_id=$5`,
+       SET breached = true, updated_ts = $1
+       WHERE tenant_id = $2 AND name = $3 AND entity_type = $4 AND entity_id = $5`,
       [params.now, params.tenant_id, params.name, params.entity_type, params.entity_id]
     )
   }
@@ -263,6 +263,6 @@ function nowUnix (): UnixSeconds {
 }
 
 function escapeIdent (name: string): string {
-  if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) throw new Error(`Invalid identifier: ${name}`)
+  if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(name)) throw new Error(`Invalid identifier: ${ name } `)
   return `"${name}"`
 }
