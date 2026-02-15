@@ -31,6 +31,13 @@ export function validateBundleV0 (bundle: unknown): { ok: true; value: CoreIrBun
   if (ir.constraints != null && !isObject(ir.constraints)) errors.push({ path: "$.core_ir.constraints", message: "constraints must be an object" })
   if (ir.views != null && !isObject(ir.views)) errors.push({ path: "$.core_ir.views", message: "views must be an object" })
   if (ir.slas != null && !isObject(ir.slas)) errors.push({ path: "$.core_ir.slas", message: "slas must be an object" })
+  
+  if (ir.queues != null && !isObject(ir.queues)) errors.push({ path: "$.core_ir.queues", message: "queues must be an object" })
+  else if (ir.queues != null) {
+    for (const [qName, qSpec] of Object.entries(ir.queues)) {
+      validateQueue(errors, `$.core_ir.queues.${qName}`, qName, qSpec as any)
+    }
+  }
 
   if (errors.length) return { ok: false, errors }
 
@@ -228,4 +235,41 @@ function isObject (x: unknown): x is Record<string, unknown> {
 function fail (errors: ValidationError[], path: string, message: string) {
   errors.push({ path, message })
   return { ok: false as const, errors }
+}
+
+function validateQueue (errors: ValidationError[], path: string, queueName: string, spec: any) {
+  if (!isObject(spec)) return void errors.push({ path, message: "queue spec must be an object" })
+
+  if (!isObject(spec.message_type)) {
+    errors.push({ path: `${path}.message_type`, message: "message_type must be an object" })
+  }
+
+  if (spec.ordering != null && !["unordered", "fifo", "per_key"].includes(spec.ordering)) {
+    errors.push({ path: `${path}.ordering`, message: "invalid ordering" })
+  }
+
+  if (!isObject(spec.retention)) {
+    errors.push({ path: `${path}.retention`, message: "retention must be an object" })
+  } else {
+    if (typeof spec.retention.max_age_seconds !== "number") {
+      errors.push({ path: `${path}.retention.max_age_seconds`, message: "max_age_seconds must be a number" })
+    }
+  }
+
+  if (!isObject(spec.delivery)) {
+    errors.push({ path: `${path}.delivery`, message: "delivery must be an object" })
+  } else {
+    if (typeof spec.delivery.max_attempts !== "number") errors.push({ path: `${path}.delivery.max_attempts`, message: "max_attempts must be number" })
+    if (typeof spec.delivery.initial_backoff_ms !== "number") errors.push({ path: `${path}.delivery.initial_backoff_ms`, message: "initial_backoff_ms must be number" })
+    if (typeof spec.delivery.max_backoff_ms !== "number") errors.push({ path: `${path}.delivery.max_backoff_ms`, message: "max_backoff_ms must be number" })
+  }
+
+  if (spec.map_to != null) {
+    if (!isObject(spec.map_to)) errors.push({ path: `${path}.map_to`, message: "map_to must be an object" })
+    else {
+      if (typeof spec.map_to.entity_type !== "string") errors.push({ path: `${path}.map_to.entity_type`, message: "entity_type must be string" })
+      if (typeof spec.map_to.command !== "string") errors.push({ path: `${path}.map_to.command`, message: "command must be string" })
+      if (!isObject(spec.map_to.input_map)) errors.push({ path: `${path}.map_to.input_map`, message: "input_map must be an object" })
+    }
+  }
 }

@@ -2442,7 +2442,7 @@ phases:
       status: done
       description: Define queue message transformation expressions (map_to)
     - id: BN1.4
-      status: open
+      status: done
       description: Update IR validator for queue specifications
   - id: BN2
     title: Queue Runtime Implementation
