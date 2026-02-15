@@ -2474,3 +2474,53 @@ phases:
     - id: BN3.4
       status: open
       description: DLQ admin API (list, inspect, replay)
+- id: BO
+  number: 16
+  status: planned
+  title: Schedule Primitive - Time-Based Execution
+  milestones:
+  - id: BO1
+    title: Core IR Schedule Extension
+    checkboxes:
+    - id: BO1.1
+      status: open
+      description: Add ScheduleSpecV0 to Core IR (cron, delay, action)
+    - id: BO1.2
+      status: open
+      description: Define schedule trigger types (cron, delay, event+delay)
+    - id: BO1.3
+      status: open
+      description: Add schedule-to-command input mapping expressions
+    - id: BO1.4
+      status: open
+      description: Update IR validator for schedule specifications
+  - id: BO2
+    title: Schedule Storage & Polling
+    checkboxes:
+    - id: BO2.1
+      status: open
+      description: Scheduled jobs table schema (scheduled_at, status, action)
+    - id: BO2.2
+      status: open
+      description: Cron schedule tracker (last_run, next_run computation)
+    - id: BO2.3
+      status: open
+      description: Schedule worker polling (due jobs query)
+    - id: BO2.4
+      status: open
+      description: Event-triggered schedule creation (on event, enqueue delayed job)
+  - id: BO3
+    title: Execution & Observability
+    checkboxes:
+    - id: BO3.1
+      status: open
+      description: Schedule execution engine (direct or via queue)
+    - id: BO3.2
+      status: open
+      description: Retry policy for failed scheduled jobs
+    - id: BO3.3
+      status: open
+      description: Schedule admin API (list, cancel, trigger now)
+    - id: BO3.4
+      status: open
+      description: Schedule metrics (pending count, execution latency)
