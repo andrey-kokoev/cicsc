@@ -4324,6 +4324,66 @@
           "notes": "Dispatch instance i02 AY1.3 -> AGENT_GEMINI via collab_dispatch_batch.sh",
           "current_status": "closed",
           "event_count": 5
+        },
+        {
+          "id": "MSG_PHASE34_AY11_GEMINI_I07_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY11_GEMINI_I07",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay1.1.i07",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i07 AY1.1 -> AGENT_GEMINI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY12_GEMINI_I06_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY12_GEMINI_I06",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay1.2.i06",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i06 AY1.2 -> AGENT_GEMINI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY13_GEMINI_I03_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY13_GEMINI_I03",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay1.3.i03",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i03 AY1.3 -> AGENT_GEMINI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
         }
       ]
     },
@@ -8599,6 +8659,66 @@
           "notes": "Dispatch instance i02 AY1.3 -> AGENT_GEMINI via collab_dispatch_batch.sh",
           "current_status": "closed",
           "event_count": 5
+        },
+        {
+          "id": "MSG_PHASE34_AY11_GEMINI_I07_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY11_GEMINI_I07",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay1.1.i07",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i07 AY1.1 -> AGENT_GEMINI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY12_GEMINI_I06_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY12_GEMINI_I06",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay1.2.i06",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i06 AY1.2 -> AGENT_GEMINI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
+        },
+        {
+          "id": "MSG_PHASE34_AY13_GEMINI_I03_DISPATCH",
+          "kind_ref": "MSGK_ASSIGNMENT_DISPATCH",
+          "assignment_ref": "ASSIGN_PHASE34_AY13_GEMINI_I03",
+          "from_agent_ref": "AGENT_MAIN",
+          "to_agent_ref": "AGENT_GEMINI",
+          "from_worktree": "/home/andrey/src/cicsc",
+          "to_worktree": "/home/andrey/src/cicsc/worktrees/gemini",
+          "branch": "phase34.ay1.3.i03",
+          "initial_status": "sent",
+          "payload_refs": [
+            "AGENTS.md",
+            "control-plane/README.md"
+          ],
+          "evidence_refs": [],
+          "evidence_bindings": [],
+          "notes": "Dispatch instance i03 AY1.3 -> AGENT_GEMINI via collab_dispatch_batch.sh",
+          "current_status": "sent",
+          "event_count": 1
         }
       ],
       "outbox": [

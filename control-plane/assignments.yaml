@@ -1,0 +1,13 @@
+assignments:
+- checkbox_ref: AY1.1
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-14T22:04:57.377382Z'
+- checkbox_ref: AY1.2
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-14T22:04:57.377398Z'
+- checkbox_ref: AY1.3
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-14T22:04:57.377400Z'
