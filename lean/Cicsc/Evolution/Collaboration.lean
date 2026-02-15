@@ -40,7 +40,7 @@ structure EventEnvelope where
 
 /-- Fold a sequence of events for a specific message -/
 def foldMessageStatus (events : List EventEnvelope) : Option MessageStatus :=
-  events.foldl (fun status env => 
+  events.foldl (fun status env =>
     match nextStatus status env.event with
     | some s => some s
     | none   => status -- In a real system we might error, but standard fold persists last valid

@@ -2,3 +2,4 @@
 node_modules
 worktrees/
 control-plane/logs/dispatch-runs/
+lean/.lake
