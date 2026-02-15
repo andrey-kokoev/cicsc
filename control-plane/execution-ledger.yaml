@@ -2125,53 +2125,53 @@ phases:
       description: Approval workflow before deployment
 - id: BH
   number: 9
-  status: active
+  status: complete
   title: OAuth Integration - Identity Providers
   milestones:
   - id: BH1
     title: OAuth Provider Adapters
     checkboxes:
     - id: BH1.1
-      status: open
+      status: done
       description: Google OAuth adapter (token validation, profile extraction)
     - id: BH1.2
-      status: open
+      status: done
       description: GitHub OAuth adapter
     - id: BH1.3
-      status: open
+      status: done
       description: Okta/OIDC enterprise adapter
     - id: BH1.4
-      status: open
+      status: done
       description: Generic OAuth2 adapter framework
   - id: BH2
     title: Token Management
     checkboxes:
     - id: BH2.1
-      status: open
+      status: done
       description: JWT validation middleware
     - id: BH2.2
-      status: open
+      status: done
       description: Token refresh handling
     - id: BH2.3
-      status: open
+      status: done
       description: Session management with OAuth
     - id: BH2.4
-      status: open
+      status: done
       description: Logout/revocation handling
   - id: BH3
     title: User Identity Mapping
     checkboxes:
     - id: BH3.1
-      status: open
+      status: done
       description: External user ID to tenant mapping
     - id: BH3.2
-      status: open
+      status: done
       description: Profile attribute synchronization
     - id: BH3.3
-      status: open
+      status: done
       description: Multi-provider identity linking
     - id: BH3.4
-      status: open
+      status: done
       description: Account provisioning/deprovisioning
 - id: BI
   number: 10
@@ -2182,46 +2182,46 @@ phases:
     title: Role Definition in Spec
     checkboxes:
     - id: BI1.1
-      status: open
+      status: done
       description: Add role declaration syntax to Spec DSL
     - id: BI1.2
-      status: open
+      status: done
       description: Entity-level permission declarations
     - id: BI1.3
-      status: open
+      status: done
       description: Command-level permission declarations
     - id: BI1.4
-      status: open
+      status: done
       description: View-level permission declarations
   - id: BI2
     title: Permission Evaluation Engine
     checkboxes:
     - id: BI2.1
-      status: open
+      status: done
       description: Runtime permission checking middleware
     - id: BI2.2
-      status: open
+      status: done
       description: Hierarchical role resolution (admin > manager > user)
     - id: BI2.3
-      status: open
+      status: done
       description: Attribute-based access control (ABAC) predicates
     - id: BI2.4
-      status: open
+      status: done
       description: Permission caching for performance
   - id: BI3
     title: Administration Interface
     checkboxes:
     - id: BI3.1
-      status: open
+      status: done
       description: Role assignment management API
     - id: BI3.2
-      status: open
+      status: done
       description: User-role binding CRUD
     - id: BI3.3
-      status: open
+      status: done
       description: Permission audit interface
     - id: BI3.4
-      status: open
+      status: done
       description: Role hierarchy visualization
 - id: BJ
   number: 11
@@ -2232,44 +2232,44 @@ phases:
     title: Audit Event Generation
     checkboxes:
     - id: BJ1.1
-      status: open
+      status: done
       description: Command execution audit events
     - id: BJ1.2
-      status: open
+      status: done
       description: View access audit events
     - id: BJ1.3
-      status: open
+      status: done
       description: Authentication/authorization events
     - id: BJ1.4
-      status: open
+      status: done
       description: Schema/migration change events
   - id: BJ2
     title: Immutable Audit Storage
     checkboxes:
     - id: BJ2.1
-      status: open
+      status: done
       description: Append-only audit log table design
     - id: BJ2.2
-      status: open
+      status: done
       description: Cryptographic integrity verification
     - id: BJ2.3
-      status: open
+      status: done
       description: Tamper-evident log signing
     - id: BJ2.4
-      status: open
+      status: done
       description: Audit log archival to cold storage
   - id: BJ3
     title: Compliance Reporting
     checkboxes:
     - id: BJ3.1
-      status: open
+      status: done
       description: Who did what when query interface
     - id: BJ3.2
-      status: open
+      status: done
       description: Compliance report generation (GDPR, SOC2)
     - id: BJ3.3
-      status: open
+      status: done
       description: Anomaly detection on audit patterns
     - id: BJ3.4
-      status: open
+      status: done
       description: Audit log export formats (JSON, CSV, PDF)

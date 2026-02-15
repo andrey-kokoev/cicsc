@@ -12,6 +12,7 @@ if [[ "${1:-}" == "--batch" ]]; then
         exit 1
     fi
     BATCH_MODE=1
+    COMMIT="$(git rev-parse --short HEAD)"
 else
     CHECKBOXES=("$1")
     COMMIT="${2:-$(git rev-parse --short HEAD)}"
@@ -25,20 +26,23 @@ if ! ./control-plane/check_gates.sh; then
     exit 1
 fi
 
-python3 << PY
+export BATCH_MODE
+export CHECKBOXES_STR="${CHECKBOXES[*]}"
+export COMMIT
+
+python3 << 'PY'
 import yaml
 import sys
+import os
 from pathlib import Path
 from datetime import datetime
 
-batch_mode = $BATCH_MODE
-checkboxes = ${CHECKBOXES[@]}
-checkbox_list = checkboxes.split() if isinstance(checkboxes, str) else list(checkboxes)
+batch_mode = bool(int(os.environ["BATCH_MODE"]))
+checkbox_list = os.environ["CHECKBOXES_STR"].split()
+commit = os.environ["COMMIT"]
 
 ledger = yaml.safe_load(Path("control-plane/execution-ledger.yaml").read_text())
 assignments = yaml.safe_load(Path("control-plane/assignments.yaml").read_text())
-
-commit = "$COMMIT" if not batch_mode else "$(git rev-parse --short HEAD)"
 
 for checkbox in checkbox_list:
     # Find and update assignment
