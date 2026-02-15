@@ -1344,29 +1344,37 @@ assignments:
   status: open
   created_at: '2026-02-15T16:02:45.543512Z'
 - checkbox_ref: BS1.1
-  agent: AGENT_COPILOT_GEMINI
-  status: open
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: in_progress
+  started_at: '2026-02-15T17:14:58.537962Z'
 - checkbox_ref: BS1.2
-  agent: AGENT_COPILOT_GEMINI
-  status: open
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: in_progress
+  started_at: '2026-02-15T17:14:58.537976Z'
 - checkbox_ref: BS1.3
-  agent: AGENT_COPILOT_GEMINI
-  status: open
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: in_progress
+  started_at: '2026-02-15T17:14:58.537978Z'
 - checkbox_ref: BS1.4
-  agent: AGENT_COPILOT_GEMINI
-  status: open
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: in_progress
+  started_at: '2026-02-15T17:14:58.537979Z'
 - checkbox_ref: BS2.1
-  agent: AGENT_COPILOT_GEMINI
-  status: open
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: in_progress
+  started_at: '2026-02-15T17:14:58.537980Z'
 - checkbox_ref: BS2.2
-  agent: AGENT_COPILOT_GEMINI
-  status: open
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: in_progress
+  started_at: '2026-02-15T17:14:58.537981Z'
 - checkbox_ref: BS2.3
-  agent: AGENT_COPILOT_GEMINI
-  status: open
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: in_progress
+  started_at: '2026-02-15T17:14:58.537982Z'
 - checkbox_ref: BS2.4
-  agent: AGENT_COPILOT_GEMINI
-  status: open
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: in_progress
+  started_at: '2026-02-15T17:14:58.537982Z'
 - checkbox_ref: BR1.1
   agent_ref: AGENT_GEMINI
   status: done
