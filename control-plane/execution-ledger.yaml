@@ -2439,7 +2439,7 @@ phases:
       status: done
       description: Add queue reference to WebhookSpecV0
     - id: BN1.3
-      status: open
+      status: done
       description: Define queue message transformation expressions (map_to)
     - id: BN1.4
       status: open

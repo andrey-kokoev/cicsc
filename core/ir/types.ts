@@ -118,10 +118,25 @@ export type WebhookSpecV0 = {
 }
 
 export type QueueSpecV0 = {
-  message_type: string
-  ordering: "fifo" | "none"
-  retention_seconds: number
-  delivery_guarantee: "at_least_once" | "at_most_once"
+  message_type: Record<string, AttrTypeSpecV0>
+  ordering?: "unordered" | "fifo" | "per_key"
+  retention: {
+    max_age_seconds: number
+    max_depth?: number
+  }
+  delivery: {
+    max_attempts: number
+    initial_backoff_ms: number
+    max_backoff_ms: number
+    dead_letter_queue?: string
+  }
+  map_to?: QueueCommandMappingV0
+}
+
+export type QueueCommandMappingV0 = {
+  entity_type: string
+  command: string
+  input_map: Record<string, ExprV0>
 }
 
 export type EventTransformV0 = {

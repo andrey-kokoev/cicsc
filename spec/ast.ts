@@ -103,8 +103,20 @@ export type SpecWebhookV0 = {
 }
 
 export type SpecQueueV0 = {
-  message_type: string
-  ordering?: "fifo" | "none"
-  retention_seconds?: number
-  delivery?: "at_least_once" | "at_most_once"
+  message_type: Record<string, SpecAttrV0>
+  ordering?: "unordered" | "fifo" | "per_key"
+  retention?: {
+    max_age_seconds: number
+    max_depth?: number
+  }
+  delivery?: {
+    max_attempts: number
+    initial_backoff_ms: number
+    max_backoff_ms: number
+    dead_letter_queue?: string
+  }
+  map_to?: {
+    command: string // format: Entity.Command
+    input_map: Record<string, any>
+  }
 }
