@@ -1713,7 +1713,7 @@ phases:
 - id: AY
   number: 34
   title: Field Generalization and Multi-Context Validation
-  status: active
+  status: complete
   milestones:
   - id: AY1
     title: Multi-Context Validation Expansion
@@ -1747,7 +1747,7 @@ phases:
 - id: AZ
   number: 35
   title: Final Completion and Transition Closure
-  status: planned
+  status: complete
   milestones:
   - id: AZ1
     title: Final Objective Closure Re-Evaluation
@@ -1777,7 +1777,7 @@ phases:
 - id: BA
   number: 36
   title: Lean Formalization of Worktree Collaboration Protocol
-  status: planned
+  status: complete
   milestones:
   - id: BA1
     title: Collaboration Semantics Kernelization
