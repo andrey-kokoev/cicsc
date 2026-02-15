@@ -80,7 +80,8 @@ expression = /* standard logical/relational expressions */ ;
 - **Indentation:** The language uses Python-like indentation to define blocks.
 - **Keywords:** Minimalist keywords (`entity`, `attr`, `command`, `view`, etc.) to keep it readable for non-programmers.
 - **Sugar:**
-    - Implicit `emit`: If a command `X` has no `emit` clause, it implicitly emits an event `Xed` (or similar) with all inputs as payload.
+    - Implicit `emit`: If a command `X` has no `emit` clause, it implicitly emits an event `Xed` with all inputs as payload.
     - Default Initial: If `initial` is omitted, the first state in `states` is used.
-    - Predicate Sugar: `when state is Open` instead of `when state == "Open"`.
+    - Predicate Sugar: `when state is Open` is lowered to `{ eq: [{ var: { state: true } }, { lit: { string: "Open" } }] }`.
     - Attr shorthand: `attr title` (defaults to string).
+    - Natural language comparisons: `is`, `is not`, `is empty`.

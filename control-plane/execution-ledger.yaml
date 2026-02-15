@@ -1847,31 +1847,31 @@ phases:
     title: Parser Implementation
     checkboxes:
     - id: BB2.1
-      status: open
+      status: done
       description: Implement Spec parser (PEG or combinators)
     - id: BB2.2
-      status: open
+      status: done
       description: Parse to intermediate AST
     - id: BB2.3
-      status: open
+      status: done
       description: Error messages with line numbers and suggestions
     - id: BB2.4
-      status: open
+      status: done
       description: Parser test suite with 100+ examples
   - id: BB3
     title: Sugar Lowering to Core IR
     checkboxes:
     - id: BB3.1
-      status: open
+      status: done
       description: "Implement AST \u2192 Core IR lowering"
     - id: BB3.2
-      status: open
+      status: done
       description: Desugar implicit constraints and defaults
     - id: BB3.3
-      status: open
+      status: done
       description: "Roundtrip tests: Spec \u2192 IR \u2192 equivalent output"
     - id: BB3.4
-      status: open
+      status: done
       description: Document sugar transformations
 - id: BC
   number: 4
