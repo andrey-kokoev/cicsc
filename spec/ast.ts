@@ -9,6 +9,7 @@ export type SpecV0 = {
   subscriptions?: Record<string, SpecSubscriptionV0>
   webhooks?: Record<string, SpecWebhookV0>
   queues?: Record<string, SpecQueueV0>
+  row_policies?: Record<string, RowPolicySugarV0>
 }
 
 export type SpecEntityV0 = {
@@ -50,7 +51,7 @@ export type SpecViewV0 = {
   kind: string
   on: string
   query?: any
-  row_policy?: any
+  row_policy?: RowPolicySugarV0
   lanes?: {
     states?: string[]
     order_by?: { field: string; dir?: "asc" | "desc" }
