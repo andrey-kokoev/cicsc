@@ -2476,276 +2476,276 @@ phases:
       description: DLQ admin API (list, inspect, replay)
 - id: BO
   number: 16
-  status: complete
+  status: planned
   title: Schedule Primitive - Time-Based Execution
   milestones:
   - id: BO1
     title: Core IR Schedule Extension
     checkboxes:
     - id: BO1.1
-      status: done
+      status: open
       description: Add ScheduleSpecV0 to Core IR (cron, delay, action)
     - id: BO1.2
-      status: done
+      status: open
       description: Define schedule trigger types (cron, delay, event+delay)
     - id: BO1.3
-      status: done
+      status: open
       description: Add schedule-to-command input mapping expressions
     - id: BO1.4
-      status: done
+      status: open
       description: Update IR validator for schedule specifications
   - id: BO2
     title: Schedule Storage & Polling
     checkboxes:
     - id: BO2.1
-      status: done
+      status: open
       description: Scheduled jobs table schema (scheduled_at, status, action)
     - id: BO2.2
-      status: done
+      status: open
       description: Cron schedule tracker (last_run, next_run computation)
     - id: BO2.3
-      status: done
+      status: open
       description: Schedule worker polling (due jobs query)
     - id: BO2.4
-      status: done
+      status: open
       description: Event-triggered schedule creation (on event, enqueue delayed job)
   - id: BO3
     title: Execution & Observability
     checkboxes:
     - id: BO3.1
-      status: done
+      status: open
       description: Schedule execution engine (direct or via queue)
     - id: BO3.2
-      status: done
+      status: open
       description: Retry policy for failed scheduled jobs
     - id: BO3.3
-      status: done
+      status: open
       description: Schedule admin API (list, cancel, trigger now)
     - id: BO3.4
-      status: done
+      status: open
       description: Schedule metrics (pending count, execution latency)
 - id: BP
   number: 17
-  status: complete
+  status: planned
   title: Workflow Primitive - Multi-Entity Orchestration
   milestones:
   - id: BP1
     title: Core IR Workflow Extension
     checkboxes:
     - id: BP1.1
-      status: done
+      status: open
       description: Add WorkflowSpecV0 to Core IR (steps, transitions, compensation)
     - id: BP1.2
-      status: done
+      status: open
       description: Define step types (command, wait, decision)
     - id: BP1.3
-      status: done
+      status: open
       description: Define compensation semantics (Saga pattern)
     - id: BP1.4
-      status: done
+      status: open
       description: Update IR validator for workflow specifications
   - id: BP2
     title: Workflow Runtime Engine
     checkboxes:
     - id: BP2.1
-      status: done
+      status: open
       description: Workflow state machine (pending, running, completed, compensating)
     - id: BP2.2
-      status: done
+      status: open
       description: Step executor (invoke commands, track results)
     - id: BP2.3
-      status: done
+      status: open
       description: Compensation engine (rollback on failure)
     - id: BP2.4
-      status: done
+      status: open
       description: Workflow persistence (correlation, saga log)
   - id: BP3
     title: Integration & Observability
     checkboxes:
     - id: BP3.1
-      status: done
+      status: open
       description: Workflow initiation API (start workflow with input)
     - id: BP3.2
-      status: done
+      status: open
       description: Event-driven step triggering (on event, advance workflow)
     - id: BP3.3
-      status: done
+      status: open
       description: Workflow admin API (status, history, cancel)
     - id: BP3.4
-      status: done
+      status: open
       description: Dead workflow detection and recovery
 - id: BQ
-  number: 18
-  status: planned
-  title: Event Transform Fan-out - One-to-Many Migrations
+  number: 37
+  status: in_progress
+  title: Event Transform Fan-out
   milestones:
   - id: BQ1
     title: Core IR Fan-out Extension
     checkboxes:
     - id: BQ1.1
       status: open
-      description: Add fan-out operator to EventTransformV0 (emit_many)
+      description: Add emit_many to EventTransformV0
     - id: BQ1.2
       status: open
-      description: Define fan-out expression context (original event access)
+      description: Define fan-out expression context
     - id: BQ1.3
       status: open
-      description: Update IR validator for fan-out transforms
+      description: Update IR validator
     - id: BQ1.4
       status: open
-      description: Spec DSL syntax for fan-out declaration
+      description: Spec DSL syntax
   - id: BQ2
-    title: Migration Engine Fan-out Support
+    title: Migration Engine Fan-out
     checkboxes:
     - id: BQ2.1
       status: open
-      description: Migration engine handles multiple output events
+      description: Handle multiple output events
     - id: BQ2.2
       status: open
-      description: Preserve event ordering with fan-out sequences
+      description: Preserve event ordering
     - id: BQ2.3
       status: open
-      description: Idempotency for fan-out migrations
+      description: Idempotency
     - id: BQ2.4
       status: open
-      description: Replay verification with fan-out
+      description: Replay verification
 - id: BR
-  number: 19
+  number: 38
   status: planned
-  title: Native SLA Declaration - First-class Spec DSL SLAs
+  title: Native SLA Declaration
   milestones:
   - id: BR1
     title: Core IR SLA Extension
     checkboxes:
     - id: BR1.1
       status: open
-      description: SlaSpecV0 with start/stop event selectors
+      description: SlaSpecV0 with start/stop selectors
     - id: BR1.2
       status: open
-      description: SLA breach detection logic
+      description: SLA breach detection
     - id: BR1.3
       status: open
-      description: Breach action binding (command emission)
+      description: Breach action binding
     - id: BR1.4
       status: open
-      description: Update IR validator for SLA specs
+      description: Update IR validator
   - id: BR2
-    title: SLA Runtime Engine
+    title: SLA Runtime
     checkboxes:
     - id: BR2.1
       status: open
-      description: SLA tracker (start timers on events)
+      description: SLA tracker
     - id: BR2.2
       status: open
-      description: Breach detector (scheduled checks)
+      description: Breach detector
     - id: BR2.3
       status: open
-      description: Breach action executor
+      description: Action executor
     - id: BR2.4
       status: open
-      description: SLA metrics export
+      description: Metrics export
 - id: BS
-  number: 20
+  number: 39
   status: planned
-  title: Rich Aggregates - Rate/Ratio View Operators
+  title: Rich Aggregates
   milestones:
   - id: BS1
-    title: Query AST Aggregate Extension
+    title: Query AST Extension
     checkboxes:
     - id: BS1.1
       status: open
-      description: Add rate operator (events per time window)
+      description: Add rate operator
     - id: BS1.2
       status: open
-      description: Add ratio operator (a/b)
+      description: Add ratio operator
     - id: BS1.3
       status: open
-      description: Add time_between operator for durations
+      description: Add time_between operator
     - id: BS1.4
       status: open
       description: Update QueryV0 types
   - id: BS2
-    title: View Runtime Implementation
+    title: View Runtime
     checkboxes:
     - id: BS2.1
       status: open
-      description: SQL generation for rate()
+      description: SQL for rate()
     - id: BS2.2
       status: open
-      description: SQL generation for ratio()
+      description: SQL for ratio()
     - id: BS2.3
       status: open
-      description: Oracle conformance for aggregates
+      description: Oracle conformance
     - id: BS2.4
       status: open
-      description: Spec DSL sugar for common patterns
+      description: Spec DSL sugar
 - id: BT
-  number: 21
+  number: 40
   status: planned
-  title: Row-Level Security Sugar - Spec-level RLS Patterns
+  title: Row-Level Security Sugar
   milestones:
   - id: BT1
     title: Core IR RLS Extension
     checkboxes:
     - id: BT1.1
       status: open
-      description: Add row_policy patterns to ViewSpecV0
+      description: Add row_policy patterns
     - id: BT1.2
       status: open
-      description: Define owner pattern semantics
+      description: Define owner semantics
     - id: BT1.3
       status: open
-      description: Define member_of pattern semantics
+      description: Define member_of semantics
     - id: BT1.4
       status: open
-      description: Update IR validator for RLS specs
+      description: Update IR validator
   - id: BT2
-    title: RLS Runtime Implementation
+    title: RLS Runtime
     checkboxes:
     - id: BT2.1
       status: open
-      description: Owner pattern code generation
+      description: Owner pattern codegen
     - id: BT2.2
       status: open
-      description: Member-of pattern code generation
+      description: Member-of codegen
     - id: BT2.3
       status: open
       description: Fallback to custom expr
     - id: BT2.4
       status: open
-      description: RLS enforcement in views
+      description: RLS enforcement
 - id: BU
-  number: 22
+  number: 41
   status: planned
-  title: Multi-Entity Commands - Atomic Cross-Entity Intents
+  title: Multi-Entity Commands
   milestones:
   - id: BU1
-    title: Core IR Multi-Entity Extension
+    title: Core IR Multi-Entity
     checkboxes:
     - id: BU1.1
       status: open
-      description: Add WorkflowCommandSpecV0 (atomic block)
+      description: WorkflowCommandSpecV0
     - id: BU1.2
       status: open
-      description: Define transaction boundary semantics
+      description: Transaction boundary semantics
     - id: BU1.3
       status: open
-      description: Define partial failure handling
+      description: Partial failure handling
     - id: BU1.4
       status: open
-      description: Update IR validator for multi-entity commands
+      description: Update IR validator
   - id: BU2
-    title: Multi-Entity Transaction Runtime
+    title: Multi-Entity Runtime
     checkboxes:
     - id: BU2.1
       status: open
-      description: Saga orchestrator for atomic commands
+      description: Saga orchestrator
     - id: BU2.2
       status: open
-      description: Compensation on partial failure
+      description: Compensation
     - id: BU2.3
       status: open
-      description: Idempotency across entity streams
+      description: Idempotency
     - id: BU2.4
       status: open
-      description: Conformance testing with oracle
+      description: Conformance testing
