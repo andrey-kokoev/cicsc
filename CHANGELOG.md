@@ -32,3 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Complete documentation and examples
 - v1.0 integration and release
 
+
+## [v1.2.1] - $(date +%Y-%m-%d)
+
+### Added
+- Microsoft OAuth adapter (Entra ID / Azure AD support)
