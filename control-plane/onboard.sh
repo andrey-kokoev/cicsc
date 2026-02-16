@@ -73,11 +73,15 @@ else
     echo "  - YAML files are read-only; use scripts to modify"
     echo ""
 
-    # Show current assignments
+    # Show current assignments and auto-claim
     echo "Your current assignments:"
     ./control-plane/inbox.sh "$AGENT"
 
     echo ""
+    echo "Auto-claiming all open assignments..."
+    ./control-plane/claim.sh "$AGENT"
+
+    echo ""
     echo "Ready to work? Run:"
-    echo "  ./control-plane/claim.sh $AGENT"
+    echo "  ./control-plane/check_gates.sh"
 fi
