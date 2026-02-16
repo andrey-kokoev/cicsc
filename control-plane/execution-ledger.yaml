@@ -2102,6 +2102,27 @@ phases:
     - id: BG1.7
       status: done
       description: Ollama provider implementation (local models)
+    - id: BG1.8
+      status: open
+      description: Add embed() method to LLMProvider interface
+    - id: BG1.9
+      status: open
+      description: Add streaming support to interface
+    - id: BG1.10
+      status: open
+      description: Implement AnthropicProvider
+    - id: BG1.11
+      status: open
+      description: Add retry/fallback logic for failed requests
+    - id: BG1.12
+      status: open
+      description: Add request timeout configuration
+    - id: BG1.13
+      status: open
+      description: Fix fragile private state access in LLMInterviewEngine
+    - id: BG1.14
+      status: open
+      description: Add error handling and output validation
   - id: BG2
     title: Natural Language to Spec Translation
     checkboxes:
