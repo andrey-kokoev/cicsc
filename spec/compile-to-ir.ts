@@ -189,11 +189,21 @@ function mapSlas (slas: Record<string, any>) {
 function mapEventTransforms (eventTransforms: Record<string, any>) {
   const out: Record<string, any> = {}
   for (const [eventType, t] of Object.entries(eventTransforms ?? {})) {
-    out[eventType] = {
+    const transform: any = {
       emit_as: typeof (t as any)?.emit_as === "string" ? (t as any).emit_as : undefined,
       payload_map: (t as any)?.payload_map ?? undefined,
       drop: Boolean((t as any)?.drop ?? false),
     }
+    
+    // BQ1.1: Handle emit_many for fan-out
+    if (Array.isArray((t as any).emit_many)) {
+      transform.emit_many = (t as any).emit_many.map((e: any) => ({
+        event_type: String(e.event_type ?? e.type),
+        payload: e.payload ?? e.payload_map ?? {},
+      }))
+    }
+    
+    out[eventType] = transform
   }
   return out
 }

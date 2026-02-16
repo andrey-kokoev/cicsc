@@ -106,6 +106,7 @@ export type SpecEventTransformV0 = {
   emit_as?: string
   payload_map?: Record<string, any>
   drop?: boolean
+  emit_many?: Array<{ event_type: string; payload_map?: Record<string, any> }> // BQ1.1: fan-out
 }
 
 export type SpecSubscriptionV0 = {
