@@ -3,6 +3,36 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
+# Check for --no-sync flag
+SKIP_SYNC=0
+NEW_ARGS=()
+for arg in "$@"; do
+    if [[ "$arg" == "--no-sync" ]]; then
+        SKIP_SYNC=1
+    else
+        NEW_ARGS+=("$arg")
+    fi
+done
+set -- "${NEW_ARGS[@]}"
+
+# Auto-sync if on worktree and behind main
+needs_sync() {
+    local local_head remote_head
+    local_head=$(git rev-parse HEAD)
+    remote_head=$(git rev-parse origin/main 2>/dev/null) || return 1
+    [[ "$local_head" != "$remote_head" ]]
+}
+
+if [[ "$SKIP_SYNC" -eq 0 ]] && needs_sync 2>/dev/null; then
+    echo "⚠ Worktree is behind origin/main. Fetching..."
+    git fetch origin
+    git rebase origin/main || {
+        echo "ERROR: Rebase failed. Resolve conflicts manually."
+        exit 1
+    }
+    echo "  ✅ Synced"
+fi
+
 # Check for --batch flag
 if [[ "${1:-}" == "--batch" ]]; then
     shift
