@@ -58,6 +58,9 @@ Lean proof baseline:
 
 # Integrate feature branch
 ./control-plane/integrate.sh status
+
+# Onboard agent
+./control-plane/onboard.sh AGENT_KIMI
 ```
 
 ### Files
