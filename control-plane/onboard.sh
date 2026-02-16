@@ -35,18 +35,41 @@ if [[ "$ROLE" == "main" ]]; then
     echo "  Welcome to CICSC, $AGENT (MAIN AGENT)!"
     echo "=============================================="
     echo ""
-    echo "Your role: AGENT main - orchestrate workers"
+    echo "Your role: Orchestrate workers, manage dispatch"
     echo ""
-    echo "See: AGENTS_MAIN.md for full guide"
-    echo ""
-    echo "Quick workflow:"
-    echo "  1. Validate:    ./control-plane/validate.sh"
-    echo "  2. Add work:   ./control-plane/add_phase.sh --id BZ ..."
-    echo "  3. Dispatch:    ./control-plane/dispatch.sh --checkbox BZ1.1 --agent AGENT_KIMI"
-    echo "  4. Commit:     git add control-plane/ && git commit -m 'dispatch: ...'"
-    echo "  5. Monitor:    ./control-plane/inbox.sh"
-    echo "  6. Merge:      git merge --ff-only origin/feat/..."
-    echo "  7. Push:       git push origin main"
+
+    # Inline main guide
+    cat << 'GUIDE'
+WORKFLOW (read carefully):
+=======================
+1. VALIDATE: ./control-plane/validate.sh
+2. CHECK:    grep status open control-plane/execution-ledger.yaml
+3. ADD:      ./control-plane/add_phase.sh --id BZ --number N --title "T"
+4. DISPATCH: ./control-plane/dispatch.sh --checkbox BZ1.1 --agent AGENT_KIMI
+5. COMMIT:   git add control-plane/ && git commit -m "dispatch: ..."
+6. PUSH:     git push origin main
+7. MONITOR:  ./control-plane/inbox.sh AGENT_NAME
+8. MERGE:    git fetch origin && git merge --ff-only origin/feat/branch
+
+RULES (non-negotiable):
+======================
+- NEVER edit YAML directly - use scripts
+- ALWAYS validate after merges
+- DISPATCH smallest adjacent steps
+- Use scripts: add_phase.sh, add_checkbox.sh, dispatch.sh
+
+COMMON COMMANDS:
+================
+| Task          | Command                                |
+|---------------|----------------------------------------|
+| Validate      | ./control-plane/validate.sh           |
+| Add phase     | ./control-plane/add_phase.sh --id ...  |
+| Add checkbox  | ./control-plane/add_checkbox.sh --... |
+| Dispatch      | ./control-plane/dispatch.sh --...     |
+| Monitor       | ./control-plane/inbox.sh AGENT_NAME   |
+| Merge         | git merge --ff-only origin/feat/...   |
+
+GUIDE
     echo ""
     echo "Ready? Run:"
     echo "  ./control-plane/validate.sh"
@@ -55,33 +78,52 @@ else
     echo "  Welcome to CICSC, $AGENT!"
     echo "=============================================="
     echo ""
-    echo "Your role: AGENT worker"
+
+    echo "Your role: AGENT worker - implement assigned work"
     echo ""
-    echo "See: AGENTS_WORKER.md for full guide"
-    echo "Workflow:"
-    echo "  1. Fetch latest:  git fetch origin && git rebase origin/main"
-    echo "  2. Check inbox:   ./control-plane/inbox.sh $AGENT"
-    echo "  3. Claim work:    ./control-plane/claim.sh $AGENT"
-    echo "  4. Do the work:   (implement in your worktree)"
-    echo "  5. Run gates:     ./control-plane/check_gates.sh"
-    echo "  6. Complete:      ./control-plane/complete.sh <checkbox>"
-    echo "  7. Push branch:   git push origin <branch>"
-    echo ""
-    echo "Tips:"
-    echo "  - Worktrees auto-sync on inbox/claim/complete/check_gates"
-    echo "  - Use --no-sync to skip sync if needed"
-    echo "  - YAML files are read-only; use scripts to modify"
+
+    # Inline worker guide
+    cat << 'GUIDE'
+WORKFLOW (read carefully):
+=======================
+1. SYNC:     git fetch origin && git rebase origin/main
+2. INBOX:    ./control-plane/inbox.sh AGENT_NAME
+3. CLAIM:    ./control-plane/claim.sh AGENT_NAME   <- REQUIRED BEFORE WORK
+4. WORK:     Implement in worktree, commit
+5. GATES:    ./control-plane/check_gates.sh         <- REQUIRED BEFORE COMPLETE
+6. COMPLETE: ./control-plane/complete.sh CHECKBOX   <- REQUIRED WHEN DONE
+7. PUSH:     git push origin feat/description
+
+RULES (non-negotiable):
+======================
+- NEVER edit YAML files directly - use scripts
+- NEVER commit to main - always feature branch
+- ALWAYS run gates before completing
+- ALWAYS complete work with complete.sh
+- ALWAYS sync before starting (rebase origin/main)
+
+COMMON COMMANDS:
+================
+| Task          | Command                                |
+|---------------|----------------------------------------|
+| Sync          | git fetch origin && git rebase origin/main |
+| Claim         | ./control-plane/claim.sh AGENT_NAME  |
+| Gates         | ./control-plane/check_gates.sh       |
+| Complete      | ./control-plane/complete.sh BZ1.1     |
+| Push branch   | git push origin feat/branch-name     |
+
+GUIDE
     echo ""
 
     # Show current assignments and auto-claim
-    echo "Your current assignments:"
+    echo "Your assignments:"
     ./control-plane/inbox.sh "$AGENT"
 
     echo ""
-    echo "Auto-claiming all open assignments..."
+    echo "Auto-claiming..."
     ./control-plane/claim.sh "$AGENT"
 
     echo ""
-    echo "Ready to work? Run:"
+    echo "Now implement. Run gates when ready:"
     echo "  ./control-plane/check_gates.sh"
 fi
