@@ -16,12 +16,20 @@ draft: false
 A constructive collaboration model in which Git worktrees, not chat sessions,
 are the primary execution boundaries for change.
 
-> **Implementation Note (2026-02-15):** The WMCC protocol was simplified from a 
-> complex message-passing system (59 scripts, 6 models, 24,000 lines) to direct 
-> state management (6 scripts, 2 files, ~300 lines). The conceptual framework 
-> below remains valid, but specific mechanisms (message_events, evidence bindings,
-> auto-dispatch loops) have been replaced with simpler equivalents.
-> See `AGENTS.md` for current operational guidance.
+> **Implementation Note (2026-02-15):** The WMCC protocol was simplified from a
+> complex message-passing system (59 scripts, 6 models, 24,000 lines) to direct
+> state management (6 scripts, 2 files, ~300 lines).
+>
+> **Implementation Note (2026-02-16):** The WMCC protocol was further refined with
+> **FF-only boundary contraction**. The key insight: instead of distributing constraints
+> across all operations, we concentrate them at the integration boundary. This is
+> formalized categorically in `lean/Cicsc/Evolution/FFIntegration.lean` and operationalized
+> in `control-plane/integrate.sh`.
+>
+> See:
+> - `docs/genesis/boundary-contraction.md` for the categorical treatment
+> - `docs/foundations/category-model.md §11` for the specification
+> - `control-plane/integrate.sh` for the executable boundary
 
 ## 1. Positioning
 
@@ -36,6 +44,30 @@ Operationally, a collaboration handoff `H` is valid only when:
 
 accept(H) iff typed_obligations(H) are satisfied  
 and required evidence is attached to the handoff branch/commit path.
+
+**The categorical refinement (2026-02-16):** WMCC is now understood as a category where:
+- Objects are worktrees branched from main
+- Morphisms are integration paths
+- The FF-property constrains valid integrations
+
+See `docs/genesis/boundary-contraction.md` for the full treatment.
+
+## 2. The Three-Phase Structure (FF-Only)
+
+### Phase 1: Dispatch (Create Object)
+
+Creates new checkbox `c` with `A(c) = u00d7`. No categorical constraint - just set expansion.
+
+### Phase 2: Claim (Create Morphism)
+
+Creates morphism `main u2192 W` (branch creation). UNCONSTRAINED - workers can branch from anywhere.
+
+### Phase 3: Integrate (Constrained Morphism)
+
+Creates morphism `W u2192 main` via FF-merge. FF-CONSTRAINED - must satisfy descent property.
+
+**Key insight:** The constraint is concentrated at the boundary (integrate), not distributed.
+This is **boundary contraction** - workers operate freely inside, but integration requires FF-morphism.
 
 ## 2. Why worktree centrality
 
@@ -257,6 +289,26 @@ Each failure mode weakens constructive collaboration guarantees.
 - Current protocol checks type/structure and obligation evidence minima;
   it does not yet cryptographically verify artifact digests against bytes.
 
+
+## 9. FF-Only Integration (Categorical)
+
+The integration boundary enforces the FF-morphism property:
+
+```
+integrate : State/main u2192 Maybe(FF-State/main)
+```
+
+This is a **proof-carrying code** pattern:
+1. Policy is formal (category model)
+2. Execution checks compliance (git --ff-only)
+3. Success yields proof object (IsFFMorph witness)
+
+**Why this works categorically:**
+- FF-State/main is a preorder (at most one morphism between objects)
+- Pushouts exist iff comparable (no concurrent merge conflicts)
+- Invalid structural states are unreachable by construction
+
+See `lean/Cicsc/Evolution/FFIntegration.lean` for the formal proofs.
 ## 11. Summary
 
 WMCC is the collaboration semantics for constructive evolution workflows.

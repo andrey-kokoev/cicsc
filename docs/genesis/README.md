@@ -13,6 +13,7 @@ plus one progression method:
 2. `docs/genesis/constructively-invariant-control-system-compiler.md`
 3. `docs/genesis/constructive-invariance-evolution-control-plane.md` + `control-plane/README.md` (with `control-plane/*` models)
 4. `docs/genesis/worktree-mediated-constructive-collaboration.md` + `control-plane/collaboration/*`
+5. `docs/genesis/boundary-contraction.md`  2190 NEW
 5. `docs/genesis/constructive-accretion-method.md`
 6. `docs/genesis/on-agent-ergonomics.md`
 
@@ -67,6 +68,15 @@ Defines typed collaboration contracts for multi-worktree execution:
 - typed message transport with generated worktree inbox/outbox projection.
 
 In project terms: WMCC is "how multiple executors coordinate admissible change."
+
+### 5) Boundary Contraction (`boundary-contraction.md`)
+Role: **categorical discipline layer**.
+
+The categorical discipline that makes WMCC constructive:
+- Constrains integration to FF-morphisms only
+- Invalid structural states become unreachable by construction
+- See `lean/Cicsc/Evolution/FFIntegration.lean` for formal proofs
+- See `control-plane/integrate.sh` for executable implementation
 
 ## Relationship Contract
 

@@ -54,6 +54,16 @@ Minimal governance algebra:
 
 This is a closed-loop controller over semantic evolution.
 
+### 3.5 Categorical Boundary Control
+
+The CIECP controller can be understood categorically:
+- State space: **State/main** (all possible worktrees)
+- Valid subspace: **FF-State/main** (FF-morphisms only)
+- Controller: `integrate : State/main u2192 Maybe(FF-State/main)`
+
+Invalid states are **unreachable** (not recoverable) by categorical construction.
+See docs/genesis/boundary-contraction.md for full treatment.
+
 ## 4. Constructive governance guarantees (operational)
 
 **Guarantee 1 — Admission by Evidence**  

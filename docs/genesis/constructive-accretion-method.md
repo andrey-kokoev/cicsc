@@ -85,6 +85,18 @@ A step is admissible only if it is closed by evidence:
 If closure is missing, the step remains open regardless of implementation
 volume.
 
+
+## 5. Example: FF-Only Integration Boundary
+
+When collaboration friction emerged (rebase conflicts, race conditions),
+CAM required the smallest adjacent step that preserved semantics:
+
+- Problem: Distributed constraints caused invalid states
+- CAM choice: Concentrate constraints at single boundary (not distribute fixes)
+- Result: FF-only integration constraint
+- Evidence: Categorical proofs in lean/Cicsc/Evolution/FFIntegration.lean
+
+This is accretion: adding one boundary constraint, not rewriting the collaboration layer.
 ## 8. Relationship to CIECP and WMCC
 
 - CIECP supplies admissibility gates and canonical execution truth.
