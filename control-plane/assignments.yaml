@@ -2188,3 +2188,27 @@ assignments:
   agent_ref: AGENT_COPILOT_GEMINI
   status: open
   created_at: '2026-02-16T15:36:16.755486Z'
+- checkbox_ref: BG1.16
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-16T15:49:26.435127Z'
+- checkbox_ref: BG1.17
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-16T15:49:26.724998Z'
+- checkbox_ref: BG1.18
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-16T15:49:27.015233Z'
+- checkbox_ref: BG1.19
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-16T15:49:27.303871Z'
+- checkbox_ref: BG1.20
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-16T15:49:27.600273Z'
+- checkbox_ref: BG1.21
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-16T15:49:27.891927Z'

@@ -2126,6 +2126,24 @@ phases:
     - id: BG1.15
       status: open
       description: Add provider-side chat cache support (cache_by)
+    - id: BG1.16
+      status: open
+      description: Implement AnthropicProvider
+    - id: BG1.17
+      status: open
+      description: Implement OpenRouterProvider (100+ models)
+    - id: BG1.18
+      status: open
+      description: Implement KimiProvider (Moonshot AI)
+    - id: BG1.19
+      status: open
+      description: Implement QwenProvider (Alibaba)
+    - id: BG1.20
+      status: open
+      description: Implement AzureOpenAIProvider
+    - id: BG1.21
+      status: open
+      description: Implement GeminiProvider (Google)
   - id: BG2
     title: Natural Language to Spec Translation
     checkboxes:
