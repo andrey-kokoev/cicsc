@@ -2749,3 +2749,68 @@ phases:
     - id: BU2.4
       status: done
       description: Conformance testing
+- id: BV
+  number: 42
+  status: planned
+  title: UI Primitive - User Interface Generation
+  milestones:
+  - id: BV1
+    title: Core IR UI Extension
+    checkboxes:
+    - id: BV1.1
+      status: open
+      description: Add UiSpecV0 to Core IR (screen, dashboard, navigation)
+    - id: BV1.2
+      status: open
+      description: Define layout primitives (section, form, table, kanban)
+    - id: BV1.3
+      status: open
+      description: Define navigation structure (sections, items, hierarchy)
+    - id: BV1.4
+      status: open
+      description: Update IR validator for UI specs
+  - id: BV2
+    title: Component Contract & Registry
+    checkboxes:
+    - id: BV2.1
+      status: open
+      description: JSON Schema component contract (Button, Table, Form, etc.)
+    - id: BV2.2
+      status: open
+      description: Capability declaration system (sort, filter, virtualize)
+    - id: BV2.3
+      status: open
+      description: Component registry format (type -> implementation mapping)
+    - id: BV2.4
+      status: open
+      description: Default shadcn-vue component library setup
+  - id: BV3
+    title: UI Generator & Runtime
+    checkboxes:
+    - id: BV3.1
+      status: open
+      description: Layout shell generator (App.vue with sidebars/rails)
+    - id: BV3.2
+      status: open
+      description: Navigation menu generator from ui.navigation
+    - id: BV3.3
+      status: open
+      description: Screen generator (table from view, form from entity)
+    - id: BV3.4
+      status: open
+      description: Dashboard generator (metrics, charts, widgets)
+  - id: BV4
+    title: Integration & Polish
+    checkboxes:
+    - id: BV4.1
+      status: open
+      description: Theme system integration (dark/light mode)
+    - id: BV4.2
+      status: open
+      description: Toast/notification feedback for actions
+    - id: BV4.3
+      status: open
+      description: Auth integration (role-based navigation)
+    - id: BV4.4
+      status: open
+      description: Router generation with navigation guards
