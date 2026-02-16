@@ -2716,36 +2716,36 @@ phases:
       description: RLS enforcement
 - id: BU
   number: 41
-  status: planned
+  status: complete
   title: Multi-Entity Commands
   milestones:
   - id: BU1
     title: Core IR Multi-Entity
     checkboxes:
     - id: BU1.1
-      status: open
+      status: done
       description: WorkflowCommandSpecV0
     - id: BU1.2
-      status: open
+      status: done
       description: Transaction boundary semantics
     - id: BU1.3
-      status: open
+      status: done
       description: Partial failure handling
     - id: BU1.4
-      status: open
+      status: done
       description: Update IR validator
   - id: BU2
     title: Multi-Entity Runtime
     checkboxes:
     - id: BU2.1
-      status: open
+      status: done
       description: Saga orchestrator
     - id: BU2.2
-      status: open
+      status: done
       description: Compensation
     - id: BU2.3
-      status: open
+      status: done
       description: Idempotency
     - id: BU2.4
-      status: open
+      status: done
       description: Conformance testing
