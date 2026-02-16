@@ -99,6 +99,11 @@ for checkbox in checkbox_list:
 Path("control-plane/assignments.yaml").write_text(yaml.dump(assignments, sort_keys=False))
 Path("control-plane/execution-ledger.yaml").write_text(yaml.dump(ledger, sort_keys=False))
 
+# Ensure YAML stays read-only after write
+import os
+os.chmod("control-plane/assignments.yaml", 0o444)
+os.chmod("control-plane/execution-ledger.yaml", 0o444)
+
 if batch_mode:
     print(f"Completed batch: {', '.join(checkbox_list)} at commit {commit}")
 else:

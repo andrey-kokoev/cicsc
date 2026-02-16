@@ -54,6 +54,9 @@ for a in assignments.get("assignments", []):
 
 if claimed:
     Path("control-plane/assignments.yaml").write_text(yaml.dump(assignments, sort_keys=False))
+    # Ensure YAML stays read-only after write
+    import os
+    os.chmod("control-plane/assignments.yaml", 0o444)
     for cb in claimed:
         print(f"Claimed {cb}")
 else:
