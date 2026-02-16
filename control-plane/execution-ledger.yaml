@@ -3062,4 +3062,25 @@ phases:
     - id: BY3.4
       status: done
       description: Document one-click deploy in user guide
+- id: BZ
+  number: 52
+  status: incomplete
+  title: End-to-End Conversational Deploy
+  description: 'Connect interview engine to CLI for seamless spec creation and deployment'
+  milestones:
+  - id: BZ1
+    title: Interview to CLI Integration
+    checkboxes:
+    - id: BZ1.1
+      status: open
+      description: Connect LLMInterviewEngine to CLI compile command
+    - id: BZ1.2
+      status: open
+      description: Add interactive mode (cicsc init --interactive)
+    - id: BZ1.3
+      status: open
+      description: Auto-run install after successful compile
+    - id: BZ1.4
+      status: open
+      description: Add --llm-provider flag for model selection
 
