@@ -75,7 +75,31 @@ Lean proof baseline:
 6. **Complete (REQUIRED):** `./control-plane/complete.sh CHECKBOX_REF`
    - This runs gates, updates `assignments.yaml` to `done`, and marks checkbox done in `execution-ledger.yaml`
    - Must be done BEFORE the final commit
-7. Commit and push (include `control-plane/` changes in commit)
+7. Commit and push to **feature branch** (NOT main)
+8. FF-merge into main via PR or `git merge --ff-only`
+
+### Feature Branch Workflow
+
+Always use feature branches, never commit directly to main:
+
+```bash
+# Create feature branch from main
+git fetch origin main
+git checkout -b feat/description origin/main
+
+# Work and commit
+git add -A && git commit -m "feat: description"
+
+# Push to origin as branch
+git push origin feat/description
+
+# FF-merge into main (via PR or manually)
+git checkout main
+git merge --ff-only feat/description
+git push origin main
+```
+
+**Why:** The FF-only categorical guarantees require all integrations to go through the boundary. Direct commits to main break the structural invariants.
 
 ---
 
