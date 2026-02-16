@@ -2082,16 +2082,16 @@ phases:
     title: Requirements Interview Engine
     checkboxes:
     - id: BG1.1
-      status: done
+      status: open
       description: Design conversational flow for entity discovery
     - id: BG1.2
-      status: done
+      status: open
       description: Design question templates for states/attributes/commands
     - id: BG1.3
-      status: done
+      status: open
       description: Handle ambiguous/vague user input gracefully
     - id: BG1.4
-      status: done
+      status: open
       description: Summarize gathered requirements for confirmation
   - id: BG2
     title: Natural Language to Spec Translation
