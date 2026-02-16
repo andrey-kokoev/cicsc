@@ -46,6 +46,18 @@ Lean proof baseline:
 
 # Validate state
 ./control-plane/validate.sh
+
+# Run gate checks
+./control-plane/check_gates.sh
+
+# Add new phase
+./control-plane/add_phase.sh --id BZ --number 52 --title "Title" --checkboxes "BZ1.1:desc"
+
+# Add checkboxes to existing milestone
+./control-plane/add_checkbox.sh --milestone BZ1 --checkbox "BZ1.1:description"
+
+# Integrate feature branch
+./control-plane/integrate.sh status
 ```
 
 ### Files
