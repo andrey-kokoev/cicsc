@@ -2123,6 +2123,9 @@ phases:
     - id: BG1.14
       status: open
       description: Add error handling and output validation
+    - id: BG1.15
+      status: open
+      description: Add provider-side chat cache support (cache_by)
   - id: BG2
     title: Natural Language to Spec Translation
     checkboxes:
