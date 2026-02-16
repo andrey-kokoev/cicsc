@@ -154,6 +154,12 @@ export type EventTransformV0 = {
   emit_as?: string
   payload_map?: Record<string, ExprV0>
   drop?: boolean
+  emit_many?: EventEmitV0[] // BQ1.1: fan-out support
+}
+
+export type EventEmitV0 = {
+  event_type: string
+  payload?: Record<string, ExprV0>
 }
 
 export type EventSelectorV0 = {
