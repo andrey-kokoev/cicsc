@@ -5,7 +5,7 @@ cd "$ROOT"
 
 AGENT="${1:-}"
 SYNC_ARG=""
-if [[ "$2" == "--no-sync" ]]; then
+if [[ "${2:-}" == "--no-sync" ]]; then
     SYNC_ARG="--no-sync"
 fi
 
