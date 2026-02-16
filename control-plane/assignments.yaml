@@ -1737,65 +1737,145 @@ assignments:
   completed_at: '2026-02-15T20:16:05.793192Z'
 - checkbox_ref: BW1.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:02.933535Z'
+  started_at: '2026-02-15T22:03:24.594409Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:44.064154Z'
 - checkbox_ref: BW1.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:03.192984Z'
+  started_at: '2026-02-15T22:03:24.594423Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:44.447680Z'
 - checkbox_ref: BW1.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:03.458038Z'
+  started_at: '2026-02-15T22:03:24.594425Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:44.846404Z'
 - checkbox_ref: BW1.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:03.730260Z'
+  started_at: '2026-02-15T22:03:24.594426Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:45.246667Z'
 - checkbox_ref: BW2.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:04.028602Z'
+  started_at: '2026-02-15T22:03:24.594427Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:45.680099Z'
 - checkbox_ref: BW2.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:04.288496Z'
+  started_at: '2026-02-15T22:03:24.594428Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:46.065441Z'
 - checkbox_ref: BW2.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:04.552859Z'
+  started_at: '2026-02-15T22:03:24.594429Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:46.463296Z'
 - checkbox_ref: BW2.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:04.817593Z'
+  started_at: '2026-02-15T22:03:24.594429Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:46.860851Z'
 - checkbox_ref: BW3.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:05.094661Z'
+  started_at: '2026-02-15T22:03:24.594430Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:47.252808Z'
 - checkbox_ref: BW3.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:05.361162Z'
+  started_at: '2026-02-15T22:03:24.594431Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:47.643473Z'
 - checkbox_ref: BW3.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:05.648148Z'
+  started_at: '2026-02-15T22:03:24.594432Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:48.033886Z'
 - checkbox_ref: BW3.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:05.917038Z'
+  started_at: '2026-02-15T22:03:24.594433Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:48.421415Z'
 - checkbox_ref: BW4.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:06.179056Z'
+  started_at: '2026-02-15T22:03:24.594433Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:48.806947Z'
 - checkbox_ref: BW4.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:06.445696Z'
+  started_at: '2026-02-15T22:03:24.594434Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:49.198175Z'
 - checkbox_ref: BW4.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:06.717396Z'
+  started_at: '2026-02-15T22:03:24.594435Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:49.589181Z'
 - checkbox_ref: BW4.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T20:17:07.019279Z'
+  started_at: '2026-02-15T22:03:24.594436Z'
+  commit: 97b2b0a
+  completed_at: '2026-02-16T08:31:49.982774Z'
+- checkbox_ref: BQ1.1
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+  created_at: '2026-02-16T09:03:49.555005Z'
+- checkbox_ref: BQ1.2
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+  created_at: '2026-02-16T09:03:49.835295Z'
+- checkbox_ref: BQ1.3
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+  created_at: '2026-02-16T09:03:50.130944Z'
+- checkbox_ref: BQ1.4
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+  created_at: '2026-02-16T09:03:50.420542Z'
+- checkbox_ref: BQ2.1
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+  created_at: '2026-02-16T09:03:50.696827Z'
+- checkbox_ref: BQ2.2
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+  created_at: '2026-02-16T09:03:50.970909Z'
+- checkbox_ref: BQ2.3
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+  created_at: '2026-02-16T09:03:51.267806Z'
+- checkbox_ref: BQ2.4
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+  created_at: '2026-02-16T09:03:51.543044Z'

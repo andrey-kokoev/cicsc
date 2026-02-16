@@ -2816,66 +2816,66 @@ phases:
       description: Router generation with navigation guards
 - id: BW
   number: 43
-  status: planned
+  status: complete
   title: Service Primitive - External System Integration
   milestones:
   - id: BW1
     title: Core IR Service Extension
     checkboxes:
     - id: BW1.1
-      status: open
+      status: done
       description: Add ServiceSpecV0 to Core IR (service types, operations)
     - id: BW1.2
-      status: open
+      status: done
       description: Define sync operation semantics (request/response)
     - id: BW1.3
-      status: open
+      status: done
       description: Define async operation with return_address semantics
     - id: BW1.4
-      status: open
+      status: done
       description: Add call expression to command emit
   - id: BW2
     title: Return Address and Correlation
     checkboxes:
     - id: BW2.1
-      status: open
+      status: done
       description: Return address URL generation (unique per call)
     - id: BW2.2
-      status: open
+      status: done
       description: Correlation ID tracking (pending_calls table)
     - id: BW2.3
-      status: open
+      status: done
       description: Webhook-to-command mapping for return addresses
     - id: BW2.4
-      status: open
+      status: done
       description: Timeout and cleanup for orphaned calls
   - id: BW3
     title: Service Runtime and Reliability
     checkboxes:
     - id: BW3.1
-      status: open
+      status: done
       description: HTTP client abstraction for sync calls
     - id: BW3.2
-      status: open
+      status: done
       description: Retry policy with exponential backoff
     - id: BW3.3
-      status: open
+      status: done
       description: Circuit breaker for degraded services
     - id: BW3.4
-      status: open
+      status: done
       description: Queue integration for at-least-once delivery
   - id: BW4
     title: Integration and Testing
     checkboxes:
     - id: BW4.1
-      status: open
+      status: done
       description: Service mocking for tests
     - id: BW4.2
-      status: open
+      status: done
       description: Observability (call metrics, latency)
     - id: BW4.3
-      status: open
+      status: done
       description: Dead call detection and alerting
     - id: BW4.4
-      status: open
+      status: done
       description: Documentation and examples (Stripe, SendGrid)
