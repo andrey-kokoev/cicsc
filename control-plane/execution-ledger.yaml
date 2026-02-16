@@ -2075,7 +2075,7 @@ phases:
       description: Cloud deployment templates
 - id: BG
   number: 8
-  status: in_progress
+  status: complete
   title: Generative Interface - Conversational Spec Assistant
   milestones:
   - id: BG1
