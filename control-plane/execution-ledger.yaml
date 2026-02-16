@@ -519,7 +519,7 @@ phases:
       title: Define objective Phase 10 exit checklist mapped to artifacts
       status: done
     - id: AA3.2
-      title: "Add PHASE10\u2194Execution Ledger status-drift consistency gate"
+      title: Add PHASE10↔Execution Ledger status-drift consistency gate
       status: done
     - id: AA3.3
       title: Add Phase 11 block gate based on Phase 10 checklist
@@ -631,7 +631,7 @@ phases:
       title: Define objective Phase 12 exit checklist mapped to artifacts
       status: done
     - id: AC4.2
-      title: "Add PHASE12\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE12↔Execution Ledger drift consistency gate
       status: done
     - id: AC4.3
       title: Add Phase 13 block gate from Phase 12 checklist
@@ -687,7 +687,7 @@ phases:
       title: Define objective Phase 13 exit checklist mapped to artifacts
       status: done
     - id: AD4.2
-      title: "Add PHASE13\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE13↔Execution Ledger drift consistency gate
       status: done
     - id: AD4.3
       title: Add Phase 14 block gate from Phase 13 checklist
@@ -743,7 +743,7 @@ phases:
       title: Define objective Phase 14 exit checklist mapped to artifacts
       status: done
     - id: AE4.2
-      title: "Add PHASE14\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE14↔Execution Ledger drift consistency gate
       status: done
     - id: AE4.3
       title: Add Phase 15 block gate from Phase 14 checklist
@@ -799,7 +799,7 @@ phases:
       title: Define objective Phase 15 exit checklist mapped to artifacts
       status: done
     - id: AF4.2
-      title: "Add PHASE15\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE15↔Execution Ledger drift consistency gate
       status: done
     - id: AF4.3
       title: Add Phase 16 block gate from Phase 15 checklist
@@ -855,7 +855,7 @@ phases:
       title: Define objective Phase 16 exit checklist mapped to artifacts
       status: done
     - id: AG4.2
-      title: "Add PHASE16\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE16↔Execution Ledger drift consistency gate
       status: done
     - id: AG4.3
       title: Add Phase 17 block gate from Phase 16 checklist
@@ -911,7 +911,7 @@ phases:
       title: Define objective Phase 17 exit checklist mapped to artifacts
       status: done
     - id: AH4.2
-      title: "Add PHASE17\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE17↔Execution Ledger drift consistency gate
       status: done
     - id: AH4.3
       title: Add Phase 18 block gate from Phase 17 checklist
@@ -967,7 +967,7 @@ phases:
       title: Define objective Phase 18 exit checklist mapped to artifacts
       status: done
     - id: AI4.2
-      title: "Add PHASE18\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE18↔Execution Ledger drift consistency gate
       status: done
     - id: AI4.3
       title: Add Phase 19 block gate from Phase 18 checklist
@@ -1023,7 +1023,7 @@ phases:
       title: Define objective Phase 19 exit checklist mapped to artifacts
       status: done
     - id: AJ4.2
-      title: "Add PHASE19\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE19↔Execution Ledger drift consistency gate
       status: done
     - id: AJ4.3
       title: Add Phase 20 block gate from Phase 19 checklist
@@ -1079,7 +1079,7 @@ phases:
       title: Define objective Phase 20 exit checklist mapped to artifacts
       status: done
     - id: AK4.2
-      title: "Add PHASE20\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE20↔Execution Ledger drift consistency gate
       status: done
     - id: AK4.3
       title: Add Phase 21 block gate from Phase 20 checklist
@@ -1135,7 +1135,7 @@ phases:
       title: Define objective Phase 21 exit checklist mapped to artifacts
       status: done
     - id: AL4.2
-      title: "Add PHASE21\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE21↔Execution Ledger drift consistency gate
       status: done
     - id: AL4.3
       title: Add Phase 22 block gate from Phase 21 checklist
@@ -1191,7 +1191,7 @@ phases:
       title: Define objective Phase 22 exit checklist mapped to artifacts
       status: done
     - id: AM4.2
-      title: "Add PHASE22\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE22↔Execution Ledger drift consistency gate
       status: done
     - id: AM4.3
       title: Add Phase 23 block gate from Phase 22 checklist
@@ -1247,7 +1247,7 @@ phases:
       title: Define objective Phase 23 exit checklist mapped to artifacts
       status: done
     - id: AN4.2
-      title: "Add PHASE23\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE23↔Execution Ledger drift consistency gate
       status: done
     - id: AN4.3
       title: Add Phase 24 block gate from Phase 23 checklist
@@ -1303,7 +1303,7 @@ phases:
       title: Define objective Phase 24 exit checklist mapped to artifacts
       status: done
     - id: AO4.2
-      title: "Add PHASE24\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE24↔Execution Ledger drift consistency gate
       status: done
     - id: AO4.3
       title: Add Phase 25 block gate from Phase 24 checklist
@@ -1359,7 +1359,7 @@ phases:
       title: Define objective Phase 25 exit checklist mapped to artifacts
       status: done
     - id: AP4.2
-      title: "Add PHASE25\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE25↔Execution Ledger drift consistency gate
       status: done
     - id: AP4.3
       title: Add Phase 26 block gate from Phase 25 checklist
@@ -1415,7 +1415,7 @@ phases:
       title: Define objective Phase 26 exit checklist mapped to artifacts
       status: done
     - id: AQ4.2
-      title: "Add PHASE26\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE26↔Execution Ledger drift consistency gate
       status: done
     - id: AQ4.3
       title: Add Phase 27 block gate from Phase 26 checklist
@@ -1471,7 +1471,7 @@ phases:
       title: Define objective Phase 27 exit checklist mapped to artifacts
       status: done
     - id: AR4.2
-      title: "Add PHASE27\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE27↔Execution Ledger drift consistency gate
       status: done
     - id: AR4.3
       title: Add Phase 28 block gate from Phase 27 checklist
@@ -1527,7 +1527,7 @@ phases:
       title: Define objective Phase 28 exit checklist mapped to artifacts
       status: done
     - id: AS4.2
-      title: "Add PHASE28\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE28↔Execution Ledger drift consistency gate
       status: done
     - id: AS4.3
       title: Add Phase 29 block gate from Phase 28 checklist
@@ -1583,7 +1583,7 @@ phases:
       title: Define objective Phase 29 exit checklist mapped to artifacts
       status: done
     - id: AT4.2
-      title: "Add PHASE29\u2194Execution Ledger drift consistency gate"
+      title: Add PHASE29↔Execution Ledger drift consistency gate
       status: done
     - id: AT4.3
       title: Add Phase 30 block gate from Phase 29 checklist
@@ -1863,13 +1863,13 @@ phases:
     checkboxes:
     - id: BB3.1
       status: done
-      description: "Implement AST \u2192 Core IR lowering"
+      description: Implement AST → Core IR lowering
     - id: BB3.2
       status: done
       description: Desugar implicit constraints and defaults
     - id: BB3.3
       status: done
-      description: "Roundtrip tests: Spec \u2192 IR \u2192 equivalent output"
+      description: 'Roundtrip tests: Spec → IR → equivalent output'
     - id: BB3.4
       status: done
       description: Document sugar transformations
@@ -2404,7 +2404,7 @@ phases:
       description: Define webhook payload schema and validation
     - id: BM1.3
       status: done
-      description: "Map webhook payloads to commands (webhook \u2192 command binding)"
+      description: Map webhook payloads to commands (webhook → command binding)
     - id: BM1.4
       status: done
       description: Parse webhooks to Core IR with source metadata
@@ -2479,7 +2479,7 @@ phases:
     checkboxes:
     - id: BN3.1
       status: done
-      description: "Route webhooks through queue (202 Accepted \u2192 enqueue)"
+      description: Route webhooks through queue (202 Accepted → enqueue)
     - id: BN3.2
       status: done
       description: Idempotency tracking (24h window)
@@ -2913,7 +2913,7 @@ phases:
       description: Formalize reducer semantics (state transitions)
     - id: BX1.4
       status: done
-      description: "Prove reducer determinism (same events \u2192 same state)"
+      description: Prove reducer determinism (same events → same state)
   - id: BX2
     title: Invariant Preservation Proofs
     checkboxes:
@@ -2943,7 +2943,7 @@ phases:
       description: Prove migration preserves invariants
     - id: BX3.4
       status: done
-      description: "Prove migration composability (A\u2192B\u2192C = A\u2192C)"
+      description: Prove migration composability (A→B→C = A→C)
   - id: BX4
     title: Integration and Extraction
     checkboxes:
@@ -2959,3 +2959,55 @@ phases:
     - id: BX4.4
       status: done
       description: Documentation of verified properties
+- id: BY
+  number: 45
+  status: in_progress
+  title: Simplify Deployment - One-Click Deploy
+  description: 'CAM smallest adjacent step: Add one-click deploy script for SQLite/Postgres.
+    Increases surface, preserves all closed semantic layers.'
+  milestones:
+  - id: BY1
+    title: SQLite One-Click Deploy
+    checkboxes:
+    - id: BY1.1
+      status: open
+      description: Create deploy-sqlite.sh script for local deployment
+    - id: BY1.2
+      status: open
+      description: Auto-detect sqlite3 and create database file
+    - id: BY1.3
+      status: open
+      description: Initialize schema and bind tenant automatically
+    - id: BY1.4
+      status: open
+      description: Print localhost URL and startup confirmation
+  - id: BY2
+    title: Postgres One-Click Deploy
+    checkboxes:
+    - id: BY2.1
+      status: open
+      description: Create deploy-postgres.sh script for cloud deployment
+    - id: BY2.2
+      status: open
+      description: Auto-provision via Docker or connection string
+    - id: BY2.3
+      status: open
+      description: Configure connection pooling and SSL
+    - id: BY2.4
+      status: open
+      description: Print deployed URL and health check
+  - id: BY3
+    title: Unified Deploy Command
+    checkboxes:
+    - id: BY3.1
+      status: open
+      description: Create cicsc deploy command in CLI
+    - id: BY3.2
+      status: open
+      description: Auto-detect target from spec or flag
+    - id: BY3.3
+      status: open
+      description: Provide rollback command for failed deploys
+    - id: BY3.4
+      status: open
+      description: Document one-click deploy in user guide

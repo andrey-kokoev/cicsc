@@ -2063,3 +2063,39 @@ assignments:
   started_at: '2026-02-16T13:41:57.821077Z'
   commit: 59f8fe3
   completed_at: '2026-02-16T13:44:06.961059Z'
+- checkbox_ref: BY1.1
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BY1.2
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BY1.3
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BY1.4
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BY2.1
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BY2.2
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BY2.3
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BY2.4
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BY3.1
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BY3.2
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BY3.3
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BY3.4
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
