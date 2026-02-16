@@ -4,6 +4,36 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 AGENT="${1:-}"
+SYNC_ARG=""
+if [[ "$2" == "--no-sync" ]]; then
+    SYNC_ARG="--no-sync"
+fi
+
+# Check if we're on a worktree and need to sync
+is_worktree() {
+    [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == "true" ]] && \
+    [[ $(git rev-parse --is-inside-work-tree) != $(git rev-parse --is-inside-work-tree "$ROOT") ]]
+}
+
+needs_sync() {
+    local local_head remote_head
+    local_head=$(git rev-parse HEAD)
+    remote_head=$(git rev-parse origin/main 2>/dev/null) || return 1
+    [[ "$local_head" != "$remote_head" ]]
+}
+
+# Auto-sync if on worktree and behind main
+if is_worktree && needs_sync 2>/dev/null; then
+    echo "⚠ Worktree is behind origin/main. Fetching..."
+    git fetch origin
+    if [[ "$SYNC_ARG" == "--no-sync" ]]; then
+        echo "  (sync skipped)"
+    else
+        echo "  Rebasing to origin/main..."
+        git rebase origin/main
+        echo "  ✅ Synced"
+    fi
+fi
 
 python3 - "$AGENT" << 'PY'
 import yaml
