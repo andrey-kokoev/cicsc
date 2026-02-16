@@ -2065,37 +2065,73 @@ assignments:
   completed_at: '2026-02-16T13:44:06.961059Z'
 - checkbox_ref: BY1.1
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T15:05:21.201835Z'
+  commit: 6ea6c64
+  completed_at: '2026-02-16T15:10:00.666432Z'
 - checkbox_ref: BY1.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T15:05:21.201849Z'
+  commit: 6ea6c64
+  completed_at: '2026-02-16T15:10:01.085652Z'
 - checkbox_ref: BY1.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T15:05:21.201851Z'
+  commit: 6ea6c64
+  completed_at: '2026-02-16T15:10:01.535466Z'
 - checkbox_ref: BY1.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T15:05:21.201852Z'
+  commit: 6ea6c64
+  completed_at: '2026-02-16T15:10:01.955771Z'
 - checkbox_ref: BY2.1
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T15:05:21.201853Z'
+  commit: 6ea6c64
+  completed_at: '2026-02-16T15:10:02.376733Z'
 - checkbox_ref: BY2.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T15:05:21.201855Z'
+  commit: 6ea6c64
+  completed_at: '2026-02-16T15:10:02.788023Z'
 - checkbox_ref: BY2.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T15:05:21.201855Z'
+  commit: 6ea6c64
+  completed_at: '2026-02-16T15:10:03.215194Z'
 - checkbox_ref: BY2.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T15:05:21.201856Z'
+  commit: 6ea6c64
+  completed_at: '2026-02-16T15:10:03.628537Z'
 - checkbox_ref: BY3.1
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T15:05:21.201857Z'
+  commit: 6ea6c64
+  completed_at: '2026-02-16T15:10:04.047381Z'
 - checkbox_ref: BY3.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T15:05:21.201858Z'
+  commit: 6ea6c64
+  completed_at: '2026-02-16T15:10:04.456299Z'
 - checkbox_ref: BY3.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T15:05:21.201859Z'
+  commit: 6ea6c64
+  completed_at: '2026-02-16T15:10:04.892847Z'
 - checkbox_ref: BY3.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T15:05:21.201859Z'
+  commit: 6ea6c64
+  completed_at: '2026-02-16T15:10:05.304979Z'

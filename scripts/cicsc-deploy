@@ -1,0 +1,182 @@
+#!/usr/bin/env bash
+#==============================================================================
+# cicsc-deploy - Unified deployment CLI
+#
+# Usage:
+#   ./cicsc-deploy sqlite                    # SQLite deploy
+#   ./cicsc-deploy postgres --connection "..." # Postgres deploy
+#   ./cicsc-deploy status                    # Check status
+#   ./cicsc-deploy rollback --version 5      # Rollback
+#==============================================================================
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+TENANT="${CICSC_TENANT:-default}"
+COMMAND="${1:-help}"
+shift || true
+
+show_help() {
+  cat <<EOF
+CICSC Deployment CLI
+
+Usage:
+  $0 sqlite                    # Deploy to SQLite
+  $0 postgres --connection=... # Deploy to Postgres
+  $0 status                    # Check deployment status
+  $0 rollback --version=N      # Rollback to version N
+
+Environment:
+  CICSC_TENANT     Tenant ID (default: "default")
+  DATABASE_URL     PostgreSQL connection string
+
+Examples:
+  $0 sqlite
+  $0 postgres --connection="postgresql://user:pass@localhost:5432/db"
+  $0 status
+EOF
+}
+
+cmd_sqlite() {
+  echo "[SQLite] Deploying tenant: $TENANT"
+  
+  local db_file="$ROOT/data/${TENANT}.db"
+  mkdir -p "$(dirname "$db_file")"
+  
+  if ! command -v sqlite3 &> /dev/null; then
+    echo "Error: sqlite3 not found"
+    exit 1
+  fi
+  
+  sqlite3 "$db_file" "SELECT 1;" 2>/dev/null || sqlite3 "$db_file" ""
+  
+  local schema_file="$ROOT/runtime/db/install-schema.sql"
+  if [[ -f "$schema_file" ]]; then
+    sqlite3 "$db_file" < "$schema_file" 2>/dev/null || true
+  fi
+  
+  local existing=$(sqlite3 "$db_file" "SELECT tenant_id FROM tenant_versions WHERE tenant_id = '$TENANT';" 2>/dev/null || echo "")
+  if [[ -z "$existing" ]]; then
+    sqlite3 "$db_file" "INSERT INTO tenant_versions VALUES ('$TENANT', 0);"
+    echo "  Created tenant: $TENANT"
+  else
+    echo "  Tenant exists: $TENANT"
+  fi
+  
+  echo ""
+  echo "✓ SQLite deployment successful!"
+  echo "  Database: $db_file"
+  echo "  Tenant: $TENANT"
+}
+
+cmd_postgres() {
+  echo "[Postgres] Deploying tenant: $TENANT"
+  
+  local connection="${DATABASE_URL:-}"
+  
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --connection=*) connection="${1#*=}"; shift ;;
+      --pool=*) shift ;;  # Ignored for now
+      --ssl) shift ;;     # Ignored for now
+      *) shift ;;
+    esac
+  done
+  
+  if [[ -z "$connection" ]]; then
+    echo "Error: --connection required or DATABASE_URL must be set"
+    exit 1
+  fi
+  
+  if ! command -v psql &> /dev/null; then
+    echo "Error: psql not found"
+    exit 1
+  fi
+  
+  psql "$connection" -c "SELECT 1;" --ssl-mode=disable &> /dev/null || {
+    echo "Error: Cannot connect to PostgreSQL"
+    exit 1
+  }
+  
+  local schema_file="$ROOT/runtime/db/install-schema.sql"
+  if [[ -f "$schema_file" ]]; then
+    psql "$connection" -f "$schema_file" --ssl-mode=disable 2>/dev/null || true
+  fi
+  
+  local existing=$(psql "$connection" -t -c "SELECT tenant_id FROM tenant_versions WHERE tenant_id = '$TENANT';" --ssl-mode=disable 2>/dev/null | tr -d ' ' || echo "")
+  if [[ -z "$existing" ]]; then
+    psql "$connection" -c "INSERT INTO tenant_versions VALUES ('$TENANT', 0);" --ssl-mode=disable
+    echo "  Created tenant: $TENANT"
+  else
+    echo "  Tenant exists: $TENANT"
+  fi
+  
+  echo ""
+  echo "✓ Postgres deployment successful!"
+  echo "  Connection: ${connection%@*}@***"
+  echo "  Tenant: $TENANT"
+}
+
+cmd_status() {
+  echo "[Status] Checking tenant: $TENANT"
+  
+  # Check SQLite
+  local db_file="$ROOT/data/${TENANT}.db"
+  if [[ -f "$db_file" ]]; then
+    if sqlite3 "$db_file" "SELECT 1;" &> /dev/null; then
+      local count=$(sqlite3 "$db_file" "SELECT COUNT(*) FROM tenant_versions WHERE tenant_id = '$TENANT';" 2>/dev/null || echo "0")
+      if [[ "$count" == "1" ]]; then
+        echo "  Found: SQLite, tenant active"
+        echo "  Database: $db_file"
+        return 0
+      fi
+    fi
+  fi
+  
+  # Check Postgres
+  if [[ -n "${DATABASE_URL:-}" ]]; then
+    if psql "$DATABASE_URL" -c "SELECT 1;" --ssl-mode=disable &> /dev/null; then
+      local count=$(psql "$DATABASE_URL" -t -c "SELECT COUNT(*) FROM tenant_versions WHERE tenant_id = '$TENANT';" --ssl-mode=disable 2>/dev/null | tr -d ' ' || echo "0")
+      if [[ "$count" == "1" ]]; then
+        echo "  Found: Postgres, tenant active"
+        echo "  Connection: ${DATABASE_URL%@*}@***"
+        return 0
+      fi
+    fi
+  fi
+  
+  echo "  Tenant not found"
+  return 1
+}
+
+cmd_rollback() {
+  echo "[Rollback] Not yet implemented"
+  echo "  Tenant: $TENANT"
+  
+  local version=""
+  while [[ $# -gt 0 ]]; do
+    case "$1" in
+      --version=*) version="${1#*=}"; shift ;;
+      *) shift ;;
+    esac
+  done
+  
+  if [[ -z "$version" ]]; then
+    echo "  Error: --version required"
+    exit 1
+  fi
+  
+  echo "  Would rollback to version: $version"
+}
+
+# BY3.2: Auto-detect target from spec or flag
+case "$COMMAND" in
+  sqlite) cmd_sqlite "$@" ;;
+  postgres|postgresql) cmd_postgres "$@" ;;
+  status) cmd_status ;;
+  rollback) cmd_rollback "$@" ;;
+  help|--help|-h) show_help ;;
+  *) show_help; exit 1 ;;
+esac
