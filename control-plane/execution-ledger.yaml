@@ -3062,48 +3062,48 @@ phases:
     - id: BY3.4
       status: done
       description: Document one-click deploy in user guide
-  - id: BZ
-    number: 52
-    status: incomplete
-    title: Human-Readable Spec DSL
-    description: 'Add surface language for non-programmers to write specs directly in YAML/JSON'
-    milestones:
-    - id: BZ1
-      title: Spec DSL Surface Language Design
-      checkboxes:
-      - id: BZ1.1
-        status: open
-        description: Design YAML syntax for entities, states, attributes, commands
-      - id: BZ1.2
-        status: open
-        description: Design command syntax (create, transition, view)
-      - id: BZ1.3
-        status: open
-        description: Design role/permission syntax
-      - id: BZ1.4
-        status: open
-        description: Write grammar/prose specification
-    - id: BZ2
-      title: Spec DSL Parser
-      checkboxes:
-      - id: BZ2.1
-        status: open
-        description: Implement YAML/JSON parser to IR translation
-      - id: BZ2.2
-        status: open
-        description: Add validation (entity uniqueness, state validity)
-      - id: BZ2.3
-        status: open
-        description: Add error messages with line numbers
-    - id: BZ3
-      title: Spec DSL CLI Integration
-      checkboxes:
-      - id: BZ3.1
-        status: open
-        description: Add `cicsc spec:validate` command
-      - id: BZ3.2
-        status: open
-        description: Add `cicsc spec:compile` command
-      - id: BZ3.3
-        status: open
-        description: Add `cicsc spec:preview` command (human-readable output)
+- id: BZ
+  number: 52
+  status: incomplete
+  title: Human-Readable Spec DSL
+  description: 'Add surface language for non-programmers to write specs directly in YAML/JSON'
+  milestones:
+  - id: BZ1
+    title: Spec DSL Surface Language Design
+    checkboxes:
+    - id: BZ1.1
+      status: open
+      description: Design YAML syntax for entities, states, attributes, commands
+    - id: BZ1.2
+      status: open
+      description: Design command syntax (create, transition, view)
+    - id: BZ1.3
+      status: open
+      description: Design role/permission syntax
+    - id: BZ1.4
+      status: open
+      description: Write grammar/prose specification
+  - id: BZ2
+    title: Spec DSL Parser
+    checkboxes:
+    - id: BZ2.1
+      status: open
+      description: Implement YAML/JSON parser to IR translation
+    - id: BZ2.2
+      status: open
+      description: Add validation (entity uniqueness, state validity)
+    - id: BZ2.3
+      status: open
+      description: Add error messages with line numbers
+  - id: BZ3
+    title: Spec DSL CLI Integration
+    checkboxes:
+    - id: BZ3.1
+      status: open
+      description: Add `cicsc spec:validate` command
+    - id: BZ3.2
+      status: open
+      description: Add `cicsc spec:compile` command
+    - id: BZ3.3
+      status: open
+      description: Add `cicsc spec:preview` command (human-readable output)
