@@ -2017,13 +2017,25 @@ assignments:
   completed_at: '2026-02-16T09:28:05.375922Z'
 - checkbox_ref: BG1.1
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T13:25:41.058769Z'
+  commit: c3c2241
+  completed_at: '2026-02-16T13:28:12.070454Z'
 - checkbox_ref: BG1.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T13:25:41.058783Z'
+  commit: c3c2241
+  completed_at: '2026-02-16T13:28:12.496552Z'
 - checkbox_ref: BG1.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T13:25:41.058785Z'
+  commit: c3c2241
+  completed_at: '2026-02-16T13:28:12.892239Z'
 - checkbox_ref: BG1.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T13:25:41.058786Z'
+  commit: c3c2241
+  completed_at: '2026-02-16T13:28:13.281580Z'
