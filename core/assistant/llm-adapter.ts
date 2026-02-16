@@ -4,6 +4,11 @@
 // BG1.5: Abstract provider interface for any LLM
 // BG1.6: OpenAI provider implementation  
 // BG1.7: Ollama provider implementation (local models)
+// BG1.8: Add embed() method to LLMProvider interface
+// BG1.12: Add request timeout configuration
+// BG1.13: Fix fragile private state access in LLMInterviewEngine
+// BG1.14: Add error handling and output validation
+// BG1.15: Add provider-side chat cache support (cache_by)
 //==============================================================================
 
 export interface LLMMessage {
@@ -21,21 +26,15 @@ export interface LLMResponse {
   }
 }
 
-export interface LLMProvider {
-  /**
-   * Provider name
-   */
-  name: string
+export interface LLMEmbedding {
+  embedding: number[]
+  model: string
+  tokens?: number
+}
 
-  /**
-   * Send a chat completion request
-   */
-  chat(messages: LLMMessage[], options?: LLMOptions): Promise<LLMResponse>
-
-  /**
-   * Check if provider is available
-   */
-  health(): Promise<boolean>
+export interface LLMTimeoutConfig {
+  requestMs: number
+  connectMs?: number
 }
 
 export interface LLMOptions {
@@ -43,6 +42,15 @@ export interface LLMOptions {
   temperature?: number
   maxTokens?: number
   stop?: string[]
+  cacheBy?: string
+  timeout?: LLMTimeoutConfig
+}
+
+export interface LLMProvider {
+  name: string
+  chat(messages: LLMMessage[], options?: LLMOptions): Promise<LLMResponse>
+  embed(text: string, options?: { model?: string }): Promise<LLMEmbedding>
+  health(): Promise<boolean>
 }
 
 export type LLMProviderName = "openai" | "ollama" | "anthropic" | "openrouter" | "kimi" | "qwen" | "azure-openai" | "gemini" | "local"
@@ -54,6 +62,90 @@ export interface LLMConfig {
   defaultModel?: string
   maxTokens?: number
   temperature?: number
+  timeout?: LLMTimeoutConfig
+}
+
+const DEFAULT_TIMEOUT_CONFIG: LLMTimeoutConfig = {
+  requestMs: 30000,
+  connectMs: 10000
+}
+
+function createAbortableFetch(
+  url: string,
+  options: RequestInit & { timeout?: number }
+): { controller: AbortController; promise: Promise<Response> } {
+  const controller = new AbortController()
+  const timeout = options.timeout || DEFAULT_TIMEOUT_CONFIG.requestMs
+  
+  const timeoutId = setTimeout(() => controller.abort(), timeout)
+  
+  const promise = fetch(url, {
+    ...options,
+    signal: controller.signal
+  }).finally(() => clearTimeout(timeoutId))
+  
+  return { controller, promise }
+}
+
+function validateResponseContent(content: string): string {
+  if (!content || content.trim().length === 0) {
+    throw new Error("LLM response content is empty")
+  }
+  return content.trim()
+}
+
+function calculateCacheKey(messages: LLMMessage[], options?: LLMOptions): string {
+  const cacheKeyParts = [
+    options?.model || "",
+    String(options?.temperature ?? ""),
+    String(options?.maxTokens ?? ""),
+    ...messages.map(m => `${m.role}:${m.content}`)
+  ]
+  
+  let hash = 0
+  for (const part of cacheKeyParts) {
+    const charCodes = part.split("").map(c => c.charCodeAt(0))
+    for (const code of charCodes) {
+      hash = ((hash << 5) - hash) + code
+      hash = hash & hash
+    }
+  }
+  
+  return Math.abs(hash).toString(36)
+}
+
+class SimpleCache {
+  private cache = new Map<string, { value: LLMResponse; expiry: number }>()
+  private ttlSeconds: number
+  private keyPrefix: string
+
+  constructor(ttlSeconds: number = 300, keyPrefix: string = "llm:") {
+    this.ttlSeconds = ttlSeconds
+    this.keyPrefix = keyPrefix
+  }
+
+  get(key: string): LLMResponse | null {
+    const item = this.cache.get(this.keyPrefix + key)
+    if (!item) return null
+    
+    if (Date.now() > item.expiry) {
+      this.cache.delete(this.keyPrefix + key)
+      return null
+    }
+    
+    return item.value
+  }
+
+  set(key: string, value: LLMResponse): void {
+    this.cache.set(this.keyPrefix + key, {
+      value,
+      expiry: Date.now() + (this.ttlSeconds * 1000)
+    })
+  }
+
+  clear(): void {
+    this.cache.clear()
+  }
 }
 
 /**
@@ -147,6 +239,51 @@ export class OpenAIProvider implements LLMProvider {
       return false
     }
   }
+
+  async embed(text: string, options?: { model?: string }): Promise<LLMEmbedding> {
+    const { controller, promise } = createAbortableFetch(
+      `${this.baseUrl}/embeddings`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${this.apiKey}`
+        },
+        body: JSON.stringify({
+          model: options?.model || "text-embedding-3-small",
+          input: text
+        }),
+        timeout: DEFAULT_TIMEOUT_CONFIG.requestMs
+      }
+    )
+
+    try {
+      const response = await promise
+
+      if (!response.ok) {
+        const error = await response.text()
+        throw new Error(`OpenAI API error: ${response.status} - ${error}`)
+      }
+
+      const data = await response.json()
+      const embedding = data.data[0]?.embedding
+
+      if (!embedding) {
+        throw new Error("No embedding returned from OpenAI")
+      }
+
+      return {
+        embedding,
+        model: data.model,
+        tokens: data.usage?.total_tokens
+      }
+    } catch (error: any) {
+      if (error.name === "AbortError") {
+        throw new Error(`Request timeout after ${DEFAULT_TIMEOUT_CONFIG.requestMs}ms`)
+      }
+      throw error
+    }
+  }
 }
 
 //==============================================================================
@@ -203,6 +340,46 @@ export class OllamaProvider implements LLMProvider {
       return response.ok
     } catch {
       return false
+    }
+  }
+
+  async embed(text: string, options?: { model?: string }): Promise<LLMEmbedding> {
+    const { controller, promise } = createAbortableFetch(
+      `${this.baseUrl}/api/embeddings`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: options?.model || this.defaultModel,
+          prompt: text
+        }),
+        timeout: DEFAULT_TIMEOUT_CONFIG.requestMs
+      }
+    )
+
+    try {
+      const response = await promise
+
+      if (!response.ok) {
+        const error = await response.text()
+        throw new Error(`Ollama API error: ${response.status} - ${error}`)
+      }
+
+      const data = await response.json()
+
+      if (!data.embedding) {
+        throw new Error("No embedding returned from Ollama")
+      }
+
+      return {
+        embedding: data.embedding,
+        model: data.model || this.defaultModel
+      }
+    } catch (error: any) {
+      if (error.name === "AbortError") {
+        throw new Error(`Request timeout after ${DEFAULT_TIMEOUT_CONFIG.requestMs}ms`)
+      }
+      throw error
     }
   }
 }
@@ -291,6 +468,10 @@ export class AnthropicProvider implements LLMProvider {
       return false
     }
   }
+
+  async embed(_text: string, _options?: { model?: string }): Promise<LLMEmbedding> {
+    throw new Error("Anthropic does not support embeddings. Use OpenAI or Ollama.")
+  }
 }
 
 //==============================================================================
@@ -360,6 +541,10 @@ export class OpenRouterProvider implements LLMProvider {
       return false
     }
   }
+
+  async embed(_text: string, _options?: { model?: string }): Promise<LLMEmbedding> {
+    throw new Error("OpenRouter does not support embeddings. Use OpenAI or Ollama.")
+  }
 }
 
 //==============================================================================
@@ -427,6 +612,10 @@ export class KimiProvider implements LLMProvider {
       return false
     }
   }
+
+  async embed(_text: string, _options?: { model?: string }): Promise<LLMEmbedding> {
+    throw new Error("Kimi does not support embeddings. Use OpenAI or Ollama.")
+  }
 }
 
 //==============================================================================
@@ -493,6 +682,10 @@ export class QwenProvider implements LLMProvider {
     } catch {
       return false
     }
+  }
+
+  async embed(_text: string, _options?: { model?: string }): Promise<LLMEmbedding> {
+    throw new Error("Qwen does not support embeddings. Use OpenAI or Ollama.")
   }
 }
 
@@ -564,6 +757,10 @@ export class AzureOpenAIProvider implements LLMProvider {
     } catch {
       return false
     }
+  }
+
+  async embed(_text: string, _options?: { model?: string }): Promise<LLMEmbedding> {
+    throw new Error("Azure OpenAI does not support embeddings. Use OpenAI or Ollama.")
   }
 }
 
@@ -651,6 +848,10 @@ export class GeminiProvider implements LLMProvider {
       return false
     }
   }
+
+  async embed(_text: string, _options?: { model?: string }): Promise<LLMEmbedding> {
+    throw new Error("Gemini does not support embeddings. Use OpenAI or Ollama.")
+  }
 }
 
 //==============================================================================
@@ -668,28 +869,20 @@ export class LLMInterviewEngine {
     this.interview = new InterviewEngine()
   }
 
-  /**
-   * Process user input through LLM + interview engine
-   */
   async process(input: string): Promise<string> {
-    // First try local interview engine
     const localResponse = this.interview.processInput(input)
     if (localResponse) {
       return localResponse
     }
 
-    // If interview complete, use LLM for refinement
-    if (this.interview["state"]["currentStep"] === "CONFIRM") {
+    const state = this.interview.getState()
+    if (state.currentStep === "CONFIRM") {
       return this.interview.getSummary()
     }
 
-    // Otherwise get next question from interview
     return this.interview.getNextQuestion()
   }
 
-  /**
-   * Use LLM to enhance entity extraction from unstructured input
-   */
   async extractEntities(unstructured: string): Promise<{
     entities: string[]
     states: Record<string, string[]>

@@ -273,6 +273,10 @@ export class InterviewEngine {
     return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase()
   }
 
+  getState (): InterviewState {
+    return { ...this.state }
+  }
+
   getSummary (): string {
     let summary = `# System Specification: ${this.state.domain || "Untitled"}\n\n`
     
