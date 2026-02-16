@@ -2158,57 +2158,99 @@ assignments:
   completed_at: '2026-02-16T15:27:13.424889Z'
 - checkbox_ref: BG1.8
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
-  created_at: '2026-02-16T15:36:14.694427Z'
+  status: done
+  created_at: '2026-02-16T15:36:14.284754Z'
+  started_at: '2026-02-16T15:36:14.284858Z'
+  commit: d809a23
+  completed_at: '2026-02-16T16:00:00.000000Z'
 - checkbox_ref: BG1.9
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
-  created_at: '2026-02-16T15:36:14.981660Z'
+  status: done
+  created_at: '2026-02-16T15:36:14.579554Z'
+  started_at: '2026-02-16T15:36:14.579665Z'
+  commit: d809a23
+  completed_at: '2026-02-16T16:00:00.000000Z'
 - checkbox_ref: BG1.10
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
-  created_at: '2026-02-16T15:36:15.277298Z'
+  status: done
+  created_at: '2026-02-16T15:36:14.874908Z'
+  started_at: '2026-02-16T15:36:14.875019Z'
+  commit: d809a23
+  completed_at: '2026-02-16T16:00:00.000000Z'
 - checkbox_ref: BG1.11
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
-  created_at: '2026-02-16T15:36:15.570271Z'
+  status: done
+  created_at: '2026-02-16T15:36:15.170029Z'
+  started_at: '2026-02-16T15:36:15.170139Z'
+  commit: d809a23
+  completed_at: '2026-02-16T16:00:00.000000Z'
 - checkbox_ref: BG1.12
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-16T15:36:15.865336Z'
+  started_at: '2026-02-16T15:36:15.865447Z'
+  commit: d809a23
+  completed_at: '2026-02-16T16:00:00.000000Z'
 - checkbox_ref: BG1.13
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-16T15:36:16.163772Z'
+  started_at: '2026-02-16T15:36:16.163883Z'
+  commit: d809a23
+  completed_at: '2026-02-16T16:00:00.000000Z'
 - checkbox_ref: BG1.14
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-16T15:36:16.460132Z'
+  started_at: '2026-02-16T15:36:16.460243Z'
+  commit: d809a23
+  completed_at: '2026-02-16T16:00:00.000000Z'
 - checkbox_ref: BG1.15
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-16T15:36:16.755486Z'
+  started_at: '2026-02-16T15:36:16.755597Z'
+  commit: d809a23
+  completed_at: '2026-02-16T16:00:00.000000Z'
 - checkbox_ref: BG1.16
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-16T15:49:26.435127Z'
+  started_at: '2026-02-16T15:52:02.631522Z'
+  commit: 0187b97
+  completed_at: '2026-02-16T15:54:46.228411Z'
 - checkbox_ref: BG1.17
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-16T15:49:26.724998Z'
+  started_at: '2026-02-16T15:52:02.631536Z'
+  commit: 0187b97
+  completed_at: '2026-02-16T15:54:46.636563Z'
 - checkbox_ref: BG1.18
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-16T15:49:27.015233Z'
+  started_at: '2026-02-16T15:52:02.631538Z'
+  commit: 0187b97
+  completed_at: '2026-02-16T15:54:47.034809Z'
 - checkbox_ref: BG1.19
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-16T15:49:27.303871Z'
+  started_at: '2026-02-16T15:52:02.631539Z'
+  commit: 0187b97
+  completed_at: '2026-02-16T15:54:47.445765Z'
 - checkbox_ref: BG1.20
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-16T15:49:27.600273Z'
+  started_at: '2026-02-16T15:52:02.631540Z'
+  commit: 0187b97
+  completed_at: '2026-02-16T15:54:47.865847Z'
 - checkbox_ref: BG1.21
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-16T15:49:27.891927Z'
+  started_at: '2026-02-16T15:52:02.631542Z'
+  commit: 0187b97
+  completed_at: '2026-02-16T15:54:48.264893Z'
