@@ -2094,13 +2094,13 @@ phases:
       status: done
       description: Summarize gathered requirements for confirmation
     - id: BG1.5
-      status: open
+      status: done
       description: LLM Adapter Interface - abstract provider interface
     - id: BG1.6
-      status: open
+      status: done
       description: OpenAI provider implementation
     - id: BG1.7
-      status: open
+      status: done
       description: Ollama provider implementation (local models)
   - id: BG2
     title: Natural Language to Spec Translation
