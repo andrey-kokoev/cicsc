@@ -168,3 +168,82 @@ Any change that violates this model must:
 - be rejected.
 
 This document constrains the system more strongly than any single implementation.
+
+---
+
+## 11. Collaboration Slice Category
+
+The category **State/main** captures worktree collaboration:
+
+- **Objects**: Morphisms `main → W` (worktrees branched from main)
+- **Morphisms**: Integration paths `W₁ → W₂`
+
+### 11.1 FF-Subcategory
+
+**FF-State/main** is the full subcategory where all morphisms satisfy:
+
+```
+W₂ descends_from W₁  (FF-merge property)
+```
+
+### 11.2 Boundary Contraction
+
+The integration functor:
+```
+integrate : State/main → Maybe(FF-State/main)
+```
+
+Is defined only when `W → main` is an FF-morphism. This **boundary contraction** ensures:
+
+- Workers operate unconstrained in `State/main` (any branch)
+- Integration enforces `FF-State/main` constraint
+- Invalid structural states are unreachable by construction
+
+### 11.3 Theorem (Unreachable Invalidity)
+
+In **FF-State/main** with recency constraint `t`:
+All reachable states satisfy structural invariants.
+
+*Proof sketch*: By definition of FF-morphism, all worktrees descend from main. No merge conflicts possible. ∎
+
+### 11.4 The Three-Phase Structure
+
+Phase 1: **Dispatch** (Create Object)
+- Creates new checkbox `c` with `A(c) = ⊥`
+- No categorical constraint - just set expansion
+
+Phase 2: **Claim** (Create Morphism)  
+- Creates morphism `main → W` (branch creation)
+- UNCONSTRAINED - workers can branch from anywhere
+
+Phase 3: **Integrate** (Constrained Morphism)
+- Creates morphism `W → main` via FF-merge
+- FF-CONSTRAINED - must satisfy descent property
+
+### 11.5 Axiomatic Bridge
+
+The categorical model is connected to git execution via an axiomatic bridge:
+
+```
+git merge --ff-only worktree → main
+```
+
+Success yields evidence of `IsFFMorph` in the categorical model.
+This is a **proof-carrying code** pattern:
+1. Policy is formal (category model)
+2. Execution checks compliance (git --ff-only)
+3. Success yields proof object (IsFFMorph witness)
+
+The proof obligation remains: prove git's `--ff-only` matches our `IsFFMorph` definition.
+
+---
+
+## 12. Change Control (Collaboration)
+
+Changes to the collaboration layer must preserve:
+
+1. FF-only integration (structural validity)
+2. At-most-one assignment per checkbox (no double-assignment)
+3. Evidence commit linkage (traceability)
+
+This section is maintained in parallel with `lean/Cicsc/Evolution/FFIntegration.lean`.
