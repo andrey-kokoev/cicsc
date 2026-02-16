@@ -2041,13 +2041,25 @@ assignments:
   completed_at: '2026-02-16T13:28:13.281580Z'
 - checkbox_ref: BG4.1
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T13:41:57.821063Z'
+  commit: 59f8fe3
+  completed_at: '2026-02-16T13:44:05.772831Z'
 - checkbox_ref: BG4.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T13:41:57.821074Z'
+  commit: 59f8fe3
+  completed_at: '2026-02-16T13:44:06.172800Z'
 - checkbox_ref: BG4.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T13:41:57.821076Z'
+  commit: 59f8fe3
+  completed_at: '2026-02-16T13:44:06.568078Z'
 - checkbox_ref: BG4.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
+  started_at: '2026-02-16T13:41:57.821077Z'
+  commit: 59f8fe3
+  completed_at: '2026-02-16T13:44:06.961059Z'

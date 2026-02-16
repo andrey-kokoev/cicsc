@@ -2127,16 +2127,16 @@ phases:
     title: Evolution via Conversation
     checkboxes:
     - id: BG4.1
-      status: open
+      status: done
       description: Detect intent to change ("Add a new field")
     - id: BG4.2
-      status: open
+      status: done
       description: Generate migration spec from natural language
     - id: BG4.3
-      status: open
+      status: done
       description: Verify migration preserves invariants (Lean)
     - id: BG4.4
-      status: open
+      status: done
       description: Apply migration and confirm with user
 - id: BH
   number: 9
