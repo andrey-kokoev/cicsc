@@ -2879,3 +2879,68 @@ phases:
     - id: BW4.4
       status: done
       description: Documentation and examples (Stripe, SendGrid)
+- id: BX
+  number: 44
+  status: planned
+  title: Lean Formal Verification - Provable Invariants
+  milestones:
+  - id: BX1
+    title: Core IR Semantics in Lean
+    checkboxes:
+    - id: BX1.1
+      status: open
+      description: Formalize EntityTypeSpecV0 semantics (states, commands, events)
+    - id: BX1.2
+      status: open
+      description: Formalize command guard evaluation and event emission
+    - id: BX1.3
+      status: open
+      description: Formalize reducer semantics (state transitions)
+    - id: BX1.4
+      status: open
+      description: "Prove reducer determinism (same events \u2192 same state)"
+  - id: BX2
+    title: Invariant Preservation Proofs
+    checkboxes:
+    - id: BX2.1
+      status: open
+      description: Formalize constraint semantics (snapshot, bool_query)
+    - id: BX2.2
+      status: open
+      description: Prove constraints preserved under valid commands
+    - id: BX2.3
+      status: open
+      description: Formalize SLA semantics and breach conditions
+    - id: BX2.4
+      status: open
+      description: Prove SLA invariants preserved over time
+  - id: BX3
+    title: Migration Correctness
+    checkboxes:
+    - id: BX3.1
+      status: open
+      description: Formalize event transform semantics
+    - id: BX3.2
+      status: open
+      description: Prove migration totality (all events handled)
+    - id: BX3.3
+      status: open
+      description: Prove migration preserves invariants
+    - id: BX3.4
+      status: open
+      description: "Prove migration composability (A\u2192B\u2192C = A\u2192C)"
+  - id: BX4
+    title: Integration and Extraction
+    checkboxes:
+    - id: BX4.1
+      status: open
+      description: Extract verified Core IR to TypeScript runtime
+    - id: BX4.2
+      status: open
+      description: Conformance testing (Lean spec vs runtime)
+    - id: BX4.3
+      status: open
+      description: CI integration for proof checking
+    - id: BX4.4
+      status: open
+      description: Documentation of verified properties
