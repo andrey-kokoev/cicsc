@@ -1849,41 +1849,57 @@ assignments:
   completed_at: '2026-02-16T08:31:49.982774Z'
 - checkbox_ref: BQ1.1
   agent_ref: AGENT_COPILOT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-16T09:03:49.555005Z'
   started_at: '2026-02-16T09:05:44.770357Z'
+  commit: 03eb7c3
+  completed_at: '2026-02-16T09:08:10.756819Z'
 - checkbox_ref: BQ1.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-16T09:03:49.835295Z'
   started_at: '2026-02-16T09:05:44.770369Z'
+  commit: 03eb7c3
+  completed_at: '2026-02-16T09:08:11.238257Z'
 - checkbox_ref: BQ1.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-16T09:03:50.130944Z'
   started_at: '2026-02-16T09:05:44.770370Z'
+  commit: 03eb7c3
+  completed_at: '2026-02-16T09:08:11.639832Z'
 - checkbox_ref: BQ1.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-16T09:03:50.420542Z'
   started_at: '2026-02-16T09:05:44.770371Z'
+  commit: 03eb7c3
+  completed_at: '2026-02-16T09:08:12.073850Z'
 - checkbox_ref: BQ2.1
   agent_ref: AGENT_COPILOT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-16T09:03:50.696827Z'
   started_at: '2026-02-16T09:05:44.770372Z'
+  commit: 03eb7c3
+  completed_at: '2026-02-16T09:08:12.481122Z'
 - checkbox_ref: BQ2.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-16T09:03:50.970909Z'
   started_at: '2026-02-16T09:05:44.770373Z'
+  commit: 03eb7c3
+  completed_at: '2026-02-16T09:08:12.896957Z'
 - checkbox_ref: BQ2.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-16T09:03:51.267806Z'
   started_at: '2026-02-16T09:05:44.770374Z'
+  commit: 03eb7c3
+  completed_at: '2026-02-16T09:08:13.344269Z'
 - checkbox_ref: BQ2.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: in_progress
+  status: done
   created_at: '2026-02-16T09:03:51.543044Z'
   started_at: '2026-02-16T09:05:44.770375Z'
+  commit: 03eb7c3
+  completed_at: '2026-02-16T09:08:13.801411Z'

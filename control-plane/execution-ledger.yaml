@@ -2576,73 +2576,73 @@ phases:
       description: Dead workflow detection and recovery
 - id: BQ
   number: 37
-  status: in_progress
+  status: complete
   title: Event Transform Fan-out
   milestones:
   - id: BQ1
     title: Core IR Fan-out Extension
     checkboxes:
     - id: BQ1.1
-      status: open
+      status: done
       description: Add emit_many to EventTransformV0
     - id: BQ1.2
-      status: open
+      status: done
       description: Define fan-out expression context
     - id: BQ1.3
-      status: open
+      status: done
       description: Update IR validator
     - id: BQ1.4
-      status: open
+      status: done
       description: Spec DSL syntax
   - id: BQ2
     title: Migration Engine Fan-out
     checkboxes:
     - id: BQ2.1
-      status: open
+      status: done
       description: Handle multiple output events
     - id: BQ2.2
-      status: open
+      status: done
       description: Preserve event ordering
     - id: BQ2.3
-      status: open
+      status: done
       description: Idempotency
     - id: BQ2.4
-      status: open
+      status: done
       description: Replay verification
 - id: BR
   number: 38
-  status: planned
+  status: complete
   title: Native SLA Declaration
   milestones:
   - id: BR1
     title: Core IR SLA Extension
     checkboxes:
     - id: BR1.1
-      status: open
+      status: done
       description: SlaSpecV0 with start/stop selectors
     - id: BR1.2
-      status: open
+      status: done
       description: SLA breach detection
     - id: BR1.3
-      status: open
+      status: done
       description: Breach action binding
     - id: BR1.4
-      status: open
+      status: done
       description: Update IR validator
   - id: BR2
     title: SLA Runtime
     checkboxes:
     - id: BR2.1
-      status: open
+      status: done
       description: SLA tracker
     - id: BR2.2
-      status: open
+      status: done
       description: Breach detector
     - id: BR2.3
-      status: open
+      status: done
       description: Action executor
     - id: BR2.4
-      status: open
+      status: done
       description: Metrics export
 - id: BS
   number: 39
