@@ -2135,3 +2135,15 @@ assignments:
   started_at: '2026-02-16T15:05:21.201859Z'
   commit: 6ea6c64
   completed_at: '2026-02-16T15:10:05.304979Z'
+- checkbox_ref: BG1.5
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+  created_at: '2026-02-16T15:24:29.616521Z'
+- checkbox_ref: BG1.6
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+  created_at: '2026-02-16T15:24:32.269848Z'
+- checkbox_ref: BG1.7
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+  created_at: '2026-02-16T15:24:32.559175Z'

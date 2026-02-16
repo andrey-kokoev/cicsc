@@ -2093,6 +2093,15 @@ phases:
     - id: BG1.4
       status: done
       description: Summarize gathered requirements for confirmation
+    - id: BG1.5
+      status: open
+      description: LLM Adapter Interface - abstract provider interface
+    - id: BG1.6
+      status: open
+      description: OpenAI provider implementation
+    - id: BG1.7
+      status: open
+      description: Ollama provider implementation (local models)
   - id: BG2
     title: Natural Language to Spec Translation
     checkboxes:
@@ -2961,7 +2970,7 @@ phases:
       description: Documentation of verified properties
 - id: BY
   number: 45
-  status: in_progress
+  status: complete
   title: Simplify Deployment - One-Click Deploy
   description: 'CAM smallest adjacent step: Add one-click deploy script for SQLite/Postgres.
     Increases surface, preserves all closed semantic layers.'
