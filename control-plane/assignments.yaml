@@ -2039,3 +2039,15 @@ assignments:
   started_at: '2026-02-16T13:25:41.058786Z'
   commit: c3c2241
   completed_at: '2026-02-16T13:28:13.281580Z'
+- checkbox_ref: BG4.1
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BG4.2
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BG4.3
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
+- checkbox_ref: BG4.4
+  agent_ref: AGENT_COPILOT_GEMINI
+  status: open
