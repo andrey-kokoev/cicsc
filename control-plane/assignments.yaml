@@ -1625,65 +1625,177 @@ assignments:
   completed_at: '2026-02-15T18:03:58.504554Z'
 - checkbox_ref: BV1.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:37.398706Z'
+  started_at: '2026-02-15T20:01:45.462732Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:00.174187Z'
 - checkbox_ref: BV1.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:37.660650Z'
+  started_at: '2026-02-15T20:01:45.462743Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:00.537186Z'
 - checkbox_ref: BV1.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:37.939828Z'
+  started_at: '2026-02-15T20:01:45.462745Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:00.904821Z'
 - checkbox_ref: BV1.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:38.200401Z'
+  started_at: '2026-02-15T20:01:45.462746Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:01.273017Z'
 - checkbox_ref: BV2.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:38.462618Z'
+  started_at: '2026-02-15T20:01:45.462747Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:01.665573Z'
 - checkbox_ref: BV2.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:38.720829Z'
+  started_at: '2026-02-15T20:01:45.462748Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:02.027095Z'
 - checkbox_ref: BV2.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:39.012843Z'
+  started_at: '2026-02-15T20:01:45.462749Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:02.402299Z'
 - checkbox_ref: BV2.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:39.268824Z'
+  started_at: '2026-02-15T20:01:45.462750Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:02.760672Z'
 - checkbox_ref: BV3.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:39.548146Z'
+  started_at: '2026-02-15T20:01:45.462750Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:03.163378Z'
 - checkbox_ref: BV3.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:39.810358Z'
+  started_at: '2026-02-15T20:01:45.462751Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:03.526004Z'
 - checkbox_ref: BV3.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:40.092167Z'
+  started_at: '2026-02-15T20:01:45.462752Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:03.887353Z'
 - checkbox_ref: BV3.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:40.348759Z'
+  started_at: '2026-02-15T20:01:45.462753Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:04.265337Z'
 - checkbox_ref: BV4.1
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:40.615142Z'
+  started_at: '2026-02-15T20:01:45.462754Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:04.671051Z'
 - checkbox_ref: BV4.2
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:40.869677Z'
+  started_at: '2026-02-15T20:01:45.462755Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:05.049477Z'
 - checkbox_ref: BV4.3
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:41.167909Z'
+  started_at: '2026-02-15T20:01:45.462755Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:05.420892Z'
 - checkbox_ref: BV4.4
   agent_ref: AGENT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-15T19:44:41.428103Z'
+  started_at: '2026-02-15T20:01:45.462756Z'
+  commit: 6adafdf
+  completed_at: '2026-02-15T20:16:05.793192Z'
+- checkbox_ref: BW1.1
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:02.933535Z'
+- checkbox_ref: BW1.2
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:03.192984Z'
+- checkbox_ref: BW1.3
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:03.458038Z'
+- checkbox_ref: BW1.4
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:03.730260Z'
+- checkbox_ref: BW2.1
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:04.028602Z'
+- checkbox_ref: BW2.2
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:04.288496Z'
+- checkbox_ref: BW2.3
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:04.552859Z'
+- checkbox_ref: BW2.4
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:04.817593Z'
+- checkbox_ref: BW3.1
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:05.094661Z'
+- checkbox_ref: BW3.2
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:05.361162Z'
+- checkbox_ref: BW3.3
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:05.648148Z'
+- checkbox_ref: BW3.4
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:05.917038Z'
+- checkbox_ref: BW4.1
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:06.179056Z'
+- checkbox_ref: BW4.2
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:06.445696Z'
+- checkbox_ref: BW4.3
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:06.717396Z'
+- checkbox_ref: BW4.4
+  agent_ref: AGENT_GEMINI
+  status: open
+  created_at: '2026-02-15T20:17:07.019279Z'

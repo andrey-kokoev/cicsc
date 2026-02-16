@@ -2751,66 +2751,131 @@ phases:
       description: Conformance testing
 - id: BV
   number: 42
-  status: planned
+  status: complete
   title: UI Primitive - User Interface Generation
   milestones:
   - id: BV1
     title: Core IR UI Extension
     checkboxes:
     - id: BV1.1
-      status: open
+      status: done
       description: Add UiSpecV0 to Core IR (screen, dashboard, navigation)
     - id: BV1.2
-      status: open
+      status: done
       description: Define layout primitives (section, form, table, kanban)
     - id: BV1.3
-      status: open
+      status: done
       description: Define navigation structure (sections, items, hierarchy)
     - id: BV1.4
-      status: open
+      status: done
       description: Update IR validator for UI specs
   - id: BV2
     title: Component Contract & Registry
     checkboxes:
     - id: BV2.1
-      status: open
+      status: done
       description: JSON Schema component contract (Button, Table, Form, etc.)
     - id: BV2.2
-      status: open
+      status: done
       description: Capability declaration system (sort, filter, virtualize)
     - id: BV2.3
-      status: open
+      status: done
       description: Component registry format (type -> implementation mapping)
     - id: BV2.4
-      status: open
+      status: done
       description: Default shadcn-vue component library setup
   - id: BV3
     title: UI Generator & Runtime
     checkboxes:
     - id: BV3.1
-      status: open
+      status: done
       description: Layout shell generator (App.vue with sidebars/rails)
     - id: BV3.2
-      status: open
+      status: done
       description: Navigation menu generator from ui.navigation
     - id: BV3.3
-      status: open
+      status: done
       description: Screen generator (table from view, form from entity)
     - id: BV3.4
-      status: open
+      status: done
       description: Dashboard generator (metrics, charts, widgets)
   - id: BV4
     title: Integration & Polish
     checkboxes:
     - id: BV4.1
-      status: open
+      status: done
       description: Theme system integration (dark/light mode)
     - id: BV4.2
-      status: open
+      status: done
       description: Toast/notification feedback for actions
     - id: BV4.3
-      status: open
+      status: done
       description: Auth integration (role-based navigation)
     - id: BV4.4
-      status: open
+      status: done
       description: Router generation with navigation guards
+- id: BW
+  number: 43
+  status: planned
+  title: Service Primitive - External System Integration
+  milestones:
+  - id: BW1
+    title: Core IR Service Extension
+    checkboxes:
+    - id: BW1.1
+      status: open
+      description: Add ServiceSpecV0 to Core IR (service types, operations)
+    - id: BW1.2
+      status: open
+      description: Define sync operation semantics (request/response)
+    - id: BW1.3
+      status: open
+      description: Define async operation with return_address semantics
+    - id: BW1.4
+      status: open
+      description: Add call expression to command emit
+  - id: BW2
+    title: Return Address and Correlation
+    checkboxes:
+    - id: BW2.1
+      status: open
+      description: Return address URL generation (unique per call)
+    - id: BW2.2
+      status: open
+      description: Correlation ID tracking (pending_calls table)
+    - id: BW2.3
+      status: open
+      description: Webhook-to-command mapping for return addresses
+    - id: BW2.4
+      status: open
+      description: Timeout and cleanup for orphaned calls
+  - id: BW3
+    title: Service Runtime and Reliability
+    checkboxes:
+    - id: BW3.1
+      status: open
+      description: HTTP client abstraction for sync calls
+    - id: BW3.2
+      status: open
+      description: Retry policy with exponential backoff
+    - id: BW3.3
+      status: open
+      description: Circuit breaker for degraded services
+    - id: BW3.4
+      status: open
+      description: Queue integration for at-least-once delivery
+  - id: BW4
+    title: Integration and Testing
+    checkboxes:
+    - id: BW4.1
+      status: open
+      description: Service mocking for tests
+    - id: BW4.2
+      status: open
+      description: Observability (call metrics, latency)
+    - id: BW4.3
+      status: open
+      description: Dead call detection and alerting
+    - id: BW4.4
+      status: open
+      description: Documentation and examples (Stripe, SendGrid)
