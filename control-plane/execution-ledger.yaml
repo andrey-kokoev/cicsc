@@ -3160,3 +3160,25 @@ phases:
     - id: CD1.4
       status: open
       description: Secret rotation support
+- id: CE
+  number: 56
+  status: incomplete
+  title: State Target Guards
+  description: Add state_will_be/target_state guard construct to gate transitions
+    by target state
+  milestones:
+  - id: CE1
+    title: Milestone CE1
+    checkboxes:
+    - id: CE1.1
+      status: open
+      description: Add state_will_be to guard AST
+    - id: CE1.2
+      status: open
+      description: Add target_state to IR
+    - id: CE1.3
+      status: open
+      description: Runtime guard evaluation for target state
+    - id: CE1.4
+      status: open
+      description: Kanban example with role+target state gates
