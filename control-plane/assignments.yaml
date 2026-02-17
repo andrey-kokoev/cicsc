@@ -2290,29 +2290,36 @@ assignments:
   completed_at: '2026-02-16T19:48:10.409939Z'
 - checkbox_ref: CD1.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T19:25:49.591156Z'
+  started_at: '2026-02-16T22:26:47.713004Z'
 - checkbox_ref: CD1.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T19:25:49.897490Z'
+  started_at: '2026-02-16T22:26:47.713019Z'
 - checkbox_ref: CD1.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T19:25:50.198641Z'
+  started_at: '2026-02-16T22:26:47.713021Z'
 - checkbox_ref: CE1.1
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T22:25:32.456749Z'
+  started_at: '2026-02-16T22:26:47.713022Z'
 - checkbox_ref: CE1.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T22:25:32.766423Z'
+  started_at: '2026-02-16T22:26:47.713023Z'
 - checkbox_ref: CE1.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T22:25:33.072339Z'
+  started_at: '2026-02-16T22:26:47.713024Z'
 - checkbox_ref: CE1.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T22:25:33.384398Z'
+  started_at: '2026-02-16T22:26:47.713025Z'

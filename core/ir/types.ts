@@ -487,6 +487,8 @@ export type ExprV0 =
 
   | { if: { cond: ExprV0; then: ExprV0; else: ExprV0 } }
   | { coalesce: ExprV0[] }
+
+  | { state_will_be: string }
   | { is_null: ExprV0 }
 
   | { time_between: [ExprV0, ExprV0] }
