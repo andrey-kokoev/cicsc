@@ -3138,3 +3138,25 @@ phases:
     - id: CB1.8
       status: done
       description: Implement NetlifyAdapter
+- id: CD
+  number: 55
+  status: incomplete
+  title: Secrets Management
+  description: Runtime secrets injection, per-tenant API key management, secrets UI,
+    secret rotation
+  milestones:
+  - id: CD1
+    title: Milestone CD1
+    checkboxes:
+    - id: CD1.1
+      status: open
+      description: Runtime secrets injection
+    - id: CD1.2
+      status: open
+      description: Per-tenant API key management
+    - id: CD1.3
+      status: open
+      description: Secrets UI in CLI
+    - id: CD1.4
+      status: open
+      description: Secret rotation support
