@@ -89,6 +89,79 @@ async function main () {
       process.exit(0)
     }
 
+    if (cmd === "secret-set") {
+      const tenantId = String(args.tenant ?? "t")
+      const key = String(args.key ?? "")
+      const value = String(args.value ?? "")
+      if (!key) throw new Error("--key is required")
+      if (!value) throw new Error("--value is required")
+      
+      const { createSecretsManager } = await import("../runtime/secrets.ts")
+      const secrets = createSecretsManager()
+      await secrets.set(tenantId, key, value)
+      console.log(`Secret ${key} set for tenant ${tenantId}`)
+      process.exit(0)
+    }
+
+    if (cmd === "secret-get") {
+      const tenantId = String(args.tenant ?? "t")
+      const key = String(args.key ?? "")
+      if (!key) throw new Error("--key is required")
+      
+      const { createSecretsManager } = await import("../runtime/secrets.ts")
+      const secrets = createSecretsManager()
+      const secret = await secrets.get(tenantId, key)
+      if (!secret) {
+        console.log(`Secret ${key} not found`)
+        process.exit(1)
+      }
+      console.log(JSON.stringify(secret, null, 2))
+      process.exit(0)
+    }
+
+    if (cmd === "secret-list") {
+      const tenantId = String(args.tenant ?? "t")
+      
+      const { createSecretsManager } = await import("../runtime/secrets.ts")
+      const secrets = createSecretsManager()
+      const list = await secrets.list(tenantId)
+      console.log(JSON.stringify(list, null, 2))
+      process.exit(0)
+    }
+
+    if (cmd === "secret-delete") {
+      const tenantId = String(args.tenant ?? "t")
+      const key = String(args.key ?? "")
+      if (!key) throw new Error("--key is required")
+      
+      const { createSecretsManager } = await import("../runtime/secrets.ts")
+      const secrets = createSecretsManager()
+      await secrets.delete(tenantId, key)
+      console.log(`Secret ${key} deleted for tenant ${tenantId}`)
+      process.exit(0)
+    }
+
+    if (cmd === "apikey-create") {
+      const tenantId = String(args.tenant ?? "t")
+      
+      const { createApiKeyManager } = await import("../runtime/secrets.ts")
+      const apiKeys = createApiKeyManager()
+      const key = await apiKeys.create(tenantId)
+      console.log(`API Key created: ${key}`)
+      process.exit(0)
+    }
+
+    if (cmd === "apikey-revoke") {
+      const key = String(args.key ?? "")
+      if (!key) throw new Error("--key is required")
+      
+      const { createApiKeyManager } = await import("../runtime/secrets.ts")
+      const apiKeys = createApiKeyManager()
+      await apiKeys.revoke(key)
+      console.log(`API Key revoked`)
+      process.exit(0)
+    }
+
     if (cmd === "install") {
       const specPath = String(args.spec ?? "")
       if (!specPath) throw new Error("--spec is required")
@@ -282,6 +355,12 @@ Usage:
   node cli/cicsc.mjs init --interactive [--llm-provider <provider>] [--tenant <tenant_id>] [--auto-install]
   node cli/cicsc.mjs compile --spec <path> [--server <url>] [--token <auth-token>] [--llm-provider <provider>] [--auto-install] [--tenant <tenant_id>]
   node cli/cicsc.mjs generate-ui --spec <path> [--out <output-dir>]
+  node cli/cicsc.mjs secret-set --key <key> --value <value> [--tenant <tenant_id>]
+  node cli/cicsc.mjs secret-get --key <key> [--tenant <tenant_id>]
+  node cli/cicsc.mjs secret-list [--tenant <tenant_id>]
+  node cli/cicsc.mjs secret-delete --key <key> [--tenant <tenant_id>]
+  node cli/cicsc.mjs apikey-create [--tenant <tenant_id>]
+  node cli/cicsc.mjs apikey-revoke --key <key>
   node cli/cicsc.mjs install --spec <path> --tenant <tenant_id> [--server <url>] [--token <auth-token>]
   node cli/cicsc.mjs verify --tenant <tenant_id> [--type <entity_type> --entity <entity_id>] [--server <url>] [--token <auth-token>]
   node cli/cicsc.mjs gates [--suite <required|cross-backend|phase6-concurrency|phase6-migration>]
@@ -289,15 +368,10 @@ Usage:
   node cli/cicsc.mjs migration-dry-run --from <bundle.json> --to <bundle.json> --events <events.json> --migration <id> [--artifact <report.json> --actor <id> --now <ts>]
   node cli/cicsc.mjs migration-rollback --to <bundle.json> --events <events.json> --migration <id> [--out-events <events.json>]
 
-LLM Providers:
-  openai, ollama, anthropic, openrouter, kimi, qwen, azure-openai, gemini, local
-  Default: gemini
-
 Examples:
-  node cli/cicsc.mjs init --interactive
-  node cli/cicsc.mjs init --interactive --llm-provider openai
-  node cli/cicsc.mjs compile --spec spec.json --auto-install --tenant mytenant
-  node cli/cicsc.mjs generate-ui --spec spec.json --out ./ui-output
+  node cli/cicsc.mjs secret-set --key API_KEY --value abc123 --tenant myapp
+  node cli/cicsc.mjs secret-list --tenant myapp
+  node cli/cicsc.mjs apikey-create --tenant myapp
 `)
 }
 
