@@ -3064,7 +3064,7 @@ phases:
       description: Document one-click deploy in user guide
 - id: BZ
   number: 52
-  status: incomplete
+  status: complete
   title: End-to-End Conversational Deploy
   description: Connect interview engine to CLI for seamless spec creation and deployment
   milestones:
@@ -3085,7 +3085,7 @@ phases:
       description: Add --llm-provider flag for model selection
 - id: CA
   number: 53
-  status: incomplete
+  status: complete
   title: UI Generator Wiring
   description: Wire UI generator to compile pipeline so SPEC generates Vue components
   milestones:
@@ -3093,14 +3093,14 @@ phases:
     title: Milestone CA1
     checkboxes:
     - id: CA1.1
-      status: open
+      status: done
       description: Implement UiSpecV0 in core/ir/types.ts
     - id: CA1.2
-      status: open
+      status: done
       description: Add UI generator to cicsc compile pipeline
     - id: CA1.3
-      status: open
+      status: done
       description: Generate Vue components from SPEC
     - id: CA1.4
-      status: open
+      status: done
       description: Wire UI to install step
