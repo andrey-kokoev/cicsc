@@ -13,7 +13,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$ROOT"
 
-# Auto-sync if on worktree and behind main
 needs_sync() {
     local local_head remote_head
     local_head=$(git rev-parse HEAD)
@@ -55,52 +54,31 @@ if [[ -z "$ID" || -z "$NUMBER" || -z "$TITLE" ]]; then
 fi
 
 python3 - "$ID" "$NUMBER" "$TITLE" "$DESCRIPTION" "$CHECKBOXES" << 'PY'
-import yaml
 import sys
+sys.path.insert(0, "control-plane")
+from db import add_phase, add_milestone, add_checkbox
 
 phase_id = sys.argv[1]
-number = sys.argv[2]
+number = int(sys.argv[2])
 title = sys.argv[3]
 description = sys.argv[4]
 checkboxes_str = sys.argv[5] if len(sys.argv) > 5 else ""
 
-ledger = yaml.safe_load(open("control-plane/execution-ledger.yaml"))
+add_phase(phase_id, number, "in_progress", title, description)
 
-new_phase = {
-    "id": phase_id,
-    "number": int(number),
-    "status": "incomplete",
-    "title": title,
-    "description": description,
-    "milestones": []
-}
-
-# Parse checkboxes: "BZ1.1:desc,BZ1.2:desc"
+milestone_checkboxes = []
 if checkboxes_str:
-    milestone_checkboxes = []
     for cb in checkboxes_str.split(","):
         if ":" in cb:
             cb_id, cb_desc = cb.split(":", 1)
-            milestone_checkboxes.append({
-                "id": cb_id,
-                "status": "open",
-                "description": cb_desc
-            })
-    
-    if milestone_checkboxes:
-        # Extract milestone prefix (e.g., BZ1 from BZ1.1)
-        first_id = milestone_checkboxes[0]["id"]
-        milestone_id = ".".join(first_id.split(".")[:-1])
-        new_phase["milestones"].append({
-            "id": milestone_id,
-            "title": f"Milestone {milestone_id}",
-            "checkboxes": milestone_checkboxes
-        })
+            milestone_checkboxes.append({"id": cb_id, "description": cb_desc})
 
-ledger["phases"].append(new_phase)
-
-with open("control-plane/execution-ledger.yaml", "w") as f:
-    yaml.dump(ledger, f, sort_keys=False, default_flow_style=False)
+if milestone_checkboxes:
+    first_id = milestone_checkboxes[0]["id"]
+    milestone_id = ".".join(first_id.split(".")[:-1])
+    add_milestone(milestone_id, phase_id, f"Milestone {milestone_id}")
+    for cb in milestone_checkboxes:
+        add_checkbox(cb["id"], milestone_id, "open", cb["description"])
 
 print(f"Added phase {phase_id} with {len(milestone_checkboxes)} checkboxes")
 PY

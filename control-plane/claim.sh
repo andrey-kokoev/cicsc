@@ -7,7 +7,6 @@ AGENT="$1"
 FORCE_SYNC=1
 SKIP_SYNC=0
 
-# Parse optional flags
 while [[ $# -gt 1 ]]; do
     case "$2" in
         --sync) FORCE_SYNC=1; SKIP_SYNC=0; shift ;;
@@ -17,7 +16,6 @@ while [[ $# -gt 1 ]]; do
     shift
 done
 
-# Auto-sync if on worktree and behind main (unless --no-sync)
 needs_sync() {
     local local_head remote_head
     local_head=$(git rev-parse HEAD)
@@ -39,24 +37,22 @@ if [[ "$FORCE_SYNC" -eq 1 ]] && [[ "$SKIP_SYNC" -eq 0 ]] && needs_sync 2>/dev/nu
 fi
 
 python3 - "$AGENT" << 'PY'
-import yaml
 import sys
-from pathlib import Path
+sys.path.insert(0, "control-plane")
+from db import get_assignments_by_agent, update_assignment
 from datetime import datetime
 
 agent = sys.argv[1]
 
-assignments = yaml.safe_load(Path("control-plane/assignments.yaml").read_text())
-
+assignments = get_assignments_by_agent(agent)
 claimed = []
-for a in assignments.get("assignments", []):
-    if a["agent_ref"] == agent and a["status"] == "open":
-        a["status"] = "in_progress"
-        a["started_at"] = datetime.now().isoformat() + "Z"
+
+for a in assignments:
+    if a["status"] == "open":
+        update_assignment(a["checkbox_ref"], status="in_progress", started_at=datetime.now().isoformat() + "Z")
         claimed.append(a["checkbox_ref"])
 
 if claimed:
-    Path("control-plane/assignments.yaml").write_text(yaml.dump(assignments, sort_keys=False))
     for cb in claimed:
         print(f"Claimed {cb}")
 else:

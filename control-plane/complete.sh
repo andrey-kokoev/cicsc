@@ -3,7 +3,6 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-# Check for --no-sync flag
 SKIP_SYNC=0
 NEW_ARGS=()
 for arg in "$@"; do
@@ -15,7 +14,6 @@ for arg in "$@"; do
 done
 set -- "${NEW_ARGS[@]}"
 
-# Auto-sync if on worktree and behind main
 needs_sync() {
     local local_head remote_head
     local_head=$(git rev-parse HEAD)
@@ -36,7 +34,6 @@ if [[ "$SKIP_SYNC" -eq 0 ]] && needs_sync 2>/dev/null; then
     echo "  ✅ Synced"
 fi
 
-# Check for --batch flag
 if [[ "${1:-}" == "--batch" ]]; then
     shift
     CHECKBOXES=("$@")
@@ -52,7 +49,6 @@ else
     BATCH_MODE=0
 fi
 
-# Run gates once (before any updates)
 echo "Running gates..."
 if ! ./control-plane/check_gates.sh; then
     echo "Gates failed - cannot complete" >&2
@@ -64,43 +60,24 @@ export CHECKBOXES_STR="${CHECKBOXES[*]}"
 export COMMIT
 
 python3 << 'PY'
-import yaml
 import sys
 import os
-from pathlib import Path
+sys.path.insert(0, "control-plane")
+from db import get_assignment, update_assignment, update_checkbox_status
 from datetime import datetime
 
 batch_mode = bool(int(os.environ["BATCH_MODE"]))
 checkbox_list = os.environ["CHECKBOXES_STR"].split()
 commit = os.environ["COMMIT"]
 
-ledger = yaml.safe_load(Path("control-plane/execution-ledger.yaml").read_text())
-assignments = yaml.safe_load(Path("control-plane/assignments.yaml").read_text())
-
 for checkbox in checkbox_list:
-    # Find and update assignment
-    found = False
-    for a in assignments.get("assignments", []):
-        if a["checkbox_ref"] == checkbox and a["status"] == "in_progress":
-            a["status"] = "done"
-            a["commit"] = commit
-            a["completed_at"] = datetime.now().isoformat() + "Z"
-            found = True
-            break
-
-    if not found:
+    assignment = get_assignment(checkbox)
+    if not assignment or assignment["status"] != "in_progress":
         print(f"ERROR: No in_progress assignment for {checkbox}", file=sys.stderr)
         sys.exit(1)
 
-    # Update ledger
-    for ph in ledger.get("phases", []):
-        for ms in ph.get("milestones", []):
-            for cb in ms.get("checkboxes", []):
-                if cb["id"] == checkbox:
-                    cb["status"] = "done"
-
-Path("control-plane/assignments.yaml").write_text(yaml.dump(assignments, sort_keys=False))
-Path("control-plane/execution-ledger.yaml").write_text(yaml.dump(ledger, sort_keys=False))
+    update_assignment(checkbox, status="done", commit_sha=commit, completed_at=datetime.now().isoformat() + "Z")
+    update_checkbox_status(checkbox, "done")
 
 if batch_mode:
     print(f"Completed batch: {', '.join(checkbox_list)} at commit {commit}")

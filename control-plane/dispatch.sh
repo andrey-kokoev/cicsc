@@ -20,47 +20,28 @@ if [[ -z "$CHECKBOX" || -z "$AGENT" ]]; then
 fi
 
 python3 - "$CHECKBOX" "$AGENT" << 'PY'
-import yaml
 import sys
-from pathlib import Path
+sys.path.insert(0, "control-plane")
+from db import get_checkbox, get_assignment, create_assignment
 from datetime import datetime
 
 checkbox = sys.argv[1]
 agent = sys.argv[2]
 
-ledger = yaml.safe_load(Path("control-plane/execution-ledger.yaml").read_text())
-assignments = yaml.safe_load(Path("control-plane/assignments.yaml").read_text())
-
-# Verify checkbox exists and is open
-valid_checkboxes = {}
-for ph in ledger.get("phases", []):
-    for ms in ph.get("milestones", []):
-        for cb in ms.get("checkboxes", []):
-            valid_checkboxes[cb["id"]] = cb.get("status")
-
-if checkbox not in valid_checkboxes:
+cb = get_checkbox(checkbox)
+if not cb:
     print(f"ERROR: Invalid checkbox: {checkbox}", file=sys.stderr)
     sys.exit(1)
 
-if valid_checkboxes[checkbox] == "done":
+if cb["status"] == "done":
     print(f"ERROR: Checkbox already done: {checkbox}", file=sys.stderr)
     sys.exit(1)
 
-# Check if already assigned
-for a in assignments.get("assignments", []):
-    if a["checkbox_ref"] == checkbox and a["status"] in ("open", "in_progress"):
-        print(f"ERROR: Checkbox already assigned: {checkbox} -> {a['agent_ref']}", file=sys.stderr)
-        sys.exit(1)
+existing = get_assignment(checkbox)
+if existing and existing["status"] in ("open", "in_progress"):
+    print(f"ERROR: Checkbox already assigned: {checkbox} -> {existing['agent_ref']}", file=sys.stderr)
+    sys.exit(1)
 
-# Add assignment
-assignments["assignments"].append({
-    "checkbox_ref": checkbox,
-    "agent_ref": agent,
-    "status": "open",
-    "created_at": datetime.now().isoformat() + "Z"
-})
-
-Path("control-plane/assignments.yaml").write_text(yaml.dump(assignments, sort_keys=False))
-
+create_assignment(checkbox, agent, "open")
 print(f"Dispatched {checkbox} -> {agent}")
 PY

@@ -12,7 +12,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$ROOT"
 
-# Auto-sync if on worktree and behind main
 needs_sync() {
     local local_head remote_head
     local_head=$(git rev-parse HEAD)
@@ -51,37 +50,21 @@ if [[ -z "$MILESTONE" || ${#CHECKBOXES[@]} -eq 0 ]]; then
 fi
 
 python3 - "$MILESTONE" "${CHECKBOXES[@]}" << 'PY'
-import yaml
 import sys
+sys.path.insert(0, "control-plane")
+from db import get_milestone, add_checkbox
 
 milestone_id = sys.argv[1]
 checkboxes = sys.argv[2:]
 
-ledger = yaml.safe_load(open("control-plane/execution-ledger.yaml"))
-
-# Find milestone
-found = False
-for ph in ledger.get("phases", []):
-    for ms in ph.get("milestones", []):
-        if ms.get("id") == milestone_id:
-            for cb_str in checkboxes:
-                cb_id, cb_desc = cb_str.split(":", 1)
-                ms["checkboxes"].append({
-                    "id": cb_id,
-                    "status": "open",
-                    "description": cb_desc
-                })
-            found = True
-            break
-    if found:
-        break
-
-if not found:
+ms = get_milestone(milestone_id)
+if not ms:
     print(f"ERROR: Milestone {milestone_id} not found", file=sys.stderr)
     sys.exit(1)
 
-with open("control-plane/execution-ledger.yaml", "w") as f:
-    yaml.dump(ledger, f, sort_keys=False, default_flow_style=False)
+for cb_str in checkboxes:
+    cb_id, cb_desc = cb_str.split(":", 1)
+    add_checkbox(cb_id, milestone_id, "open", cb_desc)
 
 print(f"Added {len(checkboxes)} checkboxes to {milestone_id}")
 PY
