@@ -3182,8 +3182,3 @@ phases:
     - id: CE1.4
       status: done
       description: Kanban example with role+target state gates
-      status: open
-      description: Runtime guard evaluation for target state
-    - id: CE1.4
-      status: open
-      description: Kanban example with role+target state gates
