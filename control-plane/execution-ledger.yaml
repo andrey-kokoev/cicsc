@@ -3118,7 +3118,7 @@ phases:
       status: done
       description: Serve Vue components via HTTP endpoint
     - id: CB1.2
-      status: open
+      status: done
       description: Wire UI to backend API (execute commands/query views)
     - id: CB1.3
       status: open
