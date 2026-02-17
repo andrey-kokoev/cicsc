@@ -49,6 +49,7 @@ export type ShadowTypeSpecV0 = {
 export type CommandSpecV0 = {
   input: Record<string, AttrTypeSpecV0>
   guard: { expr: ExprV0 }
+  target_state?: string
   emits: { event_type: string; payload: Record<string, ExprV0> }[]
 }
 
