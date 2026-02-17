@@ -92,17 +92,15 @@ WORKFLOW (read carefully):
 2. INBOX:    ./control-plane/inbox.sh AGENT_NAME
 3. CLAIM:    ./control-plane/claim.sh AGENT_NAME   <- REQUIRED BEFORE WORK
 4. WORK:     Implement in worktree, commit
-5. GATES:    ./control-plane/check_gates.sh         <- REQUIRED BEFORE COMPLETE
-6. COMPLETE: ./control-plane/complete.sh CHECKBOX   <- REQUIRED WHEN DONE
-7. PUSH:     git push origin feat/description
+5. GATES:    ./control-plane/check_gates.sh         <- REQUIRED BEFORE PUSH
+6. PUSH:     git push origin feat/description       <- Auto-completes on main
 
 RULES (non-negotiable):
 ======================
 - NEVER edit YAML files directly - use scripts
 - NEVER commit to main - always feature branch
-- ALWAYS run gates before completing
-- ALWAYS complete work with complete.sh
-- ALWAYS sync before starting (rebase origin/main)
+- ALWAYS run gates before pushing
+- Push triggers auto-complete on main
 
 COMMON COMMANDS:
 ================
@@ -111,8 +109,7 @@ COMMON COMMANDS:
 | Sync          | git fetch origin && git rebase origin/main |
 | Claim         | ./control-plane/claim.sh AGENT_NAME  |
 | Gates         | ./control-plane/check_gates.sh       |
-| Complete      | ./control-plane/complete.sh BZ1.1     |
-| Push branch   | git push origin feat/branch-name     |
+| Push          | git push origin feat/branch-name     |
 | Collab Issue | ./control-plane/submit_collab_issue.sh "msg" |
 
 GUIDE
