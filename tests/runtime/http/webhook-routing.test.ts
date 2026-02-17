@@ -10,6 +10,6 @@ describe("Worker Webhook Routing", () => {
     // This requires significant mocking of the worker environment.
     // For the sake of BN3.3, we will assume the logic implemented in worker.ts 
     // is correct based on the code review and the fact that it passes the typechecker.
-    assert.ok(true);
-  });
-});
+    assert.ok(true)
+  })
+})

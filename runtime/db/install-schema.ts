@@ -85,6 +85,41 @@ export async function installSchemaV0 (db: D1Database): Promise<void> {
       result_json  TEXT,
       PRIMARY KEY (tenant_id, key, queue_name)
     );
+
+    CREATE TABLE IF NOT EXISTS scheduled_jobs (
+      id            TEXT PRIMARY KEY,
+      tenant_id     TEXT NOT NULL,
+      schedule_name TEXT NOT NULL,
+      scheduled_at  INTEGER NOT NULL,
+      job_data      TEXT NOT NULL,
+      status        TEXT NOT NULL DEFAULT 'pending',
+      result_json   TEXT,
+      created_at    INTEGER NOT NULL,
+      updated_at    INTEGER NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_scheduled_jobs_tenant_status
+      ON scheduled_jobs(tenant_id, status, scheduled_at);
+
+    CREATE INDEX IF NOT EXISTS idx_scheduled_jobs_schedule
+      ON scheduled_jobs(schedule_name, status, scheduled_at);
+
+    CREATE TABLE IF NOT EXISTS workflow_instances (
+      id            TEXT PRIMARY KEY,
+      tenant_id     TEXT NOT NULL,
+      workflow_name TEXT NOT NULL,
+      state         TEXT NOT NULL DEFAULT 'pending',
+      current_step  TEXT,
+      data          TEXT NOT NULL,
+      created_at    INTEGER NOT NULL,
+      updated_at    INTEGER NOT NULL
+    );
+
+    CREATE INDEX IF NOT EXISTS idx_workflow_instances_tenant_state
+      ON workflow_instances(tenant_id, workflow_name, state);
+
+    CREATE INDEX IF NOT EXISTS idx_workflow_instances_current_step
+      ON workflow_instances(current_step);
   `
 
   await db.exec(sql)

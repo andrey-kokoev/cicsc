@@ -60,15 +60,6 @@ export function installSqliteSchemaV0 (db: Db) {
       updated_ts  INTEGER NOT NULL,
       severity_i  INTEGER,
       created_at  INTEGER,
-      -- Rich aggregates test columns
-      response_ts INTEGER,
-      resolve_ts  INTEGER,
-      completed   INTEGER,
-      total       INTEGER,
-      created_ts  INTEGER,
-      resolved_ts INTEGER,
-      value       INTEGER,
-      zero_col    INTEGER,
       PRIMARY KEY (tenant_id, entity_type, entity_id)
     );
 
@@ -96,32 +87,16 @@ export function upsertSnapshot (db: Db, row: {
   updated_ts: number
   severity_i?: number | null
   created_at?: number | null
-  response_ts?: number | null
-  resolve_ts?: number | null
-  completed?: number | null
-  total?: number | null
-  created_ts?: number | null
-  resolved_ts?: number | null
-  value?: number | null
-  zero_col?: number | null
 }) {
   db.prepare(
-    `INSERT INTO snapshots_v0(tenant_id, entity_type, entity_id, state, attrs_json, updated_ts, severity_i, created_at, response_ts, resolve_ts, completed, total, created_ts, resolved_ts, value, zero_col)
-     VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+    `INSERT INTO snapshots_v0(tenant_id, entity_type, entity_id, state, attrs_json, updated_ts, severity_i, created_at)
+     VALUES(?,?,?,?,?,?,?,?)
      ON CONFLICT(tenant_id, entity_type, entity_id) DO UPDATE SET
        state=excluded.state,
        attrs_json=excluded.attrs_json,
        updated_ts=excluded.updated_ts,
        severity_i=excluded.severity_i,
-       created_at=excluded.created_at,
-       response_ts=excluded.response_ts,
-       resolve_ts=excluded.resolve_ts,
-       completed=excluded.completed,
-       total=excluded.total,
-       created_ts=excluded.created_ts,
-       resolved_ts=excluded.resolved_ts,
-       value=excluded.value,
-       zero_col=excluded.zero_col`
+       created_at=excluded.created_at`
   ).run([
     row.tenant_id,
     row.entity_type,
@@ -131,14 +106,6 @@ export function upsertSnapshot (db: Db, row: {
     row.updated_ts,
     row.severity_i ?? null,
     row.created_at ?? null,
-    row.response_ts ?? null,
-    row.resolve_ts ?? null,
-    row.completed ?? null,
-    row.total ?? null,
-    row.created_ts ?? null,
-    row.resolved_ts ?? null,
-    row.value ?? null,
-    row.zero_col ?? null,
   ])
 }
 

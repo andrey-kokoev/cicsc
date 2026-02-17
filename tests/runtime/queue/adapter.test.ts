@@ -4,7 +4,7 @@ import { SqliteD1Adapter } from "../../../adapters/sqlite/src/adapter"
 
 type FakeStmt = { sql: string; binds: any[] }
 
-function makeFakeDb (opts?: { 
+function makeFakeDb (opts?: {
   failSqlIncludes?: string,
   results?: Record<string, any[]>
 }) {
@@ -30,7 +30,7 @@ function makeFakeDb (opts?: {
             out.push({ success: false, error: "forced failure" })
             continue
           }
-          
+
           let found = false
           if (opts?.results) {
             for (const [key, res] of Object.entries(opts.results)) {
@@ -87,7 +87,7 @@ describe("SqliteD1Adapter Queue Methods", () => {
 
     assert.equal(msg?.id, "m1")
     assert.deepEqual(msg?.payload, { ok: true })
-    
+
     assert.equal(fake.sqlLog[0], "BEGIN IMMEDIATE")
     assert.ok(fake.sqlLog.some(sql => sql.includes("UPDATE queue_test_queue")))
     assert.ok(fake.sqlLog.includes("COMMIT"))

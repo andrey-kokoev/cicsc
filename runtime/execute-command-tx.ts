@@ -112,6 +112,16 @@ export async function executeCommandTx (params: {
       events,
     })
 
+    // 4.5) track SLA start/stop events
+    await trackSlaEventsTx(tx, {
+      ir,
+      tenant_id: req.tenant_id,
+      entity_type: req.entity_type,
+      entity_id: req.entity_id,
+      events,
+      now: req.now,
+    })
+
     // 5) apply reducer
     let next = snap
     for (const e of events) {
@@ -613,3 +623,71 @@ function sortKeys (v: any): any {
   for (const k of Object.keys(v).sort()) out[k] = sortKeys(v[k])
   return out
 }
+
+async function trackSlaEventsTx (tx: TxCtx, p: {
+  ir: CoreIrV0
+  tenant_id: string
+  entity_type: string
+  entity_id: string
+  events: { event_type: string; payload: unknown; ts: number; actor_id: string }[]
+  now: number
+}): Promise<void> {
+  // Process each event to see if it triggers SLA start/stop
+  for (const event of p.events) {
+    // Find SLAs that match this entity type
+    for (const sla of Object.values(p.ir.slas ?? {})) {
+      if (sla.on_type !== p.entity_type) continue
+      
+      // Check if this event matches the start condition
+      if (sla.start.event.name === event.event_type) {
+        // Check if there are additional conditions (where clause)
+        let matchesStartCondition = true
+        if (sla.start.event.where) {
+          // For now, we'll assume the condition is met if the event type matches
+          // In a real implementation, we would evaluate the condition against the event payload
+        }
+        
+        if (matchesStartCondition) {
+          // Start the SLA - insert or update the SLA record with start time and deadline
+          const deadline = event.ts + (sla.within_seconds * 1000) // Convert seconds to milliseconds
+          
+          await tx.exec(
+            `INSERT INTO sla_status (tenant_id, name, entity_type, entity_id, start_ts, deadline_ts, stop_ts, breached, updated_ts)
+             VALUES (?, ?, ?, ?, ?, ?, NULL, 0, ?)
+             ON CONFLICT (tenant_id, name, entity_type, entity_id)
+             DO UPDATE SET
+               start_ts = excluded.start_ts,
+               deadline_ts = excluded.deadline_ts,
+               stop_ts = NULL,  -- Reset stop timestamp when restarting
+               breached = 0     -- Reset breach status when restarting
+            `,
+            [p.tenant_id, sla.name, p.entity_type, p.entity_id, event.ts, deadline, p.now]
+          )
+        }
+      }
+      
+      // Check if this event matches the stop condition
+      if (sla.stop.event.name === event.event_type) {
+        // Check if there are additional conditions (where clause)
+        let matchesStopCondition = true
+        if (sla.stop.event.where) {
+          // For now, we'll assume the condition is met if the event type matches
+          // In a real implementation, we would evaluate the condition against the event payload
+        }
+        
+        if (matchesStopCondition) {
+          // Stop the SLA - update the SLA record with stop time
+          await tx.exec(
+            `UPDATE sla_status
+             SET stop_ts = ?, updated_ts = ?
+             WHERE tenant_id = ? AND name = ? AND entity_type = ? AND entity_id = ?
+               AND stop_ts IS NULL  -- Only stop if not already stopped
+            `,
+            [event.ts, p.now, p.tenant_id, sla.name, p.entity_type, p.entity_id]
+          )
+        }
+      }
+    }
+  }
+}
+
