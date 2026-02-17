@@ -3162,7 +3162,7 @@ phases:
       description: Secret rotation support
 - id: CE
   number: 56
-  status: incomplete
+  status: complete
   title: State Target Guards
   description: Add state_will_be/target_state guard construct to gate transitions
     by target state
