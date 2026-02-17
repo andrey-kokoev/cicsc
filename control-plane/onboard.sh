@@ -67,6 +67,7 @@ COMMON COMMANDS:
 | Add checkbox  | ./control-plane/add_checkbox.sh --... |
 | Dispatch      | ./control-plane/dispatch.sh --...     |
 | Monitor       | ./control-plane/inbox.sh AGENT_NAME   |
+| Collab Issues| ./control-plane/get_open_collab_issues.sh |
 | Merge         | git merge --ff-only origin/feat/...   |
 
 GUIDE
