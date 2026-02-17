@@ -111,6 +111,7 @@ COMMON COMMANDS:
 | Gates         | ./control-plane/check_gates.sh       |
 | Complete      | ./control-plane/complete.sh BZ1.1     |
 | Push branch   | git push origin feat/branch-name     |
+| Collab Issue | ./control-plane/submit_collab_issue.sh "msg" |
 
 GUIDE
     echo ""
