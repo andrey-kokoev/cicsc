@@ -3104,3 +3104,25 @@ phases:
     - id: CA1.4
       status: done
       description: Wire UI to install step
+- id: CB
+  number: 54
+  status: incomplete
+  title: UI Runtime Integration
+  description: 'Connect generated UI to the runtime: serve Vue components, wire to
+    backend API, add state management, serve static assets'
+  milestones:
+  - id: CB1
+    title: Milestone CB1
+    checkboxes:
+    - id: CB1.1
+      status: open
+      description: Serve Vue components via HTTP endpoint
+    - id: CB1.2
+      status: open
+      description: Wire UI to backend API (execute commands/query views)
+    - id: CB1.3
+      status: open
+      description: Add state management for entity CRUD
+    - id: CB1.4
+      status: open
+      description: Serve static assets
