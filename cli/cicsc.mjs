@@ -63,6 +63,32 @@ async function main () {
       process.exit(body.ok ? 0 : 1)
     }
 
+    if (cmd === "generate-ui") {
+      const specPath = String(args.spec ?? "")
+      if (!specPath) throw new Error("--spec is required")
+      const outputPath = String(args.out ?? "./ui-output")
+      const spec = await readSpecFile(specPath)
+      const { compileSpecToBundleV0 } = await import("../runtime/http/compile.ts")
+      const { generateUiFromIr, generateVueComponents } = await import("../ui/generator.ts")
+      
+      const bundle = compileSpecToBundleV0(spec)
+      const ui = generateUiFromIr(bundle.core_ir)
+      const components = generateVueComponents(ui)
+      
+      const { mkdir, writeFile } = await import("node:fs/promises")
+      await mkdir(outputPath, { recursive: true })
+      
+      await writeFile(`${outputPath}/ui-spec.json`, JSON.stringify(ui, null, 2), "utf8")
+      
+      for (const [filename, content] of Object.entries(components)) {
+        await writeFile(`${outputPath}/${filename}`, content, "utf8")
+      }
+      
+      console.log(`Generated UI spec: ${outputPath}/ui-spec.json`)
+      console.log(`Generated ${Object.keys(components).length} Vue components in ${outputPath}/`)
+      process.exit(0)
+    }
+
     if (cmd === "install") {
       const specPath = String(args.spec ?? "")
       if (!specPath) throw new Error("--spec is required")
@@ -255,6 +281,7 @@ function printUsage () {
 Usage:
   node cli/cicsc.mjs init --interactive [--llm-provider <provider>] [--tenant <tenant_id>] [--auto-install]
   node cli/cicsc.mjs compile --spec <path> [--server <url>] [--token <auth-token>] [--llm-provider <provider>] [--auto-install] [--tenant <tenant_id>]
+  node cli/cicsc.mjs generate-ui --spec <path> [--out <output-dir>]
   node cli/cicsc.mjs install --spec <path> --tenant <tenant_id> [--server <url>] [--token <auth-token>]
   node cli/cicsc.mjs verify --tenant <tenant_id> [--type <entity_type> --entity <entity_id>] [--server <url>] [--token <auth-token>]
   node cli/cicsc.mjs gates [--suite <required|cross-backend|phase6-concurrency|phase6-migration>]
@@ -270,6 +297,7 @@ Examples:
   node cli/cicsc.mjs init --interactive
   node cli/cicsc.mjs init --interactive --llm-provider openai
   node cli/cicsc.mjs compile --spec spec.json --auto-install --tenant mytenant
+  node cli/cicsc.mjs generate-ui --spec spec.json --out ./ui-output
 `)
 }
 

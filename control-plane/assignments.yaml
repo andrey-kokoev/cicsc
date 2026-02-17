@@ -2284,17 +2284,21 @@ assignments:
   completed_at: '2026-02-16T18:05:23.606854Z'
 - checkbox_ref: CA1.1
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T18:38:28.402415Z'
+  started_at: '2026-02-16T18:39:28.828794Z'
 - checkbox_ref: CA1.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T18:38:28.706335Z'
+  started_at: '2026-02-16T18:39:28.828806Z'
 - checkbox_ref: CA1.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T18:38:29.010171Z'
+  started_at: '2026-02-16T18:39:28.828808Z'
 - checkbox_ref: CA1.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T18:38:29.314979Z'
+  started_at: '2026-02-16T18:39:28.828809Z'

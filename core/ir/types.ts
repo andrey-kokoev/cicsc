@@ -17,7 +17,8 @@ export type CoreIrV0 = {
   queues?: Record<string, QueueSpecV0>
   schedules?: Record<string, ScheduleSpecV0>
   workflows?: Record<string, WorkflowSpecV0>
-  row_policies?: Record<string, RowPolicyV0> // named RLS policies for reuse
+  row_policies?: Record<string, RowPolicyV0>
+  ui?: UiSpecV0
 }
 
 export type EntityTypeSpecV0 = {
@@ -318,3 +319,57 @@ export type WorkflowStepV0 =
   | { kind: "wait"; event_type: string; timeout_seconds?: number; next: string; on_timeout?: string }
   | { kind: "decision"; cases: { condition: ExprV0; next: string }[]; default_next: string }
   | { kind: "end" }
+
+export type UiSpecV0 = {
+  version: 0
+  pages: Record<string, UiPageV0>
+  components: Record<string, UiComponentV0>
+  theme?: UiThemeV0
+}
+
+export type UiPageV0 = {
+  path: string
+  title: string
+  entity?: string
+  layout?: UiLayoutV0
+  sections: UiSectionV0[]
+}
+
+export type UiLayoutV0 = {
+  kind: "list" | "detail" | "form" | "dashboard" | "kanban"
+  columns?: number
+}
+
+export type UiSectionV0 = {
+  id: string
+  title?: string
+  components: UiComponentRefV0[]
+}
+
+export type UiComponentRefV0 = {
+  component_id: string
+  props?: Record<string, unknown>
+}
+
+export type UiComponentV0 = {
+  kind: "table" | "form" | "card" | "button" | "input" | "select" | "chart" | "kanban-board"
+  entity?: string
+  fields?: string[]
+  actions?: UiActionV0[]
+  config?: Record<string, unknown>
+}
+
+export type UiActionV0 = {
+  id: string
+  label: string
+  command: string
+  icon?: string
+  style?: "primary" | "secondary" | "danger"
+}
+
+export type UiThemeV0 = {
+  primary_color?: string
+  accent_color?: string
+  border_radius?: number
+  font_family?: string
+}

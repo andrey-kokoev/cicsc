@@ -5,6 +5,7 @@ import { parseSpecV0 } from "../../spec/parse-yaml"
 import { compileSpecV0ToCoreIr } from "../../spec/compile-to-ir"
 import { typecheckSpecV0 } from "../../spec/typecheck"
 import { typecheckCoreIrV0 } from "../../core/ir/typecheck"
+import { generateUiFromIr } from "../../ui/generator"
 
 export type CompileDiagnostic = {
   layer: "spec" | "ir"
@@ -61,6 +62,12 @@ export function compileSpecToBundleV0 (input: string | unknown): CoreIrBundleV0 
   }
 
   return { core_ir: ir } as CoreIrBundleV0
+}
+
+export function compileSpecWithUi(input: string | unknown): { bundle: CoreIrBundleV0; ui: any } {
+  const bundle = compileSpecToBundleV0(input)
+  const ui = generateUiFromIr(bundle.core_ir)
+  return { bundle, ui }
 }
 
 /**
