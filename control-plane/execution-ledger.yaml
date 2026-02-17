@@ -3075,7 +3075,7 @@ phases:
       status: done
       description: Connect LLMInterviewEngine to CLI compile command
     - id: BZ1.2
-      status: open
+      status: done
       description: Add interactive mode (cicsc init --interactive)
     - id: BZ1.3
       status: open
