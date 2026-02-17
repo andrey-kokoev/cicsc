@@ -3121,20 +3121,20 @@ phases:
       status: done
       description: Wire UI to backend API (execute commands/query views)
     - id: CB1.3
-      status: open
+      status: done
       description: Add state management for entity CRUD
     - id: CB1.4
-      status: open
+      status: done
       description: Serve static assets
     - id: CB1.5
-      status: open
+      status: done
       description: Define UIDeploymentAdapter interface
     - id: CB1.6
-      status: open
+      status: done
       description: Implement CloudflarePagesAdapter
     - id: CB1.7
-      status: open
+      status: done
       description: Implement VercelAdapter
     - id: CB1.8
-      status: open
+      status: done
       description: Implement NetlifyAdapter
