@@ -3106,7 +3106,7 @@ phases:
       description: Wire UI to install step
 - id: CB
   number: 54
-  status: incomplete
+  status: complete
   title: UI Runtime Integration
   description: 'Connect generated UI to the runtime: serve Vue components, wire to
     backend API, add state management, serve static assets'
