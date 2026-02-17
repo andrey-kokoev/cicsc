@@ -30,7 +30,12 @@ if is_worktree && needs_sync 2>/dev/null; then
         echo "  (sync skipped)"
     else
         echo "  Rebasing to origin/main..."
-        git rebase origin/main
+        git stash || true
+        git rebase origin/main || {
+            echo "  Rebase failed, restoring..."
+            git stash pop || true
+        }
+        git stash pop || true
         echo "  ✅ Synced"
     fi
 fi

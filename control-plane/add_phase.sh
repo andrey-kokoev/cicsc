@@ -102,8 +102,5 @@ ledger["phases"].append(new_phase)
 with open("control-plane/execution-ledger.yaml", "w") as f:
     yaml.dump(ledger, f, sort_keys=False, default_flow_style=False)
 
-import os
-os.chmod("control-plane/execution-ledger.yaml", 0o444)
-
 print(f"Added phase {phase_id} with {len(milestone_checkboxes)} checkboxes")
 PY

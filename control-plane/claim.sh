@@ -28,10 +28,13 @@ needs_sync() {
 if [[ "$FORCE_SYNC" -eq 1 ]] && [[ "$SKIP_SYNC" -eq 0 ]] && needs_sync 2>/dev/null; then
     echo "⚠ Worktree is behind origin/main. Fetching..."
     git fetch origin
+    git stash || true
     git rebase origin/main || {
         echo "ERROR: Rebase failed. Resolve conflicts manually."
+        git stash pop || true
         exit 1
     }
+    git stash pop || true
     echo "  ✅ Synced"
 fi
 
@@ -54,9 +57,6 @@ for a in assignments.get("assignments", []):
 
 if claimed:
     Path("control-plane/assignments.yaml").write_text(yaml.dump(assignments, sort_keys=False))
-    # Ensure YAML stays read-only after write
-    import os
-    os.chmod("control-plane/assignments.yaml", 0o444)
     for cb in claimed:
         print(f"Claimed {cb}")
 else:

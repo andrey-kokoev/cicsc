@@ -14,7 +14,12 @@ needs_sync() {
 if needs_sync 2>/dev/null; then
     echo "⚠ Worktree is behind origin/main. Fetching..."
     git fetch origin
-    git rebase origin/main
+    git stash || true
+    git rebase origin/main || {
+        echo "  Rebase failed, restoring..."
+        git stash pop || true
+    }
+    git stash pop || true
     echo "  ✅ Synced"
 fi
 

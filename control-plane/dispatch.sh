@@ -62,9 +62,5 @@ assignments["assignments"].append({
 
 Path("control-plane/assignments.yaml").write_text(yaml.dump(assignments, sort_keys=False))
 
-# Ensure YAML stays read-only after write
-import os
-os.chmod("control-plane/assignments.yaml", 0o444)
-
 print(f"Dispatched {checkbox} -> {agent}")
 PY

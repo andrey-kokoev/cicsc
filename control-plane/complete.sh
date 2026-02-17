@@ -26,10 +26,13 @@ needs_sync() {
 if [[ "$SKIP_SYNC" -eq 0 ]] && needs_sync 2>/dev/null; then
     echo "⚠ Worktree is behind origin/main. Fetching..."
     git fetch origin
+    git stash || true
     git rebase origin/main || {
         echo "ERROR: Rebase failed. Resolve conflicts manually."
+        git stash pop || true
         exit 1
     }
+    git stash pop || true
     echo "  ✅ Synced"
 fi
 
@@ -98,11 +101,6 @@ for checkbox in checkbox_list:
 
 Path("control-plane/assignments.yaml").write_text(yaml.dump(assignments, sort_keys=False))
 Path("control-plane/execution-ledger.yaml").write_text(yaml.dump(ledger, sort_keys=False))
-
-# Ensure YAML stays read-only after write
-import os
-os.chmod("control-plane/assignments.yaml", 0o444)
-os.chmod("control-plane/execution-ledger.yaml", 0o444)
 
 if batch_mode:
     print(f"Completed batch: {', '.join(checkbox_list)} at commit {commit}")

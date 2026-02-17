@@ -83,8 +83,5 @@ if not found:
 with open("control-plane/execution-ledger.yaml", "w") as f:
     yaml.dump(ledger, f, sort_keys=False, default_flow_style=False)
 
-import os
-os.chmod("control-plane/execution-ledger.yaml", 0o444)
-
 print(f"Added {len(checkboxes)} checkboxes to {milestone_id}")
 PY

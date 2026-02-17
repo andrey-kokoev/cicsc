@@ -68,6 +68,7 @@ COMMON COMMANDS:
 | Dispatch      | ./control-plane/dispatch.sh --...     |
 | Monitor       | ./control-plane/inbox.sh AGENT_NAME   |
 | Collab Issues| ./control-plane/get_open_collab_issues.sh |
+| Respond Issue| ./control-plane/respond_collab_issue.sh <file> "msg" |
 | Merge         | git merge --ff-only origin/feat/...   |
 
 GUIDE
