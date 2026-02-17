@@ -3083,3 +3083,24 @@ phases:
     - id: BZ1.4
       status: done
       description: Add --llm-provider flag for model selection
+- id: CA
+  number: 53
+  status: incomplete
+  title: UI Generator Wiring
+  description: Wire UI generator to compile pipeline so SPEC generates Vue components
+  milestones:
+  - id: CA1
+    title: Milestone CA1
+    checkboxes:
+    - id: CA1.1
+      status: open
+      description: Implement UiSpecV0 in core/ir/types.ts
+    - id: CA1.2
+      status: open
+      description: Add UI generator to cicsc compile pipeline
+    - id: CA1.3
+      status: open
+      description: Generate Vue components from SPEC
+    - id: CA1.4
+      status: open
+      description: Wire UI to install step
