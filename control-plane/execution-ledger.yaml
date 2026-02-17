@@ -3152,10 +3152,10 @@ phases:
       status: done
       description: Runtime secrets injection
     - id: CD1.2
-      status: open
+      status: done
       description: Per-tenant API key management
     - id: CD1.3
-      status: open
+      status: done
       description: Secrets UI in CLI
     - id: CD1.4
       status: open
