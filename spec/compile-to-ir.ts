@@ -12,7 +12,6 @@ export function compileSpecV0ToCoreIr (spec: SpecV0): CoreIrV0 {
       shadows: e.shadows ?? {},
       commands: mapCommands(e.commands ?? {}, name),
       reducer: mapReducers(e.reducers ?? {}),
-      row_policy: e.row_policy ? lowerRowPolicy(e.row_policy) : undefined,
     } as any
   }
 
@@ -28,7 +27,6 @@ export function compileSpecV0ToCoreIr (spec: SpecV0): CoreIrV0 {
   const policies = mapPolicies(spec.policies ?? {})
   const subscriptions = mapSubscriptions(spec.subscriptions ?? {})
   const webhooks = mapWebhooks(spec.webhooks ?? {})
-  const rowPolicies = mapRowPolicies(spec.row_policies ?? {})
 
   return {
     version: 0,
@@ -45,7 +43,6 @@ export function compileSpecV0ToCoreIr (spec: SpecV0): CoreIrV0 {
     migrations: Object.keys(migrations).length ? migrations : undefined,
     subscriptions: Object.keys(subscriptions).length ? subscriptions : undefined,
     webhooks: Object.keys(webhooks).length ? webhooks : undefined,
-    row_policies: Object.keys(rowPolicies).length ? rowPolicies : undefined,
   }
 }
 
@@ -144,7 +141,7 @@ function mapViews (views: Record<string, any>) {
       kind: v.kind ?? "metric",
       on_type: v.on,
       query,
-      row_policy: v.row_policy ? lowerRowPolicy(v.row_policy) : undefined,
+      row_policy: v.row_policy ?? undefined,
     }
   }
   return out
@@ -411,22 +408,12 @@ function mapRetryPolicy (policy: any) {
 function mapEventTransforms (eventTransforms: Record<string, any>) {
   const out: Record<string, any> = {}
   for (const [eventType, t] of Object.entries(eventTransforms ?? {})) {
-    const transform: any = {
+    out[eventType] = {
       emit_as: typeof (t as any)?.emit_as === "string" ? (t as any).emit_as : undefined,
       payload_map: (t as any)?.payload_map ? mapExprRecord((t as any).payload_map) : undefined,
       drop: Boolean((t as any)?.drop ?? false),
       fan_out: (t as any)?.fan_out ? mapFanOutTransform((t as any).fan_out) : undefined,
     }
-    
-    // BQ1.1: Handle emit_many for fan-out
-    if (Array.isArray((t as any).emit_many)) {
-      transform.emit_many = (t as any).emit_many.map((e: any) => ({
-        event_type: String(e.event_type ?? e.type),
-        payload: e.payload ?? e.payload_map ?? {},
-      }))
-    }
-    
-    out[eventType] = transform
   }
   return out
 }
@@ -990,54 +977,4 @@ function mapWebhooks (webhooks: Record<string, any>) {
     }
   }
   return out
-}
-
-// Row-Level Security policy map (BT2.1-BT2.3)
-function mapRowPolicies (rowPolicies: Record<string, any>): Record<string, any> {
-  const out: Record<string, any> = {}
-  for (const [name, policy] of Object.entries(rowPolicies)) {
-    out[name] = lowerRowPolicy(policy)
-  }
-  return out
-}
-
-// Row-Level Security policy lowering (BT2.1-BT2.3)
-function lowerRowPolicy (policy: any): any {
-  if (typeof policy === "string") {
-    // Named policy reference - will be resolved at validation time
-    return { ref: policy }
-  }
-
-  if (!policy || typeof policy !== "object") {
-    throw new Error("row_policy must be an object or string reference")
-  }
-
-  const keys = Object.keys(policy)
-  if (keys.length !== 1) {
-    throw new Error("row_policy must have exactly one key (owner, member_of, or expr)")
-  }
-
-  const tag = keys[0]!
-  const body = policy[tag]
-
-  switch (tag) {
-    case "owner":
-      return {
-        owner: {
-          actor_field: String(body.field)
-        }
-      }
-    case "member_of":
-      return {
-        member_of: {
-          actor_field: String(body.field),
-          target_type: String(body.through),
-          target_field: body.target_field ? String(body.target_field) : "entity_id"
-        }
-      }
-    case "expr":
-      return { expr: body }
-    default:
-      throw new Error(`unknown row_policy tag: ${tag}`)
-  }
 }
