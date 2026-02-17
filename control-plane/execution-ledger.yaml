@@ -2076,7 +2076,7 @@ phases:
 - id: BG
   number: 8
   status: complete
-  title: Conversational Spec Assistant - True Accessibility
+  title: Generative Interface - Conversational Spec Assistant
   milestones:
   - id: BG1
     title: Requirements Interview Engine
@@ -2093,6 +2093,57 @@ phases:
     - id: BG1.4
       status: done
       description: Summarize gathered requirements for confirmation
+    - id: BG1.5
+      status: done
+      description: LLM Adapter Interface - abstract provider interface
+    - id: BG1.6
+      status: done
+      description: OpenAI provider implementation
+    - id: BG1.7
+      status: done
+      description: Ollama provider implementation (local models)
+    - id: BG1.8
+      status: done
+      description: Add embed() method to LLMProvider interface
+    - id: BG1.9
+      status: done
+      description: Add streaming support to interface
+    - id: BG1.10
+      status: done
+      description: Implement AnthropicProvider
+    - id: BG1.11
+      status: done
+      description: Add retry/fallback logic for failed requests
+    - id: BG1.12
+      status: done
+      description: Add request timeout configuration
+    - id: BG1.13
+      status: done
+      description: Fix fragile private state access in LLMInterviewEngine
+    - id: BG1.14
+      status: done
+      description: Add error handling and output validation
+    - id: BG1.15
+      status: done
+      description: Add provider-side chat cache support (cache_by)
+    - id: BG1.16
+      status: done
+      description: Implement AnthropicProvider
+    - id: BG1.17
+      status: done
+      description: Implement OpenRouterProvider (100+ models)
+    - id: BG1.18
+      status: done
+      description: Implement KimiProvider (Moonshot AI)
+    - id: BG1.19
+      status: done
+      description: Implement QwenProvider (Alibaba)
+    - id: BG1.20
+      status: done
+      description: Implement AzureOpenAIProvider
+    - id: BG1.21
+      status: done
+      description: Implement GeminiProvider (Google)
   - id: BG2
     title: Natural Language to Spec Translation
     checkboxes:
@@ -2123,6 +2174,21 @@ phases:
     - id: BG3.4
       status: done
       description: Approval workflow before deployment
+  - id: BG4
+    title: Evolution via Conversation
+    checkboxes:
+    - id: BG4.1
+      status: done
+      description: Detect intent to change ("Add a new field")
+    - id: BG4.2
+      status: done
+      description: Generate migration spec from natural language
+    - id: BG4.3
+      status: done
+      description: Verify migration preserves invariants (Lean)
+    - id: BG4.4
+      status: done
+      description: Apply migration and confirm with user
 - id: BH
   number: 9
   status: complete
@@ -2476,101 +2542,621 @@ phases:
       description: DLQ admin API (list, inspect, replay)
 - id: BO
   number: 16
-  status: planned
+  status: complete
   title: Schedule Primitive - Time-Based Execution
   milestones:
   - id: BO1
     title: Core IR Schedule Extension
     checkboxes:
     - id: BO1.1
-      status: open
+      status: done
       description: Add ScheduleSpecV0 to Core IR (cron, delay, action)
     - id: BO1.2
-      status: open
+      status: done
       description: Define schedule trigger types (cron, delay, event+delay)
     - id: BO1.3
-      status: open
+      status: done
       description: Add schedule-to-command input mapping expressions
     - id: BO1.4
-      status: open
+      status: done
       description: Update IR validator for schedule specifications
   - id: BO2
     title: Schedule Storage & Polling
     checkboxes:
     - id: BO2.1
-      status: open
+      status: done
       description: Scheduled jobs table schema (scheduled_at, status, action)
     - id: BO2.2
-      status: open
+      status: done
       description: Cron schedule tracker (last_run, next_run computation)
     - id: BO2.3
-      status: open
+      status: done
       description: Schedule worker polling (due jobs query)
     - id: BO2.4
-      status: open
+      status: done
       description: Event-triggered schedule creation (on event, enqueue delayed job)
   - id: BO3
     title: Execution & Observability
     checkboxes:
     - id: BO3.1
-      status: open
+      status: done
       description: Schedule execution engine (direct or via queue)
     - id: BO3.2
-      status: open
+      status: done
       description: Retry policy for failed scheduled jobs
     - id: BO3.3
-      status: open
+      status: done
       description: Schedule admin API (list, cancel, trigger now)
     - id: BO3.4
-      status: open
+      status: done
       description: Schedule metrics (pending count, execution latency)
 - id: BP
   number: 17
-  status: planned
+  status: complete
   title: Workflow Primitive - Multi-Entity Orchestration
   milestones:
   - id: BP1
     title: Core IR Workflow Extension
     checkboxes:
     - id: BP1.1
-      status: open
+      status: done
       description: Add WorkflowSpecV0 to Core IR (steps, transitions, compensation)
     - id: BP1.2
-      status: open
+      status: done
       description: Define step types (command, wait, decision)
     - id: BP1.3
-      status: open
+      status: done
       description: Define compensation semantics (Saga pattern)
     - id: BP1.4
-      status: open
+      status: done
       description: Update IR validator for workflow specifications
   - id: BP2
     title: Workflow Runtime Engine
     checkboxes:
     - id: BP2.1
-      status: open
+      status: done
       description: Workflow state machine (pending, running, completed, compensating)
     - id: BP2.2
-      status: open
+      status: done
       description: Step executor (invoke commands, track results)
     - id: BP2.3
-      status: open
+      status: done
       description: Compensation engine (rollback on failure)
     - id: BP2.4
-      status: open
+      status: done
       description: Workflow persistence (correlation, saga log)
   - id: BP3
     title: Integration & Observability
     checkboxes:
     - id: BP3.1
-      status: open
+      status: done
       description: Workflow initiation API (start workflow with input)
     - id: BP3.2
-      status: open
+      status: done
       description: Event-driven step triggering (on event, advance workflow)
     - id: BP3.3
-      status: open
+      status: done
       description: Workflow admin API (status, history, cancel)
     - id: BP3.4
-      status: open
+      status: done
       description: Dead workflow detection and recovery
+- id: BQ
+  number: 37
+  status: complete
+  title: Event Transform Fan-out
+  milestones:
+  - id: BQ1
+    title: Core IR Fan-out Extension
+    checkboxes:
+    - id: BQ1.1
+      status: done
+      description: Add emit_many to EventTransformV0
+    - id: BQ1.2
+      status: done
+      description: Define fan-out expression context
+    - id: BQ1.3
+      status: done
+      description: Update IR validator
+    - id: BQ1.4
+      status: done
+      description: Spec DSL syntax
+  - id: BQ2
+    title: Migration Engine Fan-out
+    checkboxes:
+    - id: BQ2.1
+      status: done
+      description: Handle multiple output events
+    - id: BQ2.2
+      status: done
+      description: Preserve event ordering
+    - id: BQ2.3
+      status: done
+      description: Idempotency
+    - id: BQ2.4
+      status: done
+      description: Replay verification
+- id: BR
+  number: 38
+  status: complete
+  title: Native SLA Declaration
+  milestones:
+  - id: BR1
+    title: Core IR SLA Extension
+    checkboxes:
+    - id: BR1.1
+      status: done
+      description: SlaSpecV0 with start/stop selectors
+    - id: BR1.2
+      status: done
+      description: SLA breach detection
+    - id: BR1.3
+      status: done
+      description: Breach action binding
+    - id: BR1.4
+      status: done
+      description: Update IR validator
+  - id: BR2
+    title: SLA Runtime
+    checkboxes:
+    - id: BR2.1
+      status: done
+      description: SLA tracker
+    - id: BR2.2
+      status: done
+      description: Breach detector
+    - id: BR2.3
+      status: done
+      description: Action executor
+    - id: BR2.4
+      status: done
+      description: Metrics export
+- id: BS
+  number: 39
+  status: complete
+  title: Rich Aggregates
+  milestones:
+  - id: BS1
+    title: Query AST Extension
+    checkboxes:
+    - id: BS1.1
+      status: done
+      description: Add rate operator
+    - id: BS1.2
+      status: done
+      description: Add ratio operator
+    - id: BS1.3
+      status: done
+      description: Add time_between operator
+    - id: BS1.4
+      status: done
+      description: Update QueryV0 types
+  - id: BS2
+    title: View Runtime
+    checkboxes:
+    - id: BS2.1
+      status: done
+      description: SQL for rate()
+    - id: BS2.2
+      status: done
+      description: SQL for ratio()
+    - id: BS2.3
+      status: done
+      description: Oracle conformance
+    - id: BS2.4
+      status: done
+      description: Spec DSL sugar
+- id: BT
+  number: 40
+  status: complete
+  title: Row-Level Security Sugar
+  milestones:
+  - id: BT1
+    title: Core IR RLS Extension
+    checkboxes:
+    - id: BT1.1
+      status: done
+      description: Add row_policy patterns
+    - id: BT1.2
+      status: done
+      description: Define owner semantics
+    - id: BT1.3
+      status: done
+      description: Define member_of semantics
+    - id: BT1.4
+      status: done
+      description: Update IR validator
+  - id: BT2
+    title: RLS Runtime
+    checkboxes:
+    - id: BT2.1
+      status: done
+      description: Owner pattern codegen
+    - id: BT2.2
+      status: done
+      description: Member-of codegen
+    - id: BT2.3
+      status: done
+      description: Fallback to custom expr
+    - id: BT2.4
+      status: done
+      description: RLS enforcement
+- id: BU
+  number: 41
+  status: complete
+  title: Multi-Entity Commands
+  milestones:
+  - id: BU1
+    title: Core IR Multi-Entity
+    checkboxes:
+    - id: BU1.1
+      status: done
+      description: WorkflowCommandSpecV0
+    - id: BU1.2
+      status: done
+      description: Transaction boundary semantics
+    - id: BU1.3
+      status: done
+      description: Partial failure handling
+    - id: BU1.4
+      status: done
+      description: Update IR validator
+  - id: BU2
+    title: Multi-Entity Runtime
+    checkboxes:
+    - id: BU2.1
+      status: done
+      description: Saga orchestrator
+    - id: BU2.2
+      status: done
+      description: Compensation
+    - id: BU2.3
+      status: done
+      description: Idempotency
+    - id: BU2.4
+      status: done
+      description: Conformance testing
+- id: BV
+  number: 42
+  status: complete
+  title: UI Primitive - User Interface Generation
+  milestones:
+  - id: BV1
+    title: Core IR UI Extension
+    checkboxes:
+    - id: BV1.1
+      status: done
+      description: Add UiSpecV0 to Core IR (screen, dashboard, navigation)
+    - id: BV1.2
+      status: done
+      description: Define layout primitives (section, form, table, kanban)
+    - id: BV1.3
+      status: done
+      description: Define navigation structure (sections, items, hierarchy)
+    - id: BV1.4
+      status: done
+      description: Update IR validator for UI specs
+  - id: BV2
+    title: Component Contract & Registry
+    checkboxes:
+    - id: BV2.1
+      status: done
+      description: JSON Schema component contract (Button, Table, Form, etc.)
+    - id: BV2.2
+      status: done
+      description: Capability declaration system (sort, filter, virtualize)
+    - id: BV2.3
+      status: done
+      description: Component registry format (type -> implementation mapping)
+    - id: BV2.4
+      status: done
+      description: Default shadcn-vue component library setup
+  - id: BV3
+    title: UI Generator & Runtime
+    checkboxes:
+    - id: BV3.1
+      status: done
+      description: Layout shell generator (App.vue with sidebars/rails)
+    - id: BV3.2
+      status: done
+      description: Navigation menu generator from ui.navigation
+    - id: BV3.3
+      status: done
+      description: Screen generator (table from view, form from entity)
+    - id: BV3.4
+      status: done
+      description: Dashboard generator (metrics, charts, widgets)
+  - id: BV4
+    title: Integration & Polish
+    checkboxes:
+    - id: BV4.1
+      status: done
+      description: Theme system integration (dark/light mode)
+    - id: BV4.2
+      status: done
+      description: Toast/notification feedback for actions
+    - id: BV4.3
+      status: done
+      description: Auth integration (role-based navigation)
+    - id: BV4.4
+      status: done
+      description: Router generation with navigation guards
+- id: BW
+  number: 43
+  status: complete
+  title: Service Primitive - External System Integration
+  milestones:
+  - id: BW1
+    title: Core IR Service Extension
+    checkboxes:
+    - id: BW1.1
+      status: done
+      description: Add ServiceSpecV0 to Core IR (service types, operations)
+    - id: BW1.2
+      status: done
+      description: Define sync operation semantics (request/response)
+    - id: BW1.3
+      status: done
+      description: Define async operation with return_address semantics
+    - id: BW1.4
+      status: done
+      description: Add call expression to command emit
+  - id: BW2
+    title: Return Address and Correlation
+    checkboxes:
+    - id: BW2.1
+      status: done
+      description: Return address URL generation (unique per call)
+    - id: BW2.2
+      status: done
+      description: Correlation ID tracking (pending_calls table)
+    - id: BW2.3
+      status: done
+      description: Webhook-to-command mapping for return addresses
+    - id: BW2.4
+      status: done
+      description: Timeout and cleanup for orphaned calls
+  - id: BW3
+    title: Service Runtime and Reliability
+    checkboxes:
+    - id: BW3.1
+      status: done
+      description: HTTP client abstraction for sync calls
+    - id: BW3.2
+      status: done
+      description: Retry policy with exponential backoff
+    - id: BW3.3
+      status: done
+      description: Circuit breaker for degraded services
+    - id: BW3.4
+      status: done
+      description: Queue integration for at-least-once delivery
+  - id: BW4
+    title: Integration and Testing
+    checkboxes:
+    - id: BW4.1
+      status: done
+      description: Service mocking for tests
+    - id: BW4.2
+      status: done
+      description: Observability (call metrics, latency)
+    - id: BW4.3
+      status: done
+      description: Dead call detection and alerting
+    - id: BW4.4
+      status: done
+      description: Documentation and examples (Stripe, SendGrid)
+- id: BX
+  number: 44
+  status: complete
+  title: Lean Formal Verification - Provable Invariants
+  milestones:
+  - id: BX1
+    title: Core IR Semantics in Lean
+    checkboxes:
+    - id: BX1.1
+      status: done
+      description: Formalize EntityTypeSpecV0 semantics (states, commands, events)
+    - id: BX1.2
+      status: done
+      description: Formalize command guard evaluation and event emission
+    - id: BX1.3
+      status: done
+      description: Formalize reducer semantics (state transitions)
+    - id: BX1.4
+      status: done
+      description: "Prove reducer determinism (same events \u2192 same state)"
+  - id: BX2
+    title: Invariant Preservation Proofs
+    checkboxes:
+    - id: BX2.1
+      status: done
+      description: Formalize constraint semantics (snapshot, bool_query)
+    - id: BX2.2
+      status: done
+      description: Prove constraints preserved under valid commands
+    - id: BX2.3
+      status: done
+      description: Formalize SLA semantics and breach conditions
+    - id: BX2.4
+      status: done
+      description: Prove SLA invariants preserved over time
+  - id: BX3
+    title: Migration Correctness
+    checkboxes:
+    - id: BX3.1
+      status: done
+      description: Formalize event transform semantics
+    - id: BX3.2
+      status: done
+      description: Prove migration totality (all events handled)
+    - id: BX3.3
+      status: done
+      description: Prove migration preserves invariants
+    - id: BX3.4
+      status: done
+      description: "Prove migration composability (A\u2192B\u2192C = A\u2192C)"
+  - id: BX4
+    title: Integration and Extraction
+    checkboxes:
+    - id: BX4.1
+      status: done
+      description: Extract verified Core IR to TypeScript runtime
+    - id: BX4.2
+      status: done
+      description: Conformance testing (Lean spec vs runtime)
+    - id: BX4.3
+      status: done
+      description: CI integration for proof checking
+    - id: BX4.4
+      status: done
+      description: Documentation of verified properties
+- id: BY
+  number: 45
+  status: complete
+  title: Simplify Deployment - One-Click Deploy
+  description: 'CAM smallest adjacent step: Add one-click deploy script for SQLite/Postgres.
+    Increases surface, preserves all closed semantic layers.'
+  milestones:
+  - id: BY1
+    title: SQLite One-Click Deploy
+    checkboxes:
+    - id: BY1.1
+      status: done
+      description: Create deploy-sqlite.sh script for local deployment
+    - id: BY1.2
+      status: done
+      description: Auto-detect sqlite3 and create database file
+    - id: BY1.3
+      status: done
+      description: Initialize schema and bind tenant automatically
+    - id: BY1.4
+      status: done
+      description: Print localhost URL and startup confirmation
+  - id: BY2
+    title: Postgres One-Click Deploy
+    checkboxes:
+    - id: BY2.1
+      status: done
+      description: Create deploy-postgres.sh script for cloud deployment
+    - id: BY2.2
+      status: done
+      description: Auto-provision via Docker or connection string
+    - id: BY2.3
+      status: done
+      description: Configure connection pooling and SSL
+    - id: BY2.4
+      status: done
+      description: Print deployed URL and health check
+  - id: BY3
+    title: Unified Deploy Command
+    checkboxes:
+    - id: BY3.1
+      status: done
+      description: Create cicsc deploy command in CLI
+    - id: BY3.2
+      status: done
+      description: Auto-detect target from spec or flag
+    - id: BY3.3
+      status: done
+      description: Provide rollback command for failed deploys
+    - id: BY3.4
+      status: done
+      description: Document one-click deploy in user guide
+- id: BZ
+  number: 52
+  status: complete
+  title: End-to-End Conversational Deploy
+  description: Connect interview engine to CLI for seamless spec creation and deployment
+  milestones:
+  - id: BZ1
+    title: Interview to CLI Integration
+    checkboxes:
+    - id: BZ1.1
+      status: done
+      description: Connect LLMInterviewEngine to CLI compile command
+    - id: BZ1.2
+      status: done
+      description: Add interactive mode (cicsc init --interactive)
+    - id: BZ1.3
+      status: done
+      description: Auto-run install after successful compile
+    - id: BZ1.4
+      status: done
+      description: Add --llm-provider flag for model selection
+- id: CA
+  number: 53
+  status: complete
+  title: UI Generator Wiring
+  description: Wire UI generator to compile pipeline so SPEC generates Vue components
+  milestones:
+  - id: CA1
+    title: Milestone CA1
+    checkboxes:
+    - id: CA1.1
+      status: done
+      description: Implement UiSpecV0 in core/ir/types.ts
+    - id: CA1.2
+      status: done
+      description: Add UI generator to cicsc compile pipeline
+    - id: CA1.3
+      status: done
+      description: Generate Vue components from SPEC
+    - id: CA1.4
+      status: done
+      description: Wire UI to install step
+- id: CB
+  number: 54
+  status: complete
+  title: UI Runtime Integration
+  description: 'Connect generated UI to the runtime: serve Vue components, wire to
+    backend API, add state management, serve static assets'
+  milestones:
+  - id: CB1
+    title: Milestone CB1
+    checkboxes:
+    - id: CB1.1
+      status: done
+      description: Serve Vue components via HTTP endpoint
+    - id: CB1.2
+      status: done
+      description: Wire UI to backend API (execute commands/query views)
+    - id: CB1.3
+      status: done
+      description: Add state management for entity CRUD
+    - id: CB1.4
+      status: done
+      description: Serve static assets
+    - id: CB1.5
+      status: done
+      description: Define UIDeploymentAdapter interface
+    - id: CB1.6
+      status: done
+      description: Implement CloudflarePagesAdapter
+    - id: CB1.7
+      status: done
+      description: Implement VercelAdapter
+    - id: CB1.8
+      status: done
+      description: Implement NetlifyAdapter
+- id: CD
+  number: 55
+  status: incomplete
+  title: Secrets Management
+  description: Runtime secrets injection, per-tenant API key management, secrets UI,
+    secret rotation
+  milestones:
+  - id: CD1
+    title: Milestone CD1
+    checkboxes:
+    - id: CD1.1
+      status: done
+      description: Runtime secrets injection
+    - id: CD1.2
+      status: open
+      description: Per-tenant API key management
+    - id: CD1.3
+      status: open
+      description: Secrets UI in CLI
+    - id: CD1.4
+      status: open
+      description: Secret rotation support
