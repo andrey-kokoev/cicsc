@@ -2312,17 +2312,23 @@ assignments:
   completed_at: '2026-02-16T18:58:15.987386Z'
 - checkbox_ref: CB1.1
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-16T19:03:26.080020Z'
+  started_at: '2026-02-16T19:04:00Z'
+  commit: cd84e11
+  completed_at: '2026-02-16T19:11:10.570641Z'
 - checkbox_ref: CB1.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T19:03:26.393010Z'
+  started_at: '2026-02-16T19:04:00Z'
 - checkbox_ref: CB1.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T19:03:26.699540Z'
+  started_at: '2026-02-16T19:04:00Z'
 - checkbox_ref: CB1.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T19:03:26.998924Z'
+  started_at: '2026-02-16T19:04:00Z'
