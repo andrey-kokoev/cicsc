@@ -3078,7 +3078,7 @@ phases:
       status: done
       description: Add interactive mode (cicsc init --interactive)
     - id: BZ1.3
-      status: open
+      status: done
       description: Auto-run install after successful compile
     - id: BZ1.4
       status: open
