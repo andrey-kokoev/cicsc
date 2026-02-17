@@ -2284,17 +2284,25 @@ assignments:
   completed_at: '2026-02-17T01:13:00.000000Z'
 - checkbox_ref: CD1.1
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-16T19:25:49.284009Z'
+  started_at: '2026-02-16T19:35:21.463545Z'
+  commit: 0d77e54
+  completed_at: '2026-02-16T19:35:28.639894Z'
 - checkbox_ref: CD1.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: done
   created_at: '2026-02-16T19:25:49.591156Z'
+  started_at: '2026-02-16T19:35:21.463561Z'
+  commit: CD1.3
+  completed_at: '2026-02-16T19:35:39.979305Z'
 - checkbox_ref: CD1.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T19:25:49.897490Z'
+  started_at: '2026-02-16T19:35:21.463563Z'
 - checkbox_ref: CD1.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: open
+  status: in_progress
   created_at: '2026-02-16T19:25:50.198641Z'
+  started_at: '2026-02-16T19:35:21.463564Z'

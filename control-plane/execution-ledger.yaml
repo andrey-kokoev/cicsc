@@ -3149,10 +3149,10 @@ phases:
     title: Milestone CD1
     checkboxes:
     - id: CD1.1
-      status: open
+      status: done
       description: Runtime secrets injection
     - id: CD1.2
-      status: open
+      status: done
       description: Per-tenant API key management
     - id: CD1.3
       status: open
