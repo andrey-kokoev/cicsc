@@ -3126,3 +3126,10 @@ phases:
     - id: CB1.4
       status: open
       description: Serve static assets
+    - id: CB1.5
+      status: open
+      description: Define UIDeploymentAdapter interface,CB1.6:Implement CloudflarePagesAdapter,CB1.7:Implement
+        VercelAdapter,CB1.8:Implement NetlifyAdapter
+    - id: CB1.6
+      status: open
+      description: Implement CloudflarePagesAdapter
