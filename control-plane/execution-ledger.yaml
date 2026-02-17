@@ -3081,5 +3081,5 @@ phases:
       status: done
       description: Auto-run install after successful compile
     - id: BZ1.4
-      status: open
+      status: done
       description: Add --llm-provider flag for model selection
