@@ -2256,49 +2256,21 @@ assignments:
   completed_at: '2026-02-16T15:54:48.264893Z'
 - checkbox_ref: BZ1.1
   agent_ref: AGENT_COPILOT_GEMINI
-  status: done
+  status: in_progress
   created_at: '2026-02-16T17:05:55.755680Z'
-  started_at: '2026-02-16T18:02:36.411224Z'
-  commit: 24595e6
-  completed_at: '2026-02-16T18:04:16.607280Z'
+  started_at: '2026-02-16T17:50:42.424503Z'
 - checkbox_ref: BZ1.2
   agent_ref: AGENT_COPILOT_GEMINI
-  status: done
+  status: in_progress
   created_at: '2026-02-16T17:05:56.053847Z'
-  started_at: '2026-02-16T18:02:36.411238Z'
-  commit: BZ1.3
-  completed_at: '2026-02-16T18:04:47.644182Z'
+  started_at: '2026-02-16T17:50:42.424518Z'
 - checkbox_ref: BZ1.3
   agent_ref: AGENT_COPILOT_GEMINI
-  status: done
+  status: in_progress
   created_at: '2026-02-16T17:05:56.355044Z'
-  started_at: '2026-02-16T18:02:36.411240Z'
-  commit: af5752b
-  completed_at: '2026-02-16T18:05:09.767771Z'
+  started_at: '2026-02-16T17:50:42.424520Z'
 - checkbox_ref: BZ1.4
   agent_ref: AGENT_COPILOT_GEMINI
-  status: done
+  status: in_progress
   created_at: '2026-02-16T17:05:56.654503Z'
-  started_at: '2026-02-16T18:02:36.411241Z'
-  commit: ea9cfd3
-  completed_at: '2026-02-16T18:05:23.606854Z'
-- checkbox_ref: CA1.1
-  agent_ref: AGENT_COPILOT_GEMINI
-  status: in_progress
-  created_at: '2026-02-16T18:38:28.402415Z'
-  started_at: '2026-02-16T18:39:28.828794Z'
-- checkbox_ref: CA1.2
-  agent_ref: AGENT_COPILOT_GEMINI
-  status: in_progress
-  created_at: '2026-02-16T18:38:28.706335Z'
-  started_at: '2026-02-16T18:39:28.828806Z'
-- checkbox_ref: CA1.3
-  agent_ref: AGENT_COPILOT_GEMINI
-  status: in_progress
-  created_at: '2026-02-16T18:38:29.010171Z'
-  started_at: '2026-02-16T18:39:28.828808Z'
-- checkbox_ref: CA1.4
-  agent_ref: AGENT_COPILOT_GEMINI
-  status: in_progress
-  created_at: '2026-02-16T18:38:29.314979Z'
-  started_at: '2026-02-16T18:39:28.828809Z'
+  started_at: '2026-02-16T17:50:42.424521Z'
