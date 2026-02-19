@@ -11,11 +11,11 @@ plus one progression method:
 
 1. `docs/genesis/on-constructively-invariant-systems.md`
 2. `docs/genesis/constructively-invariant-control-system-compiler.md`
-3. `docs/genesis/constructive-invariance-evolution-control-plane.md` + `control-plane/README.md` (with `control-plane/*` models)
-4. `docs/genesis/worktree-mediated-constructive-collaboration.md` + `control-plane/collaboration/*`
-5. `docs/genesis/boundary-contraction.md`  2190 NEW
-5. `docs/genesis/constructive-accretion-method.md`
-6. `docs/genesis/on-agent-ergonomics.md`
+3. `docs/genesis/constructive-invariance-evolution-control-plane.md` + `control-plane/*` runtime/gate models
+4. `docs/genesis/worktree-mediated-constructive-collaboration.md` + active control-plane runtime surfaces
+5. `docs/genesis/boundary-contraction.md`
+6. `docs/genesis/constructive-accretion-method.md`
+7. `docs/genesis/on-agent-ergonomics.md`
 
 Where:
 - `CIS` = Constructively Invariant Systems
@@ -47,7 +47,7 @@ Defines CICSC as a concrete instantiation of CIS:
 
 In project terms: CICSC is "what is right" semantically for this system.
 
-### 3) CIECP: Constructive-Invariance Evolution Control Plane (`control-plane/README.md` + `control-plane/*`)
+### 3) CIECP: Constructive-Invariance Evolution Control Plane (`control-plane/*`)
 Role: **execution-governance layer**.
 
 Implements executable governance over CICSC evolution:
@@ -58,14 +58,15 @@ Implements executable governance over CICSC evolution:
 
 In project terms: CIECP is "how change is allowed while preserving what is right."
 
-### 4) WMCC: Worktree-Mediated Constructive Collaboration (`worktree-mediated-constructive-collaboration.md` + `control-plane/collaboration/*`)
+### 4) WMCC: Worktree-Mediated Constructive Collaboration (`worktree-mediated-constructive-collaboration.md` + control-plane runtime)
 Role: **collaboration protocol layer**.
 
 Defines typed collaboration contracts for multi-worktree execution:
 - worktree-bound handoff semantics,
 - obligation/evidence typing,
 - branch-as-transport and canonical-ingestion discipline.
-- typed message transport with generated worktree inbox/outbox projection.
+- protocol event transport over canonical runtime state (`state/ledger.db`)
+  via `agentd`, `autoassign`, `worker-run-assignment`, `integrate`, and `status`.
 
 In project terms: WMCC is "how multiple executors coordinate admissible change."
 

@@ -25,6 +25,37 @@
         "cwd": "${workspaceFolder}"
       },
       "problemMatcher": []
+    },
+    {
+      "label": "cicsc:agentd:run-codex",
+      "type": "shell",
+      "command": "bash -lc 'export AGENT_ID=AGENT_CODEX; ./control-plane/agentd.sh run --agent \"$AGENT_ID\"'",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "cicsc:agentd:stop-codex",
+      "type": "shell",
+      "command": "bash -lc 'export AGENT_ID=AGENT_CODEX; ./control-plane/agentd.sh stop --agent \"$AGENT_ID\"'",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "cicsc:agentd:status-codex",
+      "type": "shell",
+      "command": "bash -lc 'export AGENT_ID=AGENT_CODEX; ./control-plane/status.sh --agent \"$AGENT_ID\" --json'",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
     }
   ]
 }

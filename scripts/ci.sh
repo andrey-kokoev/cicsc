@@ -6,5 +6,5 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${ROOT_DIR}"
 
 # Default automation validation entrypoint.
-./scripts/phase3_bootstrap.sh check
-./scripts/phase3_ci_target.sh
+./scripts/bootstrap_deps.sh check
+./scripts/ci_target.sh

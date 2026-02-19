@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "scope": {
+    "include_globs": [
+      "scripts/**/*.sh",
+      "control-plane/**/*.sh",
+      "control-plane/**/*.py",
+      "tests/**/*.ts"
+    ],
+    "exclude_globs": [
+      "**/node_modules/**",
+      "**/.git/**",
+      "**/dist/**",
+      "**/build/**",
+      "tests/fixtures/executable-surface/**"
+    ]
+  },
+  "banned_reference_patterns": [
+    "control-plane/execution/execution-ledger\\.yaml",
+    "control-plane/execution-ledger\\.yaml",
+    "control-plane/assignments\\.yaml",
+    "docs/pilot/",
+    "(?:^|/)scripts/check_phase[^/]*\\.sh$",
+    "(?:^|/)scripts/phase[0-9][^/]*\\.sh$",
+    "(?:^|/)control-plane/standby\\.sh$",
+    "(?:^|/)control-plane/main-close\\.sh$",
+    "(?:^|/)control-plane/onboard\\.sh$",
+    "(?:^|/)scripts/check_canonical_execution_model\\.sh$",
+    "(?:^|/)scripts/check_status_projection_sync\\.sh$",
+    "(?:^|/)scripts/check_execution_structure_roundtrip\\.sh$",
+    "(?:^|/)scripts/check_execution_structure_roundtrip_ledger\\.sh$",
+    "(?:^|/)control-plane/scripts/export_execution_status\\.py$",
+    "(?:^|/)scripts/check_collaboration_model\\.sh$"
+  ],
+  "generated_contracts": [],
+  "allowlist": []
+}

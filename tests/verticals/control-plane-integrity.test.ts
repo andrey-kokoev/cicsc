@@ -1,53 +1,58 @@
 import { describe, it } from "node:test"
 import assert from "node:assert/strict"
 import { spawnSync } from "node:child_process"
-import { readFileSync } from "node:fs"
+import fs from "node:fs"
 import path from "node:path"
 
+const ROOT = process.cwd()
+
 describe("control-plane integrity", () => {
-  it("generates tracked views with expected metadata", () => {
-    const run = spawnSync("./control-plane/scripts/generate_views.sh", {
+  it("prints a non-empty gate execution plan", () => {
+    const run = spawnSync("./scripts/run_gate_model.sh", ["--print-plan"], {
       cwd: process.cwd(),
       encoding: "utf8",
     })
     assert.equal(run.status, 0, run.stderr || run.stdout)
 
-    const phaseIndexPath = path.resolve(process.cwd(), "control-plane/views/phase-index.generated.json")
-    const gateOrderPath = path.resolve(process.cwd(), "control-plane/views/gate-order.generated.json")
-    const executionStatusPath = path.resolve(process.cwd(), "control-plane/views/execution-status.generated.json")
+    const plan = JSON.parse(run.stdout)
+    assert.ok(Array.isArray(plan.steps) && plan.steps.length > 0)
+    const gateIds = new Set((plan.steps ?? []).map((step: any) => step.gate_id))
+    assert.equal(gateIds.has("GATE_COLLAB_SURFACE_COHERENCY"), true)
+    assert.equal(gateIds.has("GATE_DB_PROTOCOL_SURFACE"), true)
 
-    const phaseIndex = JSON.parse(readFileSync(phaseIndexPath, "utf8"))
-    const gateOrder = JSON.parse(readFileSync(gateOrderPath, "utf8"))
-    const executionStatus = JSON.parse(readFileSync(executionStatusPath, "utf8"))
-
-    assert.equal(phaseIndex._generated, true)
-    assert.equal(gateOrder._generated, true)
-    assert.equal(executionStatus._generated, true)
-    assert.ok(Array.isArray(phaseIndex.phases) && phaseIndex.phases.length > 0)
-    assert.ok(Array.isArray(gateOrder.steps) && gateOrder.steps.length > 0)
-    assert.ok(Array.isArray(executionStatus.rows) && executionStatus.rows.length > 0)
+    for (const step of plan.steps ?? []) {
+      assert.equal(typeof step.gate_id, "string")
+      assert.equal(typeof step.script, "string")
+      assert.ok(step.script.startsWith("scripts/"))
+    }
   })
 
-  it("gate-model execution plan matches generated gate-order view", () => {
+  it("gate-model execution plan runs successfully", () => {
     const planRun = spawnSync("./scripts/run_gate_model.sh", ["--print-plan"], {
       cwd: process.cwd(),
       encoding: "utf8",
     })
     assert.equal(planRun.status, 0, planRun.stderr || planRun.stdout)
 
-    const plan = JSON.parse(planRun.stdout)
-    const gateOrderPath = path.resolve(process.cwd(), "control-plane/views/gate-order.generated.json")
-    const gateOrder = JSON.parse(readFileSync(gateOrderPath, "utf8"))
-
-    assert.equal(plan.version, "cicsc/gate-model-v1")
-    assert.deepEqual(plan.steps, gateOrder.steps)
-  })
-
-  it("status projection sync gate passes", () => {
-    const run = spawnSync("./scripts/check_status_projection_sync.sh", {
+    const execRun = spawnSync("./scripts/run_gate_model.sh", {
       cwd: process.cwd(),
       encoding: "utf8",
     })
-    assert.equal(run.status, 0, run.stderr || run.stdout)
+    assert.equal(execRun.status, 0, execRun.stderr || execRun.stdout)
+  })
+
+  it("canonical gate entrypoint delegates directly to run_gate_model", () => {
+    const gateScript = fs.readFileSync(path.join(ROOT, "control-plane/check_gates.sh"), "utf8")
+    assert.match(gateScript, /run_gate_model\.sh/)
+    assert.doesNotMatch(gateScript, /check_canonical_execution_model\.sh/)
+  })
+
+  it("removed collaboration wrappers are absent", () => {
+    assert.equal(fs.existsSync(path.join(ROOT, "scripts", "check_canonical_execution_model.sh")), false)
+    assert.equal(fs.existsSync(path.join(ROOT, "scripts", "check_status_projection_sync.sh")), false)
+    assert.equal(fs.existsSync(path.join(ROOT, "scripts", "check_execution_structure_roundtrip.sh")), false)
+    assert.equal(fs.existsSync(path.join(ROOT, "scripts", "check_execution_structure_roundtrip_ledger.sh")), false)
+    assert.equal(fs.existsSync(path.join(ROOT, "control-plane", "scripts", "export_execution_status.py")), false)
+    assert.equal(fs.existsSync(path.join(ROOT, "scripts", "check_collaboration_model.sh")), false)
   })
 })

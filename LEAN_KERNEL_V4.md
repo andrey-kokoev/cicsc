@@ -253,7 +253,7 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
   - Added scoped tags on `K4.1.5`, `K4.4.4`, and `K4.5.4`.
 - [x] K4.7.4 Add CI check that rejects `[x]` items missing references.
   - Added `scripts/check_v4_refs.sh` and wired it into
-    `scripts/phase3_ci_target.sh`.
+    `scripts/ci_target.sh`.
 
 ### Acceptance
 - [x] Every checked item has verifiable artifact references.
@@ -352,4 +352,4 @@ Prevent checkbox drift by enforcing theorem-indexed completion standards.
 - `K4.7.1`: `LEAN_KERNEL_V4.md` (`Theorem Index`)
 - `K4.7.2`: `LEAN_KERNEL_V4.md` (`Completion References`)
 - `K4.7.3`: `LEAN_KERNEL_V4.md` (Scoped Completion tags on K4.1.5/K4.4.4/K4.5.4)
-- `K4.7.4`: `scripts/check_v4_refs.sh`, `scripts/phase3_ci_target.sh`
+- `K4.7.4`: `scripts/check_v4_refs.sh`, `scripts/ci_target.sh`

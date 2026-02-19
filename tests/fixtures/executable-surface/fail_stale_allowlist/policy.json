@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "scope": {
+    "include_globs": [
+      "tests/fixtures/executable-surface/fail_stale_allowlist/input.sh"
+    ],
+    "exclude_globs": []
+  },
+  "banned_reference_patterns": [
+    "control-plane/execution/execution-ledger\\.yaml",
+    "control-plane/execution-ledger\\.yaml",
+    "control-plane/assignments\\.yaml"
+  ],
+  "generated_contracts": [],
+  "allowlist": [
+    {
+      "source_file": "tests/fixtures/executable-surface/fail_stale_allowlist/input.sh",
+      "reference": "./control-plane/scripts/missing_helper.sh",
+      "kind": "missing_path",
+      "reason": "fixture_case_stale_allowlist",
+      "owner": "AGENT_MAIN",
+      "expires_on": "2099-01-01"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #==============================================================================
-# autoassign.sh - Mechanistic core: assigns open work to idle agents (LIFO)
+# autoassign.sh - Mechanistic core: assigns open work to standing_by agents
 #
 # Usage:
 #   ./autoassign.sh           # Run once
@@ -49,15 +49,34 @@ assign_work() {
     python3 << 'PY'
 import sys
 sys.path.insert(0, "control-plane")
-from db import get_idle_agents, get_open_checkboxes, get_assigned_checkboxes, assign_work_to_agent
+from db import (
+    get_assignable_agents,
+    get_open_checkboxes,
+    get_assigned_checkboxes,
+    assign_work_to_agent,
+    reclaim_stale_assignments,
+    get_collab_summary,
+)
 
-idle_agents = get_idle_agents()
+reclaimed = reclaim_stale_assignments(heartbeat_grace_seconds=30)
+if reclaimed:
+    print(f"Reclaimed stale assignments: {len(reclaimed)}")
+    for row in reclaimed:
+        print(f"  Reclaimed {row['checkbox_ref']} from {row['agent_ref']}")
+
+idle_agents = get_assignable_agents(max_heartbeat_age_seconds=30)
 open_checkboxes = get_open_checkboxes()
 already_assigned = get_assigned_checkboxes()
+summary = get_collab_summary()
 
 available_work = [cb for cb in open_checkboxes if cb["id"] not in already_assigned]
 
-print(f"Status: idle_agents={len(idle_agents)} open_checkboxes={len(open_checkboxes)} unassigned_open_work={len(available_work)}")
+print(
+    f"Status: idle_agents={summary['assignable_idle_count']} "
+    f"open_checkboxes={summary['open_count']} "
+    f"unassigned_open_work={summary['unassigned_open_count']} "
+    f"stale_lease={summary['stale_lease_count']}"
+)
 
 if not idle_agents:
     print("No idle agents")
@@ -67,18 +86,17 @@ if not available_work:
     print("No open work")
     sys.exit(0)
 
-print(f"Idle agents: {len(idle_agents)}")
-print(f"Open work: {len(available_work)}")
-
 assigned_count = 0
 for agent in idle_agents:
     if not available_work:
         break
-    
+
     cb = available_work.pop()
-    assign_work_to_agent(cb["id"], agent["id"])
-    print(f"Assigned {cb['id']} -> {agent['id']}")
-    assigned_count += 1
+    if assign_work_to_agent(cb["id"], agent["id"], lease_seconds=60):
+        print(f"Assigned {cb['id']} -> {agent['id']}")
+        assigned_count += 1
+    else:
+        print(f"Skipped {cb['id']} for {agent['id']} (claim failed)")
 
 print(f"Total assigned: {assigned_count}")
 PY

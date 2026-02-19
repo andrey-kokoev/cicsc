@@ -6,7 +6,26 @@ Worker agent implementation guide. See [AGENTS.md](AGENTS.md) for overview.
 
 ## Role
 
-Implement assigned work, follow workflow, push feature branches.
+Run as a long-lived daemon that continuously:
+
+1. heartbeats,
+2. picks assigned work,
+3. executes `worker-run-assignment` closure flow,
+4. returns to `standing_by`.
+
+---
+
+## Execution Discipline
+
+Non-negotiable operating model for worker agents:
+
+1. Exactly one daemon process per agent ID.
+2. Stop only on explicit stop (`agentd.sh stop`) or hard blocker.
+3. On blocker, remain `blocked` with explicit reason until `agentd.sh unblock`.
+4. Assignment closure is daemon-owned: gates -> push verify -> integrate.
+5. Run in one foreground daemon session; do not spawn duplicate daemon terminals.
+
+`idle` in protocol terms means `standing_by` with no assigned checkbox.
 
 ---
 
@@ -17,10 +36,15 @@ Implement assigned work, follow workflow, push feature branches.
 # Set your agent ID (do once)
 export AGENT_ID=AGENT_GEMINI
 
-# Start standby - polls for assigned work
-./control-plane/standby.sh
+# Start daemon (blocking loop)
+./control-plane/agentd.sh run --agent "$AGENT_ID"
 
-# Work automatically assigned when core assigns to you
+# Check authoritative status
+./control-plane/status.sh --agent "$AGENT_ID" --json
+./control-plane/status.sh --summary --json
+
+# Stop daemon gracefully
+./control-plane/agentd.sh stop --agent "$AGENT_ID"
 ```
 <!-- generated:worker_quick_reference:end -->
 
@@ -34,57 +58,37 @@ export AGENT_ID=AGENT_GEMINI
 git fetch origin && git rebase origin/main
 ```
 
-### 2. Standby
+### 2. Start Daemon
 
 ```bash
 export AGENT_ID=AGENT_GEMINI
-./control-plane/standby.sh
+./control-plane/agentd.sh run --agent "$AGENT_ID"
 ```
 
-This polls every 5 seconds. When work is assigned to you, it outputs:
-```
-WORK ASSIGNED: CF1.1
-Task: description here
-```
+Daemon behavior:
 
-### 3. Work
+1. Writes heartbeat + lease.
+2. Executes assigned checkbox via `worker-run-assignment.sh`.
+3. Closes assignment through `integrate.sh`.
+4. Returns to `standing_by` or `blocked`.
 
-Implement in your worktree.
-
-### 4. Gates
+### 3. Observe / Control
 
 ```bash
-./control-plane/check_gates.sh
-```
-
-### 5. Push
-
-```bash
-git push origin feat/description
-```
-
-After push, Main performs FF integration and closes the checkbox.
-Commit/push alone does not close the assignment.
-
----
-
-## Worktree Usage
-
-Keep your worktree in sync manually:
-
-```bash
-git fetch origin && git rebase origin/main
+./control-plane/status.sh --agent "$AGENT_ID"
+./control-plane/agentd.sh stop --agent "$AGENT_ID"
+./control-plane/agentd.sh unblock --agent "$AGENT_ID" --reason "manual_unblock"
 ```
 
 ---
 
 ## Important Rules
 
-1. **Never edit state directly** - Use scripts
-2. **Never commit to main** - Always feature branch
-3. **Always run gates** - Before pushing
-4. **Push, then Main integrates** - Completion happens at integration boundary
-5. **Sync before starting** - Rebase origin/main
+1. Never edit state directly.
+2. Never commit to `main`.
+3. Closure gates are enforced by `worker-run-assignment.sh`.
+4. Worker daemon closes assignments; Main merges to `main`.
+5. Blocked agents keep assignment ownership until explicit unblock.
 
 ---
 
@@ -93,15 +97,13 @@ git fetch origin && git rebase origin/main
 | Task | Command |
 |------|---------|
 | Sync | `git fetch origin && git rebase origin/main` |
-| Standby | `export AGENT_ID=AGENT_GEMINI && ./control-plane/standby.sh` |
-| Gates | `./control-plane/check_gates.sh` |
-| Push | `git push origin feat/branch-name` |
+| Run daemon | `./control-plane/agentd.sh run --agent AGENT_GEMINI` |
+| Status | `./control-plane/status.sh --agent AGENT_GEMINI --json` |
+| Stop | `./control-plane/agentd.sh stop --agent AGENT_GEMINI` |
+| Unblock | `./control-plane/agentd.sh unblock --agent AGENT_GEMINI --reason "manual_unblock"` |
 
 ---
 
-## Tips
+## Notes
 
-- Worktrees are isolated - safe to experiment
-- Gates catch most issues early
-- If rebase fails, resolve conflicts and continue
-- Main will merge via FF-only
+- Assignment protocol state is authoritative in `state/ledger.db`.

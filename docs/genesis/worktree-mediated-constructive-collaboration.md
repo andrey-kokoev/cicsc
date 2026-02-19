@@ -221,56 +221,18 @@ default to deletion.
 
 ## 8. Implementation projection in this repository
 
-WMCC is operationalized through control-plane collaboration artifacts:
+WMCC is operationalized through canonical runtime control-plane surfaces:
 
-- `control-plane/collaboration/collab-model.yaml`
-- `control-plane/collaboration/collab-model.schema.json`
-- `control-plane/scripts/validate_collab_model.sh`
-- `scripts/check_collaboration_model.sh`
-- `control-plane/views/worktree-mailboxes.generated.json`
+- `control-plane/autoassign.sh` (assignment + stale reclaim)
+- `control-plane/agentd.sh` + `control-plane/agentd.py` (single-process daemon loop)
+- `control-plane/worker-run-assignment.sh` (gates -> push verify -> integrate)
+- `control-plane/integrate.sh` (FF boundary + strict owner-bound close)
+- `control-plane/status.sh` (authoritative agent/fleet status)
+- `state/ledger.db` (runtime truth for agents/assignments/events)
 
-Cross-model checks bind collaboration contracts to objectives, capabilities, and
-execution-ledger checkbox scope.
-
-### Typed message transport and mailbox projection
-
-Current WMCC implementation includes explicit typed message transport:
-
-- `message_kinds`: protocol-level message categories.
-- `messages`: concrete routed packets bound to assignments.
-
-Messages are validated against:
-- assignment references,
-- agent/worktree ownership consistency,
-- owner-dispatch authority for assignment dispatch kinds,
-- branch naming constraints,
-- payload/evidence path existence (where path-like).
-
-Operationally, collaboration flow is projected as generated inbox/outbox views
-per worktree in `worktree-mailboxes.generated.json`.
-
-Normative operator loop:
-- each worktree starts from mailbox projection, not ad hoc local task notes,
-- messages are consumed from inbox while actionable states exist,
-- lifecycle progress is represented only via append-only `message_events`.
-- `WORKTREE_ASSIGNMENT.md` is outside WMCC protocol and must not be used as
-  task authority.
-
-Message lifecycle states currently supported:
-
-- `queued`, `sent`, `acknowledged`, `fulfilled`,
-- `rejected`, `rescinded`, `ingested`, `closed`.
-
-Assignment closure semantics include explicit outcomes:
-- `pending`
-- `fulfilled_by_assignee`
-- `fulfilled_by_main`
-- `blocked`
-
-`fulfilled` is not only a lifecycle marker. It is discharge-bearing:
-- fulfilled events must carry typed evidence bindings (`evidence_kind_ref`),
-- assignment claim kind determines required obligation profile(s),
-- obligation evidence minima are checked during cross-model validation.
+Historical note:
+- Earlier iterations used mailbox/message YAML projections.
+- Those artifacts are retired and are no longer operational authority.
 
 ## 9. Failure modes
 
@@ -290,7 +252,7 @@ Each failure mode weakens constructive collaboration guarantees.
   it does not yet cryptographically verify artifact digests against bytes.
 
 
-## 9. FF-Only Integration (Categorical)
+## 11. FF-Only Integration (Categorical)
 
 The integration boundary enforces the FF-morphism property:
 
@@ -309,18 +271,18 @@ This is a **proof-carrying code** pattern:
 - Invalid structural states are unreachable by construction
 
 See `lean/Cicsc/Evolution/FFIntegration.lean` for the formal proofs.
-## 11. Summary
+## 12. Summary
 
 WMCC is the collaboration semantics for constructive evolution workflows.
 If CICSC defines what is right and CIECP defines how rightness survives change,
 WMCC defines how multiple executors coordinate that change without losing
 semantic control.
 
-## Appendix: Message-Passing Sequence Diagram
+## Appendix: Message-Passing Sequence Diagram (Historical)
 
 See:
 - `docs/genesis/worktree-collab-sequence.md`
 - `docs/genesis/worktree-collab-sequence.mmd` (raw source)
 
-This Mermaid sequence diagram captures the normative mailbox-driven WMCC flow:
-dispatch, acknowledge, fulfill with evidence, ingest, close, and rescind path.
+This Mermaid sequence diagram captures an earlier mailbox-driven WMCC iteration.
+It is retained for historical context and is not an operational control surface.

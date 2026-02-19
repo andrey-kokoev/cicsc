@@ -4,13 +4,13 @@ This guide helps diagnose and resolve common issues encountered while using or d
 
 ## Common CLI Issues
 
-### `Command failed: ./control-plane/integrate.sh integrate <checkbox>`
-- **Cause**: Gate checks failed or branch is not FF-descendant of `origin/main`.
-- **Solution**: Run `./control-plane/check_gates.sh` manually to identify failing checks. Then ensure your branch descends from `origin/main` before integrating.
+### `Command failed: ./control-plane/integrate.sh integrate <checkbox> --agent <AGENT_ID>`
+- **Cause**: Branch is not FF-descendant of `origin/main`, missing `--agent`, or assignment ownership mismatch.
+- **Solution**: Ensure branch descends from `origin/main`, pass explicit `--agent`, and verify owner via `./control-plane/status.sh --agent <AGENT_ID> --json`.
 
-### `ERROR: Execution ledger out of sync with phase views`
-- **Cause**: You updated `control-plane/execution-ledger.yaml` but didn't run the sync script.
-- **Solution**: Run `./control-plane/validate.sh`. It should automatically sync the Phase MD files or tell you which ones are broken.
+### `No idle agents` while open work exists
+- **Cause**: No agents are currently `standing_by` with fresh heartbeat (agents may be `busy`, `blocked`, or stale).
+- **Solution**: Check `./control-plane/status.sh --summary --json` and `./control-plane/status.sh --all --json`, then either `./control-plane/agentd.sh run --agent <AGENT_ID>` or `./control-plane/agentd.sh unblock --agent <AGENT_ID> --reason "manual_unblock"`.
 
 ---
 

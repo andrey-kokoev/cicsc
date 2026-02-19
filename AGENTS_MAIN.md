@@ -6,7 +6,8 @@ Main agent orchestration guide. See [AGENTS.md](AGENTS.md) for overview.
 
 ## Role
 
-Add work to ledger, maintain state. Mechanistic core handles assignment.
+Add work to ledger and maintain governance merge boundary.
+Mechanistic core handles assignment and worker closure.
 
 ---
 
@@ -23,10 +24,9 @@ Add work to ledger, maintain state. Mechanistic core handles assignment.
 # Add checkboxes to existing milestone
 ./control-plane/add_checkbox.sh --milestone CF1 --checkbox "CF1.1:description"
 
-# Merge completed work
+# Merge completed work (governance boundary)
 git fetch origin
 git merge --ff-only origin/feat/branch-name
-./control-plane/integrate.sh integrate CF1.1
 
 # Push to main
 git push origin main
@@ -50,21 +50,23 @@ git push origin main
 ./control-plane/add_checkbox.sh --milestone CF1 --checkbox "CF1.1:description"
 ```
 
-That's it. Mechanistic core (`autoassign.sh`) assigns to idle agents automatically.
+That's it. Mechanistic core (`autoassign.sh`) assigns to `standing_by` agents with fresh heartbeats.
 
 If you create a new phase without `--checkboxes`, create a milestone before
 adding checkboxes to it.
 
-### 3. Integrate
+### 3. Merge
 
 When worker pushes branch:
 ```bash
 git fetch origin
 git merge --ff-only origin/feat/branch-name
-./control-plane/integrate.sh integrate CF1.1
 ./control-plane/validate.sh
 git push origin main
 ```
+
+`integrate.sh` is executed by worker daemon closure flow (`worker-run-assignment.sh`).
+Main remains merge/governance authority for `main`.
 
 ---
 
@@ -73,6 +75,7 @@ git push origin main
 - **Just add work** - Don't dispatch, autoassign handles it
 - **Validate after every merge** - Never skip gates
 - **Use scripts** - Never edit state directly
+- **Do not close assignments manually** - Worker daemon owns assignment closure
 
 ---
 

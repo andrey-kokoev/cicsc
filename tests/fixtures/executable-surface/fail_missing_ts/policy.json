@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "scope": {
+    "include_globs": [
+      "tests/fixtures/executable-surface/fail_missing_ts/input.ts"
+    ],
+    "exclude_globs": []
+  },
+  "banned_reference_patterns": [
+    "control-plane/execution/execution-ledger\\.yaml",
+    "control-plane/execution-ledger\\.yaml",
+    "control-plane/assignments\\.yaml"
+  ],
+  "generated_contracts": [],
+  "allowlist": []
+}

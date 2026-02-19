@@ -63,15 +63,31 @@ echo "✅ Validation passed"
 echo
 echo "Checking phase completion..."
 python3 << 'PY'
-import yaml, sys
-from pathlib import Path
+import sqlite3
+import sys
 
-ledger = yaml.safe_load(Path("control-plane/execution-ledger.yaml").read_text())
+conn = sqlite3.connect("state/ledger.db")
+conn.row_factory = sqlite3.Row
+cur = conn.cursor()
+cur.execute("SELECT id, status FROM phases ORDER BY number")
+phases = [dict(r) for r in cur.fetchall()]
 
 incomplete = []
-for ph in ledger.get("phases", []):
-    done = sum(1 for ms in ph["milestones"] for cb in ms["checkboxes"] if cb["status"] == "done")
-    total = sum(1 for ms in ph["milestones"] for cb in ms["checkboxes"])
+for ph in phases:
+    cur.execute(
+        """
+        SELECT
+            SUM(CASE WHEN c.status = 'done' THEN 1 ELSE 0 END) AS done_n,
+            COUNT(*) AS total_n
+        FROM checkboxes c
+        JOIN milestones m ON m.id = c.milestone_id
+        WHERE m.phase_id = ?
+        """,
+        (ph["id"],),
+    )
+    row = cur.fetchone()
+    done = int(row["done_n"] or 0)
+    total = int(row["total_n"] or 0)
     if ph.get("status") != "complete" and total > 0:
         incomplete.append(f"{ph['id']}: {done}/{total}")
 

@@ -29,20 +29,25 @@ Primary success criteria:
 ```bash
 ./control-plane/validate.sh                 # Validate state
 ./control-plane/check_gates.sh              # Run gates
-./control-plane/add_phase.sh --id X --number N --title "T"
+./control-plane/add_phase.sh --number N --title "T"
+./control-plane/add_milestone.sh --phase CH --title "Milestone title"
 ./control-plane/add_checkbox.sh --milestone X --checkbox "X1.1:desc"
+./control-plane/plan_work.sh --phase-title "T" --milestone-title "M" --checkbox "desc"
 
 # Mechanistic core (runs continuously)
-./control-plane/autoassign.sh --loop         # Assigns open work to idle agents
+./control-plane/autoassign.sh --loop         # Assigns open work to standing_by agents with fresh heartbeat
 
 # Worker (runs continuously)
-./control-plane/standby.sh                  # Poll for assigned work (set AGENT_ID env)
+./control-plane/agentd.sh run --agent AGENT_CODEX
+./control-plane/agentd.sh stop --agent AGENT_CODEX
+./control-plane/agentd.sh unblock --agent AGENT_CODEX --reason "manual_unblock"
+./control-plane/status.sh --agent AGENT_CODEX --json
+./control-plane/status.sh --all --json
+./control-plane/status.sh --summary --json
+./control-plane/worker-run-assignment.sh --agent AGENT_CODEX --checkbox CH1.1
 
 # Integration boundary
-./control-plane/integrate.sh integrate X1.1
-
-# Legacy
-./control-plane/onboard.sh [--main|--worker]
+./control-plane/integrate.sh integrate X1.1 --agent AGENT_CODEX
 ```
 
 ---
@@ -52,20 +57,20 @@ Primary success criteria:
 ```
 Human Main:          adds work to ledger (open)
                          ↓
-autoassign.sh:       assigns open → idle agents (LIFO)
+autoassign.sh:       assigns open → standing_by+heartbeat agents (LIFO)
                          ↓
-standby.sh:          polls, outputs when work assigned
+agentd.sh:           blocking daemon loop (heartbeat/lease/close)
                          ↓
-Agent:               does work, commits, pushes
+worker-run-assignment.sh: gates → push verify → integrate
                          ↓
-integrate.sh:        marks checkbox done
+integrate.sh:        closes assigned checkbox as done (with commit evidence)
                          ↓
 validate.sh:         verifies state
 ```
 
-- Pull-based: workers pull from ledger
-- Mechanistic core: autoassign handles assignment
-- Agent identity: set via AGENT_ID env var
+- Pull-based: workers pull from SQLite ledger state
+- Mechanistic core: autoassign handles assignment + stale reclaim
+- Agent identity: explicit `--agent <AGENT_ID>` on daemon commands
 
 ---
 

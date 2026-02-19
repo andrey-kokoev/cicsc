@@ -7,7 +7,7 @@ The repository contains:
 - a Core IR with enforced semantics,
 - backend lowering (SQLite/D1),
 - a transactional runtime,
-- and an execution-ledger execution ledger toward constructive migrations.
+- and a SQLite execution ledger toward constructive migrations.
 
 ---
 
@@ -131,14 +131,6 @@ node cli/cicsc.mjs migration-dry-run --from ./bundle.v0.json --to ./bundle.v1.js
 node cli/cicsc.mjs migration-rollback --to ./bundle.v1.json --events ./events.v1.json --migration v0_to_v1 --out-events ./events.v0.rolledback.json
 ```
 
-## Feature Gates (Phase 6)
-
-- Proven vs experimental capability split is defined in:
-- `docs/pilot/phase6-feature-gates.json`
-- `docs/spec/feature-gates.md`
-
-Only proven capabilities are eligible for operator defaults.
-
 ## Local Dev Harness
 
 Run the worker locally against a file-backed SQLite DB:
@@ -174,7 +166,7 @@ These documents constrain implementation choices.
 
 The canonical execution plan/status ledger is:
 
-- `control-plane/execution/execution-ledger.yaml`
+- `state/ledger.db`
 
 
 ---

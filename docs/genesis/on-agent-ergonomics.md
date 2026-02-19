@@ -46,7 +46,8 @@ practice but not in the formal protocol.
 ### A. Single canonical entry point is non-negotiable
 
 Agents need one place to start execution.
-For the current system this is `control-plane/assignments.yaml`.
+For the current system this is `./control-plane/agentd.sh run --agent <AGENT_ID>`,
+with runtime state canonical in `state/ledger.db`.
 
 ### B. Complexity must match the problem
 
@@ -60,9 +61,8 @@ For the current system this is `control-plane/assignments.yaml`.
 **Problem:** We had 2-3 agents on the same machine editing files in a shared git repo.
 The complexity exceeded requirements and caused data integrity issues.
 
-**Second attempt (v2):** Direct state management with:
-- Two YAML files (execution-ledger.yaml, assignments.yaml)
-- Six shell scripts
+**Second attempt (v2, historical):** Direct state management with:
+- file-backed ledgers and shell wrappers
 - Git history as audit trail
 - ~300 lines of code
 
@@ -91,9 +91,9 @@ Simpler systems:
 
 The collaboration system was reduced to:
 
-1. **execution-ledger.yaml** - Roadmap (phases, milestones, checkboxes)
-2. **assignments.yaml** - Work queue (checkbox, agent, status)
-3. **Six commands** - dispatch, claim, complete, inbox, check_gates, validate
+1. **`state/ledger.db`** - canonical runtime state (phases, milestones, checkboxes, assignments, agents, events)
+2. **`agentd` loop** - heartbeat, lease, execute assignment, integrate closure, return `standing_by`
+3. **Small control-plane command set** - add work, validate/check gates, autoassign, status/stop/unblock
 
 This removes:
 - Message events
@@ -118,5 +118,6 @@ Simpler protocols are more stable because:
 - Clear error messages
 - Human-readable state
 
-The current system can be understood by reading two YAML files.
+The current system can be understood by reading one SQLite runtime store
+and the daemon/control scripts around it.
 The previous system required understanding 6 interlocking models.

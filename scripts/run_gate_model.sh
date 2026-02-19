@@ -27,6 +27,10 @@ for gate in model.get('gates', []):
     for script in gate.get('required_scripts', []):
         steps.append({'gate_id': gid, 'script': script})
 
+if not steps:
+    print('gate model has no executable steps', file=sys.stderr)
+    raise SystemExit(1)
+
 if mode == 'print':
     print(json.dumps({'version': model.get('version'), 'steps': steps}, indent=2))
     raise SystemExit(0)

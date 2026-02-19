@@ -9,4 +9,4 @@ This wrapper enforces a fixed module-resolution strategy:
 - Node test runner (`--test`)
 - explicit custom loader (`tests/harness/ts-extension-loader.mjs`)
 
-Automation entrypoints (`scripts/phase3_ci_target.sh`, `scripts/ci.sh`) must use this wrapper, not inline `node --loader ...` calls.
+Automation entrypoints (`scripts/ci_target.sh`, `scripts/ci.sh`) must use this wrapper, not inline `node --loader ...` calls.

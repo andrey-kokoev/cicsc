@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "scope": {
+    "include_globs": [
+      "tests/fixtures/executable-surface/fail_allowlist_missing_metadata/input.sh"
+    ],
+    "exclude_globs": []
+  },
+  "banned_reference_patterns": [],
+  "generated_contracts": [],
+  "allowlist": [
+    {
+      "source_file": "tests/fixtures/executable-surface/fail_allowlist_missing_metadata/input.sh",
+      "reference": "./control-plane/scripts/missing_helper.sh",
+      "kind": "missing_path",
+      "expires_on": "2099-01-01"
+    }
+  ]
+}

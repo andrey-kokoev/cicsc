@@ -3,8 +3,8 @@ import assert from "node:assert/strict"
 import { spawnSync } from "node:child_process"
 
 describe("canonical execution model", () => {
-  it("passes execution-ledger integrity, phase-view sync, and commit evidence checks", () => {
-    const run = spawnSync("./scripts/check_canonical_execution_model.sh", {
+  it("passes through canonical gate entrypoint", () => {
+    const run = spawnSync("./control-plane/check_gates.sh", {
       cwd: process.cwd(),
       encoding: "utf8",
     })

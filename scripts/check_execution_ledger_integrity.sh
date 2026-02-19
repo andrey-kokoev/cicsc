@@ -5,114 +5,106 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${ROOT_DIR}"
 
 python3 - <<'PY'
-from pathlib import Path
 import re
-import yaml
+import sqlite3
 
-root = Path('.')
-ledger = yaml.safe_load((root / 'control-plane/execution/execution-ledger.yaml').read_text(encoding='utf-8'))
+conn = sqlite3.connect("state/ledger.db")
+conn.row_factory = sqlite3.Row
+cur = conn.cursor()
 
-phase_id_re = re.compile(r'^[A-Z]{1,2}$')
-milestone_id_re = re.compile(r'^([A-Z]{1,2})(\d+)$')
-checkbox_id_re = re.compile(r'^([A-Z]{1,2})(\d+)\.(\d+)$')
+phase_id_re = re.compile(r'^[A-Z]{1,3}$')
+milestone_id_re = re.compile(r'^[A-Z]{1,3}\d+$')
+checkbox_id_re = re.compile(r'^[A-Z]{1,4}\d+\.\d+$')
 
 errors = []
-phases = ledger.get('phases', [])
-if not phases:
-    errors.append('execution-ledger has no phases')
 
-prev_no = None
-seen_phase_ids = set()
-seen_phase_nos = set()
+cur.execute("SELECT COUNT(*) AS n FROM phases")
+if int(cur.fetchone()["n"]) == 0:
+    errors.append("sqlite ledger has no phases")
 
-for phase in phases:
-    pid = phase.get('id')
-    pno = phase.get('number')
-    title = phase.get('title')
+cur.execute("SELECT id, number, status, title FROM phases")
+for row in cur.fetchall():
+    pid = str(row["id"] or "")
+    if not phase_id_re.match(pid):
+        errors.append(f"invalid phase id: {pid}")
+    if row["number"] is None:
+        errors.append(f"phase {pid} missing number")
+    if str(row["status"] or "") not in {"planned", "in_progress", "complete", "deferred"}:
+        errors.append(f"phase {pid} has invalid status: {row['status']}")
+    if not str(row["title"] or "").strip():
+        errors.append(f"phase {pid} missing title")
 
-    if not isinstance(pid, str) or not phase_id_re.match(pid):
-        errors.append(f'invalid phase id: {pid}')
-    if pid in seen_phase_ids:
-        errors.append(f'duplicate phase id: {pid}')
-    seen_phase_ids.add(pid)
+cur.execute(
+    """
+    SELECT m.id
+    FROM milestones m
+    LEFT JOIN phases p ON p.id = m.phase_id
+    WHERE p.id IS NULL
+    """
+)
+for row in cur.fetchall():
+    errors.append(f"milestone has missing phase linkage: {row['id']}")
 
-    if not isinstance(pno, int) or pno < 1:
-        errors.append(f'invalid phase number for {pid}: {pno}')
-    if pno in seen_phase_nos:
-        errors.append(f'duplicate phase number: {pno}')
-    seen_phase_nos.add(pno)
-    if prev_no is not None and pno != prev_no + 1:
-        errors.append(f'phase numbering not linear: got Phase {pno} after Phase {prev_no}')
-    prev_no = pno
+cur.execute("SELECT id, phase_id, title FROM milestones")
+for row in cur.fetchall():
+    mid = str(row["id"] or "")
+    if not milestone_id_re.match(mid):
+        errors.append(f"invalid milestone id: {mid}")
+    if not str(row["phase_id"] or "").strip():
+        errors.append(f"milestone {mid} missing phase_id")
+    if not str(row["title"] or "").strip():
+        errors.append(f"milestone {mid} missing title")
 
-    if not title:
-        errors.append(f'missing phase title for {pid}')
+cur.execute(
+    """
+    SELECT c.id
+    FROM checkboxes c
+    LEFT JOIN milestones m ON m.id = c.milestone_id
+    WHERE m.id IS NULL
+    """
+)
+for row in cur.fetchall():
+    errors.append(f"checkbox has missing milestone linkage: {row['id']}")
 
-    milestones = phase.get('milestones', [])
-    if not milestones:
-        errors.append(f'phase {pid} has zero milestones')
-        continue
+cur.execute("SELECT id, milestone_id, status, description FROM checkboxes")
+for row in cur.fetchall():
+    cid = str(row["id"] or "")
+    if not checkbox_id_re.match(cid):
+        errors.append(f"invalid checkbox id: {cid}")
+    if not str(row["milestone_id"] or "").strip():
+        errors.append(f"checkbox {cid} missing milestone_id")
+    if str(row["status"] or "") not in {"open", "done"}:
+        errors.append(f"invalid checkbox status for {cid}: {row['status']}")
+    if not str(row["description"] or "").strip():
+        errors.append(f"checkbox {cid} missing description")
 
-    prev_milestone_no = None
-    seen_milestones = set()
-    for m in milestones:
-        mid = m.get('id')
-        mt = m.get('title')
-        mm = milestone_id_re.match(mid or '')
-        if not mm:
-            errors.append(f'invalid milestone id: {mid}')
-            continue
-        mcode, mnum_s = mm.group(1), mm.group(2)
-        mnum = int(mnum_s)
-        if mcode != pid:
-            errors.append(f'milestone {mid} not in phase {pid}')
-        if mid in seen_milestones:
-            errors.append(f'duplicate milestone id in phase {pid}: {mid}')
-        seen_milestones.add(mid)
-        if prev_milestone_no is not None and mnum < prev_milestone_no:
-            errors.append(f'milestone order regressed in {pid}: {mnum} after {prev_milestone_no}')
-        prev_milestone_no = mnum
-        if not mt:
-            errors.append(f'missing milestone title: {mid}')
+cur.execute(
+    """
+    SELECT a.checkbox_ref
+    FROM assignments a
+    LEFT JOIN checkboxes c ON c.id = a.checkbox_ref
+    WHERE c.id IS NULL
+    """
+)
+for row in cur.fetchall():
+    errors.append(f"assignment has missing checkbox linkage: {row['checkbox_ref']}")
 
-        checkboxes = m.get('checkboxes', [])
-        if not checkboxes:
-            errors.append(f'milestone {mid} has zero checkboxes')
-            continue
-
-        prev_item = None
-        seen_checkbox = set()
-        for c in checkboxes:
-            cid = c.get('id')
-            ct = c.get('title')
-            status = c.get('status')
-            cm = checkbox_id_re.match(cid or '')
-            if not cm:
-                errors.append(f'invalid checkbox id: {cid}')
-                continue
-            ccode, cmnum_s, citem_s = cm.group(1), cm.group(2), cm.group(3)
-            cmnum = int(cmnum_s)
-            citem = int(citem_s)
-            if ccode != pid:
-                errors.append(f'checkbox {cid} not in phase {pid}')
-            if f'{ccode}{cmnum}' != mid:
-                errors.append(f'checkbox {cid} not under milestone {mid}')
-            if cid in seen_checkbox:
-                errors.append(f'duplicate checkbox id in {mid}: {cid}')
-            seen_checkbox.add(cid)
-            if prev_item is not None and citem < prev_item:
-                errors.append(f'checkbox order regressed in {mid}: {citem} after {prev_item}')
-            prev_item = citem
-            if not ct:
-                errors.append(f'missing checkbox title: {cid}')
-            if status not in {'open', 'done'}:
-                errors.append(f'invalid checkbox status for {cid}: {status}')
+cur.execute(
+    """
+    SELECT a.checkbox_ref, a.agent_ref
+    FROM assignments a
+    LEFT JOIN agents ag ON ag.id = a.agent_ref
+    WHERE ag.id IS NULL
+    """
+)
+for row in cur.fetchall():
+    errors.append(f"assignment {row['checkbox_ref']} has missing agent linkage: {row['agent_ref']}")
 
 if errors:
-    print('execution-ledger integrity check failed')
-    for e in errors:
-        print(f'- {e}')
+    print("execution-ledger integrity check failed")
+    for err in errors:
+        print(f"- {err}")
     raise SystemExit(1)
 
-print('execution-ledger integrity check passed')
+print("execution-ledger integrity check passed")
 PY

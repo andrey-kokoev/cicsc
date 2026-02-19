@@ -7,86 +7,138 @@ source "$ROOT/control-plane/output.sh"
 ERRORS=0
 
 echo "Validating execution ledger..."
-python3 << 'PY'
+if ! python3 << 'PY'
 import sys
 sys.path.insert(0, "control-plane")
 from db import get_all_checkboxes
 
 errors = []
-
 checkboxes = get_all_checkboxes()
+seen = set()
 
-seen_checkboxes = set()
 for cb in checkboxes:
     cid = cb["id"]
-    if cid in seen_checkboxes:
-        errors.append(f"Duplicate checkbox: {cid}")
-    seen_checkboxes.add(cid)
-    
+    if cid in seen:
+        errors.append(f"duplicate checkbox: {cid}")
+    seen.add(cid)
+
     status = cb["status"]
     if status not in ("open", "done"):
-        errors.append(f"Invalid status for {cid}: {status}")
+        errors.append(f"invalid status for {cid}: {status}")
 
 if errors:
+    print("  Ledger structure: FAIL", file=sys.stderr)
     for e in errors:
         print(f"  ERROR: {e}", file=sys.stderr)
-    sys.exit(1)
+    raise SystemExit(1)
+
 print(f"  Ledger structure: OK ({len(checkboxes)} checkboxes)")
 PY
-
-if [[ $? -ne 0 ]]; then
+then
     ERRORS=$((ERRORS + 1))
 fi
 
-echo "Validating assignments..."
-python3 << 'PY'
+echo "Validating assignment and agent protocol..."
+if ! python3 << 'PY'
 import sys
 sys.path.insert(0, "control-plane")
-from db import get_all_checkboxes, get_all_assignments
+from db import get_db
 
-checkboxes = get_all_checkboxes()
-valid_checkboxes = {cb["id"] for cb in checkboxes}
-checkbox_status = {cb["id"]: cb["status"] for cb in checkboxes}
-assignments = get_all_assignments()
+conn = get_db()
+cur = conn.cursor()
+
+cur.execute("SELECT * FROM checkboxes")
+checkboxes = [dict(r) for r in cur.fetchall()]
+checkbox_status = {c["id"]: c["status"] for c in checkboxes}
+
+cur.execute("SELECT * FROM assignments")
+assignments = [dict(r) for r in cur.fetchall()]
+
+cur.execute("SELECT * FROM agents")
+agents = [dict(r) for r in cur.fetchall()]
+agent_by_id = {a["id"]: a for a in agents}
 
 errors = []
 active_checkboxes = set()
-done_assignments = set()
+assigned_by_agent = {}
+
+def has_text(v):
+    return v is not None and str(v).strip() != ""
 
 for a in assignments:
-    cb = a["checkbox_ref"]
-    status = a["status"]
-    
-    if cb not in valid_checkboxes:
-        errors.append(f"Invalid checkbox_ref: {cb}")
+    cb = a.get("checkbox_ref")
+    status = a.get("status")
+    agent_ref = a.get("agent_ref")
+
+    if cb not in checkbox_status:
+        errors.append(f"invalid checkbox_ref: {cb}")
         continue
-        
+
     if status not in ("assigned", "done"):
-        errors.append(f"Invalid status for {cb}: {status}")
-        
+        errors.append(f"invalid status for {cb}: {status}")
+        continue
+
+    if agent_ref not in agent_by_id:
+        errors.append(f"invalid agent_ref for {cb}: {agent_ref}")
+
     if status == "assigned":
         if cb in active_checkboxes:
-            errors.append(f"Multiple active assignments for {cb}")
+            errors.append(f"multiple active assignments for {cb}")
         active_checkboxes.add(cb)
-    elif status == "done" and checkbox_status.get(cb) != "done":
-        errors.append(f"Assignment {cb} is done but checkbox is {checkbox_status.get(cb)}")
-    elif status == "done":
-        done_assignments.add(cb)
+
+        if not has_text(a.get("lease_token")):
+            errors.append(f"assigned {cb} missing lease_token")
+        if not has_text(a.get("lease_expires_at")):
+            errors.append(f"assigned {cb} missing lease_expires_at")
+        if not has_text(a.get("last_heartbeat_at")):
+            errors.append(f"assigned {cb} missing last_heartbeat_at")
+
+        if checkbox_status.get(cb) == "done":
+            errors.append(f"checkbox {cb} is done but has active assignment")
+
+        assigned_by_agent[agent_ref] = assigned_by_agent.get(agent_ref, 0) + 1
+
+    if status == "done":
+        if checkbox_status.get(cb) != "done":
+            errors.append(f"assignment {cb} is done but checkbox is {checkbox_status.get(cb)}")
+        if not has_text(a.get("commit_sha")):
+            errors.append(f"done assignment {cb} missing commit_sha")
+        if not has_text(a.get("completed_at")):
+            errors.append(f"done assignment {cb} missing completed_at")
+
+for a in agents:
+    aid = a.get("id")
+    status = a.get("status")
+    blocked_reason = a.get("blocked_reason")
+    assigned_count = assigned_by_agent.get(aid, 0)
+
+    if status not in ("standing_by", "busy", "blocked"):
+        errors.append(f"invalid agent status for {aid}: {status}")
+        continue
+
+    if status == "standing_by" and assigned_count > 0:
+        errors.append(f"agent {aid} standing_by with {assigned_count} active assignments")
+
+    if status == "busy" and assigned_count == 0:
+        errors.append(f"agent {aid} busy without active assignment")
+
+    if status == "blocked" and not has_text(blocked_reason):
+        errors.append(f"agent {aid} blocked without blocked_reason")
 
 for cb in checkboxes:
-    if cb["status"] == "done" and cb["id"] in active_checkboxes:
-        errors.append(f"Checkbox {cb['id']} is done but has active assignment")
-    if cb["status"] == "open" and cb["id"] in done_assignments:
-        errors.append(f"Checkbox {cb['id']} is open but assignment is done")
+    cid = cb["id"]
+    if cb["status"] == "done" and cid in active_checkboxes:
+        errors.append(f"checkbox {cid} is done but has active assignment")
 
 if errors:
+    print("  Assignment protocol: FAIL", file=sys.stderr)
     for e in errors:
         print(f"  ERROR: {e}", file=sys.stderr)
-    sys.exit(1)
-print(f"  Assignments: OK ({len(assignments)} total)")
-PY
+    raise SystemExit(1)
 
-if [[ $? -ne 0 ]]; then
+print(f"  Assignment protocol: OK ({len(assignments)} assignments, {len(agents)} agents)")
+PY
+then
     ERRORS=$((ERRORS + 1))
 fi
 
@@ -94,8 +146,8 @@ if [[ $ERRORS -eq 0 ]]; then
     echo "Validation passed"
     emit_result ok validate "validation passed"
     exit 0
-else
-    echo "Validation failed with $ERRORS error(s)" >&2
-    emit_result error validate "validation failed" "errors=$ERRORS"
-    exit 1
 fi
+
+echo "Validation failed with $ERRORS error(s)" >&2
+emit_result error validate "validation failed" "errors=$ERRORS"
+exit 1

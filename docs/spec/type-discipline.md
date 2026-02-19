@@ -46,5 +46,3 @@ used by v4 acceptance criteria.
 ## Evidence Pointers
 
 - Plan/closure mapping: `LEAN_KERNEL_V4.md`
-- Current status audit: `docs/spec/truth-audit-v1.md`
-

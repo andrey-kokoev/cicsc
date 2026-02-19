@@ -22,9 +22,7 @@ This document is the canonical index for normative CICSC specifications.
 
 ## Status and Scope Documents
 
-- `docs/spec/truth-audit-v1.md`
 - `docs/spec/type-discipline.md`
-- `docs/spec/isolation-guarantees.md`
 - `docs/spec/migration-safety.md`
 - `docs/spec/backend-semantics-policy.md`
 

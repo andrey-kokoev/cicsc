@@ -12,7 +12,7 @@ The checklist in **`# CICSC Completion TODO (Comprehensive)`** is the canonical 
 - Every checkbox corresponds to a concrete deliverable.
 - No work exists outside the execution ledger.
 - New work enters the system only by adding new checkboxes.
-- `control-plane/execution/execution-ledger.yaml` is the only canonical status ledger.
+- `state/ledger.db` is the only canonical status ledger.
 - `PHASE*.md` files are derived views; they may aid readability but do not own truth.
 - Planning/navigation docs (`PHASE_LEVEL_ROADMAP.md`, `JOURNEY_VECTOR.md`, etc.)
   are non-status artifacts and must not carry execution checkboxes.

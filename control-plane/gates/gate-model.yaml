@@ -1,2 +1,17 @@
-version: 2
-gates: []
+version: 3
+gates:
+  - id: GATE_EXECUTABLE_SURFACE_INTEGRITY
+    required_scripts:
+      - scripts/check_executable_surface_integrity.sh
+  - id: GATE_NO_LEGACY_PHASE_SURFACE
+    required_scripts:
+      - scripts/check_no_legacy_phase_surface.sh
+  - id: GATE_COLLAB_SURFACE_COHERENCY
+    required_scripts:
+      - scripts/check_collab_surface_coherency.sh
+  - id: GATE_DB_PROTOCOL_SURFACE
+    required_scripts:
+      - scripts/check_db_protocol_surface.sh
+  - id: GATE_AGENT_PROTOCOL
+    required_scripts:
+      - scripts/check_agent_protocol_invariants.sh

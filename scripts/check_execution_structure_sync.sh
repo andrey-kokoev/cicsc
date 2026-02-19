@@ -4,26 +4,54 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${ROOT_DIR}"
 
-./control-plane/scripts/generate_views.sh > /dev/null
-
 python3 - <<'PY'
-from pathlib import Path
-import json
-import yaml
+import sqlite3
 
-root = Path('.')
-ledger = yaml.safe_load((root / 'control-plane/execution/execution-ledger.yaml').read_text(encoding='utf-8'))
-phase_index = json.loads((root / 'control-plane/views/phase-index.generated.json').read_text(encoding='utf-8'))
+conn = sqlite3.connect("state/ledger.db")
+conn.row_factory = sqlite3.Row
+cur = conn.cursor()
 
 errors = []
-if phase_index.get('phases') != ledger.get('phases'):
-    errors.append('phase-index.generated.json does not match execution-ledger phase structure')
+
+cur.execute(
+    """
+    SELECT m.id
+    FROM milestones m
+    LEFT JOIN phases p ON p.id = m.phase_id
+    WHERE p.id IS NULL
+    """
+)
+missing_phase = [row["id"] for row in cur.fetchall()]
+if missing_phase:
+    errors.append(f"milestones missing phase linkage: {missing_phase}")
+
+cur.execute(
+    """
+    SELECT c.id
+    FROM checkboxes c
+    LEFT JOIN milestones m ON m.id = c.milestone_id
+    WHERE m.id IS NULL
+    """
+)
+missing_milestone = [row["id"] for row in cur.fetchall()]
+if missing_milestone:
+    errors.append(f"checkboxes missing milestone linkage: {missing_milestone}")
+
+cur.execute("SELECT COUNT(*) AS n FROM phases")
+phase_count = int(cur.fetchone()["n"])
+cur.execute("SELECT COUNT(*) AS n FROM milestones")
+milestone_count = int(cur.fetchone()["n"])
+cur.execute("SELECT COUNT(*) AS n FROM checkboxes")
+checkbox_count = int(cur.fetchone()["n"])
+
+if phase_count == 0 or milestone_count == 0 or checkbox_count == 0:
+    errors.append("phase/milestone/checkbox tables must be non-empty")
 
 if errors:
-    print('execution structure sync check failed')
-    for e in errors:
-        print(f'- {e}')
+    print("execution structure sync check failed")
+    for err in errors:
+        print(f"- {err}")
     raise SystemExit(1)
 
-print('execution structure sync check passed')
+print("execution structure sync check passed")
 PY

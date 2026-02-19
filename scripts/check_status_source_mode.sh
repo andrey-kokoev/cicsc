@@ -5,24 +5,27 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "${ROOT_DIR}"
 
 python3 - <<'PY'
+import sqlite3
 from pathlib import Path
-import yaml
 
 root = Path('.')
-cfg = yaml.safe_load((root / 'control-plane/execution/execution-ledger.yaml').read_text(encoding='utf-8'))
-mode = cfg.get('status_source_mode')
-
-allowed = {'execution_ledger_yaml_canonical'}
-if mode not in allowed:
+db_path = root / 'state/ledger.db'
+if not db_path.exists():
     print('status source mode check failed')
-    print(f'- unsupported status_source_mode: {mode}')
-    print(f'- allowed: {sorted(allowed)}')
+    print(f'- missing sqlite runtime store: {db_path}')
     raise SystemExit(1)
 
-if mode != 'execution_ledger_yaml_canonical':
+conn = sqlite3.connect(db_path)
+cur = conn.cursor()
+cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
+tables = {row[0] for row in cur.fetchall()}
+required = {'phases', 'milestones', 'checkboxes', 'assignments', 'agents', 'events'}
+missing = sorted(required - tables)
+
+if missing:
     print('status source mode check failed')
-    print(f'- expected execution_ledger_yaml_canonical, got {mode}')
+    print(f'- sqlite canonical schema missing tables: {missing}')
     raise SystemExit(1)
 
-print(f'status source mode check passed ({mode})')
+print('status source mode check passed (sqlite_db_canonical)')
 PY
