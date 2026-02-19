@@ -4,6 +4,7 @@
 #
 # Usage:
 #   ./add_checkbox.sh --milestone BZ1 --checkbox "BZ1.1:description" [--checkbox "BZ1.2:desc"]
+#   ./add_checkbox.sh --milestone BZ1 --create-milestone --checkbox "BZ1.1:description"
 #==============================================================================
 
 set -euo pipefail
@@ -27,15 +28,17 @@ ensure_sync_precondition() {
 ensure_sync_precondition
 
 MILESTONE=""
+CREATE_MILESTONE=0
 CHECKBOXES=()
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --help|-h)
-            echo "Usage: $0 --milestone <id> --checkbox 'id:desc' [--checkbox 'id:desc' ...]"
+            echo "Usage: $0 --milestone <id> [--create-milestone] --checkbox 'id:desc' [--checkbox 'id:desc' ...]"
             exit 0
             ;;
         --milestone) MILESTONE="$2"; shift 2 ;;
+        --create-milestone) CREATE_MILESTONE=1; shift ;;
         --checkbox)
             CHECKBOXES+=("$2")
             shift 2
@@ -45,22 +48,46 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [[ -z "$MILESTONE" || ${#CHECKBOXES[@]} -eq 0 ]]; then
-    echo "Usage: $0 --milestone <id> --checkbox 'id:desc' [--checkbox 'id:desc' ...]"
+    echo "Usage: $0 --milestone <id> [--create-milestone] --checkbox 'id:desc' [--checkbox 'id:desc' ...]"
     exit 1
 fi
 
-python3 - "$MILESTONE" "${CHECKBOXES[@]}" << 'PY'
+python3 - "$MILESTONE" "$CREATE_MILESTONE" "${CHECKBOXES[@]}" << 'PY'
+import re
 import sys
 sys.path.insert(0, "control-plane")
-from db import get_milestone, add_checkbox
+from db import get_milestone, get_phase, add_milestone, add_checkbox
 
 milestone_id = sys.argv[1]
-checkboxes = sys.argv[2:]
+create_milestone = bool(int(sys.argv[2]))
+checkboxes = sys.argv[3:]
 
 ms = get_milestone(milestone_id)
 if not ms:
-    print(f"ERROR: Milestone {milestone_id} not found", file=sys.stderr)
-    sys.exit(1)
+    if not create_milestone:
+        print(f"ERROR: Milestone {milestone_id} not found", file=sys.stderr)
+        print("Pass --create-milestone to create it on demand.", file=sys.stderr)
+        sys.exit(1)
+
+    m = re.fullmatch(r"([A-Za-z]{1,3})(\d+)", milestone_id)
+    if not m:
+        print(
+            f"ERROR: Cannot infer phase from milestone id {milestone_id}",
+            file=sys.stderr,
+        )
+        print("Expected milestone format like CG1.", file=sys.stderr)
+        sys.exit(1)
+
+    phase_id = m.group(1).upper()
+    if get_phase(phase_id) is None:
+        print(
+            f"ERROR: Cannot create milestone {milestone_id}; phase {phase_id} not found",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    add_milestone(milestone_id, phase_id, f"Milestone {milestone_id}")
+    print(f"Created milestone {milestone_id} in phase {phase_id}")
 
 for cb_str in checkboxes:
     cb_id, cb_desc = cb_str.split(":", 1)
