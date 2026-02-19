@@ -212,4 +212,25 @@ describe("intent-plane v1 contract", () => {
     assert.equal((intent as any).field, "priority")
     assert.equal((intent as any).fieldType, "int")
   })
+
+  it("resolves conflict-heavy mixed edit text via deterministic first-match intent", () => {
+    const refiner = new RefinementEngine()
+    const intent = refiner.detectIntent(
+      "add field priority to Ticket, remove state Closed from Ticket, rename Ticket to Case"
+    )
+    assert.equal(intent.type, "ADD_FIELD")
+  })
+
+  it("emits blocking issues with severity/path/message quality gates", () => {
+    const interview = new InterviewEngine()
+    const state = interview.getState()
+    assert.ok(state.blockingIssues.length > 0)
+
+    for (const issue of state.blockingIssues) {
+      assert.equal(issue.severity, "error")
+      assert.ok(issue.path.startsWith("$."))
+      assert.ok(issue.message.length > 3)
+      assert.ok(issue.code.length > 3)
+    }
+  })
 })
