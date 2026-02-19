@@ -32,6 +32,52 @@ if [[ -z "$AGENT_ID" ]]; then
     exit 1
 fi
 
+STATE_DIR="$ROOT/state"
+SAFE_AGENT_ID="$(printf '%s' "$AGENT_ID" | tr -c 'A-Za-z0-9._-' '_')"
+LOCK_FILE="$STATE_DIR/standby-${SAFE_AGENT_ID}.lock"
+LOCK_DIR_FALLBACK="$STATE_DIR/standby-${SAFE_AGENT_ID}.lock.d"
+PID_FILE="$STATE_DIR/standby-${SAFE_AGENT_ID}.pid"
+
+acquire_single_instance_lock() {
+    mkdir -p "$STATE_DIR"
+
+    if command -v flock >/dev/null 2>&1; then
+        exec 9>"$LOCK_FILE"
+        if ! flock -n 9; then
+            local running_pid=""
+            if [[ -f "$PID_FILE" ]]; then
+                running_pid="$(cat "$PID_FILE" 2>/dev/null || true)"
+            fi
+            if [[ -n "$running_pid" ]]; then
+                echo "Standby already running for $AGENT_ID (PID $running_pid); exiting."
+            else
+                echo "Standby already running for $AGENT_ID; exiting."
+            fi
+            exit 0
+        fi
+        echo $$ > "$PID_FILE"
+        trap 'rm -f "$PID_FILE"' EXIT
+        return
+    fi
+
+    if ! mkdir "$LOCK_DIR_FALLBACK" 2>/dev/null; then
+        local running_pid=""
+        if [[ -f "$PID_FILE" ]]; then
+            running_pid="$(cat "$PID_FILE" 2>/dev/null || true)"
+        fi
+        if [[ -n "$running_pid" ]]; then
+            echo "Standby already running for $AGENT_ID (PID $running_pid); exiting."
+        else
+            echo "Standby already running for $AGENT_ID; exiting."
+        fi
+        exit 0
+    fi
+    echo $$ > "$PID_FILE"
+    trap 'rm -f "$PID_FILE"; rmdir "$LOCK_DIR_FALLBACK" 2>/dev/null || true' EXIT
+}
+
+acquire_single_instance_lock
+
 echo "=== Agent $AGENT_ID starting standby ==="
 echo "Polls every 5 seconds. Set AGENT_ID env var."
 if [[ "$ONCE_ON_CHANGE" -eq 1 ]]; then
