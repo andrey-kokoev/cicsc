@@ -1,3 +1,5 @@
+import type { BlockingIssue } from "./blocking-policy"
+
 export type InterviewState = {
   domain?: string
   entities: EntityDraft[]
@@ -5,13 +7,6 @@ export type InterviewState = {
   currentEntityIndex: number
   pendingClarifications: string[]
   blockingIssues: BlockingIssue[]
-}
-
-export type BlockingIssue = {
-  code: string
-  path: string
-  severity: "error" | "warning"
-  message: string
 }
 
 export type EntityDraft = {

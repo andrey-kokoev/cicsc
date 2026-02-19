@@ -1,13 +1,14 @@
 export {
   type InterviewState,
-  type BlockingIssue,
   type EntityDraft,
   type CommandDraft,
   QUESTION_TEMPLATES,
   InterviewStateMachine,
 } from "./interview-state-machine"
+export type { BlockingIssue } from "./blocking-policy"
 
 import { InterviewStateMachine } from "./interview-state-machine"
+import { isDeployable } from "./blocking-policy"
 
 export class InterviewEngine extends InterviewStateMachine {
   getSummary (): string {
@@ -35,7 +36,7 @@ export class InterviewEngine extends InterviewStateMachine {
     }
 
     summary += "---\n"
-    summary += `Deployable: ${state.blockingIssues.length === 0 ? "yes" : "no"}\n`
+    summary += `Deployable: ${isDeployable(state.blockingIssues) ? "yes" : "no"}\n`
     if (state.blockingIssues.length > 0) {
       summary += "Blocking issues:\n"
       for (const issue of state.blockingIssues) {
@@ -54,7 +55,7 @@ export class InterviewEngine extends InterviewStateMachine {
     const spec = translator.toCanonicalSpecJson(state)
     return {
       spec,
-      deployable: state.blockingIssues.length === 0,
+      deployable: isDeployable(state.blockingIssues),
       blocking_issues: [...state.blockingIssues],
     }
   }

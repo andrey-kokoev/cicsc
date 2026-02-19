@@ -6,6 +6,7 @@ import { compileSpecV0ToCoreIr } from "../../spec/compile-to-ir"
 import { typecheckSpecV0 } from "../../spec/typecheck"
 import { typecheckCoreIrV0 } from "../../core/ir/typecheck"
 import { generateUiFromIr } from "../../ui/generator"
+import { isDeployable, normalizeBlockingIssues } from "../../core/assistant/blocking-policy"
 
 export type CompileDiagnostic = {
   layer: "spec" | "ir"
@@ -36,27 +37,17 @@ function unwrapIntentPlaneSpecEnvelope (input: unknown): unknown {
     return input
   }
 
-  const blockingIssues = Array.isArray(obj.blocking_issues) ? obj.blocking_issues : []
+  const blockingIssues = normalizeBlockingIssues(obj.blocking_issues)
   const deployable = obj.deployable === true
 
-  if (!deployable || blockingIssues.length > 0) {
+  if (!deployable || !isDeployable(blockingIssues)) {
     throw new CompileDiagnosticsError(
       "intent-plane preflight failed: unresolved blocking issues",
-      blockingIssues.map((issue: unknown, idx: number) => {
-        if (issue && typeof issue === "object" && !Array.isArray(issue)) {
-          const o = issue as any
-          return {
-            layer: "spec" as const,
-            path: typeof o.path === "string" ? o.path : `$.blocking_issues[${idx}]`,
-            message: typeof o.message === "string" ? o.message : "blocking issue",
-          }
-        }
-        return {
-          layer: "spec" as const,
-          path: `$.blocking_issues[${idx}]`,
-          message: typeof issue === "string" ? issue : "blocking issue",
-        }
-      })
+      blockingIssues.map((issue) => ({
+        layer: "spec" as const,
+        path: issue.path,
+        message: issue.message,
+      }))
     )
   }
 
