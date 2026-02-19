@@ -12,12 +12,13 @@ Add work to ledger, maintain state. Mechanistic core handles assignment.
 
 ## Quick Reference
 
+<!-- generated:main_quick_reference:start -->
 ```bash
 # Validate state
 ./control-plane/validate.sh
 
-# Add new phase
-./control-plane/add_phase.sh --id CF --number 62 --title "New Feature"
+# Add new phase (phase ID auto-generated)
+./control-plane/add_phase.sh --number 62 --title "New Feature"
 
 # Add checkboxes to existing milestone
 ./control-plane/add_checkbox.sh --milestone CF1 --checkbox "CF1.1:description"
@@ -30,6 +31,7 @@ git merge --ff-only origin/feat/branch-name
 # Push to main
 git push origin main
 ```
+<!-- generated:main_quick_reference:end -->
 
 ---
 
@@ -44,11 +46,14 @@ git push origin main
 ### 2. Add Work
 
 ```bash
-./control-plane/add_phase.sh --id CF --number 62 --title "New Feature"
+./control-plane/add_phase.sh --number 62 --title "New Feature"
 ./control-plane/add_checkbox.sh --milestone CF1 --checkbox "CF1.1:description"
 ```
 
 That's it. Mechanistic core (`autoassign.sh`) assigns to idle agents automatically.
+
+If you create a new phase without `--checkboxes`, create a milestone before
+adding checkboxes to it.
 
 ### 3. Integrate
 

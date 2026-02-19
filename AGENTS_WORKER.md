@@ -12,6 +12,7 @@ Implement assigned work, follow workflow, push feature branches.
 
 ## Quick Reference
 
+<!-- generated:worker_quick_reference:start -->
 ```bash
 # Set your agent ID (do once)
 export AGENT_ID=AGENT_GEMINI
@@ -21,6 +22,7 @@ export AGENT_ID=AGENT_GEMINI
 
 # Work automatically assigned when core assigns to you
 ```
+<!-- generated:worker_quick_reference:end -->
 
 ---
 
@@ -68,7 +70,11 @@ Commit/push alone does not close the assignment.
 
 ## Worktree Usage
 
-Worktrees auto-sync when you run scripts. Use `--no-sync` to skip if needed.
+Keep your worktree in sync manually:
+
+```bash
+git fetch origin && git rebase origin/main
+```
 
 ---
 
