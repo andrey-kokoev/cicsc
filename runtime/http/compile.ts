@@ -23,6 +23,38 @@ export class CompileDiagnosticsError extends Error {
   }
 }
 
+function unwrapIntentPlaneSpecEnvelope (input: unknown): unknown {
+  if (!input || typeof input !== "object" || Array.isArray(input)) {
+    return input
+  }
+
+  const obj = input as any
+  const hasSpec = Object.prototype.hasOwnProperty.call(obj, "spec")
+  const hasDeployable = Object.prototype.hasOwnProperty.call(obj, "deployable")
+  const hasBlocking = Object.prototype.hasOwnProperty.call(obj, "blocking_issues")
+  if (!hasSpec || (!hasDeployable && !hasBlocking)) {
+    return input
+  }
+
+  const blockingIssues = Array.isArray(obj.blocking_issues)
+    ? obj.blocking_issues.filter((x: unknown) => typeof x === "string")
+    : []
+  const deployable = obj.deployable === true
+
+  if (!deployable || blockingIssues.length > 0) {
+    throw new CompileDiagnosticsError(
+      "intent-plane preflight failed: unresolved blocking issues",
+      blockingIssues.map((issue: string, idx: number) => ({
+        layer: "spec",
+        path: `$.blocking_issues[${idx}]`,
+        message: issue,
+      }))
+    )
+  }
+
+  return obj.spec
+}
+
 /**
  * Compile Spec (YAML string or JSON object) -> validated CoreIrBundleV0
  *
@@ -32,7 +64,8 @@ export class CompileDiagnosticsError extends Error {
  * - This function compiles + typechecks; schema generation happens at install time.
  */
 export function compileSpecToBundleV0 (input: string | unknown): CoreIrBundleV0 {
-  const spec = parseSpecV0(input)
+  const preflighted = unwrapIntentPlaneSpecEnvelope(input)
+  const spec = parseSpecV0(preflighted)
   const stc = typecheckSpecV0(spec)
   if (!stc.ok) {
     const first = stc.errors[0]!

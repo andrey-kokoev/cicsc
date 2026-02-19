@@ -81,4 +81,43 @@ describe("worker /compile endpoint", () => {
     assert.equal(getBody.ok, true)
     assert.equal(getBody.bundle.core_ir.version, 0)
   })
+
+  it("rejects compile when intent-plane preflight is not deployable", async () => {
+    const fake = makeFakeDb()
+    const envelope = {
+      spec: {
+        version: 0,
+        entities: {
+          Ticket: {
+            id: "string",
+            states: ["new"],
+            initial: "new",
+            commands: {
+              create: { emit: [{ type: "created", payload: {} }] },
+            },
+            reducers: {
+              created: [{ set_state: "new" }],
+            },
+          },
+        },
+      },
+      deployable: false,
+      blocking_issues: ["Entity Ticket has no commands."],
+    }
+
+    const res = await workerDefault.fetch(
+      new Request("http://localhost/compile", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(envelope),
+      }),
+      { DB: fake.db as any } as any
+    )
+
+    assert.equal(res.status, 400)
+    const body = await res.json() as any
+    assert.equal(body.ok, false)
+    assert.match(String(body.error ?? ""), /preflight failed/i)
+    assert.equal(body.diagnostics?.[0]?.path, "$.blocking_issues[0]")
+  })
 })
