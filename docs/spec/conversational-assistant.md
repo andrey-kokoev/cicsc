@@ -2,6 +2,8 @@
 
 The Conversational Spec Assistant lowered the barrier to entry for non-programmers by guiding them through the creation of a CICSC Spec using natural language.
 
+For current intent-plane policy and implementation boundaries, see `docs/spec/intent-plane.md`.
+
 ## Conversational Flow (BG1.1)
 
 1. **Domain Discovery**: Ask "What system are we building?" (e.g., "A library system").

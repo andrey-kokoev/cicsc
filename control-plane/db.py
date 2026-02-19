@@ -5,7 +5,12 @@ import sqlite3
 import os
 from pathlib import Path
 
-DB_PATH = Path(__file__).parent.parent / "state" / "ledger.db"
+DB_PATH = Path(
+    os.environ.get(
+        "CICSC_LEDGER_DB_PATH",
+        str(Path(__file__).parent.parent / "state" / "ledger.db"),
+    )
+)
 
 
 def get_db():

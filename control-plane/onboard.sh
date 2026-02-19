@@ -89,6 +89,7 @@ RULES:
 - Never commit to main - always feature branch
 - Always run gates before pushing
 - Push, then Main integrates to close checkbox
+- Commit/push alone does not close assignment state
 
 COMMANDS:
 =========

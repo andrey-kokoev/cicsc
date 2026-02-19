@@ -1,5 +1,5 @@
-import { InterviewState, EntityDraft, CommandDraft } from "./interview-engine"
-import { parseDSL } from "../../spec/parse-dsl"
+import type { InterviewState } from "./interview-engine"
+import type { SpecV0, SpecAttrV0 } from "../../spec/ast"
 
 export class TranslationEngine {
   /**
@@ -88,10 +88,78 @@ Rules:
   }
 
   /**
+   * Canonical translator output for intent-plane v1.
+   * Produces Spec JSON (SpecV0) instead of DSL text.
+   */
+  translateToSpecJson (state: InterviewState): SpecV0 {
+    const entities: SpecV0["entities"] = {}
+
+    for (const entity of state.entities) {
+      const entityName = this.sanitize(entity.name)
+      if (!entityName) continue
+
+      const states = entity.states.map((s) => this.sanitize(s)).filter(Boolean)
+      const initial = entity.initialState ? this.sanitize(entity.initialState) : states[0]
+
+      const attributes: Record<string, SpecAttrV0> = {}
+      for (const attr of entity.attrs) {
+        const attrName = this.sanitize(attr.name)
+        if (!attrName) continue
+        attributes[attrName] = {
+          type: this.normalizeAttrType(attr.type),
+          optional: Boolean(attr.optional) || undefined,
+        }
+      }
+
+      const commands: NonNullable<SpecV0["entities"][string]["commands"]> = {}
+      const reducers: NonNullable<SpecV0["entities"][string]["reducers"]> = {}
+
+      for (const cmd of entity.commands) {
+        const cmdName = this.sanitize(cmd.name)
+        if (!cmdName) continue
+
+        const eventType = `${cmdName}ed`
+        const input: Record<string, SpecAttrV0> = {}
+        const payload: Record<string, any> = {}
+
+        for (const i of cmd.inputs) {
+          const inputName = this.sanitize(i.name)
+          if (!inputName) continue
+          input[inputName] = { type: this.normalizeAttrType(i.type) }
+          payload[inputName] = { var: { input: inputName } }
+        }
+
+        commands[cmdName] = {
+          inputs: input,
+          when: cmd.fromState ? { state_is: this.sanitize(cmd.fromState) } : undefined,
+          emit: [{ type: eventType, payload }],
+        }
+        reducers[eventType] = []
+      }
+
+      entities[entityName] = {
+        id: "string",
+        states,
+        initial: initial ?? "",
+        attributes,
+        commands,
+        reducers,
+      }
+    }
+
+    return {
+      version: 0,
+      entities,
+    }
+  }
+
+  /**
    * Validates the generated DSL string using the core parser.
    */
   validateDSL (dsl: string): { valid: boolean; error?: string } {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const { parseDSL } = require("../../spec/parse-dsl")
       parseDSL(dsl)
       return { valid: true }
     } catch (e: any) {
@@ -113,5 +181,13 @@ Rules:
 
   private sanitize (name: string): string {
     return name.replace(/[^a-zA-Z0-9]/g, "")
+  }
+
+  private normalizeAttrType (raw: string): SpecAttrV0["type"] {
+    const t = String(raw || "").toLowerCase()
+    if (t === "int" || t === "float" || t === "bool" || t === "time" || t === "enum") {
+      return t
+    }
+    return "string"
   }
 }

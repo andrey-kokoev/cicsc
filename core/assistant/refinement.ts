@@ -1,4 +1,4 @@
-import { SpecV0 } from "../../spec/ast"
+import type { SpecV0 } from "../../spec/ast"
 import type { MigrationSpecV0, EventTransformV0 } from "../ir/types"
 
 export type ChangeIntent = 
@@ -87,6 +87,20 @@ Rules:
     fromVersion: number,
     toVersion: number
   ): MigrationSpecV0 | null {
+    if (intent.type === "RENAME_ENTITY") {
+      const oldName = (intent as any).oldName
+      if (!currentSpec.entities[oldName]) {
+        return null
+      }
+      return {
+        from_version: fromVersion,
+        to_version: toVersion,
+        on_type: oldName,
+        event_transforms: {},
+        state_map: {}
+      }
+    }
+
     const entityName = "entity" in intent ? intent.entity : null
     if (!entityName || entityName === "unknown") {
       return null
@@ -115,16 +129,17 @@ Rules:
         eventTransforms["*"] = { drop: false }
         break
       }
-      case "RENAME_ENTITY": {
-        const oldName = (intent as any).oldName
-        const newName = (intent as any).newName
-        return {
-          from_version: fromVersion,
-          to_version: toVersion,
-          on_type: oldName,
-          event_transforms: {},
-          state_map: {}
-        }
+      case "ADD_COMMAND": {
+        eventTransforms["*"] = { drop: false }
+        break
+      }
+      case "REMOVE_STATE": {
+        eventTransforms["*"] = { drop: false }
+        break
+      }
+      case "ADD_ENTITY": {
+        eventTransforms["*"] = { drop: false }
+        break
       }
       default:
         return null
@@ -211,13 +226,20 @@ Rules:
     input: string,
     currentSpec: SpecV0,
     currentVersion: number
-  ): { intent: ChangeIntent; migration: MigrationSpecV0 | null; verification: { safe: boolean; issues: string[] }; confirmation: string } {
+  ): {
+    intent: ChangeIntent
+    migration: MigrationSpecV0 | null
+    verification: { safe: boolean; issues: string[] }
+    confirmation: string
+    blockingIssues: string[]
+  } {
     const intent = this.detectIntent(input)
     const nextVersion = currentVersion + 1
     const migration = this.generateMigrationSpec(currentSpec, intent, currentVersion, nextVersion)
     const verification = migration ? this.verifyMigration(migration, currentSpec) : { safe: false, issues: ["Could not generate migration"] }
     const confirmation = migration ? this.applyMigration(migration) : "Sorry, I couldn't understand that change. Try something like 'Add a new field to Ticket'."
+    const blockingIssues = verification.safe ? [] : [...verification.issues]
 
-    return { intent, migration, verification, confirmation }
+    return { intent, migration, verification, confirmation, blockingIssues }
   }
 }

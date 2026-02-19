@@ -62,6 +62,7 @@ git push origin feat/description
 ```
 
 After push, Main performs FF integration and closes the checkbox.
+Commit/push alone does not close the assignment.
 
 ---
 

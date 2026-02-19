@@ -2,9 +2,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "cicsc:auto-dispatch-loop:launch-on-open",
+      "label": "cicsc:autoassign:launch-on-open",
       "type": "shell",
-      "command": "./control-plane/scripts/auto_dispatch_loop_launch_on_open.sh",
+      "command": "./control-plane/autoassign.sh --loop",
       "options": {
         "cwd": "${workspaceFolder}"
       },
@@ -18,9 +18,9 @@
       "problemMatcher": []
     },
     {
-      "label": "cicsc:auto-dispatch-loop:stop",
+      "label": "cicsc:autoassign:stop",
       "type": "shell",
-      "command": "./control-plane/scripts/auto_dispatch_loop_stop.sh",
+      "command": "bash -lc 'if [[ -f state/autoassign.pid ]]; then kill \"$(cat state/autoassign.pid)\" && rm -f state/autoassign.pid; echo \"Stopped autoassign\"; else pkill -f \"control-plane/autoassign.sh --loop\" >/dev/null 2>&1 && echo \"Stopped autoassign\" || echo \"No autoassign process found\"; fi'",
       "options": {
         "cwd": "${workspaceFolder}"
       },

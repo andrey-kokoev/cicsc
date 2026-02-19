@@ -4,9 +4,9 @@ This guide helps diagnose and resolve common issues encountered while using or d
 
 ## Common CLI Issues
 
-### `Command failed: ./control-plane/complete.sh`
-- **Cause**: Gate checks failed.
-- **Solution**: Run `./control-plane/check_gates.sh` manually to see which script is failing. Common failures include linting errors, missing commit evidence, or Ledger integrity violations.
+### `Command failed: ./control-plane/integrate.sh integrate <checkbox>`
+- **Cause**: Gate checks failed or branch is not FF-descendant of `origin/main`.
+- **Solution**: Run `./control-plane/check_gates.sh` manually to identify failing checks. Then ensure your branch descends from `origin/main` before integrating.
 
 ### `ERROR: Execution ledger out of sync with phase views`
 - **Cause**: You updated `control-plane/execution-ledger.yaml` but didn't run the sync script.

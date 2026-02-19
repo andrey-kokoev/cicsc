@@ -18,6 +18,33 @@ if [[ "${1:-}" == "--loop" ]]; then
     LOOP=1
 fi
 
+STATE_DIR="$ROOT/state"
+LOCK_FILE="$STATE_DIR/autoassign.lock"
+LOCK_DIR_FALLBACK="$STATE_DIR/autoassign.lock.d"
+PID_FILE="$STATE_DIR/autoassign.pid"
+
+acquire_single_instance_lock() {
+    mkdir -p "$STATE_DIR"
+
+    if command -v flock >/dev/null 2>&1; then
+        exec 9>"$LOCK_FILE"
+        if ! flock -n 9; then
+            echo "Auto-assigner already running; exiting."
+            exit 0
+        fi
+        echo $$ > "$PID_FILE"
+        trap 'rm -f "$PID_FILE"' EXIT
+        return
+    fi
+
+    if ! mkdir "$LOCK_DIR_FALLBACK" 2>/dev/null; then
+        echo "Auto-assigner already running; exiting."
+        exit 0
+    fi
+    echo $$ > "$PID_FILE"
+    trap 'rm -f "$PID_FILE"; rmdir "$LOCK_DIR_FALLBACK" 2>/dev/null || true' EXIT
+}
+
 assign_work() {
     python3 << 'PY'
 import sys
@@ -29,6 +56,8 @@ open_checkboxes = get_open_checkboxes()
 already_assigned = get_assigned_checkboxes()
 
 available_work = [cb for cb in open_checkboxes if cb["id"] not in already_assigned]
+
+print(f"Status: idle_agents={len(idle_agents)} open_checkboxes={len(open_checkboxes)} unassigned_open_work={len(available_work)}")
 
 if not idle_agents:
     print("No idle agents")
@@ -56,8 +85,11 @@ PY
 }
 
 if [[ $LOOP -eq 1 ]]; then
+    acquire_single_instance_lock
     echo "=== Auto-assigner running in loop (LIFO) ==="
+    echo "PID: $$"
     while true; do
+        echo "--- $(date -u +"%Y-%m-%dT%H:%M:%SZ") ---"
         assign_work
         sleep 10
     done
