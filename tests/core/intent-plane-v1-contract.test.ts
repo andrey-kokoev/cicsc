@@ -107,6 +107,8 @@ describe("intent-plane v1 contract", () => {
     assert.equal(out.intent.type, "RENAME_ENTITY")
     assert.ok(out.migration)
     assert.equal(out.migration?.on_type, "Ticket")
+    assert.equal(out.migration?.event_transforms?.Created?.emit_as, "Created")
+    assert.equal(out.migration?.state_map?.New, "New")
     assert.deepEqual(out.blockingIssues, [])
   })
 
@@ -204,6 +206,8 @@ describe("intent-plane v1 contract", () => {
     assert.ok(out.migration)
     assert.equal(out.migration?.on_type, "Ticket")
     assert.equal(out.migration?.state_map?.Closed, "New")
+    assert.equal(out.migration?.state_map?.New, "New")
+    assert.equal(out.migration?.event_transforms?.Closed?.emit_as, "Closed")
   })
 
   it("parses structured refinement intent grammar before pattern fallback", () => {
@@ -234,5 +238,31 @@ describe("intent-plane v1 contract", () => {
       assert.ok(issue.message.length > 3)
       assert.ok(issue.code.length > 3)
     }
+  })
+
+  it("renames event types when they are prefixed with renamed entity", () => {
+    const refiner = new RefinementEngine()
+    const out = refiner.processEvolutionRequest(
+      "rename Ticket to Case",
+      {
+        version: 0,
+        entities: {
+          Ticket: {
+            id: "string",
+            states: ["New"],
+            initial: "New",
+            attributes: {},
+            commands: {},
+            reducers: {
+              ticket_created: [],
+            },
+          },
+        },
+      } as any,
+      0
+    )
+
+    assert.equal(out.intent.type, "RENAME_ENTITY")
+    assert.equal(out.migration?.event_transforms?.ticket_created?.emit_as, "case_created")
   })
 })

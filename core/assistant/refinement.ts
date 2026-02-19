@@ -27,6 +27,14 @@ type PlannerContext = {
   toVersion: number
 }
 
+function buildIdentityEventTransforms (entity: SpecV0["entities"][string]): Record<string, EventTransformV0> {
+  const transforms: Record<string, EventTransformV0> = {}
+  for (const eventType of Object.keys(entity.reducers || {})) {
+    transforms[eventType] = { emit_as: eventType }
+  }
+  return transforms
+}
+
 export class RefinementEngine {
   private parseStructuredIntent (input: string): ChangeIntent | null {
     const text = String(input || "").trim()
@@ -165,13 +173,17 @@ Rules:
       },
       ADD_STATE: (ctx) => {
         const entityName = "entity" in ctx.intent ? ctx.intent.entity : null
-        if (!entityName || entityName === "unknown" || !ctx.currentSpec.entities[entityName]) return null
+        if (!entityName || entityName === "unknown") return null
+        const entity = ctx.currentSpec.entities[entityName]
+        if (!entity) return null
+        const stateMap: Record<string, string> = {}
+        for (const s of entity.states) stateMap[s] = s
         return {
           from_version: ctx.fromVersion,
           to_version: ctx.toVersion,
           on_type: entityName,
-          event_transforms: { "*": { drop: false } },
-          state_map: {},
+          event_transforms: buildIdentityEventTransforms(entity),
+          state_map: stateMap,
         }
       },
       REMOVE_STATE: (ctx) => {
@@ -181,34 +193,51 @@ Rules:
         if (!entity) return null
         const removeState = (ctx.intent as any).state
         const fallback = entity.states.find((s) => s !== removeState) ?? ""
+        const stateMap: Record<string, string> = {}
+        for (const s of entity.states) {
+          stateMap[s] = s === removeState ? fallback : s
+        }
         return {
           from_version: ctx.fromVersion,
           to_version: ctx.toVersion,
           on_type: entityName,
-          event_transforms: { "*": { drop: false } },
-          state_map: { [removeState]: fallback },
+          event_transforms: buildIdentityEventTransforms(entity),
+          state_map: stateMap,
         }
       },
       ADD_COMMAND: (ctx) => {
         const entityName = "entity" in ctx.intent ? ctx.intent.entity : null
-        if (!entityName || entityName === "unknown" || !ctx.currentSpec.entities[entityName]) return null
+        if (!entityName || entityName === "unknown") return null
+        const entity = ctx.currentSpec.entities[entityName]
+        if (!entity) return null
         return {
           from_version: ctx.fromVersion,
           to_version: ctx.toVersion,
           on_type: entityName,
-          event_transforms: { "*": { drop: false } },
+          event_transforms: buildIdentityEventTransforms(entity),
           state_map: {},
         }
       },
       RENAME_ENTITY: (ctx) => {
         const oldName = (ctx.intent as any).oldName
+        const newName = (ctx.intent as any).newName
         if (!ctx.currentSpec.entities[oldName]) return null
+        const entity = ctx.currentSpec.entities[oldName]
+        const eventTransforms: Record<string, EventTransformV0> = {}
+        for (const eventType of Object.keys(entity.reducers || {})) {
+          const renamed = eventType.startsWith(oldName.toLowerCase())
+            ? `${newName.toLowerCase()}${eventType.slice(oldName.length)}`
+            : eventType
+          eventTransforms[eventType] = { emit_as: renamed }
+        }
+        const stateMap: Record<string, string> = {}
+        for (const s of entity.states) stateMap[s] = s
         return {
           from_version: ctx.fromVersion,
           to_version: ctx.toVersion,
           on_type: oldName,
-          event_transforms: {},
-          state_map: {},
+          event_transforms: eventTransforms,
+          state_map: stateMap,
         }
       },
       ADD_ENTITY: (_ctx) => null,
