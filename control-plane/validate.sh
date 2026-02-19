@@ -2,6 +2,7 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
+source "$ROOT/control-plane/output.sh"
 
 ERRORS=0
 
@@ -91,8 +92,10 @@ fi
 
 if [[ $ERRORS -eq 0 ]]; then
     echo "Validation passed"
+    emit_result ok validate "validation passed"
     exit 0
 else
     echo "Validation failed with $ERRORS error(s)" >&2
+    emit_result error validate "validation failed" "errors=$ERRORS"
     exit 1
 fi

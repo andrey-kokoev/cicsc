@@ -12,6 +12,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$ROOT"
+source "$SCRIPT_DIR/output.sh"
 
 ensure_sync_precondition() {
     local local_head remote_head
@@ -95,3 +96,5 @@ for cb_str in checkboxes:
 
 print(f"Added {len(checkboxes)} checkboxes to {milestone_id}")
 PY
+
+emit_result ok add_checkbox "checkboxes added" "milestone=$MILESTONE" "count=${#CHECKBOXES[@]}"

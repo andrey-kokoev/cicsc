@@ -21,6 +21,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$ROOT"
+source "$SCRIPT_DIR/output.sh"
 
 extract_checkbox_refs() {
     local text="$1"
@@ -137,6 +138,7 @@ PY
     echo "Checkbox: $checkbox"
     echo "Integration: FF-morphism verified"
     echo "Evidence: $(git rev-parse HEAD)"
+    emit_result ok integrate "integration complete" "checkbox=$checkbox" "commit=$(git rev-parse --short HEAD)"
 }
 
 status() {

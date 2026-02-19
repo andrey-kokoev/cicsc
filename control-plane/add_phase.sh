@@ -13,6 +13,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$ROOT"
+source "$SCRIPT_DIR/output.sh"
 
 ensure_sync_precondition() {
     local local_head remote_head
@@ -54,7 +55,7 @@ if [[ -z "$TITLE" ]]; then
     exit 1
 fi
 
-python3 - "$ID" "$NUMBER" "$TITLE" "$DESCRIPTION" "$CHECKBOXES" << 'PY'
+PY_OUT="$(python3 - "$ID" "$NUMBER" "$TITLE" "$DESCRIPTION" "$CHECKBOXES" << 'PY'
 import sys
 sys.path.insert(0, "control-plane")
 from db import add_phase, add_milestone, add_checkbox, get_all_phases
@@ -135,3 +136,8 @@ if milestone_checkboxes:
 print(f"Added phase {phase_id} with {len(milestone_checkboxes)} checkboxes")
 print(f"PHASE_ID={phase_id}")
 PY
+)"
+echo "$PY_OUT"
+PHASE_ID_LINE="$(printf '%s\n' "$PY_OUT" | grep '^PHASE_ID=' || true)"
+PHASE_ID="${PHASE_ID_LINE#PHASE_ID=}"
+emit_result ok add_phase "phase added" "phase_id=${PHASE_ID:-unknown}" "title=$TITLE"

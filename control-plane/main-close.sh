@@ -12,6 +12,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$ROOT"
+source "$SCRIPT_DIR/output.sh"
 
 BRANCH=""
 CHECKBOX=""
@@ -66,3 +67,4 @@ echo "[4/4] Validate state"
 
 echo ""
 echo "Main-close complete."
+emit_result ok main_close "main-close complete" "branch=$BRANCH" "checkbox=${CHECKBOX:-inferred}"

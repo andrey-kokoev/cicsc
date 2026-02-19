@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
+source "$ROOT/control-plane/output.sh"
 
 MODE="diagnose"
 APPLY=0
@@ -140,3 +141,13 @@ conn.commit()
 print("\nApplied repairs.")
 conn.close()
 PY
+
+if [[ "$MODE" == "repair" ]]; then
+    if [[ "$APPLY" -eq 1 ]]; then
+        emit_result ok doctor "repair applied"
+    else
+        emit_result ok doctor "repair dry-run complete"
+    fi
+else
+    emit_result ok doctor "diagnostics complete"
+fi

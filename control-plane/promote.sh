@@ -2,6 +2,7 @@
 set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
+source "$ROOT/control-plane/output.sh"
 
 USAGE="Usage: $0 [--phase <phase_id>] [--all]"
 MODE="all"
@@ -63,3 +64,9 @@ if promoted:
 else:
     print("No eligible phases to promote")
 PY
+
+if [[ "$MODE" == "single" ]]; then
+    emit_result ok promote "promotion evaluated" "mode=single" "phase_id=$PHASE_ID"
+else
+    emit_result ok promote "promotion evaluated" "mode=all"
+fi

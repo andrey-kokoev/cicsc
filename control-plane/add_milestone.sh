@@ -12,6 +12,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$ROOT"
+source "$SCRIPT_DIR/output.sh"
 
 ensure_sync_precondition() {
     local local_head remote_head
@@ -49,7 +50,7 @@ if [[ -z "$PHASE_ID" || -z "$TITLE" ]]; then
     exit 1
 fi
 
-python3 - "$PHASE_ID" "$MILESTONE_ID" "$TITLE" << 'PY'
+PY_OUT="$(python3 - "$PHASE_ID" "$MILESTONE_ID" "$TITLE" << 'PY'
 import re
 import sys
 sys.path.insert(0, "control-plane")
@@ -96,3 +97,8 @@ add_milestone(milestone_id, phase_id, title)
 print(f"Added milestone {milestone_id} to phase {phase_id}")
 print(f"MILESTONE_ID={milestone_id}")
 PY
+)"
+echo "$PY_OUT"
+MILESTONE_ID_LINE="$(printf '%s\n' "$PY_OUT" | grep '^MILESTONE_ID=' || true)"
+CREATED_MILESTONE_ID="${MILESTONE_ID_LINE#MILESTONE_ID=}"
+emit_result ok add_milestone "milestone added" "phase_id=$PHASE_ID" "milestone_id=${CREATED_MILESTONE_ID:-unknown}"
