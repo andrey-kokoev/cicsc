@@ -13,7 +13,7 @@ is_allowed() {
   fi
 
   # Non-checkbox maintenance/documentation commits
-  if [[ "$s" =~ ^(docs|chore|ci|test|refactor|governance|release)(/[a-z0-9._-]+)?:[[:space:]].+ ]]; then
+  if [[ "$s" =~ ^(docs|chore|ci|test|refactor|governance|release|control-plane)(/[a-z0-9._-]+)?:[[:space:]].+ ]]; then
     return 0
   fi
 
@@ -35,7 +35,7 @@ Allowed patterns:
   - phase12 ac3.2: add parity envelope differential harnesses
   - phase12 ac0: bootstrap phase12 plan and roadmap section
 - <type>[/scope]: <summary>
-  types: docs, chore, ci, test, refactor, governance, release
+  types: docs, chore, ci, test, refactor, governance, release, control-plane
   example: docs/agents: add canonical execution model requirements
 - Merge ...
 - Revert ...
