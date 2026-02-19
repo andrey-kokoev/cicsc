@@ -125,7 +125,7 @@ describe("intent-plane v1 contract", () => {
     assert.equal(after.entities.length, 0)
   })
 
-  it("handles conflicting multi-edit evolution request deterministically", () => {
+  it("flags conflicting multi-edit evolution request as ambiguous", () => {
     const refiner = new RefinementEngine()
     const spec = {
       version: 0,
@@ -154,11 +154,10 @@ describe("intent-plane v1 contract", () => {
       0
     )
 
-    assert.equal(out.intent.type, "ADD_FIELD")
-    assert.ok(out.migration)
-    assert.equal(out.migration?.on_type, "Ticket")
-    assert.equal(out.verification.safe, true)
-    assert.deepEqual(out.blockingIssues, [])
+    assert.equal(out.intent.type, "AMBIGUOUS")
+    assert.equal(out.migration, null)
+    assert.equal(out.verification.safe, false)
+    assert.ok(out.blockingIssues.some((m) => m.includes("Ambiguous refinement intent")))
   })
 
   it("reports specific blocking-issue quality for incomplete entities", () => {
@@ -219,12 +218,12 @@ describe("intent-plane v1 contract", () => {
     assert.equal((intent as any).fieldType, "int")
   })
 
-  it("resolves conflict-heavy mixed edit text via deterministic first-match intent", () => {
+  it("flags conflict-heavy mixed edit text with explicit ambiguity intent", () => {
     const refiner = new RefinementEngine()
     const intent = refiner.detectIntent(
       "add field priority to Ticket, remove state Closed from Ticket, rename Ticket to Case"
     )
-    assert.equal(intent.type, "ADD_FIELD")
+    assert.equal(intent.type, "AMBIGUOUS")
   })
 
   it("emits blocking issues with severity/path/message quality gates", () => {

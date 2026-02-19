@@ -8,6 +8,7 @@ export type ChangeIntent =
   | { type: "ADD_COMMAND"; entity: string; command: string }
   | { type: "RENAME_ENTITY"; oldName: string; newName: string }
   | { type: "ADD_ENTITY"; entity: string }
+  | { type: "AMBIGUOUS"; raw: string; candidates: string[] }
   | { type: "UNKNOWN"; raw: string }
 
 const CHANGE_PATTERNS = [
@@ -36,6 +37,32 @@ function buildIdentityEventTransforms (entity: SpecV0["entities"][string]): Reco
 }
 
 export class RefinementEngine {
+  private parseIntentWithAmbiguity (input: string): ChangeIntent {
+    const structured = this.parseStructuredIntent(input)
+    if (structured) return structured
+
+    const matches: ChangeIntent[] = []
+    for (const { pattern, type, extract } of CHANGE_PATTERNS) {
+      const match = input.match(pattern)
+      if (!match) continue
+      const extracted = extract(match)
+      matches.push({ type: type as ChangeIntent["type"], ...extracted } as ChangeIntent)
+    }
+
+    const uniqueTypes = [...new Set(matches.map((m) => m.type))]
+    if (uniqueTypes.length > 1) {
+      return {
+        type: "AMBIGUOUS",
+        raw: input,
+        candidates: uniqueTypes,
+      }
+    }
+    if (matches.length === 1) {
+      return matches[0]!
+    }
+    return { type: "UNKNOWN", raw: input }
+  }
+
   private parseStructuredIntent (input: string): ChangeIntent | null {
     const text = String(input || "").trim()
     if (!text) return null
@@ -134,17 +161,7 @@ Rules:
    * BG4.1: Detect intent to change from natural language
    */
   detectIntent (input: string): ChangeIntent {
-    const structured = this.parseStructuredIntent(input)
-    if (structured) return structured
-
-    for (const { pattern, type, extract } of CHANGE_PATTERNS) {
-      const match = input.match(pattern)
-      if (match) {
-        const extracted = extract(match)
-        return { type: type as ChangeIntent["type"], ...extracted } as ChangeIntent
-      }
-    }
-    return { type: "UNKNOWN", raw: input }
+    return this.parseIntentWithAmbiguity(input)
   }
 
   /**
@@ -241,6 +258,7 @@ Rules:
         }
       },
       ADD_ENTITY: (_ctx) => null,
+      AMBIGUOUS: (_ctx) => null,
       UNKNOWN: (_ctx) => null,
     }
 
@@ -331,7 +349,11 @@ Rules:
     const intent = this.detectIntent(input)
     const nextVersion = currentVersion + 1
     const migration = this.generateMigrationSpec(currentSpec, intent, currentVersion, nextVersion)
-    const verification = migration ? this.verifyMigration(migration, currentSpec) : { safe: false, issues: ["Could not generate migration"] }
+    const verification = intent.type === "AMBIGUOUS"
+      ? { safe: false, issues: [`Ambiguous refinement intent: ${intent.candidates.join(", ")}`] }
+      : migration
+        ? this.verifyMigration(migration, currentSpec)
+        : { safe: false, issues: ["Could not generate migration"] }
     const confirmation = migration ? this.applyMigration(migration) : "Sorry, I couldn't understand that change. Try something like 'Add a new field to Ticket'."
     const blockingIssues = verification.safe ? [] : [...verification.issues]
 
