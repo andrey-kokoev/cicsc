@@ -203,4 +203,13 @@ describe("intent-plane v1 contract", () => {
     assert.equal(out.migration?.on_type, "Ticket")
     assert.equal(out.migration?.state_map?.Closed, "New")
   })
+
+  it("parses structured refinement intent grammar before pattern fallback", () => {
+    const refiner = new RefinementEngine()
+    const intent = refiner.detectIntent("intent=ADD_FIELD entity=Ticket field=priority field_type=int")
+    assert.equal(intent.type, "ADD_FIELD")
+    assert.equal((intent as any).entity, "Ticket")
+    assert.equal((intent as any).field, "priority")
+    assert.equal((intent as any).fieldType, "int")
+  })
 })

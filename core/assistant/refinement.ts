@@ -28,6 +28,57 @@ type PlannerContext = {
 }
 
 export class RefinementEngine {
+  private parseStructuredIntent (input: string): ChangeIntent | null {
+    const text = String(input || "").trim()
+    if (!text) return null
+
+    const pairs: Record<string, string> = {}
+    const tokenRe = /([a-zA-Z_]+)\s*[:=]\s*(".*?"|'.*?'|[^\s,;]+)/g
+    let m: RegExpExecArray | null
+    while ((m = tokenRe.exec(text)) !== null) {
+      const k = m[1]!.toLowerCase()
+      let v = m[2]!
+      if ((v.startsWith("\"") && v.endsWith("\"")) || (v.startsWith("'") && v.endsWith("'"))) {
+        v = v.slice(1, -1)
+      }
+      pairs[k] = v
+    }
+
+    const kind = (pairs.intent || pairs.type || "").toUpperCase()
+    if (!kind) return null
+
+    switch (kind) {
+      case "ADD_FIELD":
+        if (pairs.entity && pairs.field) {
+          return {
+            type: "ADD_FIELD",
+            entity: pairs.entity,
+            field: pairs.field,
+            fieldType: pairs.field_type || pairs.fieldtype || pairs.type_hint || "string",
+          }
+        }
+        return null
+      case "ADD_STATE":
+        if (pairs.entity && pairs.state) return { type: "ADD_STATE", entity: pairs.entity, state: pairs.state }
+        return null
+      case "REMOVE_STATE":
+        if (pairs.entity && pairs.state) return { type: "REMOVE_STATE", entity: pairs.entity, state: pairs.state }
+        return null
+      case "ADD_COMMAND":
+        if (pairs.entity && pairs.command) return { type: "ADD_COMMAND", entity: pairs.entity, command: pairs.command }
+        return null
+      case "RENAME_ENTITY":
+        if (pairs.old && pairs.new) return { type: "RENAME_ENTITY", oldName: pairs.old, newName: pairs.new }
+        if (pairs.oldname && pairs.newname) return { type: "RENAME_ENTITY", oldName: pairs.oldname, newName: pairs.newname }
+        return null
+      case "ADD_ENTITY":
+        if (pairs.entity) return { type: "ADD_ENTITY", entity: pairs.entity }
+        return null
+      default:
+        return null
+    }
+  }
+
   /**
    * Explains a Spec in plain English (BG3.3).
    */
@@ -75,6 +126,9 @@ Rules:
    * BG4.1: Detect intent to change from natural language
    */
   detectIntent (input: string): ChangeIntent {
+    const structured = this.parseStructuredIntent(input)
+    if (structured) return structured
+
     for (const { pattern, type, extract } of CHANGE_PATTERNS) {
       const match = input.match(pattern)
       if (match) {
