@@ -4,7 +4,14 @@ export type InterviewState = {
   currentStep: "GREETING" | "DOMAIN" | "ENTITIES" | "STATES" | "ATTRIBUTES" | "COMMANDS" | "CONFIRM"
   currentEntityIndex: number
   pendingClarifications: string[]
-  blockingIssues: string[]
+  blockingIssues: BlockingIssue[]
+}
+
+export type BlockingIssue = {
+  code: string
+  path: string
+  severity: "error" | "warning"
+  message: string
 }
 
 export type EntityDraft = {
@@ -298,31 +305,63 @@ export class InterviewStateMachine {
   }
 
   protected recomputeBlockingIssues (): void {
-    const issues: string[] = []
+    const issues: BlockingIssue[] = []
+    let entityIndex = -1
 
     if (!this.state.domain || this.state.domain.trim().length === 0) {
-      issues.push("Domain is missing.")
+      issues.push({
+        code: "MISSING_DOMAIN",
+        path: "$.domain",
+        severity: "error",
+        message: "Domain is missing.",
+      })
     }
 
     if (this.state.entities.length === 0) {
-      issues.push("At least one entity is required.")
+      issues.push({
+        code: "MISSING_ENTITIES",
+        path: "$.entities",
+        severity: "error",
+        message: "At least one entity is required.",
+      })
     }
 
     for (const entity of this.state.entities) {
+      entityIndex += 1
       const entityLabel = entity.name || "(unnamed entity)"
 
       if (!entity.states.length) {
-        issues.push(`Entity ${entityLabel} has no states.`)
+        issues.push({
+          code: "MISSING_STATES",
+          path: `$.entities[${entityIndex}].states`,
+          severity: "error",
+          message: `Entity ${entityLabel} has no states.`,
+        })
       }
 
       if (!entity.initialState) {
-        issues.push(`Entity ${entityLabel} has no initial state.`)
+        issues.push({
+          code: "MISSING_INITIAL_STATE",
+          path: `$.entities[${entityIndex}].initialState`,
+          severity: "error",
+          message: `Entity ${entityLabel} has no initial state.`,
+        })
       } else if (!entity.states.includes(entity.initialState)) {
-        issues.push(`Entity ${entityLabel} initial state '${entity.initialState}' is not in states.`)
+        issues.push({
+          code: "INVALID_INITIAL_STATE",
+          path: `$.entities[${entityIndex}].initialState`,
+          severity: "error",
+          message: `Entity ${entityLabel} initial state '${entity.initialState}' is not in states.`,
+        })
       }
 
       if (!entity.commands.length) {
-        issues.push(`Entity ${entityLabel} has no commands.`)
+        issues.push({
+          code: "MISSING_COMMANDS",
+          path: `$.entities[${entityIndex}].commands`,
+          severity: "error",
+          message: `Entity ${entityLabel} has no commands.`,
+        })
       }
     }
 

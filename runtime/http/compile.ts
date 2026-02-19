@@ -36,19 +36,27 @@ function unwrapIntentPlaneSpecEnvelope (input: unknown): unknown {
     return input
   }
 
-  const blockingIssues = Array.isArray(obj.blocking_issues)
-    ? obj.blocking_issues.filter((x: unknown) => typeof x === "string")
-    : []
+  const blockingIssues = Array.isArray(obj.blocking_issues) ? obj.blocking_issues : []
   const deployable = obj.deployable === true
 
   if (!deployable || blockingIssues.length > 0) {
     throw new CompileDiagnosticsError(
       "intent-plane preflight failed: unresolved blocking issues",
-      blockingIssues.map((issue: string, idx: number) => ({
-        layer: "spec",
-        path: `$.blocking_issues[${idx}]`,
-        message: issue,
-      }))
+      blockingIssues.map((issue: unknown, idx: number) => {
+        if (issue && typeof issue === "object" && !Array.isArray(issue)) {
+          const o = issue as any
+          return {
+            layer: "spec" as const,
+            path: typeof o.path === "string" ? o.path : `$.blocking_issues[${idx}]`,
+            message: typeof o.message === "string" ? o.message : "blocking issue",
+          }
+        }
+        return {
+          layer: "spec" as const,
+          path: `$.blocking_issues[${idx}]`,
+          message: typeof issue === "string" ? issue : "blocking issue",
+        }
+      })
     )
   }
 

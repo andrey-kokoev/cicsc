@@ -102,7 +102,14 @@ describe("worker /compile endpoint", () => {
         },
       },
       deployable: false,
-      blocking_issues: ["Entity Ticket has no commands."],
+      blocking_issues: [
+        {
+          code: "MISSING_COMMANDS",
+          path: "$.entities[0].commands",
+          severity: "error",
+          message: "Entity Ticket has no commands.",
+        },
+      ],
     }
 
     const res = await workerDefault.fetch(
@@ -118,6 +125,6 @@ describe("worker /compile endpoint", () => {
     const body = await res.json() as any
     assert.equal(body.ok, false)
     assert.match(String(body.error ?? ""), /preflight failed/i)
-    assert.equal(body.diagnostics?.[0]?.path, "$.blocking_issues[0]")
+    assert.equal(body.diagnostics?.[0]?.path, "$.entities[0].commands")
   })
 })

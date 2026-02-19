@@ -164,9 +164,9 @@ describe("intent-plane v1 contract", () => {
     interview.processInput("Ticket")
 
     const state = interview.getState()
-    assert.ok(state.blockingIssues.some((s) => s.includes("Entity Ticket has no states.")))
-    assert.ok(state.blockingIssues.some((s) => s.includes("Entity Ticket has no initial state.")))
-    assert.ok(state.blockingIssues.some((s) => s.includes("Entity Ticket has no commands.")))
+    assert.ok(state.blockingIssues.some((s) => s.code === "MISSING_STATES" && s.path.includes("$.entities[0].states")))
+    assert.ok(state.blockingIssues.some((s) => s.code === "MISSING_INITIAL_STATE" && s.path.includes("$.entities[0].initialState")))
+    assert.ok(state.blockingIssues.some((s) => s.code === "MISSING_COMMANDS" && s.path.includes("$.entities[0].commands")))
   })
 
   it("uses per-intent non-additive migration strategy for remove-state", () => {

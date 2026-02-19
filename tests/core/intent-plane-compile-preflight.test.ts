@@ -29,12 +29,19 @@ describe("intent-plane compile preflight", () => {
         compileSpecToBundleV0({
           spec: ticketSpec(),
           deployable: false,
-          blocking_issues: ["Entity Ticket has no commands."],
+          blocking_issues: [
+            {
+              code: "MISSING_COMMANDS",
+              path: "$.entities[0].commands",
+              severity: "error",
+              message: "Entity Ticket has no commands.",
+            },
+          ],
         }),
       (err: unknown) => {
         assert.ok(err instanceof CompileDiagnosticsError)
         assert.match(String((err as Error).message), /preflight failed/i)
-        assert.equal((err as CompileDiagnosticsError).diagnostics[0]?.path, "$.blocking_issues[0]")
+        assert.equal((err as CompileDiagnosticsError).diagnostics[0]?.path, "$.entities[0].commands")
         return true
       }
     )
