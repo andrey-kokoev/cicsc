@@ -3,8 +3,8 @@
 # onboard.sh - Onboard an agent to CICSC
 #
 # Usage:
-#   ./onboard.sh AGENT_KIMI          # Worker onboarding
-#   ./onboard.sh --main AGENT_MAIN   # Main agent onboarding
+#   ./onboard.sh --worker AGENT_GEMINI    # Worker onboarding
+#   ./onboard.sh --main                   # Main agent onboarding
 #==============================================================================
 
 set -euo pipefail
@@ -13,63 +13,49 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 ROLE="worker"
-AGENT=""
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --main) ROLE="main"; shift ;;
-        *) AGENT="$1"; shift ;;
+        --worker) ROLE="worker"; shift ;;
+        *) shift ;;
     esac
 done
 
-if [[ -z "$AGENT" ]]; then
-    echo "Usage: $0 [--main] <agent_id>"
-    echo ""
-    echo "Onboard an agent to CICSC control-plane."
-    echo "  --main    Onboard as main agent (not worker)"
-    exit 1
-fi
-
 if [[ "$ROLE" == "main" ]]; then
     echo "=============================================="
-    echo "  Welcome to CICSC, $AGENT (MAIN AGENT)!"
+    echo "  Welcome to CICSC (MAIN AGENT)"
     echo "=============================================="
     echo ""
-    echo "Your role: Orchestrate workers, manage dispatch"
+    echo "Your role: Add work to ledger, maintain state"
     echo ""
 
-    # Inline main guide
     cat << 'GUIDE'
-WORKFLOW (read carefully):
-=======================
+WORKFLOW:
+=========
 1. VALIDATE: ./control-plane/validate.sh
-2. CHECK:    grep status open control-plane/execution-ledger.yaml
-3. ADD:      ./control-plane/add_phase.sh --id BZ --number N --title "T"
-4. DISPATCH: ./control-plane/dispatch.sh --checkbox BZ1.1 --agent AGENT_KIMI
-5. COMMIT:   git add control-plane/ && git commit -m "dispatch: ..."
-6. PUSH:     git push origin main
-7. MONITOR:  ./control-plane/inbox.sh AGENT_NAME
-8. MERGE:    git fetch origin && git merge --ff-only origin/feat/branch
+2. ADD WORK: ./control-plane/add_phase.sh --id CF --number N --title "T"
+3. CHECKBOX: ./control-plane/add_checkbox.sh --milestone CF1 --checkbox "CF1.1:desc"
+4. MERGE:    git fetch origin && git merge --ff-only origin/feat/branch
+5. CLOSE:    ./control-plane/integrate.sh integrate CF1.1
 
-RULES (non-negotiable):
-======================
-- NEVER edit YAML directly - use scripts
-- ALWAYS validate after merges
-- DISPATCH smallest adjacent steps
-- Use scripts: add_phase.sh, add_checkbox.sh, dispatch.sh
+That's it. Mechanistic core (autoassign.sh) assigns work to agents.
 
-COMMON COMMANDS:
-================
+RULES:
+======
+- Just add work - don't dispatch
+- Always validate after merges
+- Use scripts: add_phase.sh, add_checkbox.sh
+
+COMMANDS:
+=========
 | Task          | Command                                |
 |---------------|----------------------------------------|
 | Validate      | ./control-plane/validate.sh           |
 | Add phase     | ./control-plane/add_phase.sh --id ...  |
 | Add checkbox  | ./control-plane/add_checkbox.sh --... |
-| Dispatch      | ./control-plane/dispatch.sh --...     |
-| Monitor       | ./control-plane/inbox.sh AGENT_NAME   |
-| Collab Issues| ./control-plane/get_open_collab_issues.sh |
-| Respond Issue| ./control-plane/respond_collab_issue.sh <file> "msg" |
 | Merge         | git merge --ff-only origin/feat/...   |
+| Close         | ./control-plane/integrate.sh integrate CF1.1 |
 
 GUIDE
     echo ""
@@ -77,53 +63,46 @@ GUIDE
     echo "  ./control-plane/validate.sh"
 else
     echo "=============================================="
-    echo "  Welcome to CICSC, $AGENT!"
+    echo "  Welcome to CICSC (WORKER AGENT)"
     echo "=============================================="
     echo ""
-
-    echo "Your role: AGENT worker - implement assigned work"
+    echo "Your role: Implement assigned work, push feature branches"
     echo ""
 
-    # Inline worker guide
     cat << 'GUIDE'
-WORKFLOW (read carefully):
-=======================
-1. SYNC:     git fetch origin && git rebase origin/main
-2. INBOX:    ./control-plane/inbox.sh AGENT_NAME
-3. CLAIM:    ./control-plane/claim.sh AGENT_NAME   <- REQUIRED BEFORE WORK
-4. WORK:     Implement in worktree, commit
-5. GATES:    ./control-plane/check_gates.sh         <- REQUIRED BEFORE PUSH
-6. PUSH:     git push origin feat/description       <- Auto-completes on main
+WORKFLOW:
+=========
+1. SYNC:    git fetch origin && git rebase origin/main
+2. ENV:     export AGENT_ID=AGENT_xxx
+3. STANDBY: ./control-plane/standby.sh
 
-RULES (non-negotiable):
-======================
-- NEVER edit YAML files directly - use scripts
-- NEVER commit to main - always feature branch
-- ALWAYS run gates before pushing
-- Push triggers auto-complete on main
+The standby script polls every 5s. When work is assigned to you,
+it outputs the task. Do the work, commit, push.
 
-COMMON COMMANDS:
-================
+4. WORK:    Implement in worktree, commit
+5. GATES:   ./control-plane/check_gates.sh
+6. PUSH:    git push origin feat/description
+
+RULES:
+======
+- Never edit state directly - use scripts
+- Never commit to main - always feature branch
+- Always run gates before pushing
+- Push, then Main integrates to close checkbox
+
+COMMANDS:
+=========
 | Task          | Command                                |
 |---------------|----------------------------------------|
 | Sync          | git fetch origin && git rebase origin/main |
-| Claim         | ./control-plane/claim.sh AGENT_NAME  |
+| Standby       | export AGENT_ID=xxx && ./control-plane/standby.sh |
 | Gates         | ./control-plane/check_gates.sh       |
 | Push          | git push origin feat/branch-name     |
-| Collab Issue | ./control-plane/submit_collab_issue.sh "msg" |
 
 GUIDE
-    echo ""
-
-    # Show current assignments and auto-claim
-    echo "Your assignments:"
-    ./control-plane/inbox.sh "$AGENT"
 
     echo ""
-    echo "Auto-claiming..."
-    ./control-plane/claim.sh "$AGENT"
-
-    echo ""
-    echo "Now implement. Run gates when ready:"
-    echo "  ./control-plane/check_gates.sh"
+    echo "To start:"
+    echo "  export AGENT_ID=YOUR_AGENT_NAME"
+    echo "  ./control-plane/standby.sh"
 fi

@@ -46,31 +46,38 @@ from db import get_all_checkboxes, get_all_assignments
 
 checkboxes = get_all_checkboxes()
 valid_checkboxes = {cb["id"] for cb in checkboxes}
+checkbox_status = {cb["id"]: cb["status"] for cb in checkboxes}
 assignments = get_all_assignments()
 
 errors = []
 active_checkboxes = set()
+done_assignments = set()
 
 for a in assignments:
     cb = a["checkbox_ref"]
     status = a["status"]
-    agent = a["agent_ref"]
     
     if cb not in valid_checkboxes:
         errors.append(f"Invalid checkbox_ref: {cb}")
         continue
         
-    if status not in ("open", "in_progress", "done"):
+    if status not in ("assigned", "done"):
         errors.append(f"Invalid status for {cb}: {status}")
         
-    if status in ("open", "in_progress"):
+    if status == "assigned":
         if cb in active_checkboxes:
             errors.append(f"Multiple active assignments for {cb}")
         active_checkboxes.add(cb)
+    elif status == "done" and checkbox_status.get(cb) != "done":
+        errors.append(f"Assignment {cb} is done but checkbox is {checkbox_status.get(cb)}")
+    elif status == "done":
+        done_assignments.add(cb)
 
 for cb in checkboxes:
     if cb["status"] == "done" and cb["id"] in active_checkboxes:
         errors.append(f"Checkbox {cb['id']} is done but has active assignment")
+    if cb["status"] == "open" and cb["id"] in done_assignments:
+        errors.append(f"Checkbox {cb['id']} is open but assignment is done")
 
 if errors:
     for e in errors:

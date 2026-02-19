@@ -27,24 +27,51 @@ Primary success criteria:
 ## Control-Plane Scripts
 
 ```bash
-./control-plane/inbox.sh [AGENT_NAME]      # View assignments
-./control-plane/dispatch.sh --checkbox X --agent Y  # Assign work
-./control-plane/claim.sh AGENT              # Claim assignments
-./control-plane/complete.sh CHECKBOX        # Complete work
 ./control-plane/validate.sh                 # Validate state
 ./control-plane/check_gates.sh              # Run gates
 ./control-plane/add_phase.sh --id X --number N --title "T"
 ./control-plane/add_checkbox.sh --milestone X --checkbox "X1.1:desc"
-./control-plane/integrate.sh status
-./control-plane/onboard.sh [--main] AGENT
+
+# Mechanistic core (runs continuously)
+./control-plane/autoassign.sh --loop         # Assigns open work to idle agents
+
+# Worker (runs continuously)
+./control-plane/standby.sh                  # Poll for assigned work (set AGENT_ID env)
+
+# Integration boundary
+./control-plane/integrate.sh integrate X1.1
+
+# Legacy
+./control-plane/onboard.sh [--main|--worker]
 ```
+
+---
+
+## Architecture
+
+```
+Human Main:          adds work to ledger (open)
+                         ↓
+autoassign.sh:       assigns open → idle agents (LIFO)
+                         ↓
+standby.sh:          polls, outputs when work assigned
+                         ↓
+Agent:               does work, commits, pushes
+                         ↓
+integrate.sh:        marks checkbox done
+                         ↓
+validate.sh:         verifies state
+```
+
+- Pull-based: workers pull from ledger
+- Mechanistic core: autoassign handles assignment
+- Agent identity: set via AGENT_ID env var
 
 ---
 
 ## Files
 
-- `control-plane/execution-ledger.yaml` - Phase/milestone/checkbox definitions (source of truth)
-- `control-plane/assignments.yaml` - Active assignments
+- `state/ledger.db` - SQLite database with phases, milestones, checkboxes, assignments, agents
 
 ---
 

@@ -6,7 +6,6 @@
 # Workers operate unconstrained inside; integration enforces FF-property.
 #
 # Usage:
-#   ./integrate.sh claim <agent>           # Claim phase (unconstrained)
 #   ./integrate.sh integrate <checkbox>    # Integrate phase (FF-constrained)
 #   ./integrate.sh status                  # Show current state
 #
@@ -21,40 +20,6 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$ROOT"
-
-claim() {
-    local agent="$1"
-    
-    echo "=== Claim Phase ==="
-    echo "Agent: $agent"
-    
-    echo "Fetching origin/main..."
-    git fetch origin main 2>/dev/null || true
-    
-    python3 - "$agent" << 'PY'
-import sys
-sys.path.insert(0, "control-plane")
-from db import get_assignments_by_agent, update_assignment
-from datetime import datetime
-
-agent = sys.argv[1]
-
-claimed = []
-for a in get_assignments_by_agent(agent):
-    if a["status"] == "open":
-        update_assignment(a["checkbox_ref"], status="in_progress", started_at=datetime.now().isoformat() + "Z")
-        claimed.append(a["checkbox_ref"])
-
-if claimed:
-    print(f"Claimed: {', '.join(claimed)}")
-else:
-    print("No open assignments to claim")
-PY
-    
-    echo ""
-    echo "CLAIM COMPLETE - Work unconstrained until integrate"
-    echo "Run './integrate.sh integrate <checkbox>' when ready"
-}
 
 integrate() {
     local checkbox="$1"
@@ -99,21 +64,18 @@ integrate() {
         exit 1
     fi
     
-    python3 - "$checkbox" << 'PY'
+    python3 - "$checkbox" "$(git rev-parse --short HEAD)" << 'PY'
 import sys
 sys.path.insert(0, "control-plane")
-from db import get_assignment, update_assignment, update_checkbox_status
-from datetime import datetime
+from db import complete_assignment
 
 checkbox = sys.argv[1]
+commit = sys.argv[2]
 
-assignment = get_assignment(checkbox)
-if assignment:
-    update_assignment(checkbox, status="done", completed_at=datetime.now().isoformat() + "Z")
-    update_checkbox_status(checkbox, "done")
+if complete_assignment(checkbox, commit):
     print(f"Updated {checkbox} to done")
 else:
-    print(f"Warning: {checkbox} not found in assignments")
+    print(f"Warning: {checkbox} not in assigned state")
 PY
     
     echo ""
@@ -144,13 +106,6 @@ status() {
 }
 
 case "${1:-}" in
-    claim)
-        if [[ -z "${2:-}" ]]; then
-            echo "Usage: $0 claim <agent>"
-            exit 1
-        fi
-        claim "$2"
-        ;;
     integrate)
         if [[ -z "${2:-}" ]]; then
             echo "Usage: $0 integrate <checkbox>"
@@ -165,7 +120,6 @@ case "${1:-}" in
         echo "FF-Only Collaboration Boundary"
         echo ""
         echo "Usage:"
-        echo "  $0 claim <agent>           # Claim phase (unconstrained)"
         echo "  $0 integrate <checkbox>    # Integrate phase (FF-constrained)"
         echo "  $0 status                  # Show current state"
         echo ""

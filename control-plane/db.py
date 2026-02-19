@@ -110,11 +110,13 @@ def get_assignments_by_agent(agent_ref):
 def get_active_assignments():
     conn = get_db()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM assignments WHERE status IN ('open', 'in_progress')")
-    return [dict(row) for row in cur.fetchall()]
+    cur.execute("SELECT * FROM assignments WHERE status = 'assigned'")
+    rows = [dict(row) for row in cur.fetchall()]
+    conn.close()
+    return rows
 
 
-def create_assignment(checkbox_ref, agent_ref, status="open"):
+def create_assignment(checkbox_ref, agent_ref, status="assigned"):
     conn = get_db()
     cur = conn.cursor()
     from datetime import datetime
@@ -206,6 +208,167 @@ def get_phase_checkbox_stats(phase_id):
     row = cur.fetchone()
     conn.close()
     return {"total": row[0], "done": row[1] or 0}
+
+
+def get_or_create_agent(agent_id):
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM agents WHERE id = ?", (agent_id,))
+    row = cur.fetchone()
+    from datetime import datetime
+
+    if not row:
+        cur.execute(
+            "INSERT INTO agents (id, standby_since, status) VALUES (?, ?, ?)",
+            (agent_id, datetime.now().isoformat() + "Z", "standing_by"),
+        )
+        conn.commit()
+        cur.execute("SELECT * FROM agents WHERE id = ?", (agent_id,))
+        row = cur.fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+
+def agent_standby(agent_id):
+    set_agent_status(agent_id, "standing_by")
+
+
+def agent_busy(agent_id):
+    set_agent_status(agent_id, "busy")
+
+
+def set_agent_status(agent_id, status):
+    from datetime import datetime
+
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("SELECT status FROM agents WHERE id = ?", (agent_id,))
+    row = cur.fetchone()
+    now = datetime.now().isoformat() + "Z"
+
+    if row is None:
+        standby_since = now if status == "standing_by" else None
+        cur.execute(
+            "INSERT INTO agents (id, standby_since, status) VALUES (?, ?, ?)",
+            (agent_id, standby_since, status),
+        )
+    elif row[0] != status:
+        if status == "standing_by":
+            cur.execute(
+                "UPDATE agents SET status = ?, standby_since = ? WHERE id = ?",
+                (status, now, agent_id),
+            )
+        else:
+            cur.execute(
+                "UPDATE agents SET status = ? WHERE id = ?",
+                (status, agent_id),
+            )
+    conn.commit()
+    conn.close()
+
+
+def get_idle_agents():
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute(
+        "SELECT * FROM agents WHERE status = 'standing_by' ORDER BY standby_since ASC"
+    )
+    agents = [dict(row) for row in cur.fetchall()]
+    conn.close()
+    return agents
+
+
+def get_agent_assignment(agent_id):
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute(
+        """
+        SELECT a.*, c.description as task_description
+        FROM assignments a
+        JOIN checkboxes c ON a.checkbox_ref = c.id
+        WHERE a.agent_ref = ? AND a.status = 'assigned'
+    """,
+        (agent_id,),
+    )
+    row = cur.fetchone()
+    conn.close()
+    return dict(row) if row else None
+
+
+def assign_work_to_agent(checkbox_id, agent_id):
+    from datetime import datetime
+
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute(
+        """
+        INSERT OR REPLACE INTO assignments 
+        (checkbox_ref, agent_ref, status, created_at)
+        VALUES (?, ?, 'assigned', ?)
+    """,
+        (checkbox_id, agent_id, datetime.now().isoformat() + "Z"),
+    )
+    cur.execute("UPDATE agents SET status = 'busy' WHERE id = ?", (agent_id,))
+    cur.execute(
+        "UPDATE checkboxes SET status = 'open' WHERE id = ? AND status != 'done'",
+        (checkbox_id,),
+    )
+    conn.commit()
+    conn.close()
+
+
+def complete_assignment(checkbox_id, commit_sha=None):
+    from datetime import datetime
+
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("SELECT status FROM assignments WHERE checkbox_ref = ?", (checkbox_id,))
+    row = cur.fetchone()
+    if row is None or row[0] != "assigned":
+        conn.close()
+        return False
+
+    completed_at = datetime.now().isoformat() + "Z"
+    if commit_sha:
+        cur.execute(
+            """
+            UPDATE assignments
+            SET status = 'done', commit_sha = ?, completed_at = ?
+            WHERE checkbox_ref = ?
+        """,
+            (commit_sha, completed_at, checkbox_id),
+        )
+    else:
+        cur.execute(
+            """
+            UPDATE assignments
+            SET status = 'done', completed_at = ?
+            WHERE checkbox_ref = ?
+        """,
+            (completed_at, checkbox_id),
+        )
+    cur.execute("UPDATE checkboxes SET status = 'done' WHERE id = ?", (checkbox_id,))
+    conn.commit()
+    conn.close()
+    return True
+
+
+def get_open_checkboxes():
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM checkboxes WHERE status = 'open' ORDER BY id")
+    checkboxes = [dict(row) for row in cur.fetchall()]
+    conn.close()
+    return checkboxes
+
+
+def get_assigned_checkboxes():
+    conn = get_db()
+    cur = conn.cursor()
+    cur.execute("SELECT checkbox_ref FROM assignments WHERE status = 'assigned'")
+    assigned = {row[0] for row in cur.fetchall()}
+    conn.close()
+    return assigned
 
 
 if __name__ == "__main__":

@@ -38,7 +38,7 @@ cur.execute('''CREATE TABLE IF NOT EXISTS checkboxes (
 cur.execute('''CREATE TABLE IF NOT EXISTS assignments (
     checkbox_ref TEXT REFERENCES checkboxes(id),
     agent_ref TEXT,
-    status TEXT CHECK(status IN ('open','in_progress','done')),
+    status TEXT CHECK(status IN ('assigned','done')),
     created_at TEXT,
     started_at TEXT,
     commit_sha TEXT,
@@ -57,6 +57,21 @@ cur.execute('''CREATE TABLE IF NOT EXISTS events (
 
 conn.commit()
 print("Database created. Now migrating YAML...")
+
+def normalize_assignment_status(status):
+    if status in ("open", "in_progress", "assigned"):
+        return "assigned"
+    if status == "done":
+        return "done"
+    return "assigned"
+
+def normalize_checkbox_status(status):
+    if status in ("open", "assigned"):
+        # "assigned" moved to assignments table; keep checkbox open.
+        return "open"
+    if status == "done":
+        return "done"
+    return "open"
 
 # Load YAML
 with open('control-plane/execution-ledger.yaml') as f:
@@ -79,7 +94,7 @@ for ph in ledger.get('phases', []):
             cur.execute("""
                 INSERT OR REPLACE INTO checkboxes (id, milestone_id, status, description)
                 VALUES (?, ?, ?, ?)
-            """, (cb['id'], ms['id'], cb.get('status'), cb.get('description')))
+            """, (cb['id'], ms['id'], normalize_checkbox_status(cb.get('status')), cb.get('description')))
 
 # Migrate assignments
 try:
@@ -91,7 +106,7 @@ try:
             INSERT OR REPLACE INTO assignments 
             (checkbox_ref, agent_ref, status, created_at, started_at, commit_sha, completed_at)
             VALUES (?, ?, ?, ?, ?, ?, ?)
-        """, (a.get('checkbox_ref'), a.get('agent_ref'), a.get('status'),
+        """, (a.get('checkbox_ref'), a.get('agent_ref'), normalize_assignment_status(a.get('status')),
               a.get('created_at'), a.get('started_at'), a.get('commit'), a.get('completed_at')))
 except FileNotFoundError:
     print("No assignments.yaml found, skipping")
