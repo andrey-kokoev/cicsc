@@ -20,6 +20,13 @@ const CHANGE_PATTERNS = [
   { pattern: /add (?:a )?(?:new )?(field|attribute|property)\s+"?(\w+)"?/i, type: "ADD_FIELD", extract: (m: RegExpMatchArray) => ({ field: m[2]!, entity: "unknown", fieldType: "string" }) },
 ]
 
+type PlannerContext = {
+  currentSpec: SpecV0
+  intent: ChangeIntent
+  fromVersion: number
+  toVersion: number
+}
+
 export class RefinementEngine {
   /**
    * Explains a Spec in plain English (BG3.3).
@@ -87,71 +94,76 @@ Rules:
     fromVersion: number,
     toVersion: number
   ): MigrationSpecV0 | null {
-    if (intent.type === "RENAME_ENTITY") {
-      const oldName = (intent as any).oldName
-      if (!currentSpec.entities[oldName]) {
-        return null
-      }
-      return {
-        from_version: fromVersion,
-        to_version: toVersion,
-        on_type: oldName,
-        event_transforms: {},
-        state_map: {}
-      }
-    }
-
-    const entityName = "entity" in intent ? intent.entity : null
-    if (!entityName || entityName === "unknown") {
-      return null
-    }
-
-    const entity = currentSpec.entities[entityName]
-    if (!entity) {
-      return null
-    }
-
-    const eventTransforms: Record<string, EventTransformV0> = {}
-
-    switch (intent.type) {
-      case "ADD_FIELD": {
-        const fieldName = (intent as any).field
-        const fieldType = (intent as any).fieldType || "string"
-        eventTransforms["*"] = {
-          payload_map: {
-            [fieldName]: { lit: { null: true } }
-          }
+    const planners: Record<ChangeIntent["type"], (ctx: PlannerContext) => MigrationSpecV0 | null> = {
+      ADD_FIELD: (ctx) => {
+        const entityName = "entity" in ctx.intent ? ctx.intent.entity : null
+        if (!entityName || entityName === "unknown" || !ctx.currentSpec.entities[entityName]) return null
+        const fieldName = (ctx.intent as any).field
+        return {
+          from_version: ctx.fromVersion,
+          to_version: ctx.toVersion,
+          on_type: entityName,
+          event_transforms: {
+            "*": { payload_map: { [fieldName]: { lit: { null: true } } } },
+          },
+          state_map: {},
         }
-        break
-      }
-      case "ADD_STATE": {
-        const newState = (intent as any).state
-        eventTransforms["*"] = { drop: false }
-        break
-      }
-      case "ADD_COMMAND": {
-        eventTransforms["*"] = { drop: false }
-        break
-      }
-      case "REMOVE_STATE": {
-        eventTransforms["*"] = { drop: false }
-        break
-      }
-      case "ADD_ENTITY": {
-        eventTransforms["*"] = { drop: false }
-        break
-      }
-      default:
-        return null
+      },
+      ADD_STATE: (ctx) => {
+        const entityName = "entity" in ctx.intent ? ctx.intent.entity : null
+        if (!entityName || entityName === "unknown" || !ctx.currentSpec.entities[entityName]) return null
+        return {
+          from_version: ctx.fromVersion,
+          to_version: ctx.toVersion,
+          on_type: entityName,
+          event_transforms: { "*": { drop: false } },
+          state_map: {},
+        }
+      },
+      REMOVE_STATE: (ctx) => {
+        const entityName = "entity" in ctx.intent ? ctx.intent.entity : null
+        if (!entityName || entityName === "unknown") return null
+        const entity = ctx.currentSpec.entities[entityName]
+        if (!entity) return null
+        const removeState = (ctx.intent as any).state
+        const fallback = entity.states.find((s) => s !== removeState) ?? ""
+        return {
+          from_version: ctx.fromVersion,
+          to_version: ctx.toVersion,
+          on_type: entityName,
+          event_transforms: { "*": { drop: false } },
+          state_map: { [removeState]: fallback },
+        }
+      },
+      ADD_COMMAND: (ctx) => {
+        const entityName = "entity" in ctx.intent ? ctx.intent.entity : null
+        if (!entityName || entityName === "unknown" || !ctx.currentSpec.entities[entityName]) return null
+        return {
+          from_version: ctx.fromVersion,
+          to_version: ctx.toVersion,
+          on_type: entityName,
+          event_transforms: { "*": { drop: false } },
+          state_map: {},
+        }
+      },
+      RENAME_ENTITY: (ctx) => {
+        const oldName = (ctx.intent as any).oldName
+        if (!ctx.currentSpec.entities[oldName]) return null
+        return {
+          from_version: ctx.fromVersion,
+          to_version: ctx.toVersion,
+          on_type: oldName,
+          event_transforms: {},
+          state_map: {},
+        }
+      },
+      ADD_ENTITY: (_ctx) => null,
+      UNKNOWN: (_ctx) => null,
     }
 
-    return {
-      from_version: fromVersion,
-      to_version: toVersion,
-      on_type: entityName,
-      event_transforms: eventTransforms,
-      state_map: {}
-    }
+    const planner = planners[intent.type]
+    if (!planner) return null
+    return planner({ currentSpec, intent, fromVersion, toVersion })
   }
 
   /**

@@ -168,4 +168,39 @@ describe("intent-plane v1 contract", () => {
     assert.ok(state.blockingIssues.some((s) => s.includes("Entity Ticket has no initial state.")))
     assert.ok(state.blockingIssues.some((s) => s.includes("Entity Ticket has no commands.")))
   })
+
+  it("uses per-intent non-additive migration strategy for remove-state", () => {
+    const refiner = new RefinementEngine()
+    const spec = {
+      version: 0,
+      entities: {
+        Ticket: {
+          id: "string",
+          states: ["New", "Closed"],
+          initial: "New",
+          attributes: {},
+          commands: {
+            Close: {
+              inputs: {},
+              emit: [{ type: "Closed", payload: {} }],
+            },
+          },
+          reducers: {
+            Closed: [],
+          },
+        },
+      },
+    } as const
+
+    const out = refiner.processEvolutionRequest(
+      "remove state Closed from Ticket",
+      spec as any,
+      0
+    )
+
+    assert.equal(out.intent.type, "REMOVE_STATE")
+    assert.ok(out.migration)
+    assert.equal(out.migration?.on_type, "Ticket")
+    assert.equal(out.migration?.state_map?.Closed, "New")
+  })
 })
