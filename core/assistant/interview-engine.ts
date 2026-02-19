@@ -51,7 +51,7 @@ export class InterviewEngine extends InterviewStateMachine {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const { TranslationEngine } = require("./translate")
     const translator = new TranslationEngine()
-    const spec = translator.translateToSpecJson(state)
+    const spec = translator.toCanonicalSpecJson(state)
     return {
       spec,
       deployable: state.blockingIssues.length === 0,

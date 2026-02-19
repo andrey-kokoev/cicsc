@@ -63,12 +63,14 @@ describe("intent-plane v1 contract", () => {
 
     const state = interview.getState()
     const translator = new TranslationEngine()
-    const spec = translator.translateToSpecJson(state)
-    const dslPreview = translator.translateToDSLPreview(state)
+    const spec = translator.toCanonicalSpecJson(state)
+    const dslPreview = translator.toPreviewDsl(state)
 
     assert.equal(spec.version, 0)
     assert.ok(spec.entities.Ticket)
     assert.match(dslPreview, /entity Ticket:/)
+    assert.deepEqual(translator.translateToSpecJson(state), spec)
+    assert.equal(translator.translateToDSLPreview(state), dslPreview)
   })
 
   it("accepts non-additive refinement intents (rename) for full-range editing", () => {

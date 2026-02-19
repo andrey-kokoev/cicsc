@@ -6,7 +6,7 @@ export class TranslationEngine {
    * Generates the system prompt for the LLM to translate requirements into canonical Spec JSON.
    * DSL text is preview-only and non-canonical.
    */
-  getSystemPrompt (): string {
+  getCanonicalSpecSystemPrompt (): string {
     return `You are an expert CICSC Spec architect.
 Your task is to translate natural language requirements into canonical CICSC Spec JSON.
 
@@ -25,10 +25,14 @@ Rules:
 `
   }
 
+  getSystemPrompt (): string {
+    return this.getCanonicalSpecSystemPrompt()
+  }
+
   /**
    * Generates the user prompt based on the interview draft.
    */
-  getUserPrompt (state: InterviewState): string {
+  getCanonicalSpecUserPrompt (state: InterviewState): string {
     let prompt = `Translate the following system requirements into canonical CICSC Spec JSON:\n\n`
     prompt += `Domain: ${state.domain}\n`
     for (const entity of state.entities) {
@@ -48,11 +52,15 @@ Rules:
     return prompt
   }
 
+  getUserPrompt (state: InterviewState): string {
+    return this.getCanonicalSpecUserPrompt(state)
+  }
+
   /**
    * Preview-only adapter: deterministic Surface DSL rendering from canonical interview state.
    * Non-canonical; canonical output is Spec JSON via translateToSpecJson.
    */
-  translateToDSLPreview (state: InterviewState): string {
+  toPreviewDsl (state: InterviewState): string {
     let dsl = ""
     for (const entity of state.entities) {
       dsl += `entity ${this.sanitize(entity.name)}:\n`
@@ -85,14 +93,18 @@ Rules:
    * Backward-compatible alias for preview-only DSL adapter.
    */
   translateToDSL (state: InterviewState): string {
-    return this.translateToDSLPreview(state)
+    return this.toPreviewDsl(state)
+  }
+
+  translateToDSLPreview (state: InterviewState): string {
+    return this.toPreviewDsl(state)
   }
 
   /**
    * Canonical translator output for intent-plane v1.
    * Produces Spec JSON (SpecV0) instead of DSL text.
    */
-  translateToSpecJson (state: InterviewState): SpecV0 {
+  toCanonicalSpecJson (state: InterviewState): SpecV0 {
     const entities: SpecV0["entities"] = {}
 
     for (const entity of state.entities) {
@@ -152,6 +164,10 @@ Rules:
       version: 0,
       entities,
     }
+  }
+
+  translateToSpecJson (state: InterviewState): SpecV0 {
+    return this.toCanonicalSpecJson(state)
   }
 
   /**
