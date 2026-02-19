@@ -361,10 +361,18 @@ async function runInteractiveMode (llmProvider, args) {
 
     const state = engine.getState()
     if (state.currentStep === "CONFIRM" && input.toLowerCase().includes("yes")) {
-      const spec = engine.getStructuredSpec()
+      const structured = engine.getStructuredSpec()
+      const spec = structured.spec
       const specPath = args["spec-path"] ? String(args["spec-path"]) : "./spec-generated.json"
       await writeFile(specPath, JSON.stringify(spec, null, 2), "utf8")
       console.log(`\nSpec saved to: ${specPath}`)
+
+      const preflightPath = args["preflight-path"] ? String(args["preflight-path"]) : "./spec-preflight.json"
+      await writeFile(preflightPath, JSON.stringify({
+        deployable: structured.deployable,
+        blocking_issues: structured.blocking_issues,
+      }, null, 2), "utf8")
+      console.log(`Preflight report saved to: ${preflightPath}`)
 
       const server = String(args.server ?? "http://localhost")
       const token = typeof args.token === "string" ? args.token : null

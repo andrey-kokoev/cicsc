@@ -52,6 +52,25 @@ describe("intent-plane v1 contract", () => {
     assert.equal(tc.ok, true)
   })
 
+  it("keeps DSL rendering as preview adapter while Spec JSON remains canonical", () => {
+    const interview = new InterviewEngine()
+    interview.processInput("ticketing")
+    interview.processInput("ticketing")
+    interview.processInput("Ticket")
+    interview.processInput("New, Closed")
+    interview.processInput("title string")
+    interview.processInput("Create")
+
+    const state = interview.getState()
+    const translator = new TranslationEngine()
+    const spec = translator.translateToSpecJson(state)
+    const dslPreview = translator.translateToDSLPreview(state)
+
+    assert.equal(spec.version, 0)
+    assert.ok(spec.entities.Ticket)
+    assert.match(dslPreview, /entity Ticket:/)
+  })
+
   it("accepts non-additive refinement intents (rename) for full-range editing", () => {
     const refiner = new RefinementEngine()
 

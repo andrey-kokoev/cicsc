@@ -3,32 +3,25 @@ import type { SpecV0, SpecAttrV0 } from "../../spec/ast"
 
 export class TranslationEngine {
   /**
-   * Generates the system prompt for the LLM to translate requirements into Spec DSL.
+   * Generates the system prompt for the LLM to translate requirements into canonical Spec JSON.
+   * DSL text is preview-only and non-canonical.
    */
   getSystemPrompt (): string {
     return `You are an expert CICSC Spec architect.
-Your task is to translate natural language requirements into the CICSC Surface DSL.
+Your task is to translate natural language requirements into canonical CICSC Spec JSON.
 
-The Surface DSL is indentation-aware (4 spaces).
+Return only JSON matching SpecV0 shape.
 
-Grammar:
-entity <EntityName>:
-    states: [<State1>, <State2>]
-    initial: <State1>
-
-    attr <attrName>: <type> [optional]
-
-    command <CommandName>:
-        input <inputName>: <type>
-        when state is <CurrentState>
-        emit <EventName>(<field>: input.<inputName>)
-
-Types: string, int, float, bool, time.
+Schema:
+{
+  "version": 0,
+  "entities": { ... }
+}
 
 Rules:
-1. Every entity must have 'states:' and 'initial:'.
-2. Indentation is mandatory.
-3. Use 'attr' for fields.
+1. Every entity must have states and initial.
+2. commands/reducers must be internally consistent.
+3. Types: string, int, float, bool, time, enum.
 `
   }
 
@@ -36,7 +29,7 @@ Rules:
    * Generates the user prompt based on the interview draft.
    */
   getUserPrompt (state: InterviewState): string {
-    let prompt = `Translate the following system requirements into CICSC Spec DSL:\n\n`
+    let prompt = `Translate the following system requirements into canonical CICSC Spec JSON:\n\n`
     prompt += `Domain: ${state.domain}\n`
     for (const entity of state.entities) {
       prompt += `Entity: ${entity.name}\n`
@@ -56,9 +49,10 @@ Rules:
   }
 
   /**
-   * Simple deterministic translator for basic cases (fallback/verification).
+   * Preview-only adapter: deterministic Surface DSL rendering from canonical interview state.
+   * Non-canonical; canonical output is Spec JSON via translateToSpecJson.
    */
-  translateToDSL (state: InterviewState): string {
+  translateToDSLPreview (state: InterviewState): string {
     let dsl = ""
     for (const entity of state.entities) {
       dsl += `entity ${this.sanitize(entity.name)}:\n`
@@ -85,6 +79,13 @@ Rules:
       dsl += `\n`
     }
     return dsl
+  }
+
+  /**
+   * Backward-compatible alias for preview-only DSL adapter.
+   */
+  translateToDSL (state: InterviewState): string {
+    return this.translateToDSLPreview(state)
   }
 
   /**
