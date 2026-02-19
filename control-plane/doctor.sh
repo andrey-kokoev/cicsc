@@ -112,6 +112,48 @@ for r in rows:
     for e in extra[1:]:
         ops.append(("DELETE FROM assignments WHERE rowid = ?", (e["rowid"],), "drop duplicate active assignment"))
 
+# 5) done checkbox but no done assignment record (integration mismatch)
+rows = q("""
+SELECT c.id
+FROM checkboxes c
+LEFT JOIN assignments a
+  ON a.checkbox_ref = c.id
+  AND a.status = 'done'
+WHERE c.status = 'done'
+GROUP BY c.id
+HAVING COUNT(a.checkbox_ref) = 0
+""")
+for r in rows:
+    issues.append(f"done checkbox has no done assignment record: {r['id']}")
+
+# 6) done assignment missing completion metadata
+rows = q("""
+SELECT rowid, checkbox_ref
+FROM assignments
+WHERE status = 'done' AND (completed_at IS NULL OR completed_at = '')
+""")
+for r in rows:
+    issues.append(f"done assignment missing completed_at: {r['checkbox_ref']}")
+    ops.append((
+        "UPDATE assignments SET completed_at = COALESCE(completed_at, datetime('now')) WHERE rowid = ?",
+        (r["rowid"],),
+        "backfill completed_at on done assignment",
+    ))
+
+# 7) assigned assignment carrying completion metadata
+rows = q("""
+SELECT rowid, checkbox_ref
+FROM assignments
+WHERE status = 'assigned' AND (completed_at IS NOT NULL OR commit_sha IS NOT NULL)
+""")
+for r in rows:
+    issues.append(f"assigned assignment has completion metadata: {r['checkbox_ref']}")
+    ops.append((
+        "UPDATE assignments SET completed_at = NULL, commit_sha = NULL WHERE rowid = ?",
+        (r["rowid"],),
+        "clear completion metadata on assigned assignment",
+    ))
+
 if not issues:
     print("Doctor: no issues found")
     conn.close()
