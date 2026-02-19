@@ -3,8 +3,9 @@
 # add_phase.sh - Add new phase to execution ledger
 #
 # Usage:
-#   ./add_phase.sh --number 52 --title "Phase Title" --description "desc"
-#   ./add_phase.sh --id BZ --number 52 --title "Phase Title" --checkboxes "BZ1.1:desc,BZ1.2:desc"
+#   ./add_phase.sh --title "Phase Title" --description "desc"
+#   ./add_phase.sh --number 52 --title "Phase Title"
+#   ./add_phase.sh --id BZ --title "Phase Title" --checkboxes "BZ1.1:desc,BZ1.2:desc"
 #==============================================================================
 
 set -euo pipefail
@@ -36,7 +37,7 @@ CHECKBOXES=""
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --help|-h)
-            echo "Usage: $0 [--id <phase_id>] --number <num> --title <title> [--description <desc>] [--checkboxes 'id:desc,id:desc']"
+            echo "Usage: $0 [--id <phase_id>] [--number <num>] --title <title> [--description <desc>] [--checkboxes 'id:desc,id:desc']"
             exit 0
             ;;
         --id) ID="$2"; shift 2 ;;
@@ -48,8 +49,8 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-if [[ -z "$NUMBER" || -z "$TITLE" ]]; then
-    echo "Usage: $0 [--id <phase_id>] --number <num> --title <title> [--description <desc>] [--checkboxes 'id:desc,id:desc']"
+if [[ -z "$TITLE" ]]; then
+    echo "Usage: $0 [--id <phase_id>] [--number <num>] --title <title> [--description <desc>] [--checkboxes 'id:desc,id:desc']"
     exit 1
 fi
 
@@ -59,7 +60,7 @@ sys.path.insert(0, "control-plane")
 from db import add_phase, add_milestone, add_checkbox, get_all_phases
 
 phase_id = sys.argv[1]
-number = int(sys.argv[2])
+number_arg = sys.argv[2]
 title = sys.argv[3]
 description = sys.argv[4]
 checkboxes_str = sys.argv[5] if len(sys.argv) > 5 else ""
@@ -100,6 +101,20 @@ if not phase_id:
         if idx is not None and idx > max_idx:
             max_idx = idx
     phase_id = index_to_phase_id(max_idx + 1 if max_idx >= 0 else 0)
+
+all_phases = get_all_phases()
+if number_arg:
+    number = int(number_arg)
+else:
+    max_number = 0
+    for p in all_phases:
+        try:
+            n = int(p.get("number", 0))
+        except (TypeError, ValueError):
+            n = 0
+        if n > max_number:
+            max_number = n
+    number = max_number + 1
 
 add_phase(phase_id, number, "in_progress", title, description)
 
