@@ -4,7 +4,6 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
 ERRORS=0
-AUTO_PROMOTED=0
 
 echo "Validating execution ledger..."
 python3 << 'PY'
@@ -90,33 +89,8 @@ if [[ $? -ne 0 ]]; then
     ERRORS=$((ERRORS + 1))
 fi
 
-echo "Checking for auto-promotion..."
-AUTO_PROMOTED=$(python3 << 'PY'
-import sys
-sys.path.insert(0, "control-plane")
-from db import get_all_phases, get_phase_checkbox_stats, update_phase_status
-
-promoted = []
-
-for ph in get_all_phases():
-    stats = get_phase_checkbox_stats(ph["id"])
-    if stats["total"] > 0 and stats["done"] == stats["total"] and ph["status"] != "complete":
-        update_phase_status(ph["id"], "complete")
-        promoted.append(ph["id"])
-
-for pid in promoted:
-    print(f"  Auto-promoted {pid} -> complete")
-
-print(len(promoted))
-PY
-)
-
 if [[ $ERRORS -eq 0 ]]; then
-    if [[ $AUTO_PROMOTED -gt 0 ]]; then
-        echo "Validation passed ($AUTO_PROMOTED phase(s) auto-promoted)"
-    else
-        echo "Validation passed"
-    fi
+    echo "Validation passed"
     exit 0
 else
     echo "Validation failed with $ERRORS error(s)" >&2
