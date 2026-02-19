@@ -13,19 +13,19 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$ROOT"
 
-needs_sync() {
+ensure_sync_precondition() {
     local local_head remote_head
     local_head=$(git rev-parse HEAD)
-    remote_head=$(git rev-parse origin/main 2>/dev/null) || return 1
-    [[ "$local_head" != "$remote_head" ]]
+    remote_head=$(git rev-parse origin/main 2>/dev/null) || return 0
+    if [[ "$local_head" != "$remote_head" ]]; then
+        echo "ERROR: Worktree is not at origin/main." >&2
+        echo "Refusing implicit git fetch/rebase in state mutation script." >&2
+        echo "Run sync explicitly, then retry." >&2
+        exit 1
+    fi
 }
 
-if needs_sync 2>/dev/null; then
-    echo "⚠ Worktree is behind origin/main. Fetching..."
-    git fetch origin
-    git rebase origin/main
-    echo "  ✅ Synced"
-fi
+ensure_sync_precondition
 
 ID=""
 NUMBER=""
