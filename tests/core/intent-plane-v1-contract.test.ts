@@ -88,4 +88,65 @@ describe("intent-plane v1 contract", () => {
     assert.equal(out.migration?.on_type, "Ticket")
     assert.deepEqual(out.blockingIssues, [])
   })
+
+  it("keeps interview step stable on ambiguous input and returns clarification", () => {
+    const interview = new InterviewEngine()
+    const before = interview.getState()
+    assert.equal(before.currentStep, "GREETING")
+
+    const response = interview.processInput("maybe")
+    assert.match(response ?? "", /examples|purpose|direction/i)
+
+    const after = interview.getState()
+    assert.equal(after.currentStep, "GREETING")
+    assert.equal(after.entities.length, 0)
+  })
+
+  it("handles conflicting multi-edit evolution request deterministically", () => {
+    const refiner = new RefinementEngine()
+    const spec = {
+      version: 0,
+      entities: {
+        Ticket: {
+          id: "string",
+          states: ["New"],
+          initial: "New",
+          attributes: {},
+          commands: {
+            Create: {
+              inputs: {},
+              emit: [{ type: "Created", payload: {} }],
+            },
+          },
+          reducers: {
+            Created: [],
+          },
+        },
+      },
+    } as const
+
+    const out = refiner.processEvolutionRequest(
+      "rename Ticket to Case and add field priority to Ticket",
+      spec as any,
+      0
+    )
+
+    assert.equal(out.intent.type, "ADD_FIELD")
+    assert.ok(out.migration)
+    assert.equal(out.migration?.on_type, "Ticket")
+    assert.equal(out.verification.safe, true)
+    assert.deepEqual(out.blockingIssues, [])
+  })
+
+  it("reports specific blocking-issue quality for incomplete entities", () => {
+    const interview = new InterviewEngine()
+    interview.processInput("ticketing")
+    interview.processInput("ticketing")
+    interview.processInput("Ticket")
+
+    const state = interview.getState()
+    assert.ok(state.blockingIssues.some((s) => s.includes("Entity Ticket has no states.")))
+    assert.ok(state.blockingIssues.some((s) => s.includes("Entity Ticket has no initial state.")))
+    assert.ok(state.blockingIssues.some((s) => s.includes("Entity Ticket has no commands.")))
+  })
 })
